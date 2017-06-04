@@ -1,0 +1,29 @@
+# Handling overlapping points
+
+Let's consider this figure from Chapter \@ref(small-axis-labels):
+```{r}
+p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
+  geom_point(size=4) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+   theme_cowplot(19)
+stamp_ugly(p)
+```
+There it was labeled "good", but here I have labeled it "ugly" because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
+```{r}
+p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
+  geom_point(size=4, alpha=0.65) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+   theme_cowplot(19)
+stamp_good(p2)
+```
+

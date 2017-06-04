@@ -1,0 +1,49 @@
+# Your axis labels are too small {#small-axis-labels}
+
+If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you're almost certainly making a poor choice.
+
+For example, consider the following figure. I see figures like this all the time.
+```{r}
+p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
+  geom_point() + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD"))
+stamp_bad(p + theme_cowplot(7))
+```
+The axis labels, axis tick labels, and legend labels are all incredibly small. We can barely see them, and we may have to zoom into the page to distinguish FWD from RWD in the figure legend.
+
+A somewhat better version of this figure would be this one:
+```{r}
+stamp_ugly(p + theme_cowplot(11))
+```
+I think the fonts are still too small, and that's why I have labeled it "ugly". However, we are moving in the right direction, and this figure might be passable under some circumstances. My main criticism with this figure is not so much that the labels aren't legible as that it is not balanced; the text elements are too small compared to the rest of the figure.
+
+The next figure uses the default settings I'm applying throughout this book. I think it is well balanced, the text is clearly visible, and it fits with the overall size of the figure. 
+```{r}
+stamp_good(p)
+```
+
+Importantly, we can overdo it and make the labels too big:
+```{r}
+stamp_ugly(p + theme_cowplot(19))
+```
+Sometimes we need big labels, in particular if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In the above example, the points used to visualize the data are too small relative to the text. Once we fix this, the figure becomes acceptable again:
+
+```{r}
+p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
+  geom_point(size=4) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+   theme_cowplot(19)
+stamp_good(p2)
+```
+
+I think there is a simple psychological reason for why we routinely make figures whose axis labels are too small, and it relates to large, high-resolution computer monitors. We routinely preview figures on the computer screen, and often we do so while the figure takes up a large amount of space on the screen. In this viewing mode, even comparatively small text seems perfectly fine and legible, and large text can seem awkward and overpowering. In fact, if you take the first figure from this chapter and magnify it to the point where it fills your entire screen, you will likely think that it looks just fine. The solution is to always make sure that you look at your figures at a realistic print size. You can either zoom out so they are only three to five inches in width on your screen, or you can go to the other side of your room and check whether the figure still looks good from a substantial distance.
