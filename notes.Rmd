@@ -1,0 +1,12 @@
+# Notes
+
+Topics to cover eventually:
+
+- bitmaps vs vector graphics
+- pie charts
+- background grids
+- labeling vs legends
+- multi-part plots
+- scatter plots of dense point clouds
+- histograms and density plots
+- solid colors vs. outlines

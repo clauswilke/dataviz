@@ -7,7 +7,9 @@ rmd_files: [
   "aspect_ratio.Rmd",
 
   "colorblind.Rmd",
-  "bargraphs_logy.Rmd"
+  "bargraphs_logy.Rmd",
+
+  "notes.Rmd"
 ]
 
 before_chapter_script: "_common.R"
