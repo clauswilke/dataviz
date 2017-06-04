@@ -1,7 +1,7 @@
 ---
 title: "Professional Figures"
 author: "Claus O. Wilke"
-description: "A book on how to make professional looking figures for scientific publications."
+description: "A guide for making figures that look professional and are publication-ready."
 github-repo: clauswilke/professional_figures
 site: bookdown::bookdown_site
 documentclass: book
