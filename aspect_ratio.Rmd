@@ -1,0 +1,10 @@
+# Choosing the correct aspect ratio for your figure
+
+
+
+```{r}
+ggplot(mpg, aes(cty, displ, color=manufacturer)) + geom_point()
+
+
+
+```

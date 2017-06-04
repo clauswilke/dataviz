@@ -1,0 +1,13 @@
+new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+
+
+  "aspect_ratio.Rmd",
+
+  "colorblind.Rmd",
+  "bargraphs_logy.Rmd"
+]
+
+before_chapter_script: "_common.R"
