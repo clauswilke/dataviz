@@ -3,6 +3,7 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
 
+  "introduction.Rmd",
 
   "aspect_ratio.Rmd",
 
