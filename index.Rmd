@@ -1,0 +1,13 @@
+---
+title: "Professional Figures"
+author: "Claus O. Wilke"
+site: bookdown::bookdown_site
+documentclass: book
+output:
+  bookdown::gitbook: default
+  bookdown::pdf_book: default
+---
+
+# Preface
+
+This is my current, overly ambitious project. Enjoy!
