@@ -8,6 +8,6 @@ output:
   bookdown::pdf_book: default
 ---
 
-# Preface
+# Preface {-}
 
 This is my current, overly ambitious project. Enjoy!

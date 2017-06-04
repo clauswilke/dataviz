@@ -1,0 +1,5 @@
+# Colors
+
+Some useful posts on color-blind friendly palettes:
+
+- [Cookbook for R](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)
