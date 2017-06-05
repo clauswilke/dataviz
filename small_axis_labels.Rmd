@@ -12,13 +12,13 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD"))
-stamp_bad(p + theme_cowplot(7))
+stamp_bad(p + theme_pf(7))
 ```
 The axis labels, axis tick labels, and legend labels are all incredibly small. We can barely see them, and we may have to zoom into the page to distinguish FWD from RWD in the figure legend.
 
 A somewhat better version of this figure would be this one:
 ```{r}
-stamp_ugly(p + theme_cowplot(11))
+stamp_ugly(p + theme_pf(11))
 ```
 I think the fonts are still too small, and that's why I have labeled it "ugly". However, we are moving in the right direction, and this figure might be passable under some circumstances. My main criticism with this figure is not so much that the labels aren't legible as that it is not balanced; the text elements are too small compared to the rest of the figure.
 
@@ -29,7 +29,7 @@ stamp_good(p)
 
 Importantly, we can overdo it and make the labels too big:
 ```{r}
-stamp_ugly(p + theme_cowplot(19))
+stamp_ugly(p + theme_pf(19))
 ```
 Sometimes we need big labels, in particular if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In the above example, the points used to visualize the data are too small relative to the text. Once we fix this, the figure becomes acceptable again:
 
@@ -42,7 +42,7 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_cowplot(19)
+   theme_pf(19)
 stamp_good(p2)
 ```
 

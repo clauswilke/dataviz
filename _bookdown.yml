@@ -6,11 +6,12 @@ rmd_files: [
   "introduction.Rmd",
 
   "small_axis_labels.Rmd",
+  "background_grids.Rmd",
 
   "aspect_ratio.Rmd",
 
   "colorblind.Rmd",
-  "bargraphs_logy.Rmd",
+  #"bargraphs_logy.Rmd",
   "overlapping_points.Rmd",
 
   "notes.Rmd"

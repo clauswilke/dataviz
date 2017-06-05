@@ -1,0 +1,87 @@
+# Background grids
+
+```{r message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(stringr)
+library(lubridate)
+```
+
+With the rising popularity of the R package **ggplot2**, which uses a gray background grid as default, graphs with this style have become widespread. With apologies to Hadley Wickham, for whom I have the utmost respect, I don't find this style particularly attractive. In general, I find that the gray background detracts from the actual data. As an example, consider this figure, which shows the stock price of four major tech companies, indexed to their value in June 2012:
+
+```{r message=FALSE, warning=FALSE}
+stocks <- data_frame(company = c("Alphabet", "Apple", "Facebook", "Microsoft"),
+                     ticker = c("GOOG", "AAPL", "FB", "MSFT"))
+
+data_path <- "datasets" # path to the individual datasets
+
+# read in all at once
+prices <- stocks %>%
+  mutate(filename = paste(str_to_lower(ticker), ".csv", sep="")) %>%
+  mutate(file_contents = map(filename,
+                             ~ read_csv(file.path(data_path, .), col_types = "cdddd-")
+                             )
+         ) %>%
+  select(-filename) %>%
+  unnest() %>%
+  mutate(date=dmy(Date), price=Close) %>%
+  select(company, ticker, date, price)
+
+index_prices <- prices %>%
+  filter(date == ymd("2012-06-01")) %>%
+  select(-company, -date, index_price = price)
+
+prices <- left_join(prices, index_prices) %>%
+  group_by(ticker) %>%
+  mutate(price_indexed = price/index_price*100)
+
+p <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+  geom_line() +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name="stock",
+                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
+                     labels=c("Facebook", "Alphabet", "Microsoft", "Google")) +
+  scale_x_date(name="year",
+               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price, indexed",
+                     expand=c(0,0))
+
+stamp_ugly(p + theme_gray(12))
+```
+The grid is too busy, and the gray background in the legend is distracting.
+
+We could try to remove the grid altogether, but I think that is a worse option:
+```{r warning=FALSE}
+stamp_bad(p + theme_pf_half_open())
+```
+Now the curves seem to just float in space, and it's difficult to see where they go. In addition, since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at $y=100$:
+```{r warning=FALSE}
+p2 <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+  geom_hline(yintercept = 100, size = 0.5, color="grey70") +
+  geom_line() +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name="stock",
+                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
+                     labels=c("Facebook", "Alphabet", "Microsoft", "Google")) +
+  scale_x_date(name="year",
+               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price, indexed",
+                     expand=c(0,0)) +
+  theme_pf_half_open()
+
+
+
+stamp_good(p2)
+```
+
+
+Alternatively, we can use just a minimal grid. In particular, for a plot where we are primarily interested in the change in $y$ values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin. Thus, we arrive at this plot:
+```{r warning=FALSE}
+stamp_good(p + theme_pf_hgrid())
+```
+
+
