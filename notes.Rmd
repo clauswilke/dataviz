@@ -7,6 +7,8 @@ Topics to cover eventually:
 - background grids
 - labeling vs legends
 - multi-part plots
-- scatter plots of dense point clouds
+- scatter plots of dense point clouds, chapter is partially started
 - histograms and density plots
 - solid colors vs. outlines
+- choice of plot libraries
+- 
