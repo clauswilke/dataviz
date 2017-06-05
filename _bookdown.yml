@@ -8,7 +8,7 @@ rmd_files: [
   "small_axis_labels.Rmd",
   "background_grids.Rmd",
 
-  "aspect_ratio.Rmd",
+  #"aspect_ratio.Rmd",
 
   "colorblind.Rmd",
   #"bargraphs_logy.Rmd",

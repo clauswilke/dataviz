@@ -27,3 +27,4 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
 stamp_good(p2)
 ```
 
+

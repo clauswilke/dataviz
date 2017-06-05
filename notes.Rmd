@@ -4,11 +4,11 @@ Topics to cover eventually:
 
 - bitmaps vs vector graphics
 - pie charts
-- background grids
+- background grids: add diagonal lines
 - labeling vs legends
 - multi-part plots
 - scatter plots of dense point clouds, chapter is partially started
 - histograms and density plots
 - solid colors vs. outlines
 - choice of plot libraries
-- 
+
