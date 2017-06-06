@@ -5,3 +5,20 @@ Some useful posts on color-blind friendly palettes:
 - [Cookbook for R](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)
 - [Gradient-based color palettes](https://blog.graphiq.com/finding-the-right-color-palettes-for-data-visualizations-fcd4e707a283)
 - [Avoid equidistant HSV colors](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
+
+
+A nice color-blind palette containing black:
+```{r fig.width=8, fig.asp=.14}
+# from: http://jfly.iam.u-tokyo.ac.jp/color/
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+palette_plot(cbbPalette, label_size = 4)
+```
+
+And the same palette with gray instead of black:
+```{r fig.width=8, fig.asp=.14}
+# from: http://jfly.iam.u-tokyo.ac.jp/color/
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+palette_plot(cbPalette, label_size = 4)
+```
