@@ -110,8 +110,58 @@ stamp_good(perc_plot)
 ```
 Note that in addition to the light vertical lines, I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values (like here, four), it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.
 
-Next topics to cover:
+Background grids along both axis directions can make sense for scatter plots where there is no primary axis of interest, in particular if you leave out the axis lines:
+```{r}
+iris %>%
+  select(Sepal.Width, Sepal.Length, species=Species) %>%
+  ggplot(aes(x=Sepal.Width, y=Sepal.Length, shape=species, fill=species)) + 
+    geom_point(color="black", size=2) +
+    scale_shape_manual(values=21:23) +
+    scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73")) +
+    xlab("sepal width") +
+    ylab("setal length") +
+    scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
 
-- For scatter plots, grids in both directions may be useful (use `iris` dataset?)
-- For x vs y comparison plots, a diagonal line is best
-- Data-specific guidelines? (e.g., limits of mathematical expressions?)
+stamp_good(plot_grid(NULL, iris_plot + theme_pf_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+```
+
+For figures where the relevant comparison is the $x=y$ line, I prefer to draw a diagonal line rather than a grid. For example, if we compare two sets of correlations, we can see immediately which correlations are systematically stronger (figure adapted from **Echave et al, need to add reference here**):
+```{r message=FALSE, warning=FALSE}
+cor_table = read_csv("datasets/Echave_et_al_2016_NRG_correlations.csv")
+nrg_plot <- ggplot(cor_table, aes(y=cor.RSA, x=-cor.WCN)) + 
+  geom_abline(color="#999999") +
+  geom_point(shape=21, color="black", fill="#0072B2", size=2, stroke=0.5) + 
+  scale_x_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7), labels = c("-0.3", "-0.5", "-0.7")) +
+  scale_y_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7)) +
+  coord_fixed() +
+  xlab("rate–WCN correlation") +
+  ylab("rate–RSA correlation") +
+  labs(title = "") # add an empty title as a simple trick to move the plot downwards
+
+stamp_good(plot_grid(nrg_plot, NULL, nrow=1, rel_widths=c(1, 0.2)))
+```
+
+The same observation is much harder to make when the figure has a background grid instead. Thus, even though this figure looks pleasing, I label it as "bad":
+```{r message=FALSE, warning=FALSE}
+nrg_plot2 <- ggplot(cor_table, aes(y=cor.RSA, x=-cor.WCN)) + 
+  #geom_abline(color="#999999") +
+  geom_point(shape=21, color="black", fill="#0072B2", size=2, stroke=0.5) + 
+  scale_x_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7), labels = c("-0.3", "-0.5", "-0.7")) +
+  scale_y_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7)) +
+  coord_fixed() +
+  xlab("rate–WCN correlation") +
+  ylab("rate–RSA correlation") +
+  background_grid(size.major=0.5) +
+  labs(title = "") # add an empty title as a simple trick to move the plot downwards
+
+stamp_bad(plot_grid(nrg_plot2, NULL, nrow=1, rel_widths=c(1, 0.2)))
+```
+
+```{r}
+#Next topics to cover:
+#
+#- For scatter plots, grids in both directions may be useful (use `iris` dataset?)
+#- For x vs y comparison plots, a diagonal line is best
+#- Data-specific guidelines? (e.g., limits of mathematical expressions?)
+```

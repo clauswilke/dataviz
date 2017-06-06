@@ -1,24 +1,50 @@
-# Colors that work even for the colorblind
+# Choosing colorblind-friendly color scales
 
-Some useful posts on color-blind friendly palettes:
+When coloring elements in your figures, you need keep in mind that a good proportion of your readers may be colorblind and may not be able to distinguish the colors that look so clearly different to you. You could address this problem by preparing all figures in grayscale, but those figures would look drab and boring to everybody, even the colorblind. Alternatively, you can (and should) employ redundant coding, discussed in more detail in Chapter \@ref{redundant-coding}. However, independent of whether or not you use redundant coding, you should consider using a color scale whose colors are distinguishable even for colorblind people. 
 
-- [Cookbook for R](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)
-- [Gradient-based color palettes](https://blog.graphiq.com/finding-the-right-color-palettes-for-data-visualizations-fcd4e707a283)
-- [Avoid equidistant HSV colors](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
+In choosing your color scale, remember that colorblind people are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red--green colorblindness) or blue and green (blue-yellow colorblindness). The key to making a colorblind-friendly color scale is to (i) choose colors with different levels of brightness and saturation, and (ii) choose color combinations that tend to look dissimilar even if color vision is partially impaired.
 
-
-A nice color-blind palette containing black:
-```{r fig.width=8, fig.asp=.14}
+Throughout this book, I'm using the following color palette, which was developed to work well for all the major types of colorblindness:
+```{r fig.width=8.5, fig.asp=.14}
 # from: http://jfly.iam.u-tokyo.ac.jp/color/
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 palette_plot(cbbPalette, label_size = 4)
 ```
+By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.
 
-And the same palette with gray instead of black:
-```{r fig.width=8, fig.asp=.14}
+A variant of the palette replaces black with gray, if you don't like to see completely black visual elements:
+```{r fig.width=8.5, fig.asp=.14}
 # from: http://jfly.iam.u-tokyo.ac.jp/color/
 cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 palette_plot(cbPalette, label_size = 4)
+```
+
+In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table \@ref(tab:color-codes).
+
+
+Table: (\#tab:color-codes) Colorblind-friendly color scale, developed by Masataka Okabe and Kei Ito. 
+
+Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B (%)
+--------------  ------------ ------- ---------------- ----------------- ------------
+         black       #000000       -  0, 0, 0, 100    0, 0, 0           0, 0, 0
+          gray       #999999       -  0, 0, 0, 60     153, 153, 153     60, 60, 60
+        orange       #E69F00     41°  0, 50, 100, 0   230, 159, 0       90, 60, 0
+      sky blue       #56B4E9    202° 80, 0, 0, 0      86, 180, 233      35, 70, 90
+  bluish green       #009E73    164° 97, 0, 75, 0     0, 158, 115       0, 60, 50
+        yellow       #F0E442     56° 10, 5, 90, 0     240, 228, 66      95, 90, 25
+          blue       #0072B2    202° 100, 50, 0, 0    0, 114, 178       0, 45, 70
+     vermilion       #D55E00     27° 0, 80, 100, 0    213, 94, 0        80, 40, 0
+reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
+ 
+ 
+ 
+```{r} 
+## Notes, entered as R comment so as to not appear in the printed output
+#Some useful posts on color-blind friendly palettes:
+#
+#- [Color Universal Design by Okabe and Ito](http://jfly.iam.u-tokyo.ac.jp/color/)
+#- [Gradient-based color palettes](https://blog.graphiq.com/finding-the-right-color-palettes-for-data-visualizations-fcd4e707a283)
+#- [Avoid equidistant HSV colors](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
 ```

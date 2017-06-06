@@ -5,8 +5,6 @@ rmd_files: [
 
   "introduction.Rmd",
 
-  "figure_preparation.Rmd",
-
   "small_axis_labels.Rmd",
   "background_grids.Rmd",
 

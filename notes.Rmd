@@ -11,4 +11,6 @@ Topics to cover eventually:
 - histograms and density plots
 - solid colors vs. outlines
 - choice of plot libraries
+- avoid boxes and frames around parts of the plot
+- redundant coding (to help color-blind people, and generally)
 
