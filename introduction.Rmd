@@ -1,23 +1,3 @@
-```{r include=FALSE, cache=FALSE}
-set.seed(7654)
-options(digits = 3)
-
-knitr::opts_chunk$set(
-  echo = FALSE,
-  cache = FALSE,
-  fig.align = 'center',
-  fig.width = 6,
-  fig.asp = 0.618,  # 1 / phi
-  fig.show = "hold"
-)
-
-options(dplyr.print_min = 6, dplyr.print_max = 6)
-
-library(cowplot)
-
-source("R/misc.R")
-source("R/themes.R")
-```
 # Introduction {-}
 
 If you are a scientist, an analyst, a consultant, or anybody else who has to prepare technical documents or reports, one of the most important skills you need to have is the ability to make compelling figures. Figures will typically carry the weight of your arguments. They need to be clear, attractive, and compelling. The difference between good and bad figures can be the difference between a highly influential or a obscure paper, a grant or contract won or lost, a job interview gone well or poorly. And yet, there are surprisingly few resources to teach you how to make compelling figures. There are no college courses on figure making, and no extensive collection of books you can read.^[One notable exception is the works of Edward Tufte. His books and seminars are excellent, and much of what I do and say has been inspired by him.] Tutorials for plotting sofware typically focus on how to achieve specific visual effects rather than explaining why certain choices are preferred and others not. In your day-to-day work, you are simply expected to know how to make good figures, and if you're lucky you have a patient adviser who teaches you a few tricks as you're writing your first scientific papers.

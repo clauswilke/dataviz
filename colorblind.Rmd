@@ -4,7 +4,7 @@ When coloring elements in your figures, you need keep in mind that a good propor
 
 In choosing your color scale, remember that colorblind people are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red--green colorblindness) or blue and green (blue-yellow colorblindness). The key to making a colorblind-friendly color scale is to (i) choose colors with different levels of brightness and saturation, and (ii) choose color combinations that tend to look dissimilar even if color vision is partially impaired.
 
-Throughout this book, I'm using the following color palette, which was developed to work well for all the major types of colorblindness:
+Throughout this book, I'm using the following color palette, which was developed to work well for all the major types of colorblindness [@Okabe-Ito-CUD]:
 ```{r fig.width=8.5, fig.asp=.14}
 # from: http://jfly.iam.u-tokyo.ac.jp/color/
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -24,7 +24,7 @@ palette_plot(cbPalette, label_size = 4)
 In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table \@ref(tab:color-codes).
 
 
-Table: (\#tab:color-codes) Colorblind-friendly color scale, developed by Masataka Okabe and Kei Ito. 
+Table: (\#tab:color-codes) Colorblind-friendly color scale, developed by @Okabe-Ito-CUD. 
 
 Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B (%)
 --------------  ------------ ------- ---------------- ----------------- ------------
