@@ -14,7 +14,9 @@ rmd_files: [
   #"bargraphs_logy.Rmd",
   "overlapping_points.Rmd",
 
-  "notes.Rmd"
+  "notes.Rmd",
+
+  "references.Rmd"
 ]
 
 before_chapter_script: "_common.R"

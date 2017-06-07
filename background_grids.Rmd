@@ -126,7 +126,7 @@ iris %>%
 stamp_good(plot_grid(NULL, iris_plot + theme_pf_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
 ```
 
-For figures where the relevant comparison is the $x=y$ line, I prefer to draw a diagonal line rather than a grid. For example, if we compare two sets of correlations, we can see immediately which correlations are systematically stronger (figure adapted from **Echave et al, need to add reference here**):
+For figures where the relevant comparison is the $x=y$ line, I prefer to draw a diagonal line rather than a grid. For example, consider the following figure, adapted from @Echave-et-al-2016, which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger:
 ```{r message=FALSE, warning=FALSE}
 cor_table = read_csv("datasets/Echave_et_al_2016_NRG_correlations.csv")
 nrg_plot <- ggplot(cor_table, aes(y=cor.RSA, x=-cor.WCN)) + 
