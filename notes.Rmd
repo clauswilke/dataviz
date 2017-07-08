@@ -20,3 +20,4 @@ Topics to cover eventually:
 Other notes and comments:
 
 - aspect ratio chapter needs to be completed
+- this looks like a useful resource: [dataviz catalogue](http://www.datavizcatalogue.com/about.html)
