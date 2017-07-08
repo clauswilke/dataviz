@@ -119,7 +119,7 @@ iris %>%
     scale_shape_manual(values=21:23) +
     scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73")) +
     xlab("sepal width") +
-    ylab("setal length") +
+    ylab("sep3al length") +
     scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
     scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
 
