@@ -13,6 +13,7 @@ rmd_files: [
   "colorblind.Rmd",
   #"bargraphs_logy.Rmd",
   "overlapping_points.Rmd",
+  "image_file_formats.Rmd",
 
   "notes.Rmd",
 

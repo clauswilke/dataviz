@@ -1,0 +1,27 @@
+# Understanding commonly used image file formats
+
+
+
+(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. 
+
+
+```{r iris-zoom, fig.cap='(ref:iris-zoom)'}
+knitr::include_graphics("figures/iris_zoom.png")
+```
+
+
+Commonly used image formats are listed in Table \@ref(tab:file-formats).
+
+
+Table: (\#tab:file-formats) Commonly used image file formats
+
+Acronym   Name                              Type         Application
+--------- --------------------------------- ------------ ------------------------
+pdf       Portable Document Format          vector       various
+eps       Encapsulated PostScript           vector       various
+svg       Scalable Vector Graphics          vector       various
+png       Portable Network Graphics         bitmap       line drawings
+jpeg      Joint Photographic Experts Group  bitmap       photographic images
+tiff      Tagged Image File Format          bitmap       line drawings or photographic images
+gif       Graphics Interchange Format       bitmap       photographic images, animations
+ 

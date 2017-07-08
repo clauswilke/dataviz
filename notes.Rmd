@@ -19,4 +19,4 @@ Topics to cover eventually:
 
 Other notes and comments:
 
-- background grids: add diagonal lines
+- aspect ratio chapter needs to be completed
