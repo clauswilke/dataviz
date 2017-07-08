@@ -1,6 +1,7 @@
 # Notes
 
 A few easy chapters to write soon:
+
 - visualizing paired data (use protein correlation data from Echave et al?)
 - visualizing distribution (use iris?)
 

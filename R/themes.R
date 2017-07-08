@@ -1,13 +1,13 @@
-theme_pf <- function(font_size = 14, font_family = ""){
+theme_dviz <- function(font_size = 14, font_family = ""){
   theme_cowplot(font_size = font_size, font_family = font_family)
 }
 
-theme_pf_half_open <- function(font_size = 14, font_family = ""){
+theme_dviz_half_open <- function(font_size = 14, font_family = ""){
   theme_cowplot(font_size = font_size, font_family = font_family)
 }
 
 # horizontal grid lines only
-theme_pf_hgrid <- function(font_size = 14, font_family = "") {
+theme_dviz_hgrid <- function(font_size = 14, font_family = "") {
   color = "grey90"
   line_size = 0.5
 
@@ -31,7 +31,7 @@ theme_pf_hgrid <- function(font_size = 14, font_family = "") {
 
 
 # vertical grid lines only
-theme_pf_vgrid <- function(font_size = 14, font_family = "") {
+theme_dviz_vgrid <- function(font_size = 14, font_family = "") {
   color = "grey90"
   line_size = 0.5
 
@@ -54,7 +54,7 @@ theme_pf_vgrid <- function(font_size = 14, font_family = "") {
 }
 
 # grid lines along major axis ticks, no axes
-theme_pf_grid <- function(font_size = 14, font_family = "") {
+theme_dviz_grid <- function(font_size = 14, font_family = "") {
   color = "grey90"
   line_size = 0.5
 

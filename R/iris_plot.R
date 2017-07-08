@@ -16,6 +16,6 @@ iris %>%
   scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
   scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
 
-p <- plot_grid(NULL, iris_plot + theme_pf_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04))
+p <- plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04))
 save_plot("../figures/iris.png", p, base_height=3.708, base_width=6, dpi=150)
 save_plot("../figures/iris.pdf", p, base_height=3.708, base_width=6)

@@ -10,7 +10,7 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_pf(19)
+   theme_dviz(19)
 stamp_ugly(p)
 ```
 I have labeled this figure "ugly" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
@@ -23,7 +23,7 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_pf(19)
+   theme_dviz(19)
 stamp_good(p2)
 ```
 
