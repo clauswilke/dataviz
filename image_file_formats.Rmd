@@ -1,6 +1,10 @@
 # Understanding commonly used image file formats
 
+Anybody who is making figures for data visualization will eventually have to know a few things about how figures are stored on the computer. There are many different image file formats, and each has its own set of benefits and disadvantages.
 
+My own preference is to use pdf for high-quality publication-ready files and generally whenever possible, png for online documents and other scenarios where bitmap graphics are required, and jpeg as the final resort if the png files are too large. In the following, I explain the factors that lead me to these choices.
+
+## Bitmap and vector graphics
 
 (ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. 
 
@@ -17,11 +21,24 @@ Table: (\#tab:file-formats) Commonly used image file formats
 
 Acronym   Name                              Type         Application
 --------- --------------------------------- ------------ ------------------------
-pdf       Portable Document Format          vector       various
-eps       Encapsulated PostScript           vector       various
-svg       Scalable Vector Graphics          vector       various
-png       Portable Network Graphics         bitmap       line drawings
-jpeg      Joint Photographic Experts Group  bitmap       photographic images
-tiff      Tagged Image File Format          bitmap       line drawings or photographic images
-gif       Graphics Interchange Format       bitmap       photographic images, animations
- 
+pdf       Portable Document Format          vector       general purpose
+eps       Encapsulated PostScript           vector       general purpose, outdated; use pdf
+svg       Scalable Vector Graphics          vector       online use
+png       Portable Network Graphics         bitmap       optimized for line drawings
+jpeg      Joint Photographic Experts Group  bitmap       optimized for photographic images
+tiff      Tagged Image File Format          bitmap       print production, accurate color reproduction
+raw       Raw Image File                    bitmap       digital photography, needs post-processing
+gif       Graphics Interchange Format       bitmap       outdated, do not use
+
+
+## Lossy and lossless bitmap graphics
+
+For example, in the widely-used RGB format, a black pixel can be represented by three zeroes in a row: 0 0 0. Now imagine an image with a black background, where large areas of the image are solid black and thus many black pixels appear right next to each other. You can imagine that storing this image information could require thousands of consecutive zeroes. If however, instead of writing out all the zeroes, we store the number of consecutive zeroes we need, then we have conveyed the exact same information with only two numbers, the count (e.g., 3000) and the value (here, 0). This is the key idea behind lossless compression of image data. We store the exact color of each individual pixel, but we do so in a space-efficient manner.
+
+## Image resolutions, dots per inch
+
+
+## Converting between image formats
+
+It is generally possible to convert any image format into any other image format. For example, on a Mac, you can open an image with Preview and then export to a number of different formats. In this process, though, important information can be lost, and information is never regained. For example, after saving a vector graphic into a bitmap format, e.g. a pdf file as a jpeg, the resolution independence that is a key feature of the vector graphic has been lost. Conversely, saving a jpeg image into a pdf file does not magically turn the image into a vector graphic. The image will still be a bitmap image, just stored inside the pdf file.
+
