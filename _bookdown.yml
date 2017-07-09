@@ -15,7 +15,7 @@ rmd_files: [
   "overlapping_points.Rmd",
   "image_file_formats.Rmd",
 
-  "notes.Rmd",
+  #"notes.Rmd",
 
   "references.Rmd"
 ]
