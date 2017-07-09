@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/professional_figures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction.html">
+<link rel="next" href="background-grids.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>1</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="2" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>2</b> Background grids</a></li>
+<li class="chapter" data-level="3" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>3</b> Choosing colorblind-friendly color scales</a></li>
+<li class="chapter" data-level="4" data-path="handling-overlapping-points.html"><a href="handling-overlapping-points.html"><i class="fa fa-check"></i><b>4</b> Handling overlapping points</a></li>
+<li class="chapter" data-level="5" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>5</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>5.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>5.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="5.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>5.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>6</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="small-axis-labels" class="section level1">
+<h1><span class="header-section-number">1</span> Your axis labels are too small</h1>
+<p>If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you’re almost certainly making a poor choice.</p>
+<p>For example, consider the following figure. I see figures like this all the time. <img src="small_axis_labels_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /> The axis labels, axis tick labels, and legend labels are all incredibly small. We can barely see them, and we may have to zoom into the page to distinguish FWD from RWD in the figure legend.</p>
+<p>A somewhat better version of this figure would be this one: <img src="small_axis_labels_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /> I think the fonts are still too small, and that’s why I have labeled it “ugly”. However, we are moving in the right direction, and this figure might be passable under some circumstances. My main criticism with this figure is not so much that the labels aren’t legible as that it is not balanced; the text elements are too small compared to the rest of the figure.</p>
+<p>The next figure uses the default settings I’m applying throughout this book. I think it is well balanced, the text is clearly visible, and it fits with the overall size of the figure. <img src="small_axis_labels_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Importantly, we can overdo it and make the labels too big: <img src="small_axis_labels_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /> Sometimes we need big labels, in particular if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In the above example, the points used to visualize the data are too small relative to the text. Once we fix this, the figure becomes acceptable again:</p>
+<p><img src="small_axis_labels_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /> You may look at this figure and find everything too big. However, keep in mind that it is meant to be scaled down. Scale it down so that it is only an inch or two in width, and the figure looks just fine. In fact, at that scaling this is the only figure in this chapter that looks good.</p>
+<p>I think there is a simple psychological reason for why we routinely make figures whose axis labels are too small, and it relates to large, high-resolution computer monitors. We routinely preview figures on the computer screen, and often we do so while the figure takes up a large amount of space on the screen. In this viewing mode, even comparatively small text seems perfectly fine and legible, and large text can seem awkward and overpowering. In fact, if you take the first figure from this chapter and magnify it to the point where it fills your entire screen, you will likely think that it looks just fine. The solution is to always make sure that you look at your figures at a realistic print size. You can either zoom out so they are only three to five inches in width on your screen, or you can go to the other side of your room and check whether the figure still looks good from a substantial distance.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="background-grids.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

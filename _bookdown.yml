@@ -21,3 +21,5 @@ rmd_files: [
 ]
 
 before_chapter_script: "_common.R"
+
+output_dir: "docs"

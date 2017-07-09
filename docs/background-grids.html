@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/professional_figures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="small-axis-labels.html">
+<link rel="next" href="choosing-colorblind-friendly-color-scales.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>1</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="2" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>2</b> Background grids</a></li>
+<li class="chapter" data-level="3" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>3</b> Choosing colorblind-friendly color scales</a></li>
+<li class="chapter" data-level="4" data-path="handling-overlapping-points.html"><a href="handling-overlapping-points.html"><i class="fa fa-check"></i><b>4</b> Handling overlapping points</a></li>
+<li class="chapter" data-level="5" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>5</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>5.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>5.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="5.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>5.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>6</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="background-grids" class="section level1">
+<h1><span class="header-section-number">2</span> Background grids</h1>
+<p>With the rising popularity of the R package ggplot2, which uses a gray background grid as default, graphs with this style have become widespread. With apologies to Hadley Wickham, for whom I have the utmost respect, I don’t find this style particularly attractive. In general, I find that the gray background detracts from the actual data. As an example, consider this figure, which shows the stock price of four major tech companies, indexed to their value in June 2012:</p>
+<p><img src="background_grids_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /> The grid is too busy, and the gray background in the legend is distracting.</p>
+<p>We could try to remove the grid altogether, but I think that is a worse option: <img src="background_grids_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /> Now the curves seem to just float in space, and it’s difficult to see where they go. In addition, since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at <span class="math inline">\(y=100\)</span>: <img src="background_grids_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Alternatively, we can use just a minimal grid. In particular, for a plot where we are primarily interested in the change in <span class="math inline">\(y\)</span> values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin. Thus, we arrive at this plot: <img src="background_grids_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Note that for such a minimal grid, we generally draw the lines orthogonally to direction along which the numbers of interest vary. Thus, if instead of plotting the stock price over time we plot the five-year increase, as horizontal bars, then we will want to use vertical lines instead: <img src="background_grids_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /> Note that in addition to the light vertical lines, I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values (like here, four), it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.</p>
+<p>Background grids along both axis directions can make sense for scatter plots where there is no primary axis of interest, in particular if you leave out the axis lines: <img src="background_grids_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>For figures where the relevant comparison is the <span class="math inline">\(x=y\)</span> line, I prefer to draw a diagonal line rather than a grid. For example, consider the following figure, adapted from <span class="citation">Echave, Spielman, and Wilke (<a href="#ref-Echave-et-al-2016">2016</a>)</span>, which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger: <img src="background_grids_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The same observation is much harder to make when the figure has a background grid instead. Thus, even though this figure looks pleasing, I label it as “bad”: <img src="background_grids_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Echave-et-al-2016">
+<p>Echave, J., S. J. Spielman, and C. O. Wilke. 2016. “Causes of Evolutionary Rate Variation Among Protein Sites.” <em>Nature Rev. Genet.</em> 17: 109–21.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="small-axis-labels.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="choosing-colorblind-friendly-color-scales.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

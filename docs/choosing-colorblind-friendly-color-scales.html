@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/professional_figures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="background-grids.html">
+<link rel="next" href="handling-overlapping-points.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>1</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="2" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>2</b> Background grids</a></li>
+<li class="chapter" data-level="3" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>3</b> Choosing colorblind-friendly color scales</a></li>
+<li class="chapter" data-level="4" data-path="handling-overlapping-points.html"><a href="handling-overlapping-points.html"><i class="fa fa-check"></i><b>4</b> Handling overlapping points</a></li>
+<li class="chapter" data-level="5" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>5</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>5.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>5.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="5.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>5.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>6</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="choosing-colorblind-friendly-color-scales" class="section level1">
+<h1><span class="header-section-number">3</span> Choosing colorblind-friendly color scales</h1>
+<p>When coloring elements in your figures, you need keep in mind that a good proportion of your readers may be colorblind and may not be able to distinguish the colors that look so clearly different to you. You could address this problem by preparing all figures in grayscale, but those figures would look drab and boring to everybody, even the colorblind. Alternatively, you can (and should) employ redundant coding, discussed in more detail in Chapter @ref{redundant-coding}. However, independent of whether or not you use redundant coding, you should consider using a color scale whose colors are distinguishable even for colorblind people.</p>
+<p>In choosing your color scale, remember that colorblind people are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red–green colorblindness) or blue and green (blue-yellow colorblindness). The key to making a colorblind-friendly color scale is to (i) choose colors with different levels of brightness and saturation, and (ii) choose color combinations that tend to look dissimilar even if color vision is partially impaired.</p>
+<p>Throughout this book, I’m using the following color palette, which was developed to work well for all the major types of colorblindness <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>: <img src="colorblind_files/figure-html/unnamed-chunk-2-1.png" width="816" style="display: block; margin: auto;" /> By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.</p>
+<p>A variant of the palette replaces black with gray, if you don’t like to see completely black visual elements: <img src="colorblind_files/figure-html/unnamed-chunk-3-1.png" width="816" style="display: block; margin: auto;" /></p>
+<p>In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table <a href="choosing-colorblind-friendly-color-scales.html#tab:color-codes">3.1</a>.</p>
+<table>
+<caption><span id="tab:color-codes">Table 3.1: </span> Colorblind-friendly color scale, developed by <span class="citation">Okabe and Ito (<a href="#ref-Okabe-Ito-CUD">2008</a>)</span>.</caption>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Hex code</th>
+<th align="left">Hue</th>
+<th align="left">C, M, Y, K (%)</th>
+<th align="left">R, G, B (0-255)</th>
+<th align="left">R, G, B (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">black</td>
+<td align="left">#000000</td>
+<td align="left">-</td>
+<td align="left">0, 0, 0, 100</td>
+<td align="left">0, 0, 0</td>
+<td align="left">0, 0, 0</td>
+</tr>
+<tr class="even">
+<td align="left">gray</td>
+<td align="left">#999999</td>
+<td align="left">-</td>
+<td align="left">0, 0, 0, 60</td>
+<td align="left">153, 153, 153</td>
+<td align="left">60, 60, 60</td>
+</tr>
+<tr class="odd">
+<td align="left">orange</td>
+<td align="left">#E69F00</td>
+<td align="left">41°</td>
+<td align="left">0, 50, 100, 0</td>
+<td align="left">230, 159, 0</td>
+<td align="left">90, 60, 0</td>
+</tr>
+<tr class="even">
+<td align="left">sky blue</td>
+<td align="left">#56B4E9</td>
+<td align="left">202°</td>
+<td align="left">80, 0, 0, 0</td>
+<td align="left">86, 180, 233</td>
+<td align="left">35, 70, 90</td>
+</tr>
+<tr class="odd">
+<td align="left">bluish green</td>
+<td align="left">#009E73</td>
+<td align="left">164°</td>
+<td align="left">97, 0, 75, 0</td>
+<td align="left">0, 158, 115</td>
+<td align="left">0, 60, 50</td>
+</tr>
+<tr class="even">
+<td align="left">yellow</td>
+<td align="left">#F0E442</td>
+<td align="left">56°</td>
+<td align="left">10, 5, 90, 0</td>
+<td align="left">240, 228, 66</td>
+<td align="left">95, 90, 25</td>
+</tr>
+<tr class="odd">
+<td align="left">blue</td>
+<td align="left">#0072B2</td>
+<td align="left">202°</td>
+<td align="left">100, 50, 0, 0</td>
+<td align="left">0, 114, 178</td>
+<td align="left">0, 45, 70</td>
+</tr>
+<tr class="even">
+<td align="left">vermilion</td>
+<td align="left">#D55E00</td>
+<td align="left">27°</td>
+<td align="left">0, 80, 100, 0</td>
+<td align="left">213, 94, 0</td>
+<td align="left">80, 40, 0</td>
+</tr>
+<tr class="odd">
+<td align="left">reddish purple</td>
+<td align="left">#CC79A7</td>
+<td align="left">326°</td>
+<td align="left">10, 70, 0, 0</td>
+<td align="left">204, 121, 167</td>
+<td align="left">80, 60, 70</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Okabe-Ito-CUD">
+<p>Okabe, M., and K. Ito. 2008. “Color Universal Design (CUD): How to Make Figures and Presentations That Are Friendly to Colorblind People.” <a href="http://jfly.iam.u-tokyo.ac.jp/color/" class="uri">http://jfly.iam.u-tokyo.ac.jp/color/</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="background-grids.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="handling-overlapping-points.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
