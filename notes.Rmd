@@ -22,3 +22,7 @@ Other notes and comments:
 
 - aspect ratio chapter needs to be completed
 - this looks like a useful resource: [dataviz catalogue](http://www.datavizcatalogue.com/about.html)
+
+Articles and blog posts with useful ideas:
+
+- https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f

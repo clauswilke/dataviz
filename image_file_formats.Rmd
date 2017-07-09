@@ -1,40 +1,12 @@
-```{r include=FALSE, cache=FALSE}
-set.seed(7654)
-options(digits = 3)
-
-knitr::opts_chunk$set(
-  echo = FALSE,
-  cache = FALSE,
-  fig.align = 'center',
-  fig.width = 6,
-  fig.asp = 0.618,  # 1 / phi
-  fig.show = "hold"
-)
-
-options(dplyr.print_min = 6, dplyr.print_max = 6)
-
-library(cowplot)
-
-source("R/misc.R")
-source("R/themes.R")
-```
 # Understanding the most commonly used image file formats
 
-Anybody who is making figures for data visualization will eventually have to know a few things about how figures are stored on the computer. There are many different image file formats, and each has its own set of benefits and disadvantages.
+Anybody who is making figures for data visualization will eventually have to know a few things about how figures are stored on the computer. There are many different image file formats, and each has its own set of benefits and disadvantages. Choosing the right file format and the right workflow can alleviate many figure-preparation headaches. 
 
-My own preference is to use pdf for high-quality publication-ready files and generally whenever possible, png for online documents and other scenarios where bitmap graphics are required, and jpeg as the final resort if the png files are too large. In the following, I explain the factors that lead me to these choices.
+My own preference is to use pdf for high-quality publication-ready files and generally whenever possible, png for online documents and other scenarios where bitmap graphics are required, and jpeg as the final resort if the png files are too large. In the following, I explain the key differences between these file formats and their respective benefits and drawbacks.
 
 ## Bitmap and vector graphics
 
-(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. 
-
-```{r iris-zoom, fig.cap='(ref:iris-zoom)'}
-knitr::include_graphics("figures/iris_zoom.png")
-```
-
-
-Commonly used image formats are listed in Table \@ref(tab:file-formats).
-
+The most important difference between the various graphics formats is whether they are bitmap or vector (Table \@ref(tab:file-formats)). Bitmaps or raster graphics store the image as a grid of individual points (called pixels), each with a specified color. By contrast, vector graphics store the geometric arrangement of individual graphical elements in the image. Thus, a vector image contains information such as "there's a black line from the top left corner to the bottom right corner, and a red line from the bottom left corner to the top right corner," and the actual image is recreated on the fly as it is displayed on screen or printed.
 
 Table: (\#tab:file-formats) Commonly used image file formats
 
@@ -49,6 +21,18 @@ tiff      Tagged Image File Format          bitmap       print production, accur
 raw       Raw Image File                    bitmap       digital photography, needs post-processing
 gif       Graphics Interchange Format       bitmap       outdated, do not use
 
+Vector graphics are also called "resolution-independent."
+
+
+
+(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. 
+
+```{r iris-zoom, fig.cap='(ref:iris-zoom)'}
+knitr::include_graphics("figures/iris_zoom.png")
+```
+
+
+*May want to mention that vector graphics have downsides, in that sometimes the interpretation of the same code differs among programs. Particularly a problem with fonts, and more frequently with svg than pdf.*
 
 ## Lossless and lossy compression of bitmap graphics
 
@@ -61,17 +45,16 @@ Photographic images rarely have multiple pixels of identical color and brightnes
 The most widely used lossy image format is jpeg (Table \@ref(tab:file-formats)), and indeed many digital cameras output images as jpeg by default. Jpeg compression works exceptionally well for photographic images, and huge reductions in file-size can often be obtained with very little degradation in image quality. However, jpeg compression fails when images contain sharp edges, such as created by line drawings or by text. In those cases, jpeg compression can result in very noticeable artifacts (Figure \@ref(fig:jpeg-example)). 
 
 
-(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times with increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10 results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to visible artifacts. (b) Zooming in to the most highly compressed image reveals numerous compression artifacts. *Image credit: Claus O. Wilke* 
+(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. *Image credit: Claus O. Wilke* 
 
 ```{r jpeg-example, fig.cap='(ref:jpeg-example)'}
 knitr::include_graphics("figures/jpeg_example_combined.jpg", dpi=600)
 ```
 
 
-## Image resolutions, dots per inch
-
-
 ## Converting between image formats
 
-It is generally possible to convert any image format into any other image format. For example, on a Mac, you can open an image with Preview and then export to a number of different formats. In this process, though, important information can be lost, and information is never regained. For example, after saving a vector graphic into a bitmap format, e.g. a pdf file as a jpeg, the resolution independence that is a key feature of the vector graphic has been lost. Conversely, saving a jpeg image into a pdf file does not magically turn the image into a vector graphic. The image will still be a bitmap image, just stored inside the pdf file.
+It is generally possible to convert any image format into any other image format. For example, on a Mac, you can open an image with Preview and then export to a number of different formats. In this process, though, important information can get lost, and information is never regained. For example, after saving a vector graphic into a bitmap format, e.g. a pdf file as a jpeg, the resolution independence that is a key feature of the vector graphic has been lost. Conversely, saving a jpeg image into a pdf file does not magically turn the image into a vector graphic. The image will still be a bitmap image, just stored inside the pdf file. Similarly, converting a jpeg file into a png file does not remove any artifacts that may have been introduced by the jpeg compression algorithm.
+
+It is therefore a good rule of thumb to always store the original image in the format that maintains maximum resolution, accuracy, and flexibility. Thus, for data visualizations, create your figure as pdf and then convert into png or jpg when necessary. Similarly, for images that are only available as bitmaps, such as digital photographs, store them in a format that doesn't use lossy compression, or if that can't be done, compress as little as possible. Also, store the image in as high a resolution as possible, and down-scale when needed.  
 
