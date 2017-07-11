@@ -32,7 +32,7 @@ knitr::include_graphics("figures/iris_zoom.png")
 ```
 
 
-*May want to mention that vector graphics have downsides, in that sometimes the interpretation of the same code differs among programs. Particularly a problem with fonts, and more frequently with svg than pdf. Also, rendering speed, and file size for large datasets. Reason why I don't use pdf in MS Office.*
+*May want to mention that vector graphics have downsides, in that sometimes the interpretation of the same code differs among programs. Particularly a problem with fonts, and more frequently with svg than pdf. Also, rendering speed, and file size for large datasets. Reason why I don't use pdf in MS Office. And eps doesn't do transparency.*
 
 ## Lossless and lossy compression of bitmap graphics
 
