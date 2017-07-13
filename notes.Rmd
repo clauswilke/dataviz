@@ -22,6 +22,7 @@ Other notes and comments:
 
 - aspect ratio chapter needs to be completed
 - this looks like a useful resource: [dataviz catalogue](http://www.datavizcatalogue.com/about.html)
+- the [viridis package](https://CRAN.R-project.org/package=viridis) has several great color scales
 
 Articles and blog posts with useful ideas:
 
