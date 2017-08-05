@@ -3,13 +3,14 @@
 
 
 
-*Some intro text here*
-
-<img src="redundant_coding_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
+*Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
 
 
-<img src="redundant_coding_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+
+
+
+
 
 
 

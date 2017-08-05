@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="background-grids.html">
-<link rel="next" href="redundant-coding.html">
+<link rel="prev" href="choosing-colorblind-friendly-color-scales.html">
+<link rel="next" href="handling-overlapping-points.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -95,115 +95,26 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="choosing-colorblind-friendly-color-scales" class="section level1">
-<h1><span class="header-section-number">3</span> Choosing colorblind-friendly color scales</h1>
-<p>When coloring elements in your figures, you need keep in mind that a good proportion of your readers may be colorblind and may not be able to distinguish the colors that look so clearly different to you. You could address this problem by preparing all figures in grayscale, but those figures would look drab and boring to everybody, even the colorblind. Alternatively, you can (and should) employ redundant coding, discussed in more detail in Chapter <a href="redundant-coding.html#redundant-coding">4</a>. However, independent of whether or not you use redundant coding, you should consider using a color scale whose colors are distinguishable even for colorblind people.</p>
-<p>In choosing your color scale, remember that colorblind people are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red–green colorblindness) or blue and green (blue-yellow colorblindness). The key to making a colorblind-friendly color scale is to (i) choose colors with different levels of brightness and saturation, and (ii) choose color combinations that tend to look dissimilar even if color vision is partially impaired.</p>
-<p>Throughout this book, I’m using the following color palette, which was developed to work well for all the major types of colorblindness <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>: <img src="colorblind_files/figure-html/unnamed-chunk-2-1.png" width="816" style="display: block; margin: auto;" /> By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.</p>
-<p>A variant of the palette replaces black with gray, if you don’t like to see completely black visual elements: <img src="colorblind_files/figure-html/unnamed-chunk-3-1.png" width="816" style="display: block; margin: auto;" /></p>
-<p>In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table <a href="choosing-colorblind-friendly-color-scales.html#tab:color-codes">3.1</a>.</p>
-<table>
-<caption><span id="tab:color-codes">Table 3.1: </span> Colorblind-friendly color scale, developed by <span class="citation">Okabe and Ito (<a href="#ref-Okabe-Ito-CUD">2008</a>)</span>.</caption>
-<thead>
-<tr class="header">
-<th align="left">Name</th>
-<th align="left">Hex code</th>
-<th align="left">Hue</th>
-<th align="left">C, M, Y, K (%)</th>
-<th align="left">R, G, B (0-255)</th>
-<th align="left">R, G, B (%)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">black</td>
-<td align="left">#000000</td>
-<td align="left">-</td>
-<td align="left">0, 0, 0, 100</td>
-<td align="left">0, 0, 0</td>
-<td align="left">0, 0, 0</td>
-</tr>
-<tr class="even">
-<td align="left">gray</td>
-<td align="left">#999999</td>
-<td align="left">-</td>
-<td align="left">0, 0, 0, 60</td>
-<td align="left">153, 153, 153</td>
-<td align="left">60, 60, 60</td>
-</tr>
-<tr class="odd">
-<td align="left">orange</td>
-<td align="left">#E69F00</td>
-<td align="left">41°</td>
-<td align="left">0, 50, 100, 0</td>
-<td align="left">230, 159, 0</td>
-<td align="left">90, 60, 0</td>
-</tr>
-<tr class="even">
-<td align="left">sky blue</td>
-<td align="left">#56B4E9</td>
-<td align="left">202°</td>
-<td align="left">80, 0, 0, 0</td>
-<td align="left">86, 180, 233</td>
-<td align="left">35, 70, 90</td>
-</tr>
-<tr class="odd">
-<td align="left">bluish green</td>
-<td align="left">#009E73</td>
-<td align="left">164°</td>
-<td align="left">97, 0, 75, 0</td>
-<td align="left">0, 158, 115</td>
-<td align="left">0, 60, 50</td>
-</tr>
-<tr class="even">
-<td align="left">yellow</td>
-<td align="left">#F0E442</td>
-<td align="left">56°</td>
-<td align="left">10, 5, 90, 0</td>
-<td align="left">240, 228, 66</td>
-<td align="left">95, 90, 25</td>
-</tr>
-<tr class="odd">
-<td align="left">blue</td>
-<td align="left">#0072B2</td>
-<td align="left">202°</td>
-<td align="left">100, 50, 0, 0</td>
-<td align="left">0, 114, 178</td>
-<td align="left">0, 45, 70</td>
-</tr>
-<tr class="even">
-<td align="left">vermilion</td>
-<td align="left">#D55E00</td>
-<td align="left">27°</td>
-<td align="left">0, 80, 100, 0</td>
-<td align="left">213, 94, 0</td>
-<td align="left">80, 40, 0</td>
-</tr>
-<tr class="odd">
-<td align="left">reddish purple</td>
-<td align="left">#CC79A7</td>
-<td align="left">326°</td>
-<td align="left">10, 70, 0, 0</td>
-<td align="left">204, 121, 167</td>
-<td align="left">80, 60, 70</td>
-</tr>
-</tbody>
-</table>
+<div id="redundant-coding" class="section level1">
+<h1><span class="header-section-number">4</span> Redundant coding</h1>
+<p><em>Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.</em></p>
+<p>Let’s consider this example, which demonstrates an very common visualization mistake.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The figure contains four lines, representing the stock prices of four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft inbetween, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of effort to match data lines with company names.</p>
+<p>This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R’s ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The general principle is this: <strong>Whenever possible, design your figures so they don’t need a legend.</strong></p>
 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Okabe-Ito-CUD">
-<p>Okabe, M., and K. Ito. 2008. “Color Universal Design (CUD): How to Make Figures and Presentations That Are Friendly to Colorblind People.” <a href="http://jfly.iam.u-tokyo.ac.jp/color/" class="uri">http://jfly.iam.u-tokyo.ac.jp/color/</a>.</p>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="background-grids.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="redundant-coding.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="choosing-colorblind-friendly-color-scales.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="handling-overlapping-points.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

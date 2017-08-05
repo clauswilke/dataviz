@@ -9,9 +9,9 @@ library(stringr)
 library(lubridate)
 ```
 
-*Some intro text here*
+*Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
-```{r}
+```{r message=FALSE, eval=FALSE}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
   ggplot(aes(x=Sepal.Width, y=Sepal.Length, fill=species)) + 
@@ -28,7 +28,7 @@ stamp_bad(plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_width
 
 
 
-```{r}
+```{r message=FALSE, eval=FALSE}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
   ggplot(aes(x=Sepal.Width, y=Sepal.Length, shape=species, fill=species)) + 
