@@ -1,4 +1,4 @@
-gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
+require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
     var $searchInput, $searchForm;
     var $highlighted, hi = 0, hiOpts = { className: 'search-highlight' };

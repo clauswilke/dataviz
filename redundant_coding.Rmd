@@ -1,0 +1,152 @@
+# Redundant coding {#redundant-coding}
+
+```{r message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(stringr)
+library(lubridate)
+```
+
+*Some intro text here*
+
+```{r}
+iris %>%
+  select(Sepal.Width, Sepal.Length, species=Species) %>%
+  ggplot(aes(x=Sepal.Width, y=Sepal.Length, fill=species)) + 
+    geom_point(color="black", size=2, shape=21) +
+    scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73")) +
+    xlab("sepal width") +
+    ylab("sepal length") +
+    scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
+
+stamp_bad(plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+```
+
+
+
+
+```{r}
+iris %>%
+  select(Sepal.Width, Sepal.Length, species=Species) %>%
+  ggplot(aes(x=Sepal.Width, y=Sepal.Length, shape=species, fill=species)) + 
+    geom_point(color="black", size=2) +
+    scale_shape_manual(values=c(22, 23, 21),
+                       breaks=c("virginica", "versicolor", "setosa")) +
+    scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73"),
+                       breaks=c("virginica", "versicolor", "setosa")) +
+    xlab("sepal width") +
+    ylab("sepal length") +
+    scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
+
+stamp_good(plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+```
+
+
+```{r message=FALSE, warning=FALSE}
+stocks <- data_frame(company = c("Alphabet", "Apple", "Facebook", "Microsoft"),
+                     ticker = c("GOOG", "AAPL", "FB", "MSFT"))
+
+data_path <- "datasets" # path to the individual datasets
+
+# read in all at once
+prices <- stocks %>%
+  mutate(filename = paste(str_to_lower(ticker), ".csv", sep="")) %>%
+  mutate(file_contents = map(filename,
+                             ~ read_csv(file.path(data_path, .), col_types = "cdddd-")
+                             )
+         ) %>%
+  select(-filename) %>%
+  unnest() %>%
+  mutate(date=dmy(Date), price=Close) %>%
+  select(company, ticker, date, price)
+
+index_prices <- prices %>%
+  filter(date == ymd("2012-06-01")) %>%
+  select(-company, -date, index_price = price)
+
+prices <- left_join(prices, index_prices) %>%
+  group_by(ticker) %>%
+  mutate(price_indexed = price/index_price*100)
+```
+
+
+Let's consider this example, which demonstrates an very common visualization mistake.
+
+```{r message=FALSE, warning=FALSE}
+price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+  geom_line() +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name="",
+                     breaks=c("GOOG", "AAPL", "FB", "MSFT"),
+                     labels=c("Alphabet", "Apple", "Facebook", "Microsoft")) +
+  scale_x_date(name="year",
+               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price, indexed",
+                     limits = c(0, 560),
+                     expand=c(0,0)) +
+  theme_dviz_hgrid()
+
+
+stamp_bad(price_plot)
+```
+
+The figure contains four lines, representing the stock prices of four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft inbetween, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of effort to match data lines with company names.
+
+This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R's ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.
+
+```{r message=FALSE, warning=FALSE}
+price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+  geom_line() +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name="",
+                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
+                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
+  scale_x_date(name="year",
+               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price, indexed",
+                     limits = c(0, 560),
+                     expand=c(0,0)) +
+  theme_dviz_hgrid()
+
+
+stamp_good(price_plot)
+```
+
+While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.
+
+```{r message=FALSE, warning=FALSE}
+price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+  geom_line() +
+  geom_rect(data = data.frame(xmin = ymd("2017-06-03"), xmax = ymd("2019-01-01"), ymin = -1, ymax = 520),
+            aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+            inherit.aes=FALSE, fill="white") +
+  geom_text(data = filter(prices, date == "2017-06-02"),
+            aes(label = company), hjust = 0, nudge_x = 20, color = "black",
+            size = 12/ggplot2::.pt) +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name="",
+                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
+                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
+  scale_x_date(name="year",
+               limits=c(ymd("2012-06-01"), ymd("2019-01-01")),
+               breaks=c(ymd("2013-01-01"), ymd("2014-01-01"), ymd("2015-01-01"), ymd("2016-01-01"),
+                        ymd("2017-01-01")),
+               labels=c(2013:2017),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price, indexed",
+                     limits = c(-1, 580),
+                     expand=c(0, 0)) +
+  guides(label = "none", color = "none") +
+  theme_dviz_hgrid() + theme(axis.line.x = element_blank(), axis.title.x = element_text(hjust = 0.37))
+
+
+stamp_good(price_plot)
+```
+
+The general principle is this: **Whenever possible, design your figures so they don't need a legend.**

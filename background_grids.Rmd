@@ -47,6 +47,7 @@ price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
                limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
                expand=c(0,0)) + 
   scale_y_continuous(name="stock price, indexed",
+                     limits = c(0, 560),
                      expand=c(0,0))
 
 stamp_ugly(price_plot + theme_gray(12))
@@ -70,6 +71,7 @@ price_plot2 <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
                limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
                expand=c(0,0)) + 
   scale_y_continuous(name="stock price, indexed",
+                     limits = c(0, 560),
                      expand=c(0,0)) +
   theme_dviz_half_open()
 
@@ -119,7 +121,7 @@ iris %>%
     scale_shape_manual(values=21:23) +
     scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73")) +
     xlab("sepal width") +
-    ylab("sep3al length") +
+    ylab("sepal length") +
     scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
     scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
 

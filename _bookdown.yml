@@ -11,6 +11,7 @@ rmd_files: [
   #"aspect_ratio.Rmd",
 
   "colorblind.Rmd",
+  "redundant_coding.Rmd",
   #"bargraphs_logy.Rmd",
   "overlapping_points.Rmd",
   "image_file_formats.Rmd",

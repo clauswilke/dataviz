@@ -7,7 +7,6 @@ A few easy chapters to write soon:
 
 Topics to cover eventually:
 
-- bitmaps vs vector graphics
 - pie charts
 - multi-part plots
 - scatter plots of dense point clouds, chapter is partially started

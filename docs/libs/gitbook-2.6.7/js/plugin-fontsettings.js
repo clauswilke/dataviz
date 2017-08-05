@@ -1,4 +1,4 @@
-gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
+require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var fontState;
 
     var THEMES = {

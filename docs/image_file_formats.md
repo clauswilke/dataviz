@@ -22,19 +22,19 @@ tiff      Tagged Image File Format          bitmap       print production, accur
 raw       Raw Image File                    bitmap       digital photography, needs post-processing
 gif       Graphics Interchange Format       bitmap       outdated, do not use
 
-Vector graphics are also called "resolution-independent."
+Vector graphics are also called "resolution-independent," because they can be magnified to arbitrary size without losing detail or sharpness. See Figure \@ref(fig:iris-zoom) for a demonstration.
 
 
-
-(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. 
+(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square around the number seven indicates the area we're magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated and blurry as we zoom in further. (c) As part (b), but now for a vector representatin of the image. The image maintains perfect sharpness at arbitrary magnification levels.
 
 <div class="figure" style="text-align: center">
 <img src="figures/iris_zoom.png" alt="(ref:iris-zoom)" width="2430" />
 <p class="caption">(\#fig:iris-zoom)(ref:iris-zoom)</p>
 </div>
 
+Vector graphics have two down-sides that can and often do cause trouble in real-world applications. First, because vector graphics are redrawn on the fly by the graphics program with which they are displayed, it can happen that there are differences in how the same graphic looks in two different programs, or on two different computers. This problem occurs most frequently with text, for example when the required font is not available and the rendering software substitutes a different font. Font substitutions will typically allow the viewer to read the text as intended, but the resulting image rarely looks good. There are ways to avoid these problems, such as outlining or embedding all fonts in a pdf file, but they may require special software and/or special technical knowledge to achieve. By contrast, bitmap images will always look correct.
 
-*May want to mention that vector graphics have downsides, in that sometimes the interpretation of the same code differs among programs. Particularly a problem with fonts, and more frequently with svg than pdf.*
+Second, for very large and/or complex figures, vector graphics can grow to enourmous file sizes and be slow to render. For example, a scatter plot of millions of data points will contain the x and y coordinates of every individual point, and each point needs to be drawn when the image is rendered, even if points overlap and/or are hidden by other graphical elements. As a consequence, the file may be many megabytes in size, and it may take the rendering software some time to display the figure. When I was a postdoc in the early 2000s, I once created a pdf file that at the time took almost an hour to display in the Acrobat reader. While modern computers are much faster and rendering times of many minutes are all but unheard of these days, even a rendering time of a few seconds can be disruptive if you want to embed your figure into a larger document and your pdf reader grinds to a halt every time you display the page with that one offending figure. Of course, on the flip side, simple figures with only a small number of elements (a few data points and some text, say) will often be much smaller as vector graphics than as bitmaps, and the viewing software may even render such figures faster than it would the corresponding bitmap images.
 
 ## Lossless and lossy compression of bitmap graphics
 
@@ -50,7 +50,7 @@ The most widely used lossy image format is jpeg (Table \@ref(tab:file-formats)),
 (ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. *Image credit: Claus O. Wilke* 
 
 <div class="figure" style="text-align: center">
-<img src="figures/jpeg_example_combined.jpg" alt="(ref:jpeg-example)" width="806" />
+<img src="figures/jpeg_example_combined.jpg" alt="(ref:jpeg-example)"  />
 <p class="caption">(\#fig:jpeg-example)(ref:jpeg-example)</p>
 </div>
 
