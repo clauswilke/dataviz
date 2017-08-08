@@ -136,7 +136,7 @@ stamp_good(price_plot_ann)
 ```
 
 ```{block type='rmdtip', echo=TRUE}
-Tip: Whenever possible, design your figures so they don't need a legend.
+Whenever possible, design your figures so they don't need a legend.
 ```
 
 I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.

@@ -32,7 +32,7 @@ While the above figure is a major improvement, we can still do better. Even with
 <img src="redundant_coding_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
 
 <div class="rmdtip">
-<p>Tip: Whenever possible, design your figures so they don't need a legend.</p>
+<p>Whenever possible, design your figures so they don't need a legend.</p>
 </div>
 
 I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.
