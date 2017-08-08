@@ -1,4 +1,4 @@
-# Handling overlapping points
+# Handling overlapping points {#overlapping-points}
 
 Let's revisit this figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
 ```{r}

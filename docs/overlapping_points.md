@@ -1,5 +1,5 @@
 
-# Handling overlapping points
+# Handling overlapping points {#overlapping-points}
 
 Let's revisit this figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
 <img src="overlapping_points_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" />

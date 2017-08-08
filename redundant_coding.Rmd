@@ -7,43 +7,47 @@ library(tidyr)
 library(purrr)
 library(stringr)
 library(lubridate)
+library(ggjoy)
+library(viridis)
 ```
 
 *Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
-```{r message=FALSE, eval=FALSE}
+```{r message=FALSE}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x=Sepal.Width, y=Sepal.Length, fill=species)) + 
-    geom_point(color="black", size=2, shape=21) +
-    scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73")) +
-    xlab("sepal width") +
-    ylab("sepal length") +
-    scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
-    scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
-
-stamp_bad(plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
-```
-
-
-
-
-```{r message=FALSE, eval=FALSE}
-iris %>%
-  select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x=Sepal.Width, y=Sepal.Length, shape=species, fill=species)) + 
-    geom_point(color="black", size=2) +
-    scale_shape_manual(values=c(22, 23, 21),
-                       breaks=c("virginica", "versicolor", "setosa")) +
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width, fill=species)) + 
+    geom_point(color="black", size=2.5, shape=21) +
     scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73"),
-                       breaks=c("virginica", "versicolor", "setosa")) +
-    xlab("sepal width") +
-    ylab("sepal length") +
-    scale_x_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) +
-    scale_y_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) -> iris_plot
+                      breaks=c("setosa", "virginica", "versicolor")) +
+    xlab("sepal length") +
+    ylab("sepal width") +
+    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter
 
-stamp_good(plot_grid(NULL, iris_plot + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_bad(plot_grid(NULL, iris_scatter + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
 ```
+
+There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
+
+```{r message=FALSE}
+iris %>%
+  select(Sepal.Width, Sepal.Length, species=Species) %>%
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width, shape=species, fill=species)) + 
+    geom_point(color="black", size=2.5) +
+    scale_shape_manual(values=c(21, 22, 23),
+                       breaks=c("setosa", "virginica", "versicolor")) +
+    scale_fill_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
+                       breaks=c("setosa", "virginica", "versicolor")) +
+    xlab("sepal length") +
+    ylab("sepal width") +
+    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter2
+
+stamp_good(plot_grid(NULL, iris_scatter2 + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+```
+
+Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -74,7 +78,7 @@ prices <- left_join(prices, index_prices) %>%
 ```
 
 
-Let's consider this example, which demonstrates an very common visualization mistake.
+Let's consider another example that also demonstrates a very common visualization mistake.
 
 ```{r message=FALSE, warning=FALSE}
 price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
@@ -121,32 +125,128 @@ stamp_good(price_plot)
 While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.
 
 ```{r message=FALSE, warning=FALSE}
-price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
-  geom_line() +
-  geom_rect(data = data.frame(xmin = ymd("2017-06-03"), xmax = ymd("2019-01-01"), ymin = -1, ymax = 520),
-            aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-            inherit.aes=FALSE, fill="white") +
+yann <- axis_canvas(price_plot, axis = "y") +
   geom_text(data = filter(prices, date == "2017-06-02"),
-            aes(label = company), hjust = 0, nudge_x = 20, color = "black",
-            size = 12/ggplot2::.pt) +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
-                     name="",
-                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
-                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
-  scale_x_date(name="year",
-               limits=c(ymd("2012-06-01"), ymd("2019-01-01")),
-               breaks=c(ymd("2013-01-01"), ymd("2014-01-01"), ymd("2015-01-01"), ymd("2016-01-01"),
-                        ymd("2017-01-01")),
-               labels=c(2013:2017),
-               expand=c(0,0)) + 
-  scale_y_continuous(name="stock price, indexed",
-                     limits = c(-1, 580),
-                     expand=c(0, 0)) +
-  guides(label = "none", color = "none") +
-  theme_dviz_hgrid() + theme(axis.line.x = element_blank(), axis.title.x = element_text(hjust = 0.37))
+            aes(y = price_indexed, label = paste0(" ", company)),
+            x = 0, hjust = 0, size = 12/.pt)
 
-
-stamp_good(price_plot)
+price_plot_ann <- insert_yaxis_grob(price_plot + theme(legend.position = "none"), yann,
+                                    width = grid::unit(0.3, "null"))
+stamp_good(price_plot_ann)
 ```
 
-The general principle is this: **Whenever possible, design your figures so they don't need a legend.**
+```{block type='rmdtip', echo=TRUE}
+Tip: Whenever possible, design your figures so they don't need a legend.
+```
+
+I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.
+```{r message=FALSE, warning=FALSE}
+# compute densities for sepal lengths
+iris_dens <- group_by(iris, Species) %>%
+  do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
+  rename(Sepal.Length = x)
+
+# get the maximum values
+iris_max <- filter(iris_dens, density == max(density)) %>%
+  ungroup() %>%
+  mutate(hjust = c(0, 0.4, 0),
+         vjust = c(1, 0, 1),
+         nudge_x = c(0.11, 0, 0.2),
+         nudge_y = c(-0.02, 0.02, -0.02) 
+        )
+
+iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
+  geom_density(stat = "identity", alpha = 0.7) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
+  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+  
+stamp_good(plot_grid(iris_p, NULL, rel_widths = c(8, 1)))
+```
+
+Second, we can also combine this concept with the scatter plot from the beginning of this chapter to avoid a legend in that plot.
+
+```{r message=FALSE, warning=FALSE, fig.asp=0.75}
+# compute densities for sepal lengths
+iris_dens2 <- group_by(iris, Species) %>%
+  do(ggplot2:::compute_density(.$Sepal.Width, NULL)) %>%
+  rename(Sepal.Width = x)
+
+# we need different hjust and nudge values here
+iris_max <- mutate(iris_max,
+         hjust = c(1, 0.4, 0),
+         vjust = c(1, 0, 1),
+         nudge_x = c(-0.18, 0, 0.43),
+         nudge_y = c(-0.02, 0.05, -0.02) 
+        )
+
+
+xdens <- axis_canvas(iris_scatter2, axis = "x") +
+  geom_ridgeline(data=iris_dens, aes(x=Sepal.Length, y=0, height=density, fill=Species),
+                 alpha=0.7, size=.2) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none")
+
+ydens <- axis_canvas(iris_scatter2, axis = "y") +
+  geom_vridgeline(data=iris_dens2, aes(y=Sepal.Width, x=0, width=density, fill=Species),
+                 alpha=0.7, size=.2)  +
+  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none")
+
+p1 <- insert_xaxis_grob(iris_scatter2 + theme_dviz_grid() + 
+                          theme(legend.position = "none"),
+                        xdens, grid::unit(.2, "null"), position = "top")
+p2 <- insert_yaxis_grob(p1, ydens, grid::unit(.15, "null"), position = "right")
+stamp_good(plot_grid(p2, NULL, rel_widths = c(8, 1)))
+```
+
+
+And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.
+
+```{r message=FALSE, warning=FALSE, fig.asp=0.75}
+bandwidth <- 3.4
+
+lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
+  geom_joy_gradient(scale = 3, rel_min_height = 0.001, bandwidth = bandwidth) +
+  scale_x_continuous(expand = c(0.01, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
+  scale_y_discrete(expand = c(0.01, 0.3)) +
+  scale_fill_viridis(name = "Temp. [F]", option = "C") +
+  labs(title = 'Temperatures in Lincoln NE',
+       subtitle = 'Mean temperatures (Fahrenheit) by month for 2016') +
+  guides(fill = "none") +
+  theme_joy(font_size = 13, grid = TRUE) +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_text(hjust = 1, vjust = 1),
+        axis.line.x = element_blank())
+
+# x axis labels
+temps <- data.frame(temp = c(0, 25, 50, 75))
+
+# calculate corrected color ranges
+# stat_joy uses the +/- 3*bandwidth calculation internally
+tmin <- min(lincoln_weather$`Mean Temperature [F]`) - 3*bandwidth
+tmax <- max(lincoln_weather$`Mean Temperature [F]`) + 3*bandwidth
+
+xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
+  geom_ridgeline_gradient(data = data.frame(temp = seq(tmin, tmax, length.out = 100)),
+                          aes(x = temp, y = 1.1, height = .9, fill = temp),
+                          color = "transparent") +
+  geom_text(data = temps, aes(x = temp, label = temp),
+            color = "black",
+            y = 0.9, hjust = 0.5, vjust = 1, size = 14/.pt) +
+  scale_fill_viridis(option = "C")
+
+lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
+stamp_good(plot_grid(lincoln_final, NULL, rel_widths = c(8, 1)))
+```

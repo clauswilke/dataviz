@@ -5,18 +5,19 @@
 
 *Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
+<img src="redundant_coding_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
+
+There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
+
+<img src="redundant_coding_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+
+Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
 
 
 
 
 
-
-
-
-
-
-
-Let's consider this example, which demonstrates an very common visualization mistake.
+Let's consider another example that also demonstrates a very common visualization mistake.
 
 <img src="redundant_coding_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
 
@@ -30,4 +31,18 @@ While the above figure is a major improvement, we can still do better. Even with
 
 <img src="redundant_coding_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
 
-The general principle is this: **Whenever possible, design your figures so they don't need a legend.**
+<div class="rmdtip">
+<p>Tip: Whenever possible, design your figures so they don't need a legend.</p>
+</div>
+
+I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.
+<img src="redundant_coding_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
+
+Second, we can also combine this concept with the scatter plot from the beginning of this chapter to avoid a legend in that plot.
+
+<img src="redundant_coding_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" />
+
+
+And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.
+
+<img src="redundant_coding_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />

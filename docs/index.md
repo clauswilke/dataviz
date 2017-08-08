@@ -8,8 +8,6 @@ site: bookdown::bookdown_site
 bibliography: "bibliography.bib"
 biblio-style: "apalike"
 link-citations: true
-output:
-  bookdown::gitbook: default
 ---
 
 # Preface {-}
