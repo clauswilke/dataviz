@@ -2,7 +2,7 @@
 title: "Fundamentals of data visualization"
 author: "Claus O. Wilke"
 description: "A guide for making figures that look professional and are publication-ready."
-github-repo: clauswilke/professional_figures
+github-repo: clauswilke/dataviz
 site: bookdown::bookdown_site
 bibliography: "bibliography.bib"
 biblio-style: "apalike"

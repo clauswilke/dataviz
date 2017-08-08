@@ -3,18 +3,17 @@
 A few easy chapters to write soon:
 
 - visualizing paired data (use protein correlation data from Echave et al?)
-- visualizing distribution (use iris?)
+- solid colors vs. outlines
 
 Topics to cover eventually:
 
 - pie charts
 - multi-part plots
 - scatter plots of dense point clouds, chapter is partially started
-- histograms and density plots
-- solid colors vs. outlines
+- visualizing distributions 1: histograms and density plots
+- visualizing distributions 2: boxplots, violins, and more
 - choice of plot libraries
 - avoid boxes and frames around parts of the plot
-- redundant coding (to help color-blind people, and generally), labeling vs legends
 - don't go 3d
 
 Other notes and comments:
