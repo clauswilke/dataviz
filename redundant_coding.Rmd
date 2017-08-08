@@ -189,7 +189,7 @@ iris_max <- mutate(iris_max,
 
 xdens <- axis_canvas(iris_scatter2, axis = "x") +
   geom_ridgeline(data=iris_dens, aes(x=Sepal.Length, y=0, height=density, fill=Species),
-                 alpha=0.7, size=.2) +
+                 alpha=0.5, size=.2) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y), size = 12/.pt) +
@@ -199,7 +199,7 @@ xdens <- axis_canvas(iris_scatter2, axis = "x") +
 
 ydens <- axis_canvas(iris_scatter2, axis = "y") +
   geom_vridgeline(data=iris_dens2, aes(y=Sepal.Width, x=0, width=density, fill=Species),
-                 alpha=0.7, size=.2)  +
+                 alpha=0.5, size=.2)  +
   scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none")
