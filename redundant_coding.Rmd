@@ -50,6 +50,38 @@ stamp_good(plot_grid(NULL, iris_scatter2 + theme_dviz_grid(), NULL, nrow=1, rel_
 Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
 
 
+```{r message=FALSE}
+label_df <- data.frame(species = c("setosa", "virginica", "versicolor"),
+                     Sepal.Width = c(4.2, 3.76, 2.08),
+                     Sepal.Length = c(5.7, 7, 5.1),
+                     hjust = c(0, 0.5, 0),
+                     vjust = c(0, 0.5, 1))
+
+iris %>%
+  select(Sepal.Width, Sepal.Length, species=Species) %>%
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width, shape=species, fill=species)) + 
+    geom_point(color="black", size = 2.5) +
+    stat_ellipse(aes(color=species),
+                 size = 0.5) +
+    geom_text(data = label_df,
+              aes(label = species, color = species, hjust = hjust, vjust = vjust),
+              size = 14/.pt) +
+    scale_shape_manual(values=c(21, 22, 23),
+                       breaks=c("setosa", "virginica", "versicolor")) +
+    scale_fill_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
+                       breaks=c("setosa", "virginica", "versicolor")) +
+    scale_color_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
+                       breaks=c("setosa", "virginica", "versicolor")) +
+    xlab("sepal length") +
+    ylab("sepal width") +
+    guides(fill = "none", color = "none", shape = "none") +
+    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
+    scale_y_continuous(limits=c(1.8, 4.6), expand=c(0, 0)) -> iris_scatter3
+
+stamp_good(plot_grid(NULL, iris_scatter3 + theme_dviz(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
+```
+
+
 ```{r message=FALSE, warning=FALSE}
 stocks <- data_frame(company = c("Alphabet", "Apple", "Facebook", "Microsoft"),
                      ticker = c("GOOG", "AAPL", "FB", "MSFT"))
@@ -75,6 +107,12 @@ index_prices <- prices %>%
 prices <- left_join(prices, index_prices) %>%
   group_by(ticker) %>%
   mutate(price_indexed = price/index_price*100)
+```
+
+I have removed the background grid from this figure because otherwise the figure was becoming too busy.
+
+```{block type='rmdtip', echo=TRUE}
+Whenever possible, design your figures so they don't need a legend.
 ```
 
 
@@ -133,10 +171,6 @@ yann <- axis_canvas(price_plot, axis = "y") +
 price_plot_ann <- insert_yaxis_grob(price_plot + theme(legend.position = "none"), yann,
                                     width = grid::unit(0.3, "null"))
 stamp_good(price_plot_ann)
-```
-
-```{block type='rmdtip', echo=TRUE}
-Whenever possible, design your figures so they don't need a legend.
 ```
 
 I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.

@@ -66,21 +66,13 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="1" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>1</b> Your axis labels are too small</a></li>
 <li class="chapter" data-level="2" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>2</b> Background grids</a></li>
 <li class="chapter" data-level="3" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>3</b> Choosing colorblind-friendly color scales</a></li>
 <li class="chapter" data-level="4" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>4</b> Redundant coding</a></li>
 <li class="chapter" data-level="5" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>5</b> Handling overlapping points</a></li>
-<li class="chapter" data-level="6" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>6</b> Understanding the most commonly used image file formats</a><ul>
-<li class="chapter" data-level="6.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>6.1</b> Bitmap and vector graphics</a></li>
-<li class="chapter" data-level="6.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>6.2</b> Lossless and lossy compression of bitmap graphics</a></li>
-<li class="chapter" data-level="6.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>6.3</b> Converting between image formats</a></li>
-</ul></li>
+<li class="chapter" data-level="6" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>6</b> Understanding the most commonly used image file formats</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -109,23 +101,24 @@
 <p>There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.</p>
 <p><img src="redundant_coding_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter <a href="overlapping-points.html#overlapping-points">5</a>.</p>
-<p>Let’s consider another example that also demonstrates a very common visualization mistake.</p>
-<p><img src="redundant_coding_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>The figure contains four lines, representing the stock prices of four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft inbetween, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of effort to match data lines with company names.</p>
-<p>This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R’s ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.</p>
-<p><img src="redundant_coding_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.</p>
-<p><img src="redundant_coding_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
 <div class="rmdtip">
 <p>
 Whenever possible, design your figures so they don’t need a legend.
 </p>
 </div>
-<p>I’ll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend. <img src="redundant_coding_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Let’s consider another example that also demonstrates a very common visualization mistake.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The figure contains four lines, representing the stock prices of four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft inbetween, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of effort to match data lines with company names.</p>
+<p>This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R’s ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>I’ll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend. <img src="redundant_coding_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>Second, we can also combine this concept with the scatter plot from the beginning of this chapter to avoid a legend in that plot.</p>
-<p><img src="redundant_coding_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.</p>
 <p><img src="redundant_coding_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.</p>
+<p><img src="redundant_coding_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 
 </div>
             </section>
@@ -174,17 +167,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
