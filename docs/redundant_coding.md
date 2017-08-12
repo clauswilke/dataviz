@@ -19,6 +19,8 @@ Notice how it has become easier to distinguish virginica and versicolor. Also, n
 
 
 
+I have removed the background grid from this figure because otherwise the figure was becoming too busy.
+
 <div class="rmdtip">
 <p>Whenever possible, design your figures so they don't need a legend.</p>
 </div>

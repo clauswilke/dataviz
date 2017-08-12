@@ -18,8 +18,9 @@ Topics to cover eventually:
 
 Other notes and comments:
 
+- need a clear system of stamping figures while keeping some spacing. current system is ad-hoc and inconsistent. This touches all chapters already written.
 - aspect ratio chapter needs to be completed
-- in the colorblind package, add color simulations using the dichromat R package
+- in the colorblind package, add color simulations using the dichromat R package?
 - this looks like a useful resource: [dataviz catalogue](http://www.datavizcatalogue.com/about.html)
 - the [viridis package](https://CRAN.R-project.org/package=viridis) has several great color scales
 
