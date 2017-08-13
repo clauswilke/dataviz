@@ -27,3 +27,6 @@ Other notes and comments:
 Articles and blog posts with useful ideas:
 
 - https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f
+
+Datasets to use:
+- midwest

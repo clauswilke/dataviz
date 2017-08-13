@@ -4,6 +4,7 @@
 library(dplyr)
 library(forcats)
 library(ggjoy)
+library(ggforce)
 library(viridis)
 
 lincoln_weather %>% mutate(month_short = fct_recode(Month,
@@ -24,15 +25,15 @@ lincoln_weather %>% mutate(month_short = fct_recode(Month,
 
 ```{r points-errorbars, message=FALSE, warning=FALSE}
 lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + sd(x)},
-               fun.ymin = function(x) {mean(x) - sd(x)}, geom = "pointrange",
+  stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
+               fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
                fatten = 5) +
   xlab("Month")
 
 stamp_bad(lincoln_errbar)
 ```
 
-There are multiple problems with points plus errorbars. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, and most importantly, it's definitely not clear what the errorbars represent. There is no standard.
+There are multiple problems with points plus errorbars. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
 
 ```{r boxplots, message=FALSE, warning=FALSE}
@@ -48,4 +49,18 @@ lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   geom_violin(fill = 'grey90') + xlab("Month")
 
 stamp_good(lincoln_violin)
+```
+
+```{r jittered-points, message=FALSE, warning=FALSE}
+lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_jitter(width = .25) + xlab("Month")
+
+stamp_good(lincoln_jitter)
+```
+
+```{r sina-plots, message=FALSE, warning=FALSE}
+lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_violin(color = "transparent", fill = "gray90") + stat_sina(bins = 7, method = "counts") + xlab("Month")
+
+stamp_good(lincoln_sina)
 ```
