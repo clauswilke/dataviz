@@ -16,6 +16,8 @@ rmd_files: [
   "overlapping_points.Rmd",
   "image_file_formats.Rmd",
 
+  "boxplots_violins.Rmd",
+
   #"notes.Rmd",
 
   "references.Rmd"

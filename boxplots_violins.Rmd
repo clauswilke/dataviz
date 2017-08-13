@@ -1,0 +1,51 @@
+# Boxplots, violin plots, and more
+
+```{r message=FALSE}
+library(dplyr)
+library(forcats)
+library(ggjoy)
+library(viridis)
+
+lincoln_weather %>% mutate(month_short = fct_recode(Month,
+                                                    Jan = "January",
+                                                    Feb = "February",
+                                                    Mar = "March",
+                                                    Apr = "April",
+                                                    May = "May",
+                                                    Jun = "June",
+                                                    Jul = "July",
+                                                    Aug = "August",
+                                                    Sep = "September",
+                                                    Oct = "October",
+                                                    Nov = "November",
+                                                    Dec = "December")) %>%
+  mutate(month_short = fct_rev(month_short)) -> lincoln_df
+```
+
+```{r points-errorbars, message=FALSE, warning=FALSE}
+lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + sd(x)},
+               fun.ymin = function(x) {mean(x) - sd(x)}, geom = "pointrange",
+               fatten = 5) +
+  xlab("Month")
+
+stamp_bad(lincoln_errbar)
+```
+
+There are multiple problems with points plus errorbars. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, and most importantly, it's definitely not clear what the errorbars represent. There is no standard.
+
+
+```{r boxplots, message=FALSE, warning=FALSE}
+lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_boxplot(fill = 'grey90') + xlab("Month")
+
+
+stamp_good(lincoln_box)
+```
+
+```{r violin-plots, message=FALSE, warning=FALSE}
+lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_violin(fill = 'grey90') + xlab("Month")
+
+stamp_good(lincoln_violin)
+```

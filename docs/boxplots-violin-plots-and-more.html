@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="introduction.html">
-<link rel="next" href="background-grids.html">
+<link rel="prev" href="understanding-the-most-commonly-used-image-file-formats.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -73,6 +73,7 @@
 <li class="chapter" data-level="4" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>4</b> Redundant coding</a></li>
 <li class="chapter" data-level="5" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>5</b> Handling overlapping points</a></li>
 <li class="chapter" data-level="6" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>6</b> Understanding the most commonly used image file formats</a></li>
+<li class="chapter" data-level="7" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>7</b> Boxplots, violin plots, and more</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -94,20 +95,12 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="small-axis-labels" class="section level1">
-<h1><span class="header-section-number">1</span> Your axis labels are too small</h1>
-<p>If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you’re almost certainly making a poor choice.</p>
-<p>For example, consider the following figure. I see figures like this all the time. <img src="small_axis_labels_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /> The axis labels, axis tick labels, and legend labels are all incredibly small. We can barely see them, and we may have to zoom into the page to distinguish FWD from RWD in the figure legend.</p>
-<p>A somewhat better version of this figure would be this one: <img src="small_axis_labels_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /> I think the fonts are still too small, and that’s why I have labeled it “ugly”. However, we are moving in the right direction, and this figure might be passable under some circumstances. My main criticism with this figure is not so much that the labels aren’t legible as that it is not balanced; the text elements are too small compared to the rest of the figure.</p>
-<p>The next figure uses the default settings I’m applying throughout this book. I think it is well balanced, the text is clearly visible, and it fits with the overall size of the figure. <img src="small_axis_labels_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Importantly, we can overdo it and make the labels too big: <img src="small_axis_labels_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /> Sometimes we need big labels, in particular if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In the above example, the points used to visualize the data are too small relative to the text. Once we fix this, the figure becomes acceptable again:</p>
-<p><img src="small_axis_labels_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /> You may look at this figure and find everything too big. However, keep in mind that it is meant to be scaled down. Scale it down so that it is only an inch or two in width, and the figure looks just fine. In fact, at that scaling this is the only figure in this chapter that looks good.</p>
-<div class="rmdtip">
-<p>
-Always look at scaled-down versions of your figures to make sure the axis labels are appropriately sized.
-</p>
-</div>
-<p>I think there is a simple psychological reason for why we routinely make figures whose axis labels are too small, and it relates to large, high-resolution computer monitors. We routinely preview figures on the computer screen, and often we do so while the figure takes up a large amount of space on the screen. In this viewing mode, even comparatively small text seems perfectly fine and legible, and large text can seem awkward and overpowering. In fact, if you take the first figure from this chapter and magnify it to the point where it fills your entire screen, you will likely think that it looks just fine. The solution is to always make sure that you look at your figures at a realistic print size. You can either zoom out so they are only three to five inches in width on your screen, or you can go to the other side of your room and check whether the figure still looks good from a substantial distance.</p>
+<div id="boxplots-violin-plots-and-more" class="section level1">
+<h1><span class="header-section-number">7</span> Boxplots, violin plots, and more</h1>
+<p><img src="boxplots_violins_files/figure-html/points-errorbars-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>There are multiple problems with points plus errorbars. First, we’re losing a lot of information about the data. Second, it’s not necessarily clear what the points represent. Third, and most importantly, it’s definitely not clear what the errorbars represent. There is no standard.</p>
+<p><img src="boxplots_violins_files/figure-html/boxplots-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="boxplots_violins_files/figure-html/violin-plots-1.png" width="576" style="display: block; margin: auto;" /></p>
 
 </div>
             </section>
@@ -115,8 +108,8 @@ Always look at scaled-down versions of your figures to make sure the axis labels
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="background-grids.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="understanding-the-most-commonly-used-image-file-formats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

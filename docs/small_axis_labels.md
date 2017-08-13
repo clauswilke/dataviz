@@ -21,5 +21,9 @@ Sometimes we need big labels, in particular if the figure is meant to be reduced
 <img src="small_axis_labels_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
 You may look at this figure and find everything too big. However, keep in mind that it is meant to be scaled down. Scale it down so that it is only an inch or two in width, and the figure looks just fine. In fact, at that scaling this is the only figure in this chapter that looks good.
 
+<div class="rmdtip">
+<p>Always look at scaled-down versions of your figures to make sure the axis labels are appropriately sized.</p>
+</div>
+
 
 I think there is a simple psychological reason for why we routinely make figures whose axis labels are too small, and it relates to large, high-resolution computer monitors. We routinely preview figures on the computer screen, and often we do so while the figure takes up a large amount of space on the screen. In this viewing mode, even comparatively small text seems perfectly fine and legible, and large text can seem awkward and overpowering. In fact, if you take the first figure from this chapter and magnify it to the point where it fills your entire screen, you will likely think that it looks just fine. The solution is to always make sure that you look at your figures at a realistic print size. You can either zoom out so they are only three to five inches in width on your screen, or you can go to the other side of your room and check whether the figure still looks good from a substantial distance.
