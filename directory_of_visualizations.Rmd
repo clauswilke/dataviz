@@ -1,3 +1,23 @@
+```{r include=FALSE, cache=FALSE}
+set.seed(7654)
+options(digits = 3)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  cache = FALSE,
+  fig.align = 'center',
+  fig.width = 6,
+  fig.asp = 0.618,  # 1 / phi
+  fig.show = "hold"
+)
+
+options(dplyr.print_min = 6, dplyr.print_max = 6)
+
+library(cowplot)
+
+source("R/misc.R")
+source("R/themes.R")
+```
 # Directory of visualizations
 
 ```{r fig.width = 8, fig.asp = 1/4}
@@ -63,9 +83,9 @@ p1 <- ggplot(df, aes(x, y)) +
 
 df <- data.frame(x = c(rnorm(1000, 1., 1.6), rnorm(350, 4, .4)))
 p2 <- ggplot(df, aes(x)) +
-  geom_density(fill = palette[4], color = palette[2], bw = .6) +
+  geom_density(fill = palette[4], color = palette[2], bw = .35) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, .24), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, .29), expand = c(0, 0)) +
   labs(title = "Density plot") +
   theme_plot_icon(palette[length(palette)], palette[1])
 
