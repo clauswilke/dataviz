@@ -12,6 +12,11 @@ There are multiple problems with points plus errorbars. First, we're losing a lo
 
 <img src="boxplots_violins_files/figure-html/violin-plots-1.png" width="576" style="display: block; margin: auto;" />
 
+
+We can also plot all individual points:
+<img src="boxplots_violins_files/figure-html/all-points-no-jitter-1.png" width="576" style="display: block; margin: auto;" />
+
+
 <img src="boxplots_violins_files/figure-html/jittered-points-1.png" width="576" style="display: block; margin: auto;" />
 
 <img src="boxplots_violins_files/figure-html/sina-plots-1.png" width="576" style="display: block; margin: auto;" />

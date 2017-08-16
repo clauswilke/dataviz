@@ -5,6 +5,8 @@ rmd_files: [
 
   "introduction.Rmd",
 
+  "directory_of_visualizations.Rmd",
+
   "small_axis_labels.Rmd",
   "background_grids.Rmd",
 

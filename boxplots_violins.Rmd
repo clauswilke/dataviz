@@ -51,16 +51,26 @@ lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
 stamp_good(lincoln_violin)
 ```
 
+
+We can also plot all individual points:
+```{r all-points-no-jitter, message=FALSE, warning=FALSE}
+lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_point() + xlab("Month")
+
+stamp_bad(lincoln_points)
+```
+
+
 ```{r jittered-points, message=FALSE, warning=FALSE}
 lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_jitter(width = .25) + xlab("Month")
+  geom_jitter(width = .15) + xlab("Month")
 
 stamp_good(lincoln_jitter)
 ```
 
 ```{r sina-plots, message=FALSE, warning=FALSE}
 lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_violin(color = "transparent", fill = "gray90") + stat_sina(bins = 7, method = "counts") + xlab("Month")
+  geom_violin(color = "transparent", fill = "gray90") + stat_sina(maxwidth = 0.8) + xlab("Month")
 
 stamp_good(lincoln_sina)
 ```

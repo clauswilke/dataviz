@@ -6,7 +6,8 @@ stamp <- function(p, color, alpha, label)
     draw_line(c(.99, .99), c(0, 1), size=1.4, color=color, alpha=alpha)
 }
 
-stamp_good <- function(p) stamp(p, "olivedrab4", .7, "good")
+#stamp_good <- function(p) stamp(p, "olivedrab4", .7, "good")
+stamp_good <- function(p) stamp(p, "transparent", .7, "")
 stamp_bad <- function(p) stamp(p, "firebrick", .7, "bad")
 stamp_ugly <- function(p) stamp(p, "orange3", .7, "ugly")
 

@@ -1,0 +1,82 @@
+# Directory of visualizations
+
+```{r fig.width = 8, fig.asp = 1/4}
+theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
+  line_size <- .8
+  font_size <- 10
+  theme_dviz_half_open() %+replace% theme(
+    axis.text.x       = element_blank(),
+    axis.text.y       = element_blank(),
+    axis.title.x      = element_blank(),
+    axis.title.y      = element_blank(),
+    axis.line.x       = element_line(size = line_size, color = line_color),
+    axis.line.y       = element_line(size = line_size, color = line_color),
+    axis.ticks        = element_line(size = line_size, color = line_color),
+    axis.ticks.length = grid::unit(4, "pt"),
+    legend.position   = "none",
+    plot.margin       = margin(2, font_size, font_size, font_size),
+    plot.title        = element_text(hjust = 0.5, face = "bold", color = line_color,
+                                     size = font_size,
+                                     margin = margin(0, 0, 2, 0)),
+    plot.background   = element_rect(fill = bg_color)
+  )
+}
+
+# green-brown
+# HCL Wizard settings: -265, 80, 10, 18, 97, 1.5, 2
+palette = c("#243400", "#667300", "#A4AD7C", "#D8DDC4", "#F5F8EA")
+
+# burgundy-red
+# HCL Wizard settings: 17, 80, 10, 18, 97, 1.5, 2
+#palette = c("#670000", "#A1574F", "#CF9C98", "#F1D4D1", "#FFF3F2")
+
+# brown-red
+# HCL Wizard settings: 41, 80, 10, 18, 97, 1.5, 2
+#palette = c("#581900", "#96602B", "#C7A188", "#ECD6C9", "#FFF4ED")
+
+# earth-brown
+# HCL Wizard settings: 71, 80, 10, 18, 97, 1.5, 2
+palette = c("#402B00", "#7F6B00", "#B6A87C", "#E2DAC4", "#FBF6EA")
+
+# brown-green
+# HCL Wizard settings: 86, 80, 10, 18, 97, 1.5, 2
+#palette = c("#313100", "#707000", "#ABAB7B", "#DCDCC3", "#F7F7EA")
+
+# ocean-blue
+# HCL Wizard settings: 241, 80, 10, 18, 97, 1.5, 2
+#palette = c("#003F9C", "#2372A3", "#8DACCC", "#CDDCEE", "#EFF7FF")
+
+# steel-blue
+# HCL Wizard settings: 257, 80, 10, 18, 97, 1.5, 2
+#palette = c("#0021B1", "#546AA8", "#9DA7CF", "#D4DAF0", "#F3F6FF")
+
+n <- 15
+x <- rnorm(15)
+y <- .4*x + .6*rnorm(15)
+df <- data.frame(x, y)
+p1 <- ggplot(df, aes(x, y)) + 
+  geom_point(color = palette[3], size = 2.4) + 
+  scale_x_continuous(expand = c(.2, 0)) +
+  scale_y_continuous(expand = c(.2, 0)) +
+  labs(title = "Scatterplot") +
+  theme_plot_icon(palette[length(palette)], palette[1])
+
+df <- data.frame(x = c(rnorm(1000, 1., 1.6), rnorm(350, 4, .4)))
+p2 <- ggplot(df, aes(x)) +
+  geom_density(fill = palette[4], color = palette[2], bw = .6) +
+  scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, .24), expand = c(0, 0)) +
+  labs(title = "Density plot") +
+  theme_plot_icon(palette[length(palette)], palette[1])
+
+p3 <- ggplot(df, aes(x)) +
+  geom_histogram(fill = palette[4], color = palette[2], bins = 18) +
+  scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 290), 
+                     expand = c(0, 0)) +
+  labs(title = "Histogram") +
+  theme_plot_icon(palette[length(palette)], palette[1])
+
+
+plot_grid(p1, p2, p3, p2, ncol = 4, scale = .9)
+```
