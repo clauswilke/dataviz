@@ -27,6 +27,9 @@ Other notes and comments:
 Articles and blog posts with useful ideas:
 
 - https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f
+- http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
 
 Datasets to use:
-- midwest
+- midwest (ggplot2)
+- overlapping points: mpg cty vs hwy
+- economics (ggplot2)
