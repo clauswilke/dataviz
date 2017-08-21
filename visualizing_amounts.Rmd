@@ -1,3 +1,5 @@
-# Don't use a logscale y axis with a bargraph
+# Visualizing amounts
+
+## Don't use a logscale y axis with a bargraph
 
 You can use either a bargraph or a logscale y axis, but not both in combination.

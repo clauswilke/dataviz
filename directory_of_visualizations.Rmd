@@ -1,3 +1,5 @@
+# (PART\*) Part II: A visualization for every occasion {-}
+
 # Directory of visualizations
 
 ```{r echo = FALSE, message = FALSE}

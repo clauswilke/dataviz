@@ -3,6 +3,8 @@
 
 ## Outline
 
+Chapters for which some material exists at this time are marked with stars, as follows:
+
 \*Chapter started; made relevant figures and/or wrote rudimentary first draft  
 \*\*Chapter mostly complete
 
@@ -10,6 +12,9 @@
 
 #. **Visualizing data: mapping data onto aesthetics**  
   Explains the basic concept of aesthetic mapping, which lies at the heart of any data visualization.
+  
+#. **Figure titles**  
+  Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
 
 #. **Choosing colorblind-friendly color scales**\*  
   Explains what color choices can and cannot be seen by people with colorblindness, and also introduces the three basic types of color scales: qualitative, directional, diverging. Material on diverging color scales is not yet written. 
@@ -17,7 +22,7 @@
 #. **Effective use of color in figures**  
   Covers basic concepts of color use, as a tool to highlight, as a tool to distinguish, and as a tool to represent a value.
 
-#. **Redundant coding**\*
+#. **Redundant coding**\*  
   Explains how to make sure that key information in the figure is provided in multiple, reduant ways, for example through color and location or color and direct labeling.
 
 #. **Your axis labels are too small**\*\*  
@@ -47,11 +52,17 @@
 #. **Don't go 3d**  
   Argues why 3d plots are generally problematic (figures are fundamentally a 2d medium, and in 3d plots data is subjected to an additional, non-obvious transformation from 3d to 2d) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.
  
-### Part II: A figure for every occasion  {-}
+### Part II: A visualization for every occasion  {-}
 
-14. **Directory of visualizations**\*  
+15. **Directory of visualizations**\*  
   Provides a graphical guide to the most commonly used types of data visualizations, with pointers to relevant other chapters in the book.
-  
+
+#. **Visualizing amounts**  
+  Discusses bar plots in various forms.
+
+#. **Visualizing proportions**  
+  Discusses stacked bar plots, stacked density plots, and pie charts.
+
 #. **Visualizing paired data**  
   Discusses common strategies for paired data, including scatter plots and paired dot plots.
 
@@ -70,17 +81,20 @@
 #. **Visualizing distributions III: Joyplots**  
   Describes the joyplot, an effective tool for visualizing a very large number of related distributions.
 
-#. **Visualizing proportions**  
-  Discusses bar plots, stacked bar plots, stacked density plots, and pie charts.
+#. **Visualizing arrays of intensities**  
+  Discusses heat maps.
   
 
 ### Part III: Miscellaneous topics {-}
 
-22. **Understanding the most commonly used image file formats**\*\*  
+25. **Understanding the most commonly used image file formats**\*\*  
   Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.
 
 #. **Choosing the right plotting software**  
   Discusses the pros and cons of different software available to make graphs.
+  
+#. **Selecting figures for a report, paper, or presentation**  
+  Discusses how to compile larger sets of figures to tell a story; e.g., always move from less processed to more processed data representations; also, avoid repeating the same type of figure many times.
   
 #. **Annotated bibliography**  
   Provides a list of other reading material on related topics, with a brief paragraph describing the contents of each reference.

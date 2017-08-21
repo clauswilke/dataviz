@@ -5,20 +5,22 @@ rmd_files: [
 
   "introduction.Rmd",
 
-  "directory_of_visualizations.Rmd",
-
-  "small_axis_labels.Rmd",
-  "background_grids.Rmd",
-
-  #"aspect_ratio.Rmd",
-
+  # Part I
+  "aesthetic_mapping.Rmd",
   "colorblind.Rmd",
   "redundant_coding.Rmd",
-  #"bargraphs_logy.Rmd",
+  "small_axis_labels.Rmd",
+  #"aspect_ratio.Rmd",
+  "background_grids.Rmd",
   "overlapping_points.Rmd",
-  "image_file_formats.Rmd",
 
+  # Part II
+  "directory_of_visualizations.Rmd",
+  #"visualizing_amounts.Rmd",
   "boxplots_violins.Rmd",
+
+  # Part III
+  "image_file_formats.Rmd",
 
   "notes.Rmd",
 

@@ -1,4 +1,6 @@
 
+# (PART\*) Part II: A visualization for every occasion {-}
+
 # Directory of visualizations
 
 
