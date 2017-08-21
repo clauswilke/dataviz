@@ -20,7 +20,7 @@ rmd_files: [
 
   "boxplots_violins.Rmd",
 
-  #"notes.Rmd",
+  "notes.Rmd",
 
   "references.Rmd"
 ]

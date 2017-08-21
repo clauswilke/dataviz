@@ -14,7 +14,7 @@
   
   
   <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
-  <meta name="github-repo" content="clauswilke/professional_figures" />
+  <meta name="github-repo" content="clauswilke/dataviz" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Fundamentals of data visualization" />
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="understanding-the-most-commonly-used-image-file-formats.html">
+<link rel="prev" href="boxplots-violin-plots-and-more.html">
 <link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,6 +49,7 @@
 
 
 
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -61,23 +62,42 @@
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>1</b> Your axis labels are too small</a></li>
-<li class="chapter" data-level="2" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>2</b> Background grids</a></li>
-<li class="chapter" data-level="3" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>3</b> Choosing colorblind-friendly color scales</a></li>
-<li class="chapter" data-level="4" data-path="handling-overlapping-points.html"><a href="handling-overlapping-points.html"><i class="fa fa-check"></i><b>4</b> Handling overlapping points</a></li>
-<li class="chapter" data-level="5" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>5</b> Understanding the most commonly used image file formats</a><ul>
-<li class="chapter" data-level="5.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>5.1</b> Bitmap and vector graphics</a></li>
-<li class="chapter" data-level="5.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>5.2</b> Lossless and lossy compression of bitmap graphics</a></li>
-<li class="chapter" data-level="5.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>5.3</b> Converting between image formats</a></li>
+<li class="chapter" data-level="1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>1</b> Directory of visualizations</a></li>
+<li class="chapter" data-level="2" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>2</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="3" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>3</b> Background grids</a></li>
+<li class="chapter" data-level="4" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>4</b> Choosing colorblind-friendly color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html#qualitative-color-scales"><i class="fa fa-check"></i><b>4.1</b> Qualitative color scales</a></li>
+<li class="chapter" data-level="4.2" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html#directional-color-scales"><i class="fa fa-check"></i><b>4.2</b> Directional color scales</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>6</b> Notes</a></li>
+<li class="chapter" data-level="5" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>5</b> Redundant coding</a></li>
+<li class="chapter" data-level="6" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>6</b> Handling overlapping points</a></li>
+<li class="chapter" data-level="7" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>7</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="7.1" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>7.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="7.2" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>7.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="7.3" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>7.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>8</b> Boxplots, violin plots, and more</a></li>
+<li class="chapter" data-level="9" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>9</b> Notes</a><ul>
+<li class="chapter" data-level="9.1" data-path="notes.html"><a href="notes.html#outline"><i class="fa fa-check"></i><b>9.1</b> Outline</a><ul>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html#part-i-general-principles-of-figure-design"><i class="fa fa-check"></i>Part I: General principles of figure design</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html#part-ii-a-figure-for-every-occasion"><i class="fa fa-check"></i>Part II: A figure for every occasion</a></li>
+<li class="chapter" data-level="" data-path="notes.html"><a href="notes.html#part-iii-miscellaneous-topics"><i class="fa fa-check"></i>Part III: Miscellaneous topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="notes.html"><a href="notes.html#other-notes-and-comments"><i class="fa fa-check"></i><b>9.2</b> Other notes and comments</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -96,42 +116,104 @@
 
             <section class="normal" id="section-">
 <div id="notes" class="section level1">
-<h1><span class="header-section-number">6</span> Notes</h1>
-<p>A few easy chapters to write soon:</p>
+<h1><span class="header-section-number">9</span> Notes</h1>
+<div id="outline" class="section level2">
+<h2><span class="header-section-number">9.1</span> Outline</h2>
+<p>*Chapter started; made relevant figures and/or wrote rudimentary first draft<br />
+**Chapter mostly complete</p>
+<div id="part-i-general-principles-of-figure-design" class="section level3 unnumbered">
+<h3>Part I: General principles of figure design</h3>
+<ol>
+<li><p><strong>Visualizing data: mapping data onto aesthetics</strong><br />
+Explains the basic concept of aesthetic mapping, which lies at the heart of any data visualization.</p></li>
+<li><p><strong>Choosing colorblind-friendly color scales</strong>*<br />
+Explains what color choices can and cannot be seen by people with colorblindness, and also introduces the three basic types of color scales: qualitative, directional, diverging. Material on diverging color scales is not yet written.</p></li>
+<li><p><strong>Effective use of color in figures</strong><br />
+Covers basic concepts of color use, as a tool to highlight, as a tool to distinguish, and as a tool to represent a value.</p></li>
+<li><p><strong>Redundant coding</strong>* Explains how to make sure that key information in the figure is provided in multiple, reduant ways, for example through color and location or color and direct labeling.</p></li>
+<li><p><strong>Your axis labels are too small</strong>**<br />
+Discusses the widespread problem of excessively small axis labels.</p></li>
+<li><p><strong>Choosing the right axis settings</strong><br />
+Covers various aspects related to axis choice, including linear vs. logarithmic axes, as well as issues of axis expansion beyond the data range.</p></li>
+<li><p><strong>Choosing an appropriate aspect ratio</strong><br />
+Discusses the concept of aspect ratio, including when it matters a lot (same axis range on x and y) and when it is more of a personal preference.</p></li>
+<li><p><strong>Background grids</strong>**<br />
+Discusses when and how to use background grids and other guide lines in figures.</p></li>
+<li><p><strong>Don’t box yourself in</strong><br />
+Argues to avoid boxes and frames around figure parts.</p></li>
+<li><p><strong>Avoid line drawings</strong><br />
+Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.</p></li>
+<li><p><strong>Handling overlapping points</strong>*<br />
+Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.</p></li>
+<li><p><strong>Multi-part figures</strong><br />
+Discusses issues that arise in multi-part figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-part figures.</p></li>
+<li><p><strong>Don’t go 3d</strong><br />
+Argues why 3d plots are generally problematic (figures are fundamentally a 2d medium, and in 3d plots data is subjected to an additional, non-obvious transformation from 3d to 2d) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.</p></li>
+</ol>
+</div>
+<div id="part-ii-a-figure-for-every-occasion" class="section level3 unnumbered">
+<h3>Part II: A figure for every occasion</h3>
+<ol start="14" style="list-style-type: decimal">
+<li><p><strong>Directory of visualizations</strong>*<br />
+Provides a graphical guide to the most commonly used types of data visualizations, with pointers to relevant other chapters in the book.</p></li>
+<li><p><strong>Visualizing paired data</strong><br />
+Discusses common strategies for paired data, including scatter plots and paired dot plots.</p></li>
+<li><p><strong>Visualizing time series</strong><br />
+Discusses common strategies for time series, including line plots and sparklines</p></li>
+<li><p><strong>Visualizing trends</strong><br />
+Discusses various approaches to smoothing data (linear regression line, GAMs, splines), and common pitfalls (many smoothers are unreliable or misleading at the edges of the data range).</p></li>
+<li><p><strong>Visualizing distributions I: Histograms and density plots</strong><br />
+Discusses strategies for visualizing individual distributions, including pros and cons of histograms and density plots.</p></li>
+<li><p><strong>Visualizing distributions II: Boxplots, violin plots, and more</strong>*<br />
+Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.</p></li>
+<li><p><strong>Visualizing distributions III: Joyplots</strong><br />
+Describes the joyplot, an effective tool for visualizing a very large number of related distributions.</p></li>
+<li><p><strong>Visualizing proportions</strong><br />
+Discusses bar plots, stacked bar plots, stacked density plots, and pie charts.</p></li>
+</ol>
+</div>
+<div id="part-iii-miscellaneous-topics" class="section level3 unnumbered">
+<h3>Part III: Miscellaneous topics</h3>
+<ol start="22" style="list-style-type: decimal">
+<li><p><strong>Understanding the most commonly used image file formats</strong>**<br />
+Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.</p></li>
+<li><p><strong>Choosing the right plotting software</strong><br />
+Discusses the pros and cons of different software available to make graphs.</p></li>
+<li><p><strong>Annotated bibliography</strong><br />
+Provides a list of other reading material on related topics, with a brief paragraph describing the contents of each reference.</p></li>
+</ol>
+</div>
+</div>
+<div id="other-notes-and-comments" class="section level2">
+<h2><span class="header-section-number">9.2</span> Other notes and comments</h2>
 <ul>
-<li>visualizing paired data (use protein correlation data from Echave et al?)</li>
-<li>visualizing distribution (use iris?)</li>
-</ul>
-<p>Topics to cover eventually:</p>
-<ul>
-<li>bitmaps vs vector graphics</li>
-<li>pie charts</li>
-<li>multi-part plots</li>
-<li>scatter plots of dense point clouds, chapter is partially started</li>
-<li>histograms and density plots</li>
-<li>solid colors vs. outlines</li>
-<li>choice of plot libraries</li>
-<li>avoid boxes and frames around parts of the plot</li>
-<li>redundant coding (to help color-blind people, and generally), labeling vs legends</li>
-<li>don’t go 3d</li>
-</ul>
-<p>Other notes and comments:</p>
-<ul>
+<li>for paired data chapter, use protein correlation dataset from Echave et al?</li>
+<li>need a clear system of stamping figures while keeping some spacing. current system is ad-hoc and inconsistent. This touches all chapters already written.</li>
 <li>aspect ratio chapter needs to be completed</li>
+<li>in the colorblind package, add color simulations using the dichromat R package?</li>
 <li>this looks like a useful resource: <a href="http://www.datavizcatalogue.com/about.html">dataviz catalogue</a></li>
+<li>the <a href="https://CRAN.R-project.org/package=viridis">viridis package</a> has several great color scales</li>
 </ul>
 <p>Articles and blog posts with useful ideas:</p>
 <ul>
 <li><a href="https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f" class="uri">https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f</a></li>
+<li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html" class="uri">http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html</a></li>
+</ul>
+<p>Datasets to use:</p>
+<ul>
+<li>midwest (ggplot2)</li>
+<li>overlapping points: mpg cty vs hwy</li>
+<li>economics (ggplot2)</li>
 </ul>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="understanding-the-most-commonly-used-image-file-formats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boxplots-violin-plots-and-more.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -143,7 +225,7 @@
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,

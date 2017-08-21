@@ -158,6 +158,8 @@ p6 <- ggplot(df, aes(x = y, y = number, group = number)) +
 p7 <- ggplot(df, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
   geom_density(alpha = 0.7, color = palette[1], position = "fill") +
   scale_fill_manual(values = palette[2:4]) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
   labs(title = "Stacked densities plot") +
   theme_plot_icon(palette[length(palette)], palette[1])
 
