@@ -27,4 +27,17 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
 stamp_good(p2)
 ```
 
+```{r}
+ggplot(mpg, aes(cty, hwy)) + geom_point(alpha = .5, size = 3)
+```
+
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) + geom_jitter(alpha = .5, width = .3, height = .3, size = 3)
+```
+
+```{r}
+ggplot(midwest, aes(area, poptotal)) + geom_density2d() + geom_smooth(method = 'lm') + geom_point(alpha = 0.4) + scale_y_log10()
+```
+
 

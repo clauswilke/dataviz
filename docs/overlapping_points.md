@@ -6,4 +6,11 @@ Let's revisit this figure from Chapter \@ref(small-axis-labels) and focus on an 
 I have labeled this figure "ugly" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
 <img src="overlapping_points_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
 
+<img src="overlapping_points_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+
+
+<img src="overlapping_points_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" />
+
+<img src="overlapping_points_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
+
 
