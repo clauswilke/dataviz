@@ -1,3 +1,8 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
 # Choosing the correct aspect ratio for your figure
 
 

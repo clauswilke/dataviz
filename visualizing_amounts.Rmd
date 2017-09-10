@@ -1,3 +1,9 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+
 # Visualizing amounts
 
 ## Don't use a logscale y axis with a bargraph

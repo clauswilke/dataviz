@@ -1,4 +1,3 @@
-
 ---
 title: "Fundamentals of data visualization"
 author: "Claus O. Wilke"

@@ -1,6 +1,8 @@
-# Redundant coding {#redundant-coding}
+```{r echo = FALSE}
+# run setup script
+source("_common.R")
 
-```{r message=FALSE}
+# libraries
 library(readr)
 library(dplyr)
 library(tidyr)
@@ -10,6 +12,9 @@ library(lubridate)
 library(ggjoy)
 library(viridis)
 ```
+
+
+# Redundant coding {#redundant-coding}
 
 *Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 

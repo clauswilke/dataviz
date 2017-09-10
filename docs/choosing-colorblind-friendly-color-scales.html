@@ -131,8 +131,8 @@ Unless you’re an expert in color theory, go with an existing color scheme inst
 <div id="qualitative-color-scales" class="section level2">
 <h2><span class="header-section-number">2.1</span> Qualitative color scales</h2>
 <p>We frequently need to color discrete items that do not have an inherent order, such as different countries on a map or different manufacturers of a certain product. In those cases, we use qualitative color scales, which are color scales with a finite set of specific colors that are chosen to look as different from each other as possible.</p>
-<p>My preferred color scale of this type, which I use extensively throughout this book, was developed specifically to work well for all the major types of color-vision deficiency <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>: <img src="colorblind_files/figure-html/unnamed-chunk-4-1.png" width="816" style="display: block; margin: auto;" /> By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.</p>
-<p>A variant of the palette replaces black with gray, if you don’t like to see completely black visual elements: <img src="colorblind_files/figure-html/unnamed-chunk-5-1.png" width="816" style="display: block; margin: auto;" /></p>
+<p>My preferred color scale of this type, which I use extensively throughout this book, was developed specifically to work well for all the major types of color-vision deficiency <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>: <img src="colorblind_files/figure-html/unnamed-chunk-3-1.png" width="816" style="display: block; margin: auto;" /> By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.</p>
+<p>A variant of the palette replaces black with gray, if you don’t like to see completely black visual elements: <img src="colorblind_files/figure-html/unnamed-chunk-4-1.png" width="816" style="display: block; margin: auto;" /></p>
 <p>In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table <a href="choosing-colorblind-friendly-color-scales.html#tab:color-codes">2.1</a>.</p>
 <table>
 <caption><span id="tab:color-codes">Table 2.1: </span> Colorblind-friendly color scale, developed by <span class="citation">Okabe and Ito (<a href="#ref-Okabe-Ito-CUD">2008</a>)</span>.</caption>
@@ -226,9 +226,33 @@ Unless you’re an expert in color theory, go with an existing color scheme inst
 <h2><span class="header-section-number">2.2</span> Directional color scales</h2>
 <p>A second common use of color is to indicate intensity of some sort, for example temperature or speed. In those cases, we need a directional color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.</p>
 <p>Designing such a color scale, in particular while respecting the additional requirement that they work for viewers with impaired color vision, can be surprisingly difficult. However, recent research into color scales has solved these issues and produced some very nice color scales <span class="citation">(Smith and van der Walt <a href="#ref-Smith-vanderWalt-2015">2015</a>)</span>. In brief, all these color scales satisfy the following conditions. First, brightness varies continuosly from dark to light, such that the color scale works even when reproduced in grayscale. Second, the major color axis changes from blue to yellow, because the alternative, red to green, would not work for the most common forms of color-vision deficiency, red-green blindness. Third, the blue colors appear on the dark side of the scale and the yellow colors on the light side, because gradients from dark yellow to bright blue look unnatural. With these constraints, there is only one major choice remaining, which is whether to transition from blue to yellow through green or through red. The following four color scales, which are now available for both python and R graphics and are becoming increasingly popular, meet all these requirements.</p>
-<p><img src="colorblind_files/figure-html/unnamed-chunk-6-1.png" width="816" style="display: block; margin: auto;" /></p>
+<p><img src="colorblind_files/figure-html/unnamed-chunk-5-1.png" width="816" style="display: block; margin: auto;" /></p>
 <p>You can see examples using these scales throughout this book, for example in the chapter on redundant coding (Chapter <a href="redundant-coding.html#redundant-coding">3</a>).</p>
 
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     ggsave</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     stamp</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
 </div>
 </div>
 <h3>References</h3>

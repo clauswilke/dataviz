@@ -27,6 +27,4 @@ rmd_files: [
   "references.Rmd"
 ]
 
-before_chapter_script: "_common.R"
-
 output_dir: "docs"

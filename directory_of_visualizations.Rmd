@@ -1,12 +1,15 @@
-# (PART\*) Part II: A visualization for every occasion {-}
-
-# Directory of visualizations
-
 ```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+
 library(dplyr)
 library(ggforce)
 library(ggjoy)
 ```
+
+# (PART\*) Part II: A visualization for every occasion {-}
+
+# Directory of visualizations
 
 ```{r fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
 theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {

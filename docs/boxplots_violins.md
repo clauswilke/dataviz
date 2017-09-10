@@ -1,7 +1,6 @@
 
+
 # Boxplots, violin plots, and more
-
-
 
 *A few intro sentences needed here. This chapter is about visualizing many distributions.*
 

@@ -1,3 +1,8 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
 # (PART\*) Part III: Miscellaneous topics {-}
 
 # Understanding the most commonly used image file formats

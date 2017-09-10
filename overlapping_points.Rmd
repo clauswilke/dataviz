@@ -1,7 +1,18 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+
+library(dplyr)
+library(stringr)
+library(lubridate)
+library(nycflights13)
+library(viridis)
+```
+
 # Handling overlapping points {#overlapping-points}
 
 Let's revisit this figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
-```{r}
+```{r mpg-cty-displ-solid}
 p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4) + 
   ylab("fuel economy (mpg)") +
@@ -11,10 +22,10 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
    theme_dviz(19)
-stamp_ugly(p)
+stamp_bad(p)
 ```
-I have labeled this figure "ugly" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
-```{r}
+I have labeled this figure "bad" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
+```{r mpg-cty-displ-transp}
 p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4, alpha=0.65) + 
   ylab("fuel economy (mpg)") +
@@ -27,17 +38,117 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
 stamp_good(p2)
 ```
 
-```{r}
-ggplot(mpg, aes(cty, hwy)) + geom_point(alpha = .5, size = 3)
+However, making points partially transparent is not always sufficient. For example, the same dataset contains fuel economy for both city and highway driving. If we plot those two quantities against each other, we obtain the following figure.
+```{r  mpg-cty-hwy-transp, fig.asp = 0.8}
+p_cty_hwy_base <- ggplot(mpg, aes(cty, hwy)) +
+  xlab("city economy (mpg)") +
+  ylab("highway economy (mpg)") +
+  geom_abline(slope = 1, intercept = 0, color="grey70") +
+  coord_fixed(xlim = c(5, 40), ylim = c(10, 45)) +
+  draw_text("highway mpg = city mpg",
+            x = 11.2, y = 10.8, size = 12, hjust = 0, vjust = 1) +
+  theme_dviz()
+
+p3 <- p_cty_hwy_base + geom_point(alpha = .5, size = 3)
+
+stamp_bad(p3)
+```
+
+Because fuel economy is rounded to whole integers in this dataset, many points lie exactly on top of each other. While these fully overlapping points appear darker in the plot, the visual appearance is that of one darker point rather than of a set of points plotted in the same location. We can emphasize the number of points in the same locations by applying a small amount of jitter, i.e., displacing each point randomly by a small amount.
+
+```{r mpg-cty-hwy-jitter, fig.asp = 0.8}
+p4 <- p_cty_hwy_base + geom_jitter(alpha = .5, width = .3, height = .3, size = 3)
+
+stamp_good(p4)
+```
+
+However, when jittering we have to make sure not to overdo it. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset and hence are creating a misleading visualization of the data.
+```{r mpg-cty-hwy-jitter-extreme, fig.asp = 0.8}
+p5 <- p_cty_hwy_base + geom_jitter(alpha = .5, width = 2.5, height = 2.5, size = 3)
+
+stamp_bad(p5)
+```
+
+For example, in this particular case the extreme jittering creates the impression that for some cars the highway economy can fall below the city economy. However, such cases do not exist in the original dataset.
+
+
+When the number of points grows large, it can be helpful to indicate the point density, for example with contour lines. This technique works well for the following figure, which shows the total population as a function of area for counties in the midwest.
+```{r midwest-density-dots, fig.asp = 0.8, message = FALSE, warning = FALSE}
+p6 <- ggplot(midwest, aes(area, poptotal)) + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
+  geom_point(color = "navy", size = 1, alpha = .7) + 
+  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
+  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
+                limits = c(1000, 1e7),
+                labels = c(expression(10^3), expression(10^4), expression(10^5),
+                           expression(10^6), expression(10^7))) +
+  xlim(0, 0.1) +
+  ylab("population total") +
+  theme_dviz_grid()
+  
+stamp_good(p6)
+```
+
+If we want to emphasize the overall features of the distribution rather than the individual points, we can also show only the contour lines and leave out the individual points.
+```{r midwest-density-only, fig.asp = 0.8, message = FALSE, warning = FALSE}
+p7 <- ggplot(midwest, aes(area, poptotal)) + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
+#  geom_point(color = "navy", size = 1, alpha = .7) + 
+  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
+  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
+                limits = c(1000, 1e6),
+                labels = c(expression(10^3), expression(10^4), expression(10^5),
+                           expression(10^6), expression(10^7))) +
+  scale_x_continuous(breaks = c(0, 0.025, 0.05, 0.075), limits = c(0, 0.08)) +
+  ylab("population total") +
+  theme_dviz_grid()
+  
+stamp_good(p7)
+```
+
+Finally, we can add a smoothing line to highlight the overall trend in the relationship between the two variables.
+```{r midwest-density-smooth, fig.asp = 0.8, message = FALSE, warning = FALSE}
+p8 <- ggplot(midwest, aes(area, poptotal)) + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
+  geom_smooth(color = "navy", se = FALSE) + 
+  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
+  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
+                limits = c(1000, 1e6),
+                labels = c(expression(10^3), expression(10^4), expression(10^5),
+                           expression(10^6), expression(10^7))) +
+  scale_x_continuous(breaks = c(0, 0.025, 0.05, 0.075), limits = c(0, 0.08)) +
+  ylab("population total") +
+  theme_dviz_grid()
+  
+stamp_good(p8)
 ```
 
 
-```{r}
-ggplot(mpg, aes(cty, hwy)) + geom_jitter(alpha = .5, width = .3, height = .3, size = 3)
-```
 
 ```{r}
-ggplot(midwest, aes(area, poptotal)) + geom_density2d() + geom_smooth(method = 'lm') + geom_point(alpha = 0.4) + scale_y_log10()
+
+flights %>% filter(origin == "EWR") %>%
+  mutate(`departure time` = hm(sprintf("%02d:%02d", dep_time %/% 100, dep_time %% 100 ))) %>%
+  select(`departure time`, `departure delay (minutes)` = dep_delay) %>%
+  na.omit() -> delay_df
+
+# the break points along the x axis
+breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
+
+ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
+  geom_point(alpha = 0.2) +
+  scale_x_time(breaks = hm(breaks_x),
+               labels = breaks_x)
+
+ ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
+  geom_bin2d(bins=50) +
+  scale_fill_viridis() + 
+  scale_x_time(breaks = hm(breaks_x),
+               labels = breaks_x)
+ 
+ ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
+  geom_hex(bins=50) +
+  scale_fill_viridis() + 
+  scale_x_time(breaks = hm(breaks_x),
+               labels = breaks_x)
 ```
-
-

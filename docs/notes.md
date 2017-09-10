@@ -1,4 +1,3 @@
-
 # Notes
 
 ## Outline
@@ -114,9 +113,14 @@ Articles and blog posts with useful ideas:
 
 - https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f
 - http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
+- http://socviz.co/
 
 Datasets to use:
 
 - midwest (ggplot2)
 - overlapping points: mpg cty vs hwy
 - economics (ggplot2)
+- gapminder (gapminder)
+- gss_sm (socviz) http://gss.norc.org/Get-Documentation
+- organdata (socviz)
+- titanic_test, titanic_train (titanic) (is a better source of this dataset available?)

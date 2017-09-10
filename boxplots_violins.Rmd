@@ -1,12 +1,19 @@
-# Boxplots, violin plots, and more
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
 
-```{r message=FALSE}
 library(dplyr)
 library(forcats)
 library(ggjoy)
 library(ggforce)
 library(viridis)
+```
 
+# Boxplots, violin plots, and more
+
+*A few intro sentences needed here. This chapter is about visualizing many distributions.*
+
+```{r points-errorbars, message=FALSE, warning=FALSE}
 lincoln_weather %>% mutate(month_short = fct_recode(Month,
                                                     Jan = "January",
                                                     Feb = "February",
@@ -21,11 +28,8 @@ lincoln_weather %>% mutate(month_short = fct_recode(Month,
                                                     Nov = "November",
                                                     Dec = "December")) %>%
   mutate(month_short = fct_rev(month_short)) -> lincoln_df
-```
 
-*A few intro sentences needed here. This chapter is about visualizing many distributions.*
 
-```{r points-errorbars, message=FALSE, warning=FALSE}
 lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
                fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",

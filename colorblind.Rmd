@@ -1,9 +1,12 @@
-# Choosing colorblind-friendly color scales
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
 
-```{r message=FALSE}
 library(viridis)
 library(ggjoy)
 ```
+
+# Choosing colorblind-friendly color scales
 
 When coloring elements in your figures, you need keep in mind that a good proportion of your readers may have color-vision deficiency (i.e., are colorblind) and may not be able to distinguish the colors that look so clearly different to you. You could address this problem by preparing all figures in grayscale, but those figures would look drab and boring to everybody, even those with impaired color vision. Alternatively, you can (and should) employ redundant coding, discussed in more detail in Chapter \@ref(redundant-coding). However, independent of whether or not you use redundant coding, you should consider using a color scale whose colors are distinguishable even for people with color-vision deficiency. 
 

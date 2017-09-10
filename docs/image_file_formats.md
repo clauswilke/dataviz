@@ -1,4 +1,5 @@
 
+
 # (PART\*) Part III: Miscellaneous topics {-}
 
 # Understanding the most commonly used image file formats
