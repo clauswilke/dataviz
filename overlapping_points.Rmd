@@ -5,13 +5,16 @@ source("_common.R")
 library(dplyr)
 library(stringr)
 library(lubridate)
-library(nycflights13)
 library(viridis)
 ```
 
 # Handling overlapping points {#overlapping-points}
 
-Let's revisit this figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
+When we want to visualize large or very large datasets, we often experience the challenge that simple x--y scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is "overplotting", i.e., plotting many points on top of each other. Below, I describe several strategies you can pursue when you encounter this challenge.
+
+## Partial transparency
+
+Let's revisit the fuel economy figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
 ```{r mpg-cty-displ-solid}
 p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4) + 
@@ -38,7 +41,9 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
 stamp_good(p2)
 ```
 
-However, making points partially transparent is not always sufficient. For example, the same dataset contains fuel economy for both city and highway driving. If we plot those two quantities against each other, we obtain the following figure.
+## Jittering
+
+Making points partially transparent is not always sufficient. For example, the same dataset contains fuel economy for both city and highway driving. If we plot those two quantities against each other, we obtain the following figure.
 ```{r  mpg-cty-hwy-transp, fig.asp = 0.8}
 p_cty_hwy_base <- ggplot(mpg, aes(cty, hwy)) +
   xlab("city economy (mpg)") +
@@ -46,7 +51,7 @@ p_cty_hwy_base <- ggplot(mpg, aes(cty, hwy)) +
   geom_abline(slope = 1, intercept = 0, color="grey70") +
   coord_fixed(xlim = c(5, 40), ylim = c(10, 45)) +
   draw_text("highway mpg = city mpg",
-            x = 11.2, y = 10.8, size = 12, hjust = 0, vjust = 1) +
+            x = 40.2, y = 39.8, size = 12, hjust = 1, vjust = 1, angle = 45) +
   theme_dviz()
 
 p3 <- p_cty_hwy_base + geom_point(alpha = .5, size = 3)
@@ -71,6 +76,7 @@ stamp_bad(p5)
 
 For example, in this particular case the extreme jittering creates the impression that for some cars the highway economy can fall below the city economy. However, such cases do not exist in the original dataset.
 
+## Contour lines
 
 When the number of points grows large, it can be helpful to indicate the point density, for example with contour lines. This technique works well for the following figure, which shows the total population as a function of area for counties in the midwest.
 ```{r midwest-density-dots, fig.asp = 0.8, message = FALSE, warning = FALSE}
@@ -123,9 +129,14 @@ p8 <- ggplot(midwest, aes(area, poptotal)) +
 stamp_good(p8)
 ```
 
+## 2d histograms
 
+None of the techniques discussed so far work very well when the majority of points falls into a small area relative to the overall extent of the data and the overall extent highlights important data features.
 
-```{r}
+Consider the following figure, which shows the departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013.
+
+```{r nycflights-points, fig.asp = 0.8}
+library(nycflights13)
 
 flights %>% filter(origin == "EWR") %>%
   mutate(`departure time` = hm(sprintf("%02d:%02d", dep_time %/% 100, dep_time %% 100 ))) %>%
@@ -135,20 +146,36 @@ flights %>% filter(origin == "EWR") %>%
 # the break points along the x axis
 breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
-ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
-  geom_point(alpha = 0.2) +
+p_flights_base <- ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
+  geom_abline(slope = 0, intercept = 0, color="grey70") +
   scale_x_time(breaks = hm(breaks_x),
-               labels = breaks_x)
+               labels = breaks_x) +
+  theme_dviz()
 
- ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
-  geom_bin2d(bins=50) +
-  scale_fill_viridis() + 
-  scale_x_time(breaks = hm(breaks_x),
-               labels = breaks_x)
- 
- ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
-  geom_hex(bins=50) +
-  scale_fill_viridis() + 
-  scale_x_time(breaks = hm(breaks_x),
-               labels = breaks_x)
+p9 <- p_flights_base + geom_point(alpha = 0.2)
+
+stamp_bad(p9)
 ```
+Even though we have made the points fairly transparent, the majority of the points just form a black band between 0 and 300 minutes departure delay. This black band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the points.
+
+A good solution for this particular case is a 2d histogram, where we subdivide the entire x--y plane into small squares, count how many observations fall into each square, and then color the square by that count. The result is the following figure.
+
+```{r nycflights-2d-bins, fig.asp = 0.75}
+p10 <- p_flights_base +
+  geom_bin2d(bins=50) +
+  scale_fill_viridis()
+stamp_good(p10)
+```
+
+This figure clearly highlights several important features. First, the vast majority of departures during the day (6am to about 9pm) actually depart without delay or even early (negative delay). However, a modest number of departures has a substantial delay. Moreover, the later a plane departs in the day the more of a delay it can have. Importantly, here the departure time is the actual time of departure, not the scheduled time of departure. So this figure does not necessarily tell us that planes scheduled to depart early never experience delay. What it does tell us, though, is that if a plane departs early it either has little delay or, in very rare cases, a delay of around 900 minutes.
+
+As an alternative to binning the data into squares, we can also bin into hexagons. This approach, first proposed by 
+@Carr-et-al-1987, has the advantage that the points in a hexagon are, on average, closer to the hexagon center than the points in an equal-area square are to the center of the square. As a consequence, the colored hexagon represents the data slightly more accurately than the colored square does. The following figure shows the same data with hexagon binning rather than square binning.
+
+```{r nycflights-hex-bins, fig.asp = 0.75}
+p11 <- p_flights_base +
+  geom_hex(bins=50) +
+  scale_fill_viridis()
+stamp_good(p11)
+```
+
