@@ -2,11 +2,13 @@
 
 # Boxplots, violin plots, and more
 
-*A few intro sentences needed here. This chapter is about visualizing many distributions.*
+We commonly have to visualize multiple distributions at the same time. For example, consider weather data. We have observations for each day in a month, possibly at multiple time points or multiple locations, but we frequently are interested in the broader trends, such as how temperature changes with month.
+
+The following figure visualizes temperature data collected in Lincoln, Nebraska in 2016. The dataset contains the mean temperature for each day of the year. We could plot this dataset by calculating the average mean temperature in each month and plotting it as points with error bars.
 
 <img src="boxplots_violins_files/figure-html/points-errorbars-1.png" width="576" style="display: block; margin: auto;" />
 
-There are multiple problems with points plus errorbars. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
+However, there are multiple problems with this approach. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I'm here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
 A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner.
 <img src="boxplots_violins_files/figure-html/boxplot-dia-1.png" width="480" style="display: block; margin: auto;" />

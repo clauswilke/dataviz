@@ -80,16 +80,23 @@ For example, in this particular case the extreme jittering creates the impressio
 
 When the number of points grows large, it can be helpful to indicate the point density, for example with contour lines. This technique works well for the following figure, which shows the total population as a function of area for counties in the midwest.
 ```{r midwest-density-dots, fig.asp = 0.8, message = FALSE, warning = FALSE}
-p6 <- ggplot(midwest, aes(area, poptotal)) + 
+library(openintro) # for countyComplete dataset
+midwest_states = c("Illinois", "Indiana", "Iowa", "Michigan", "Minnesota", "Missouri", "Ohio", "Wisconsin")
+
+countyComplete %>% filter(state %in% midwest_states) -> county_midwest
+
+p6 <- ggplot(county_midwest, aes(area, pop2010)) + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
-  geom_point(color = "navy", size = 1, alpha = .7) + 
+  geom_point(color = "navy", size = .6, alpha = .7) + 
   scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
   scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
                 limits = c(1000, 1e7),
                 labels = c(expression(10^3), expression(10^4), expression(10^5),
                            expression(10^6), expression(10^7))) +
-  xlim(0, 0.1) +
+  scale_x_log10(breaks = c(100, 300, 1000, 3000),
+                limits = c(50, 7000), expand = c(0, 0)) +
   ylab("population total") +
+  xlab("area (square miles)") +
   theme_dviz_grid()
   
 stamp_good(p6)
@@ -97,7 +104,7 @@ stamp_good(p6)
 
 If we want to emphasize the overall features of the distribution rather than the individual points, we can also show only the contour lines and leave out the individual points.
 ```{r midwest-density-only, fig.asp = 0.8, message = FALSE, warning = FALSE}
-p7 <- ggplot(midwest, aes(area, poptotal)) + 
+p7 <- ggplot(county_midwest, aes(area, pop2010)) + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
 #  geom_point(color = "navy", size = 1, alpha = .7) + 
   scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
@@ -105,8 +112,10 @@ p7 <- ggplot(midwest, aes(area, poptotal)) +
                 limits = c(1000, 1e6),
                 labels = c(expression(10^3), expression(10^4), expression(10^5),
                            expression(10^6), expression(10^7))) +
-  scale_x_continuous(breaks = c(0, 0.025, 0.05, 0.075), limits = c(0, 0.08)) +
+  scale_x_log10(breaks = c(100, 300, 1000, 3000),
+                limits = c(150, 2000), expand = c(0, 0)) +
   ylab("population total") +
+  xlab("area (square miles)") +
   theme_dviz_grid()
   
 stamp_good(p7)
@@ -114,18 +123,8 @@ stamp_good(p7)
 
 Finally, we can add a smoothing line to highlight the overall trend in the relationship between the two variables.
 ```{r midwest-density-smooth, fig.asp = 0.8, message = FALSE, warning = FALSE}
-p8 <- ggplot(midwest, aes(area, poptotal)) + 
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) + 
-  geom_smooth(color = "navy", se = FALSE) + 
-  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
-  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
-                limits = c(1000, 1e6),
-                labels = c(expression(10^3), expression(10^4), expression(10^5),
-                           expression(10^6), expression(10^7))) +
-  scale_x_continuous(breaks = c(0, 0.025, 0.05, 0.075), limits = c(0, 0.08)) +
-  ylab("population total") +
-  theme_dviz_grid()
-  
+p8 <- p7 + geom_smooth(color = "navy", se = FALSE)
+
 stamp_good(p8)
 ```
 

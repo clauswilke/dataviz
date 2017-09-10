@@ -124,3 +124,4 @@ Datasets to use:
 - gss_sm (socviz) http://gss.norc.org/Get-Documentation
 - organdata (socviz)
 - titanic_test, titanic_train (titanic) (is a better source of this dataset available?)
+- various datasets of openintro package, https://cran.r-project.org/web/packages/openintro/index.html
