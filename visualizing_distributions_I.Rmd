@@ -1,0 +1,79 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+
+# Visualizing distributions
+
+We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 2012. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the *age distribution* of the passengers.
+
+We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table \@ref(tab:titanic-ages). 
+```{r titanic-ages, message=FALSE, warning=FALSE}
+library(readr)
+df <- read_csv("datasets/Titanic.csv")
+titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
+age_counts <- hist(titanic$age, breaks=(0:15)*5+.01, plot = FALSE)$counts
+age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
+                       count = age_counts,
+                       check.names = FALSE)
+
+knitr::kable(
+  list(
+    age_hist[1:6,], age_hist[7:12,], age_hist[13:15,]
+  ),
+  caption = 'Numbers of passenger with known age on the Titanic.', booktabs = TRUE,
+  row.names = FALSE
+)
+
+```
+
+We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins. Such a visualization is called a histogram.
+
+```{r titanic-ages-hist1}
+age_hist <- cbind(age_hist, age = (1:15)*5-2.5)
+h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#0072B2")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+h1
+```
+
+*Discus histogram dependency on bin width.* 
+
+```{r titanic-ages-hist-grid, fig.width=8.5}
+age_hist_1 <- data.frame(age = (1:75)-0.5, 
+                         count = hist(titanic$age, breaks=(0:75) + .01, plot = FALSE)$counts)
+
+age_hist_3 <- data.frame(age = (1:25)*3-1.5, 
+                         count = hist(titanic$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts)
+
+age_hist_15 <- data.frame(age = (1:5)*15-7.5, 
+                         count = hist(titanic$age, breaks=(0:5)*15 + .01, plot = FALSE)$counts)
+
+h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#0072B2")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 10*(0:5)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+
+h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#0072B2")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+
+h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#0072B2")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 100*(0:4)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+
+plot_grid(h2, h3, h1, h4, align = 'hv')
+
+```
+
+```{r}
+library(ggridges)
+ggplot(titanic, aes(x=age, height = ..count.., y = 0)) + 
+  geom_ridgeline(stat = "density", fill = "gray70", trim = TRUE, bw = .8, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 90), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0))
+```

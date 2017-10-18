@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="background-grids.html">
-<link rel="next" href="directory-of-visualizations.html">
+<link rel="prev" href="directory-of-visualizations.html">
+<link rel="next" href="boxplots-violin-plots-and-more.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -125,56 +125,129 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="overlapping-points" class="section level1">
-<h1><span class="header-section-number">6</span> Handling overlapping points</h1>
-<p>When we want to visualize large or very large datasets, we often experience the challenge that simple x–y scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is “overplotting”, i.e., plotting many points on top of each other. Below, I describe several strategies you can pursue when you encounter this challenge.</p>
-<div id="partial-transparency" class="section level2">
-<h2><span class="header-section-number">6.1</span> Partial transparency</h2>
-<p>Let’s revisit the fuel economy figure from Chapter <a href="small-axis-labels.html#small-axis-labels">4</a> and focus on an aspect we ignored there: <img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" width="576" style="display: block; margin: auto;" /> I have labeled this figure “bad” here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency: <img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="jittering" class="section level2">
-<h2><span class="header-section-number">6.2</span> Jittering</h2>
-<p>Making points partially transparent is not always sufficient. For example, the same dataset contains fuel economy for both city and highway driving. If we plot those two quantities against each other, we obtain the following figure. <img src="overlapping_points_files/figure-html/mpg-cty-hwy-transp-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Because fuel economy is rounded to whole integers in this dataset, many points lie exactly on top of each other. While these fully overlapping points appear darker in the plot, the visual appearance is that of one darker point rather than of a set of points plotted in the same location. We can emphasize the number of points in the same locations by applying a small amount of jitter, i.e., displacing each point randomly by a small amount.</p>
-<p><img src="overlapping_points_files/figure-html/mpg-cty-hwy-jitter-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>However, when jittering we have to make sure not to overdo it. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset and hence are creating a misleading visualization of the data. <img src="overlapping_points_files/figure-html/mpg-cty-hwy-jitter-extreme-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>For example, in this particular case the extreme jittering creates the impression that for some cars the highway economy can fall below the city economy. However, such cases do not exist in the original dataset.</p>
-</div>
-<div id="contour-lines" class="section level2">
-<h2><span class="header-section-number">6.3</span> Contour lines</h2>
-<p>When the number of points grows large, it can be helpful to indicate the point density, for example with contour lines. This technique works well for the following figure, which shows the total population as a function of area for counties in the midwest. <img src="overlapping_points_files/figure-html/midwest-density-dots-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>If we want to emphasize the overall features of the distribution rather than the individual points, we can also show only the contour lines and leave out the individual points. <img src="overlapping_points_files/figure-html/midwest-density-only-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Finally, we can add a smoothing line to highlight the overall trend in the relationship between the two variables. <img src="overlapping_points_files/figure-html/midwest-density-smooth-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="d-histograms" class="section level2">
-<h2><span class="header-section-number">6.4</span> 2d histograms</h2>
-<p>None of the techniques discussed so far work very well when the majority of points falls into a small area relative to the overall extent of the data and the overall extent highlights important data features.</p>
-<p>Consider the following figure, which shows the departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013.</p>
-<p><img src="overlapping_points_files/figure-html/nycflights-points-1.png" width="576" style="display: block; margin: auto;" /> Even though we have made the points fairly transparent, the majority of the points just form a black band between 0 and 300 minutes departure delay. This black band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the points.</p>
-<p>A good solution for this particular case is a 2d histogram, where we subdivide the entire x–y plane into small squares, count how many observations fall into each square, and then color the square by that count. The result is the following figure.</p>
-<p><img src="overlapping_points_files/figure-html/nycflights-2d-bins-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>This figure clearly highlights several important features. First, the vast majority of departures during the day (6am to about 9pm) actually depart without delay or even early (negative delay). However, a modest number of departures has a substantial delay. Moreover, the later a plane departs in the day the more of a delay it can have. Importantly, here the departure time is the actual time of departure, not the scheduled time of departure. So this figure does not necessarily tell us that planes scheduled to depart early never experience delay. What it does tell us, though, is that if a plane departs early it either has little delay or, in very rare cases, a delay of around 900 minutes.</p>
-<p>As an alternative to binning the data into squares, we can also bin into hexagons. This approach, first proposed by <span class="citation">Carr et al. (<a href="#ref-Carr-et-al-1987">1987</a>)</span>, has the advantage that the points in a hexagon are, on average, closer to the hexagon center than the points in an equal-area square are to the center of the square. As a consequence, the colored hexagon represents the data slightly more accurately than the colored square does. The following figure shows the same data with hexagon binning rather than square binning.</p>
-<p><img src="overlapping_points_files/figure-html/nycflights-hex-bins-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div id="visualizing-distributions" class="section level1">
+<h1><span class="header-section-number">8</span> Visualizing distributions</h1>
+<p>We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 2012. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the <em>age distribution</em> of the passengers.</p>
+<p>We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table <a href="visualizing-distributions.html#tab:titanic-ages">8.1</a>.</p>
+<table class="kable_wrapper">
+<caption>
+<span id="tab:titanic-ages">Table 8.1: </span>Numbers of passenger with known age on the Titanic.
+</caption>
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0–5</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">6–10</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">11–15</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">16–20</td>
+<td align="right">99</td>
+</tr>
+<tr class="odd">
+<td align="left">21–25</td>
+<td align="right">139</td>
+</tr>
+<tr class="even">
+<td align="left">26–30</td>
+<td align="right">121</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">31–35</td>
+<td align="right">76</td>
+</tr>
+<tr class="even">
+<td align="left">36–40</td>
+<td align="right">74</td>
+</tr>
+<tr class="odd">
+<td align="left">41–45</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">46–50</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">51–55</td>
+<td align="right">26</td>
+</tr>
+<tr class="even">
+<td align="left">56–60</td>
+<td align="right">22</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">61–65</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">66–70</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">71–75</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins. Such a visualization is called a histogram.</p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><em>Discus histogram dependency on bin width.</em></p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" width="816" style="display: block; margin: auto;" /></p>
+<p><img src="visualizing_distributions_I_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 
-</div>
-</div>
-
-
-
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Carr-et-al-1987">
-<p>Carr, D. B., R. J. Littlefield, W. L. Nicholson, and J. S. Littlefield. 1987. “Scatterplot Matrix Techniques for Large N.” <em>J. Am. Stat. Assoc.</em> 82: 424–36.</p>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="background-grids.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="directory-of-visualizations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="directory-of-visualizations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boxplots-violin-plots-and-more.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

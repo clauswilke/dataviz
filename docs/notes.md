@@ -42,7 +42,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Avoid line drawings**  
   Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
 
-#. **Handling overlapping points**\*  
+#. **Handling overlapping points**\*\*  
   Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.
   
 #. **Multi-part figures**  
@@ -74,7 +74,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing distributions I: Histograms and density plots**  
   Discusses strategies for visualizing individual distributions, including pros and cons of histograms and density plots.
 
-#. **Visualizing distributions II: Boxplots, violin plots, and more**\*  
+#. **Visualizing distributions II: Boxplots, violin plots, and more**\*\*  
   Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.
 
 #. **Visualizing distributions III: Joyplots**  
@@ -124,3 +124,4 @@ Datasets to use:
 - gss_sm (socviz) http://gss.norc.org/Get-Documentation
 - organdata (socviz)
 - titanic_test, titanic_train (titanic) (is a better source of this dataset available?)
+- various datasets of openintro package, https://cran.r-project.org/web/packages/openintro/index.html

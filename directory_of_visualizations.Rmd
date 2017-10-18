@@ -170,4 +170,20 @@ p7 <- ggplot(df, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) +
 
 plot_grid(p1, p2, p3, p4, 
           p5, p6, p7, ncol = 4, scale = .9)
+
+
+## plots to add:
+
+# x-y relationships:
+# - 2d bins
+# - hexbins
+# - smooth line with error region
+# - multiple lines
+
+# quantities
+# - horizontal bars, ordered
+
+# proportions
+# - mosaic plot/stacked bars flipped to horizontal
+# - pie chart
 ```
