@@ -1,12 +1,17 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(dplyr)
+library(tidyr)
 ```
 
 
 # Visualizing distributions
 
 We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 2012. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the *age distribution* of the passengers.
+
+## Visualizing a single distribution
 
 We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table \@ref(tab:titanic-ages). 
 ```{r titanic-ages, message=FALSE, warning=FALSE}
@@ -32,7 +37,7 @@ We can visualize this table by drawing filled rectangles whose heights correspon
 
 ```{r titanic-ages-hist1}
 age_hist <- cbind(age_hist, age = (1:15)*5-2.5)
-h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#0072B2")  + 
+h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz_hgrid()
@@ -51,29 +56,151 @@ age_hist_3 <- data.frame(age = (1:25)*3-1.5,
 age_hist_15 <- data.frame(age = (1:5)*15-7.5, 
                          count = hist(titanic$age, breaks=(0:5)*15 + .01, plot = FALSE)$counts)
 
-h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#0072B2")  + 
+h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 10*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_dviz_hgrid(12)
 
-h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#0072B2")  + 
+h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_dviz_hgrid(12)
 
-h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#0072B2")  + 
+h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 100*(0:4)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_dviz_hgrid(12)
 
-plot_grid(h2, h3, h1, h4, align = 'hv')
+plot_grid(h2, h3, h1 + theme_dviz_hgrid(12), h4, align = 'hv')
 
 ```
 
-```{r}
-library(ggridges)
-ggplot(titanic, aes(x=age, height = ..count.., y = 0)) + 
-  geom_ridgeline(stat = "density", fill = "gray70", trim = TRUE, bw = .8, kernel = "gaussian") + 
-  scale_y_continuous(limits = c(0, 90), expand = c(0, 0)) +
+```{block type='rmdtip', echo=TRUE}
+When making a histogram, always explore multiple bin widths.
+```
+
+
+```{r titanic-ages-dens1}
+ggplot(titanic, aes(x=age)) + 
+  geom_density(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 0.04), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0))
+
 ```
+
+*Discuss scaling, different choices for kernel and bandwith*
+
+## Visualizing multiple distributions at the same time
+
+```{r titanic-age-stacked-hist}
+data.frame(age = (1:25)*3-1.5, 
+           male = hist(filter(titanic, sex == "male")$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts,
+           female = hist(filter(titanic, sex == "female")$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts) %>%
+  gather(gender, count, -age) -> gender_counts
+
+gender_counts$gender <- factor(gender_counts$gender, levels = c("female", "male"))
+
+p_hist_stacked <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) + 
+  geom_col(position = "stack") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2")) +
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .92),
+        legend.justification = c("right", "top"),
+        legend.box.background = element_rect(fill = "white", color = "white"))
+
+stamp_bad(p_hist_stacked)
+```
+There are two key problems with this type of visualization: First, it is never entirely clear whether all bars are meant to start at zero or exactly where the color changes. Are there about 25 females of age 18--20 or are there almost 80? (The former is the case.) Second, the bar heights for the female counts cannot be directly compared, because the bars all start at a different height.
+
+We could try to address these problems by having all bars start at zero and making the bars partially transparent:
+```{r titanic-age-overlapping-hist}
+p_hist_overlapped <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) + 
+  geom_col(position = "identity", alpha = 0.7) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2")) +
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .92),
+        legend.justification = c("right", "top"),
+        legend.box.background = element_rect(fill = "white", color = "white"))
+
+stamp_bad(p_hist_overlapped)
+```
+
+However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we're still not entirely sure where each bar starts and ends.
+
+
+```{r titanic-age-overlapping-dens}
+titanic2 <- titanic
+titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
+p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=3*..count.., fill = sex)) + 
+  geom_density(bw = 2, alpha = 0.7) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 55), name = "scaled density", expand = c(0, 0)) +
+  scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .92),
+        legend.justification = c("right", "top"),
+        legend.box.background = element_rect(fill = "white", color = "white"))
+
+stamp_good(p_dens_overlapped)
+```
+
+*Discuss scaling*
+
+
+When we want to visualize exactly two distributions, we can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an *age pyramid*.
+
+```{r titanic-age-pyramid}
+ggplot(gender_counts, aes(x=age, y=ifelse(gender == "male",-1, 1)*count, fill = gender)) + 
+  geom_col() +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  scale_y_continuous(name = "count", breaks = 20*(-2:1)) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  draw_text(x = 70, y = -35, "male") +
+  draw_text(x = 70, y = 25, "female") +
+  coord_flip() +
+  theme_dviz_grid() +
+  theme(axis.title.x = element_text(hjust = 0.61))
+
+
+```
+
+Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For example, to visualize the length distributions of sepals for three different iris species, density plots are by far the best choice.
+
+```{r iris-densities, message=FALSE, warning=FALSE}
+# compute densities for sepal lengths
+iris_dens <- group_by(iris, Species) %>%
+  do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
+  rename(Sepal.Length = x)
+
+# get the maximum values
+iris_max <- filter(iris_dens, density == max(density)) %>%
+  ungroup() %>%
+  mutate(hjust = c(0, 0.4, 0),
+         vjust = c(1, 0, 1),
+         nudge_x = c(0.11, 0, 0.2),
+         nudge_y = c(-0.02, 0.02, -0.02) 
+        )
+
+iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
+  geom_density(stat = "identity", alpha = 0.7) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
+  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  theme_dviz_hgrid()
+  
+iris_p
+```
+
+```{block type='rmdtip', echo=TRUE}
+To visualize several distributions at once, kernel density plots will generally work better than histograms.
+```
+
