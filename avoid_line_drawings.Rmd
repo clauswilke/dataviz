@@ -1,0 +1,37 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+
+# Avoid line drawings
+
+
+However, the figure still needs to satisfy the principle of proportional ink (Chapter \@ref(proportional-ink)).
+
+```{r titanic-hist, message=FALSE, warning=FALSE}
+library(readr)
+df <- read_csv("datasets/Titanic.csv")
+titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
+age_hist_3 <- data.frame(age = (1:25)*3-1.5, 
+                         count = hist(titanic$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts)
+
+h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fill = "transparent",
+                                                             color = "black")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz() +
+  background_grid(major = "y", minor = "none")
+
+h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
+  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz() +
+  background_grid(major = "y", minor = "none")
+
+
+stamp_bad(h3_bad)
+stamp_good(h3_good)
+
+```
+

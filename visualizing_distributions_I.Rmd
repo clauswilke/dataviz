@@ -7,7 +7,7 @@ library(tidyr)
 ```
 
 
-# Visualizing distributions
+# Visualizing distributions: Histograms and density plots
 
 We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 2012. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the *age distribution* of the passengers.
 
@@ -85,7 +85,6 @@ ggplot(titanic, aes(x=age)) +
   geom_density(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.04), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0))
-
 ```
 
 *Discuss scaling, different choices for kernel and bandwith*
@@ -135,7 +134,7 @@ However, this approach generates new problems. Now it appears that there are act
 ```{r titanic-age-overlapping-dens}
 titanic2 <- titanic
 titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
-p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=3*..count.., fill = sex)) + 
+p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=..count.., fill = sex)) + 
   geom_density(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 55), name = "scaled density", expand = c(0, 0)) +

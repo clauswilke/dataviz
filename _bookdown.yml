@@ -12,12 +12,15 @@ rmd_files: [
   "small_axis_labels.Rmd",
   #"aspect_ratio.Rmd",
   "background_grids.Rmd",
+  "avoid_line_drawings.Rmd",
+  "proportional_ink.Rmd",
   "overlapping_points.Rmd",
 
   # Part II
   "directory_of_visualizations.Rmd",
   #"visualizing_amounts.Rmd",
   "visualizing_distributions_I.Rmd",
+  "visualizing_distributions_II.Rmd",
   "boxplots_violins.Rmd",
 
   # Part III

@@ -15,11 +15,11 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Figure titles**  
   Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
 
-#. **Choosing colorblind-friendly color scales**\*  
-  Explains what color choices can and cannot be seen by people with colorblindness, and also introduces the three basic types of color scales: qualitative, directional, diverging. Material on diverging color scales is not yet written. 
-
 #. **Effective use of color in figures**  
-  Covers basic concepts of color use, as a tool to highlight, as a tool to distinguish, and as a tool to represent a value.
+  Covers basic concepts of color use, as a tool to highlight, as a tool to distinguish, and as a tool to represent a value.   Introduces the three basic types of color scales: qualitative, directional, diverging.
+
+#. **Choosing colorblind-friendly color scales**\*  
+  Explains what color choices can and cannot be seen by people with colorblindness.
 
 #. **Redundant coding**\*  
   Explains how to make sure that key information in the figure is provided in multiple, reduant ways, for example through color and location or color and direct labeling.
@@ -41,6 +41,9 @@ Chapters for which some material exists at this time are marked with stars, as f
   
 #. **Avoid line drawings**  
   Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
+  
+#. **The principle of proportional ink**  
+  Explains that the size of colored areas needs to be proportional to the data value they represent.
 
 #. **Handling overlapping points**\*\*  
   Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.
@@ -53,7 +56,7 @@ Chapters for which some material exists at this time are marked with stars, as f
  
 ### Part II: A visualization for every occasion  {-}
 
-15. **Directory of visualizations**\*  
+16. **Directory of visualizations**\*  
   Provides a graphical guide to the most commonly used types of data visualizations, with pointers to relevant other chapters in the book.
 
 #. **Visualizing amounts**  
@@ -71,14 +74,14 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing trends**  
   Discusses various approaches to smoothing data (linear regression line, GAMs, splines), and common pitfalls (many smoothers are unreliable or misleading at the edges of the data range).
 
-#. **Visualizing distributions I: Histograms and density plots**  
+#. **Visualizing distributions I: Histograms and density plots**\*  
   Discusses strategies for visualizing individual distributions, including pros and cons of histograms and density plots.
 
-#. **Visualizing distributions II: Boxplots, violin plots, and more**\*\*  
-  Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.
+#. **Visualizing distributions II: Cumulative density functions and q-q plots**\*  
+  Discusses strategies for visualizing distributions that are exact and non-arbitrary (unlike histograms and density plots) but are more difficult to interpret.
 
-#. **Visualizing distributions III: Joyplots**  
-  Describes the joyplot, an effective tool for visualizing a very large number of related distributions.
+#. **Visualizing distributions III: Boxplots, violin plots, and more**\*\*  
+  Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.
 
 #. **Visualizing arrays of intensities**  
   Discusses heat maps.
@@ -86,7 +89,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 
 ### Part III: Miscellaneous topics {-}
 
-25. **Understanding the most commonly used image file formats**\*\*  
+26. **Understanding the most commonly used image file formats**\*\*  
   Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.
 
 #. **Choosing the right plotting software**  
@@ -125,3 +128,4 @@ Datasets to use:
 - organdata (socviz)
 - titanic_test, titanic_train (titanic) (is a better source of this dataset available?)
 - various datasets of openintro package, https://cran.r-project.org/web/packages/openintro/index.html
+- Moby Dick wordcounts, downloaded from http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm, reference: M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005).

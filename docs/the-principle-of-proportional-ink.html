@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="background-grids.html">
+<link rel="next" href="overlapping-points.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="part"><span><b>Part I: General principles of figure design</b></span></li>
+<li class="chapter" data-level="1" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html"><i class="fa fa-check"></i><b>1</b> Visualizing data: mapping data onto aesthetics</a></li>
+<li class="chapter" data-level="2" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>2</b> Choosing colorblind-friendly color scales</a></li>
+<li class="chapter" data-level="3" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>3</b> Redundant coding</a></li>
+<li class="chapter" data-level="4" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>4</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="5" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>5</b> Background grids</a></li>
+<li class="chapter" data-level="6" data-path="the-principle-of-proportional-ink.html"><a href="the-principle-of-proportional-ink.html"><i class="fa fa-check"></i><b>6</b> The principle of proportional ink</a></li>
+<li class="chapter" data-level="7" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>7</b> Handling overlapping points</a></li>
+<li class="part"><span><b>Part II: A visualization for every occasion</b></span></li>
+<li class="chapter" data-level="8" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>8</b> Directory of visualizations</a></li>
+<li class="chapter" data-level="9" data-path="visualizing-distributions-histograms-and-density-plots.html"><a href="visualizing-distributions-histograms-and-density-plots.html"><i class="fa fa-check"></i><b>9</b> Visualizing distributions: Histograms and density plots</a></li>
+<li class="chapter" data-level="10" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Cumulative density functions and q-q plots</a></li>
+<li class="chapter" data-level="11" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>11</b> Boxplots, violin plots, and more</a></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="12" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>12</b> Understanding the most commonly used image file formats</a></li>
+<li class="chapter" data-level="13" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>13</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-principle-of-proportional-ink" class="section level1">
+<h1><span class="header-section-number">6</span> The principle of proportional ink</h1>
+<p>The principle of proportional ink:</p>
+<p><strong>The sizes of shaded areas in a plot need to be proportional to the data values they represent</strong></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="background-grids.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="overlapping-points.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

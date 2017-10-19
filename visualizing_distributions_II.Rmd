@@ -1,0 +1,80 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+
+# Visualizing distributions: Cumulative density functions and q-q plots
+
+*intro text*
+
+
+## Empirical density functions
+
+```{r student-grades}
+set.seed(4211)
+points = round(c(rnorm(47, mean = 82, sd = 10), 45, 51, 67))
+points[points > 100] <- 100
+student_data <- data.frame(points, rank = rank(points, ties.method = "random"))
+ggplot(student_data, aes(x = points, y = 50*..y..)) + 
+  stat_ecdf(geom = "step") +
+  geom_point(aes(y = rank)) +
+  scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
+  scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank") +
+  theme_dviz_hgrid() +
+  theme(axis.line.x = element_blank())
+```
+
+
+```{r student-grades-normalized}
+ggplot(student_data, aes(x = points, y = ..y..)) + 
+  stat_ecdf(geom = "step") +
+  scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
+  scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "student rank") +
+  theme_dviz_hgrid() +
+  theme(axis.line.x = element_blank())
+```
+
+## Highly skewed distributions
+```{r county-populations, message=FALSE, warning=FALSE}
+library(openintro)
+ggplot(countyComplete, aes(x=pop2010)) + 
+  stat_ecdf(geom = "step") +
+  scale_x_continuous(expand = c(0, 0), name = "number of county inhabitants") +
+  scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
+  theme_dviz_grid()
+
+ggplot(countyComplete, aes(x=log(pop2010))) + 
+  stat_ecdf(geom = "step") +
+  scale_x_continuous(expand = c(0, 0), name = "log number of county inhabitants") +
+  scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
+  theme_dviz_grid()
+
+```
+
+```{r county-populations-tail-log-log, message=FALSE, warning=FALSE}
+ggplot(countyComplete, aes(x=pop2010, y = 1-..y..)) + 
+  stat_ecdf(geom = "step") +
+  scale_x_log10(expand = c(0, 0),
+                breaks = c(1e2, 1e3, 1e4, 1e5, 1e6, 1e7),
+                labels = c(expression(10^2), expression(10^3), expression(10^4),
+                           expression(10^5), expression(10^6), expression(10^7)),
+                name = "number of county inhabitants") +
+  scale_y_log10(expand = c(0, 0), name = "tail frequency") +
+  theme_dviz_grid()
+```
+
+```{r word-counts-tail-log-log, message=FALSE, warning=FALSE}
+wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
+ggplot(wc, aes(x=count, y = 1-..y..)) + 
+  stat_ecdf(geom = "step") +
+  scale_x_log10(expand = c(0, 0), breaks = c(1, 10, 100, 1000, 10000),
+                name = "number of times word is used") +
+  scale_y_log10(expand = c(0, 0), breaks = c(1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1),
+                labels = c(expression(10^-5), expression(10^-4), expression(10^-3),
+                           expression(10^-2), expression(10^-1), expression(10^0)),
+                name = "fraction of words") +
+  theme_dviz_grid()
+```
+
+## Quantile--quantile plots
