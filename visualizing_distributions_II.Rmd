@@ -47,7 +47,7 @@ ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
 
 Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see below).
 
-In practical applications, it is quite common to draw the ecdf without highlighting the individual points, and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.
+In practical applications, it is quite common to draw the ecdf without highlighting the individual points and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.
 
 
 ```{r student-grades-normalized}
@@ -59,50 +59,83 @@ ggplot(student_data, aes(x = points, y = ..y..)) +
   theme(axis.line.x = element_blank())
 ```
 
-We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value is 81. Approximately 20% of the students received 90 points or more.
+We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value (corresponding to a cumulative frequency of 0.5) is 81. Approximately 20% of the students received 90 points or more.
 
-I find ecdfs handy for assigning grade boundaries because they help me locate the exact cutoffs that minimize student unhappiness. For example, in this example, there's a fairly long horizontal line right below 80 points, followed by a steep rise right at 80. This feature is caused by three students receiving 80 points on their exam while the next poorer performing student received only 76. In this scenario, I might decide that everybody with a point score of 80 or more receives a B and everybody with 79 or less receives a C. The three students with 80 points are happy that they just made a B, and the student with 76 realizes that they would have had to perform much better to not receive a C. If I had set the cutoff at 77, the distribution of letter grades would have been exactly the same, but I might find the student with 76 points visiting my office hoping to negotiate their grade up. Likewise, if I had set the cutoff at 81, I would likely have three students in my office trying to negotiate their grade.
+I find ecdfs handy for assigning grade boundaries because they help me locate the exact cutoffs that minimize student unhappiness. For example, in this example, there's a fairly long horizontal line right below 80 points, followed by a steep rise right at 80. This feature is caused by three students receiving 80 points on their exam while the next poorer performing student received only 76. In this scenario, I might decide that everybody with a point score of 80 or more receives a B and everybody with 79 or less receives a C. The three students with 80 points are happy that they just made a B, and the student with 76 realizes that they would have had to perform much better to not receive a C. If I had set the cutoff at 77, the distribution of letter grades would have been exactly the same, but I might find the student with 76 points visiting my office hoping to negotiate their grade up. Likewise, if I had set the cutoff at 81, I would likely have had three students in my office trying to negotiate their grade.
 
 ## Highly skewed distributions
 
-Many empirical datasets display highly skewed distributions, in particular to the right, and these distributions can be challenging to visualize. Examples include *list* (@Clauset-et-al-2009).
+Many empirical datasets display highly skewed distributions, in particular right-skewed, and these distributions can be challenging to visualize. Examples include the number of people living in different cities or counties, the number of interaction partners of individual proteins in protein--protein interaction networks, the frequency with which individual words appear in a book, the number of academic papers written by different authors, the net worth of individuals, and the number of contacts in a social network (@Clauset-et-al-2009).
 
-```{r county-populations, message=FALSE, warning=FALSE}
+As an example, I will here discuss the number of people living in different US counties according to the 2010 US Census. This distribution has a very long tail to the right. Even though most counties have relatively small numbers of inhabitants (the median is 25,857), a few counties have extremely large numbers of inhabitants (e.g., Los Angeles County, with 9,818,605 inhabitants). If we try to visualize the distribution of population counts as either a density plot or an ecdf, we obtain figures that are essentially useles.
+
+```{r county-populations, message=FALSE, warning=FALSE, fig.width = 8.5, fig.asp = 0.309}
 library(openintro)
-ggplot(countyComplete, aes(x=pop2010)) + 
-  stat_ecdf(geom = "step") +
-  scale_x_continuous(expand = c(0, 0), name = "number of county inhabitants") +
-  scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
-  theme_dviz_grid()
+
+p1 <- ggplot(countyComplete, aes(x=pop2010)) + 
+  geom_density(fill = "#56B4E9", color = "transparent") +
+  scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
+                     breaks = c(0, 2.5e6, 5e6, 7.5e6),
+                     labels = c(expression(0), expression(2.5 %*% 10^6),
+                                expression(5 %*% 10^6), expression(7.5 %*% 10^6))) +
+  scale_y_continuous(expand = c(0, 0), name = expression(paste("density [x", 10^-5, "]")),
+                     breaks = c(0, 4e-6, 8e-6, 1.2e-5),
+                     labels = c(0, 0.4, 0.8, 1.2)) +
+  theme_dviz_grid(12)
+
+p2 <- ggplot(countyComplete, aes(x=pop2010)) + 
+  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
+                     breaks = c(0, 2.5e6, 5e6, 7.5e6),
+                     labels = c(expression(0), expression(2.5 %*% 10^6),
+                                expression(5 %*% 10^6), expression(7.5 %*% 10^6))) +
+  scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
+  theme_dviz_grid(12)
+
+plot_grid(p1, p2, labels = 'auto')
 ```
 
-```{r county-populations-log, message=FALSE, warning=FALSE}
-ggplot(countyComplete, aes(x=log(pop2010))) + 
-  stat_ecdf(geom = "step") +
-  scale_x_continuous(expand = c(0, 0), name = "log number of county inhabitants") +
-  scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
-  theme_dviz_grid()
+The density plot (part a) shows a sharp peak right at 0, and virtually no details of the distribution are visible. Similarly, the ecdf (part b) shows a rapid rise near 0, and again no details of the distribution are visible. For this particular dataset, one solution could be to log-transform the data, and to visualize the distribution of the log-transformed values. This transformation works here because the population numbers in counties follow a nearly perfect log-normal distribution (see below). Indeed, the density plot of the log-transformed values shows a nice bell curve, and the corresponding ecdf shows a nice sigmoidal.
+
+```{r county-populations-log, message=FALSE, warning=FALSE, fig.width = 8.5, fig.asp = 0.309}
+p1_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
+  geom_density(fill = "#56B4E9", color = "transparent") +
+  scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
+  scale_y_continuous(expand = c(0, 0), name = "density") +
+  theme_dviz_grid(12)
+
+p2_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
+  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
+  scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
+  theme_dviz_grid(12)
+
+plot_grid(p1_log, p2_log, labels = 'auto')
 ```
+
+Alternatively, we can plot a descending ecdf with logarithmic *x* and *y* axes. This visualization helps us understand exactly how the right tail decays. *need a few sentences about power laws here.*
 
 ```{r county-populations-tail-log-log, message=FALSE, warning=FALSE}
 ggplot(countyComplete, aes(x=pop2010, y = 1-..y..)) + 
-  stat_ecdf(geom = "step") +
-  scale_x_log10(expand = c(0, 0),
+  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  scale_x_log10(expand = c(0.01, 0),
                 breaks = c(1e2, 1e3, 1e4, 1e5, 1e6, 1e7),
                 labels = c(expression(10^2), expression(10^3), expression(10^4),
                            expression(10^5), expression(10^6), expression(10^7)),
                 name = "number of county inhabitants") +
-  scale_y_log10(expand = c(0, 0), name = "tail frequency") +
+  scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
   theme_dviz_grid()
 ```
+
+The number of times words are used in a book tend to follow a perfect power law. The next example uses the frequencies of words in the novel Moby Dick. When plotted as descending ecdf on a log-log plot, we see a nearly perfect straight line, indicating a true power-law distribution of word frequencies.
 
 ```{r word-counts-tail-log-log, message=FALSE, warning=FALSE}
 wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
 ggplot(wc, aes(x=count, y = 1-..y..)) + 
-  stat_ecdf(geom = "step") +
-  scale_x_log10(expand = c(0, 0), breaks = c(1, 10, 100, 1000, 10000),
+  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  scale_x_log10(expand = c(0.01, 0), breaks = c(1, 10, 100, 1000, 10000),
                 name = "number of times word is used") +
-  scale_y_log10(expand = c(0, 0), breaks = c(1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1),
+  scale_y_log10(expand = c(0.01, 0), breaks = c(1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1),
                 labels = c(expression(10^-5), expression(10^-4), expression(10^-3),
                            expression(10^-2), expression(10^-1), expression(10^0)),
                 name = "fraction of words") +

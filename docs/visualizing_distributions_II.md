@@ -23,24 +23,32 @@ You may wonder what happens if we rank the students the other way round, in desc
 
 Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see below).
 
-In practical applications, it is quite common to draw the ecdf without highlighting the individual points, and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.
+In practical applications, it is quite common to draw the ecdf without highlighting the individual points and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.
 
 
 <img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" width="576" style="display: block; margin: auto;" />
 
-We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value is 81. Approximately 20% of the students received 90 points or more.
+We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value (corresponding to a cumulative frequency of 0.5) is 81. Approximately 20% of the students received 90 points or more.
 
-I find ecdfs handy for assigning grade boundaries because they help me locate the exact cutoffs that minimize student unhappiness. For example, in this example, there's a fairly long horizontal line right below 80 points, followed by a steep rise right at 80. This feature is caused by three students receiving 80 points on their exam while the next poorer performing student received only 76. In this scenario, I might decide that everybody with a point score of 80 or more receives a B and everybody with 79 or less receives a C. The three students with 80 points are happy that they just made a B, and the student with 76 realizes that they would have had to perform much better to not receive a C. If I had set the cutoff at 77, the distribution of letter grades would have been exactly the same, but I might find the student with 76 points visiting my office hoping to negotiate their grade up. Likewise, if I had set the cutoff at 81, I would likely have three students in my office trying to negotiate their grade.
+I find ecdfs handy for assigning grade boundaries because they help me locate the exact cutoffs that minimize student unhappiness. For example, in this example, there's a fairly long horizontal line right below 80 points, followed by a steep rise right at 80. This feature is caused by three students receiving 80 points on their exam while the next poorer performing student received only 76. In this scenario, I might decide that everybody with a point score of 80 or more receives a B and everybody with 79 or less receives a C. The three students with 80 points are happy that they just made a B, and the student with 76 realizes that they would have had to perform much better to not receive a C. If I had set the cutoff at 77, the distribution of letter grades would have been exactly the same, but I might find the student with 76 points visiting my office hoping to negotiate their grade up. Likewise, if I had set the cutoff at 81, I would likely have had three students in my office trying to negotiate their grade.
 
 ## Highly skewed distributions
 
-Many empirical datasets display highly skewed distributions, in particular to the right, and these distributions can be challenging to visualize. Examples include *list* (@Clauset-et-al-2009).
+Many empirical datasets display highly skewed distributions, in particular right-skewed, and these distributions can be challenging to visualize. Examples include the number of people living in different cities or counties, the number of interaction partners of individual proteins in protein--protein interaction networks, the frequency with which individual words appear in a book, the number of academic papers written by different authors, the net worth of individuals, and the number of contacts in a social network (@Clauset-et-al-2009).
 
-<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" width="576" style="display: block; margin: auto;" />
+As an example, I will here discuss the number of people living in different US counties according to the 2010 US Census. This distribution has a very long tail to the right. Even though most counties have relatively small numbers of inhabitants (the median is 25,857), a few counties have extremely large numbers of inhabitants (e.g., Los Angeles County, with 9,818,605 inhabitants). If we try to visualize the distribution of population counts as either a density plot or an ecdf, we obtain figures that are essentially useles.
 
-<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" width="576" style="display: block; margin: auto;" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" width="816" style="display: block; margin: auto;" />
+
+The density plot (part a) shows a sharp peak right at 0, and virtually no details of the distribution are visible. Similarly, the ecdf (part b) shows a rapid rise near 0, and again no details of the distribution are visible. For this particular dataset, one solution could be to log-transform the data, and to visualize the distribution of the log-transformed values. This transformation works here because the population numbers in counties follow a nearly perfect log-normal distribution (see below). Indeed, the density plot of the log-transformed values shows a nice bell curve, and the corresponding ecdf shows a nice sigmoidal.
+
+<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" width="816" style="display: block; margin: auto;" />
+
+Alternatively, we can plot a descending ecdf with logarithmic *x* and *y* axes. This visualization helps us understand exactly how the right tail decays. *need a few sentences about power laws here.*
 
 <img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" width="576" style="display: block; margin: auto;" />
+
+The number of times words are used in a book tend to follow a perfect power law. The next example uses the frequencies of words in the novel Moby Dick. When plotted as descending ecdf on a log-log plot, we see a nearly perfect straight line, indicating a true power-law distribution of word frequencies.
 
 <img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" width="576" style="display: block; margin: auto;" />
 
