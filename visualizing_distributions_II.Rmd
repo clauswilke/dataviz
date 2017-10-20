@@ -144,6 +144,9 @@ ggplot(wc, aes(x=count, y = 1-..y..)) +
 
 ## Quantile--quantile plots
 
+Just like an ecdf, a q-q plot is also based on ranking the data and visualizing the relationship between ranks and acutal values. However, unlike the ecdf case, we don't plot the ranks directly, we use them to predict where a given data point should fall if the data were distributed according to a specified reference distribution. Most commonly, q-q plots are constructed using a normal distribution as the reference. To give a concrete example, assume the actual data values have a mean of 10 and a standard deviation of 3. Then, assuming a normal distribution, we would expect a data point ranked at the 50th percentile to lie at position 10, a data point at the 84th percentile to lie at position 13 (one standard deviation above from the mean), and a data point at the 2.3rd percentile to lie at position 4 (two standard deviations below the mean). We can carry out this calculation for all points in the dataset and then plot the observed values (i.e., values in the dataset) against the theoretical values (i.e., values expected given each data point's rank and the assumed reference distribution).
+
+For the student grades distribution from the beginning of this chapter, this procedure yields the following plot.
 
 ```{r student-grades-qq}
 # estimate distribution parameters (mean and sd)
@@ -156,6 +159,11 @@ ggplot(student_data, aes(sample = points)) +
   theme_dviz()
 ```
 
+The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal).
+
+
+We can use a q-q plot to test my assertion from earlier in this chapter that the population counts in US counties follow a log-normal distribution. If these counts are log-normally distributed, then their log-transformed values are normally distributed and hence should fall right onto the *x* = *y* line.
+
 ```{r county-populations-qq}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(log(countyComplete$pop2010), "normal")$estimate)
@@ -167,4 +175,4 @@ ggplot(countyComplete, aes(sample = log(pop2010))) +
   theme_dviz()
 ```
 
-The agreement between the observed and the theoretical values is exceptional. This demonstrates that the distribution of population counts among counties is indeed log-normal, as I suggested earlier in this chapter. *Give brief explanation for why. Random, multiplicative growth.*
+Indeed, the agreement between the observed and the theoretical values is exceptional. This demonstrates that the distribution of population counts among counties is log-normal, as I suggested earlier in this chapter. *Give brief explanation for why. Random, multiplicative growth.*
