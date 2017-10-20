@@ -11,6 +11,8 @@ source("_common.R")
 
 ## Empirical density functions
 
+We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained.
+
 ```{r student-grades}
 set.seed(4211)
 points = round(c(rnorm(47, mean = 82, sd = 10), 45, 51, 67))
@@ -20,22 +22,45 @@ ggplot(student_data, aes(x = points, y = 50*..y..)) +
   stat_ecdf(geom = "step") +
   geom_point(aes(y = rank)) +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
-  scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank") +
-  theme_dviz_hgrid() +
+  scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (ascending)") +
+  theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
+
+The result is an *empirical cumulative distribution function* (ecdf) or simply *cumulative distribution.* Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value.
+
+Alternatively, we can also rank students in descending order. This ranking simply flips the function on its head. The result is still an empirical cumulative distribution function, but the lines now represent the lowest student rank observed for any possible point value. 
+
+```{r student-grades-desc}
+ggplot(student_data, aes(x = points, y = 51-50*..y..)) + 
+  stat_ecdf(geom = "step") +
+  geom_point(aes(y = 51-rank)) +
+  scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
+  scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (descending)") +
+  theme_dviz_grid() +
+  theme(axis.line.x = element_blank())
+
+```
+
+Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see below).
+
+In practical applications, it is quite common to draw the ecdf without highlighting the individual points, and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.
 
 
 ```{r student-grades-normalized}
 ggplot(student_data, aes(x = points, y = ..y..)) + 
   stat_ecdf(geom = "step") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
-  scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "student rank") +
-  theme_dviz_hgrid() +
+  scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "cumulative frequency") +
+  theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
 
+We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value is 81. Approximately 20% of the students received 90 points or more.
+
 ## Highly skewed distributions
+
+
 ```{r county-populations, message=FALSE, warning=FALSE}
 library(openintro)
 ggplot(countyComplete, aes(x=pop2010)) + 
@@ -43,13 +68,14 @@ ggplot(countyComplete, aes(x=pop2010)) +
   scale_x_continuous(expand = c(0, 0), name = "number of county inhabitants") +
   scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
   theme_dviz_grid()
+```
 
+```{r county-populations-log, message=FALSE, warning=FALSE}
 ggplot(countyComplete, aes(x=log(pop2010))) + 
   stat_ecdf(geom = "step") +
   scale_x_continuous(expand = c(0, 0), name = "log number of county inhabitants") +
   scale_y_continuous(expand = c(0, 0), name = "cumulative frequency") +
   theme_dviz_grid()
-
 ```
 
 ```{r county-populations-tail-log-log, message=FALSE, warning=FALSE}
@@ -78,3 +104,28 @@ ggplot(wc, aes(x=count, y = 1-..y..)) +
 ```
 
 ## Quantile--quantile plots
+
+
+```{r student-grades-qq}
+# estimate distribution parameters (mean and sd)
+params <- as.list(MASS::fitdistr(student_data$points, "normal")$estimate)
+ggplot(student_data, aes(sample = points)) + 
+  geom_abline(slope = 1, intercept = 0, color = "grey70") +
+  stat_qq(dparams = params, color = "#0072B2") +
+  scale_x_continuous(breaks = 10*(5:10)) +
+  scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
+  theme_dviz()
+```
+
+```{r county-populations-qq}
+# estimate distribution parameters (mean and sd)
+params <- as.list(MASS::fitdistr(log(countyComplete$pop2010), "normal")$estimate)
+ggplot(countyComplete, aes(sample = log(pop2010))) + 
+  geom_abline(slope = 1, intercept = 0, color = "grey70") +
+  stat_qq(dparams = params, color = "#0072B2") +
+  scale_x_continuous(breaks = 5+2.5*(0:4)) +
+  scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
+  theme_dviz()
+```
+
+The agreement between the observed and the theoretical values is exceptional. This demonstrates that the distribution of population counts among counties is indeed log-normal, as I suggested earlier in this chapter. *Give brief explanation for why. Random, multiplicative growth.*
