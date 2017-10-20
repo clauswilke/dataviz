@@ -9,7 +9,7 @@ library(ggforce)
 library(viridis)
 ```
 
-# Boxplots, violin plots, and more
+# Boxplots, violin plots, and more {#boxplots-violins}
 
 We commonly have to visualize multiple distributions at the same time. For example, consider weather data. We have observations for each day in a month, possibly at multiple time points or multiple locations, but we frequently are interested in the broader trends, such as how temperature changes with month.
 

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="directory-of-visualizations.html">
+<link rel="next" href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="part"><span><b>Part I: General principles of figure design</b></span></li>
+<li class="chapter" data-level="1" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html"><i class="fa fa-check"></i><b>1</b> Visualizing data: mapping data onto aesthetics</a></li>
+<li class="chapter" data-level="2" data-path="choosing-colorblind-friendly-color-scales.html"><a href="choosing-colorblind-friendly-color-scales.html"><i class="fa fa-check"></i><b>2</b> Choosing colorblind-friendly color scales</a></li>
+<li class="chapter" data-level="3" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>3</b> Redundant coding</a></li>
+<li class="chapter" data-level="4" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>4</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="5" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>5</b> Background grids</a></li>
+<li class="chapter" data-level="6" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>6</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="7" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>7</b> The principle of proportional ink</a></li>
+<li class="chapter" data-level="8" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>8</b> Handling overlapping points</a></li>
+<li class="part"><span><b>Part II: A visualization for every occasion</b></span></li>
+<li class="chapter" data-level="9" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>9</b> Directory of visualizations</a></li>
+<li class="chapter" data-level="10" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="10.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>10.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="10.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-multiple-distributions-at-the-same-time"><i class="fa fa-check"></i><b>10.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Cumulative density functions and q-q plots</a></li>
+<li class="chapter" data-level="12" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>12</b> Boxplots, violin plots, and more</a></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="13" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>13</b> Understanding the most commonly used image file formats</a></li>
+<li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="histograms-density-plots" class="section level1">
+<h1><span class="header-section-number">10</span> Visualizing distributions: Histograms and density plots</h1>
+<p>We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 2012. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the <em>age distribution</em> of the passengers.</p>
+<div id="visualizing-a-single-distribution" class="section level2">
+<h2><span class="header-section-number">10.1</span> Visualizing a single distribution</h2>
+<p>We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table <a href="histograms-density-plots.html#tab:titanic-ages">10.1</a>.</p>
+<table class="kable_wrapper">
+<caption>
+<span id="tab:titanic-ages">Table 10.1: </span>Numbers of passenger with known age on the Titanic.
+</caption>
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0–5</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">6–10</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">11–15</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">16–20</td>
+<td align="right">99</td>
+</tr>
+<tr class="odd">
+<td align="left">21–25</td>
+<td align="right">139</td>
+</tr>
+<tr class="even">
+<td align="left">26–30</td>
+<td align="right">121</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">31–35</td>
+<td align="right">76</td>
+</tr>
+<tr class="even">
+<td align="left">36–40</td>
+<td align="right">74</td>
+</tr>
+<tr class="odd">
+<td align="left">41–45</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">46–50</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">51–55</td>
+<td align="right">26</td>
+</tr>
+<tr class="even">
+<td align="left">56–60</td>
+<td align="right">22</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age range</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">61–65</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">66–70</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">71–75</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins. Such a visualization is called a histogram.</p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><em>Discus histogram dependency on bin width.</em></p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" width="816" style="display: block; margin: auto;" /></p>
+<div class="rmdtip">
+<p>
+When making a histogram, always explore multiple bin widths.
+</p>
+</div>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><em>Discuss scaling, different choices for kernel and bandwith</em></p>
+</div>
+<div id="visualizing-multiple-distributions-at-the-same-time" class="section level2">
+<h2><span class="header-section-number">10.2</span> Visualizing multiple distributions at the same time</h2>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" width="576" style="display: block; margin: auto;" /> There are two key problems with this type of visualization: First, it is never entirely clear whether all bars are meant to start at zero or exactly where the color changes. Are there about 25 females of age 18–20 or are there almost 80? (The former is the case.) Second, the bar heights for the female counts cannot be directly compared, because the bars all start at a different height.</p>
+<p>We could try to address these problems by having all bars start at zero and making the bars partially transparent: <img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we’re still not entirely sure where each bar starts and ends.</p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-dens-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><em>Discuss scaling</em></p>
+<p>When we want to visualize exactly two distributions, we can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an <em>age pyramid</em>.</p>
+<p><img src="visualizing_distributions_I_files/figure-html/titanic-age-pyramid-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For example, to visualize the length distributions of sepals for three different iris species, density plots are by far the best choice.</p>
+<p><img src="visualizing_distributions_I_files/figure-html/iris-densities-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="rmdtip">
+<p>
+To visualize several distributions at once, kernel density plots will generally work better than histograms.
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="directory-of-visualizations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

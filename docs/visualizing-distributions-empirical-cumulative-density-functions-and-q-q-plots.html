@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="visualizing-distributions-histograms-and-density-plots.html">
-<link rel="next" href="boxplots-violin-plots-and-more.html">
+<link rel="prev" href="histograms-density-plots.html">
+<link rel="next" href="boxplots-violins.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -78,13 +78,13 @@
 <li class="chapter" data-level="8" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>8</b> Handling overlapping points</a></li>
 <li class="part"><span><b>Part II: A visualization for every occasion</b></span></li>
 <li class="chapter" data-level="9" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>9</b> Directory of visualizations</a></li>
-<li class="chapter" data-level="10" data-path="visualizing-distributions-histograms-and-density-plots.html"><a href="visualizing-distributions-histograms-and-density-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Histograms and density plots</a></li>
-<li class="chapter" data-level="11" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Cumulative density functions and q-q plots</a><ul>
-<li class="chapter" data-level="11.1" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#empirical-density-functions"><i class="fa fa-check"></i><b>11.1</b> Empirical density functions</a></li>
-<li class="chapter" data-level="11.2" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#highly-skewed-distributions"><i class="fa fa-check"></i><b>11.2</b> Highly skewed distributions</a></li>
-<li class="chapter" data-level="11.3" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#quantilequantile-plots"><i class="fa fa-check"></i><b>11.3</b> Quantile–quantile plots</a></li>
+<li class="chapter" data-level="10" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Histograms and density plots</a></li>
+<li class="chapter" data-level="11" data-path="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Empirical cumulative density functions and q-q plots</a><ul>
+<li class="chapter" data-level="11.1" data-path="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html#empirical-cumulative-density-functions"><i class="fa fa-check"></i><b>11.1</b> Empirical cumulative density functions</a></li>
+<li class="chapter" data-level="11.2" data-path="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html#highly-skewed-distributions"><i class="fa fa-check"></i><b>11.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="11.3" data-path="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots.html#quantilequantile-plots"><i class="fa fa-check"></i><b>11.3</b> Quantile–quantile plots</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>12</b> Boxplots, violin plots, and more</a></li>
+<li class="chapter" data-level="12" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>12</b> Boxplots, violin plots, and more</a></li>
 <li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
 <li class="chapter" data-level="13" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>13</b> Understanding the most commonly used image file formats</a></li>
 <li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a></li>
@@ -109,23 +109,26 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visualizing-distributions-cumulative-density-functions-and-q-q-plots" class="section level1">
-<h1><span class="header-section-number">11</span> Visualizing distributions: Cumulative density functions and q-q plots</h1>
-<p><em>intro text</em></p>
-<div id="empirical-density-functions" class="section level2">
-<h2><span class="header-section-number">11.1</span> Empirical density functions</h2>
-<p>We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained.</p>
+<div id="visualizing-distributions-empirical-cumulative-density-functions-and-q-q-plots" class="section level1">
+<h1><span class="header-section-number">11</span> Visualizing distributions: Empirical cumulative density functions and q-q plots</h1>
+<p>In Chapter <a href="histograms-density-plots.html#histograms-density-plots">10</a>, I described how we can visualize distributions with histograms or density plots. Both of these approaches are highly intuitive and visually appealing. However, as discussed in that chapter, they both share the limitation that the resulting figure depends to a substantial degree on parameters the user has to choose, such as the bin width for histograms and the bandwidth for density plots. As a result, both have to be considered as an interpretation of the data rather than a direct visualization of the data itself.</p>
+<p>As an alternative to using histograms or density plots, we could simply show all the data points individually, as a point cloud (see e.g. Chapter <a href="boxplots-violins.html#boxplots-violins">12</a>). However, this approach becomes unwieldy for very large datasets, and in any case there is value in aggregate methods that highlight properties of the distribution rather than the individual data points. To solve this problem, statisticians have invented empirical cumulative density functions (ecdfs) and quantile–quantile (q-q) plots. These types of visualizations require no arbitrary parameter choices, and they show all of the data at once. Unfortunately, they are a little less intuitive than a histogram or a density plot is, and I don’t see them used frequently outside of highly technical publications. They are quite popular among statisticians, though, and I think anybody interested in data visualization should be familiar with these techniques.</p>
+<div id="empirical-cumulative-density-functions" class="section level2">
+<h2><span class="header-section-number">11.1</span> Empirical cumulative density functions</h2>
+<p>To illustrate cumulative empirical density functions, I will begin with a hypothetical example that is closely modeled after something I deal with a lot as a professor in the classroom: a dataset of student grades. Assume our hypothetical class has 50 students, and the students just completed an exam on which they could score between 0 and 100 points. How can we best visualize the class performance, for example to determine appropriate grade boundaries?</p>
+<p>We can plot the total number of students that have received at least a certain number of points versus all possible point scores. This plot will be an ascending function, starting at 0 for 0 points and ending at 50 for 100 points. A different way of thinking about this visualization is the following: We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained. The result is an <em>empirical cumulative distribution function</em> (ecdf) or simply <em>cumulative distribution.</em> Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value.</p>
 <p><img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>The result is an <em>empirical cumulative distribution function</em> (ecdf) or simply <em>cumulative distribution.</em> Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value.</p>
-<p>Alternatively, we can also rank students in descending order. This ranking simply flips the function on its head. The result is still an empirical cumulative distribution function, but the lines now represent the lowest student rank observed for any possible point value.</p>
+<p>You may wonder what happens if we rank the students the other way round, in descending order. This ranking simply flips the function on its head. The result is still an empirical cumulative distribution function, but the lines now represent the lowest student rank observed for any possible point value.</p>
 <p><img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see below).</p>
 <p>In practical applications, it is quite common to draw the ecdf without highlighting the individual points, and to normalize the ranks by the maximum rank, so that the <em>y</em> axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.</p>
 <p><img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value is 81. Approximately 20% of the students received 90 points or more.</p>
+<p>I find ecdfs handy for assigning grade boundaries because they help me locate the exact cutoffs that minimize student unhappiness. For example, in this example, there’s a fairly long horizontal line right below 80 points, followed by a steep rise right at 80. This feature is caused by three students receiving 80 points on their exam while the next poorer performing student received only 76. In this scenario, I might decide that everybody with a point score of 80 or more receives a B and everybody with 79 or less receives a C. The three students with 80 points are happy that they just made a B, and the student with 76 realizes that they would have had to perform much better to not receive a C. If I had set the cutoff at 77, the distribution of letter grades would have been exactly the same, but I might find the student with 76 points visiting my office hoping to negotiate their grade up. Likewise, if I had set the cutoff at 81, I would likely have three students in my office trying to negotiate their grade.</p>
 </div>
 <div id="highly-skewed-distributions" class="section level2">
 <h2><span class="header-section-number">11.2</span> Highly skewed distributions</h2>
+<p>Many empirical datasets display highly skewed distributions, in particular to the right, and these distributions can be challenging to visualize. Examples include <em>list</em> (<span class="citation">Clauset, Shalizi, and Newman (<a href="#ref-Clauset-et-al-2009">2009</a>)</span>).</p>
 <p><img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p><img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p><img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" width="576" style="display: block; margin: auto;" /></p>
@@ -139,13 +142,19 @@
 
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Clauset-et-al-2009">
+<p>Clauset, A., C. R. Shalizi, and M. E. J. Newman. 2009. “Power-Law Distributions in Empirical Data.” <em>SIAM Review</em> 51: 661–703.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="visualizing-distributions-histograms-and-density-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="boxplots-violin-plots-and-more.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="histograms-density-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boxplots-violins.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

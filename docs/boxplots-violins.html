@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="visualizing-distributions-histograms-and-density-plots.html">
-<link rel="next" href="boxplots-violin-plots-and-more.html">
+<link rel="prev" href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html">
+<link rel="next" href="understanding-the-most-commonly-used-image-file-formats.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -78,13 +78,9 @@
 <li class="chapter" data-level="8" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>8</b> Handling overlapping points</a></li>
 <li class="part"><span><b>Part II: A visualization for every occasion</b></span></li>
 <li class="chapter" data-level="9" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>9</b> Directory of visualizations</a></li>
-<li class="chapter" data-level="10" data-path="visualizing-distributions-histograms-and-density-plots.html"><a href="visualizing-distributions-histograms-and-density-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Histograms and density plots</a></li>
-<li class="chapter" data-level="11" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Cumulative density functions and q-q plots</a><ul>
-<li class="chapter" data-level="11.1" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#empirical-density-functions"><i class="fa fa-check"></i><b>11.1</b> Empirical density functions</a></li>
-<li class="chapter" data-level="11.2" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#highly-skewed-distributions"><i class="fa fa-check"></i><b>11.2</b> Highly skewed distributions</a></li>
-<li class="chapter" data-level="11.3" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html#quantilequantile-plots"><i class="fa fa-check"></i><b>11.3</b> Quantile–quantile plots</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="boxplots-violin-plots-and-more.html"><a href="boxplots-violin-plots-and-more.html"><i class="fa fa-check"></i><b>12</b> Boxplots, violin plots, and more</a></li>
+<li class="chapter" data-level="10" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>10</b> Visualizing distributions: Histograms and density plots</a></li>
+<li class="chapter" data-level="11" data-path="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Cumulative density functions and q-q plots</a></li>
+<li class="chapter" data-level="12" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>12</b> Boxplots, violin plots, and more</a></li>
 <li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
 <li class="chapter" data-level="13" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>13</b> Understanding the most commonly used image file formats</a></li>
 <li class="chapter" data-level="14" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>14</b> Notes</a></li>
@@ -109,43 +105,32 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visualizing-distributions-cumulative-density-functions-and-q-q-plots" class="section level1">
-<h1><span class="header-section-number">11</span> Visualizing distributions: Cumulative density functions and q-q plots</h1>
-<p><em>intro text</em></p>
-<div id="empirical-density-functions" class="section level2">
-<h2><span class="header-section-number">11.1</span> Empirical density functions</h2>
-<p>We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained.</p>
-<p><img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>The result is an <em>empirical cumulative distribution function</em> (ecdf) or simply <em>cumulative distribution.</em> Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value.</p>
-<p>Alternatively, we can also rank students in descending order. This ranking simply flips the function on its head. The result is still an empirical cumulative distribution function, but the lines now represent the lowest student rank observed for any possible point value.</p>
-<p><img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see below).</p>
-<p>In practical applications, it is quite common to draw the ecdf without highlighting the individual points, and to normalize the ranks by the maximum rank, so that the <em>y</em> axis represents the cumulative frequency. For the student grades example, these modifications yield the following plot.</p>
-<p><img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>We can directly read off key properties of the student grade distribution from this plot. For example, a quarter of the students (25%) received less than 75 points. The median point value is 81. Approximately 20% of the students received 90 points or more.</p>
-</div>
-<div id="highly-skewed-distributions" class="section level2">
-<h2><span class="header-section-number">11.2</span> Highly skewed distributions</h2>
-<p><img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="quantilequantile-plots" class="section level2">
-<h2><span class="header-section-number">11.3</span> Quantile–quantile plots</h2>
-<p><img src="visualizing_distributions_II_files/figure-html/student-grades-qq-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><img src="visualizing_distributions_II_files/figure-html/county-populations-qq-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>The agreement between the observed and the theoretical values is exceptional. This demonstrates that the distribution of population counts among counties is indeed log-normal, as I suggested earlier in this chapter. <em>Give brief explanation for why. Random, multiplicative growth.</em></p>
+<div id="boxplots-violins" class="section level1">
+<h1><span class="header-section-number">12</span> Boxplots, violin plots, and more</h1>
+<p>We commonly have to visualize multiple distributions at the same time. For example, consider weather data. We have observations for each day in a month, possibly at multiple time points or multiple locations, but we frequently are interested in the broader trends, such as how temperature changes with month.</p>
+<p>The following figure visualizes temperature data collected in Lincoln, Nebraska in 2016. The dataset contains the mean temperature for each day of the year. We could plot this dataset by calculating the average mean temperature in each month and plotting it as points with error bars.</p>
+<p><img src="boxplots_violins_files/figure-html/points-errorbars-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>However, there are multiple problems with this approach. First, we’re losing a lot of information about the data. Second, it’s not necessarily clear what the points represent. Third, it’s definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I’m here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.</p>
+<p>A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner. <img src="boxplots_violins_files/figure-html/boxplot-dia-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>The line in the middle represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.</p>
+<p>When we visualize the temperature dataset using boxplots, we obtain the following result. <img src="boxplots_violins_files/figure-html/boxplots-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Using the boxplot visualization, we see clearly that temperature is highly skewed in December (most days are moderately cold, and a few are extremely cold) and not very skewed at all in some other months, e.g., July.</p>
+<p><img src="boxplots_violins_files/figure-html/violin-plots-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>We can also plot all individual points: <img src="boxplots_violins_files/figure-html/all-points-no-jitter-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="boxplots_violins_files/figure-html/jittered-points-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. <img src="boxplots_violins_files/figure-html/sina-plots-1.png" width="576" style="display: block; margin: auto;" /></p>
 
 </div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="visualizing-distributions-histograms-and-density-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="boxplots-violin-plots-and-more.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="visualizing-distributions-cumulative-density-functions-and-q-q-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="understanding-the-most-commonly-used-image-file-formats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
