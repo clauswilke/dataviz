@@ -3,7 +3,7 @@
 source("_common.R")
 
 library(viridis)
-library(ggjoy)
+library(ggridges)
 ```
 
 # Choosing colorblind-friendly color scales

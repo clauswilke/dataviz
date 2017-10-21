@@ -9,7 +9,7 @@ library(tidyr)
 library(purrr)
 library(stringr)
 library(lubridate)
-library(ggjoy)
+library(ggridges)
 library(viridis)
 ```
 
@@ -257,14 +257,14 @@ And finally, here is an example where the color bar (representing temperature) i
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
-  geom_joy_gradient(scale = 3, rel_min_height = 0.001, bandwidth = bandwidth) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.001, bandwidth = bandwidth) +
   scale_x_continuous(expand = c(0.01, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
   scale_y_discrete(expand = c(0.01, 0.3)) +
   scale_fill_viridis(name = "Temp. [F]", option = "C") +
   labs(title = 'Temperatures in Lincoln NE',
        subtitle = 'Mean temperatures (Fahrenheit) by month for 2016') +
   guides(fill = "none") +
-  theme_joy(font_size = 13, grid = TRUE) +
+  theme_ridges(font_size = 13, grid = TRUE) +
   theme(axis.title.y = element_blank(),
         axis.title.x = element_text(hjust = 1, vjust = 1),
         axis.line.x = element_blank())

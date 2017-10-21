@@ -6,9 +6,21 @@
   background-image: url("../images/tip.png");
 }
 
+table {
+  font-size: .833em !important;
+}
+
+caption {
+  display: table-caption;
+  font-size: .833em !important;
+  text-align: left;
+}
+
 p.caption {
-  color: #777;
+  #color: #777;
   margin-top: 10px;
+  font-size: .833em !important;
+  text-align: left;
 }
 p code {
   white-space: inherit;

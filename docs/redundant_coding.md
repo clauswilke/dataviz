@@ -53,17 +53,6 @@
 ```
 
 ```
-## Loading required package: ggridges
-```
-
-```
-## The ggjoy package has been deprecated. Please switch over to the
-## ggridges package, which provides the same functionality. Porting
-## guidelines can be found here:
-## https://github.com/clauswilke/ggjoy/blob/master/README.md
-```
-
-```
 ## Loading required package: viridisLite
 ```
 
