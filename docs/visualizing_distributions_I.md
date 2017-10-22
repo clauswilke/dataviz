@@ -52,7 +52,7 @@ age range    count
 
 We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins (Figure \@ref(fig:titanic-ages-hist1)). Such a visualization is called a histogram.
 
-(ref:titanic-ages-hist1) Counts of passengers of the Titanic at various ages.
+(ref:titanic-ages-hist1) Histogram of the ages of Titanic passengers.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist1-1.png" alt="(ref:titanic-ages-hist1)" width="576" />
@@ -61,7 +61,7 @@ We can visualize this table by drawing filled rectangles whose heights correspon
 
 **Discus histogram dependency on bin width.** 
 
-(ref:titanic-ages-hist-grid) **Caption needed.**
+(ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" alt="(ref:titanic-ages-hist-grid)" width="816" />
