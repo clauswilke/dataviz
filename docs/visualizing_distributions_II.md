@@ -1,7 +1,7 @@
 
 
 
-# Visualizing distributions: Empirical cumulative density functions and q-q plots
+# Visualizing distributions: Empirical cumulative density functions and q-q plots {#ecdf-qq}
 
 In Chapter \@ref(histograms-density-plots), I described how we can visualize distributions with histograms or density plots. Both of these approaches are highly intuitive and visually appealing. However, as discussed in that chapter, they both share the limitation that the resulting figure depends to a substantial degree on parameters the user has to choose, such as the bin width for histograms and the bandwidth for density plots. As a result, both have to be considered as an interpretation of the data rather than a direct visualization of the data itself.
 
@@ -77,7 +77,7 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 <p class="caption">(\#fig:county-populations-tail-log-log)(ref:county-populations-tail-log-log)</p>
 </div>
 
-As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf on a log-log plot, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
+As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
 
 (ref:word-counts-tail-log-log) Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used.
 

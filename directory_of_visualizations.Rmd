@@ -4,14 +4,18 @@ source("_common.R")
 
 library(dplyr)
 library(ggforce)
-library(ggjoy)
+library(ggridges)
+library(colorspace)
 ```
 
 # (PART\*) Part II: A visualization for every occasion {-}
 
 # Directory of visualizations
 
-```{r fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
+```{r message = FALSE, warning = FALSE}
+## general setup code
+
+# theme
 theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
   line_size <- .8
   font_size <- 10
@@ -33,75 +37,150 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
   )
 }
 
-# earth-brown
-# HCL Wizard settings: 71, 80, 10, 18, 97, 1.5, 2
-palette1 = c("#402B00", "#7F6B00", "#B6A87C", "#E2DAC4", "#FBF6EA")
 
-# brown-green
-# HCL Wizard settings: 86, 80, 10, 18, 97, 1.5, 2
-palette2 = c("#313100", "#707000", "#ABAB7B", "#DCDCC3", "#F7F7EA")
-
-# green-brown
-# HCL Wizard settings: -265, 80, 10, 18, 97, 1.5, 2
-palette3 = c("#243400", "#667300", "#A4AD7C", "#D8DDC4", "#F5F8EA")
-
-# burgundy-red
-# HCL Wizard settings: 17, 80, 10, 18, 97, 1.5, 2
-palette4 = c("#670000", "#A1574F", "#CF9C98", "#F1D4D1", "#FFF3F2")
-
-# brown-red
-# HCL Wizard settings: 41, 80, 10, 18, 97, 1.5, 2
-palette5 = c("#581900", "#96602B", "#C7A188", "#ECD6C9", "#FFF4ED")
-
-# ocean-blue
-# HCL Wizard settings: 241, 80, 10, 18, 97, 1.5, 2
-palette6 = c("#003F9C", "#2372A3", "#8DACCC", "#CDDCEE", "#EFF7FF")
-
-# steel-blue
-# HCL Wizard settings: 257, 80, 10, 18, 97, 1.5, 2
-palette7 = c("#0021B1", "#546AA8", "#9DA7CF", "#D4DAF0", "#F3F6FF")
-
-
-palette <- palette1
+# data sets
+set.seed(5142)
 
 n <- 15
-x <- rnorm(15)
-y <- .4*x + .6*rnorm(15)
-df <- data.frame(x, y)
-p1 <- ggplot(df, aes(x, y)) + 
-  geom_point(color = palette[3], size = 2.4) + 
-  scale_x_continuous(expand = c(.2, 0)) +
-  scale_y_continuous(expand = c(.2, 0)) +
-  labs(title = "Scatterplot") +
-  theme_plot_icon(palette1[length(palette)], palette[1])
+x <- rnorm(n)
+y <- .4*x + .6*rnorm(n)
+df_scatter_xy <- data.frame(x, y)
 
-df <- data.frame(x = c(rnorm(1000, 1., 1.6), rnorm(350, 4, .4)))
-p2 <- ggplot(df, aes(x)) +
-  geom_density(fill = palette[4], color = palette[2], bw = .35) +
-  scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, .29), expand = c(0, 0)) +
-  labs(title = "Density plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
+df_one_dist <- data.frame(x = c(rnorm(1000, 1., 1.6), rnorm(350, 4, .4)))
 
-p3 <- ggplot(df, aes(x)) +
+df_one_normal <- data.frame(x = rnorm(20))
+
+df_fractions <- data.frame(y = c(.3, .39, .48, .6, .25, .13, .22, .24, .45, .48, .3, .16),
+                 x = factor(rep(1:4, 3)),
+                 type = rep(c("A", "B", "C"), each = 4))
+
+n <- 70
+df_multi_dist <- data.frame(y = c(rnorm(n, 1, .8), rnorm(n, 2, .7), rnorm(n, 0, .5)),
+                 type = rep(c("A", "B", "C"), each = n),
+                 number = rep(c(2, 1, 3), each = n))
+
+# palettes
+
+npal <- 5
+# earth-brown
+pal_earth_brown <- sequential_hcl(n = npal, h1 = 71, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# brown-green
+pal_brown_green <- sequential_hcl(n = npal, h1 = 86, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# green-brown
+pal_green_brown <- sequential_hcl(n = npal, h1 = -265, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# burgundy-red
+pal_burgundy_red <- sequential_hcl(n = npal, h1 = 17, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# brown-red
+pal_brown_red <- sequential_hcl(n = npal, h1 = 41, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# ocean-blue
+pal_ocean_blue <- sequential_hcl(n = npal, h1 = 241, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+
+# steel-blue
+pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+```
+
+## Individual distributions
+
+```{r single-distributions, fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
+
+palette <- pal_earth_brown 
+
+p1 <- ggplot(df_one_dist, aes(x)) +
   geom_histogram(fill = palette[4], color = palette[2], bins = 18) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 290), 
                      expand = c(0, 0)) +
   labs(title = "Histogram") +
-  theme_plot_icon(palette[length(palette)], palette[1])
+  theme_plot_icon(palette[npal], palette[1])
 
 
-plot_grid(p1, p2, p3, ncol = 4, scale = .9)
+p2 <- ggplot(df_one_dist, aes(x)) +
+  geom_density(fill = palette[4], color = palette[2], bw = .35) +
+  scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, .29), expand = c(0, 0)) +
+  labs(title = "Density plot") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p3 <- ggplot(df_one_normal, aes(x)) +
+  stat_ecdf(color = palette[2], size = .7) +
+  scale_x_continuous(expand = c(0.05, 0)) +
+  scale_y_continuous(limits = c(0, 1.1), expand = c(0, 0)) +
+  labs(title = "Cumulative density") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p4 <- ggplot(df_one_normal, aes(sample = x)) +
+  geom_abline(intercept = 0, slope = 1, color = palette[4]) +
+  geom_qq(color = palette[2]) +
+  labs(title = "q-q plot") +
+  theme_plot_icon(palette[npal], palette[1])
+
+plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 ```
 
-```{r fig.width = 8, fig.asp = 1/4, message = FALSE}
-palette <- palette2
+Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
 
-df <- data.frame(y = c(.3, .39, .48, .6, .25, .13, .22, .24, .45, .48, .3, .16),
-                 x = factor(rep(1:4, 3)),
-                 type = rep(c("A", "B", "C"), each = 4))
-p1 <- ggplot(filter(df, x!=4), aes(x, y,
+## Multiple distributions
+
+```{r multiple-distributions, fig.width = 8, fig.asp = 1/2, message = FALSE}
+palette <- pal_ocean_blue
+
+p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_boxplot(color = palette[1], fill = palette[4]) +
+  labs(title = "Boxplots") +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+p2 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_violin(color = palette[1], fill = palette[4]) +
+  labs(title = "Violin plots") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p3 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_jitter(color = palette[1], width = 0.3, size = .8) +
+  labs(title = "Jittered points") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p4 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_sina(color = palette[1], size = 0.8) +
+  labs(title = "Sina plot") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
+  geom_histogram(color = palette[1], bins = 12) +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Stacked histograms") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 49), expand = c(0, 0)) +
+  theme_plot_icon(palette[npal], palette[1])
+
+p6 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
+  geom_density(alpha = 0.7, color = palette[1]) +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Overlapping densities") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, .95), expand = c(0, 0)) +
+  theme_plot_icon(palette[npal], palette[1])
+
+p7 <- ggplot(df_multi_dist, aes(x = y, y = number, group = number)) + 
+  geom_density_ridges(alpha = 0.7, color = palette[1], fill = palette[3], scale = 2.0) +
+  labs(title = "Ridgeline plot") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(limits = c(1, 6.5), expand = c(0, 0)) +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+plot_grid(p1, p2, p3, p4, 
+          p5, p6, p7, ncol = 4, scale = .9)
+```
+
+
+## Proportions
+
+```{r proportions, fig.width = 8, fig.asp = 1/4, message = FALSE}
+palette <- pal_brown_green
+
+p1 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
                                    fill=factor(type, levels = c("A", "C", "B")))) + 
   geom_col(position="dodge", color = palette[1],
            width = .7) +
@@ -109,68 +188,42 @@ p1 <- ggplot(filter(df, x!=4), aes(x, y,
                      limits = c(0, .58)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Bar plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
+  theme_plot_icon(palette[npal], palette[1])
 
-p2 <- ggplot(df, aes(x, y, fill=type)) + 
+p2 <- ggplot(df_fractions, aes(x, y, fill=type)) + 
   geom_col(position="stack", color = palette[1]) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked bar plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
+  theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, ncol = 4, scale = .9)
-```
-
-```{r fig.width = 8, fig.asp = 1/2, message = FALSE}
-palette <- palette6
-
-n <- 70
-df <- data.frame(y = c(rnorm(n, 1, .8), rnorm(n, 2, .7), rnorm(n, 0, .5)),
-                 type = rep(c("A", "B", "C"), each = n),
-                 number = rep(c(2, 1, 3), each = n))
-p1 <- ggplot(df, aes(x = type, y = y)) + geom_boxplot(color = palette[1], fill = palette[4]) +
-  labs(title = "Boxplot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-
-p2 <- ggplot(df, aes(x = type, y = y)) + geom_violin(color = palette[1], fill = palette[4]) +
-  labs(title = "Violin plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-p3 <- ggplot(df, aes(x = type, y = y)) + geom_jitter(color = palette[1], width = 0.3, size = .8) +
-  labs(title = "Jittered points") +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-p4 <- ggplot(df, aes(x = type, y = y)) + geom_sina(color = palette[1], size = 0.8) +
-  labs(title = "Sina plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-p5 <- ggplot(df, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
-  geom_density(alpha = 0.7, color = palette[1]) +
-  scale_fill_manual(values = palette[2:4]) +
-  labs(title = "Overlapping densities plot") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, .95), expand = c(0, 0)) +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-p6 <- ggplot(df, aes(x = y, y = number, group = number)) + 
-  geom_joy(alpha = 0.7, fill = palette[3], scale = 2.0) +
-  labs(title = "Joyplot") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(limits = c(1, 6.5), expand = c(0, 0)) +
-  theme_plot_icon(palette[length(palette)], palette[1])
-
-p7 <- ggplot(df, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
+p3 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
   geom_density(alpha = 0.7, color = palette[1], position = "fill") +
   scale_fill_manual(values = palette[2:4]) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  labs(title = "Stacked densities plot") +
-  theme_plot_icon(palette[length(palette)], palette[1])
+  labs(title = "Stacked densities") +
+  theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, p3, p4, 
-          p5, p6, p7, ncol = 4, scale = .9)
 
+plot_grid(p1, p2, p3, ncol = 4, scale = .9)
+```
+
+## Other
+
+```{r fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
+
+palette <- pal_steel_blue
+
+
+p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
+  geom_point(color = palette[3], size = 2.4) + 
+  scale_x_continuous(expand = c(.2, 0)) +
+  scale_y_continuous(expand = c(.2, 0)) +
+  labs(title = "Scatterplot") +
+  theme_plot_icon(palette[npal], palette[1])
+
+plot_grid(p1, ncol = 4, scale = .9)
 
 ## plots to add:
 
@@ -187,3 +240,4 @@ plot_grid(p1, p2, p3, p4,
 # - mosaic plot/stacked bars flipped to horizontal
 # - pie chart
 ```
+

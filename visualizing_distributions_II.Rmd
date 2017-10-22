@@ -4,7 +4,7 @@ source("_common.R")
 ```
 
 
-# Visualizing distributions: Empirical cumulative density functions and q-q plots
+# Visualizing distributions: Empirical cumulative density functions and q-q plots {#ecdf-qq}
 
 In Chapter \@ref(histograms-density-plots), I described how we can visualize distributions with histograms or density plots. Both of these approaches are highly intuitive and visually appealing. However, as discussed in that chapter, they both share the limitation that the resulting figure depends to a substantial degree on parameters the user has to choose, such as the bin width for histograms and the bandwidth for density plots. As a result, both have to be considered as an interpretation of the data rather than a direct visualization of the data itself.
 

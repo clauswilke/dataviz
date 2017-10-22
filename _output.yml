@@ -3,7 +3,7 @@ bookdown::gitbook:
   split_by: chapter
   config:
     toc:
-      collapse: subsection
+      collapse: section
       before: |
         <li><a href="./">Data Visualization</a></li>
       after: |

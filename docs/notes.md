@@ -77,7 +77,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing distributions I: Histograms and density plots**\*  
   Discusses strategies for visualizing individual distributions, including pros and cons of histograms and density plots.
 
-#. **Visualizing distributions II: Cumulative density functions and q-q plots**\*  
+#. **Visualizing distributions II: Cumulative density functions and q-q plots**\*\*  
   Discusses strategies for visualizing distributions that are exact and non-arbitrary (unlike histograms and density plots) but are more difficult to interpret.
 
 #. **Visualizing distributions III: Boxplots, violin plots, and more**\*\*  
