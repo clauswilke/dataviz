@@ -4,6 +4,7 @@ source("_common.R")
 
 library(dplyr)
 library(tidyr)
+library(ggridges) # for geom_density_line()
 ```
 
 
@@ -92,10 +93,10 @@ Histograms have been a popular visualization option since at least the 18th cent
 
 ```{r titanic-ages-dens1, fig.cap='(ref:titanic-ages-dens1)'}
 ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(0, 75), expand = c(0.01, 0)) +
-  theme_dviz_grid()
+  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid()
 ```
 
 Just as is the case with histograms, the exact visual appearance of a density plot depends on the kernel and bandwidth choices (Figure \@ref(fig:titanic-ages-dens-grid)). The bandwidth parameter behaves similarly to the bin width in histograms. If the bandwidth is too small, then the density estimate can become overly peaky and visually busy and the main trends in the data may be obscured. On the other hand, if the bandwidth is too large, then smaller features in the distribution of the data may disappear. In addition, the choice of the kernel affects the shape of the density curve. For example, a Gaussian kernel will have a tendency to produce density estimates that look Gaussian-like, with smooth features and tails. By contrast, a rectangular kernel can generate the appearance of steps in the density curve (Figure \@ref(fig:titanic-ages-dens-grid)d). In general, the more data points there are in the data set, the less the choice of the kernel matters. Therefore, density plots tend to be quite reliable and informative for large data sets but can be misleading for data sets of only a few points.
@@ -104,28 +105,28 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 
 ```{r titanic-ages-dens-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-dens-grid)'}
 pdens1 <- ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9", bw = .5, kernel = "gaussian") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(0, 75), expand = c(0.01, 0)) +
-  theme_dviz_grid(12)
+  geom_density_line(fill = "#56B4E9", bw = .5, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid(12)
 
 pdens2 <- ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(0, 75), expand = c(0.01, 0)) +
-  theme_dviz_grid(12)
+  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid(12)
 
 pdens3 <- ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9", bw = 5, kernel = "gaussian") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(0, 75), expand = c(0.01, 0)) +
-  theme_dviz_grid(12)
+  geom_density_line(fill = "#56B4E9", bw = 5, kernel = "gaussian") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid(12)
 
 pdens4 <- ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9", bw = 2, kernel = "rectangular") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(0, 75), expand = c(0.01, 0)) +
-  theme_dviz_grid(12)
+  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "rectangular") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  theme_dviz_hgrid(12)
 
 plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv',
           labels = 'auto', label_fontface = "plain")
@@ -140,10 +141,10 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 
 ```{r titanic-ages-dens-negative, fig.cap='(ref:titanic-ages-dens-negative)'}
 pdens_neg <- ggplot(titanic, aes(x=age)) + 
-  geom_density(fill = "#56B4E9") + 
-  scale_y_continuous(limits = c(0, 0.046), expand = c(0.01, 0), name = "density") +
-  scale_x_continuous(limits = c(-10, 80), expand = c(0.01, 0)) +
-  theme_dviz_grid()
+  geom_density_line(fill = "#56B4E9") + 
+  scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
+  scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
+  theme_dviz_hgrid()
 
 stamp_bad(pdens_neg)
 ```
@@ -210,7 +211,7 @@ However, this approach generates new problems. Now it appears that there are act
 titanic2 <- titanic
 titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
 p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=..count.., fill = sex)) + 
-  geom_density(bw = 2, alpha = 0.7) +
+  geom_density_line(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 20), name = "scaled density", expand = c(0, 0)) +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
@@ -264,7 +265,7 @@ iris_max <- filter(iris_dens, density == max(density)) %>%
         )
 
 iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
-  geom_density(stat = "identity", alpha = 0.7) +
+  geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y), size = 12/.pt) +
