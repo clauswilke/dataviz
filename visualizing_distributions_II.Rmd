@@ -99,7 +99,7 @@ p2 <- ggplot(countyComplete, aes(x=pop2010)) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_dviz_grid(12)
 
-plot_grid(p1, p2, labels = 'auto')
+plot_grid(p1, p2, labels = 'auto', label_fontface = 'plain')
 ```
 
 The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak right at 0 and virtually no details of the distribution are visible. Similarly, the ecdf (Figure \@ref(fig:county-populations)b) shows a rapid rise near 0 and again no details of the distribution are visible. For this particular dataset, we can log-transform the data and visualize the distribution of the log-transformed values. This transformation works here because the population numbers in counties is not actually a power law, but instead follow a nearly perfect log-normal distribution (see Section \@ref(qq-plots)). Indeed, the density plot of the log-transformed values shows a nice bell curve and the corresponding ecdf shows a nice sigmoidal shape (Figure \@ref(fig:county-populations-log)).
@@ -119,7 +119,7 @@ p2_log <- ggplot(countyComplete, aes(x=log10(pop2010))) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_dviz_grid(12)
 
-plot_grid(p1_log, p2_log, labels = 'auto')
+plot_grid(p1_log, p2_log, labels = 'auto', label_fontface = 'plain')
 ```
 
 To see that this distribution is not a power law, we plot it as a descending ecdf with logarithmic *x* and *y* axes. In this visualization, a power law appears as a perfect straight line. For the population counts in counties, the right tail forms almost but not quite a straight line on the descending log-log ecdf plot (Figure \@ref(fig:county-populations-tail-log-log)).
