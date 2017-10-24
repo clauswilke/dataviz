@@ -271,36 +271,36 @@ Figure 10.5: Kernel density estimates can extend the tails of the distribution i
 Always make sure that your density estimate does not predict the existence of nonsensical data values.
 </p>
 </div>
-<p>So should you use a histogram or a density plot to visualize a distribution? Heated discussions can be had on this topic. Some people are vehemently against density plots and believe that they are arbitrary and misleading. Others realize that histograms can be just as arbitrary and misleading. I think the choice is ultimately a matter of taste. However, the choice should also be made on a case-by-case basis, based on which visualization more accurately reflects the specific features of interest in the data at hand. Finally, I believe that density estimates have an inherent advantage over histograms as soon as we want to visualize more than one distribution at a time (see next section).</p>
+<p>So should you use a histogram or a density plot to visualize a distribution? Heated discussions can be had on this topic. Some people are vehemently against density plots and believe that they are arbitrary and misleading. Others realize that histograms can be just as arbitrary and misleading. I think the choice is largely a matter of taste, but sometimes one or the other option may more accurately reflect the specific features of interest in the data at hand. There is also the possibility of using neither and instead choosing empirical cumulative density functions or q-q plots (Chapter <a href="ecdf-qq.html#ecdf-qq">11</a>). Finally, I believe that density estimates have an inherent advantage over histograms as soon as we want to visualize more than one distribution at a time (see next section).</p>
 </div>
 <div id="visualizing-multiple-distributions-at-the-same-time" class="section level2">
 <h2><span class="header-section-number">10.2</span> Visualizing multiple distributions at the same time</h2>
 <p>In many scenarios we have multiple distributions we would like to visualize simultaneously. For example, let’s say we’d like to see how the ages of Titanic passengers are distributed between men and women. Were men and women passengers generally of the same age, or was there an age difference between the genders? One commonly employed visualization strategy in this case is a stacked histogram, where we draw the histogram bars for women on top of the bars for men, in a different color (Figure <a href="histograms-density-plots.html#fig:titanic-age-stacked-hist">10.6</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-stacked-hist"></span>
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="Caption needed." width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="Histogram of the ages of Titanic passengers stratified by gender." width="576" />
 <p class="caption">
-Figure 10.6: <strong>Caption needed.</strong>
+Figure 10.6: Histogram of the ages of Titanic passengers stratified by gender.
 </p>
 </div>
-<p>In my opinion, this type of visualization should be avoided. There are two key problems here: First, from just looking at the figure, it is never entirely clear where exactly the bars begin. Do they start where the color changes or are they meant to start at zero? In other words, are there about 25 females of age 18–20 or are there almost 80? (The former is the case.) Second, the bar heights for the female counts cannot be directly compared, because the bars all start at a different height. In fact, the men were, on average, older than the women, and this fact is not at all visible in Figure <a href="histograms-density-plots.html#fig:titanic-age-stacked-hist">10.6</a>.</p>
+<p>In my opinion, this type of visualization should be avoided. There are two key problems here: First, from just looking at the figure, it is never entirely clear where exactly the bars begin. Do they start where the color changes or are they meant to start at zero? In other words, are there about 25 females of age 18–20 or are there almost 80? (The former is the case.) Second, the bar heights for the female counts cannot be directly compared to each other, because the bars all start at a different height. For example, the men were on average older than the women, and this fact is not at all visible in Figure <a href="histograms-density-plots.html#fig:titanic-age-stacked-hist">10.6</a>.</p>
 <p>We could try to address these problems by having all bars start at zero and making the bars partially transparent (Figure <a href="histograms-density-plots.html#fig:titanic-age-overlapping-hist">10.7</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-overlapping-hist"></span>
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="Caption needed." width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="Age distributions of male and female Titanic passengers, shown as two overlapping histograms." width="576" />
 <p class="caption">
-Figure 10.7: <strong>Caption needed.</strong>
+Figure 10.7: Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
 </p>
 </div>
-<p>However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we’re still not entirely sure where each bar starts and ends.</p>
+<p>However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we’re still not entirely sure where each bar starts and ends. Overlapping histograms don’t work well because a semi-transparent bar drawn on top of another tends to not look like a semi-transparent bar but instead a bar drawn in a different color.</p>
+<p><strong>Discuss density plot option. Highlight how distributions are the same until 18 years and then diverge.</strong></p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-overlapping-dens"></span>
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-dens-1.png" alt="Caption needed. Mention special scaling here." width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-dens-1.png" alt="Density estimates of the ages of male and female Titanic passengers. To highlight that there were more male than female passengers, the density curves were scaled such that the area under each curve corresponds to the total number of male and female passengers with known age (468 and 288, respectively)." width="576" />
 <p class="caption">
-Figure 10.8: <strong>Caption needed.</strong> <em>Mention special scaling here.</em>
+Figure 10.8: Density estimates of the ages of male and female Titanic passengers. To highlight that there were more male than female passengers, the density curves were scaled such that the area under each curve corresponds to the total number of male and female passengers with known age (468 and 288, respectively).
 </p>
 </div>
-<p><em>Discuss scaling</em></p>
 <p>When we want to visualize exactly two distributions, we can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an <em>age pyramid</em> (Figure <a href="histograms-density-plots.html#fig:titanic-age-pyramid">10.9</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-pyramid"></span>
