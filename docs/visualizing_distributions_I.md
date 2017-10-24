@@ -105,7 +105,7 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 </div>
 
 <div class="rmdtip">
-<p>Always make sure that your density estimate does not predict the existence of nonsensical data values.</p>
+<p>Always verify that your density estimate does not predict the existence of nonsensical data values.</p>
 </div>
 
 So should you use a histogram or a density plot to visualize a distribution? Heated discussions can be had on this topic. Some people are vehemently against density plots and believe that they are arbitrary and misleading. Others realize that histograms can be just as arbitrary and misleading. I think the choice is largely a matter of taste, but sometimes one or the other option may more accurately reflect the specific features of interest in the data at hand. There is also the possibility of using neither and instead choosing empirical cumulative density functions or q-q plots (Chapter \@ref(ecdf-qq)). Finally, I believe that density estimates have an inherent advantage over histograms as soon as we want to visualize more than one distribution at a time (see next section).
@@ -132,9 +132,9 @@ We could try to address these problems by having all bars start at zero and maki
 <p class="caption">(\#fig:titanic-age-overlapping-hist)(ref:titanic-age-overlapping-hist)</p>
 </div>
 
-However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we're still not entirely sure where each bar starts and ends. Overlapping histograms don't work well because a semi-transparent bar drawn on top of another tends to not look like a semi-transparent bar but instead a bar drawn in a different color.
+However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we're still not entirely sure where each bar starts and ends. Overlapping histograms don't work well because a semi-transparent bar drawn on top of another tends to not look like a semi-transparent bar but instead like a bar drawn in a different color.
 
-**Discuss density plot option. Highlight how distributions are the same until 18 years and then diverge.**
+Overlapping density plots don't typically have the problem that overlapping histograms have, because the continuous density lines help the eye keep the distributions separate. However, for this particular dataset, the age distributions for male and female passengers are nearly identical up to around age 17 and then diverge, so that the resulting visualization is still not ideal (Figure \@ref(fig:titanic-age-overlapping-dens)). 
 
 (ref:titanic-age-overlapping-dens) Density estimates of the ages of male and female Titanic passengers. To highlight that there were more male than female passengers, the density curves were scaled such that the area under each curve corresponds to the total number of male and female passengers with known age (468 and 288, respectively).
 
@@ -143,9 +143,7 @@ However, this approach generates new problems. Now it appears that there are act
 <p class="caption">(\#fig:titanic-age-overlapping-dens)(ref:titanic-age-overlapping-dens)</p>
 </div>
 
-
-
-When we want to visualize exactly two distributions, we can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an *age pyramid* (Figure \@ref(fig:titanic-age-pyramid)).
+Another option is possible when we want to visualize exactly two distributions. We can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an *age pyramid* (Figure \@ref(fig:titanic-age-pyramid)).
 
 (ref:titanic-age-pyramid) The age distributions of male and female Titanic passengers visualized as an age pyramid.
 
@@ -156,7 +154,7 @@ When we want to visualize exactly two distributions, we can make two separate hi
 
 Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For example, to visualize the length distributions of sepals for three different iris species, density plots are by far the best choice (Figure \@ref(fig:iris-densities)).
 
-(ref:iris-densities) **Caption needed.**
+(ref:iris-densities) Density estimates of the sepal lengths of three different iris species.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_I_files/figure-html/iris-densities-1.png" alt="(ref:iris-densities)" width="576" />
