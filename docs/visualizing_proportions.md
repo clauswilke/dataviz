@@ -22,9 +22,6 @@ as proportions of a whole
 Allows easy visual comparison           ✖                 ✖                   ✔ 
 of the relative proportions 
 
-Colored areas are proportional            ✖                 ✔                   ✔ 
-to the visualized data values
-
 Visually emphasizes simple              ✔                 ✖                   ✖
 fractions, such as 1/2, 1/3,
 1/4
