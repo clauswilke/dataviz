@@ -19,6 +19,7 @@ rmd_files: [
   # Part II
   "directory_of_visualizations.Rmd",
   #"visualizing_amounts.Rmd",
+  "visualizing_proportions.Rmd",
   "visualizing_distributions_I.Rmd",
   "visualizing_distributions_II.Rmd",
   "boxplots_violins.Rmd",
