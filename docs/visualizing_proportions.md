@@ -3,6 +3,9 @@
 
 # Visualizing proportions
 
+<img src="visualizing_proportions_files/figure-html/bundestag-1.png" width="816" style="display: block; margin: auto;" />
+
+
 
 
 <img src="visualizing_proportions_files/figure-html/five-cases-side-by-side-1.png" width="576" style="display: block; margin: auto;" />

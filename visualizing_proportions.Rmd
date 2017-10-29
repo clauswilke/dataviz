@@ -8,6 +8,71 @@ library(colorblindr)
 
 # Visualizing proportions
 
+```{r, bundestag, fig.width=8.5, message=FALSE, warning=FALSE}
+# 8th Bundestag	1976–1980, source: https://en.wikipedia.org/wiki/Bundestag#Distribution_of_seats_in_the_Bundestag
+bundestag = data.frame(party = c("CDU/CSU", "SPD", "FDP"),
+                       seats = c(243, 214, 39),
+                       colors = c("#000000", "#e30113", "#ffed00"))
+
+bundestag <- mutate(bundestag,
+                    label_theta = c(420, 160, 19.5), # manually chosen
+                    label_r = c(1.75, 1.6, 1.55), # manually chosen
+                    party = factor(party, levels = party))
+
+bt_pie <- ggplot(bundestag, aes(x = 1, y = seats, fill = party)) + 
+  geom_col(position = "stack") + 
+  geom_text(aes(x = label_r, y = label_theta, label = party), size = 12/.pt) +
+  coord_polar(theta = "y") +
+  scale_y_continuous(breaks = NULL, name = "") +
+  scale_x_continuous(breaks = NULL, name = "") +
+  scale_fill_manual(values = bundestag$colors) + 
+  theme_dviz(12) + 
+  theme(axis.line.x = element_blank(),
+        legend.position = "none")
+
+#bt_pie
+
+bt_bars <- ggplot(bundestag, aes(x = party, y = seats, fill = party)) + 
+  geom_col() + 
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_fill_manual(values = bundestag$colors, guide = "none") + 
+  theme_dviz_hgrid(12)
+
+#bt_bars
+
+bundestag <- mutate(bundestag,
+                    label_y = cumsum(seats) - seats/2)
+
+bt_bars_stacked_base <- ggplot(bundestag, aes(x = 1, y = seats, fill = factor(party, levels = rev(party)))) + 
+  geom_col(position = "stack") + 
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_x_discrete(expand = c(0, 0), breaks = NULL, name = "") +
+  scale_fill_manual(values = rev(bundestag$colors), guide = "none")
+
+bt_bars_yax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
+  geom_text(data = bundestag, aes(x = 0.06, y = label_y, label = party, hjust = 0, vjust = 0.5)) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 1))
+
+bt_bars_stacked <- insert_yaxis_grob(bt_bars_stacked_base + theme_dviz_hgrid(12),
+                                     bt_bars_yax, grid::unit(.5, "null"))
+#ggdraw(bt_bars_stacked)
+
+bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
+  geom_text(data = bundestag, aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0)) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +
+  coord_flip()
+
+bt_bars_hstacked <- insert_xaxis_grob(bt_bars_stacked_base + coord_flip() +
+                                        scale_y_continuous(expand = c(0, 0), position = "top") +
+                                        theme_dviz_vgrid(12),
+                                      bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
+
+#ggdraw(bt_bars_hstacked)
+
+plot_grid(bt_pie, bt_bars_stacked, bt_bars, bt_bars_hstacked)
+```
+
+
 ```{r}
 # Example recreated after:
 # https://en.wikipedia.org/wiki/File:Piecharts.svg
@@ -28,14 +93,16 @@ ggplot(five_cases, aes(x = company, y = percent, fill = company)) +
   geom_col() + 
   facet_wrap(~year) +
   scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_OkabeIto()
+  scale_fill_OkabeIto() + 
+  theme_dviz()
 ```
 
 ```{r five-cases-stacked-bars}
 ggplot(five_cases, aes(x = year, y = percent, fill = company)) + 
   geom_col(position = "stack") + 
   scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_OkabeIto(order = c(1:3, 5, 4))
+  scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
+  theme_dviz()
 ```
 
 ```{r five-cases-pies, fig.width = 8.5}
@@ -47,6 +114,7 @@ pies <- ggplot(five_cases, aes(x = 1, y = percent, fill = company)) +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_OkabeIto() + 
+  theme_dviz() +
   theme(axis.line.x = element_blank(),
         legend.position = "none",
         strip.background = element_blank())
@@ -81,3 +149,9 @@ proportions or time series
 of proportions
 ----------------------------------------------------------------------------------------
 
+
+```{r}
+#Notes:
+#  https://github.com/wilkox/treemapify
+#  Also possibly use survival on Titanic, as.data.frame(Titanic)
+```
