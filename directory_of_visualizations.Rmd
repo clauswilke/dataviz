@@ -185,7 +185,7 @@ plot_grid(p1, p2, p3, p4,
 ```{r proportions, fig.width = 8, fig.asp = 1/2, message = FALSE}
 palette <- pal_brown_green
 
-p1 <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
+p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
   geom_col(position = "stack", color = palette[1]) + 
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
@@ -198,10 +198,14 @@ p1 <- ggplot(df_props, aes(x = 1, y = value, fill = group)) +
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank())
 
+# make sure plot background is fully filled, as in the other plots
+p1 <- ggdraw(p1_main) +
+  theme(plot.background = element_rect(fill = palette[npal],
+                                       color = "transparent"))
 
 p2 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
   geom_col(position="identity", color = palette[1],
-           width = .7) +
+           width = .8) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Side-by-side bars") +
