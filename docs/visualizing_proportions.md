@@ -3,8 +3,30 @@
 
 # Visualizing proportions
 
-<img src="visualizing_proportions_files/figure-html/bundestag-1.png" width="816" style="display: block; margin: auto;" />
 
+A pie chart (Figure \@ref(fig:bundestag-pie)).
+
+(ref:bundestag-pie) Party composition of the 8th German Bundestag, 1976--1980, visualized as a pie chart.
+
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="(ref:bundestag-pie)" width="432" />
+<p class="caption">(\#fig:bundestag-pie)(ref:bundestag-pie)</p>
+</div>
+
+(ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally.
+
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="(ref:bundestag-stacked-bars)" width="816" />
+<p class="caption">(\#fig:bundestag-stacked-bars)(ref:bundestag-stacked-bars)</p>
+</div>
+
+
+(ref:bundestag-bars-side-by-side) Party composition of the 8th German Bundestag, 1976--1980, visualized as side-by-side bars.
+
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/bundestag-bars-side-by-side-1.png" alt="(ref:bundestag-bars-side-by-side)" width="576" />
+<p class="caption">(\#fig:bundestag-bars-side-by-side)(ref:bundestag-bars-side-by-side)</p>
+</div>
 
 
 
@@ -40,4 +62,6 @@ visualization of many sets of
 proportions or time series
 of proportions
 ----------------------------------------------------------------------------------------
+
+
 
