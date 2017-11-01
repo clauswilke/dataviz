@@ -60,9 +60,19 @@ of proportions
 
 
 
-<img src="visualizing_proportions_files/figure-html/marketshare-side-by-side-1.png" width="576" style="display: block; margin: auto;" />
+(ref:marketshare-side-by-side) Marketshare of five hypothetical companies for the years 2015--2017, visualized as side-by-side bars.
 
-<img src="visualizing_proportions_files/figure-html/five-companies-stacked-bars-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/marketshare-side-by-side-1.png" alt="(ref:marketshare-side-by-side)" width="576" />
+<p class="caption">(\#fig:marketshare-side-by-side)(ref:marketshare-side-by-side)</p>
+</div>
+
+(ref:marketshare-stacked-bars) Marketshare of five hypothetical companies for the years 2015--2017, visualized as stacked bars.
+
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/five-companies-stacked-bars-1.png" alt="(ref:marketshare-stacked-bars)" width="576" />
+<p class="caption">(\#fig:five-companies-stacked-bars)(ref:marketshare-stacked-bars)</p>
+</div>
 
 
 (ref:marketshare-pies) Marketshare of five hypothetical companies for the years 2015--2017, visualized as pie charts.
@@ -72,6 +82,11 @@ of proportions
 <p class="caption">(\#fig:marketshare-pies)(ref:marketshare-pies)</p>
 </div>
 
-**Additional things this chapter needs: A time course of proportions, visualized as stacked bars (ideally, just two categories); stacked density distributions (continuous x axis); treemap (maybe move to separate chapter?).**
+
+<img src="visualizing_proportions_files/figure-html/women-parliament-1.png" width="720" style="display: block; margin: auto;" />
+
+<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" width="720" style="display: block; margin: auto;" />
+
+**Additional things this chapter needs: Stacked density distributions (continuous x axis); treemap (maybe move to separate chapter, visualizing nested proportions?).**
 
 

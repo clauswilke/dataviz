@@ -2,6 +2,7 @@
 # run setup script
 source("_common.R")
 library(dplyr)
+library(tidyr)
 library(colorblindr)
 ```
 
@@ -134,7 +135,7 @@ marketshare <- group_by(marketshare, year) %>%
 
 (ref:marketshare-side-by-side) Marketshare of five hypothetical companies for the years 2015--2017, visualized as side-by-side bars.
 
-```{r marketshare-side-by-side, fig.cap='(ref:marketshare-side-by-side)}
+```{r marketshare-side-by-side, fig.cap='(ref:marketshare-side-by-side)'}
 ggplot(marketshare, aes(x = company, y = percent, fill = company)) + 
   geom_col() + 
   facet_wrap(~year) +
@@ -145,7 +146,7 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
 
 (ref:marketshare-stacked-bars) Marketshare of five hypothetical companies for the years 2015--2017, visualized as stacked bars.
 
-```{r five-companies-stacked-bars, fig.cap='(ref:marketshare-stacked-bars)}
+```{r five-companies-stacked-bars, fig.cap='(ref:marketshare-stacked-bars)'}
 ggplot(marketshare, aes(x = year, y = percent, fill = company)) + 
   geom_col(position = "stack") + 
   scale_y_continuous(expand = c(0, 0)) +
@@ -177,7 +178,68 @@ pies <- ggplot(marketshare, aes(x = 1, y = percent, fill = company)) +
 pies
 ```
 
-**Additional things this chapter needs: A time course of proportions, visualized as stacked bars (ideally, just two categories); stacked density distributions (continuous x axis); treemap (maybe move to separate chapter, visualizing nested proportions?).**
+
+```{r women-parliament, fig.width = 7.5, fig.asp = .55}
+df <- read.csv("datasets/women_parliaments/women_tidy.csv")
+
+ccode = "RWA" # Rwanda
+#ccode = "BEL" # Belgium
+#ccode = "ARB" # Arab world
+#ccode = "BOL" # Bolivia
+#ccode = "EUU" # European Union
+
+df %>% filter(country_code == ccode & year > 1990) %>%
+  mutate(women = perc_women, men = 100 - perc_women) %>%
+  select(-perc_women) %>%
+  gather(gender, percent, women, men) %>%
+  mutate(gender = factor(gender, levels = c("women", "men"))) -> women_rwanda
+
+plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
+    geom_col(position = "stack", width = .9) +
+    geom_hline(yintercept = c(25, 50, 75), color = "#FFFFFFA0") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_fill_OkabeIto(guide = "none") +
+    theme_dviz() + 
+    theme(axis.ticks.y = element_blank(),
+          #axis.ticks.x = element_blank(),
+          axis.line.x = element_blank(),
+          axis.line.y = element_blank())
+    #theme_dviz_hgrid() + background_grid(major = "none", minor = "none")
+
+# calculate label position
+labels <- filter(women_rwanda, year == max(year)) %>%
+  mutate(pos = 100 - cumsum(percent) + 0.5*percent)
+
+yax <- axis_canvas(plot_base, axis = "y") +
+  geom_text(data = labels, aes(y = pos, label = paste0(" ", gender)),
+            x = 0, hjust = 0, size = 14/.pt)
+
+ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
+
+```
+
+```{r health-vs-age, fig.width = 7.5, fig.asp = .55}
+df <- select(productplots::happy, age, health) %>%
+  na.omit()
+
+ggplot(df, aes(x=age, y=..count.., fill = health, color = health)) + 
+  geom_density(position = "fill") +
+  geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), name = "percent",
+                     labels = c(0, 25, 50, 75, 100)) + 
+  scale_color_brewer() + 
+  scale_fill_brewer() +
+  theme_dviz() + 
+  theme(axis.ticks.y = element_blank(),
+        #axis.ticks.x = element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank())
+
+```
+
+**Additional ideas for this chapter: treemap and other nested situations (maybe move to separate chapter, visualizing nested proportions?).**
 
 ```{r}
 #Notes:
