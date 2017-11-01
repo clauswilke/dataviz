@@ -132,7 +132,9 @@ marketshare <- group_by(marketshare, year) %>%
 
 ```
 
-```{r marketshare-side-by-side}
+(ref:marketshare-side-by-side) Marketshare of five hypothetical companies for the years 2015--2017, visualized as side-by-side bars.
+
+```{r marketshare-side-by-side, fig.cap='(ref:marketshare-side-by-side)}
 ggplot(marketshare, aes(x = company, y = percent, fill = company)) + 
   geom_col() + 
   facet_wrap(~year) +
@@ -141,7 +143,9 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
   theme_dviz()
 ```
 
-```{r five-companies-stacked-bars}
+(ref:marketshare-stacked-bars) Marketshare of five hypothetical companies for the years 2015--2017, visualized as stacked bars.
+
+```{r five-companies-stacked-bars, fig.cap='(ref:marketshare-stacked-bars)}
 ggplot(marketshare, aes(x = year, y = percent, fill = company)) + 
   geom_col(position = "stack") + 
   scale_y_continuous(expand = c(0, 0)) +
@@ -173,7 +177,7 @@ pies <- ggplot(marketshare, aes(x = 1, y = percent, fill = company)) +
 pies
 ```
 
-**Additional things this chapter needs: A time course of proportions, visualized as stacked bars (ideally, just two categories); stacked density distributions (continuous x axis); treemap (maybe move to separate chapter?).**
+**Additional things this chapter needs: A time course of proportions, visualized as stacked bars (ideally, just two categories); stacked density distributions (continuous x axis); treemap (maybe move to separate chapter, visualizing nested proportions?).**
 
 ```{r}
 #Notes:
