@@ -91,6 +91,8 @@ of proportions
 </div>
 
 
+As of 2016, the African country Rwanda tops the list of countries with the highest number of women in their national parliament. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered. (See Chapter \@ref(background-grids) for further discussion on such lines.)
+
 (ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Source: Inter-Parliamentary Union (IPU), ipu.org.
 
 <div class="figure" style="text-align: center">
