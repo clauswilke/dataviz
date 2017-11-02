@@ -108,7 +108,8 @@
             <section class="normal" id="section-">
 <div id="visualizing-proportions" class="section level1">
 <h1><span class="header-section-number">10</span> Visualizing proportions</h1>
-<p>A pie chart (Figure <a href="visualizing-proportions.html#fig:bundestag-pie">10.1</a>).</p>
+<p><em>Introductory paragraph here.</em></p>
+<p>From 1961 to 1983, the German parliament (called the <em>Bundestag</em>) was composed of members of three different parties, CDU/CSU, SPD, and FDP. During most of this time, CDU/CSU and SPD had approximately comparable numbers of seats, while the FDP typically held only a small fraction of seats. For example, in the 8th Bundestag, from 1976–1980, the CDU/CSU held 243 seats, SPD 214, and FDP 39, for a total of 496. This type of data, where different parts combine into a total, is most commonly visualized as a pie chart (Figure <a href="visualizing-proportions.html#fig:bundestag-pie">10.1</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-pie"></span>
 <img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU." width="403.2" />
@@ -116,6 +117,7 @@
 Figure 10.1: Party composition of the 8th German Bundestag, 1976–1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU.
 </p>
 </div>
+<p>A pie chart breaks a circle into slices such that the area of each slice is proportional to the fraction of the total it represents. The same procedure can be performed on a rectangle, and the result is a stacked bar chart (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a>). Depending on whether we slice the bar vertically or horizontally, we obtain vertically stacked bars (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a>a) or horizontally stacked bars (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a>b).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-stacked-bars"></span>
 <img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="816" />
@@ -123,6 +125,7 @@ Figure 10.1: Party composition of the 8th German Bundestag, 1976–1980, visuali
 Figure 10.2: Party composition of the 8th German Bundestag, 1976–1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 </p>
 </div>
+<p>We can also take the bars from Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a>a and place them side-by-side rather than stacking them on top of each other. This visualization makes it easier to perform a direct comparison of the three groups, though it obscures other aspects of the data (Figure <a href="visualizing-proportions.html#fig:bundestag-bars-side-by-side">10.3</a>). Most importantly, in a side-by-side bar plot the relationship of each bar to the total is not visually obvious.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-bars-side-by-side"></span>
 <img src="visualizing_proportions_files/figure-html/bundestag-bars-side-by-side-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as side-by-side bars. As in Figure 10.2, it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="576" />
@@ -130,7 +133,8 @@ Figure 10.2: Party composition of the 8th German Bundestag, 1976–1980, visuali
 Figure 10.3: Party composition of the 8th German Bundestag, 1976–1980, visualized as side-by-side bars. As in Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a>, it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 </p>
 </div>
-<p>None of these three types of visualizations are consistently superior over any other, however. Depending on the features of the dataset and the specific story you want to tell, you may want to favor one or the other approach.</p>
+<p>Many authors categorically reject pie charts and argue in favor of side-by-side or stacked bars. Others defend the use of pie charts in some applications. My own opinion is that none of these visualizations is consistently superior over any other. Depending on the features of the dataset and the specific story you want to tell, you may want to favor one or the other approach. In the case of the 8th German Bundestag, I think that a pie chart is the best option. It shows clearly that the ruling coalition of SPD and FDP jointly had a small majority over the CDU/CSU (Figure <a href="visualizing-proportions.html#fig:bundestag-pie">10.1</a>). This fact is not visually obvious in any of the other plots (Figures <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">10.2</a> and <a href="visualizing-proportions.html#fig:bundestag-bars-side-by-side">10.3</a>).</p>
+<p>(Table <a href="visualizing-proportions.html#tab:pros-cons-pie-bar">10.1</a>).</p>
 <table>
 <caption><span id="tab:pros-cons-pie-bar">Table 10.1: </span> Pros and cons of common apporaches to visualizing proportions: pie charts, stacked bars, and side-by-side bars.</caption>
 <colgroup>
@@ -207,9 +211,21 @@ Figure 10.5: Marketshare of five hypothetical companies for the years 2015–201
 Figure 10.6: Marketshare of five hypothetical companies for the years 2015–2017, visualized as pie charts.
 </p>
 </div>
-<p><img src="visualizing_proportions_files/figure-html/women-parliament-1.png" width="720" style="display: block; margin: auto;" /></p>
-<p><img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" width="720" style="display: block; margin: auto;" /></p>
-<p><strong>Additional things this chapter needs: Stacked density distributions (continuous x axis); treemap (maybe move to separate chapter, visualizing nested proportions?).</strong></p>
+
+<div class="figure" style="text-align: center"><span id="fig:women-parliament"></span>
+<img src="visualizing_proportions_files/figure-html/women-parliament-1.png" alt="Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Source: Inter-Parliamentary Union (IPU), ipu.org." width="720" />
+<p class="caption">
+Figure 10.7: Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Source: Inter-Parliamentary Union (IPU), ipu.org.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:health-vs-age"></span>
+<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" alt="Health status by age, as reported by the general social survey (GSS)." width="720" />
+<p class="caption">
+Figure 10.8: Health status by age, as reported by the general social survey (GSS).
+</p>
+</div>
+<p><strong>Additional ideas for this chapter: treemap and other nested situations (maybe move to separate chapter, visualizing nested proportions?).</strong></p>
 
 </div>
             </section>

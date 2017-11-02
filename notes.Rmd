@@ -134,3 +134,4 @@ Datasets to use:
 - Moby Dick wordcounts, downloaded from http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm, reference: M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005).
 - Berkeley list of health statistics datasets: http://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata
 - Birth and death rates: http://www.mortality.org/cgi-bin/hmd/hmd_download.php
+- OECD, http://stats.oecd.org/, e.g. tax as % of GDP

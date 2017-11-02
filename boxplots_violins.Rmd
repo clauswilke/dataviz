@@ -4,7 +4,7 @@ source("_common.R")
 
 library(dplyr)
 library(forcats)
-library(ggjoy)
+library(ggridges)
 library(ggforce)
 library(viridis)
 ```

@@ -4,13 +4,18 @@ source("_common.R")
 library(dplyr)
 library(tidyr)
 library(colorblindr)
+
+main_size = 14 / .pt
+small_rel <- 0.857
+small_size <- small_rel * main_size
 ```
 
 
 # Visualizing proportions
 
+*Introductory paragraph here.*
 
-A pie chart (Figure \@ref(fig:bundestag-pie)).
+From 1961 to 1983, the German parliament (called the *Bundestag*) was composed of members of three different parties, CDU/CSU, SPD, and FDP. During most of this time, CDU/CSU and SPD had approximately comparable numbers of seats, while the FDP typically held only a small fraction of seats. For example, in the 8th Bundestag, from 1976--1980, the CDU/CSU held 243 seats, SPD 214, and FDP 39, for a total of 496. This type of data, where different parts combine into a total, is most commonly visualized as a pie chart (Figure \@ref(fig:bundestag-pie)).
 
 (ref:bundestag-pie) Party composition of the 8th German Bundestag, 1976--1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU.
 
@@ -23,12 +28,14 @@ bundestag = data.frame(party = c("CDU/CSU", "SPD", "FDP"),
 
 bundestag <- mutate(bundestag,
                     label_theta = c(420, 160, 19.5), # manually chosen
+                    seats_theta = c(375, 146, 19.5),
                     label_r = c(1.7, 1.6, 1.55), # manually chosen
                     party = factor(party, levels = party))
 
 bt_pie <- ggplot(bundestag, aes(x = 1, y = seats, fill = party)) + 
   geom_col(position = "stack") + 
-  geom_text(aes(x = label_r, y = label_theta, label = party), size = 12/.pt) +
+  geom_text(aes(x = label_r, y = label_theta, label = party), size = small_size) +
+  geom_text(aes(x = 1.05, y = label_theta, label = seats), size = main_size, color = c("white", "white", "black")) +
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
@@ -36,8 +43,10 @@ bt_pie <- ggplot(bundestag, aes(x = 1, y = seats, fill = party)) +
   theme_nothing() #+
   #theme(plot.background = element_rect(fill = "#C0C0C0"))
 
-plot_grid(bt_pie, scale = 1.25)
+plot_grid(bt_pie, scale = 1.2)
 ```
+
+A pie chart breaks a circle into slices such that the area of each slice is proportional to the fraction of the total it represents. The same procedure can be performed on a rectangle, and the result is a stacked bar chart (Figure \@ref(fig:bundestag-stacked-bars)). Depending on whether we slice the bar vertically or horizontally, we obtain vertically stacked bars (Figure \@ref(fig:bundestag-stacked-bars)a) or horizontally stacked bars (Figure \@ref(fig:bundestag-stacked-bars)b).
 
 (ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
@@ -47,20 +56,21 @@ bundestag <- mutate(bundestag,
 
 bt_bars_stacked_base <- ggplot(bundestag, aes(x = 1, y = seats, fill = factor(party, levels = rev(party)))) + 
   geom_col(position = "stack") + 
+  geom_text(aes(x = 1., y = label_y, label = seats), size = main_size, color = c("white", "white", "black")) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_x_discrete(expand = c(0, 0), breaks = NULL, name = "") +
   scale_fill_manual(values = rev(bundestag$colors), guide = "none") 
   #geom_hline(yintercept = c(100, 200, 300, 400), color = "#ffffff50", size = .5)
 
 bt_bars_yax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag, aes(x = 0.06, y = label_y, label = party, hjust = 0, vjust = 0.5, size = 14/.pt)) +
+  geom_text(data = bundestag, aes(x = 0.06, y = label_y, label = party, hjust = 0, vjust = 0.5, size = small_size)) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1))
 
 bt_bars_stacked <- insert_yaxis_grob(bt_bars_stacked_base + theme_dviz_hgrid(),
                                      bt_bars_yax, grid::unit(.5, "null"))
 
 bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag, aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = 14/.pt)) +
+  geom_text(data = bundestag, aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = small_size)) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +
   coord_flip()
 
@@ -73,12 +83,14 @@ plot_grid(bt_bars_stacked, plot_grid(NULL, bt_bars_hstacked, NULL, ncol = 1, rel
           rel_widths = c(4, 7), labels = "auto", label_fontface = "plain")
 ```
 
+We can also take the bars from Figure \@ref(fig:bundestag-stacked-bars)a and place them side-by-side rather than stacking them on top of each other. This visualization makes it easier to perform a direct comparison of the three groups, though it obscures other aspects of the data (Figure \@ref(fig:bundestag-bars-side-by-side)). Most importantly, in a side-by-side bar plot the relationship of each bar to the total is not visually obvious.
 
 (ref:bundestag-bars-side-by-side) Party composition of the 8th German Bundestag, 1976--1980, visualized as side-by-side bars. As in Figure \@ref(fig:bundestag-stacked-bars), it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
 ```{r bundestag-bars-side-by-side, fig.cap='(ref:bundestag-bars-side-by-side)'}
 bt_bars <- ggplot(bundestag, aes(x = party, y = seats, fill = party)) + 
   geom_col() + 
+  geom_text(aes(label = seats), size = main_size, vjust = 2, color = c("white", "white", "black")) +
   scale_x_discrete(expand = c(0, 0), name = "") +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = bundestag$colors, guide = "none") + 
@@ -88,7 +100,11 @@ bt_bars <- ggplot(bundestag, aes(x = party, y = seats, fill = party)) +
 bt_bars
 ```
 
-None of these three types of visualizations are consistently superior over any other, however. Depending on the features of the dataset and the specific story you want to tell, you may want to favor one or the other approach.
+Many authors categorically reject pie charts and argue in favor of side-by-side or stacked bars. Others defend the use of pie charts in some applications. My own opinion is that none of these visualizations is consistently superior over any other. Depending on the features of the dataset and the specific story you want to tell, you may want to favor one or the other approach. In the case of the 8th German Bundestag, I think that a pie chart is the best option. It shows clearly that the ruling coalition of SPD and FDP jointly had a small majority over the CDU/CSU (Figure \@ref(fig:bundestag-pie)). This fact is not visually obvious in any of the other plots (Figures \@ref(fig:bundestag-stacked-bars) and \@ref(fig:bundestag-bars-side-by-side)). 
+
+
+
+(Table \@ref(tab:pros-cons-pie-bar)). 
 
 Table: (\#tab:pros-cons-pie-bar) Pros and cons of common apporaches to visualizing proportions: pie charts, stacked bars, and side-by-side bars. 
 
@@ -141,7 +157,8 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
   facet_wrap(~year) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto() + 
-  theme_dviz()
+  theme_dviz() +
+  theme(strip.background = element_blank())
 ```
 
 (ref:marketshare-stacked-bars) Marketshare of five hypothetical companies for the years 2015--2017, visualized as stacked bars.
@@ -179,7 +196,9 @@ pies
 ```
 
 
-```{r women-parliament, fig.width = 7.5, fig.asp = .55}
+(ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Source: Inter-Parliamentary Union (IPU), ipu.org.
+
+```{r women-parliament, fig.width = 7.5, fig.asp = .55, fig.cap = '(ref:women-parliament)'}
 df <- read.csv("datasets/women_parliaments/women_tidy.csv")
 
 ccode = "RWA" # Rwanda
@@ -196,7 +215,7 @@ df %>% filter(country_code == ccode & year > 1990) %>%
 
 plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
     geom_col(position = "stack", width = .9) +
-    geom_hline(yintercept = c(25, 50, 75), color = "#FFFFFFA0") +
+    #geom_hline(yintercept = c(25, 50, 75), color = "#FFFFFFA0") +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_fill_OkabeIto(guide = "none") +
@@ -219,18 +238,24 @@ ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
 
 ```
 
-```{r health-vs-age, fig.width = 7.5, fig.asp = .55}
+
+(ref:health-vs-age) Health status by age, as reported by the general social survey (GSS).
+
+```{r health-vs-age, fig.width = 7.5, fig.asp = .55, fig.cap='(ref:health-vs-age)'}
 df <- select(productplots::happy, age, health) %>%
   na.omit()
 
+# color brewer 5-class PuBu
+colors = c('#f1eef6', '#bdc9e1', '#74a9cf', '#2b8cbe', '#045a8d')[5:1]
+
 ggplot(df, aes(x=age, y=..count.., fill = health, color = health)) + 
   geom_density(position = "fill") +
-  geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
+  #geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0), name = "percent",
                      labels = c(0, 25, 50, 75, 100)) + 
-  scale_color_brewer() + 
-  scale_fill_brewer() +
+  scale_color_manual(values = colors) + 
+  scale_fill_manual(values = colors) +
   theme_dviz() + 
   theme(axis.ticks.y = element_blank(),
         #axis.ticks.x = element_blank(),
