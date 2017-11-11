@@ -33,7 +33,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Choosing an appropriate aspect ratio**  
   Discusses the concept of aspect ratio, including when it matters a lot (same axis range on x and y) and when it is more of a personal preference.
 
-#. **Background grids**\*  
+#. **Background grids**\*\*  
   Discusses when and how to use background grids and other guide lines in figures.
 
 #. **Don't box yourself in**  
@@ -80,7 +80,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing distributions II: Cumulative density functions and q-q plots**\*\*  
   Discusses strategies for visualizing distributions that are exact and non-arbitrary (unlike histograms and density plots) but are more difficult to interpret.
 
-#. **Visualizing distributions III: Boxplots, violin plots, and more**\*
+#. **Visualizing distributions III: Boxplots, violin plots, and more**\*  
   Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.
 
 #. **Visualizing arrays of intensities**  
