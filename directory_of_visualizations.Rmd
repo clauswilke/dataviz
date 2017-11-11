@@ -3,7 +3,7 @@
 source("_common.R")
 
 library(dplyr)
-#library(ggforce) # comment out for now
+library(ggforce)
 library(ggridges)
 library(colorspace)
 ```
@@ -211,7 +211,7 @@ p3 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_jitter(color = palette[
   theme_plot_icon(palette[npal], palette[1])
 
 p4 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
-  #geom_sina(color = palette[1], size = 0.8) +
+  geom_sina(color = palette[1], size = 0.8) +
   labs(title = "Sina plot") +
   theme_plot_icon(palette[npal], palette[1])
 

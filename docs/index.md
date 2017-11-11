@@ -15,4 +15,4 @@ This book is meant as a guide for making figures that look professional and are 
 
 The entire book was written in R Markdown, using RStudio as my text editor and the bookdown package to turn a collection of markdown documents into a coherent whole. The book's source code is hosted on GitHub, at https://github.com/clauswilke/dataviz. If you would like to fix typos or other issues, feel free to send me pull requests through GitHub. In your commit message, please add the sentence "I assign the copyright of this contribution to Claus O. Wilke," so that I can maintain the option of publishing this book in other forms. For comments, questions, or requests for additional chapters, please open an issue on GitHub.
 
-This work is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/us/) United States License. 
+This work is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) License. 

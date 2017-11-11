@@ -13,7 +13,7 @@ small_size <- small_rel * main_size
 
 # Visualizing proportions
 
-In many scenarios we want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypical such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypical such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
 
 ```{block type='rmdtip', echo=TRUE}
 Remember: You always need to pick the visualization that best fits your specific dataset and that highlights the key data features you want to show.
@@ -257,8 +257,9 @@ ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
 
 ```
 
+If we want to visualize how proportions change in response to a continuous variable, we can switch from stacked bars to stacked densities. Stacked densities can be thought of as the limiting case of infinitely many infinitely small stacked bars arranged side-by-side. The densities in stacked-density plots are typically obtained from kernel density estimation, as described in Chapter \@ref(histograms-density-plots), and I refer you to that chapter for a general discussion of the strengths and weaknesses of this method.
 
-(see Chapter \@ref(histograms-density-plots) for a discussion of density estimates)
+To give an example where stacked densities are appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data this way works well (Figure \@ref(fig:health-vs-age)). Even though we have four health categories here, and I'm generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure works. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.
 
 (ref:health-vs-age) Health status by age, as reported by the general social survey (GSS).
 

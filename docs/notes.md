@@ -62,7 +62,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing amounts**  
   Discusses bar plots in various forms.
 
-#. **Visualizing proportions**  
+#. **Visualizing proportions**\*\*  
   Discusses stacked bar plots, stacked density plots, and pie charts.
 
 #. **Visualizing paired data**  
@@ -117,6 +117,9 @@ Articles and blog posts with useful ideas:
 - https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f
 - http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
 - http://socviz.co/
+- Births per month visualization: https://github.com/aaronpenne/Data_Visualization/blob/master/HMD/Births_USA/Births_USA.ipynb
+
+
 
 Datasets to use:
 
@@ -129,3 +132,6 @@ Datasets to use:
 - titanic_test, titanic_train (titanic) (is a better source of this dataset available?)
 - various datasets of openintro package, https://cran.r-project.org/web/packages/openintro/index.html
 - Moby Dick wordcounts, downloaded from http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm, reference: M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005).
+- Berkeley list of health statistics datasets: http://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata
+- Birth and death rates: http://www.mortality.org/cgi-bin/hmd/hmd_download.php
+- OECD, http://stats.oecd.org/, e.g. tax as % of GDP

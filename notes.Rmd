@@ -62,7 +62,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing amounts**  
   Discusses bar plots in various forms.
 
-#. **Visualizing proportions**  
+#. **Visualizing proportions**\*\*  
   Discusses stacked bar plots, stacked density plots, and pie charts.
 
 #. **Visualizing paired data**  
