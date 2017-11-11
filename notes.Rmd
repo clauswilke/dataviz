@@ -33,7 +33,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Choosing an appropriate aspect ratio**  
   Discusses the concept of aspect ratio, including when it matters a lot (same axis range on x and y) and when it is more of a personal preference.
 
-#. **Background grids**\*\*  
+#. **Background grids**\*  
   Discusses when and how to use background grids and other guide lines in figures.
 
 #. **Don't box yourself in**  
@@ -45,7 +45,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **The principle of proportional ink**  
   Explains that the size of colored areas needs to be proportional to the data value they represent.
 
-#. **Handling overlapping points**\*\*  
+#. **Handling overlapping points**\*  
   Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.
   
 #. **Multi-part figures**  
