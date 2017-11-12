@@ -127,8 +127,8 @@ mpg_filledpoints <- ggplot(mpg, aes(y=cty, x=displ, color=drv, shape=drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme(legend.position = c(.7, .8))
 
-mpg_linespoints
-mpg_filledpoints
+stamp_bad(mpg_linespoints)
+stamp_good(mpg_filledpoints)
 ```
 
 
