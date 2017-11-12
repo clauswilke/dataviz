@@ -6,14 +6,14 @@
 
 However, the figure still needs to satisfy the principle of proportional ink (Chapter \@ref(proportional-ink)).
 
-(ref:titanic-ages-lines) Histogram of the ages of Titanic passengers.
+(ref:titanic-ages-lines) Histogram of the ages of Titanic passengers, drawn with empty bars. The empty bars create a confusing visual pattern. In the center of the histogram, it is difficult to tell which parts are inside of bars and which parts are outside. 
 
 <div class="figure" style="text-align: center">
 <img src="avoid_line_drawings_files/figure-html/titanic-ages-lines-1.png" alt="(ref:titanic-ages-lines)" width="576" />
 <p class="caption">(\#fig:titanic-ages-lines)(ref:titanic-ages-lines)</p>
 </div>
 
-(ref:titanic-ages-filled) Histogram of the ages of Titanic passengers.
+(ref:titanic-ages-filled) The same histogram of Figure \@ref(fig:titanic-ages-lines), now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure.
 
 <div class="figure" style="text-align: center">
 <img src="avoid_line_drawings_files/figure-html/titanic-ages-filled-1.png" alt="(ref:titanic-ages-filled)" width="576" />

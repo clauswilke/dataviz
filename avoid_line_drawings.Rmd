@@ -14,7 +14,7 @@ library(ggridges) # for geom_density_line
 
 However, the figure still needs to satisfy the principle of proportional ink (Chapter \@ref(proportional-ink)).
 
-(ref:titanic-ages-lines) Histogram of the ages of Titanic passengers.
+(ref:titanic-ages-lines) Histogram of the ages of Titanic passengers, drawn with empty bars. The empty bars create a confusing visual pattern. In the center of the histogram, it is difficult to tell which parts are inside of bars and which parts are outside. 
 
 ```{r titanic-ages-lines, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-lines)'}
 df <- read_csv("datasets/Titanic.csv")
@@ -32,7 +32,7 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
 stamp_bad(h3_bad)
 ```
 
-(ref:titanic-ages-filled) Histogram of the ages of Titanic passengers.
+(ref:titanic-ages-filled) The same histogram of Figure \@ref(fig:titanic-ages-lines), now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure.
 
 ```{r titanic-ages-filled, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-filled)'}
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
