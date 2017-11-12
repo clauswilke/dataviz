@@ -4,6 +4,7 @@ source("_common.R")
 
 library(dplyr)
 library(forcats)
+library(readr)
 library(ggridges) # for geom_density_line
 ```
 
@@ -13,8 +14,9 @@ library(ggridges) # for geom_density_line
 
 However, the figure still needs to satisfy the principle of proportional ink (Chapter \@ref(proportional-ink)).
 
-```{r message=FALSE, warning=FALSE}
-library(readr)
+(ref:titanic-ages-lines) Histogram of the ages of Titanic passengers.
+
+```{r titanic-ages-lines, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-lines)'}
 df <- read_csv("datasets/Titanic.csv")
 titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
 age_hist_3 <- data.frame(age = (1:25)*3-1.5, 
@@ -27,20 +29,24 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
   theme_dviz() +
   background_grid(major = "y", minor = "none")
 
+stamp_bad(h3_bad)
+```
+
+(ref:titanic-ages-filled) Histogram of the ages of Titanic passengers.
+
+```{r titanic-ages-filled, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-filled)'}
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz() +
   background_grid(major = "y", minor = "none")
 
-
-stamp_bad(h3_bad)
 stamp_good(h3_good)
-
 ```
 
+(ref:iris-densities-lines) Density estimates of the sepal lengths of three different iris species.
 
-```{r message=FALSE, warning=FALSE}
+```{r iris-densities-lines, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-lines)'}
 # compute densities for sepal lengths
 iris_dens <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
@@ -67,7 +73,13 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz()
 
+stamp_bad(iris_lines)
+```
 
+
+(ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species.
+
+```{r iris-densities-colored-lines, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-colored-lines)'}
 iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species)) + 
   geom_density_line(stat = "identity", alpha = 0., size = 1) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
@@ -80,7 +92,13 @@ iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz()
 
+stamp_ugly(iris_colored_lines)
+```
 
+
+(ref:iris-densities-filled) Density estimates of the sepal lengths of three different iris species.
+
+```{r iris-densities-filled, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-filled)'}
 iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
   geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
@@ -93,16 +111,12 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz()
   
-
-stamp_bad(iris_lines)
-stamp_ugly(iris_colored_lines)
 stamp_good(iris_filled)
 ```
 
+(ref:mpg-linespoints) Fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD).
 
-
-
-```{r fig.width=5, fig.asp=.7416}
+```{r mpg-linespoints, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-linespoints)'}
 mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
   geom_point(size = 2) + 
   ylab("fuel economy (mpg)") +
@@ -112,7 +126,13 @@ mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
   theme(legend.position = c(.7, .8))
+stamp_bad(mpg_linespoints)
+```
 
+
+(ref:mpg-filledpoints) Fuel economy versus engine displacement.
+
+```{r mpg-filledpoints, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-filledpoints)'}
 mpg_filledpoints <- ggplot(mpg, aes(y=cty, x=displ, color=drv, shape=drv)) +
   geom_point(size = 2.5) + 
   ylab("fuel economy (mpg)") +
@@ -127,12 +147,13 @@ mpg_filledpoints <- ggplot(mpg, aes(y=cty, x=displ, color=drv, shape=drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme(legend.position = c(.7, .8))
 
-stamp_bad(mpg_linespoints)
 stamp_good(mpg_filledpoints)
 ```
 
 
-```{r}
+(ref:lincoln-weather-box-empty) *Figure caption goes here.*
+
+```{r lincoln-weather-box-empty, fig.cap='(ref:lincoln-weather-box-empty)'}
 lincoln_weather %>% mutate(month_short = fct_recode(Month,
                                                     Jan = "January",
                                                     Feb = "February",
@@ -151,9 +172,15 @@ lincoln_weather %>% mutate(month_short = fct_recode(Month,
 lincoln_box_empty <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot() + xlab("Month")
 
+lincoln_box_empty
+```
+
+
+(ref:lincoln-weather-box-filled) *Figure caption goes here.*
+
+```{r lincoln-weather-box-filled, fig.cap='(ref:lincoln-weather-box-filled)'}
 lincoln_box_filled <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot(fill = 'grey90') + xlab("Month")
 
-lincoln_box_empty
 lincoln_box_filled
 ```

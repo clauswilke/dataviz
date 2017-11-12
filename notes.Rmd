@@ -39,7 +39,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Don't box yourself in**  
   Argues to avoid boxes and frames around figure parts.
   
-#. **Avoid line drawings**  
+#. **Avoid line drawings**\*  
   Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
   
 #. **The principle of proportional ink**  
@@ -105,20 +105,13 @@ Chapters for which some material exists at this time are marked with stars, as f
   
 ## Other notes and comments
 
-- for paired data chapter, use protein correlation dataset from Echave et al?
-- need a clear system of stamping figures while keeping some spacing. current system is ad-hoc and inconsistent. This touches all chapters already written.
-- aspect ratio chapter needs to be completed
-- in the colorblind package, add color simulations using the dichromat R package?
-- this looks like a useful resource: [dataviz catalogue](http://www.datavizcatalogue.com/about.html)
-- the [viridis package](https://CRAN.R-project.org/package=viridis) has several great color scales
-
 Articles and blog posts with useful ideas:
 
 - https://medium.com/@clmentviguier/how-to-turn-a-twitter-comment-into-a-data-visualisation-design-opportunity-7447402f0c2f
 - http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
 - http://socviz.co/
 - Births per month visualization: https://github.com/aaronpenne/Data_Visualization/blob/master/HMD/Births_USA/Births_USA.ipynb
-
+- http://www.datavizcatalogue.com/about.html
 
 
 Datasets to use:

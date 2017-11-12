@@ -10,6 +10,8 @@
 
 <img src="directory_of_visualizations_files/figure-html/proportions-1.png" width="768" style="display: block; margin: auto;" />
 
+<img src="directory_of_visualizations_files/figure-html/proportions-comp-1.png" width="768" style="display: block; margin: auto;" />
+
 
 
 ## Individual distributions

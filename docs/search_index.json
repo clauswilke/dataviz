@@ -1,3 +1,3 @@
 [
-["avoid-line-drawings.html", "6 Avoid line drawings", " 6 Avoid line drawings However, the figure still needs to satisfy the principle of proportional ink (Chapter 7). "]
+["directory-of-visualizations.html", "9 Directory of visualizations 9.1 Proportions 9.2 Individual distributions 9.3 Multiple distributions 9.4 Other", " 9 Directory of visualizations 9.1 Proportions 9.2 Individual distributions Histograms and density plots (Chapter 11) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter 12) always represent the data faithfully but can be more difficult to interpret. 9.3 Multiple distributions 9.4 Other "]
 ]

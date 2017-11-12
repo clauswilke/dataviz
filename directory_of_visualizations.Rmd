@@ -80,7 +80,7 @@ pal_brown_green <- sequential_hcl(n = npal, h1 = 86, c1 = 80, c2 = 10, l1 = 18, 
 pal_green_brown <- sequential_hcl(n = npal, h1 = -265, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
 
 # burgundy-red
-pal_burgundy_red <- sequential_hcl(n = npal, h1 = 17, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+pal_red_brown <- sequential_hcl(n = npal, h1 = 28, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
 
 # brown-red
 pal_brown_red <- sequential_hcl(n = npal, h1 = 41, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
@@ -94,7 +94,7 @@ pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, 
 
 ## Proportions
 
-```{r proportions, fig.width = 8, fig.asp = 1/2, message = FALSE}
+```{r proportions, fig.width = 8, fig.asp = 1/4, message = FALSE}
 palette <- pal_brown_green
 
 p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
@@ -115,7 +115,22 @@ p1 <- ggdraw(p1_main) +
   theme(plot.background = element_rect(fill = palette[npal],
                                        color = "transparent"))
 
-p2 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
+p2 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
+  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[1]) + 
+  scale_y_continuous(limits = c(0, 110), expand = c(0, 0)) +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Stacked bars") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p3 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
+  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[1]) + 
+  scale_y_continuous(limits = c(0, 110), expand = c(0, 0), position = "right") +
+  coord_flip() +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Stacked bars") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p4 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
   geom_col(position="identity", color = palette[1],
            width = .8) +
   scale_y_continuous(expand = c(0, 0)) +
@@ -123,7 +138,13 @@ p2 <- ggplot(df_props, aes(x = group, y = value, fill = group)) +
   labs(title = "Side-by-side bars") +
   theme_plot_icon(palette[npal], palette[1])
 
-p3 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
+plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
+```
+
+```{r proportions-comp, fig.width = 8, fig.asp = 1/4, message = FALSE}
+palette <- pal_earth_brown
+
+p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
                                    fill=factor(type, levels = c("A", "C", "B")))) + 
   geom_col(position="dodge", color = palette[1],
            width = .7) +
@@ -133,14 +154,14 @@ p3 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
   labs(title = "Side-by-side bars") +
   theme_plot_icon(palette[npal], palette[1])
 
-p4 <- ggplot(df_fractions, aes(x, y, fill=type)) + 
+p6 <- ggplot(df_fractions, aes(x, y, fill=type)) + 
   geom_col(position="stack", color = palette[1]) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked bars") +
   theme_plot_icon(palette[npal], palette[1])
 
-p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
+p7 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
   geom_density(alpha = 0.7, color = palette[1], position = "fill") +
   scale_fill_manual(values = palette[2:4]) +
   scale_x_continuous(expand = c(0, 0)) +
@@ -148,9 +169,7 @@ p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", 
   labs(title = "Stacked densities") +
   theme_plot_icon(palette[npal], palette[1])
 
-
-plot_grid(p1, p2, p3, p4,
-          p5, ncol = 4, scale = .9)
+plot_grid(p5, p6, p7, ncol = 4, scale = .9)
 ```
 
 
@@ -159,7 +178,7 @@ plot_grid(p1, p2, p3, p4,
 
 ```{r single-distributions, fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
 
-palette <- pal_earth_brown 
+palette <- pal_red_brown
 
 p1 <- ggplot(df_one_dist, aes(x)) +
   geom_histogram(fill = palette[4], color = palette[2], bins = 18) +
