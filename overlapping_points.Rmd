@@ -15,7 +15,7 @@ When we want to visualize large or very large datasets, we often experience the 
 ## Partial transparency
 
 Let's revisit the fuel economy figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
-```{r mpg-cty-displ-solid}
+```{r mpg-cty-displ-solid, fig.width=5, fig.asp=.7416}
 p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4) + 
   ylab("fuel economy (mpg)") +
@@ -24,11 +24,12 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_dviz(19)
+  theme_dviz(19) +
+  theme(legend.position = c(.6, .8))
 stamp_bad(p)
 ```
 I have labeled this figure "bad" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
-```{r mpg-cty-displ-transp}
+```{r mpg-cty-displ-transp, fig.width=5, fig.asp=.7416}
 p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4, alpha=0.65) + 
   ylab("fuel economy (mpg)") +
@@ -37,7 +38,8 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_dviz(19)
+  theme_dviz(19) +
+  theme(legend.position = c(.6, .8))
 stamp_good(p2)
 ```
 

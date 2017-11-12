@@ -2,14 +2,14 @@
 
 # Handling overlapping points {#overlapping-points}
 
-When we want to visualize large or very large datasets, we often experience the challenge that simple x--y scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is "overplotting", i.e., plotting many points on top of each other. Below, I describe several strategies you can pursue when you encounter this challenge.
+When we want to visualize large or very large datasets, we often experience the challenge that simple *x*--*y* scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is "overplotting", i.e., plotting many points on top of each other. Below, I describe several strategies you can pursue when you encounter this challenge.
 
 ## Partial transparency
 
 Let's revisit the fuel economy figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" width="576" style="display: block; margin: auto;" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" width="480" style="display: block; margin: auto;" />
 I have labeled this figure "bad" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" width="576" style="display: block; margin: auto;" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" width="480" style="display: block; margin: auto;" />
 
 ## Jittering
 

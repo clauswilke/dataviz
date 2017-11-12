@@ -11,7 +11,7 @@ For example, consider Figure \@ref(fig:mpg-small). I see figures like this all t
 
 (ref:mpg-small) Fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). This figure suffers from the common affliction that the text elements are way too small and are barely legible.
 
-```{r mpg-small, fig.cap='(ref:mpg-small)'}
+```{r mpg-small, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-small)'}
 p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size = 2) + 
   ylab("fuel economy (mpg)") +
@@ -20,15 +20,18 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD"))
-stamp_bad(p + theme_dviz(7))
+
+stamp_bad(p + theme_dviz(7) +
+  theme(legend.position = c(.7, .8)))
 ```
 
 A somewhat better version of this figure is shown as Figure \@ref(fig:mpg-ugly). I think the fonts are still too small, and that's why I have labeled the figure as ugly. However, we are moving in the right direction. This figure might be passable under some circumstances. My main criticism here is not so much that the labels aren't legible as that the figure is not balanced; the text elements are too small compared to the rest of the figure.
 
 (ref:mpg-ugly) Fuel economy versus engine displacement. This figure is an improvement over Figure \@ref(fig:mpg-bad), but the text elements remain too small and the figure is not balanced.
 
-```{r mpg-ugly, fig.cap='(ref:mpg-ugly)'}
-stamp_ugly(p + theme_dviz(10))
+```{r mpg-ugly, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-ugly)'}
+stamp_ugly(p + theme_dviz(10) +
+  theme(legend.position = c(.7, .8)))
 ```
 
 
@@ -36,22 +39,24 @@ The next figure uses the default settings I'm applying throughout this book. I t
 
 (ref:mpg-good) Fuel economy versus engine displacement. All figure elements are appropriately scaled.
 
-```{r mpg-good, fig.cap='(ref:mpg-good)'}
-stamp_good(p)
+```{r mpg-good, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-good)'}
+stamp_good(p +
+  theme(legend.position = c(.7, .8)))
 ```
 
 Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:mpg-big-ugly)). Sometimes we need big labels, in particular if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In Figure \@ref(fig:mpg-big-ugly), the points used to visualize the data are too small relative to the text.  Once we fix this issue, the figure becomes acceptable again (Figure \@ref(fig:mpg-big-good)).
 
 (ref:mpg-big-ugly) Fuel economy versus engine displacement. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements.
 
-```{r mpg-big-ugly, fig.cap='(ref:mpg-big-ugly)'}
-stamp_ugly(p + theme_dviz(19))
+```{r mpg-big-ugly, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-big-ugly)'}
+stamp_ugly(p + theme_dviz(19) +
+  theme(legend.position = c(.6, .8)))
 ```
 
 
 (ref:mpg-big-good) Fuel economy versus engine displacement. All figure elements are sized such that the figure is balanced and can be reproduced at a small scale.
 
-```{r mpg-big-good, fig.cap='(ref:mpg-big-good)'}
+```{r mpg-big-good, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-big-good)'}
 p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
   geom_point(size=4) + 
   ylab("fuel economy (mpg)") +
@@ -60,7 +65,8 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-   theme_dviz(19)
+  theme_dviz(19) +
+  theme(legend.position = c(.6, .8))
 stamp_good(p2)
 ```
 

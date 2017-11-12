@@ -9,7 +9,7 @@ For example, consider Figure \@ref(fig:mpg-small). I see figures like this all t
 (ref:mpg-small) Fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). This figure suffers from the common affliction that the text elements are way too small and are barely legible.
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/mpg-small-1.png" alt="(ref:mpg-small)" width="576" />
+<img src="small_axis_labels_files/figure-html/mpg-small-1.png" alt="(ref:mpg-small)" width="480" />
 <p class="caption">(\#fig:mpg-small)(ref:mpg-small)</p>
 </div>
 
@@ -18,7 +18,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:mpg-ugly).
 (ref:mpg-ugly) Fuel economy versus engine displacement. This figure is an improvement over Figure \@ref(fig:mpg-bad), but the text elements remain too small and the figure is not balanced.
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/mpg-ugly-1.png" alt="(ref:mpg-ugly)" width="576" />
+<img src="small_axis_labels_files/figure-html/mpg-ugly-1.png" alt="(ref:mpg-ugly)" width="480" />
 <p class="caption">(\#fig:mpg-ugly)(ref:mpg-ugly)</p>
 </div>
 
@@ -28,7 +28,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 (ref:mpg-good) Fuel economy versus engine displacement. All figure elements are appropriately scaled.
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/mpg-good-1.png" alt="(ref:mpg-good)" width="576" />
+<img src="small_axis_labels_files/figure-html/mpg-good-1.png" alt="(ref:mpg-good)" width="480" />
 <p class="caption">(\#fig:mpg-good)(ref:mpg-good)</p>
 </div>
 
@@ -37,7 +37,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:mpg-
 (ref:mpg-big-ugly) Fuel economy versus engine displacement. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements.
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/mpg-big-ugly-1.png" alt="(ref:mpg-big-ugly)" width="576" />
+<img src="small_axis_labels_files/figure-html/mpg-big-ugly-1.png" alt="(ref:mpg-big-ugly)" width="480" />
 <p class="caption">(\#fig:mpg-big-ugly)(ref:mpg-big-ugly)</p>
 </div>
 
@@ -45,7 +45,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:mpg-
 (ref:mpg-big-good) Fuel economy versus engine displacement. All figure elements are sized such that the figure is balanced and can be reproduced at a small scale.
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/mpg-big-good-1.png" alt="(ref:mpg-big-good)" width="576" />
+<img src="small_axis_labels_files/figure-html/mpg-big-good-1.png" alt="(ref:mpg-big-good)" width="480" />
 <p class="caption">(\#fig:mpg-big-good)(ref:mpg-big-good)</p>
 </div>
 

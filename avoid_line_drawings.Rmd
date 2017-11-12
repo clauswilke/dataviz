@@ -1,6 +1,10 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(dplyr)
+library(forcats)
+library(ggridges) # for geom_density_line
 ```
 
 
@@ -9,7 +13,7 @@ source("_common.R")
 
 However, the figure still needs to satisfy the principle of proportional ink (Chapter \@ref(proportional-ink)).
 
-```{r titanic-hist, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(readr)
 df <- read_csv("datasets/Titanic.csv")
 titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
@@ -18,13 +22,13 @@ age_hist_3 <- data.frame(age = (1:25)*3-1.5,
 
 h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fill = "transparent",
                                                              color = "black")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz() +
   background_grid(major = "y", minor = "none")
 
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz() +
   background_grid(major = "y", minor = "none")
@@ -35,3 +39,121 @@ stamp_good(h3_good)
 
 ```
 
+
+```{r message=FALSE, warning=FALSE}
+# compute densities for sepal lengths
+iris_dens <- group_by(iris, Species) %>%
+  do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
+  rename(Sepal.Length = x)
+
+# get the maximum values
+iris_max <- filter(iris_dens, density == max(density)) %>%
+  ungroup() %>%
+  mutate(hjust = c(0, 0.4, 0),
+         vjust = c(1, 0, 1),
+         nudge_x = c(0.11, 0, 0.2),
+         nudge_y = c(-0.02, 0.02, -0.02) 
+        )
+
+iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Species)) + 
+  geom_density_line(stat = "identity", alpha = 0., size = 0.75) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_linetype_manual(values = c(1, 3, 4),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
+  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  theme_dviz()
+
+
+iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species)) + 
+  geom_density_line(stat = "identity", alpha = 0., size = 1) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_color_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
+  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  theme_dviz()
+
+
+iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
+  geom_density_line(stat = "identity", alpha = 0.7) +
+  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
+                                 x = Sepal.Length + nudge_x, 
+                                 y = density + nudge_y), size = 12/.pt) +
+  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
+  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  theme_dviz()
+  
+
+stamp_bad(iris_lines)
+stamp_ugly(iris_colored_lines)
+stamp_good(iris_filled)
+```
+
+
+
+
+```{r fig.width=5, fig.asp=.7416}
+mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
+  geom_point(size = 2) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_shape_manual(values=c(4, 1, 2), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  theme(legend.position = c(.7, .8))
+
+mpg_filledpoints <- ggplot(mpg, aes(y=cty, x=displ, color=drv, shape=drv)) +
+  geom_point(size = 2.5) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  scale_shape_manual(values=c(18, 16, 17), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  theme(legend.position = c(.7, .8))
+
+mpg_linespoints
+mpg_filledpoints
+```
+
+
+```{r}
+lincoln_weather %>% mutate(month_short = fct_recode(Month,
+                                                    Jan = "January",
+                                                    Feb = "February",
+                                                    Mar = "March",
+                                                    Apr = "April",
+                                                    May = "May",
+                                                    Jun = "June",
+                                                    Jul = "July",
+                                                    Aug = "August",
+                                                    Sep = "September",
+                                                    Oct = "October",
+                                                    Nov = "November",
+                                                    Dec = "December")) %>%
+  mutate(month_short = fct_rev(month_short)) -> lincoln_df
+
+lincoln_box_empty <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_boxplot() + xlab("Month")
+
+lincoln_box_filled <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_boxplot(fill = 'grey90') + xlab("Month")
+
+lincoln_box_empty
+lincoln_box_filled
+```
