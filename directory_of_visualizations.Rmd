@@ -35,7 +35,7 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
     plot.margin       = margin(2, font_size, font_size, font_size),
     plot.title        = element_text(hjust = 0.5, face = "bold", color = line_color,
                                      size = font_size,
-                                     margin = margin(0, 0, 2, 0)),
+                                     margin = margin(1, 0, 2, 0)),
     plot.background   = element_rect(fill = bg_color)
   )
 }
@@ -133,13 +133,16 @@ p3 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) +
 p4 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
   geom_col(position="identity", color = palette[1],
            width = .8) +
-  scale_y_continuous(expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Side-by-side bars") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
+plot_grid(p1, p4, p2, p3, ncol = 4, scale = .9)
 ```
+
+Proportions can be visualized as pie charts, side-by-side bars, or stacked bars, the latter arranged either vertically or horizontally (Chapter \@ref(visualizing-proportions)).
+
 
 ```{r proportions-comp, fig.width = 8, fig.asp = 1/4, message = FALSE}
 palette <- pal_earth_brown
@@ -169,7 +172,54 @@ p7 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", 
   labs(title = "Stacked densities") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p5, p6, p7, ncol = 4, scale = .9)
+p8_a <- ggplot(filter(df_fractions, x==1), aes(x = 1, y = y, fill = type)) + 
+  geom_col(position = "stack", color = palette[1]) + 
+  coord_polar(theta = "y") +
+  scale_y_continuous(breaks = NULL, name = "") +
+  scale_x_continuous(breaks = NULL, name = "") +
+  scale_fill_manual(values = palette[2:4]) +
+  theme_plot_icon(palette[npal], palette[1]) +
+  theme(axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.background = element_blank())
+
+p8_b <- ggplot(filter(df_fractions, x==2), aes(x = 1, y = y, fill = type)) + 
+  geom_col(position = "stack", color = palette[1]) + 
+  coord_polar(theta = "y") +
+  scale_y_continuous(breaks = NULL, name = "") +
+  scale_x_continuous(breaks = NULL, name = "") +
+  scale_fill_manual(values = palette[2:4]) +
+  theme_plot_icon(palette[npal], palette[1]) +
+  theme(axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.background = element_blank())
+
+p8_c <- ggplot(filter(df_fractions, x==3), aes(x = 1, y = y, fill = type)) + 
+  geom_col(position = "stack", color = palette[1]) + 
+  coord_polar(theta = "y") +
+  scale_y_continuous(breaks = NULL, name = "") +
+  scale_x_continuous(breaks = NULL, name = "") +
+  scale_fill_manual(values = palette[2:4]) +
+  theme_plot_icon(palette[npal], palette[1]) +
+  theme(axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.background = element_blank())
+
+
+# combine
+p8 <- ggdraw(plot_grid(p8_a, p8_b, p8_c, ncol = 3, scale = 1.4)) +
+      labs(title = "Multiple pie charts") +        
+      theme(plot.title = element_text(hjust = 0.5, face = "bold", color = palette[1],
+                                      size = 10, margin = margin(1, 0, 2, 0)),
+            plot.background = element_rect(fill = palette[npal], color = "transparent"))
+
+plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 ```
 
 
@@ -264,6 +314,8 @@ p7 <- ggplot(df_multi_dist, aes(x = y, y = number, group = number)) +
 plot_grid(p1, p2, p3, p4, 
           p5, p6, p7, ncol = 4, scale = .9)
 ```
+
+Boxplots, violin plots, jittered points, and sina plots are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions (Chapter \@ref(boxplots-violins)). Stacked histograms and overlapping densities allow a more in-depth comparison of a smaller number of distributions, though stacked histograms can be difficult to interpret and are best avoided (Chapter \@ref(histograms-density-plots)). Ridgeline plots can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time (Chapter \@ref(boxplots-violins)).
 
 
 ## Other
