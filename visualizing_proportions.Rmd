@@ -286,6 +286,8 @@ ggplot(df, aes(x=age, y=..count.., fill = health, color = health)) +
 
 ```
 
+
+
 **Additional ideas for this chapter: nested proportions, treemaps and Sankey diagrams.**
 
 ```{r}

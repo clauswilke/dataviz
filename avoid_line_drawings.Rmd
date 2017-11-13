@@ -47,8 +47,7 @@ h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, f
 stamp_good(h3_good)
 ```
 
-Next, let's take a look at an old-school density plot. I'm showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure \@ref(fig:iris-densities-lines)). The distributions are shown just by their outlines, and because the figure is in black-and-white, we're using different line styles to distinguish them. 
-
+Next, let's take a look at an old-school density plot. I'm showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure \@ref(fig:iris-densities-lines)). The distributions are shown just by their outlines, and because the figure is in black-and-white, we're using different line styles to distinguish them. This figure has multiple problems. Most importantly, the dashed line styles do not provide a clean boundary that separates the area under the curve from the area above it. While our visual system is quite good at connecting the individual line elements into a continuous line, these dashed lines nevertheless look porous and do not serve as a strong boundary of the enclose area. Second, because the lines intersect and the areas they enclose are not shaded, we can perceive six different distinct shapes and we need to expend some additional mental energy to merge the correct shapes together. This effect would have been even stronger had I used solid rather than dashed lines for all three distributions.
 
 (ref:iris-densities-lines) Density estimates of the sepal lengths of three different iris species. The broken line styles used for versicolor and virginica detract from the perception that the areas under the curves are distinct from the areas above them.
 
@@ -82,6 +81,8 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
 stamp_bad(iris_lines)
 ```
 
+
+*paragraph on the colored version of the iris figure.*
 
 (ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve. Also, the colored labels are hard to read.
 

@@ -110,7 +110,7 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 
 So should you use a histogram or a density plot to visualize a distribution? Heated discussions can be had on this topic. Some people are vehemently against density plots and believe that they are arbitrary and misleading. Others realize that histograms can be just as arbitrary and misleading. I think the choice is largely a matter of taste, but sometimes one or the other option may more accurately reflect the specific features of interest in the data at hand. There is also the possibility of using neither and instead choosing empirical cumulative density functions or q-q plots (Chapter \@ref(ecdf-qq)). Finally, I believe that density estimates have an inherent advantage over histograms as soon as we want to visualize more than one distribution at a time (see next section).
 
-## Visualizing multiple distributions at the same time
+## Visualizing multiple distributions at the same time {#multiple-histograms-densities}
 
 In many scenarios we have multiple distributions we would like to visualize simultaneously. For example, let's say we'd like to see how the ages of Titanic passengers are distributed between men and women. Were men and women passengers generally of the same age, or was there an age difference between the genders? One commonly employed visualization strategy in this case is a stacked histogram, where we draw the histogram bars for women on top of the bars for men, in a different color (Figure \@ref(fig:titanic-age-stacked-hist)).
 
@@ -143,7 +143,17 @@ Overlapping density plots don't typically have the problem that overlapping hist
 <p class="caption">(\#fig:titanic-age-overlapping-dens)(ref:titanic-age-overlapping-dens)</p>
 </div>
 
-Another option is possible when we want to visualize exactly two distributions. We can make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an *age pyramid* (Figure \@ref(fig:titanic-age-pyramid)).
+A solution that works well for this dataset is to show the age distributions of male and female passengers separately, each as a proportion of the overall age distribution (Figure \@ref(fig:titanic-age-fractional-dens)). This visualization shows intuitively and clearly that there were many fewer women than men in the 20--50-year age range on the Titanic.
+
+(ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
+
+<div class="figure" style="text-align: center">
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-fractional-dens-1.png" alt="(ref:titanic-age-fractional-dens)" width="816" />
+<p class="caption">(\#fig:titanic-age-fractional-dens)(ref:titanic-age-fractional-dens)</p>
+</div>
+
+
+Finally, when we want to visualize exactly two distributions, we can also make two separate histograms, rotate them by 90 degrees, and have the bars in one histogram point into the opposite direction of the other. This trick is commonly employed when visualizing age distributions, and the resulting plot is usually called an *age pyramid* (Figure \@ref(fig:titanic-age-pyramid)).
 
 (ref:titanic-age-pyramid) The age distributions of male and female Titanic passengers visualized as an age pyramid.
 

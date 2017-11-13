@@ -126,6 +126,9 @@ To give an example where stacked densities are appropriate, consider the health 
 <p class="caption">(\#fig:health-vs-age)(ref:health-vs-age)</p>
 </div>
 
+For an example, see Section \@ref(multiple-histograms-densities) in Chapter \@ref(histograms-density-plots).
+
+
 **Additional ideas for this chapter: nested proportions, treemaps and Sankey diagrams.**
 
 
