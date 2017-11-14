@@ -4,6 +4,8 @@ source("_common.R")
 library(dplyr)
 library(tidyr)
 library(colorblindr)
+library(forcats)
+library(ggridges)
 
 main_size = 14 / .pt
 small_rel <- 0.857
@@ -211,7 +213,7 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
 ```
 
 
-## A case for stacked bars and stacked densities
+## A case for stacked bars and stacked densities {#stacked-densities}
 
 In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be exceptionally clear. As an example, consider the proportion of women in a country's national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament memebers. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered. (See Chapter \@ref(background-grids) for further discussion on such lines.)
 
@@ -259,18 +261,18 @@ ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
 
 If we want to visualize how proportions change in response to a continuous variable, we can switch from stacked bars to stacked densities. Stacked densities can be thought of as the limiting case of infinitely many infinitely small stacked bars arranged side-by-side. The densities in stacked-density plots are typically obtained from kernel density estimation, as described in Chapter \@ref(histograms-density-plots), and I refer you to that chapter for a general discussion of the strengths and weaknesses of this method.
 
-To give an example where stacked densities are appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data this way works well (Figure \@ref(fig:health-vs-age)). Even though we have four health categories here, and I'm generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure works. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.
+To give an example where stacked densities may be appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data in this way works reasonably well (Figure \@ref(fig:health-vs-age)). Even though we have four health categories here, and I'm generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure is acceptable. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.
 
 (ref:health-vs-age) Health status by age, as reported by the general social survey (GSS).
 
-```{r health-vs-age, fig.width = 7.5, fig.asp = .55, fig.cap='(ref:health-vs-age)'}
-df <- select(productplots::happy, age, health) %>%
+```{r health-vs-age, fig.asp = .5, fig.cap='(ref:health-vs-age)'}
+df_health <- select(productplots::happy, age, health) %>%
   na.omit()
 
 # color brewer 5-class PuBu
 colors = c('#f1eef6', '#bdc9e1', '#74a9cf', '#2b8cbe', '#045a8d')[5:1]
 
-ggplot(df, aes(x=age, y=..count.., fill = health, color = health)) + 
+p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color = health)) + 
   geom_density(position = "fill") +
   #geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
   scale_x_continuous(expand = c(0, 0)) +
@@ -284,13 +286,80 @@ ggplot(df, aes(x=age, y=..count.., fill = health, color = health)) +
         axis.line.x = element_blank(),
         axis.line.y = element_blank())
 
+df_marital <- select(productplots::happy, age, marital) %>%
+  na.omit() %>%
+  filter(marital != "separated") %>% # remove separated to make plot simpler
+  mutate(marital = factor(marital, levels = c("widowed", "divorced", "married", "never married")))
+
+p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, color = marital)) + 
+  geom_density(position = "fill") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), name = "percent",
+                     labels = c(0, 25, 50, 75, 100)) + 
+  scale_color_manual(values = colors) + 
+  scale_fill_manual(values = colors) +
+  theme_dviz() + 
+  theme(axis.ticks.y = element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank())
+
+p_aligned <- align_plots(p_health, p_marital, align = 'v')
+ggdraw(p_aligned[[1]])
+```
+
+Nevertheless, this figure has a major limitation: By visualizing the porportions of the four health conditions as percent of the total, the figure obscures that there are many more young people than old people in the dataset. Thus, even though the *percentage* of people reporting to be in good health remains approximately unchanged across ages spanning seven decades, the *absolute number* of people in good health declines as the total number of people at a given age declines. I will present a potential solution to this problem in the next section.
+
+
+## Visualizing proportions separately as parts of the total
+
+Side-by-side bars have the problem that they don't clearly visualize the size of the individual parts relative to the whole and stacked bars have the problem that the different bars cannot be compared easily because they have different baselines. We can resolve these two issues by making a separate plot for each part and in each plot showing the respective part relative to the whole. For the health dataset of Figure \@ref(fig:health-vs-age), this procedure results in Figure \@ref(fig:health-vs-age-facets). The overall age distribution in the dataset is shown as the shaded gray areas, and the age distributions for each health status are shown in blue. This figure highlights that in absolute terms, the number people with excellent or good health declines past ages 30--40, while the number of people with fair health remains approximately constant across all ages.
+
+(ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution.
+
+```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.3, fig.cap='(ref:health-vs-age-facets)'}
+ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..)) +
+  geom_density_line(data=select(df_health, -health), color = "transparent") +
+  geom_density_line(fill = "#2b8cbe", color = "transparent") +
+  facet_wrap(~health, nrow = 1) +
+  scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
+  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  theme_dviz_hgrid() +
+  theme(strip.background = element_blank(),
+        strip.text = element_text(margin = margin(0, 0, 0, 0)))
 ```
 
 
 
-**Additional ideas for this chapter: nested proportions, treemaps and Sankey diagrams.**
+To provide a second example, let's consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure \@ref(fig:marital-vs-age)).
+
+(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret. 
+
+```{r marital-vs-age, fig.asp = 0.5, fig.cap='(ref:marital-vs-age)'}
+stamp_bad(p_marital)
+```
+
+The same dataset visualized as partial densities is much clearer (Figure \@ref(fig:marital-vs-age-facets)). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.
+
+(ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution.
+
+```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.3, fig.cap='(ref:marital-vs-age-facets)'}
+ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
+  geom_density_line(data=select(df_marital, -marital), color = "transparent") +
+  geom_density_line(fill = "#2b8cbe", color = "transparent") +
+  facet_wrap(~marital, nrow = 1) +
+  scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
+  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  theme_dviz_hgrid() +
+  theme(strip.background = element_blank(),
+        strip.text = element_text(margin = margin(0, 0, 0, 0)))
+```
+
+
 
 ```{r}
+
+# **Additional ideas, for a separate chapter on nested proportions: treemaps and Sankey diagrams.**
+
 #Notes:
 #  https://github.com/wilkox/treemapify
 #  Also possibly use survival on Titanic, as.data.frame(Titanic)

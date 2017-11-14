@@ -81,7 +81,8 @@
 <li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
 <li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
 <li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
-<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-stacked-bars-and-stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Histograms and density plots</a></li>
 <li class="chapter" data-level="12" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>12</b> Visualizing distributions: Empirical cumulative density functions and q-q plots</a></li>
@@ -229,7 +230,7 @@ Figure 10.6: Market share of five hypothetical companies for the years 2015–20
 </p>
 </div>
 </div>
-<div id="a-case-for-stacked-bars-and-stacked-densities" class="section level2">
+<div id="stacked-densities" class="section level2">
 <h2><span class="header-section-number">10.3</span> A case for stacked bars and stacked densities</h2>
 <p>In Section <a href="visualizing-proportions.html#side-by-side-bars">10.2</a>, I wrote that I don’t normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be exceptionally clear. As an example, consider the proportion of women in a country’s national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament memebers. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure <a href="visualizing-proportions.html#fig:women-parliament">10.7</a>). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered. (See Chapter <a href="background-grids.html#background-grids">5</a> for further discussion on such lines.)</p>
 
@@ -240,16 +241,42 @@ Figure 10.7: Change in the gender composition of the Rwandan parliament over tim
 </p>
 </div>
 <p>If we want to visualize how proportions change in response to a continuous variable, we can switch from stacked bars to stacked densities. Stacked densities can be thought of as the limiting case of infinitely many infinitely small stacked bars arranged side-by-side. The densities in stacked-density plots are typically obtained from kernel density estimation, as described in Chapter <a href="histograms-density-plots.html#histograms-density-plots">11</a>, and I refer you to that chapter for a general discussion of the strengths and weaknesses of this method.</p>
-<p>To give an example where stacked densities are appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data this way works well (Figure <a href="visualizing-proportions.html#fig:health-vs-age">10.8</a>). Even though we have four health categories here, and I’m generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure works. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.</p>
+<p>To give an example where stacked densities may be appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data in this way works reasonably well (Figure <a href="visualizing-proportions.html#fig:health-vs-age">10.8</a>). Even though we have four health categories here, and I’m generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure is acceptable. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:health-vs-age"></span>
-<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" alt="Health status by age, as reported by the general social survey (GSS)." width="720" />
+<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" alt="Health status by age, as reported by the general social survey (GSS)." width="576" />
 <p class="caption">
 Figure 10.8: Health status by age, as reported by the general social survey (GSS).
 </p>
 </div>
-<p>For an example, see Section <a href="#multiple-histograms-densities"><strong>??</strong></a> in Chapter <a href="histograms-density-plots.html#histograms-density-plots">11</a>.</p>
-<p><strong>Additional ideas for this chapter: nested proportions, treemaps and Sankey diagrams.</strong></p>
+<p>Nevertheless, this figure has a major limitation: By visualizing the porportions of the four health conditions as percent of the total, the figure obscures that there are many more young people than old people in the dataset. Thus, even though the <em>percentage</em> of people reporting to be in good health remains approximately unchanged across ages spanning seven decades, the <em>absolute number</em> of people in good health declines as the total number of people at a given age declines. I will present a potential solution to this problem in the next section.</p>
+</div>
+<div id="visualizing-proportions-separately-as-parts-of-the-total" class="section level2">
+<h2><span class="header-section-number">10.4</span> Visualizing proportions separately as parts of the total</h2>
+<p>Side-by-side bars have the problem that they don’t clearly visualize the size of the individual parts relative to the whole and stacked bars have the problem that the different bars cannot be compared easily because they have different baselines. We can resolve these two issues by making a separate plot for each part and in each plot showing the respective part relative to the whole. For the health dataset of Figure <a href="visualizing-proportions.html#fig:health-vs-age">10.8</a>, this procedure results in Figure <a href="visualizing-proportions.html#fig:health-vs-age-facets">10.9</a>. The overall age distribution in the dataset is shown as the shaded gray areas, and the age distributions for each health status are shown in blue. This figure highlights that in absolute terms, the number people with excellent or good health declines past ages 30–40, while the number of people with fair health remains approximately constant across all ages.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:health-vs-age-facets"></span>
+<img src="visualizing_proportions_files/figure-html/health-vs-age-facets-1.png" alt="Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution." width="816" />
+<p class="caption">
+Figure 10.9: Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution.
+</p>
+</div>
+<p>To provide a second example, let’s consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure <a href="visualizing-proportions.html#fig:marital-vs-age">10.10</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:marital-vs-age"></span>
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-1.png" alt="Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret." width="576" />
+<p class="caption">
+Figure 10.10: Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret.
+</p>
+</div>
+<p>The same dataset visualized as partial densities is much clearer (Figure <a href="visualizing-proportions.html#fig:marital-vs-age-facets">10.11</a>). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:marital-vs-age-facets"></span>
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-facets-1.png" alt="Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution." width="816" />
+<p class="caption">
+Figure 10.11: Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution.
+</p>
+</div>
 
 </div>
 </div>
