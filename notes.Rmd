@@ -39,7 +39,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Don't box yourself in**  
   Argues to avoid boxes and frames around figure parts.
   
-#. **Avoid line drawings**\*  
+#. **Avoid line drawings**\*\*  
   Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
   
 #. **The principle of proportional ink**  
