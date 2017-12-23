@@ -17,7 +17,7 @@ From 1961 to 1983, the German parliament (called the *Bundestag*) was composed o
 (ref:bundestag-pie) Party composition of the 8th German Bundestag, 1976--1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="(ref:bundestag-pie)" width="403.2" />
+<img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="(ref:bundestag-pie)" width="576" />
 <p class="caption">(\#fig:bundestag-pie)(ref:bundestag-pie)</p>
 </div>
 
@@ -74,8 +74,6 @@ of proportions
 ## A case for side-by-side bars {#side-by-side-bars}
 
 I will now demonstrate a case where pie charts fail. This example is modeled after a critiqute of pie charts originally posted on Wikipedia [@Schutz-piecharts]. Consider the hypothetical scenario of five companies, A, B, C, D, and E, who all have roughly comparable market share of approximately 20%. Our hypothetical dataset lists the marketshare of each company for three consecutive years. When we visualize this dataset with pie charts, it is difficult to see what exactly is going on (Figure \@ref(fig:marketshare-pies)). It appears that the market share of company A is growing and the one of company E is shrinking, but beyond this one observation we can't tell what's going on. In particular, it is unclear how exactly the market shares of the different companies compare within each year.
-
-
 
 
 (ref:marketshare-pies) Market share of five hypothetical companies, A--E, for the years 2015--2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
