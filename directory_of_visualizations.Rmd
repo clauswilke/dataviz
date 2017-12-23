@@ -5,7 +5,6 @@ source("_common.R")
 library(dplyr)
 library(ggforce)
 library(ggridges)
-library(colorspace)
 ```
 
 # (PART\*) Part II: A visualization for every occasion {-}
@@ -19,7 +18,7 @@ library(colorspace)
 theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
   line_size <- .8
   font_size <- 10
-  theme_dviz_half_open() %+replace% theme(
+  theme_half_open() %+replace% theme(
     axis.text.x       = element_blank(),
     axis.text.y       = element_blank(),
     axis.title.x      = element_blank(),

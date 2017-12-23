@@ -42,6 +42,12 @@ None of the techniques discussed so far work very well when the majority of poin
 
 Consider the following figure, which shows the departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013.
 
+
+```
+## Warning in .parse_hms(..., order = "HM", quiet = quiet): Some strings
+## failed to parse, or all strings are NAs
+```
+
 <img src="overlapping_points_files/figure-html/nycflights-points-1.png" width="576" style="display: block; margin: auto;" />
 Even though we have made the points fairly transparent, the majority of the points just form a black band between 0 and 300 minutes departure delay. This black band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the points.
 

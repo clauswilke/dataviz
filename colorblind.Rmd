@@ -107,7 +107,7 @@ You can see examples using these scales throughout this book, for example in the
 
 
 
-```{r} 
+```{r eval = FALSE, include = FALSE} 
 ## Notes, entered as R comment so as to not appear in the printed output
 #Some useful posts on color-blind friendly palettes:
 #

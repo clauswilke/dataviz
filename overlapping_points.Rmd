@@ -24,7 +24,7 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_dviz(19) +
+  theme_half_open(19) +
   theme(legend.position = c(.6, .8))
 stamp_bad(p)
 ```
@@ -38,7 +38,7 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_dviz(19) +
+  theme_half_open(19) +
   theme(legend.position = c(.6, .8))
 stamp_good(p2)
 ```
@@ -54,7 +54,7 @@ p_cty_hwy_base <- ggplot(mpg, aes(cty, hwy)) +
   coord_fixed(xlim = c(5, 40), ylim = c(10, 45)) +
   draw_text("highway mpg = city mpg",
             x = 40.2, y = 39.8, size = 12, hjust = 1, vjust = 1, angle = 45) +
-  theme_dviz()
+  theme_half_open()
 
 p3 <- p_cty_hwy_base + geom_point(alpha = .5, size = 3)
 
@@ -99,7 +99,7 @@ p6 <- ggplot(county_midwest, aes(area, pop2010)) +
                 limits = c(50, 7000), expand = c(0, 0)) +
   ylab("population total") +
   xlab("area (square miles)") +
-  theme_dviz_grid()
+  theme_minimal_grid()
   
 stamp_good(p6)
 ```
@@ -118,7 +118,7 @@ p7 <- ggplot(county_midwest, aes(area, pop2010)) +
                 limits = c(150, 2000), expand = c(0, 0)) +
   ylab("population total") +
   xlab("area (square miles)") +
-  theme_dviz_grid()
+  theme_minimal_grid()
   
 stamp_good(p7)
 ```
@@ -151,7 +151,7 @@ p_flights_base <- ggplot(delay_df, aes(`departure time`, `departure delay (minut
   geom_abline(slope = 0, intercept = 0, color="grey70") +
   scale_x_time(breaks = hm(breaks_x),
                labels = breaks_x) +
-  theme_dviz()
+  theme_half_open()
 
 p9 <- p_flights_base + geom_point(alpha = 0.2)
 

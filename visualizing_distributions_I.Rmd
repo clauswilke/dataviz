@@ -43,7 +43,7 @@ age_hist <- cbind(age_hist, age = (1:15)*5-2.5)
 h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 h1
 ```
 
@@ -66,19 +66,19 @@ age_hist_15 <- data.frame(age = (1:5)*15-7.5,
 h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 10*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 100*(0:4)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
-plot_grid(h2, h3, h1 + theme_dviz_hgrid(12), h4, align = 'hv',
+plot_grid(h2, h3, h1 + theme_minimal_hgrid(12), h4, align = 'hv',
           labels = 'auto', label_fontface = "plain")
 
 ```
@@ -96,7 +96,7 @@ ggplot(titanic, aes(x=age)) +
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 ```
 
 Just as is the case with histograms, the exact visual appearance of a density plot depends on the kernel and bandwidth choices (Figure \@ref(fig:titanic-ages-dens-grid)). The bandwidth parameter behaves similarly to the bin width in histograms. If the bandwidth is too small, then the density estimate can become overly peaky and visually busy and the main trends in the data may be obscured. On the other hand, if the bandwidth is too large, then smaller features in the distribution of the data may disappear. In addition, the choice of the kernel affects the shape of the density curve. For example, a Gaussian kernel will have a tendency to produce density estimates that look Gaussian-like, with smooth features and tails. By contrast, a rectangular kernel can generate the appearance of steps in the density curve (Figure \@ref(fig:titanic-ages-dens-grid)d). In general, the more data points there are in the data set, the less the choice of the kernel matters. Therefore, density plots tend to be quite reliable and informative for large data sets but can be misleading for data sets of only a few points.
@@ -108,25 +108,25 @@ pdens1 <- ggplot(titanic, aes(x=age)) +
   geom_density_line(fill = "#56B4E9", bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 pdens2 <- ggplot(titanic, aes(x=age)) + 
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 pdens3 <- ggplot(titanic, aes(x=age)) + 
   geom_density_line(fill = "#56B4E9", bw = 5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 pdens4 <- ggplot(titanic, aes(x=age)) + 
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "rectangular") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz_hgrid(12)
+  theme_minimal_hgrid(12)
 
 plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv',
           labels = 'auto', label_fontface = "plain")
@@ -144,7 +144,7 @@ pdens_neg <- ggplot(titanic, aes(x=age)) +
   geom_density_line(fill = "#56B4E9") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 
 stamp_bad(pdens_neg)
 ```
@@ -174,7 +174,7 @@ p_hist_stacked <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#D55E00", "#0072B2")) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(legend.position = c(.9, .92),
         legend.justification = c("right", "top"),
         legend.box.background = element_rect(fill = "white", color = "white"))
@@ -195,7 +195,7 @@ p_hist_overlapped <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"),
                     guide = guide_legend(reverse=TRUE)) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(legend.position = c(.9, .92),
         legend.justification = c("right", "top"),
         legend.box.background = element_rect(fill = "white", color = "white"))
@@ -218,7 +218,7 @@ p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=..count.., fill = sex)) +
   scale_y_continuous(limits = c(0, 20), name = "scaled density", expand = c(0, 0)) +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
   guides(fill = guide_legend(override.aes = list(linetype = 0))) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(legend.position = c(.9, .92),
         legend.justification = c("right", "top"),
         legend.box.background = element_rect(fill = "white", color = "white"))
@@ -238,7 +238,7 @@ p_dens_fraction <- ggplot(titanic2, aes(x=age, y=..count..)) +
   scale_y_continuous(limits = c(0, 26), name = "scaled density", expand = c(0, 0)) +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender", guide = "none") +
   facet_wrap(~sex, labeller = labeller(sex = function(sex) paste(sex, "passengers"))) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(strip.background = element_blank(),
         strip.text = element_text(margin = margin(0, 0, 0, 0)))
 
@@ -259,7 +259,7 @@ ggplot(gender_counts, aes(x=age, y=ifelse(gender == "male",-1, 1)*count, fill = 
   draw_text(x = 70, y = -35, "male") +
   draw_text(x = 70, y = 25, "female") +
   coord_flip() +
-  theme_dviz_grid() +
+  theme_minimal_grid() +
   theme(axis.title.x = element_text(hjust = 0.61))
 
 
@@ -288,13 +288,14 @@ iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) 
   geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
+                                 y = density + nudge_y),
+            inherit.aes = FALSE, size = 12/.pt) +
   scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
   
 iris_p
 ```

@@ -29,7 +29,7 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
                                                              color = "black")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz() +
+  theme_half_open() +
   background_grid(major = "y", minor = "none")
 
 stamp_bad(h3_bad)
@@ -41,7 +41,7 @@ stamp_bad(h3_bad)
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_dviz() +
+  theme_half_open() +
   background_grid(major = "y", minor = "none")
 
 stamp_good(h3_good)
@@ -70,13 +70,14 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   geom_density_line(stat = "identity", alpha = 0., size = 0.75) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
+                                 y = density + nudge_y),
+            inherit.aes = FALSE, size = 12/.pt) +
   scale_linetype_manual(values = c(1, 3, 4),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz()
+  theme_half_open()
 
 stamp_bad(iris_lines)
 ```
@@ -90,13 +91,14 @@ iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color
   geom_density_line(stat = "identity", alpha = 0., size = 1) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
+                                 y = density + nudge_y),
+            inherit.aes = FALSE, size = 12/.pt) +
   scale_color_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz()
+  theme_half_open()
 
 stamp_ugly(iris_colored_lines)
 ```
@@ -109,13 +111,14 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
+                                 y = density + nudge_y),
+            inherit.aes = FALSE, size = 12/.pt) +
   scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz()
+  theme_half_open()
   
 stamp_good(iris_filled)
 ```

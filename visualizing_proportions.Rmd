@@ -3,7 +3,6 @@
 source("_common.R")
 library(dplyr)
 library(tidyr)
-library(colorblindr)
 library(forcats)
 library(ggridges)
 
@@ -75,7 +74,7 @@ bt_bars_yax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
   geom_text(data = bundestag, aes(x = 0.06, y = label_y, label = party, hjust = 0, vjust = 0.5, size = small_size)) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1))
 
-bt_bars_stacked <- insert_yaxis_grob(bt_bars_stacked_base + theme_dviz_hgrid(),
+bt_bars_stacked <- insert_yaxis_grob(bt_bars_stacked_base + theme_minimal_hgrid(),
                                      bt_bars_yax, grid::unit(.5, "null"))
 
 bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
@@ -85,7 +84,7 @@ bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
 
 bt_bars_hstacked <- insert_xaxis_grob(bt_bars_stacked_base + coord_flip() +
                                         scale_y_continuous(expand = c(0, 0), position = "top") +
-                                        theme_dviz_vgrid(),
+                                        theme_minimal_vgrid(),
                                       bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
 
 plot_grid(bt_bars_stacked, plot_grid(NULL, bt_bars_hstacked, NULL, ncol = 1, rel_heights = c(1, 6, 7.5)),
@@ -104,7 +103,7 @@ bt_bars <- ggplot(bundestag, aes(x = party, y = seats, fill = party)) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = bundestag$colors, guide = "none") + 
   #geom_hline(yintercept = c(50, 100, 150, 200), color = "#ffffff70", size = .5) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 
 bt_bars
 ```
@@ -172,7 +171,7 @@ pies <- ggplot(marketshare, aes(x = 1, y = percent, fill = company)) +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(limits = c(0.55, 1.6), breaks = NULL, name = "") +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
-  theme_dviz() +
+  theme_half_open() +
   theme(axis.line.x = element_blank(),
         axis.title.x = element_blank(),
         axis.ticks.y = element_blank(),
@@ -193,7 +192,7 @@ stacked_bars <- ggplot(marketshare, aes(x = year, y = percent, fill = company)) 
   geom_col(position = "stack") + 
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
-  theme_dviz()
+  theme_half_open()
 
 stamp_bad(stacked_bars)
 ```
@@ -208,7 +207,7 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
   facet_wrap(~year) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
-  theme_dviz() +
+  theme_half_open() +
   theme(strip.background = element_blank())
 ```
 
@@ -240,12 +239,12 @@ plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_fill_OkabeIto(guide = "none") +
-    theme_dviz() + 
+    theme_half_open() + 
     theme(axis.ticks.y = element_blank(),
           #axis.ticks.x = element_blank(),
           axis.line.x = element_blank(),
           axis.line.y = element_blank())
-    #theme_dviz_hgrid() + background_grid(major = "none", minor = "none")
+    #theme_minimal_hgrid() + background_grid(major = "none", minor = "none")
 
 # calculate label position
 labels <- filter(women_rwanda, year == max(year)) %>%
@@ -280,7 +279,7 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
                      labels = c(0, 25, 50, 75, 100)) + 
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
-  theme_dviz() + 
+  theme_half_open() + 
   theme(axis.ticks.y = element_blank(),
         #axis.ticks.x = element_blank(),
         axis.line.x = element_blank(),
@@ -298,7 +297,7 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
                      labels = c(0, 25, 50, 75, 100)) + 
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
-  theme_dviz() + 
+  theme_half_open() + 
   theme(axis.ticks.y = element_blank(),
         axis.line.x = element_blank(),
         axis.line.y = element_blank())
@@ -323,7 +322,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
   facet_wrap(~health, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(strip.background = element_blank(),
         strip.text = element_text(margin = margin(0, 0, 0, 0)))
 ```
@@ -349,7 +348,7 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
   facet_wrap(~marital, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
-  theme_dviz_hgrid() +
+  theme_minimal_hgrid() +
   theme(strip.background = element_blank(),
         strip.text = element_text(margin = margin(0, 0, 0, 0)))
 ```

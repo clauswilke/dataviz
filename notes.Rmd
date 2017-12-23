@@ -112,6 +112,10 @@ Articles and blog posts with useful ideas:
 - http://socviz.co/
 - Births per month visualization: https://github.com/aaronpenne/Data_Visualization/blob/master/HMD/Births_USA/Births_USA.ipynb
 - http://www.datavizcatalogue.com/about.html
+- Data acquisition (four parts):
+  * https://ikashnitsky.github.io/2017/data-acquisition-one/
+  * https://ikashnitsky.github.io/2017/data-acquisition-two/
+  * https://ikashnitsky.github.io/2017/data-acquisition-three/
 
 
 Datasets to use:
@@ -128,3 +132,9 @@ Datasets to use:
 - Berkeley list of health statistics datasets: http://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata
 - Birth and death rates: http://www.mortality.org/cgi-bin/hmd/hmd_download.php
 - OECD, http://stats.oecd.org/, e.g. tax as % of GDP
+
+Required versions of rendering software:
+
+- pandoc: 1.19.2.1
+- rmarkdown: 1.8
+- bookdown: 0.4

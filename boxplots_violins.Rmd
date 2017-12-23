@@ -6,7 +6,6 @@ library(dplyr)
 library(forcats)
 library(ggridges)
 library(ggforce)
-library(viridis)
 ```
 
 # Boxplots, violin plots, and more {#boxplots-violins}
@@ -36,7 +35,8 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
                fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
                fatten = 5) +
-  xlab("Month")
+  xlab("Month") + 
+  theme_half_open()
 
 stamp_bad(lincoln_errbar)
 ```
@@ -63,8 +63,8 @@ The line in the middle represents the median, and the box encloses the middle 50
 When we visualize the temperature dataset using boxplots, we obtain the following result.
 ```{r boxplots, message=FALSE, warning=FALSE}
 lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot(fill = 'grey90') + xlab("Month")
-
+  geom_boxplot(fill = 'grey90') + xlab("Month") +
+  theme_half_open()
 
 stamp_good(lincoln_box)
 ```
@@ -74,7 +74,8 @@ Using the boxplot visualization, we see clearly that temperature is highly skewe
 
 ```{r violin-plots, message=FALSE, warning=FALSE}
 lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_violin(fill = 'grey90') + xlab("Month")
+  geom_violin(fill = 'grey90') + xlab("Month") +
+  theme_half_open()
 
 stamp_good(lincoln_violin)
 ```
@@ -83,7 +84,8 @@ stamp_good(lincoln_violin)
 We can also plot all individual points:
 ```{r all-points-no-jitter, message=FALSE, warning=FALSE}
 lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_point() + xlab("Month")
+  geom_point() + xlab("Month") +
+  theme_half_open()
 
 stamp_bad(lincoln_points)
 ```
@@ -91,7 +93,8 @@ stamp_bad(lincoln_points)
 
 ```{r jittered-points, message=FALSE, warning=FALSE}
 lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_jitter(width = .15) + xlab("Month")
+  geom_jitter(width = .15) + xlab("Month") +
+  theme_half_open()
 
 stamp_good(lincoln_jitter)
 ```
@@ -100,7 +103,10 @@ stamp_good(lincoln_jitter)
 Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. 
 ```{r sina-plots, message=FALSE, warning=FALSE}
 lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_violin(color = "transparent", fill = "gray90") + stat_sina(maxwidth = 0.8) + xlab("Month")
+  geom_violin(color = "transparent", fill = "gray90") + 
+  stat_sina(maxwidth = 0.8) + 
+  xlab("Month") +
+  theme_half_open()
 
 stamp_good(lincoln_sina)
 ```

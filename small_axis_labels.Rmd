@@ -21,7 +21,7 @@ p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD"))
 
-stamp_bad(p + theme_dviz(7) +
+stamp_bad(p + theme_half_open(7) +
   theme(legend.position = c(.7, .8)))
 ```
 
@@ -30,7 +30,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:mpg-ugly).
 (ref:mpg-ugly) Fuel economy versus engine displacement. This figure is an improvement over Figure \@ref(fig:mpg-bad), but the text elements remain too small and the figure is not balanced.
 
 ```{r mpg-ugly, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-ugly)'}
-stamp_ugly(p + theme_dviz(10) +
+stamp_ugly(p + theme_half_open(10) +
   theme(legend.position = c(.7, .8)))
 ```
 
@@ -49,7 +49,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:mpg-
 (ref:mpg-big-ugly) Fuel economy versus engine displacement. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements.
 
 ```{r mpg-big-ugly, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-big-ugly)'}
-stamp_ugly(p + theme_dviz(19) +
+stamp_ugly(p + theme_half_open(19) +
   theme(legend.position = c(.6, .8)))
 ```
 
@@ -65,7 +65,7 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_dviz(19) +
+  theme_half_open(19) +
   theme(legend.position = c(.6, .8))
 stamp_good(p2)
 ```

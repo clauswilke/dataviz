@@ -1,4 +1,4 @@
-```{r echo = FALSE}
+```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
 
@@ -10,7 +10,6 @@ library(purrr)
 library(stringr)
 library(lubridate)
 library(ggridges)
-library(viridis)
 ```
 
 
@@ -30,7 +29,7 @@ iris %>%
     scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
     scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter
 
-stamp_bad(plot_grid(NULL, iris_scatter + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_bad(plot_grid(NULL, iris_scatter + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
 ```
 
 There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
@@ -49,7 +48,7 @@ iris %>%
     scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
     scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter2
 
-stamp_good(plot_grid(NULL, iris_scatter2 + theme_dviz_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_good(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
 ```
 
 Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
@@ -83,7 +82,7 @@ iris %>%
     scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
     scale_y_continuous(limits=c(1.8, 4.6), expand=c(0, 0)) -> iris_scatter3
 
-stamp_good(plot_grid(NULL, iris_scatter3 + theme_dviz(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
+stamp_good(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
 ```
 
 
@@ -136,7 +135,7 @@ price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
   scale_y_continuous(name="stock price, indexed",
                      limits = c(0, 560),
                      expand=c(0,0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 
 
 stamp_bad(price_plot)
@@ -159,7 +158,7 @@ price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
   scale_y_continuous(name="stock price, indexed",
                      limits = c(0, 560),
                      expand=c(0,0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
 
 
 stamp_good(price_plot)
@@ -195,16 +194,18 @@ iris_max <- filter(iris_dens, density == max(density)) %>%
         )
 
 iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
-  geom_density(stat = "identity", alpha = 0.7) +
+  geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
+                                 y = density + nudge_y), 
+            size = 12/.pt,
+            inherit.aes = FALSE) +
   scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  theme_minimal_hgrid()
   
 stamp_good(plot_grid(iris_p, NULL, rel_widths = c(8, 1)))
 ```
@@ -227,8 +228,8 @@ iris_max <- mutate(iris_max,
 
 
 xdens <- axis_canvas(iris_scatter2, axis = "x") +
-  geom_ridgeline(data=iris_dens, aes(x=Sepal.Length, y=0, height=density, fill=Species),
-                 alpha=0.5, size=.2) +
+  geom_density_line(data=iris_dens, aes(x = Sepal.Length, y = density, fill = Species),
+                    stat = "identity", alpha = 0.5, size = .2) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y), size = 12/.pt) +
@@ -236,14 +237,15 @@ xdens <- axis_canvas(iris_scatter2, axis = "x") +
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none")
 
-ydens <- axis_canvas(iris_scatter2, axis = "y") +
-  geom_vridgeline(data=iris_dens2, aes(y=Sepal.Width, x=0, width=density, fill=Species),
-                 alpha=0.5, size=.2)  +
+ydens <- axis_canvas(iris_scatter2, axis = "y", coord_flip = TRUE) +
+  geom_density_line(data = iris_dens2, aes(x = Sepal.Width, y = density, fill = Species),
+                    stat = "identity", alpha = 0.5, size = .2)  +
   scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none")
+                    guide = "none") +
+  coord_flip()
 
-p1 <- insert_xaxis_grob(iris_scatter2 + theme_dviz_grid() + 
+p1 <- insert_xaxis_grob(iris_scatter2 + theme_minimal_grid() + 
                           theme(legend.position = "none"),
                         xdens, grid::unit(.2, "null"), position = "top")
 p2 <- insert_yaxis_grob(p1, ydens, grid::unit(.15, "null"), position = "right")
@@ -260,7 +262,7 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
   geom_density_ridges_gradient(scale = 3, rel_min_height = 0.001, bandwidth = bandwidth) +
   scale_x_continuous(expand = c(0.01, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
   scale_y_discrete(expand = c(0.01, 0.3)) +
-  scale_fill_viridis(name = "Temp. [F]", option = "C") +
+  scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
   labs(title = 'Temperatures in Lincoln NE',
        subtitle = 'Mean temperatures (Fahrenheit) by month for 2016') +
   guides(fill = "none") +
@@ -284,7 +286,7 @@ xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
   geom_text(data = temps, aes(x = temp, label = temp),
             color = "black",
             y = 0.9, hjust = 0.5, vjust = 1, size = 14/.pt) +
-  scale_fill_viridis(option = "C")
+  scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0)
 
 lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
 stamp_good(plot_grid(lincoln_final, NULL, rel_widths = c(8, 1)))

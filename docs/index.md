@@ -4,6 +4,7 @@ author: "Claus O. Wilke"
 description: "A guide for making figures that look professional and are publication-ready."
 github-repo: clauswilke/dataviz
 site: bookdown::bookdown_site
+output: bookdown::gitbook
 bibliography: "bibliography.bib"
 biblio-style: "apalike"
 link-citations: true

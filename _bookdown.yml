@@ -1,4 +1,6 @@
 new_session: yes
+output_dir: "docs"
+delete_merged_file: false
 
 rmd_files: [
   "index.Rmd",
@@ -10,15 +12,15 @@ rmd_files: [
   "colorblind.Rmd",
   "redundant_coding.Rmd",
   "small_axis_labels.Rmd",
-  #"aspect_ratio.Rmd",
+  ##"aspect_ratio.Rmd",
   "background_grids.Rmd",
   "avoid_line_drawings.Rmd",
-  "proportional_ink.Rmd",
+  ##"proportional_ink.Rmd",
   "overlapping_points.Rmd",
 
   # Part II
   "directory_of_visualizations.Rmd",
-  #"visualizing_amounts.Rmd",
+  ##"visualizing_amounts.Rmd",
   "visualizing_proportions.Rmd",
   "visualizing_distributions_I.Rmd",
   "visualizing_distributions_II.Rmd",
@@ -31,5 +33,3 @@ rmd_files: [
 
   "references.Rmd"
 ]
-
-output_dir: "docs"

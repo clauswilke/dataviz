@@ -74,6 +74,394 @@ For figures where the relevant comparison is the *x* = *y* line, I prefer to dra
 
 (ref:echave-et-al-grid) Correlations between evolutionary conservation and structural features of sites in 209 proteins. By plotting this dataset against a background grid, the systematic shift of all points away from the *x* = *y* line is obscured.
 
+
+```
+## List of 58
+##  $ line                 :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.636
+##   ..$ linetype     : num 1
+##   ..$ lineend      : chr "butt"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ rect                 :List of 5
+##   ..$ fill         : chr "transparent"
+##   ..$ colour       : logi NA
+##   ..$ size         : num 0
+##   ..$ linetype     : num 0
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ text                 :List of 11
+##   ..$ family       : chr ""
+##   ..$ face         : chr "plain"
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 14
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : num 0
+##   ..$ lineheight   : num 0.9
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 0 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 6 0 3 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x.top     :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 7 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.y         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 6 0 3
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.y.right   :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 0 7
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text            :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 12
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 3 0 0 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x.top      :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 2.8 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.y          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 1
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 3 0 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.y.right    :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 0 2.8
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.ticks           :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ axis.ticks.length    :Class 'unit'  atomic [1:1] 3.5
+##   .. ..- attr(*, "valid.unit")= int 8
+##   .. ..- attr(*, "unit")= chr "pt"
+##  $ axis.line            :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : chr "square"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ axis.line.x          :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : chr "square"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ axis.line.y          :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : chr "square"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ legend.background    : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ legend.margin        :Classes 'margin', 'unit'  atomic [1:4] 0.2 0.2 0.2 0.2
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ legend.spacing       :Class 'unit'  atomic [1:1] 0.4
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ legend.spacing.x     : NULL
+##  $ legend.spacing.y     : NULL
+##  $ legend.key           : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ legend.key.size      :Class 'unit'  atomic [1:1] 1
+##   .. ..- attr(*, "valid.unit")= int 3
+##   .. ..- attr(*, "unit")= chr "lines"
+##  $ legend.key.height    : NULL
+##  $ legend.key.width     : NULL
+##  $ legend.text          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         :Class 'rel'  num 0.857
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.text.align    : NULL
+##  $ legend.title         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.title.align   : NULL
+##  $ legend.position      : chr "right"
+##  $ legend.direction     : NULL
+##  $ legend.justification : chr [1:2] "left" "center"
+##  $ legend.box           : NULL
+##  $ legend.box.margin    :Classes 'margin', 'unit'  atomic [1:4] 0 0 0 0
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ legend.box.background: list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ legend.box.spacing   :Class 'unit'  atomic [1:1] 0.4
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ panel.background     : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.border         : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.spacing        :Class 'unit'  atomic [1:1] 7
+##   .. ..- attr(*, "valid.unit")= int 8
+##   .. ..- attr(*, "unit")= chr "pt"
+##  $ panel.spacing.x      : NULL
+##  $ panel.spacing.y      : NULL
+##  $ panel.grid           :List of 6
+##   ..$ colour       : chr "white"
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ panel.grid.minor     :List of 6
+##   ..$ colour       : chr "grey98"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi FALSE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ panel.ontop          : logi FALSE
+##  $ plot.background      : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ plot.title           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : chr "bold"
+##   ..$ colour       : NULL
+##   ..$ size         : num 14
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 7 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.subtitle        :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         :Class 'rel'  num 0.9
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 0 0 6.3 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.caption         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         :Class 'rel'  num 0.9
+##   ..$ hjust        : num 1
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       :Classes 'margin', 'unit'  atomic [1:4] 6.3 0 0 0
+##   .. .. ..- attr(*, "valid.unit")= int 8
+##   .. .. ..- attr(*, "unit")= chr "pt"
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.margin          :Classes 'margin', 'unit'  atomic [1:4] 7 7 7 7
+##   .. ..- attr(*, "valid.unit")= int 8
+##   .. ..- attr(*, "unit")= chr "pt"
+##  $ strip.background     :List of 5
+##   ..$ fill         : chr "grey80"
+##   ..$ colour       : chr "grey50"
+##   ..$ size         : num 0
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ strip.placement      : chr "inside"
+##  $ strip.text           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         :Class 'rel'  num 0.857
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.text.x         : NULL
+##  $ strip.text.y         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.switch.pad.grid:Class 'unit'  atomic [1:1] 0.1
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ strip.switch.pad.wrap:Class 'unit'  atomic [1:1] 0.1
+##   .. ..- attr(*, "valid.unit")= int 1
+##   .. ..- attr(*, "unit")= chr "cm"
+##  $ panel.grid.major     :List of 6
+##   ..$ colour       : chr "grey90"
+##   ..$ size         : num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi FALSE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  - attr(*, "class")= chr [1:2] "theme" "gg"
+##  - attr(*, "complete")= logi TRUE
+##  - attr(*, "validate")= logi TRUE
+```
+
 <div class="figure" style="text-align: center">
 <img src="background_grids_files/figure-html/echave-et-al-grid-1.png" alt="(ref:echave-et-al-grid)" width="576" />
 <p class="caption">(\#fig:echave-et-al-grid)(ref:echave-et-al-grid)</p>

@@ -29,7 +29,7 @@ ggplot(student_data, aes(x = points, y = 50*..y..)) +
   geom_point(aes(y = rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (ascending)") +
-  theme_dviz_grid() +
+  theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 ```
 
@@ -44,7 +44,7 @@ ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
   geom_point(aes(y = 51-rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (descending)") +
-  theme_dviz_grid() +
+  theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 
 ```
@@ -60,7 +60,7 @@ ggplot(student_data, aes(x = points, y = ..y..)) +
   stat_ecdf(geom = "step", color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "cumulative frequency") +
-  theme_dviz_grid() +
+  theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 ```
 
@@ -88,7 +88,7 @@ p1 <- ggplot(countyComplete, aes(x=pop2010)) +
   scale_y_continuous(expand = c(0, 0), name = expression(paste("density [x", 10^-5, "]")),
                      breaks = c(0, 4e-6, 8e-6, 1.2e-5),
                      labels = c(0, 0.4, 0.8, 1.2)) +
-  theme_dviz_grid(12)
+  theme_minimal_grid(12)
 
 p2 <- ggplot(countyComplete, aes(x=pop2010)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
@@ -97,7 +97,7 @@ p2 <- ggplot(countyComplete, aes(x=pop2010)) +
                      labels = c(expression(0), expression(2.5 %*% 10^6),
                                 expression(5 %*% 10^6), expression(7.5 %*% 10^6))) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
-  theme_dviz_grid(12)
+  theme_minimal_grid(12)
 
 plot_grid(p1, p2, labels = 'auto', label_fontface = 'plain')
 ```
@@ -111,13 +111,13 @@ p1_log <- ggplot(countyComplete, aes(x=log10(pop2010))) +
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0, 0), name = "density") +
-  theme_dviz_grid(12)
+  theme_minimal_grid(12)
 
 p2_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
-  theme_dviz_grid(12)
+  theme_minimal_grid(12)
 
 plot_grid(p1_log, p2_log, labels = 'auto', label_fontface = 'plain')
 ```
@@ -135,7 +135,7 @@ ggplot(countyComplete, aes(x=pop2010, y = 1-..y..)) +
                            expression(10^5), expression(10^6), expression(10^7)),
                 name = "number of county inhabitants") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
-  theme_dviz_grid()
+  theme_minimal_grid()
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
@@ -152,7 +152,7 @@ ggplot(wc, aes(x=count, y = 1-..y..)) +
                 labels = c(expression(10^-5), expression(10^-4), expression(10^-3),
                            expression(10^-2), expression(10^-1), expression(10^0)),
                 name = "fraction of words") +
-  theme_dviz_grid()
+  theme_minimal_grid()
 ```
 
 ## Quantile--quantile plots {#qq-plots}
@@ -171,7 +171,7 @@ ggplot(student_data, aes(sample = points)) +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 10*(5:10)) +
   scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
-  theme_dviz()
+  theme_half_open()
 ```
 
 The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal). We see that the student grades follow mostly a normal distribution, with a few deviations at the bottom and at the top (a few students performed worse than expected on either end). The deviations from the distribution at the top end are caused by the maximum point value of 100 in the hypothetical exam; regardless of how good the best student is, he or she could at most obtain 100 points.
@@ -189,7 +189,7 @@ ggplot(countyComplete, aes(sample = log(pop2010))) +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 5+2.5*(0:4)) +
   scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
-  theme_dviz()
+  theme_half_open()
 ```
 
 

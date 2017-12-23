@@ -3,6 +3,8 @@ options(digits = 3)
 
 knitr::opts_chunk$set(
   echo = FALSE,
+  message = FALSE,
+  warnings = FALSE,
   cache = FALSE,
   fig.align = 'center',
   fig.width = 6,
@@ -12,7 +14,4 @@ knitr::opts_chunk$set(
 
 options(dplyr.print_min = 6, dplyr.print_max = 6)
 
-library(cowplot)
-
-source("R/misc.R")
-source("R/themes.R")
+library(dviz.supp)
