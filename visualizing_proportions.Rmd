@@ -319,16 +319,21 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 
 (ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution.
 
-```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.3, fig.cap='(ref:health-vs-age-facets)'}
+```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:health-vs-age-facets)'}
 ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..)) +
-  geom_density_line(data=select(df_health, -health), color = "transparent") +
-  geom_density_line(fill = "#2b8cbe", color = "transparent") +
+  geom_density_line(data=select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
+  geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~health, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
   theme_minimal_hgrid() +
   theme(strip.background = element_blank(),
-        strip.text = element_text(margin = margin(0, 0, 0, 0)))
+        strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+        legend.position = "bottom",
+        legend.justification = "right",
+        legend.margin = margin(0, 0, 0.2, 0, "cm"),
+        legend.spacing.x = grid::unit(0.2, "cm"))
 ```
 
 
@@ -345,16 +350,21 @@ The same dataset visualized as partial densities is much clearer (Figure \@ref(f
 
 (ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution.
 
-```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.3, fig.cap='(ref:marital-vs-age-facets)'}
+```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
 ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
-  geom_density_line(data=select(df_marital, -marital), color = "transparent") +
-  geom_density_line(fill = "#2b8cbe", color = "transparent") +
+  geom_density_line(data=select(df_marital, -marital), aes(fill = "all people surveyed   "), color = "transparent") +
+  geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~marital, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
   theme_minimal_hgrid() +
   theme(strip.background = element_blank(),
-        strip.text = element_text(margin = margin(0, 0, 0, 0)))
+        strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+        legend.position = "bottom",
+        legend.justification = "right",
+        legend.margin = margin(0, 0, 0.2, 0, "cm"),
+        legend.spacing.x = grid::unit(0.2, "cm"))
 ```
 
 
