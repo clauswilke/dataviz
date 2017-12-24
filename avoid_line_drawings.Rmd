@@ -19,7 +19,7 @@ The most common and at the same time most inappropriate use of line drawings is 
 
 (ref:titanic-ages-lines) Histogram of the ages of Titanic passengers, drawn with empty bars. The empty bars create a confusing visual pattern. In the center of the histogram, it is difficult to tell which parts are inside of bars and which parts are outside. 
 
-```{r titanic-ages-lines, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-lines)'}
+```{r titanic-ages-lines, fig.cap='(ref:titanic-ages-lines)'}
 df <- read_csv("datasets/Titanic.csv")
 titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
 age_hist_3 <- data.frame(age = (1:25)*3-1.5, 
@@ -37,21 +37,21 @@ stamp_bad(h3_bad)
 
 (ref:titanic-ages-filled) The same histogram of Figure \@ref(fig:titanic-ages-lines), now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure.
 
-```{r titanic-ages-filled, message=FALSE, warning=FALSE, fig.cap='(ref:titanic-ages-filled)'}
+```{r titanic-ages-filled, fig.cap='(ref:titanic-ages-filled)'}
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_half_open() +
   background_grid(major = "y", minor = "none")
 
-stamp_good(h3_good)
+stamp_phantom(h3_good)
 ```
 
 Next, let's take a look at an old-school density plot. I'm showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure \@ref(fig:iris-densities-lines)). The distributions are shown just by their outlines, and because the figure is in black-and-white, we're using different line styles to distinguish them. This figure has two main problems. First, the dashed line styles do not provide a clear separation between the area under the curve and the area above it. While our visual system is quite good at connecting the individual line elements into a continuous line, the dashed lines nevertheless look porous and do not serve as a strong boundary of the enclosed area. Second, because the lines intersect and the areas they enclose are not shaded, we can perceive six different distinct shapes and we need to expend some additional mental energy to merge the correct shapes together. This effect would have been even stronger had I used solid rather than dashed lines for all three distributions.
 
 (ref:iris-densities-lines) Density estimates of the sepal lengths of three different iris species. The broken line styles used for versicolor and virginica detract from the perception that the areas under the curves are distinct from the areas above them.
 
-```{r iris-densities-lines, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-lines)'}
+```{r iris-densities-lines, fig.cap='(ref:iris-densities-lines)'}
 # compute densities for sepal lengths
 iris_dens <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
@@ -86,7 +86,7 @@ We can attempt to address the problem of porous boundaries by using colored line
 
 (ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve. Also, the colored labels are hard to read.
 
-```{r iris-densities-colored-lines, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-colored-lines)'}
+```{r iris-densities-colored-lines, fig.cap='(ref:iris-densities-colored-lines)'}
 iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species)) + 
   geom_density_line(stat = "identity", alpha = 0., size = 1) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
@@ -106,7 +106,7 @@ stamp_ugly(iris_colored_lines)
 
 (ref:iris-densities-filled) Density estimates of the sepal lengths of three different iris species, shown as partially transparent shaded areas.
 
-```{r iris-densities-filled, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities-filled)'}
+```{r iris-densities-filled, fig.cap='(ref:iris-densities-filled)'}
 iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
   geom_density_line(stat = "identity", alpha = 0.7) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
@@ -120,7 +120,7 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_half_open()
   
-stamp_good(iris_filled)
+stamp_phantom(iris_filled)
 ```
 
 Line drawings also arise in the context of scatter plots, when different point types are drawn as open circles, triangles, crosses, etc. As an example, consider Figure \@ref(fig:mpg-linespoints). The figure contains a lot of visual noise, and the different point types do not strongly separate from each other. Drawing the same figure with solidly colored shapes addresses this issue (Figure \@ref(fig:mpg-filledpoints)).
@@ -158,7 +158,7 @@ mpg_filledpoints <- ggplot(mpg, aes(y=cty, x=displ, color=drv, shape=drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme(legend.position = c(.7, .8))
 
-stamp_good(mpg_filledpoints)
+stamp_phantom(mpg_filledpoints)
 ```
 
 I strongly prefer solid points over open points, because the solid points have much more visual presence. The argument that I sometimes hear in favor of open points is that they help with overplotting, since the empty areas in the middle of each point allow us to see other points that may be lying underneath. In my opinion, the benefit from being able to see overplotted points does not, in general, outweight the detriment from the added visual noise of open symbols. There are other approaches for dealing with overplotting, see Chapter \@ref(overlapping-points) for some suggestions.

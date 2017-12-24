@@ -40,7 +40,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 (ref:mpg-good) Fuel economy versus engine displacement. All figure elements are appropriately scaled.
 
 ```{r mpg-good, fig.width=5, fig.asp=.7416, fig.cap='(ref:mpg-good)'}
-stamp_good(p +
+stamp_phantom(p +
   theme(legend.position = c(.7, .8)))
 ```
 
@@ -67,7 +67,7 @@ p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme_half_open(19) +
   theme(legend.position = c(.6, .8))
-stamp_good(p2)
+stamp_phantom(p2)
 ```
 
 You may look at Figure \@ref(fig:mpg-big-good) and find everything too big. However, keep in mind that it is meant to be scaled down. Scale the figure down so that it is only an inch or two in width, and it looks just fine. In fact, at that scaling this is the only figure in this chapter that looks good.

@@ -28,7 +28,7 @@ From 1961 to 1983, the German parliament (called the *Bundestag*) was composed o
 
 (ref:bundestag-pie) Party composition of the 8th German Bundestag, 1976--1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU.
 
-```{r, bundestag-pie, message=FALSE, warning=FALSE, fig.cap='(ref:bundestag-pie)'}
+```{r, bundestag-pie, fig.cap='(ref:bundestag-pie)'}
 # calculate the start and end angles for each pie
 bund_pie <- bundestag %>%
   arrange(seats) %>%
@@ -63,7 +63,7 @@ A pie chart breaks a circle into slices such that the area of each slice is prop
 
 (ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
-```{r, bundestag-stacked-bars, fig.width = 8.5, message=FALSE, warning=FALSE, fig.cap='(ref:bundestag-stacked-bars)'}
+```{r, bundestag-stacked-bars, fig.width = 8.5, fig.cap='(ref:bundestag-stacked-bars)'}
 bundestag <- mutate(bundestag,
                     label_y = cumsum(seats) - seats/2)
 

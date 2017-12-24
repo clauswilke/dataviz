@@ -11,7 +11,7 @@ library(ggridges)
 
 # Directory of visualizations
 
-```{r message = FALSE, warning = FALSE}
+```{r}
 ## general setup code
 
 # theme
@@ -93,7 +93,7 @@ pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, 
 
 ## Proportions
 
-```{r proportions, fig.width = 8, fig.asp = 1/4, message = FALSE}
+```{r proportions, fig.width = 8, fig.asp = 1/4}
 palette <- pal_brown_green
 
 p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
@@ -144,7 +144,7 @@ plot_grid(p1, p4, p2, p3, ncol = 4, scale = .9)
 Proportions can be visualized as pie charts, side-by-side bars, or stacked bars, the latter arranged either vertically or horizontally (Chapter \@ref(visualizing-proportions)). Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
 
 
-```{r proportions-comp, fig.width = 8, fig.asp = 1/4, message = FALSE}
+```{r proportions-comp, fig.width = 8, fig.asp = 1/4}
 palette <- pal_earth_brown
 
 p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
@@ -226,7 +226,7 @@ When visualizing multiple sets of proportions or changes in proportions across c
 
 ## Individual distributions
 
-```{r single-distributions, fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
+```{r single-distributions, fig.width = 8, fig.asp = 1/4}
 
 palette <- pal_brown_red
 
@@ -266,7 +266,7 @@ Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide t
 
 ## Multiple distributions
 
-```{r multiple-distributions, fig.width = 8, fig.asp = 1/2, message = FALSE}
+```{r multiple-distributions, fig.width = 8, fig.asp = 1/2}
 palette <- pal_ocean_blue
 
 p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_boxplot(color = palette[1], fill = palette[4]) +
@@ -320,7 +320,7 @@ Boxplots, violin plots, jittered points, and sina plots are useful when we want 
 
 ## Other
 
-```{r fig.width = 8, fig.asp = 1/4, message = FALSE, warning=FALSE}
+```{r fig.width = 8, fig.asp = 1/4}
 
 palette <- pal_steel_blue
 

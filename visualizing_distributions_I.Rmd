@@ -15,7 +15,7 @@ We frequently encounter the situation where we would like to understand how a pa
 ## Visualizing a single distribution
 
 We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table \@ref(tab:titanic-ages). 
-```{r titanic-ages, message=FALSE, warning=FALSE}
+```{r titanic-ages}
 library(readr)
 df <- read_csv("datasets/Titanic.csv")
 titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
@@ -223,7 +223,7 @@ p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=..count.., fill = sex)) +
         legend.justification = c("right", "top"),
         legend.box.background = element_rect(fill = "white", color = "white"))
 
-stamp_good(p_dens_overlapped)
+stamp_phantom(p_dens_overlapped)
 ```
 
 A solution that works well for this dataset is to show the age distributions of male and female passengers separately, each as a proportion of the overall age distribution (Figure \@ref(fig:titanic-age-fractional-dens)). This visualization shows intuitively and clearly that there were many fewer women than men in the 20--50-year age range on the Titanic.
@@ -269,7 +269,7 @@ Importantly, this trick does not work when there are more than two distributions
 
 (ref:iris-densities) Density estimates of the sepal lengths of three different iris species.
 
-```{r iris-densities, message=FALSE, warning=FALSE, fig.cap='(ref:iris-densities)'}
+```{r iris-densities, fig.cap='(ref:iris-densities)'}
 # compute densities for sepal lengths
 iris_dens <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%

@@ -14,7 +14,7 @@ We commonly have to visualize multiple distributions at the same time. For examp
 
 The following figure visualizes temperature data collected in Lincoln, Nebraska in 2016. The dataset contains the mean temperature for each day of the year. We could plot this dataset by calculating the average mean temperature in each month and plotting it as points with error bars.
 
-```{r points-errorbars, message=FALSE, warning=FALSE}
+```{r points-errorbars}
 lincoln_weather %>% mutate(month_short = fct_recode(Month,
                                                     Jan = "January",
                                                     Feb = "February",
@@ -44,7 +44,7 @@ stamp_bad(lincoln_errbar)
 However, there are multiple problems with this approach. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I'm here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
 A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner.
-```{r boxplot-dia, message=FALSE, warning=FALSE, fig.width = 5}
+```{r boxplot-dia, fig.width = 5}
 set.seed(3423)
 y <- c(rnorm(100), 3.4)
 s <- boxplot.stats(y)
@@ -61,28 +61,28 @@ plot_grid(NULL, boxplot_dia, NULL, rel_widths = c(0.2, 0.6, 0.2), nrow = 1)
 The line in the middle represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
 
 When we visualize the temperature dataset using boxplots, we obtain the following result.
-```{r boxplots, message=FALSE, warning=FALSE}
+```{r boxplots}
 lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot(fill = 'grey90') + xlab("Month") +
   theme_half_open()
 
-stamp_good(lincoln_box)
+stamp_phantom(lincoln_box)
 ```
 
 Using the boxplot visualization, we see clearly that temperature is highly skewed in December (most days are moderately cold, and a few are extremely cold) and not very skewed at all in some other months, e.g., July.
 
 
-```{r violin-plots, message=FALSE, warning=FALSE}
+```{r violin-plots}
 lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_violin(fill = 'grey90') + xlab("Month") +
   theme_half_open()
 
-stamp_good(lincoln_violin)
+stamp_phantom(lincoln_violin)
 ```
 
 
 We can also plot all individual points:
-```{r all-points-no-jitter, message=FALSE, warning=FALSE}
+```{r all-points-no-jitter}
 lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point() + xlab("Month") +
   theme_half_open()
@@ -91,22 +91,22 @@ stamp_bad(lincoln_points)
 ```
 
 
-```{r jittered-points, message=FALSE, warning=FALSE}
+```{r jittered-points}
 lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_jitter(width = .15) + xlab("Month") +
   theme_half_open()
 
-stamp_good(lincoln_jitter)
+stamp_phantom(lincoln_jitter)
 ```
 
 
 Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. 
-```{r sina-plots, message=FALSE, warning=FALSE}
+```{r sina-plots}
 lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_violin(color = "transparent", fill = "gray90") + 
   stat_sina(maxwidth = 0.8) + 
   xlab("Month") +
   theme_half_open()
 
-stamp_good(lincoln_sina)
+stamp_phantom(lincoln_sina)
 ```

@@ -4,7 +4,7 @@ options(digits = 3)
 knitr::opts_chunk$set(
   echo = FALSE,
   message = FALSE,
-  warnings = FALSE,
+  warning = FALSE,
   cache = FALSE,
   fig.align = 'center',
   fig.width = 6,

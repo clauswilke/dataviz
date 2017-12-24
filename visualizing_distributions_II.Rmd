@@ -76,7 +76,7 @@ Here, I will first discuss the number of people living in different US counties 
 
 (ref:county-populations) Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations, message=FALSE, warning=FALSE, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations)'}
+```{r county-populations, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations)'}
 library(openintro)
 
 p1 <- ggplot(countyComplete, aes(x=pop2010)) + 
@@ -106,7 +106,7 @@ The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak righ
 
 (ref:county-populations-log) Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations-log, message=FALSE, warning=FALSE, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations-log)'}
+```{r county-populations-log, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations-log)'}
 p1_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
@@ -126,7 +126,7 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 
 (ref:county-populations-tail-log-log) Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants.
 
-```{r county-populations-tail-log-log, message=FALSE, warning=FALSE, fig.cap='(ref:county-populations-tail-log-log)'}
+```{r county-populations-tail-log-log, fig.cap='(ref:county-populations-tail-log-log)'}
 ggplot(countyComplete, aes(x=pop2010, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0),
@@ -142,7 +142,7 @@ As a second example, I will use the distribution of word frequencies for all wor
 
 (ref:word-counts-tail-log-log) Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used.
 
-```{r word-counts-tail-log-log, message=FALSE, warning=FALSE, fig.cap='(ref:word-counts-tail-log-log)' }
+```{r word-counts-tail-log-log, fig.cap='(ref:word-counts-tail-log-log)' }
 wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
 ggplot(wc, aes(x=count, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +

@@ -17,7 +17,7 @@ library(ggridges)
 
 *Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
-```{r message=FALSE}
+```{r}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
   ggplot(aes(x=Sepal.Length, y=Sepal.Width, fill=species)) + 
@@ -34,7 +34,7 @@ stamp_bad(plot_grid(NULL, iris_scatter + theme_minimal_grid(), NULL, nrow=1, rel
 
 There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
 
-```{r message=FALSE}
+```{r}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
   ggplot(aes(x=Sepal.Length, y=Sepal.Width, shape=species, fill=species)) + 
@@ -48,13 +48,13 @@ iris %>%
     scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
     scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter2
 
-stamp_good(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_phantom(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
 ```
 
 Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
 
 
-```{r message=FALSE}
+```{r}
 label_df <- data.frame(species = c("setosa", "virginica", "versicolor"),
                      Sepal.Width = c(4.2, 3.76, 2.08),
                      Sepal.Length = c(5.7, 7, 5.1),
@@ -82,11 +82,11 @@ iris %>%
     scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
     scale_y_continuous(limits=c(1.8, 4.6), expand=c(0, 0)) -> iris_scatter3
 
-stamp_good(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
+stamp_phantom(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
 ```
 
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 stocks <- data_frame(company = c("Alphabet", "Apple", "Facebook", "Microsoft"),
                      ticker = c("GOOG", "AAPL", "FB", "MSFT"))
 
@@ -122,7 +122,7 @@ Whenever possible, design your figures so they don't need a legend.
 
 Let's consider another example that also demonstrates a very common visualization mistake.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
@@ -145,7 +145,7 @@ The figure contains four lines, representing the stock prices of four different 
 
 This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R's ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
@@ -161,12 +161,12 @@ price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
   theme_minimal_hgrid()
 
 
-stamp_good(price_plot)
+stamp_phantom(price_plot)
 ```
 
 While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 yann <- axis_canvas(price_plot, axis = "y") +
   geom_text(data = filter(prices, date == "2017-06-02"),
             aes(y = price_indexed, label = paste0(" ", company)),
@@ -174,11 +174,11 @@ yann <- axis_canvas(price_plot, axis = "y") +
 
 price_plot_ann <- insert_yaxis_grob(price_plot + theme(legend.position = "none"), yann,
                                     width = grid::unit(0.3, "null"))
-stamp_good(price_plot_ann)
+stamp_phantom(price_plot_ann)
 ```
 
 I'll provide a few more examples. First, in a density plot we may want to label the density curves directly rather than adding a color legend.
-```{r message=FALSE, warning=FALSE}
+```{r}
 # compute densities for sepal lengths
 iris_dens <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
@@ -207,12 +207,12 @@ iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) 
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_minimal_hgrid()
   
-stamp_good(plot_grid(iris_p, NULL, rel_widths = c(8, 1)))
+stamp_phantom(plot_grid(iris_p, NULL, rel_widths = c(8, 1)))
 ```
 
 Second, we can also combine this concept with the scatter plot from the beginning of this chapter to avoid a legend in that plot.
 
-```{r message=FALSE, warning=FALSE, fig.asp=0.75}
+```{r fig.asp=0.75}
 # compute densities for sepal lengths
 iris_dens2 <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Width, NULL)) %>%
@@ -249,13 +249,13 @@ p1 <- insert_xaxis_grob(iris_scatter2 + theme_minimal_grid() +
                           theme(legend.position = "none"),
                         xdens, grid::unit(.2, "null"), position = "top")
 p2 <- insert_yaxis_grob(p1, ydens, grid::unit(.15, "null"), position = "right")
-stamp_good(plot_grid(p2, NULL, rel_widths = c(8, 1)))
+stamp_phantom(plot_grid(p2, NULL, rel_widths = c(8, 1)))
 ```
 
 
 And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.
 
-```{r message=FALSE, warning=FALSE, fig.asp=0.75}
+```{r fig.asp=0.75}
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
@@ -289,5 +289,5 @@ xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0)
 
 lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
-stamp_good(plot_grid(lincoln_final, NULL, rel_widths = c(8, 1)))
+stamp_phantom(plot_grid(lincoln_final, NULL, rel_widths = c(8, 1)))
 ```
