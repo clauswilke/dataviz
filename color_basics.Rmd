@@ -7,6 +7,36 @@ library(dplyr)
 
 # Effective use of color in figures
 
+
+## Color as a means to draw attention
+
+(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
+
+```{r Aus-athletes-track, fig.cap='(ref:Aus-athletes-track)'}
+male_Aus <- filter(Aus_athletes, sex=="m") %>%
+  filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
+                      "track (sprint)", "water polo")) %>%
+  mutate(sport = case_when(sport == "track (400m)" ~ "track",
+                           sport == "track (sprint)" ~ "track",
+                           TRUE ~ sport))
+
+male_Aus$sport <- factor(male_Aus$sport,
+                         levels = c("track", "field", "water polo", "basketball", "swimming"))
+
+colors <- c("#BD3828", rep("#808080", 4))
+fills <- c("#BD3828D0", rep("#80808080", 4))
+
+ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = sport)) +
+  geom_point(size = 3) +
+  scale_shape_manual(values = 21:25, name = "height (cm)" ) +
+  scale_color_manual(values = colors, name = "height (cm)") +
+  scale_fill_manual(values = fills, name = "height (cm)") +
+  ylab("% bodyfat") +
+  theme_minimal_grid()
+```
+
+## Color as a means to distinguish
+
 (ref:popgrowth-US) Population growth in the US from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
 ```{r popgrowth-US, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US)'}
@@ -43,53 +73,33 @@ ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = region)) +
 ```
 
 
-(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
+(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book.
 
-```{r Aus-athletes-track, fig.cap='(ref:Aus-athletes-track)'}
-male_Aus <- filter(Aus_athletes, sex=="m") %>%
-  filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
-                      "track (sprint)", "water polo")) %>%
-  mutate(sport = case_when(sport == "track (400m)" ~ "track",
-                           sport == "track (sprint)" ~ "track",
-                           TRUE ~ sport))
-
-male_Aus$sport <- factor(male_Aus$sport,
-                         levels = c("track", "field", "water polo", "basketball", "swimming"))
-
-colors <- c("#BD3828", rep("#808080", 4))
-fills <- c("#BD3828D0", rep("#80808080", 4))
-
-ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = sport)) +
-  geom_point(size = 3) +
-  scale_shape_manual(values = 21:25, name = "height (cm)" ) +
-  scale_color_manual(values = colors, name = "height (cm)") +
-  scale_fill_manual(values = fills, name = "height (cm)") +
-  ylab("% bodyfat") +
-  theme_minimal()
-```
-
-
-## Color scales
-
-```{r fig.width=8.5, fig.asp=3*.14}
+```{r qualitative-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_OkabeIto() + ggtitle("Okabe Ito")
-p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Accent") + ggtitle("Colorbrewer Accent")
+p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Dark2") + ggtitle("Colorbrewer Dark2")
 p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 default")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
 
-```{r fig.width=8.5, fig.asp=3*.14}
+## Color as a representation of a value
+
+(ref:sequential-scales) Example sequential color scales.
+
+```{r sequential-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:sequential-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "seq", palette = "Blues", direction = -1) + ggtitle("Colorbrewer Blues")
 p2 <- gg_color_swatches(7) + scale_fill_discrete_sequential("Heat") + ggtitle("Heat")
 p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-```{r fig.width=8.5, fig.asp=3*.14}
-p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", "Spectral") + ggtitle("Colorbrewer Spectral")
-p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Heat") + ggtitle("heat")
-p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "Fall") + ggtitle("Carto Fall")
+(ref:sequential-scales) Example diverging color scales.
+
+```{r diverging-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
+p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("Colorbrewer BrBG")
+p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
+p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + ggtitle("Carto ArmyRose")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
@@ -120,6 +130,29 @@ p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.ch
 
 p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
 stamp_bad(plot_grid(NULL, p_comb, NULL, rel_widths = c(.5, 6, .5), nrow = 1))
+```
+
+```{r, fig.width = 8.5, fig.asp = 0.8}
+library(ggrepel)
+
+set.seed(7586)
+
+df_repel <- select(popgrowth_df, x = pop2000, y = popgrowth, label = state) %>%
+  mutate(y = 100 * y,
+         label = ifelse(runif(n()) < .35 | x > 1e7 | x < 640000 | y > 20, as.character(label), ""))
+
+ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth)) +
+  geom_point(size = 2) +
+  geom_text_repel(data = df_repel,
+                  aes(x, y, label = label),
+                  segment.alpha = 0.5,
+                  size = 10/.pt) +
+  scale_x_log10(labels = label_log10) +
+  xlab("population size in 2000") +
+  ylab("population growth (%)\n2000 to 2010    ") +
+  theme_minimal_grid() +
+  theme(legend.text = element_text(size = 10),
+        legend.justification = "center")
 ```
 
 ```{r fig.width = 6.5, fig.asp = 1.2}
