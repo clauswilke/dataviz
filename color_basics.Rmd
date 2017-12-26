@@ -12,7 +12,7 @@ library(dplyr)
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
 
-```{r Aus-athletes-track, fig.cap='(ref:Aus-athletes-track)'}
+```{r Aus-athletes-track, fig.width = 7, fig.cap='(ref:Aus-athletes-track)'}
 male_Aus <- filter(Aus_athletes, sex=="m") %>%
   filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
                       "track (sprint)", "water polo")) %>%
@@ -28,9 +28,10 @@ fills <- c("#BD3828D0", rep("#80808080", 4))
 
 ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = sport)) +
   geom_point(size = 3) +
-  scale_shape_manual(values = 21:25, name = "height (cm)" ) +
-  scale_color_manual(values = colors, name = "height (cm)") +
-  scale_fill_manual(values = fills, name = "height (cm)") +
+  scale_shape_manual(values = 21:25) +
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = fills) +
+  xlab("height (cm)") +
   ylab("% bodyfat") +
   theme_minimal_grid()
 ```

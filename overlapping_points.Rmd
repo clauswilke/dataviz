@@ -12,68 +12,109 @@ library(viridis)
 
 When we want to visualize large or very large datasets, we often experience the challenge that simple *x*--*y* scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is "overplotting", i.e., plotting many points on top of each other. Below, I describe several strategies you can pursue when you encounter this challenge.
 
-## Partial transparency
+## Partial transparency and jittering
 
-Let's revisit the fuel economy figure from Chapter \@ref(small-axis-labels) and focus on an aspect we ignored there:
-```{r mpg-cty-displ-solid, fig.width=5, fig.asp=.7416}
-p <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
-  geom_point(size=4) + 
+Consider Figure \@ref(fig:mpg-cty-displ-solid): **some more text here. explain the problem: points overlapp, though it can't be seen in the figure.**
+
+(ref:mpg-cty-displ-solid) Fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled "bad" because many points overlap and obscure each other. 
+
+```{r mpg-cty-displ-solid, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-solid)'}
+p_mpg_solid <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
+  geom_point(size = 3, shape = 21) + 
   ylab("fuel economy (mpg)") +
   xlab("displacement (l)") +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+  scale_color_manual(values=c("#202020", "#E69F00", "#56B4E9"), 
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open(19) +
-  theme(legend.position = c(.6, .8))
-stamp_bad(p)
-```
-I have labeled this figure "bad" here because the points overlap and partly obscure each other. A simple way to ameliorate this issue is to use partial transparency:
-```{r mpg-cty-displ-transp, fig.width=5, fig.asp=.7416}
-p2 <- ggplot(mpg, aes(y=cty, x=displ, color=drv)) +
-  geom_point(size=4, alpha=0.65) + 
-  ylab("fuel economy (mpg)") +
-  xlab("displacement (l)") +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9"), 
+  scale_fill_manual(values=c("#202020", "#E69F00", "#56B4E9"), 
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open(19) +
-  theme(legend.position = c(.6, .8))
-stamp_phantom(p2)
+  theme_half_open() +
+  theme(legend.position = c(.7, .8))
+
+stamp_bad(p_mpg_solid)
 ```
 
-## Jittering
+
+
+A simple way to ameliorate this issue is to use partial transparency.
+
+
+(ref:mpg-cty-displ-transp) Fuel economy versus engine displacement. Because points have been made partially transparent, we can now see points that are plotted on top of each other as points with darker shade.
+
+```{r mpg-cty-displ-transp, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-transp)'}
+p_mpg_transp <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
+  geom_point(size = 3, shape = 21) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#202020", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  scale_fill_manual(values=c("#202020A6", "#E69F00A6", "#56B4E9A6"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  theme_half_open() +
+  theme(legend.position = c(.7, .8))
+
+stamp_phantom(p_mpg_transp)
+```
+
 
 Making points partially transparent is not always sufficient. For example, the same dataset contains fuel economy for both city and highway driving. If we plot those two quantities against each other, we obtain the following figure.
-```{r  mpg-cty-hwy-transp, fig.asp = 0.8}
-p_cty_hwy_base <- ggplot(mpg, aes(cty, hwy)) +
-  xlab("city economy (mpg)") +
-  ylab("highway economy (mpg)") +
-  geom_abline(slope = 1, intercept = 0, color="grey70") +
-  coord_fixed(xlim = c(5, 40), ylim = c(10, 45)) +
-  draw_text("highway mpg = city mpg",
-            x = 40.2, y = 39.8, size = 12, hjust = 1, vjust = 1, angle = 45) +
-  theme_half_open()
-
-p3 <- p_cty_hwy_base + geom_point(alpha = .5, size = 3)
-
-stamp_bad(p3)
-```
 
 Because fuel economy is rounded to whole integers in this dataset, many points lie exactly on top of each other. While these fully overlapping points appear darker in the plot, the visual appearance is that of one darker point rather than of a set of points plotted in the same location. We can emphasize the number of points in the same locations by applying a small amount of jitter, i.e., displacing each point randomly by a small amount.
 
-```{r mpg-cty-hwy-jitter, fig.asp = 0.8}
-p4 <- p_cty_hwy_base + geom_jitter(alpha = .5, width = .3, height = .3, size = 3)
+(ref:mpg-cty-displ-jitter) Fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overlapping points more clearly visible without substantially distorting the message of the plot.
 
-stamp_phantom(p4)
+```{r mpg-cty-displ-jitter, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-jitter)'}
+p_mpg_jitter <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
+  geom_point(size = 3, shape = 21,
+             position = position_jitter(width = 0.01 * diff(range(mpg$displ)),
+                                        height = 0.01 * diff(range(mpg$cty)))) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#202020", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  scale_fill_manual(values=c("#202020A6", "#E69F00A6", "#56B4E9A6"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  theme_half_open() +
+  theme(legend.position = c(.7, .8))
+
+stamp_phantom(p_mpg_jitter)
 ```
 
-However, when jittering we have to make sure not to overdo it. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset and hence are creating a misleading visualization of the data.
-```{r mpg-cty-hwy-jitter-extreme, fig.asp = 0.8}
-p5 <- p_cty_hwy_base + geom_jitter(alpha = .5, width = 2.5, height = 2.5, size = 3)
 
-stamp_bad(p5)
+However, when jittering we have to make sure not to overdo it. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset and hence are creating a misleading visualization of the data.
+
+(ref:mpg-cty-displ-jitter-extreme) Fuel economy versus engine displacement. It is critical not to add excessive amounts of jitter.
+
+```{r mpg-cty-hwy-jitter-extreme, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-jitter-extreme)'}
+p_mpg_jitter_extreme <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
+  geom_point(size = 3, shape = 21,
+             position = position_jitter(width = 0.1 * diff(range(mpg$displ)),
+                                        height = 0.1 * diff(range(mpg$cty)))) + 
+  ylab("fuel economy (mpg)") +
+  xlab("displacement (l)") +
+  scale_color_manual(values=c("#202020", "#E69F00", "#56B4E9"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  scale_fill_manual(values=c("#202020A6", "#E69F00A6", "#56B4E9A6"), 
+                     name="drive train",
+                     breaks=c("f", "r", "4"),
+                     labels=c("FWD", "RWD", "4WD")) +
+  theme_half_open() +
+  theme(legend.position = c(.7, .8))
+
+stamp_bad(p_mpg_jitter_extreme)
 ```
 
 For example, in this particular case the extreme jittering creates the impression that for some cars the highway economy can fall below the city economy. However, such cases do not exist in the original dataset.
@@ -136,7 +177,7 @@ None of the techniques discussed so far work very well when the majority of poin
 
 Consider the following figure, which shows the departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013.
 
-```{r nycflights-points, fig.asp = 0.8}
+```{r nycflights-points, fig.asp = 0.75}
 library(nycflights13)
 
 flights %>% filter(origin == "EWR") %>%
@@ -148,11 +189,11 @@ flights %>% filter(origin == "EWR") %>%
 breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
 p_flights_base <- ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
-  geom_abline(slope = 0, intercept = 0, color="grey70") +
+  geom_abline(slope = 0, intercept = 0, color="grey80") +
   scale_x_time(breaks = hm(breaks_x),
                labels = breaks_x) +
   theme_half_open()
-
+  
 p9 <- p_flights_base + geom_point(alpha = 0.2)
 
 stamp_bad(p9)
@@ -164,7 +205,8 @@ A good solution for this particular case is a 2d histogram, where we subdivide t
 ```{r nycflights-2d-bins, fig.asp = 0.75}
 p10 <- p_flights_base +
   geom_bin2d(bins=50) +
-  scale_fill_viridis()
+  scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+  theme(legend.position = c(0.85, .85))
 stamp_phantom(p10)
 ```
 
@@ -176,7 +218,8 @@ As an alternative to binning the data into squares, we can also bin into hexagon
 ```{r nycflights-hex-bins, fig.asp = 0.75}
 p11 <- p_flights_base +
   geom_hex(bins=50) +
-  scale_fill_viridis()
+  scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+  theme(legend.position = c(0.85, .85))
 stamp_phantom(p11)
 ```
 
