@@ -2,13 +2,12 @@
 # run setup script
 source("_common.R")
 
-library(dplyr)
 library(forcats)
 library(ggridges)
 library(ggforce)
 ```
 
-# Boxplots, violin plots, and more {#boxplots-violins}
+# Boxplots, violins, and ridgelines {#boxplots-violins}
 
 We commonly have to visualize multiple distributions at the same time. For example, consider weather data. We have observations for each day in a month, possibly at multiple time points or multiple locations, but we frequently are interested in the broader trends, such as how temperature changes with month.
 
@@ -43,22 +42,35 @@ stamp_bad(lincoln_errbar)
 
 However, there are multiple problems with this approach. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I'm here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
-A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner.
-```{r boxplot-dia, fig.width = 5}
+## From boxplots to violins and sinas
+
+A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner (Figure \@ref(fig:boxplot-schematic)).
+
+(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+
+```{r boxplot-schematic, fig.cap = '(ref:boxplot-schematic)'}
 set.seed(3423)
 y <- c(rnorm(100), 3.4)
 s <- boxplot.stats(y)
 df <- data.frame(y = c(s$stats, max(y)),
                  x = c(1.03, 1.405, 1.405, 1.405, 1.03, 1.04),
                  label = c("minimum", "first quartile", "median", "third quartile", "upper fence", "outlier"))
-boxplot_dia <- ggplot(data.frame(y), aes(x = 1, y = y)) + geom_boxplot(fill = 'grey90') +
+p_boxplot <- ggplot(data.frame(y), aes(x = 1, y = y)) + geom_boxplot(fill = 'grey90') +
   geom_text(data = df, aes(x, y, label = label), hjust = 0, size = 12/.pt) +
-  scale_x_continuous(limits = c(-.3, 2.3)) +
+  scale_x_continuous(limits = c(0, 3.5), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
   theme_nothing()
-plot_grid(NULL, boxplot_dia, NULL, rel_widths = c(0.2, 0.6, 0.2), nrow = 1)
+
+p_points <- ggplot(data.frame(y), aes(x = 0, y = y)) + 
+  geom_point(position = position_jitter(width = .4, height = 0, seed = 320)) +
+  scale_x_continuous(limits = c(-1.8, .4), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
+  theme_nothing()
+
+plot_grid(p_points, p_boxplot, rel_widths = c(.65, 1), nrow = 1)
 ```
 
-The line in the middle represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+
 
 When we visualize the temperature dataset using boxplots, we obtain the following result.
 ```{r boxplots}
@@ -109,4 +121,70 @@ lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F
   theme_half_open()
 
 stamp_phantom(lincoln_sina)
+```
+
+
+## Ridgeline plots
+
+
+
+
+(ref:temp-ridgeline) Temperatures in Lincoln, Nebraska, in 2016. For each month, we show the distribution of daily mean temperatures measured in Fahrenheit. (Original figure concept: Austin Wehrwein)
+
+```{r temp-ridgeline, fig.cap = '(ref:temp-ridgeline)'}
+bandwidth <- 3.4
+
+ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
+  geom_density_ridges(scale = 3, rel_min_height = 0.01,
+                      bandwidth = bandwidth, fill = lighten("#56B4E9", .3), color = "white") +
+  scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
+  scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
+  xlab("mean temperature (F)") +
+  theme_ridges(grid = TRUE) +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_text(hjust = 1, vjust = 1),
+        axis.line.x = element_blank())
+```
+
+
+(ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. (Source: Internet Movie Database, IMDB)
+
+```{r movies-ridgeline, fig.width = 5, fig.asp = 1, fig.cap = '(ref:movies-ridgeline)'}
+ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
+  geom_density_ridges(scale = 10, size = 0.25, rel_min_height = 0.03, fill = "grey85") +
+  theme_ridges(center = TRUE) +
+  scale_x_continuous(limits = c(0, 200), expand = c(0, 0), name = "length (minutes)") +
+  scale_y_reverse(breaks = c(2000, 1980, 1960, 1940, 1920),
+                  limits = c(2005, 1903), expand = c(0, 0))
+```
+
+(ref:dw-nominate-ridgeline) Voting patterns in the U.S. House of Representatives have become increasingly polarized. DW-NOMINATE scores are frequently used to compare voting patterns of representatives between parties and over time. Here, score distributions are shown for each Congress from 1963 to 2013 separately for Democrats and Republicans. Each Congress is represented by its first year. (Original figure concept: Ian R. McDonald)
+
+```{r dw-nominate-ridgeline, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:dw-nominate-ridgeline)'}
+# U.S. House 1963-2013
+all_house_88_113 <- dw_nominate_house %>% 
+  filter(congress >= 88 & cd !=0 & cd != 98 & cd != 99) %>%
+  filter(party_code == 100 | party_code == 200) %>%
+  arrange(desc(congress)) %>% mutate(year1 = congress * 2 + 1787) %>%
+  arrange(desc(year1))
+
+ggplot(all_house_88_113,
+       aes(x = dim_1,
+           y = year1,
+           group = interaction(party_code, factor(year1)),
+           fill = interaction(party_code, factor(year1)))) +
+  geom_density_ridges(scale = 5, size = 0.25, rel_min_height = 0.01, alpha=0.9, color = "white") +
+  scale_x_continuous(limits=c(-.8, 1.3), expand = c(0.01, 0), breaks=c(-1,-.75,-.5,-.25,0,.25,.5,.75,1)) +
+  scale_y_reverse(expand = c(0, 0), breaks=c(seq(2013, 1963, -10))) +
+  scale_fill_cyclical(breaks = c("100.1963", "200.1963"),
+                      labels = c(`100.1963` = "Democrats", `200.1963` = "Republicans"),
+                      values = c("#4040ff", "#ff4040", "#6060ff", "#ff6060"),
+                      name = NULL, guide = "legend") +
+  ylab("year") + # ylab("first year of each congress") +
+  xlab("DW-NOMINATE score") +
+  theme_ridges(center = TRUE) +
+  theme(legend.position = c(1, .95),
+        legend.justification = "right",
+        legend.direction = "horizontal",
+        legend.background = element_rect(fill = "white"))
 ```

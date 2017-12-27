@@ -1,6 +1,6 @@
 
 
-# Boxplots, violin plots, and more {#boxplots-violins}
+# Boxplots, violins, and ridgelines {#boxplots-violins}
 
 We commonly have to visualize multiple distributions at the same time. For example, consider weather data. We have observations for each day in a month, possibly at multiple time points or multiple locations, but we frequently are interested in the broader trends, such as how temperature changes with month.
 
@@ -10,10 +10,18 @@ The following figure visualizes temperature data collected in Lincoln, Nebraska 
 
 However, there are multiple problems with this approach. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I'm here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
-A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner.
-<img src="boxplots_violins_files/figure-html/boxplot-dia-1.png" width="480" style="display: block; margin: auto;" />
+## From boxplots to violins and sinas
 
-The line in the middle represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner (Figure \@ref(fig:boxplot-schematic)).
+
+(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="576" />
+<p class="caption">(\#fig:boxplot-schematic)(ref:boxplot-schematic)</p>
+</div>
+
+
 
 When we visualize the temperature dataset using boxplots, we obtain the following result.
 <img src="boxplots_violins_files/figure-html/boxplots-1.png" width="576" style="display: block; margin: auto;" />
@@ -33,3 +41,31 @@ We can also plot all individual points:
 
 Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. 
 <img src="boxplots_violins_files/figure-html/sina-plots-1.png" width="576" style="display: block; margin: auto;" />
+
+
+## Ridgeline plots
+
+
+
+
+(ref:temp-ridgeline) Temperatures in Lincoln, Nebraska, in 2016. For each month, we show the distribution of daily mean temperatures measured in Fahrenheit. (Original figure concept: Austin Wehrwein)
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/temp-ridgeline-1.png" alt="(ref:temp-ridgeline)" width="576" />
+<p class="caption">(\#fig:temp-ridgeline)(ref:temp-ridgeline)</p>
+</div>
+
+
+(ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. (Source: Internet Movie Database, IMDB)
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/movies-ridgeline-1.png" alt="(ref:movies-ridgeline)" width="480" />
+<p class="caption">(\#fig:movies-ridgeline)(ref:movies-ridgeline)</p>
+</div>
+
+(ref:dw-nominate-ridgeline) Voting patterns in the U.S. House of Representatives have become increasingly polarized. DW-NOMINATE scores are frequently used to compare voting patterns of representatives between parties and over time. Here, score distributions are shown for each Congress from 1963 to 2013 separately for Democrats and Republicans. Each Congress is represented by its first year. (Original figure concept: Ian R. McDonald)
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/dw-nominate-ridgeline-1.png" alt="(ref:dw-nominate-ridgeline)" width="816" />
+<p class="caption">(\#fig:dw-nominate-ridgeline)(ref:dw-nominate-ridgeline)</p>
+</div>

@@ -51,18 +51,18 @@ We can attempt to address the problem of porous boundaries by using colored line
 
 Line drawings also arise in the context of scatter plots, when different point types are drawn as open circles, triangles, crosses, etc. As an example, consider Figure \@ref(fig:mpg-linespoints). The figure contains a lot of visual noise, and the different point types do not strongly separate from each other. Drawing the same figure with solidly colored shapes addresses this issue (Figure \@ref(fig:mpg-filledpoints)).
 
-(ref:mpg-linespoints) Fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). The different point styles, all black-and-white line-drawn symbols, create substantial visual noise and make it difficult to read the figure.
+(ref:mpg-linespoints) City fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). The different point styles, all black-and-white line-drawn symbols, create substantial visual noise and make it difficult to read the figure.
 
 <div class="figure" style="text-align: center">
-<img src="avoid_line_drawings_files/figure-html/mpg-linespoints-1.png" alt="(ref:mpg-linespoints)" width="480" />
+<img src="avoid_line_drawings_files/figure-html/mpg-linespoints-1.png" alt="(ref:mpg-linespoints)" width="528" />
 <p class="caption">(\#fig:mpg-linespoints)(ref:mpg-linespoints)</p>
 </div>
 
 
-(ref:mpg-filledpoints) Fuel economy versus engine displacement. By using both different colors and different solid shapes for the different drive-train variants, this figure clearly separates the drive-train variants while remaining reproducible in gray scale if needed.
+(ref:mpg-filledpoints) City fuel economy versus engine displacement. By using both different colors and different solid shapes for the different drive-train variants, this figure clearly separates the drive-train variants while remaining reproducible in gray scale if needed.
 
 <div class="figure" style="text-align: center">
-<img src="avoid_line_drawings_files/figure-html/mpg-filledpoints-1.png" alt="(ref:mpg-filledpoints)" width="480" />
+<img src="avoid_line_drawings_files/figure-html/mpg-filledpoints-1.png" alt="(ref:mpg-filledpoints)" width="528" />
 <p class="caption">(\#fig:mpg-filledpoints)(ref:mpg-filledpoints)</p>
 </div>
 

@@ -93,7 +93,7 @@ p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-(ref:sequential-scales) Example diverging color scales.
+(ref:diverging-scales) Example diverging color scales.
 
 ```{r diverging-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("Colorbrewer BrBG")

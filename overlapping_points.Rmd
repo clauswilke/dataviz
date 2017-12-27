@@ -2,7 +2,6 @@
 # run setup script
 source("_common.R")
 
-library(stringr)
 library(lubridate)
 ```
 
@@ -118,17 +117,10 @@ When the number of individual points gets very large, partial transparency (with
 (ref:nycflights-points) Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure.
 
 ```{r nycflights-points, fig.asp = 0.75, fig.cap = '(ref:nycflights-points)'}
-library(nycflights13)
-
-flights %>% filter(origin == "EWR") %>%
-  mutate(`departure time` = hm(sprintf("%02d:%02d", dep_time %/% 100, dep_time %% 100 ))) %>%
-  select(`departure time`, `departure delay (minutes)` = dep_delay) %>%
-  na.omit() -> delay_df
-
-# the break points along the x axis
+# break points along the x axis
 breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
-p_flights_base <- ggplot(delay_df, aes(`departure time`, `departure delay (minutes)`)) + 
+p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (minutes)`)) + 
   geom_abline(slope = 0, intercept = 0, color="grey80") +
   scale_x_time(breaks = hm(breaks_x),
                labels = breaks_x) +

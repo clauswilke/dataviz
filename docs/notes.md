@@ -15,7 +15,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Figure titles**  
   Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
 
-#. **Effective use of color in figures**  
+#. **Effective use of color in figures**\*  
   Covers basic concepts of color use, as a tool to highlight, as a tool to distinguish, and as a tool to represent a value.   Introduces the three basic types of color scales: qualitative, directional, diverging.
 
 #. **Choosing colorblind-friendly color scales**\*  
@@ -33,20 +33,20 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Choosing an appropriate aspect ratio**  
   Discusses the concept of aspect ratio, including when it matters a lot (same axis range on x and y) and when it is more of a personal preference.
 
-#. **Background grids**\*\*  
+#. **Background grids**\*  
   Discusses when and how to use background grids and other guide lines in figures.
 
 #. **Don't box yourself in**  
   Argues to avoid boxes and frames around figure parts.
   
-#. **Avoid line drawings**\*\*  
-  Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
-  
 #. **The principle of proportional ink**  
   Explains that the size of colored areas needs to be proportional to the data value they represent.
 
-#. **Handling overlapping points**\*  
+#. **Handling overlapping points**\*\*  
   Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.
+  
+#. **Avoid line drawings**\*\*  
+  Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
   
 #. **Multi-part figures**  
   Discusses issues that arise in multi-part figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-part figures. 
