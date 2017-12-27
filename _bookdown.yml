@@ -16,9 +16,9 @@ rmd_files: [
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
   "background_grids.Rmd", # completed
-  "avoid_line_drawings.Rmd", # completed
   ##"proportional_ink.Rmd",
   "overlapping_points.Rmd",
+  "avoid_line_drawings.Rmd", # completed
 
   # Part II
   "directory_of_visualizations.Rmd",
@@ -50,9 +50,9 @@ rmd_files_final: [
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
   "background_grids.Rmd", # completed
-  "avoid_line_drawings.Rmd", # completed
   ##"proportional_ink.Rmd",
   #"overlapping_points.Rmd",
+  "avoid_line_drawings.Rmd", # completed
 
   # Part II
   "directory_of_visualizations.Rmd",

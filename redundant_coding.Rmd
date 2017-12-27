@@ -4,7 +4,6 @@ source("_common.R")
 
 # libraries
 library(readr)
-library(dplyr)
 library(tidyr)
 library(purrr)
 library(stringr)

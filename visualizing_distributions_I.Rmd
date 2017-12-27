@@ -2,7 +2,6 @@
 # run setup script
 source("_common.R")
 
-library(dplyr)
 library(tidyr)
 library(ggridges) # for geom_density_line()
 ```
@@ -17,8 +16,7 @@ We frequently encounter the situation where we would like to understand how a pa
 We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table \@ref(tab:titanic-ages). 
 ```{r titanic-ages}
 library(readr)
-df <- read_csv("datasets/Titanic.csv")
-titanic <- na.omit(data.frame(age = df$Age, sex = df$Sex, survived = df$Survived))
+titanic <- titanic_all
 age_counts <- hist(titanic$age, breaks=(0:15)*5+.01, plot = FALSE)$counts
 age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
                        count = age_counts,

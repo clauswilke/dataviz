@@ -1,7 +1,7 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
-library(dplyr)
+
 library(tidyr)
 library(forcats)
 library(ggforce)

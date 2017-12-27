@@ -1,8 +1,6 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
-
-library(dplyr)
 ```
 
 # Effective use of color in figures
