@@ -6,7 +6,7 @@ source("_common.R")
 # Effective use of color in figures
 
 
-## Color as a means to draw attention
+## Color as a tool to highlight
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
 
@@ -34,7 +34,7 @@ ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = spor
   theme_minimal_grid()
 ```
 
-## Color as a means to distinguish
+## Color as a tool to distinguish
 
 (ref:popgrowth-US) Population growth in the US from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
@@ -82,7 +82,30 @@ plot_grid(p1, p2, p3, ncol = 1)
 ```
 
 
-## Color as a representation of a value
+## Color to represent of a value
+
+(ref:map-Texas-income) Median income in Texas counties.
+
+```{r map-Texas-income, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-income)'}
+library(sf)
+
+# B19013_001: Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)
+
+texas_income %>%
+  ggplot(aes(fill = estimate)) + 
+  geom_sf(color = "white") + 
+  coord_sf(datum = NA) +
+  theme_map() + 
+  scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
+                                   na.value = "grey50", end = 0.9,
+                                   name = "income",
+                                   limits = c(18000, 90000),
+                                   breaks = 20000*c(1:4),
+                                   labels = c("$20,000", "$40,000", "$60,000", "$80,000")) +
+  theme(legend.title.align = 0.5,
+        legend.text.align = 0,
+        legend.position = c(0.07, 0.8))
+```
 
 (ref:sequential-scales) Example sequential color scales.
 
@@ -91,6 +114,28 @@ p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "seq", palette = "Blues", 
 p2 <- gg_color_swatches(7) + scale_fill_discrete_sequential("Heat") + ggtitle("Heat")
 p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
 plot_grid(p1, p2, p3, ncol = 1)
+```
+
+
+(ref:map-Texas-race) Racial composition in Texas counties.
+
+```{r map-Texas-race, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-race)'}
+# we reuse the geometries from texas_income
+select(texas_income, -NAME, -variable, -estimate, -moe) %>%
+  left_join(select(texas_race, GEOID, variable, pct) %>% filter(variable == "White")) %>%
+  ggplot(aes(fill = pct)) +
+  geom_sf(color = "white") +
+  coord_sf(datum = NA) + 
+  theme_map() +
+  #scale_fill_continuous_diverging(palette = "Blue-Red 3", # uncomment for alternative color scale
+  scale_fill_continuous_carto(palette = "Earth",
+                              mid = 50,
+                              limits = c(0, 100),
+                              breaks = 25*(0:4),
+                              name = "% white") +
+  theme(legend.title.align = 0.5,
+        legend.text.align = 0,
+        legend.position = c(0.07, 0.8))
 ```
 
 (ref:diverging-scales) Example diverging color scales.

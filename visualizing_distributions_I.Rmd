@@ -194,7 +194,7 @@ p_hist_overlapped <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"),
                     guide = guide_legend(reverse=TRUE)) +
   theme_minimal_hgrid() +
-  theme(legend.position = c(.9, .92),
+  theme(legend.position = c(.9, .90),
         legend.justification = c("right", "top"),
         legend.box.background = element_rect(fill = "white", color = "white"))
 
@@ -228,17 +228,23 @@ A solution that works well for this dataset is to show the age distributions of 
 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
-```{r titanic-age-fractional-dens, fig.width = 8.5, fig.asp = .4, fig.cap='(ref:titanic-age-fractional-dens)'}
+```{r titanic-age-fractional-dens, fig.width = 8.5, fig.asp = .45, fig.cap='(ref:titanic-age-fractional-dens)'}
 p_dens_fraction <- ggplot(titanic2, aes(x=age, y=..count..)) +
-  geom_density_line(data=select(titanic, -sex), color = "transparent") + 
+  geom_density_line(data=select(titanic, -sex), aes(fill = "all passengers"),
+                    color = "transparent") + 
   geom_density_line(aes(fill = sex), bw = 2, color = "transparent") +
   scale_x_continuous(limits = c(0, 75), name = "passenger age", expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 26), name = "scaled density", expand = c(0, 0)) +
-  scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender", guide = "none") +
+  scale_fill_manual(values = c("#b3b3b3a0", "#0072B2", "#D55E00"), 
+                    breaks = c("all passengers", "male", "female"),
+                    labels = c("all passengers  ", "males  ", "females"),
+                    name = "") +
   facet_wrap(~sex, labeller = labeller(sex = function(sex) paste(sex, "passengers"))) +
   theme_minimal_hgrid() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(margin = margin(0, 0, 0, 0)))
+  theme(legend.position = "bottom",
+        legend.justification = "right",
+        legend.margin = margin(0, 0, 0.2, 0, "cm"),
+        legend.spacing.x = grid::unit(0.2, "cm"))
 
 p_dens_fraction
 ```
@@ -254,8 +260,8 @@ ggplot(gender_counts, aes(x=age, y=ifelse(gender == "male",-1, 1)*count, fill = 
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(name = "count", breaks = 20*(-2:1)) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
-  draw_text(x = 70, y = -35, "male") +
-  draw_text(x = 70, y = 25, "female") +
+  draw_text(x = 70, y = -39, "male", hjust = 0) +
+  draw_text(x = 70, y = 21, "female", hjust = 0) +
   coord_flip() +
   theme_minimal_grid() +
   theme(axis.title.x = element_text(hjust = 0.61))

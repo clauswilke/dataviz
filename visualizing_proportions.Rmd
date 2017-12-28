@@ -328,8 +328,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
   theme_minimal_hgrid() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+  theme(strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
         legend.position = "bottom",
         legend.justification = "right",
         legend.margin = margin(0, 0, 0.2, 0, "cm"),
@@ -352,15 +351,14 @@ The same dataset visualized as partial densities is much clearer (Figure \@ref(f
 
 ```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
 ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
-  geom_density_line(data=select(df_marital, -marital), aes(fill = "all people surveyed   "), color = "transparent") +
+  geom_density_line(data=select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~marital, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
   theme_minimal_hgrid() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+  theme(strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
         legend.position = "bottom",
         legend.justification = "right",
         legend.margin = margin(0, 0, 0.2, 0, "cm"),
