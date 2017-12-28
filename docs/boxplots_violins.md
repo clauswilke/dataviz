@@ -6,7 +6,12 @@ We commonly have to visualize multiple distributions at the same time. For examp
 
 The following figure visualizes temperature data collected in Lincoln, Nebraska in 2016. The dataset contains the mean temperature for each day of the year. We could plot this dataset by calculating the average mean temperature in each month and plotting it as points with error bars.
 
-<img src="boxplots_violins_files/figure-html/points-errorbars-1.png" width="576" style="display: block; margin: auto;" />
+(ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average mean temperature for each month and errorbars represent twice the standard deviation of mean temperatures within each month.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-points-errorbars-1.png" alt="(ref:lincoln-temp-points-errorbars)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-points-errorbars)(ref:lincoln-temp-points-errorbars)</p>
+</div>
 
 However, there are multiple problems with this approach. First, we're losing a lot of information about the data. Second, it's not necessarily clear what the points represent. Third, it's definitely not clear what the errorbars represent. There is no standard. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? (I'm here plotting twice the standard deviation, to indicate the range that contains approximately 95% of the data.) Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
@@ -14,7 +19,7 @@ However, there are multiple problems with this approach. First, we're losing a l
 
 A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner (Figure \@ref(fig:boxplot-schematic)).
 
-(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data or to the maximum or minimum that falls within 1.5 times the height of the box, whichever yields the shorter wisker. The distances of 1.5 times the height of the box in either direction are called the upper and the lower fence. Individual data points that fall beyond the fences are referred to as outliers and usually showns as individual dots.
 
 <div class="figure" style="text-align: center">
 <img src="boxplots_violins_files/figure-html/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="576" />
@@ -24,23 +29,51 @@ A traditional and commonly used method of visualizing key parameters of distribu
 
 
 When we visualize the temperature dataset using boxplots, we obtain the following result.
-<img src="boxplots_violins_files/figure-html/boxplots-1.png" width="576" style="display: block; margin: auto;" />
+
+(ref:lincoln-temp-boxplots) Mean daily temperatures in Lincoln, Nebraska, visualized as boxplots.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-boxplots-1.png" alt="(ref:lincoln-temp-boxplots)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-boxplots)(ref:lincoln-temp-boxplots)</p>
+</div>
 
 Using the boxplot visualization, we see clearly that temperature is highly skewed in December (most days are moderately cold, and a few are extremely cold) and not very skewed at all in some other months, e.g., July.
 
+(ref:lincoln-temp-violins) Mean daily temperatures in Lincoln, Nebraska, visualized as violin plots.
 
-<img src="boxplots_violins_files/figure-html/violin-plots-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-violins-1.png" alt="(ref:lincoln-temp-violins)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-violins)(ref:lincoln-temp-violins)</p>
+</div>
 
 
 We can also plot all individual points:
-<img src="boxplots_violins_files/figure-html/all-points-no-jitter-1.png" width="576" style="display: block; margin: auto;" />
+
+(ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-all-points-1.png" alt="(ref:lincoln-temp-all-points)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-all-points)(ref:lincoln-temp-all-points)</p>
+</div>
 
 
-<img src="boxplots_violins_files/figure-html/jittered-points-1.png" width="576" style="display: block; margin: auto;" />
+(ref:lincoln-temp-jittered) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-jittered-1.png" alt="(ref:lincoln-temp-jittered)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-jittered)(ref:lincoln-temp-jittered)</p>
+</div>
 
 
-Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. 
-<img src="boxplots_violins_files/figure-html/sina-plots-1.png" width="576" style="display: block; margin: auto;" />
+Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions.
+
+
+(ref:lincoln-temp-sina) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+<div class="figure" style="text-align: center">
+<img src="boxplots_violins_files/figure-html/lincoln-temp-sina-1.png" alt="(ref:lincoln-temp-sina)" width="576" />
+<p class="caption">(\#fig:lincoln-temp-sina)(ref:lincoln-temp-sina)</p>
+</div>
 
 
 ## Ridgeline plots
