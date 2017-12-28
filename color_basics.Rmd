@@ -6,6 +6,8 @@ source("_common.R")
 # Effective use of color in figures
 
 
+
+
 ## Color as a tool to highlight
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
@@ -147,7 +149,7 @@ p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + g
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-## Dos and Don'ts of color use 
+## Dos and don'ts of color use 
 
 
 (ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot.
@@ -176,7 +178,9 @@ p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base)
 stamp_bad(plot_grid(NULL, p_comb, NULL, rel_widths = c(.5, 6, .5), nrow = 1))
 ```
 
-```{r, fig.width = 8.5, fig.asp = 0.8}
+(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context.
+
+```{r popgrowth-vs-popsize-bw, fig.width = 8.5, fig.asp = 0.8, fig.cap = '(ref:popgrowth-vs-popsize-bw)'}
 library(ggrepel)
 
 set.seed(7586)
@@ -199,7 +203,9 @@ ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth)) +
         legend.justification = "center")
 ```
 
-```{r fig.width = 6.5, fig.asp = 1.2}
+(ref:popgrowth-US-rainbow) Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
+
+```{r popgrowth-US-rainbow, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
 popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = state)) + 
   geom_col() + 
   scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
@@ -215,9 +221,5 @@ popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth,
 
 stamp_ugly(popgrowth_bars_rainbow)
 ```
+
 This figure violates two principles: (i) don't use spurious colors; (ii) don't use overly saturated colors.
-
-
-Notes:
-
-- Color as quantification: colored map

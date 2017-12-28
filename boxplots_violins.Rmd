@@ -13,7 +13,9 @@ We commonly have to visualize multiple distributions at the same time. For examp
 
 The following figure visualizes temperature data collected in Lincoln, Nebraska in 2016. The dataset contains the mean temperature for each day of the year. We could plot this dataset by calculating the average mean temperature in each month and plotting it as points with error bars.
 
-```{r points-errorbars}
+(ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average mean temperature for each month and errorbars represent twice the standard deviation of mean temperatures within each month.
+
+```{r lincoln-temp-points-errorbars, fig.cap = '(ref:lincoln-temp-points-errorbars)'}
 lincoln_weather %>% mutate(month_short = fct_recode(Month,
                                                     Jan = "January",
                                                     Feb = "February",
@@ -34,7 +36,8 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
                fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
                fatten = 5) +
-  xlab("Month") + 
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_bad(lincoln_errbar)
@@ -46,7 +49,7 @@ However, there are multiple problems with this approach. First, we're losing a l
 
 A traditional and commonly used method of visualizing key parameters of distributions is the boxplot. The boxplot divides the data into quartiles and visualizes them in a standardized manner (Figure \@ref(fig:boxplot-schematic)).
 
-(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data, respectively, or to 1.5 times the height of the box, whichever yields the shorter wisker. When the wiskers extend to 1.5 times the height of the box, they are called the upper and lower fence, respectively. Individual data points that fall beyond the upper or lower fence are referred to as outliers and usually showns as individual dots.
+(ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points and the corresponding boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data or to the maximum or minimum that falls within 1.5 times the height of the box, whichever yields the shorter wisker. The distances of 1.5 times the height of the box in either direction are called the upper and the lower fence. Individual data points that fall beyond the fences are referred to as outliers and usually showns as individual dots.
 
 ```{r boxplot-schematic, fig.cap = '(ref:boxplot-schematic)'}
 set.seed(3423)
@@ -73,9 +76,14 @@ plot_grid(p_points, p_boxplot, rel_widths = c(.65, 1), nrow = 1)
 
 
 When we visualize the temperature dataset using boxplots, we obtain the following result.
-```{r boxplots}
+
+(ref:lincoln-temp-boxplots) Mean daily temperatures in Lincoln, Nebraska, visualized as boxplots.
+
+```{r lincoln-temp-boxplots, fig.cap = '(ref:lincoln-temp-boxplots)'}
 lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot(fill = 'grey90') + xlab("Month") +
+  geom_boxplot(fill = 'grey90') + 
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_box)
@@ -83,10 +91,13 @@ stamp_phantom(lincoln_box)
 
 Using the boxplot visualization, we see clearly that temperature is highly skewed in December (most days are moderately cold, and a few are extremely cold) and not very skewed at all in some other months, e.g., July.
 
+(ref:lincoln-temp-violins) Mean daily temperatures in Lincoln, Nebraska, visualized as violin plots.
 
-```{r violin-plots}
+```{r lincoln-temp-violins, fig.cap = '(ref:lincoln-temp-violins)'}
 lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_violin(fill = 'grey90') + xlab("Month") +
+  geom_violin(fill = 'grey90') +
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_violin)
@@ -94,30 +105,44 @@ stamp_phantom(lincoln_violin)
 
 
 We can also plot all individual points:
-```{r all-points-no-jitter}
+
+(ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+```{r lincoln-temp-all-points, fig.cap = '(ref:lincoln-temp-all-points)'}
 lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_point() + xlab("Month") +
+  geom_point() + 
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_bad(lincoln_points)
 ```
 
 
-```{r jittered-points}
+(ref:lincoln-temp-jittered) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+```{r lincoln-temp-jittered, fig.cap = '(ref:lincoln-temp-jittered)'}
 lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_jitter(width = .15) + xlab("Month") +
+  geom_jitter(width = .15) +
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_jitter)
 ```
 
 
-Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions. 
-```{r sina-plots}
+Finally, we can combine the best of both worlds and spread the dots out in proportion to the number of points with a similar y coordinate. This methods yields the sina plot, which shows each individual dot while also visualizing the distributions.
+
+
+(ref:lincoln-temp-sina) Mean daily temperatures in Lincoln, Nebraska, visualized as **complete**.
+
+```{r lincoln-temp-sina, fig.cap = '(ref:lincoln-temp-sina)'}
 lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_violin(color = "transparent", fill = "gray90") + 
   stat_sina(maxwidth = 0.8) + 
-  xlab("Month") +
+  xlab("month") + 
+  ylab("mean temperature (F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_sina)
