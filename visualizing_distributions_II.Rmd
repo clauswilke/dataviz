@@ -8,7 +8,7 @@ source("_common.R")
 
 In Chapter \@ref(histograms-density-plots), I described how we can visualize distributions with histograms or density plots. Both of these approaches are highly intuitive and visually appealing. However, as discussed in that chapter, they both share the limitation that the resulting figure depends to a substantial degree on parameters the user has to choose, such as the bin width for histograms and the bandwidth for density plots. As a result, both have to be considered as an interpretation of the data rather than a direct visualization of the data itself.
 
-As an alternative to using histograms or density plots, we could simply show all the data points individually, as a point cloud (see e.g. Chapter \@ref(boxplots-violins)). However, this approach becomes unwieldy for very large datasets, and in any case there is value in aggregate methods that highlight properties of the distribution rather than the individual data points. To solve this problem, statisticians have invented empirical cumulative density functions (ecdfs) and quantile--quantile (q-q) plots. These types of visualizations require no arbitrary parameter choices, and they show all of the data at once. Unfortunately, they are a little less intuitive than a histogram or a density plot is, and I don't see them used frequently outside of highly technical publications. They are quite popular among statisticians, though, and I think anybody interested in data visualization should be familiar with these techniques.
+As an alternative to using histograms or density plots, we could simply show all the data points individually, as a point cloud. However, this approach becomes unwieldy for very large datasets, and in any case there is value in aggregate methods that highlight properties of the distribution rather than the individual data points. To solve this problem, statisticians have invented empirical cumulative density functions (ecdfs) and quantile--quantile (q-q) plots. These types of visualizations require no arbitrary parameter choices, and they show all of the data at once. Unfortunately, they are a little less intuitive than a histogram or a density plot is, and I don't see them used frequently outside of highly technical publications. They are quite popular among statisticians, though, and I think anybody interested in data visualization should be familiar with these techniques.
 
 
 ## Empirical cumulative density functions
@@ -77,25 +77,23 @@ Here, I will first discuss the number of people living in different US counties 
 (ref:county-populations) Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 
 ```{r county-populations, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations)'}
-library(openintro)
-
-p1 <- ggplot(countyComplete, aes(x=pop2010)) + 
+p1 <- ggplot(US_census, aes(x=pop2010)) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
-                     breaks = c(0, 2.5e6, 5e6, 7.5e6),
-                     labels = c(expression(0), expression(2.5 %*% 10^6),
-                                expression(5 %*% 10^6), expression(7.5 %*% 10^6))) +
+                     limits = c(0, 4.3e6),
+                     breaks = 1e6*(0:4),
+                     labels = label_log10) +
   scale_y_continuous(expand = c(0, 0), name = expression(paste("density [x", 10^-5, "]")),
                      breaks = c(0, 4e-6, 8e-6, 1.2e-5),
-                     labels = c(0, 0.4, 0.8, 1.2)) +
+                     labels = label_log10) +
   theme_minimal_grid(12)
 
-p2 <- ggplot(countyComplete, aes(x=pop2010)) + 
+p2 <- ggplot(US_census, aes(x=pop2010)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
-                     breaks = c(0, 2.5e6, 5e6, 7.5e6),
-                     labels = c(expression(0), expression(2.5 %*% 10^6),
-                                expression(5 %*% 10^6), expression(7.5 %*% 10^6))) +
+                     limits = c(0, 4.3e6),
+                     breaks = 1e6*(0:4),
+                     labels = label_log10) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_minimal_grid(12)
 
@@ -107,13 +105,13 @@ The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak righ
 (ref:county-populations-log) Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 
 ```{r county-populations-log, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations-log)'}
-p1_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
+p1_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0, 0), name = "density") +
   theme_minimal_grid(12)
 
-p2_log <- ggplot(countyComplete, aes(x=log10(pop2010))) + 
+p2_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
@@ -127,7 +125,7 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 (ref:county-populations-tail-log-log) Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants.
 
 ```{r county-populations-tail-log-log, fig.cap='(ref:county-populations-tail-log-log)'}
-ggplot(countyComplete, aes(x=pop2010, y = 1-..y..)) + 
+ggplot(US_census, aes(x=pop2010, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0),
                 breaks = c(1e2, 1e3, 1e4, 1e5, 1e6, 1e7),
@@ -183,8 +181,8 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 
 ```{r county-populations-qq, fig.cap='(ref:county-populations-qq)'}
 # estimate distribution parameters (mean and sd)
-params <- as.list(MASS::fitdistr(log(countyComplete$pop2010), "normal")$estimate)
-ggplot(countyComplete, aes(sample = log(pop2010))) + 
+params <- as.list(MASS::fitdistr(log(US_census$pop2010), "normal")$estimate)
+ggplot(US_census, aes(sample = log(pop2010))) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 5+2.5*(0:4)) +

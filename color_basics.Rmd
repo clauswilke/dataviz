@@ -84,7 +84,7 @@ plot_grid(p1, p2, p3, ncol = 1)
 ```
 
 
-## Color to represent of a value
+## Color to represent a value
 
 (ref:map-Texas-income) Median income in Texas counties.
 
@@ -96,17 +96,24 @@ library(sf)
 texas_income %>%
   ggplot(aes(fill = estimate)) + 
   geom_sf(color = "white") + 
-  coord_sf(datum = NA) +
+  coord_sf(xlim = c(-110, -93.5), datum = NA) +
   theme_map() + 
   scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
                                    na.value = "grey50", end = 0.9,
-                                   name = "income",
+                                   name = "annual median income",
                                    limits = c(18000, 90000),
                                    breaks = 20000*c(1:4),
-                                   labels = c("$20,000", "$40,000", "$60,000", "$80,000")) +
+                                   labels = c("$20,000", "$40,000", "$60,000", "$80,000"),
+                                   guide = guide_colorbar(direction = "horizontal",
+                                                          label.position = "bottom",
+                                                          title.position = "top",
+                                                          ticks = FALSE,
+                                                          barwidth = grid::unit(3.5, "in"),
+                                                          barheight = grid::unit(0.2, "in"))) +
   theme(legend.title.align = 0.5,
-        legend.text.align = 0,
-        legend.position = c(0.07, 0.8))
+        legend.text.align = 0.5,
+        legend.justification = c(0, 0),
+        legend.position = c(0, 0.1))
 ```
 
 (ref:sequential-scales) Example sequential color scales.
@@ -127,17 +134,25 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
   left_join(select(texas_race, GEOID, variable, pct) %>% filter(variable == "White")) %>%
   ggplot(aes(fill = pct)) +
   geom_sf(color = "white") +
-  coord_sf(datum = NA) + 
+  coord_sf(xlim = c(-110, -93.5), datum = NA) + 
   theme_map() +
   #scale_fill_continuous_diverging(palette = "Blue-Red 3", # uncomment for alternative color scale
   scale_fill_continuous_carto(palette = "Earth",
                               mid = 50,
                               limits = c(0, 100),
                               breaks = 25*(0:4),
-                              name = "% white") +
+                              labels = c("0% ", "25%", "50%", "75%", " 100%"),
+                              name = "percent identifying as white",
+                              guide = guide_colorbar(direction = "horizontal",
+                                                     label.position = "bottom",
+                                                     title.position = "top",
+                                                     ticks = FALSE,
+                                                     barwidth = grid::unit(3.5, "in"),
+                                                     barheight = grid::unit(0.2, "in"))) +
   theme(legend.title.align = 0.5,
-        legend.text.align = 0,
-        legend.position = c(0.07, 0.8))
+        legend.text.align = 0.5,
+        legend.justification = c(0, 0),
+        legend.position = c(0, 0.1))
 ```
 
 (ref:diverging-scales) Example diverging color scales.
