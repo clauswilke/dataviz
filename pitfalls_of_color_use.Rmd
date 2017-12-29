@@ -149,9 +149,7 @@ Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B 
 reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
  
  
-## Directional color scales
 
-A second common use of color is to indicate intensity of some sort, for example temperature or speed. In those cases, we need a directional color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
 
 ```{r}
 cols <- scales::colour_ramp(c("#FF1B1B", "#F9F1CE", high = "#057905"))(seq(0, 1, .25))
