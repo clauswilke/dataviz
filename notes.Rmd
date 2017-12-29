@@ -80,7 +80,7 @@ Chapters for which some material exists at this time are marked with stars, as f
 #. **Visualizing distributions II: Cumulative density functions and q-q plots**\*\*  
   Discusses strategies for visualizing distributions that are exact and non-arbitrary (unlike histograms and density plots) but are more difficult to interpret.
 
-#. **Visualizing distributions III: Boxplots, violin plots, and more**\*  
+#. **Visualizing distributions III: Boxplots, violin plots, and more**\*\*  
   Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.
 
 #. **Visualizing arrays of intensities**  

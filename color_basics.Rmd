@@ -5,7 +5,9 @@ source("_common.R")
 
 # Effective use of color in figures
 
+Color can be an incredibly effective tool to enhance data visualizations. At the same time, the biggest visualization mistakes I see are probably linked to color use. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
+There are three fundamental ways in which we can use color: (i) We can use color to highlight; (ii) we can use color to distinguish groups of data from each other; and (iii) we can use color to represent data values. The types of colors we would use in each case and the way in which we would use it are entirely different for these three cases.
 
 
 ## Color as a tool to highlight
@@ -74,9 +76,10 @@ ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = region)) +
 ```
 
 
+
 (ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book.
 
-```{r qualitative-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
+```{r qualitative-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_OkabeIto() + ggtitle("Okabe Ito")
 p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Dark2") + ggtitle("Colorbrewer Dark2")
 p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 default")
@@ -84,7 +87,9 @@ plot_grid(p1, p2, p3, ncol = 1)
 ```
 
 
-## Color to represent a value
+For qualitative color scales, it is critical that the colors appear equivalent to each other and do not have an intrinsic order. You don't want to have any particular group stand out among the others (unless you purposefully try to highlight, see previous subsection), and you also don't want there to be an apparent order among the groups. 
+
+## Color to represent data values
 
 (ref:map-Texas-income) Median income in Texas counties.
 
@@ -116,9 +121,13 @@ texas_income %>%
         legend.position = c(0, 0.1))
 ```
 
+
+Finally, color is commonly used to represent data values, such income, temperature, or speed. In those cases, we need a sequential color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
+
+
 (ref:sequential-scales) Example sequential color scales.
 
-```{r sequential-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:sequential-scales)'}
+```{r sequential-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:sequential-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "seq", palette = "Blues", direction = -1) + ggtitle("Colorbrewer Blues")
 p2 <- gg_color_swatches(7) + scale_fill_discrete_sequential("Heat") + ggtitle("Heat")
 p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
@@ -157,7 +166,7 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
 
 (ref:diverging-scales) Example diverging color scales.
 
-```{r diverging-scales, fig.width=8.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
+```{r diverging-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("Colorbrewer BrBG")
 p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
 p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + ggtitle("Carto ArmyRose")

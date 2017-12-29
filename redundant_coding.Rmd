@@ -19,35 +19,41 @@ library(ggridges)
 ```{r}
 iris %>%
   select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x=Sepal.Length, y=Sepal.Width, fill=species)) + 
-    geom_point(color="black", size=2.5, shape=21) +
-    scale_fill_manual(values=c("#E69F00", "#56B4E9", "#009E73"),
-                      breaks=c("setosa", "virginica", "versicolor")) +
+  ggplot(aes(x = Sepal.Length, y = Sepal.Width, fill = species, color = species)) + 
+    geom_point(size=2.5, shape=21) +
+    scale_color_manual(values = darken(c("#E69F00", "#56B4E9", "#009E73"), 0.3),
+                       breaks = c("setosa", "virginica", "versicolor")) +
+    scale_fill_manual(values = c("#E69F0080", "#56B4E980", "#009E7380"),
+                      breaks = c("setosa", "virginica", "versicolor")) +
     xlab("sepal length") +
     ylab("sepal width") +
-    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
-    scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter
+    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(1.95, 4.6), expand = c(0, 0)) -> iris_scatter
 
-stamp_bad(plot_grid(NULL, iris_scatter + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_bad(plot_grid(NULL, iris_scatter + theme_minimal_grid(), NULL,
+                    nrow = 1, rel_widths = c(0.02, 1, 0.04)))
 ```
 
 There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
 
 ```{r}
 iris %>%
-  select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x=Sepal.Length, y=Sepal.Width, shape=species, fill=species)) + 
-    geom_point(color="black", size=2.5) +
-    scale_shape_manual(values=c(21, 22, 23),
-                       breaks=c("setosa", "virginica", "versicolor")) +
-    scale_fill_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
-                       breaks=c("setosa", "virginica", "versicolor")) +
+  select(Sepal.Width, Sepal.Length, species = Species) %>%
+  ggplot(aes(x = Sepal.Length, y = Sepal.Width, shape = species, fill = species, color = species)) + 
+    geom_point(size = 2.5) +
+    scale_shape_manual(values = c(21, 22, 23),
+                       breaks = c("setosa", "virginica", "versicolor")) +
+    scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                       breaks = c("setosa", "virginica", "versicolor")) +
+    scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
+                       breaks = c("setosa", "virginica", "versicolor")) +
     xlab("sepal length") +
     ylab("sepal width") +
-    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
-    scale_y_continuous(limits=c(1.95, 4.6), expand=c(0, 0)) -> iris_scatter2
+    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(1.95, 4.6), expand = c(0, 0)) -> iris_scatter2
 
-stamp_phantom(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL, nrow=1, rel_widths=c(0.02, 1, 0.04)))
+stamp_phantom(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL,
+                        nrow = 1, rel_widths = c(0.02, 1, 0.04)))
 ```
 
 Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
@@ -61,27 +67,27 @@ label_df <- data.frame(species = c("setosa", "virginica", "versicolor"),
                      vjust = c(0, 0.5, 1))
 
 iris %>%
-  select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x=Sepal.Length, y=Sepal.Width, shape=species, fill=species)) + 
-    geom_point(color="black", size = 2.5) +
-    stat_ellipse(aes(color=species),
-                 size = 0.5) +
+  select(Sepal.Width, Sepal.Length, species = Species) %>%
+  ggplot(aes(x = Sepal.Length, y = Sepal.Width, shape = species, fill = species, color = species)) + 
+    geom_point(size = 2.5) +
+    stat_ellipse(size = 0.5) +
     geom_text(data = label_df,
-              aes(label = species, color = species, hjust = hjust, vjust = vjust),
+              aes(label = species, hjust = hjust, vjust = vjust),
               size = 14/.pt) +
-    scale_shape_manual(values=c(21, 22, 23),
-                       breaks=c("setosa", "virginica", "versicolor")) +
-    scale_fill_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
-                       breaks=c("setosa", "virginica", "versicolor")) +
-    scale_color_manual(values=c("#56B4E9", "#E69F00", "#009E73"),
-                       breaks=c("setosa", "virginica", "versicolor")) +
+    scale_shape_manual(values = c(21, 22, 23),
+                       breaks = c("setosa", "virginica", "versicolor")) +
+    scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
+                       breaks = c("setosa", "virginica", "versicolor")) +
+    scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                       breaks = c("setosa", "virginica", "versicolor")) +
     xlab("sepal length") +
     ylab("sepal width") +
     guides(fill = "none", color = "none", shape = "none") +
-    scale_x_continuous(limits=c(3.95, 8.1), expand=c(0, 0)) +
-    scale_y_continuous(limits=c(1.8, 4.6), expand=c(0, 0)) -> iris_scatter3
+    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(1.8, 4.6), expand = c(0, 0)) -> iris_scatter3
 
-stamp_phantom(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL, nrow=1, rel_widths=c(0.02, .8, 0.24)))
+stamp_phantom(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL,
+                        nrow=1, rel_widths = c(0.02, .8, 0.24)))
 ```
 
 
@@ -192,14 +198,17 @@ iris_max <- filter(iris_dens, density == max(density)) %>%
          nudge_y = c(-0.02, 0.02, -0.02) 
         )
 
-iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
-  geom_density_line(stat = "identity", alpha = 0.7) +
+iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species, color = Species)) + 
+  geom_density_line(stat = "identity") +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y), 
             size = 12/.pt,
             inherit.aes = FALSE) +
-  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
@@ -227,19 +236,26 @@ iris_max <- mutate(iris_max,
 
 
 xdens <- axis_canvas(iris_scatter2, axis = "x") +
-  geom_density_line(data=iris_dens, aes(x = Sepal.Length, y = density, fill = Species),
-                    stat = "identity", alpha = 0.5, size = .2) +
+  geom_density_line(data=iris_dens, aes(x = Sepal.Length, y = density, fill = Species, color = Species),
+                    stat = "identity", size = .2) +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), size = 12/.pt) +
-  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+                                 y = density + nudge_y),
+            size = 11/.pt, color = "black", inherit.aes = FALSE) +
+  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none")
 
 ydens <- axis_canvas(iris_scatter2, axis = "y", coord_flip = TRUE) +
-  geom_density_line(data = iris_dens2, aes(x = Sepal.Width, y = density, fill = Species),
+  geom_density_line(data = iris_dens2, aes(x = Sepal.Width, y = density, fill = Species, color = Species),
                     stat = "identity", alpha = 0.5, size = .2)  +
-  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   coord_flip()
@@ -254,7 +270,7 @@ stamp_phantom(plot_grid(p2, NULL, rel_widths = c(8, 1)))
 
 And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.
 
-```{r fig.asp=0.75}
+```{r}
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
@@ -262,13 +278,10 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
-  labs(title = 'Temperatures in Lincoln NE',
-       subtitle = 'Mean temperatures (Fahrenheit) by month for 2016') +
+  xlab("mean temperature (F)") +
   guides(fill = "none") +
-  theme_ridges(font_size = 13, grid = TRUE) +
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_text(hjust = 1, vjust = 1),
-        axis.line.x = element_blank())
+  theme_ridges(center = TRUE, grid = TRUE) +
+  theme(axis.title.y = element_blank())
 
 # x axis labels
 temps <- data.frame(temp = c(0, 25, 50, 75))
