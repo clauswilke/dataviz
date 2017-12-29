@@ -32,7 +32,7 @@
 </div>
 
 
-## Color to represent of a value
+## Color to represent a value
 
 (ref:map-Texas-income) Median income in Texas counties.
 
