@@ -1,0 +1,188 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+
+library(viridis)
+library(ggridges)
+```
+
+# Common pitfalls of color use
+
+## Encoding too much or irrelevant information
+
+(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot.
+
+```{r popgrowth-vs-popsize-colored, fig.width = 7, fig.asp = 2*0.618, fig.cap = '(ref:popgrowth-vs-popsize-colored)'}
+
+popgrowth_df <- left_join(US_census, US_regions) %>%
+    group_by(region, division, state) %>%
+    summarize(pop2000 = sum(pop2000, na.rm = TRUE),
+              pop2010 = sum(pop2010, na.rm = TRUE),
+              popgrowth = (pop2010-pop2000)/pop2000,
+              area = sum(area)) %>%
+    arrange(popgrowth) %>%
+    ungroup() %>%
+    mutate(state = factor(state, levels = state),
+           region = factor(region, levels = c("West", "South", "Midwest", "Northeast")))
+
+
+colors <- c(rainbow_hcl(8, l = 35, c = 25, start = 0, end = 315),
+            rainbow_hcl(8, l = 45, c = 34, start = -10, end = 305),
+            rainbow_hcl(9, l = 55, c = 42, start = -20, end = 300),
+            rainbow_hcl(9, l = 65, c = 50, start = -30, end = 290),
+            rainbow_hcl(9, l = 75, c = 55, start = -40, end = 280),
+            rainbow_hcl(8, l = 85, c = 32, start = -50, end = 265))
+
+#colors <- sample(colors, 51)
+
+p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.character(state))) +
+  geom_point(size = 4) +
+  scale_x_log10(labels = label_log10) +
+  scale_color_manual(values = colors, name = "state") +
+  xlab("population size in 2000") +
+  ylab("population growth (%)\n2000 to 2010    ") +
+  theme_minimal_grid() +
+  theme(legend.text = element_text(size = 10),
+        legend.justification = "center")
+
+p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
+stamp_bad(plot_grid(NULL, p_comb, NULL, rel_widths = c(.5, 6, .5), nrow = 1))
+```
+
+(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context. **Move to redundant coding?**
+
+```{r popgrowth-vs-popsize-bw, fig.width = 8.5, fig.asp = 0.8, fig.cap = '(ref:popgrowth-vs-popsize-bw)'}
+library(ggrepel)
+
+set.seed(7586)
+
+df_repel <- select(popgrowth_df, x = pop2000, y = popgrowth, label = state) %>%
+  mutate(y = 100 * y,
+         label = ifelse(runif(n()) < .35 | x > 1e7 | x < 640000 | y > 20, as.character(label), ""))
+
+ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth)) +
+  geom_point(size = 2) +
+  geom_text_repel(data = df_repel,
+                  aes(x, y, label = label),
+                  segment.alpha = 0.5,
+                  size = 10/.pt) +
+  scale_x_log10(labels = label_log10) +
+  xlab("population size in 2000") +
+  ylab("population growth (%)\n2000 to 2010    ") +
+  theme_minimal_grid() +
+  theme(legend.text = element_text(size = 10),
+        legend.justification = "center")
+```
+
+(ref:popgrowth-US-rainbow) Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
+
+```{r popgrowth-US-rainbow, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
+popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = state)) + 
+  geom_col() + 
+  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
+                     name = "population growth (%)\n2000 to 2010    ") +
+  scale_fill_hue(c = 140, l = 55) +
+  coord_flip() + 
+  theme_minimal_vgrid() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.length = unit(0, "pt"),
+        axis.text.y = element_text(size = 10),
+        legend.position = "none")
+
+stamp_ugly(popgrowth_bars_rainbow)
+```
+
+This figure violates two principles: (i) don't use spurious colors; (ii) don't use overly saturated colors.
+
+
+## Using non-monotonic color scales to encode data values
+
+## Not designing for color-vision deficiency
+
+
+When coloring elements in your figures, you need keep in mind that a good proportion of your readers may have color-vision deficiency (i.e., are colorblind) and may not be able to distinguish the colors that look so clearly different to you. You could address this problem by preparing all figures in grayscale, but those figures would look drab and boring to everybody, even those with impaired color vision. Alternatively, you can (and should) employ redundant coding, discussed in more detail in Chapter \@ref(redundant-coding). However, independent of whether or not you use redundant coding, you should consider using a color scale whose colors are distinguishable even for people with color-vision deficiency. 
+
+In choosing your color scale, remember that people with impaired color vision are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red--green colorblindness) or blue and green (blue-yellow colorblindness). The key to making a colorblind-friendly color scale is to (i) choose colors with different levels of brightness and saturation, and (ii) choose color combinations that tend to look dissimilar even if color vision is partially impaired.
+
+```{block type='rmdtip', echo=TRUE}
+Unless you're an expert in color theory, go with an existing color scheme instead of designing your own.
+```
+
+
+## Qualitative color scales
+
+We frequently need to color discrete items that do not have an inherent order, such as different countries on a map or different manufacturers of a certain product. In those cases, we use qualitative color scales, which are color scales with a finite set of specific colors that are chosen to look as different from each other as possible.
+
+My preferred color scale of this type, which I use extensively throughout this book, was developed specifically to work well for all the major types of color-vision deficiency [@Okabe-Ito-CUD]:
+```{r fig.width=8.5, fig.asp=.14}
+# from: http://jfly.iam.u-tokyo.ac.jp/color/
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+palette_plot(cbbPalette, label_size = 4)
+```
+By providing eight different colors, this palette works for nearly any scenario with discrete colors. You should probably not color-code more than eight different items in a plot anyways.
+
+A variant of the palette replaces black with gray, if you don't like to see completely black visual elements:
+```{r fig.width=8.5, fig.asp=.14}
+# from: http://jfly.iam.u-tokyo.ac.jp/color/
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+palette_plot(cbPalette, label_size = 4)
+```
+
+In these palettes, the alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use Table \@ref(tab:color-codes).
+
+
+Table: (\#tab:color-codes) Colorblind-friendly color scale, developed by @Okabe-Ito-CUD. 
+
+Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B (%)
+--------------  ------------ ------- ---------------- ----------------- ------------
+         black       #000000       -  0, 0, 0, 100    0, 0, 0           0, 0, 0
+          gray       #999999       -  0, 0, 0, 60     153, 153, 153     60, 60, 60
+        orange       #E69F00     41°  0, 50, 100, 0   230, 159, 0       90, 60, 0
+      sky blue       #56B4E9    202° 80, 0, 0, 0      86, 180, 233      35, 70, 90
+  bluish green       #009E73    164° 97, 0, 75, 0     0, 158, 115       0, 60, 50
+        yellow       #F0E442     56° 10, 5, 90, 0     240, 228, 66      95, 90, 25
+          blue       #0072B2    202° 100, 50, 0, 0    0, 114, 178       0, 45, 70
+     vermilion       #D55E00     27° 0, 80, 100, 0    213, 94, 0        80, 40, 0
+reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
+ 
+ 
+## Directional color scales
+
+A second common use of color is to indicate intensity of some sort, for example temperature or speed. In those cases, we need a directional color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
+
+```{r}
+cols <- scales::colour_ramp(c("#FF1B1B", "#F9F1CE", high = "#057905"))(seq(0, 1, .25))
+
+grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
+                                    ymargin = 0.05) + 
+                  scale_fill_manual(values = cols)
+
+cvd_sim(grad_red_green)
+```
+
+
+```{r}
+cols <- scales::colour_ramp(c("#284F9B", "grey90", high = "#056D05"))(seq(0, 1, .25))
+
+grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
+                                    ymargin = 0.05) + 
+                  scale_fill_manual(values = cols)
+
+cvd_sim(grad_red_green)
+```
+
+```{r eval = FALSE, include = FALSE} 
+## Notes, entered as R comment so as to not appear in the printed output
+
+# add diagrams of simple color scales in cvd simulation, e.g. red-green or blue-green
+
+
+#Some useful posts on color-blind friendly palettes:
+#
+#- [Color Universal Design by Okabe and Ito](http://jfly.iam.u-tokyo.ac.jp/color/)
+#- [Gradient-based color palettes](https://blog.graphiq.com/finding-the-right-color-palettes-for-data-visualizations-fcd4e707a283)
+#- [Avoid equidistant HSV colors](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
+```

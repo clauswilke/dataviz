@@ -11,13 +11,13 @@ rmd_files: [
   # Part I
   "aesthetic_mapping.Rmd",
   "color_basics.Rmd",
-  "colorblind.Rmd",
+  "pitfalls_of_color_use.Rmd",
   "redundant_coding.Rmd",
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
   "background_grids.Rmd", # completed
   ##"proportional_ink.Rmd",
-  "overlapping_points.Rmd",
+  "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
 
   # Part II
@@ -45,13 +45,13 @@ rmd_files_final: [
   # Part I
   #"aesthetic_mapping.Rmd",
   #"color_basics.Rmd",
-  #"colorblind.Rmd",
+  #"pitfalls_of_color_use.Rmd",
   #"redundant_coding.Rmd",
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
   "background_grids.Rmd", # completed
   ##"proportional_ink.Rmd",
-  #"overlapping_points.Rmd",
+  "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
 
   # Part II
@@ -60,7 +60,7 @@ rmd_files_final: [
   "visualizing_proportions.Rmd", # completed
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
-  #"boxplots_violins.Rmd",
+  "boxplots_violins.Rmd", # completed
 
   # Part III
   "image_file_formats.Rmd", # completed

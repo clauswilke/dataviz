@@ -7,36 +7,8 @@ source("_common.R")
 
 Color can be an incredibly effective tool to enhance data visualizations. At the same time, the biggest visualization mistakes I see are probably linked to color use. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
-There are three fundamental ways in which we can use color: (i) We can use color to highlight; (ii) we can use color to distinguish groups of data from each other; and (iii) we can use color to represent data values. The types of colors we would use in each case and the way in which we would use it are entirely different for these three cases.
+There are three fundamental ways in which we can use color: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we would use in each case and the way in which we would use it are entirely different for these three cases.
 
-
-## Color as a tool to highlight
-
-(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
-
-```{r Aus-athletes-track, fig.width = 7, fig.cap='(ref:Aus-athletes-track)'}
-male_Aus <- filter(Aus_athletes, sex=="m") %>%
-  filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
-                      "track (sprint)", "water polo")) %>%
-  mutate(sport = case_when(sport == "track (400m)" ~ "track",
-                           sport == "track (sprint)" ~ "track",
-                           TRUE ~ sport))
-
-male_Aus$sport <- factor(male_Aus$sport,
-                         levels = c("track", "field", "water polo", "basketball", "swimming"))
-
-colors <- c("#BD3828", rep("#808080", 4))
-fills <- c("#BD3828D0", rep("#80808080", 4))
-
-ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = sport)) +
-  geom_point(size = 3) +
-  scale_shape_manual(values = 21:25) +
-  scale_color_manual(values = colors) +
-  scale_fill_manual(values = fills) +
-  xlab("height (cm)") +
-  ylab("% bodyfat") +
-  theme_minimal_grid()
-```
 
 ## Color as a tool to distinguish
 
@@ -122,7 +94,7 @@ texas_income %>%
 ```
 
 
-Finally, color is commonly used to represent data values, such income, temperature, or speed. In those cases, we need a sequential color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
+Color is commonly used to represent data values, such income, temperature, or speed. In those cases, we need a sequential color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
 
 
 (ref:sequential-scales) Example sequential color scales.
@@ -173,77 +145,33 @@ p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + g
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-## Dos and don'ts of color use 
 
 
-(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot.
+## Color as a tool to highlight
 
-```{r popgrowth-vs-popsize-colored, fig.width = 7, fig.asp = 2*0.618, fig.cap = '(ref:popgrowth-vs-popsize-colored)'}
-colors <- c(rainbow_hcl(8, l = 35, c = 25, start = 0, end = 315),
-            rainbow_hcl(8, l = 45, c = 34, start = -10, end = 305),
-            rainbow_hcl(9, l = 55, c = 42, start = -20, end = 300),
-            rainbow_hcl(9, l = 65, c = 50, start = -30, end = 290),
-            rainbow_hcl(9, l = 75, c = 55, start = -40, end = 280),
-            rainbow_hcl(8, l = 85, c = 32, start = -50, end = 265))
+(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
 
-#colors <- sample(colors, 51)
+```{r Aus-athletes-track, fig.width = 7, fig.cap='(ref:Aus-athletes-track)'}
+male_Aus <- filter(Aus_athletes, sex=="m") %>%
+  filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
+                      "track (sprint)", "water polo")) %>%
+  mutate(sport = case_when(sport == "track (400m)" ~ "track",
+                           sport == "track (sprint)" ~ "track",
+                           TRUE ~ sport))
 
-p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.character(state))) +
-  geom_point(size = 4) +
-  scale_x_log10(labels = label_log10) +
-  scale_color_manual(values = colors, name = "state") +
-  xlab("population size in 2000") +
-  ylab("population growth (%)\n2000 to 2010    ") +
-  theme_minimal_grid() +
-  theme(legend.text = element_text(size = 10),
-        legend.justification = "center")
+male_Aus$sport <- factor(male_Aus$sport,
+                         levels = c("track", "field", "water polo", "basketball", "swimming"))
 
-p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
-stamp_bad(plot_grid(NULL, p_comb, NULL, rel_widths = c(.5, 6, .5), nrow = 1))
+colors <- c("#BD3828", rep("#808080", 4))
+fills <- c("#BD3828D0", rep("#80808080", 4))
+
+ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = sport)) +
+  geom_point(size = 3) +
+  scale_shape_manual(values = 21:25) +
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = fills) +
+  xlab("height (cm)") +
+  ylab("% bodyfat") +
+  theme_minimal_grid()
 ```
 
-(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context.
-
-```{r popgrowth-vs-popsize-bw, fig.width = 8.5, fig.asp = 0.8, fig.cap = '(ref:popgrowth-vs-popsize-bw)'}
-library(ggrepel)
-
-set.seed(7586)
-
-df_repel <- select(popgrowth_df, x = pop2000, y = popgrowth, label = state) %>%
-  mutate(y = 100 * y,
-         label = ifelse(runif(n()) < .35 | x > 1e7 | x < 640000 | y > 20, as.character(label), ""))
-
-ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth)) +
-  geom_point(size = 2) +
-  geom_text_repel(data = df_repel,
-                  aes(x, y, label = label),
-                  segment.alpha = 0.5,
-                  size = 10/.pt) +
-  scale_x_log10(labels = label_log10) +
-  xlab("population size in 2000") +
-  ylab("population growth (%)\n2000 to 2010    ") +
-  theme_minimal_grid() +
-  theme(legend.text = element_text(size = 10),
-        legend.justification = "center")
-```
-
-(ref:popgrowth-US-rainbow) Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
-
-```{r popgrowth-US-rainbow, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
-popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = state)) + 
-  geom_col() + 
-  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
-                     name = "population growth (%)\n2000 to 2010    ") +
-  scale_fill_hue(c = 140, l = 55) +
-  coord_flip() + 
-  theme_minimal_vgrid() +
-  theme(axis.title.y = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.length = unit(0, "pt"),
-        axis.text.y = element_text(size = 10),
-        legend.position = "none")
-
-stamp_ugly(popgrowth_bars_rainbow)
-```
-
-This figure violates two principles: (i) don't use spurious colors; (ii) don't use overly saturated colors.
