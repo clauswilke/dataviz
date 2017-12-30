@@ -55,11 +55,11 @@ For such a minimal grid, we generally draw the lines orthogonally to direction a
 
 Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:iris-scatter) provides an example.
 
-(ref:iris-scatter) Sepal length vs sepal width for 50 samples each from three different species of irises.
+(ref:Aus-athletes-grid) Percent bodyfat versus height in professional male Australian athletes. (Each point represents one athlete.) 
 
 <div class="figure" style="text-align: center">
-<img src="background_grids_files/figure-html/iris-scatter-1.png" alt="(ref:iris-scatter)" width="576" />
-<p class="caption">(\#fig:iris-scatter)(ref:iris-scatter)</p>
+<img src="background_grids_files/figure-html/Aus-athletes-grid-1.png" alt="(ref:Aus-athletes-grid)" width="672" />
+<p class="caption">(\#fig:Aus-athletes-grid)(ref:Aus-athletes-grid)</p>
 </div>
 
 For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad.

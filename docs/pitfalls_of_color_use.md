@@ -2,24 +2,22 @@
 
 # Common pitfalls of color use
 
-**Introductory paragraph**
+Color can be an incredibly effective tool to enhance data visualizations. At the same time, poor color choices can ruin an otherwise excellent visualization. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
 ## Encoding too much or irrelevant information
 
-**Introductory sentences**
+One common mistake is trying to give color a job that is too big for it to handle, by encoding too many different items in different colors. As an example, consider Figure \@ref(fig:popgrowth-vs-popsize-colored). It shows population growth versus population size for all 50 U.S. states and the District of Columbia. I have attempted to identify each state by giving it its own color. However, the result is not very useful. Even though we can guess which state is which by looking at the colored points in the plot and in the legend, it takes a lot of effort to go back and forth between the two to try to match them up. There are simply too many different colors, and many of them are quite similar to each other. Even if with a lot of effort we can figure out exactly which state is which, this visualization defeats the purpose of coloring. We should use color to enhance figures and make them easier to read, not to obscure the data by creating visual puzzles.
 
-Consider Figure \@ref(fig:popgrowth-vs-popsize-colored). It shows population growth versus population size for all 50 US states and the Districut of Columbia. We have attempted to encode each state by its own color, but the result is not very useful. Even though we can guess which state is which by looking at the colored points and the legend, we cannot reliably match the point colors to the colors in the legend. There are simply too many of them, and they are too similar to each other. And even if it were possible to perform this matching by carefully inspecting the colored points one by one, it would certainly not be easy. Therefore, this visualization defeats the purpose of coloring. We should use color to enhance figures and make them easier to read, not to obscure the data by creating visual puzzles.
-
-(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot.
+(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 U.S. states and the Discrict of Columbia. Every state is marked in a different color. Because there are so many states, it is very difficult to match the colors in the legend to the dots in the scatter plot.
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-colored-1.png" alt="(ref:popgrowth-vs-popsize-colored)" width="672" />
 <p class="caption">(\#fig:popgrowth-vs-popsize-colored)(ref:popgrowth-vs-popsize-colored)</p>
 </div>
 
-As a rule of thumb, qualitative color scales work best when there are three to five different categories that need to be colored. Once we reach eight to ten different categories, the colors by necessity become too similar to each other and the reader cannot easily match colors to categories anymore. For the dataset of Figure \@ref(fig:popgrowth-vs-popsize-colored), it is probably best to forego color alltogether and to identify states with text labels, even if this means we have to leave some states unidentified (Figure \@ref(fig:popgrowth-vs-popsize-bw)).
+As a rule of thumb, qualitative color scales work best when there are three to five different categories that need to be colored. Once we reach eight to ten different categories or more, the task of matching colors to categories becomes too burdensome to be useful, even if the colors remain sufficiently different to be distinguishable in principle. For the dataset of Figure \@ref(fig:popgrowth-vs-popsize-colored), it is probably best to use color only to indicate the geographic region of each state and to identify individual states by direct labeling, i.e., by placing appropriate text labels adjacent to the data points (Figure \@ref(fig:popgrowth-vs-popsize-bw)). Even though we cannot label every individual state without making the figure too crowded, direct labeling is the right choice for this figure. In general, for figures such as this one, we don't need to label every single data point. It is sufficient to label a representative subset, for example a set of states we specifically want to call out in the text that will accompany the figure. We always have the option to also provide the underlying data as a table if we want to make sure the reader has access to it in its entirety.
 
-(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context, while others have been left unlabeled to keep the figure from overcrowding.
+(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. In contrast to Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now colored states by region and have directly labeled a subset of states. The majority of states have been left unlabeled to keep the figure from overcrowding.
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-bw-1.png" alt="(ref:popgrowth-vs-popsize-bw)" width="816" />
@@ -27,26 +25,30 @@ As a rule of thumb, qualitative color scales work best when there are three to f
 </div>
 
 
-A second common problem is coloring for the sake of coloring, without clear purpose to the colors. As an example, consider Figure \@ref(fig:popgrowth-US-rainbow).
+<div class="rmdtip">
+<p>Use direct labeling instead of colors when you need to distinguish between more than about eight categorical items.</p>
+</div>
 
-(ref:popgrowth-US-rainbow) Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
+
+A second common problem is coloring for the sake of coloring, without having a clear purpose for the colors. As an example, consider Figure \@ref(fig:popgrowth-US-rainbow), which shows the population growth between 2000 and 2010 for all U.S. states as horizontal bars. Each bar has been given its own color, and in aggregate the bars create a rainbow effect. This may look like an interesting visual effect, but it is in no way creating new insight into the data or making the figure easier to read. In general, it is best to not use color when color isn't needed.
+
+(ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-US-rainbow-1.png" alt="(ref:popgrowth-US-rainbow)" width="624" />
 <p class="caption">(\#fig:popgrowth-US-rainbow)(ref:popgrowth-US-rainbow)</p>
 </div>
 
-**Talk about overly saturated colors here.**
+Besides the gratuitous use of different colors, Figure \@ref(fig:popgrowth-US-rainbow) has a second color-related problem: The chosen colors are too saturated and intense. This color intensity makes the figure difficult to look at. For example, it is difficult to read the names of the states without having our eyes drawn to the large, strongly colored areas right next to the state names. Similarly, it is difficult to compare the endpoints of the bars to the underlying grid lines. In addition, if we stare at the figure for too long, we will see afterimages of the figure once we move our attention elsewhere. 
+
+<div class="rmdtip">
+<p>Avoid large filled areas of overly saturated colors. They make it difficult for your reader to carefully inspect your figure.</p>
+</div>
+
 
 ## Using non-monotonic color scales to encode data values
 
-(ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. 
-
-
-<div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="(ref:map-Texas-rainbow)" width="672" />
-<p class="caption">(\#fig:map-Texas-rainbow)(ref:map-Texas-rainbow)</p>
-</div>
+In Chapter \@ref(color-basics), I listed two critical conditions for designing sequential color scales that can represent data values: The colors need to clearly indicate which data values are larger or smaller than which other ones, and the differences between colors need to visualize the corresponding differences between data values. Unfortunately, several existing color scales---including very popular ones---violate one or both of these conditions. The most popular such scale is the rainbow scale (Figure \@ref(fig:rainbow-desaturated)). It runs through all possible colors in the color spectrum. This means the scale is effectively circular; the colors at the beginning and the end are nearly the same (dark red). If these two colors end up next to each other in a plot, we do not instinctively perceive them as representing data values that are maximally apart. In addition, the scale is highly non-monotonic. It has regions where colors change very slowly and others when colors change rapidly. This lack of monotonicity becomes particularly apparent if we look at the color scale in grayscale (Figure \@ref(fig:rainbow-desaturated)). The scale goes from medium dark to light to very dark and back to medium dark, and there are large stretches where lightness changes very little followed by relatively narrow stretches with large changes in lightness. 
 
 (ref:rainbow-desaturated) The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale.
 
@@ -55,13 +57,24 @@ A second common problem is coloring for the sake of coloring, without clear purp
 <p class="caption">(\#fig:rainbow-desaturated)(ref:rainbow-desaturated)</p>
 </div>
 
+In a visualization of actual data, the rainbow scale tends to obscure data features and/or highlight arbitrary aspects of the data (Figure \@ref(fig:map-Texas-rainbow)). As an aside, the colors in the rainbow scale are also overly saturated. Looking at Figure \@ref(fig:map-Texas-rainbow) for any extended period of time can be quite uncomfortable.
+
+
+(ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. The rainbow color scale is not an appropriate scale to visualize continuous data values, because it tends to place emphasis on arbitrary features of the data. Here, it emphasizes counties in which approximately 75% of the population identify as white.
+
+<div class="figure" style="text-align: center">
+<img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="(ref:map-Texas-rainbow)" width="672" />
+<p class="caption">(\#fig:map-Texas-rainbow)(ref:map-Texas-rainbow)</p>
+</div>
+
+
 ## Not designing for color-vision deficiency
 
-Whenever we are choosing colors, we need to keep in mind that a good proportion of our readers may have some form of color-vision deficiency (i.e., are colorblind) and may not be able to distinguish the colors that look clearly different to us. Despite the widely used term "colorblindness", people with impaired color vision are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red--green color-vision deficiency) or blue and green (blue--yellow color-vision deficiency). The technical terms for these deficiencies are deuteranomaly or protanomaly for the red--green variant (where people have difficulty perceiving either green or red, respectively) and tritanomaly for the blue--yellow variant (where people have difficulty perceiving blue). Approximately 8% of males and 0.5% of females suffer from some sort of color-vision deficiency, and deuteranomaly is the most common form whereas tritanomaly is relatively rare.
+Whenever we are choosing colors for a visualization, we need to keep in mind that a good proportion of our readers may have some form of color-vision deficiency (i.e., are colorblind). These readers may not be able to distinguish colors that look clearly different to us. People with impaired color vision are not literally unable to see any colors, however. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red--green color-vision deficiency) or blue and green (blue--yellow color-vision deficiency). The technical terms for these deficiencies are deuteranomaly or protanomaly for the red--green variant (where people have difficulty perceiving either green or red, respectively) and tritanomaly for the blue--yellow variant (where people have difficulty perceiving blue). Approximately 8% of males and 0.5% of females suffer from some sort of color-vision deficiency, and deuteranomaly is the most common form whereas tritanomaly is relatively rare.
 
 As discussed in Chapter \@ref(color-basics), there are three fundamental types of color scales used in data visualization: sequential scales, diverging scales, and qualitative scales. Of these three, sequential scales will generally not cause any problems for people with color-vision deficiency (cvd), since a properly designed sequential scale should present a continuous gradient from dark to light colors. Figure \@ref(fig:heat-cvd-sim) shows the Heat scale from Chapter \@ref(color-basics) in simulated versions of deuteranomaly, protanomaly, and tritanomaly. While none of these cvd-simulated scales look like the original, they all present a clear gradient from dark to light and they all work well to convey the magnitude of a data value.
 
-(ref:heat-cvd-sim) Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly. Even though the specific colors look different under the three cvd simulations, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
+(ref:heat-cvd-sim) Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly simulations. Even though the specific colors look different under the three types of cvd, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/heat-cvd-sim-1.png" alt="(ref:heat-cvd-sim)" width="624" />
@@ -93,7 +106,7 @@ With these examples, it might seem that it is nearly impossible to find two cont
 <p class="caption">(\#fig:army-rose-cvd-sim)(ref:army-rose-cvd-sim)</p>
 </div>
 
-Things are most complicated for qualitative scales, because there we need many different colors and they all need to be distinguishable from each other under all forms of cvd. My preferred qualitative color scale, which I use extensively throughout this book, was developed specifically to address this challenge (Figure \@ref(fig:palette-Okabe-Ito)). By providing eight different colors, it palette works for nearly any scenario with discrete colors. As discussed at the beginning of this chapter, you should probably not color-code more than eight different items in a plot anyways.
+Things are most complicated for qualitative scales, because there we need many different colors and they all need to be distinguishable from each other under all forms of cvd. My preferred qualitative color scale, which I use extensively throughout this book, was developed specifically to address this challenge (Figure \@ref(fig:palette-Okabe-Ito)). By providing eight different colors, the palette works for nearly any scenario with discrete colors. As discussed at the beginning of this chapter, you should probably not color-code more than eight different items in a plot anyways.
 
 (ref:palette-Okabe-Ito) Qualitative color palette for all color-vision deficiencies [@Okabe-Ito-CUD]. The alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use the values in Table \@ref(tab:color-codes).
 
@@ -116,13 +129,18 @@ Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B 
 reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
           gray       #999999       -  0, 0, 0, 60     153, 153, 153     60, 60, 60
  
-While there are several good, cvd-safe color scales readily available, we need to recognize that they are not magic bullets. It is very possible to make a figure using a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In the end, in addition to the various color-design considerations discussed in this chapter and the previous one, I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
+While there are several good, cvd-safe color scales readily available, we need to recognize that they are no magic bullets. It is very possible to use a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In the end, in addition to the various color-design considerations discussed in this chapter and the previous one, I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
 
-(ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeld "original") shows four rectangles, four thick lines, and four thin lines, all colored in the same four colors. We can see that the colors become more difficult to distinguish the thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
+(ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, and four thin lines, all colored in the same four colors. We can see that the colors become more difficult to distinguish the thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/colors-thin-lines-1.png" alt="(ref:colors-thin-lines)" width="624" />
 <p class="caption">(\#fig:colors-thin-lines)(ref:colors-thin-lines)</p>
 </div>
+
+<div class="rmdtip">
+<p>To make sure your figures work for people with cvd, don't just rely on specific color scales. Instead, test your figures in a cvd simulator.</p>
+</div>
+
 
 

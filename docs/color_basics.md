@@ -2,7 +2,6 @@
 
 # Effective use of color in figures {#color-basics}
 
-Color can be an incredibly effective tool to enhance data visualizations. At the same time, the biggest visualization mistakes I see are probably linked to color use. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
 There are three fundamental ways in which we can use color: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we would use in each case and the way in which we would use it are entirely different for these three cases.
 
@@ -20,9 +19,9 @@ Many appropriate qualitative color scales are readily available. Figure \@ref(fi
 <p class="caption">(\#fig:qualitative-scales)(ref:qualitative-scales)</p>
 </div>
 
-As an example of how we use qualitative color scales, consider Figure \@ref(fig:popgrowth-US). It shows the percent population growth from 2000 to 2010 in US states. I have arranged the states in order of their population growth, and I have colored them by geographic region. This coloring highlights that states in the same regions have experienced similar population growth. In particular, states in the West and the South have seen the largest population increases whereas states in the Midwest and the Northeast have grown much less.
+As an example of how we use qualitative color scales, consider Figure \@ref(fig:popgrowth-US). It shows the percent population growth from 2000 to 2010 in U.S. states. I have arranged the states in order of their population growth, and I have colored them by geographic region. This coloring highlights that states in the same regions have experienced similar population growth. In particular, states in the West and the South have seen the largest population increases whereas states in the Midwest and the Northeast have grown much less.
 
-(ref:popgrowth-US) Population growth in the US from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
+(ref:popgrowth-US) Population growth in the U.S. from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
 <div class="figure" style="text-align: center">
 <img src="color_basics_files/figure-html/popgrowth-US-1.png" alt="(ref:popgrowth-US)" width="624" />
@@ -67,7 +66,7 @@ Representing data values as colors is particularly useful when we want to show h
 
 
 
-(ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 decennial US Census.
+(ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
 <img src="color_basics_files/figure-html/map-Texas-race-1.png" alt="(ref:map-Texas-race)" width="672" />

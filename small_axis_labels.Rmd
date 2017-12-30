@@ -12,10 +12,6 @@ For example, consider Figure \@ref(fig:Aus-athletes-small). I see figures like t
 (ref:Aus-athletes-small) Percent bodyfat versus height in professional male Australian athletes. (Each point represents one athlete.) This figure suffers from the common affliction that the text elements are way too small and are barely legible.
 
 ```{r Aus-athletes-small, fig.width = 7, fig.cap='(ref:Aus-athletes-small)'}
-library(dplyr)
-library(ggplot2)
-library(colorblindr)
-
 male_Aus <- filter(Aus_athletes, sex=="m") %>%
     filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
                         "track (sprint)", "water polo")) %>%
