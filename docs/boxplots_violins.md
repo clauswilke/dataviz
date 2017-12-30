@@ -109,9 +109,9 @@ The standard ridgeline plot uses density estimates (Figure \@ref(fig:temp-ridgel
 Because the *x* axis shows the response variable and the *y* axis shows the grouping variable, there is no separate axis for the density estimates in a ridgeline plot. Density estimates are shown alongside the grouping variable. This is no different from the violin plot, where densities are also shown alongside the grouping variable, without a separate, explicit scale. In both cases, the purpose of the plot is not to show specific density values but instead to allow for easy comparison of density shapes and relative heights across groups.
 
 
-In principle, we can use histograms instead of density plots in a ridgeline visualization. However, the resulting figures often don't look very good (Figure \@ref(fig:temp-binline)). The problems are similar to those of stacked or overlapping histograms (Chapter \@ref(histograms-density-plots)). Because the vertical lines in these ridgeline histograms appear always at the exact same *x* values, the bars from different histograms align in confusing ways with each other. In my mind, it is better to not draw such overlapping histograms.
+In principle, we can use histograms instead of density plots in a ridgeline visualization. However, the resulting figures often don't look very good (Figure \@ref(fig:temp-binline)). The problems are similar to those of stacked or overlapping histograms (Chapter \@ref(histograms-density-plots)). Because the vertical lines in these ridgeline histograms appear always at the exact same *x* values, the bars from different histograms align with each other in confusing ways. In my opinion, it is better to not draw such overlapping histograms.
 
-(ref:temp-binline) Temperatures in Lincoln, Nebraska, in 2016, visualized as a ridgeline plot of histograms. The individual histograms don't separate well visually, and overall the figure is quite busy and confusing.
+(ref:temp-binline) Temperatures in Lincoln, Nebraska, in 2016, visualized as a ridgeline plot of histograms. The individual histograms don't separate well visually, and the overall figure is quite busy and confusing.
 
 <div class="figure" style="text-align: center">
 <img src="boxplots_violins_files/figure-html/temp-binline-1.png" alt="(ref:temp-binline)" width="576" />

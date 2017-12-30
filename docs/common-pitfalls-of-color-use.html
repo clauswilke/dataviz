@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of data visualization</title>
+  <meta name="description" content="A guide for making figures that look professional and are publication-ready.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of data visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide for making figures that look professional and are publication-ready." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of data visualization" />
+  
+  <meta name="twitter:description" content="A guide for making figures that look professional and are publication-ready." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="color-basics.html">
+<link rel="next" href="redundant-coding.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="part"><span><b>Part I: General principles of figure design</b></span></li>
+<li class="chapter" data-level="1" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html"><i class="fa fa-check"></i><b>1</b> Visualizing data: mapping data onto aesthetics</a></li>
+<li class="chapter" data-level="2" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>2</b> Effective use of color in figures</a></li>
+<li class="chapter" data-level="3" data-path="common-pitfalls-of-color-use.html"><a href="common-pitfalls-of-color-use.html"><i class="fa fa-check"></i><b>3</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="3.1" data-path="common-pitfalls-of-color-use.html"><a href="common-pitfalls-of-color-use.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>3.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="3.2" data-path="common-pitfalls-of-color-use.html"><a href="common-pitfalls-of-color-use.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>3.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="3.3" data-path="common-pitfalls-of-color-use.html"><a href="common-pitfalls-of-color-use.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>3.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>4</b> Redundant coding</a></li>
+<li class="chapter" data-level="5" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>5</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="6" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>6</b> Background grids</a></li>
+<li class="chapter" data-level="7" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>7</b> Handling overlapping points</a></li>
+<li class="chapter" data-level="8" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>8</b> Avoid line drawings</a></li>
+<li class="part"><span><b>Part II: A visualization for every occasion</b></span></li>
+<li class="chapter" data-level="9" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>9</b> Directory of visualizations</a></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a></li>
+<li class="chapter" data-level="11" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>11</b> Visualizing distributions: Histograms and density plots</a></li>
+<li class="chapter" data-level="12" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>12</b> Visualizing distributions: Empirical cumulative density functions and q-q plots</a></li>
+<li class="chapter" data-level="13" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>13</b> Visualizing many distributions at once: boxplots, violins, and ridgeline plots</a></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="14" data-path="understanding-the-most-commonly-used-image-file-formats.html"><a href="understanding-the-most-commonly-used-image-file-formats.html"><i class="fa fa-check"></i><b>14</b> Understanding the most commonly used image file formats</a></li>
+<li class="chapter" data-level="15" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>15</b> Notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of data visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="common-pitfalls-of-color-use" class="section level1">
+<h1><span class="header-section-number">3</span> Common pitfalls of color use</h1>
+<p><strong>Introductory paragraph</strong></p>
+<div id="encoding-too-much-or-irrelevant-information" class="section level2">
+<h2><span class="header-section-number">3.1</span> Encoding too much or irrelevant information</h2>
+<p><strong>Introductory sentences</strong></p>
+<p>Consider Figure <a href="common-pitfalls-of-color-use.html#fig:popgrowth-vs-popsize-colored">3.1</a>. It shows population growth versus population size for all 50 US states and the Districut of Columbia. We have attempted to encode each state by its own color, but the result is not very useful. Even though we can guess which state is which by looking at the colored points and the legend, we cannot reliably match the point colors to the colors in the legend. There are simply too many of them, and they are too similar to each other. And even if it were possible to perform this matching by carefully inspecting the colored points one by one, it would certainly not be easy. Therefore, this visualization defeats the purpose of coloring. We should use color to enhance figures and make them easier to read, not to obscure the data by creating visual puzzles.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:popgrowth-vs-popsize-colored"></span>
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-colored-1.png" alt="Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot." width="672" />
+<p class="caption">
+Figure 3.1: Population growth from 2000 to 2010 versus population size in 2000, for all 50 US states and the Discrict of Columbia. Every state is marked in a different color, but it is not possible to reliably match the colors in the legend to the dots in the scatter plot.
+</p>
+</div>
+<p>As a rule of thumb, qualitative color scales work best when there are three to five different categories that need to be colored. Once we reach eight to ten different categories, the colors by necessity become too similar to each other and the reader cannot easily match colors to categories anymore. For the dataset of Figure <a href="common-pitfalls-of-color-use.html#fig:popgrowth-vs-popsize-colored">3.1</a>, it is probably best to forego color alltogether and to identify states with text labels, even if this means we have to leave some states unidentified (Figure <a href="common-pitfalls-of-color-use.html#fig:popgrowth-vs-popsize-bw">3.2</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:popgrowth-vs-popsize-bw"></span>
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-bw-1.png" alt="Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure 3.1, I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context, while others have been left unlabeled to keep the figure from overcrowding." width="816" />
+<p class="caption">
+Figure 3.2: Population growth from 2000 to 2010 versus population size in 2000. Unlike Figure <a href="common-pitfalls-of-color-use.html#fig:popgrowth-vs-popsize-colored">3.1</a>, I have now shown all states in black and have directly labeled a subset of states. All states with very large or very small population size in 2000 or with very large population growth are labeled. Among the remaining states, an arbitrary subset is labeled to provide context, while others have been left unlabeled to keep the figure from overcrowding.
+</p>
+</div>
+<p>A second common problem is coloring for the sake of coloring, without clear purpose to the colors. As an example, consider Figure <a href="common-pitfalls-of-color-use.html#fig:popgrowth-US-rainbow">3.3</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:popgrowth-US-rainbow"></span>
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-US-rainbow-1.png" alt="Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated." width="624" />
+<p class="caption">
+Figure 3.3: Population growth in the US from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
+</p>
+</div>
+<p><strong>Talk about overly saturated colors here.</strong></p>
+</div>
+<div id="using-non-monotonic-color-scales-to-encode-data-values" class="section level2">
+<h2><span class="header-section-number">3.2</span> Using non-monotonic color scales to encode data values</h2>
+
+<div class="figure" style="text-align: center"><span id="fig:map-Texas-rainbow"></span>
+<img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="Percentage of people identifying as white in Texas counties." width="672" />
+<p class="caption">
+Figure 3.4: Percentage of people identifying as white in Texas counties.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:rainbow-desaturated"></span>
+<img src="pitfalls_of_color_use_files/figure-html/rainbow-desaturated-1.png" alt="The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale." width="624" />
+<p class="caption">
+Figure 3.5: The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale.
+</p>
+</div>
+</div>
+<div id="not-designing-for-color-vision-deficiency" class="section level2">
+<h2><span class="header-section-number">3.3</span> Not designing for color-vision deficiency</h2>
+<p>Whenever we are choosing colors, we need to keep in mind that a good proportion of our readers may have some form of color-vision deficiency (i.e., are colorblind) and may not be able to distinguish the colors that look clearly different to us. Despite the widely used term “colorblindness”, people with impaired color vision are not literally unable to see any colors. Instead, they will typically have difficulty to distinguish certain types of colors, for example red and green (red–green color-vision deficiency) or blue and green (blue–yellow color-vision deficiency). The technical terms for these deficiencies are deuteranomaly or protanomaly for the red–green variant (where people have difficulty perceiving either green or red, respectively) and tritanomaly for the blue–yellow variant (where people have difficulty perceiving blue). Approximately 8% of males and 0.5% of females suffer from some sort of color-vision deficiency, and deuteranomaly is the most common form whereas tritanomaly is relatively rare.</p>
+<p>As discussed in Chapter <a href="color-basics.html#color-basics">2</a>, there are three fundamental types of color scales used in data visualization: sequential scales, diverging scales, and qualitative scales. Of these three, sequential scales will generally not cause any problems for people with color-vision deficiency (cvd), since a properly designed sequential scale should present a continuous gradient from dark to light colors. Figure <a href="common-pitfalls-of-color-use.html#fig:heat-cvd-sim">3.6</a> shows the Heat scale from Chapter <a href="color-basics.html#color-basics">2</a> in simulated versions of deuteranomaly, protanomaly, and tritanomaly. While none of these cvd-simulated scales look like the original, they all present a clear gradient from dark to light and they all work well to convey the magnitude of a data value.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:heat-cvd-sim"></span>
+<img src="pitfalls_of_color_use_files/figure-html/heat-cvd-sim-1.png" alt="Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly. Even though the specific colors look different under the three cvd simulations, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd." width="624" />
+<p class="caption">
+Figure 3.6: Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly. Even though the specific colors look different under the three cvd simulations, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
+</p>
+</div>
+<p>Things become more complicated for diverging scales, because popular color contrasts can become indistinguishable under cvd. In particular, the colors red and green provide about the strongest contrast for people with normal color vision but become nearly indistinguishable for deutans (people with deuteranomaly) or protans (people with proteranomaly) (Figure <a href="common-pitfalls-of-color-use.html#fig:red-green-cvd-sim">3.7</a>). Similarly, blue-green contrasts are visible for deutans and protans but become indistinguishable for tritans (people with tritanomaly) (Figure <a href="common-pitfalls-of-color-use.html#fig:blue-green-cvd-sim">3.8</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:red-green-cvd-sim"></span>
+<img src="pitfalls_of_color_use_files/figure-html/red-green-cvd-sim-1.png" alt="A red–green contrast becomes indistinguishable under red–green cvd (deuteranomaly or protanomaly)." width="624" />
+<p class="caption">
+Figure 3.7: A red–green contrast becomes indistinguishable under red–green cvd (deuteranomaly or protanomaly).
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:blue-green-cvd-sim"></span>
+<img src="pitfalls_of_color_use_files/figure-html/blue-green-cvd-sim-1.png" alt="A blue–green contrast becomes indistinguishable under blue–yellow cvd (tritanomaly)." width="624" />
+<p class="caption">
+Figure 3.8: A blue–green contrast becomes indistinguishable under blue–yellow cvd (tritanomaly).
+</p>
+</div>
+<p>With these examples, it might seem that it is nearly impossible to find two contrasting colors that are safe under all forms of cvd. However, the situation is not that dire. It is often possible to make slight modifications to the colors such that they have the desired character while also being safe for cvd. For example, Figure <a href="common-pitfalls-of-color-use.html#fig:army-rose-cvd-sim">3.9</a> shows a scale that looks red–green to people with normal color vision yet remains somewhat distinguishable for people with cvd.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:army-rose-cvd-sim"></span>
+<img src="pitfalls_of_color_use_files/figure-html/army-rose-cvd-sim-1.png" alt="The CARTO ArmyRose scale looks like a red–green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is closer to magenta (a mix of red and blue) while the greenish color is actually a dark yellow (contains similar amounts of red and green). The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans." width="624" />
+<p class="caption">
+Figure 3.9: The CARTO ArmyRose scale looks like a red–green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is closer to magenta (a mix of red and blue) while the greenish color is actually a dark yellow (contains similar amounts of red and green). The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans.
+</p>
+</div>
+<p>Things are most complicated for qualitative scales, because there we need many different colors and they all need to be distinguishable from each other under all forms of cvd. My preferred qualitative color scale, which I use extensively throughout this book, was developed specifically to address this challenge (Figure <a href="common-pitfalls-of-color-use.html#fig:palette-Okabe-Ito">3.10</a>). By providing eight different colors, it palette works for nearly any scenario with discrete colors. As discussed at the beginning of this chapter, you should probably not color-code more than eight different items in a plot anyways.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:palette-Okabe-Ito"></span>
+<img src="pitfalls_of_color_use_files/figure-html/palette-Okabe-Ito-1.png" alt="Qualitative color palette for all color-vision deficiencies (Okabe and Ito 2008). The alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use the values in Table 3.1." width="816" />
+<p class="caption">
+Figure 3.10: Qualitative color palette for all color-vision deficiencies <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>. The alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use the values in Table <a href="common-pitfalls-of-color-use.html#tab:color-codes">3.1</a>.
+</p>
+</div>
+<table>
+<caption><span id="tab:color-codes">Table 3.1: </span> Colorblind-friendly color scale, developed by <span class="citation">Okabe and Ito (<a href="#ref-Okabe-Ito-CUD">2008</a>)</span>.</caption>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Hex code</th>
+<th align="left">Hue</th>
+<th align="left">C, M, Y, K (%)</th>
+<th align="left">R, G, B (0-255)</th>
+<th align="left">R, G, B (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">orange</td>
+<td align="left">#E69F00</td>
+<td align="left">41°</td>
+<td align="left">0, 50, 100, 0</td>
+<td align="left">230, 159, 0</td>
+<td align="left">90, 60, 0</td>
+</tr>
+<tr class="even">
+<td align="left">sky blue</td>
+<td align="left">#56B4E9</td>
+<td align="left">202°</td>
+<td align="left">80, 0, 0, 0</td>
+<td align="left">86, 180, 233</td>
+<td align="left">35, 70, 90</td>
+</tr>
+<tr class="odd">
+<td align="left">bluish green</td>
+<td align="left">#009E73</td>
+<td align="left">164°</td>
+<td align="left">97, 0, 75, 0</td>
+<td align="left">0, 158, 115</td>
+<td align="left">0, 60, 50</td>
+</tr>
+<tr class="even">
+<td align="left">yellow</td>
+<td align="left">#F0E442</td>
+<td align="left">56°</td>
+<td align="left">10, 5, 90, 0</td>
+<td align="left">240, 228, 66</td>
+<td align="left">95, 90, 25</td>
+</tr>
+<tr class="odd">
+<td align="left">blue</td>
+<td align="left">#0072B2</td>
+<td align="left">202°</td>
+<td align="left">100, 50, 0, 0</td>
+<td align="left">0, 114, 178</td>
+<td align="left">0, 45, 70</td>
+</tr>
+<tr class="even">
+<td align="left">vermilion</td>
+<td align="left">#D55E00</td>
+<td align="left">27°</td>
+<td align="left">0, 80, 100, 0</td>
+<td align="left">213, 94, 0</td>
+<td align="left">80, 40, 0</td>
+</tr>
+<tr class="odd">
+<td align="left">reddish purple</td>
+<td align="left">#CC79A7</td>
+<td align="left">326°</td>
+<td align="left">10, 70, 0, 0</td>
+<td align="left">204, 121, 167</td>
+<td align="left">80, 60, 70</td>
+</tr>
+<tr class="even">
+<td align="left">gray</td>
+<td align="left">#999999</td>
+<td align="left">-</td>
+<td align="left">0, 0, 0, 60</td>
+<td align="left">153, 153, 153</td>
+<td align="left">60, 60, 60</td>
+</tr>
+</tbody>
+</table>
+<p>While there are several good, cvd-safe color scales readily available, we need to recognize that they are not magic bullets. It is very possible to make a figure using a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure <a href="common-pitfalls-of-color-use.html#fig:colors-thin-lines">3.11</a>). In the end, in addition to the various color-design considerations discussed in this chapter and the previous one, I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:colors-thin-lines"></span>
+<img src="pitfalls_of_color_use_files/figure-html/colors-thin-lines-1.png" alt="Colored elements become difficult to distinguish at small sizes. The top left panel (labeld “original”) shows four rectangles, four thick lines, and four thin lines, all colored in the same four colors. We can see that the colors become more difficult to distinguish the thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements." width="624" />
+<p class="caption">
+Figure 3.11: Colored elements become difficult to distinguish at small sizes. The top left panel (labeld “original”) shows four rectangles, four thick lines, and four thin lines, all colored in the same four colors. We can see that the colors become more difficult to distinguish the thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Okabe-Ito-CUD">
+<p>Okabe, M., and K. Ito. 2008. “Color Universal Design (CUD): How to Make Figures and Presentations That Are Friendly to Colorblind People.” <a href="http://jfly.iam.u-tokyo.ac.jp/color/" class="uri">http://jfly.iam.u-tokyo.ac.jp/color/</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="color-basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="redundant-coding.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

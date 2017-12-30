@@ -53,7 +53,7 @@ The most widely used lossy image format is jpeg (Table \@ref(tab:file-formats)),
 (ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. *Image credit: Claus O. Wilke* 
 
 <div class="figure" style="text-align: center">
-<img src="figures/jpeg_example_combined.jpg" alt="(ref:jpeg-example)"  />
+<img src="figures/jpeg_example_combined.jpg" alt="(ref:jpeg-example)" width="806" />
 <p class="caption">(\#fig:jpeg-example)(ref:jpeg-example)</p>
 </div>
 
