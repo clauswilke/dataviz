@@ -2,11 +2,6 @@
 # run setup script
 source("_common.R")
 
-# libraries
-library(readr)
-library(tidyr)
-library(purrr)
-library(stringr)
 library(lubridate)
 library(ggridges)
 ```
@@ -91,33 +86,6 @@ stamp_phantom(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL,
 ```
 
 
-```{r}
-stocks <- data_frame(company = c("Alphabet", "Apple", "Facebook", "Microsoft"),
-                     ticker = c("GOOG", "AAPL", "FB", "MSFT"))
-
-data_path <- "datasets" # path to the individual datasets
-
-# read in all at once
-prices <- stocks %>%
-  mutate(filename = paste(str_to_lower(ticker), ".csv", sep="")) %>%
-  mutate(file_contents = map(filename,
-                             ~ read_csv(file.path(data_path, .), col_types = "cdddd-")
-                             )
-         ) %>%
-  select(-filename) %>%
-  unnest() %>%
-  mutate(date=dmy(Date), price=Close) %>%
-  select(company, ticker, date, price)
-
-index_prices <- prices %>%
-  filter(date == ymd("2012-06-01")) %>%
-  select(-company, -date, index_price = price)
-
-prices <- left_join(prices, index_prices) %>%
-  group_by(ticker) %>%
-  mutate(price_indexed = price/index_price*100)
-```
-
 I have removed the background grid from this figure because otherwise the figure was becoming too busy.
 
 ```{block type='rmdtip', echo=TRUE}
@@ -128,7 +96,7 @@ Whenever possible, design your figures so they don't need a legend.
 Let's consider another example that also demonstrates a very common visualization mistake.
 
 ```{r}
-price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
                      name="",
@@ -151,7 +119,7 @@ The figure contains four lines, representing the stock prices of four different 
 This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R's ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.
 
 ```{r}
-price_plot <- ggplot(prices, aes(x=date, y=price_indexed, color=ticker)) +
+price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
                      name="",
@@ -173,7 +141,7 @@ While the above figure is a major improvement, we can still do better. Even with
 
 ```{r}
 yann <- axis_canvas(price_plot, axis = "y") +
-  geom_text(data = filter(prices, date == "2017-06-02"),
+  geom_text(data = filter(tech_stocks, date == "2017-06-02"),
             aes(y = price_indexed, label = paste0(" ", company)),
             x = 0, hjust = 0, size = 12/.pt)
 

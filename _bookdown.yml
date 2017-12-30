@@ -11,7 +11,7 @@ rmd_files: [
   # Part I
   "aesthetic_mapping.Rmd",
   "color_basics.Rmd",
-  "pitfalls_of_color_use.Rmd",
+  "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd",
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
@@ -45,7 +45,7 @@ rmd_files_final: [
   # Part I
   #"aesthetic_mapping.Rmd",
   #"color_basics.Rmd",
-  #"pitfalls_of_color_use.Rmd",
+  "pitfalls_of_color_use.Rmd", # completed
   #"redundant_coding.Rmd",
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
