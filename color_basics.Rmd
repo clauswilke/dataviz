@@ -3,7 +3,7 @@
 source("_common.R")
 ```
 
-# Effective use of color in figures
+# Effective use of color in figures {#color-basics}
 
 Color can be an incredibly effective tool to enhance data visualizations. At the same time, the biggest visualization mistakes I see are probably linked to color use. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
@@ -11,6 +11,21 @@ There are three fundamental ways in which we can use color: (i) we can use color
 
 
 ## Color as a tool to distinguish
+
+We frequently use color as a means to distinguish discrete items or groups that do not have an intrinsic order, such as different countries on a map or different manufacturers of a certain product. In this case, we use a *qualitative* color scale. Such a scale contains a finite set of specific colors that are chosen to look clearly distinct from each other. At the same time, the colors must also appear equivalent to each other, in the sense that no one color should stand out relative to the others. And, the colors should not create the impression of an order, as would be the case with a sequence of colors that get successively lighter. Such colors would create an apparent order among the items being colored, which by definition have no order. 
+
+Many appropriate qualitative color scales are readily available. Figure \@ref(fig:qualitative-scales) shows three representative examples. In particular, the ColorBrewer project provides a nice selection of qualitative color scales, including both fairly light and fairly dark colors [@ColorBrewer]. 
+
+(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default in the widely used plotting software ggplot2.
+
+```{r qualitative-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
+p1 <- gg_color_swatches(7) + scale_fill_OkabeIto() + ggtitle("Okabe Ito")
+p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Dark2") + ggtitle("ColorBrewer Dark2")
+p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 default")
+plot_grid(p1, p2, p3, ncol = 1)
+```
+
+As an example of how we use qualitative color scales, consider Figure \@ref(fig:popgrowth-US). It shows the percent population growth from 2000 to 2010 in US states. I have arranged the states in order of their population growth, and I have colored them by geographic region. This coloring highlights that states in the same regions have experienced similar population growth. In particular, states in the West and the South have seen the largest population increases whereas states in the Midwest and the Northeast have grown much less.
 
 (ref:popgrowth-US) Population growth in the US from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
@@ -49,21 +64,25 @@ ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = region)) +
 
 
 
-(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book.
+## Color to represent data values
 
-```{r qualitative-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
-p1 <- gg_color_swatches(7) + scale_fill_OkabeIto() + ggtitle("Okabe Ito")
-p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Dark2") + ggtitle("Colorbrewer Dark2")
-p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 default")
+Color can also be used to represent data values, such income, temperature, or speed. In this case, we use a *sequential* color scale. Such a scale contains a sequence of colors that clearly indicate (i) which values are larger or smaller than which other ones and (ii) how distant two specific values are from each other. The second point implies that the color scale needs to vary uniformly across its entire range.
+
+Sequential scales can be based on a single hue (e.g., from dark blue to light blue) or on multiple hues (e.g., from dark red to light yellow) (Figure \@ref(fig:sequential-scales)). Multi-hue scales tend to follow color gradients that can be seen in the natural world, such as dark red, green, or blue to light yellow, or dark purple to light green. The reverse, e.g. dark yellow to light blue, looks unnatural and doesn't make a useful sequential scale.
+
+(ref:sequential-scales) Example sequential color scales. The ColorBrewer Blues scale is a monochromatic scale that varies from dark to light blue. The Heat and Viridis scales are multi-hue scales that vary from dark red to light yellow and from dark blue via green to light yellow, respectively. 
+
+```{r sequential-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:sequential-scales)'}
+p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "seq", palette = "Blues", direction = -1) + ggtitle("ColorBrewer Blues")
+p2 <- gg_color_swatches(7) + scale_fill_discrete_sequential("Heat") + ggtitle("Heat")
+p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
+Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called choropleths. Figure \@ref(fig:map-Texas-income) shows an example where I have mapped annual median income within each county in Texas onto a map of those counties. 
 
-For qualitative color scales, it is critical that the colors appear equivalent to each other and do not have an intrinsic order. You don't want to have any particular group stand out among the others (unless you purposefully try to highlight, see previous subsection), and you also don't want there to be an apparent order among the groups. 
+(ref:map-Texas-income) Median annual income in Texas counties. The highest median incomes are seen in major Texas metropolitan areas, in particular near Houston and Dallas. No median income estimate is available for Loving County in West Texas and therefore that county is shown in gray. Data source: 2015 five-year American Community Survey.
 
-## Color to represent data values
-
-(ref:map-Texas-income) Median income in Texas counties.
 
 ```{r map-Texas-income, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-income)'}
 library(sf)
@@ -76,7 +95,7 @@ texas_income %>%
   coord_sf(xlim = c(-110, -93.5), datum = NA) +
   theme_map() + 
   scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
-                                   na.value = "grey50", end = 0.9,
+                                   na.value = "grey50", l2 = 98, #end = 0.9, 
                                    name = "annual median income",
                                    limits = c(18000, 90000),
                                    breaks = 20000*c(1:4),
@@ -93,21 +112,22 @@ texas_income %>%
         legend.position = c(0, 0.1))
 ```
 
+**Explain diverging scales here.**
 
-Color is commonly used to represent data values, such income, temperature, or speed. In those cases, we need a sequential color scale that clearly indicates (i) which values are larger or smaller than which other ones, and (ii) how distant two specific values are from each other. The second point is particularly important, because it implies that the color scale needs to vary uniformly across its entire range. There cannot be parts of the scale where color changes more quickly than in other parts.
 
+(ref:diverging-scales) Example diverging color scales.
 
-(ref:sequential-scales) Example sequential color scales.
-
-```{r sequential-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:sequential-scales)'}
-p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "seq", palette = "Blues", direction = -1) + ggtitle("Colorbrewer Blues")
-p2 <- gg_color_swatches(7) + scale_fill_discrete_sequential("Heat") + ggtitle("Heat")
-p3 <- gg_color_swatches(7) + scale_fill_viridis_d() + ggtitle("Viridis")
+```{r diverging-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
+p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("ColorBrewer BrBG")
+p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
+p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + ggtitle("CARTO ArmyRose")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
 
-(ref:map-Texas-race) Racial composition in Texas counties.
+
+
+(ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 decennial US Census.
 
 ```{r map-Texas-race, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-race)'}
 # we reuse the geometries from texas_income
@@ -136,18 +156,23 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
         legend.position = c(0, 0.1))
 ```
 
-(ref:diverging-scales) Example diverging color scales.
-
-```{r diverging-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
-p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("Colorbrewer BrBG")
-p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
-p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + ggtitle("Carto ArmyRose")
-plot_grid(p1, p2, p3, ncol = 1)
-```
-
 
 
 ## Color as a tool to highlight
+
+**Define accent scales**
+
+(ref:accent-scales) Example accent color scales. We can arrive at accent color scales in several different ways. First, we can take gray values and pair them with colors. Second, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten some colors while darkening others. Third, we can take work with an existing accent color scale, e.g. the one from the Colorbrewer project.
+
+```{r accent-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:accent-scales)'}
+p1 <- gg_color_swatches(7) + scale_fill_manual(values = c("gray60", "gray70","gray80", "gray90", "#C95C4F",   '#83A121', '#6B8AD5')) + ggtitle("Grays with accents")
+p2 <- gg_color_swatches(7) + scale_fill_OkabeIto(order = c(1, 2, 7, 4, 5, 3, 6), darken = c(rep(-0.55, 4), rep(.1, 3))) + ggtitle("Okabe Ito Accent")
+p3 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Accent") + ggtitle("ColorBrewer Accent")
+plot_grid(p1, p2, p3, ncol = 1)
+```
+
+**Discuss example.**
+
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
 
@@ -174,4 +199,5 @@ ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = spor
   ylab("% bodyfat") +
   theme_minimal_grid()
 ```
+
 
