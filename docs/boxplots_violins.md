@@ -14,7 +14,7 @@ The simplest approach to showing many distributions at once is to show their mea
 (ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average daily mean temperatures for each month, averaged over all days of the month, and errorbars represent twice the standard deviation of the daily mean temperatures within each month.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-points-errorbars-1.png" alt="(ref:lincoln-temp-points-errorbars)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-points-errorbars-1.png" alt="(ref:lincoln-temp-points-errorbars)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-points-errorbars)(ref:lincoln-temp-points-errorbars)</p>
 </div>
 
@@ -23,7 +23,7 @@ We can address all four shortcomings of Figure \@ref(fig:lincoln-temp-points-err
 (ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points (left) and the corresponding boxplot (right). Only the *y* values of the points are visualized in the boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom wiskers extend either to the maximum and minimum of the data or to the maximum or minimum that falls within 1.5 times the height of the box, whichever yields the shorter wisker. The distances of 1.5 times the height of the box in either direction are called the upper and the lower fences. Individual data points that fall beyond the fences are referred to as outliers and are usually showns as individual dots.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="576" />
+<img src="boxplots_violins_files/figure-html4/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="576" />
 <p class="caption">(\#fig:boxplot-schematic)(ref:boxplot-schematic)</p>
 </div>
 
@@ -31,7 +31,7 @@ We can address all four shortcomings of Figure \@ref(fig:lincoln-temp-points-err
 (ref:lincoln-temp-boxplots) Mean daily temperatures in Lincoln, Nebraska, visualized as boxplots.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-boxplots-1.png" alt="(ref:lincoln-temp-boxplots)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-boxplots-1.png" alt="(ref:lincoln-temp-boxplots)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-boxplots)(ref:lincoln-temp-boxplots)</p>
 </div>
 
@@ -41,7 +41,7 @@ Boxplots were invented by the statistician John Tukey in the early 1970s, and th
 (ref:violin-schematic) Anatomy of a violin plot. Shown are a cloud of points (left) and the corresponding violin plot (right). Only the *y* values of the points are visualized in the violin plot. The width of the violin at a given *y* value represents the point density at that *y* value. Technically, a violin plot is a density estimate rotated by 90 degrees and then mirrored. Violins are therefore symmetric. Violins begin and end at the minimum and maximum data values, respectively. The thickest part of the violin corresponds to the highest point density in the dataset.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/violin-schematic-1.png" alt="(ref:violin-schematic)" width="576" />
+<img src="boxplots_violins_files/figure-html4/violin-schematic-1.png" alt="(ref:violin-schematic)" width="576" />
 <p class="caption">(\#fig:violin-schematic)(ref:violin-schematic)</p>
 </div>
 
@@ -56,7 +56,7 @@ When we visualize the Lincoln temperature data with violins, we obtain Figure \@
 (ref:lincoln-temp-violins) Mean daily temperatures in Lincoln, Nebraska, visualized as violin plots.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-violins-1.png" alt="(ref:lincoln-temp-violins)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-violins-1.png" alt="(ref:lincoln-temp-violins)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-violins)(ref:lincoln-temp-violins)</p>
 </div>
 
@@ -66,7 +66,7 @@ Because violin plots are derived from density estimates, they have similar short
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as individual temperature values. Each point represents the mean temperature for one day. This figure is labeled as bad because so many points are plotted on top of each other that it is not possible to ascertain which temperatures were the most common in each month. 
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-all-points-1.png" alt="(ref:lincoln-temp-all-points)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-all-points-1.png" alt="(ref:lincoln-temp-all-points)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-all-points)(ref:lincoln-temp-all-points)</p>
 </div>
 
@@ -74,7 +74,7 @@ Because violin plots are derived from density estimates, they have similar short
 (ref:lincoln-temp-jittered) Mean daily temperatures in Lincoln, Nebraska, visualized as individual temperature values. The points have been jittered along the *x* axis to better show the density of points at each temperature value.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-jittered-1.png" alt="(ref:lincoln-temp-jittered)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-jittered-1.png" alt="(ref:lincoln-temp-jittered)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-jittered)(ref:lincoln-temp-jittered)</p>
 </div>
 
@@ -88,7 +88,7 @@ Finally, we can combine the best of both worlds by spreading out the dots in pro
 (ref:lincoln-temp-sina) Mean daily temperatures in Lincoln, Nebraska, visualized as a sina plot (combination of individual points and violins). The points have been jittered along the *x* axis in proportion to the point density at the respective temperature.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/lincoln-temp-sina-1.png" alt="(ref:lincoln-temp-sina)" width="576" />
+<img src="boxplots_violins_files/figure-html4/lincoln-temp-sina-1.png" alt="(ref:lincoln-temp-sina)" width="576" />
 <p class="caption">(\#fig:lincoln-temp-sina)(ref:lincoln-temp-sina)</p>
 </div>
 
@@ -102,7 +102,7 @@ The standard ridgeline plot uses density estimates (Figure \@ref(fig:temp-ridgel
 (ref:temp-ridgeline) Temperatures in Lincoln, Nebraska, in 2016, visualized as a ridgeline plot. For each month, we show the distribution of daily mean temperatures measured in Fahrenheit. Original figure concept: @Wehrwein-Lincoln-weather.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/temp-ridgeline-1.png" alt="(ref:temp-ridgeline)" width="576" />
+<img src="boxplots_violins_files/figure-html4/temp-ridgeline-1.png" alt="(ref:temp-ridgeline)" width="576" />
 <p class="caption">(\#fig:temp-ridgeline)(ref:temp-ridgeline)</p>
 </div>
 
@@ -114,7 +114,7 @@ In principle, we can use histograms instead of density plots in a ridgeline visu
 (ref:temp-binline) Temperatures in Lincoln, Nebraska, in 2016, visualized as a ridgeline plot of histograms. The individual histograms don't separate well visually, and the overall figure is quite busy and confusing.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/temp-binline-1.png" alt="(ref:temp-binline)" width="576" />
+<img src="boxplots_violins_files/figure-html4/temp-binline-1.png" alt="(ref:temp-binline)" width="576" />
 <p class="caption">(\#fig:temp-binline)(ref:temp-binline)</p>
 </div>
 
@@ -125,7 +125,7 @@ Ridgeline plots scale to very large numbers of distributions. For example, Figur
 (ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. (Source: Internet Movie Database, IMDB)
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/movies-ridgeline-1.png" alt="(ref:movies-ridgeline)" width="480" />
+<img src="boxplots_violins_files/figure-html4/movies-ridgeline-1.png" alt="(ref:movies-ridgeline)" width="480" />
 <p class="caption">(\#fig:movies-ridgeline)(ref:movies-ridgeline)</p>
 </div>
 
@@ -134,6 +134,6 @@ Ridgeline plots also work well if we want to compare two trends over time. This 
 (ref:dw-nominate-ridgeline) Voting patterns in the U.S. House of Representatives have become increasingly polarized. DW-NOMINATE scores are frequently used to compare voting patterns of representatives between parties and over time. Here, score distributions are shown for each Congress from 1963 to 2013 separately for Democrats and Republicans. Each Congress is represented by its first year. Original figure concept: @McDonald-DW-NOMINATE.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/dw-nominate-ridgeline-1.png" alt="(ref:dw-nominate-ridgeline)" width="816" />
+<img src="boxplots_violins_files/figure-html4/dw-nominate-ridgeline-1.png" alt="(ref:dw-nominate-ridgeline)" width="816" />
 <p class="caption">(\#fig:dw-nominate-ridgeline)(ref:dw-nominate-ridgeline)</p>
 </div>

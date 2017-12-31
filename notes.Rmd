@@ -116,6 +116,7 @@ Articles and blog posts with useful ideas:
   * https://ikashnitsky.github.io/2017/data-acquisition-one/
   * https://ikashnitsky.github.io/2017/data-acquisition-two/
   * https://ikashnitsky.github.io/2017/data-acquisition-three/
+- https://eagereyes.org
 
 
 Datasets to use:
@@ -136,5 +137,6 @@ Datasets to use:
 Required versions of rendering software:
 
 - pandoc: 1.19.2.1
-- rmarkdown: 1.8
+- rmarkdown: 1.6
 - bookdown: 0.4
+- knitr: 1.17

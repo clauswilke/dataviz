@@ -103,7 +103,7 @@ Grid lines that run perpendicular to the key variable of interest tend to be the
 ```
 
 
-Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:iris-scatter) provides an example.
+Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:Aus-athletes-grid) provides an example.
 
 (ref:Aus-athletes-grid) Percent bodyfat versus height in professional male Australian athletes. (Each point represents one athlete.) 
 

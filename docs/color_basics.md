@@ -15,7 +15,7 @@ Many appropriate qualitative color scales are readily available. Figure \@ref(fi
 (ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default in the widely used plotting software ggplot2.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/qualitative-scales-1.png" alt="(ref:qualitative-scales)" width="624" />
+<img src="color_basics_files/figure-html4/qualitative-scales-1.png" alt="(ref:qualitative-scales)" width="624" />
 <p class="caption">(\#fig:qualitative-scales)(ref:qualitative-scales)</p>
 </div>
 
@@ -24,7 +24,7 @@ As an example of how we use qualitative color scales, consider Figure \@ref(fig:
 (ref:popgrowth-US) Population growth in the U.S. from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/popgrowth-US-1.png" alt="(ref:popgrowth-US)" width="624" />
+<img src="color_basics_files/figure-html4/popgrowth-US-1.png" alt="(ref:popgrowth-US)" width="624" />
 <p class="caption">(\#fig:popgrowth-US)(ref:popgrowth-US)</p>
 </div>
 
@@ -39,7 +39,7 @@ Sequential scales can be based on a single hue (e.g., from dark blue to light bl
 (ref:sequential-scales) Example sequential color scales. The ColorBrewer Blues scale is a monochromatic scale that varies from dark to light blue. The Heat and Viridis scales are multi-hue scales that vary from dark red to light yellow and from dark blue via green to light yellow, respectively. 
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/sequential-scales-1.png" alt="(ref:sequential-scales)" width="624" />
+<img src="color_basics_files/figure-html4/sequential-scales-1.png" alt="(ref:sequential-scales)" width="624" />
 <p class="caption">(\#fig:sequential-scales)(ref:sequential-scales)</p>
 </div>
 
@@ -49,7 +49,7 @@ Representing data values as colors is particularly useful when we want to show h
 
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/map-Texas-income-1.png" alt="(ref:map-Texas-income)" width="672" />
+<img src="color_basics_files/figure-html4/map-Texas-income-1.png" alt="(ref:map-Texas-income)" width="672" />
 <p class="caption">(\#fig:map-Texas-income)(ref:map-Texas-income)</p>
 </div>
 
@@ -59,7 +59,7 @@ Representing data values as colors is particularly useful when we want to show h
 (ref:diverging-scales) Example diverging color scales.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/diverging-scales-1.png" alt="(ref:diverging-scales)" width="624" />
+<img src="color_basics_files/figure-html4/diverging-scales-1.png" alt="(ref:diverging-scales)" width="624" />
 <p class="caption">(\#fig:diverging-scales)(ref:diverging-scales)</p>
 </div>
 
@@ -69,7 +69,7 @@ Representing data values as colors is particularly useful when we want to show h
 (ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/map-Texas-race-1.png" alt="(ref:map-Texas-race)" width="672" />
+<img src="color_basics_files/figure-html4/map-Texas-race-1.png" alt="(ref:map-Texas-race)" width="672" />
 <p class="caption">(\#fig:map-Texas-race)(ref:map-Texas-race)</p>
 </div>
 
@@ -82,7 +82,7 @@ Representing data values as colors is particularly useful when we want to show h
 (ref:accent-scales) Example accent color scales. We can arrive at accent color scales in several different ways. First, we can take gray values and pair them with colors. Second, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten some colors while darkening others. Third, we can take work with an existing accent color scale, e.g. the one from the Colorbrewer project.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/accent-scales-1.png" alt="(ref:accent-scales)" width="624" />
+<img src="color_basics_files/figure-html4/accent-scales-1.png" alt="(ref:accent-scales)" width="624" />
 <p class="caption">(\#fig:accent-scales)(ref:accent-scales)</p>
 </div>
 
@@ -92,7 +92,7 @@ Representing data values as colors is particularly useful when we want to show h
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/Aus-athletes-track-1.png" alt="(ref:Aus-athletes-track)" width="672" />
+<img src="color_basics_files/figure-html4/Aus-athletes-track-1.png" alt="(ref:Aus-athletes-track)" width="672" />
 <p class="caption">(\#fig:Aus-athletes-track)(ref:Aus-athletes-track)</p>
 </div>
 

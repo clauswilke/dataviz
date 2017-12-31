@@ -39,3 +39,7 @@ I generally provide my rationale for specific ratings, but some are a matter of 
 ## Acknowledgments {-}
 
 This project would not have been possible without the fantastic work the RStudio team has put into turning the R universe into a first-rate publishing platform. In particular, I have to thank Hadley Wickham for creating ggplot2, the plotting software that was used to make all the figures throughout this book. I would also like to thank Yihui Xie for creating the knitr package, R Markdown, and bookdown. I don't think I would have started this project without these tools ready to go. Even though I have over 20 years of experience authoring documents in LaTeX, and I have written and continue to write almost all my scientific papers using that platform, the idea of writing a LaTeX document that contains hundreds of figures, having to maintain the R code for all these figures separately, and having to manually organize storage and naming of all the figure files makes me cringe. By contrast, writing self-contained R Markdown files is fun, and it's easy to collect material and gain momentum. 
+
+
+# (PART\*) Part I: General principles of figure design {-}
+
