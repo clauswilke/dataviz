@@ -288,13 +288,16 @@ iris_max <- filter(iris_dens, density == max(density)) %>%
          nudge_y = c(-0.02, 0.02, -0.02) 
         )
 
-iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species)) + 
-  geom_density_line(stat = "identity", alpha = 0.7) +
+iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species, fill = Species)) + 
+  geom_density_line(stat = "identity") +
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y),
             inherit.aes = FALSE, size = 12/.pt) +
-  scale_fill_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
+  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+                    breaks = c("virginica", "versicolor", "setosa"),
+                    guide = "none") +
+  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +

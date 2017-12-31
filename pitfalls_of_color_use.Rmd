@@ -209,7 +209,7 @@ grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
 cvd_sim(grad_red_green)
 ```
 
-With these examples, it might seem that it is nearly impossible to find two contrasting colors that are safe under all forms of cvd. However, the situation is not that dire. It is often possible to make slight modifications to the colors such that they have the desired character while also being safe for cvd. For example, Figure \@ref(fig:army-rose-cvd-sim) shows a scale that looks red--green to people with normal color vision yet remains somewhat distinguishable for people with cvd.
+With these examples, it might seem that it is nearly impossible to find two contrasting colors that are safe under all forms of cvd. However, the situation is not that dire. It is often possible to make slight modifications to the colors such that they have the desired character while also being safe for cvd. For example, the CARTO ArmyRose scale from Figure \@ref(fig:diverging-scales) looks red--green to people with normal color vision yet remains somewhat distinguishable for people with cvd (Figure \@ref(fig:army-rose-cvd-sim)).
 
 (ref:army-rose-cvd-sim) The CARTO ArmyRose scale looks like a red--green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is closer to magenta (a mix of red and blue) while the greenish color is actually a dark yellow (contains similar amounts of red and green). The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans.
 

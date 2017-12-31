@@ -80,7 +80,7 @@ plot_grid(p1, p2, p3, ncol = 1)
 
 Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called choropleths. Figure \@ref(fig:map-Texas-income) shows an example where I have mapped annual median income within each county in Texas onto a map of those counties. 
 
-(ref:map-Texas-income) Median annual income in Texas counties. The highest median incomes are seen in major Texas metropolitan areas, in particular near Houston and Dallas. No median income estimate is available for Loving County in West Texas and therefore that county is shown in gray. Data source: 2015 five-year American Community Survey.
+(ref:map-Texas-income) Median annual income in Texas counties. The highest median incomes are seen in major Texas metropolitan areas, in particular near Houston and Dallas. No median income estimate is available for Loving County in West Texas and therefore that county is shown in gray. Data source: 2015 Five-Year American Community Survey.
 
 
 ```{r map-Texas-income, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-income)'}
@@ -111,10 +111,9 @@ texas_income %>%
         legend.position = c(0, 0.1))
 ```
 
-**Explain diverging scales here.**
+In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show them with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a *diverging* color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure \@ref(fig:diverging-scales)). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.
 
-
-(ref:diverging-scales) Example diverging color scales.
+(ref:diverging-scales) Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown-green, blue-red, and red-green.
 
 ```{r diverging-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("ColorBrewer BrBG")
@@ -123,10 +122,9 @@ p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + g
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
+As an example application of a diverging color scale, consider Figure \@ref(fig:map-Texas-race), which shows the percentage of people identifying as white in Texas counties. Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. Numbers above 50% indicate that whites are in the majority and numbers below 50% indicate the opposite. The visualization makes it easy to identify counties where whites are a clear majority, counties where whites are a minority, and counties that are approximately even between whites and non-whites.
 
-
-
-(ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 decennial U.S. Census.
+(ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census.
 
 ```{r map-Texas-race, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-race)'}
 # we reuse the geometries from texas_income
@@ -159,6 +157,7 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
 
 ## Color as a tool to highlight
 
+Color can also be an effective tool to highlight specific elements in the data.
 **Define accent scales**
 
 (ref:accent-scales) Example accent color scales. We can arrive at accent color scales in several different ways. First, we can take gray values and pair them with colors. Second, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten some colors while darkening others. Third, we can take work with an existing accent color scale, e.g. the one from the Colorbrewer project.

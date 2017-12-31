@@ -318,9 +318,9 @@ plot_grid(p1, p2, p3, p4,
 Boxplots, violin plots, jittered points, and sina plots are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions (Chapter \@ref(boxplots-violins)). Stacked histograms and overlapping densities allow a more in-depth comparison of a smaller number of distributions, though stacked histograms can be difficult to interpret and are best avoided (Chapter \@ref(histograms-density-plots)). Ridgeline plots can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time (Chapter \@ref(boxplots-violins)).
 
 
-## Other
 
-```{r fig.width = 8, fig.asp = 1/4}
+```{r fig.width = 8, fig.asp = 1/4, include = FALSE}
+## Other
 
 palette <- pal_steel_blue
 
