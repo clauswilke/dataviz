@@ -6,21 +6,21 @@ source("_common.R")
 # Effective use of color in figures {#color-basics}
 
 
-There are three fundamental ways in which we can use color: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we would use in each case and the way in which we would use it are entirely different for these three cases.
+There are three fundamental use cases for color in data visualizations: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we use and the way in which we use them are quite different for these three cases.
 
 
 ## Color as a tool to distinguish
 
-We frequently use color as a means to distinguish discrete items or groups that do not have an intrinsic order, such as different countries on a map or different manufacturers of a certain product. In this case, we use a *qualitative* color scale. Such a scale contains a finite set of specific colors that are chosen to look clearly distinct from each other. At the same time, the colors must also appear equivalent to each other, in the sense that no one color should stand out relative to the others. And, the colors should not create the impression of an order, as would be the case with a sequence of colors that get successively lighter. Such colors would create an apparent order among the items being colored, which by definition have no order. 
+We frequently use color as a means to distinguish discrete items or groups that do not have an intrinsic order, such as different countries on a map or different manufacturers of a certain product. In this case, we use a *qualitative* color scale. Such a scale contains a finite set of specific colors that are chosen to look clearly distinct from each other while also being equivalent to each other. The second condition requires that no one color should stand out relative to the others. And, the colors should not create the impression of an order, as would be the case with a sequence of colors that get successively lighter. Such colors would create an apparent order among the items being colored, which by definition have no order. 
 
 Many appropriate qualitative color scales are readily available. Figure \@ref(fig:qualitative-scales) shows three representative examples. In particular, the ColorBrewer project provides a nice selection of qualitative color scales, including both fairly light and fairly dark colors [@ColorBrewer]. 
 
-(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default in the widely used plotting software ggplot2.
+(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default qualitqtive scale in the widely used plotting software ggplot2.
 
 ```{r qualitative-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:qualitative-scales)'}
 p1 <- gg_color_swatches(7) + scale_fill_OkabeIto() + ggtitle("Okabe Ito")
 p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Dark2") + ggtitle("ColorBrewer Dark2")
-p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 default")
+p3 <- gg_color_swatches(7) + scale_fill_hue() + ggtitle("ggplot2 hue")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
@@ -93,8 +93,9 @@ texas_income %>%
   geom_sf(color = "white") + 
   coord_sf(xlim = c(-110, -93.5), datum = NA) +
   theme_map() + 
-  scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
-                                   na.value = "grey50", l2 = 98, #end = 0.9, 
+  scale_fill_distiller(palette = "Blues", type = 'seq', na.value = "grey60", direction = 1,
+#  scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
+#                                   na.value = "grey50", l2 = 98, #end = 0.9, 
                                    name = "annual median income",
                                    limits = c(18000, 90000),
                                    breaks = 20000*c(1:4),
@@ -111,18 +112,18 @@ texas_income %>%
         legend.position = c(0, 0.1))
 ```
 
-In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show them with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a *diverging* color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure \@ref(fig:diverging-scales)). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.
+In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show those with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a *diverging* color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure \@ref(fig:diverging-scales)). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.
 
-(ref:diverging-scales) Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown-green, blue-red, and red-green.
+(ref:diverging-scales) Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown to greenish blue, pink to yellow-green, and blue to red.
 
 ```{r diverging-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
-p1 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "BrBG") + ggtitle("ColorBrewer BrBG")
-p2 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
-p3 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "ArmyRose") + ggtitle("CARTO ArmyRose")
+p1 <- gg_color_swatches(7) + scale_fill_discrete_carto(palette = "Earth") + ggtitle("CARTO Earth")
+p2 <- gg_color_swatches(7) + scale_fill_brewer(type = "div", palette = "PiYG") + ggtitle("ColorBrewer PiYG")
+p3 <- gg_color_swatches(7) + scale_fill_discrete_diverging("Blue-Red") + ggtitle("Blue-Red")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-As an example application of a diverging color scale, consider Figure \@ref(fig:map-Texas-race), which shows the percentage of people identifying as white in Texas counties. Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. Numbers above 50% indicate that whites are in the majority and numbers below 50% indicate the opposite. The visualization makes it easy to identify counties where whites are a clear majority, counties where whites are a minority, and counties that are approximately even between whites and non-whites.
+As an example application of a diverging color scale, consider Figure \@ref(fig:map-Texas-race), which shows the percentage of people identifying as white in Texas counties. Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. Numbers above 50% indicate that whites are in the majority and numbers below 50% indicate the opposite. The visualization makes it easy to identify counties where whites are a clear majority, counties where they are a minority, and counties that are approximately even between whites and non-whites.
 
 (ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census.
 
@@ -157,19 +158,64 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
 
 ## Color as a tool to highlight
 
-Color can also be an effective tool to highlight specific elements in the data.
-**Define accent scales**
+Color can also be an effective tool to highlight specific elements in the data. There may be specific categories or values in the dataset that carry key information about the story we want to tell, and we can strengthen the story by emphasizing the relevant figure elements to the reader. An easy way to achieve this emphasis is color these figure elements in a color or set of colors that vividly stand out against the rest of the figure. This effect can be achieved with *accent* color scales, which are color scales that contain both a set of subdued colors and a matching set of stronger, darker, and/or more saturated colors (Figure \@ref(fig:accent-scales)).
 
-(ref:accent-scales) Example accent color scales. We can arrive at accent color scales in several different ways. First, we can take gray values and pair them with colors. Second, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten some colors while darkening others. Third, we can take work with an existing accent color scale, e.g. the one from the Colorbrewer project.
+(ref:accent-scales) Example accent color scales, each with four base colors and three accent colors. Accent color scales can be derived in several different ways. First, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten and/or partially desaturate some colors while darkening others. Second, we can take gray values and pair them with colors. Third, we can take work with an existing accent color scale, e.g. the one from the ColorBrewer project.
 
 ```{r accent-scales, fig.width=6.5, fig.asp=3*.14, fig.cap = '(ref:accent-scales)'}
-p1 <- gg_color_swatches(7) + scale_fill_manual(values = c("gray60", "gray70","gray80", "gray90", "#C95C4F",   '#83A121', '#6B8AD5')) + ggtitle("Grays with accents")
-p2 <- gg_color_swatches(7) + scale_fill_OkabeIto(order = c(1, 2, 7, 4, 5, 3, 6), darken = c(rep(-0.55, 4), rep(.1, 3))) + ggtitle("Okabe Ito Accent")
+accent_OkabeIto <- palette_OkabeIto[c(1, 2, 7, 4, 5, 3, 6)]
+accent_OkabeIto[1:4] <- desaturate(lighten(accent_OkabeIto[1:4], .4), .8)
+accent_OkabeIto[5:7] <- darken(accent_OkabeIto[5:7], .3)
+
+
+p1 <- gg_color_swatches(7) + scale_fill_manual(values = accent_OkabeIto) + ggtitle("Okabe Ito Accent")
+p2 <- gg_color_swatches(7) + scale_fill_manual(values = c("gray60", "gray70","gray80", "gray90", "#C95C4F",   '#83A121', '#6B8AD5')) + ggtitle("Grays with accents")
 p3 <- gg_color_swatches(7) + scale_fill_brewer(type = "qual", palette = "Accent") + ggtitle("ColorBrewer Accent")
 plot_grid(p1, p2, p3, ncol = 1)
 ```
 
-**Discuss example.**
+As an example of how the same data can support differing stories with different coloring approaches, I have created a variant of Figure \@ref(fig:popgrowth-US) where now I highlight two specific states, Texas and Louisiana (Figure \@ref(fig:popgrowth-US-highlight)). Both states are in the South, they are immediate neighbors, and yet one state (Texas) was the fifth-fastest growing state within the U.S. where as the other was the third slowest growing from 2000 to 2010.
+
+(ref:popgrowth-US-highlight) From 2000 to 2010, the two neighboring southern states Texas and Louisiana have experienced among the highest and lowest population growth across the U.S.
+
+```{r popgrowth-US-highlight, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-highlight)'}
+popgrowth_hilight <- left_join(US_census, US_regions) %>%
+    group_by(region, division, state) %>%
+    summarize(pop2000 = sum(pop2000, na.rm = TRUE),
+              pop2010 = sum(pop2010, na.rm = TRUE),
+              popgrowth = (pop2010-pop2000)/pop2000,
+              area = sum(area)) %>%
+    arrange(popgrowth) %>%
+    ungroup() %>%
+    mutate(region = ifelse(state %in% c("Texas", "Louisiana"), "highlight", region)) %>%
+    mutate(state = factor(state, levels = state),
+           region = factor(region, levels = c("West", "South", "Midwest", "Northeast", "highlight")))
+
+# make color and fontface vector in order of the states
+region_colors_bars <- c(desaturate(lighten(c("#E69F00", "#56B4E9", "#009E73", "#F0E442"), .4), .8), darken("#56B4E9", .3))
+region_colors_axis <- c(rep("gray40", 4), darken("#56B4E9", .4))
+region_fontface <- c(rep("plain", 4), "bold")
+state_colors <- region_colors_axis[as.numeric(popgrowth_hilight$region[order(popgrowth_hilight$state)])]
+state_fontface <- region_fontface[as.numeric(popgrowth_hilight$region[order(popgrowth_hilight$state)])]
+
+ggplot(popgrowth_hilight, aes(x = state, y = 100*popgrowth, fill = region)) + 
+  geom_col() + 
+  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
+                     name = "population growth (%)\n2000 to 2010    ") +
+  scale_fill_manual(values = region_colors_bars,
+                    breaks = c("West", "South", "Midwest", "Northeast")) +
+  coord_flip() + 
+  theme_minimal_vgrid() +
+  theme(axis.title.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.length = unit(0, "pt"),
+        axis.text.y = element_text(size = 10, color = state_colors,
+                                   face = state_fontface),
+        legend.position = c(.56, .68),
+        legend.background = element_rect(fill = "#ffffffb0"))
+```
+
+When working with accent colors, it is critical that the baseline colors do not compete for attention. Notice how drab the baseline colors are in (Figure \@ref(fig:popgrowth-US-highlight)). Yet they work well to support the accent color. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader's attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points. An example of this strategy is provided in Figure \@ref(fig:Aus-athletes-track).
 
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
