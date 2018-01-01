@@ -9,6 +9,7 @@ rmd_files: [
 
   # Part I
   "aesthetic_mapping.Rmd",
+  "coordinate_systems_axes.Rmd",
   "color_basics.Rmd",
   "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd",

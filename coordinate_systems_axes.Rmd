@@ -1,0 +1,18 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+# Coordinate systems and axes
+
+## Cartesian coordinates
+
+Discuss aspect ratio, fixed vs. fluid
+
+## Nonlinear axes
+
+Discuss logarithmic scales and square-root scales
+
+## Polar coordinates
+
+Make a figure of mean temperature across the year, as circular chart?

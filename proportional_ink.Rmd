@@ -1,6 +1,9 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(lubridate)
+library(ggridges)
 ```
 
 
@@ -9,4 +12,34 @@ source("_common.R")
 The principle of proportional ink:
 
 **The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
+```{r}
+df_fb_drop <- filter(tech_stocks, ticker == "FB", date >= ymd("2016-10-21") & date < ymd("2017-01-20"))
 
+fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
+  geom_ridgeline(alpha = 0.7) +
+  scale_x_date(name="year",
+               #limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price (USD)",
+                     limits = c(110, 135),
+                     expand=c(0,0)) +
+  theme_half_open() +
+  theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
+
+stamp_bad(fb_drop_bad)
+```
+
+```{r}
+fb_drop_good <- ggplot(fb_stock_drop, aes(x=date, height=price, y = 0)) +
+  geom_ridgeline(alpha = 0.7) +
+  scale_x_date(name="year",
+               #limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand=c(0,0)) + 
+  scale_y_continuous(name="stock price (USD)",
+                     limits = c(0, 150),
+                     expand=c(0,0)) +
+  theme_half_open() +
+  theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
+
+stamp_phantom(fb_drop_good)
+```

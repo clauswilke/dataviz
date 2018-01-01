@@ -4,3 +4,9 @@ source("_common.R")
 ```
 
 # Visualizing data: mapping data onto aesthetics
+
+## Geometric objects
+
+## Scales
+
+Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
