@@ -14,6 +14,21 @@ The principle of proportional ink:
 
 **The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
 
+```{r}
+df_rhode_island <- filter(US_census, state == "Rhode Island") %>%
+  select(county = name,
+         pop2000, pop2010) %>%
+  gather(popyear, population, -county) %>%
+  extract(popyear, "year", regex = "([[:digit:]]+)")
+
+ggplot(filter(df_rhode_island, year == 2010), aes(x = reorder(county, desc(population)), y = population)) +
+  geom_col() +
+  scale_y_continuous(labels = label_log10, expand = c(0, 0)) +
+  xlab("county") +
+  theme_minimal_hgrid()
+```
+
+
 (ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 21, 2016 to Jan. 20, 2017. This figure seems to imply that the Facebook stock pice collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
 
 ```{r fb-stock-drop-bad, fig.cap = '(ref:fb-stock-drop-bad)'}
@@ -52,16 +67,16 @@ fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
 stamp_phantom(fb_drop_good)
 ```
 
-## 
+## Non-linear coordinate systems
 
 ```{r}
-df_hawaii_island <- filter(US_census, state == "Hawaii") %>%
+df_hawaii <- filter(US_census, state == "Hawaii") %>%
   select(county = name,
          pop2000, pop2010) %>%
   gather(popyear, population, -county) %>%
   extract(popyear, "year", regex = "([[:digit:]]+)")
 
-ggplot(df_hawaii_island, aes(x = county, y = population, fill = year)) +
+ggplot(df_hawaii, aes(x = county, y = population, fill = year)) +
   geom_col(position = "dodge") +
   scale_y_log10()
 ```
