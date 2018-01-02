@@ -94,16 +94,9 @@ stamp_phantom(fb_drop_good)
 ## Non-linear coordinate systems
 
 ```{r}
-df_hawaii <- filter(US_census, state == "Hawaii") %>%
-  select(county = name,
-         pop2000, pop2010) %>%
-  gather(popyear, population, -county) %>%
-  extract(popyear, "year", regex = "([[:digit:]]+)") %>%
-  extract(county, "county", regex = "(.+) County")
-
-ggplot(filter(df_hawaii, year == 2000), aes(x = county, y = population)) +
+ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(population)), y = population)) +
   geom_col() +
   theme_minimal_hgrid() +
-  scale_y_sqrt()
+  scale_y_sqrt(expand = c(0, 0))
 
 ```
