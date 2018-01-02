@@ -29,7 +29,7 @@ xaxis_lin <- ggplot(df, aes(x, y = 1)) +
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 12, face = "plain"),
+        plot.title = element_text(face = "plain"),
         plot.margin = margin(3.5, 20, 3.5, 20))
 
 xaxis_log <- ggplot(df, aes(log10(x), y = 1)) + 
@@ -40,7 +40,7 @@ xaxis_log <- ggplot(df, aes(log10(x), y = 1)) +
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 12, face = "plain"),
+        plot.title = element_text(face = "plain"),
         plot.margin = margin(3.5, 20, 3.5, 20))
 
 plotlist <- 
@@ -68,7 +68,9 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 Make a figure of mean temperature across the year, as circular chart?
 
-```{r}
+(ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. Death Valley, CA is the hottest place in the continental U.S. and Barrow, AK the coldest. Honolulu, HI and Chicago, IL were chosen as representative tropical and temperate locations, respectively. Source: NOAA.
+
+```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
 library(lubridate)
 library(forcats)
 
@@ -94,7 +96,9 @@ ggplot(temps, aes(x = date, y = temperature, color = location)) +
   theme_minimal_grid()
 ```
 
-```{r fig.width = 7.5}
+(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged clockwise starting with Jan. 1st at the 12:00 position.
+
+```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
 ggplot(temps, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
   scale_x_date(name="date", expand=c(0, 0)) + 
