@@ -15,16 +15,40 @@ The principle of proportional ink:
 **The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
 
 ```{r}
-df_rhode_island <- filter(US_census, state == "Rhode Island") %>%
-  select(county = name,
-         pop2000, pop2010) %>%
-  gather(popyear, population, -county) %>%
-  extract(popyear, "year", regex = "([[:digit:]]+)")
-
-ggplot(filter(df_rhode_island, year == 2010), aes(x = reorder(county, desc(population)), y = population)) +
+ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_income)), y = median_income)) +
   geom_col() +
-  scale_y_continuous(labels = label_log10, expand = c(0, 0)) +
+  coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50000, 75000), expand = FALSE) +
   xlab("county") +
+  scale_y_continuous(name = "median income", 
+                     breaks = 10000*(5:7),
+                     labels = function(x) paste0("$", scales::comma(x))) +
+  theme_minimal_hgrid()
+```
+
+```{r}
+ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_income)), y = median_income)) +
+  geom_col() +
+  coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0, 78000), expand = FALSE) +
+  xlab("county") +
+  scale_y_continuous(name = "median income", 
+                     breaks = 20000*(0:3),
+                     labels = function(x) paste0("$", scales::comma(x))) +
+  theme_minimal_hgrid()
+```
+
+```{r}
+hawaii_income_diff <- select(hawaii_income, -median_income_moe) %>%
+  spread(year, median_income) %>%
+  mutate(income_diff = `2015` - `2010`)
+
+ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
+                               y = income_diff)) + 
+  geom_col() +
+  xlab("county") +
+  scale_y_continuous(name = "change in median income", 
+                     limits = c(-5000, 25000),
+                     expand = c(0, 0),
+                     labels = function(x) paste0("$", scales::comma(x))) +
   theme_minimal_hgrid()
 ```
 
@@ -74,9 +98,12 @@ df_hawaii <- filter(US_census, state == "Hawaii") %>%
   select(county = name,
          pop2000, pop2010) %>%
   gather(popyear, population, -county) %>%
-  extract(popyear, "year", regex = "([[:digit:]]+)")
+  extract(popyear, "year", regex = "([[:digit:]]+)") %>%
+  extract(county, "county", regex = "(.+) County")
 
-ggplot(df_hawaii, aes(x = county, y = population, fill = year)) +
-  geom_col(position = "dodge") +
-  scale_y_log10()
+ggplot(filter(df_hawaii, year == 2000), aes(x = county, y = population)) +
+  geom_col() +
+  theme_minimal_hgrid() +
+  scale_y_sqrt()
+
 ```
