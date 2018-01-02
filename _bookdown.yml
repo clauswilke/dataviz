@@ -16,7 +16,7 @@ rmd_files: [
   "small_axis_labels.Rmd", # completed
   ##"aspect_ratio.Rmd",
   "background_grids.Rmd", # completed
-  ##"proportional_ink.Rmd",
+  "proportional_ink.Rmd",
   "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
 

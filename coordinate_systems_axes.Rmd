@@ -16,3 +16,41 @@ Discuss logarithmic scales and square-root scales
 ## Polar coordinates
 
 Make a figure of mean temperature across the year, as circular chart?
+
+```{r}
+library(lubridate)
+library(forcats)
+
+temps <- filter(ncdc_normals,
+                station_id %in% c(
+                  "USW00014819", # Chicago, IL 60638
+                  "USC00516128", # Honolulu, HI 96813
+                  "USW00027502", # Barrow, AK 99723, coldest point in the US
+                  "USC00042319" # Death Valley, CA 92328 hottest point in the US
+                )) %>%
+  mutate(location = fct_recode(factor(station_id),
+                               "Chicago, IL" = "USW00014819",
+                               "Honolulu, HI" = "USC00516128",
+                               "Barrow, AK" = "USW00027502",
+                               "Death Valley, CA" = "USC00042319"))
+
+ggplot(temps, aes(x = date, y = temperature, color = location)) +
+  geom_line(size = 1) +
+  scale_x_date(name="date", expand=c(0, 0)) + 
+  scale_y_continuous(limits = c(-30, 110), expand = c(0, 0),
+                     breaks = seq(-30, 90, by=30),
+                     name = "temperature (F)") +
+  theme_minimal_grid()
+```
+
+```{r fig.width = 7.5}
+ggplot(temps, aes(x = date, y = temperature, color = location)) +
+  geom_line(size = 1) +
+  scale_x_date(name="date", expand=c(0, 0)) + 
+  scale_y_continuous(limits = c(-30, 110), expand = c(0, 0),
+                     breaks = seq(-30, 90, by=30),
+                     name = "temperature (F)") +
+  theme_minimal() +
+  coord_polar(theta = "x") +
+  theme_minimal_grid()
+```

@@ -2,6 +2,7 @@
 # run setup script
 source("_common.R")
 
+library(tidyr)
 library(lubridate)
 library(ggridges)
 ```
@@ -12,28 +13,35 @@ library(ggridges)
 The principle of proportional ink:
 
 **The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
-```{r}
-df_fb_drop <- filter(tech_stocks, ticker == "FB", date >= ymd("2016-10-21") & date < ymd("2017-01-20"))
+
+(ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 21, 2016 to Jan. 20, 2017. This figure seems to imply that the Facebook stock pice collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
+
+```{r fb-stock-drop-bad, fig.cap = '(ref:fb-stock-drop-bad)'}
+df_fb_drop <- filter(tech_stocks, ticker == "FB", date >= ymd("2016-10-21") & date < ymd("2017-01-21"))
 
 fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
   geom_ridgeline(alpha = 0.7) +
-  scale_x_date(name="year",
-               #limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
-               expand=c(0,0)) + 
+  scale_x_date(name = "day",
+               breaks = ymd(c("2016-11-01", "2016-12-01", "2017-01-01")),
+               labels = c("Nov 1, 2016", "Dec 1, 2016", "Jan 1, 2017"),
+               expand=c(0, 0)) + 
   scale_y_continuous(name="stock price (USD)",
                      limits = c(110, 135),
-                     expand=c(0,0)) +
+                     expand=c(0, 0)) +
   theme_half_open() +
   theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
 
 stamp_bad(fb_drop_bad)
 ```
 
-```{r}
-fb_drop_good <- ggplot(fb_stock_drop, aes(x=date, height=price, y = 0)) +
+(ref:fb-stock-drop-good) Stock price of Facebook (FB) from Oct. 21, 2016 to Jan. 20, 2017. By showing the stock price on a *y* scale from $0 to $150, this figure more accurately relays the magnitude of the FB price drop around Nov. 1, 2016.
+
+```{r fb-stock-drop-good, fig.cap = '(ref:fb-stock-drop-good)'}
+fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
   geom_ridgeline(alpha = 0.7) +
-  scale_x_date(name="year",
-               #limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+  scale_x_date(name = "day",
+               breaks = ymd(c("2016-11-01", "2016-12-01", "2017-01-01")),
+               labels = c("Nov 1, 2016", "Dec 1, 2016", "Jan 1, 2017"),
                expand=c(0,0)) + 
   scale_y_continuous(name="stock price (USD)",
                      limits = c(0, 150),
@@ -42,4 +50,18 @@ fb_drop_good <- ggplot(fb_stock_drop, aes(x=date, height=price, y = 0)) +
   theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
 
 stamp_phantom(fb_drop_good)
+```
+
+## 
+
+```{r}
+df_hawaii_island <- filter(US_census, state == "Hawaii") %>%
+  select(county = name,
+         pop2000, pop2010) %>%
+  gather(popyear, population, -county) %>%
+  extract(popyear, "year", regex = "([[:digit:]]+)")
+
+ggplot(df_hawaii_island, aes(x = county, y = population, fill = year)) +
+  geom_col(position = "dodge") +
+  scale_y_log10()
 ```

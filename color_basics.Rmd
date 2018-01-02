@@ -193,7 +193,7 @@ popgrowth_hilight <- left_join(US_census, US_regions) %>%
 
 # make color and fontface vector in order of the states
 region_colors_bars <- c(desaturate(lighten(c("#E69F00", "#56B4E9", "#009E73", "#F0E442"), .4), .8), darken("#56B4E9", .3))
-region_colors_axis <- c(rep("gray40", 4), darken("#56B4E9", .4))
+region_colors_axis <- c(rep("gray30", 4), darken("#56B4E9", .4))
 region_fontface <- c(rep("plain", 4), "bold")
 state_colors <- region_colors_axis[as.numeric(popgrowth_hilight$region[order(popgrowth_hilight$state)])]
 state_fontface <- region_fontface[as.numeric(popgrowth_hilight$region[order(popgrowth_hilight$state)])]
@@ -206,7 +206,9 @@ ggplot(popgrowth_hilight, aes(x = state, y = 100*popgrowth, fill = region)) +
                     breaks = c("West", "South", "Midwest", "Northeast")) +
   coord_flip() + 
   theme_minimal_vgrid() +
-  theme(axis.title.y = element_blank(),
+  theme(text = element_text(color = "gray30"),
+        axis.text.x = element_text(color = "gray30"),
+        axis.title.y = element_blank(),
         axis.line.y = element_blank(),
         axis.ticks.length = unit(0, "pt"),
         axis.text.y = element_text(size = 10, color = state_colors,
