@@ -10,3 +10,18 @@ source("_common.R")
 ## Scales
 
 Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
+
+(ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars (1973--74 models). This figure uses five separate scales to represent data: (i) the *x* axis (displacement); (ii) the *y* axis (fuel efficiency); (iii) the color of the data points (power); (iv) the size of the data points (weight); and (v) the shape of the data points (number of cylinders).
+
+```{r mtcars-five-scale, fig.width = 7.5, fig.cap = '(ref:mtcars-five-scale)'}
+ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
+  geom_point(color = "white") +
+  scale_shape_manual(values = c(23, 24, 21), name = "cylinders") +
+  scale_fill_continuous_carto(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
+  xlab("displacement (cu. in.)") +
+  ylab("fuel efficiency (mpg)") +
+  guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
+         size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
+                             title = "weight (1000 lbs)")) +
+  theme(legend.title.align = 0.5)
+```

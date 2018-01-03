@@ -1,6 +1,11 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(lubridate)
+library(forcats)
+library(tidyr)
+library(ggrepel)
 ```
 
 # Coordinate systems and axes
@@ -51,6 +56,36 @@ plot_grid(p_cart, p_cart_scaled, labels = "auto")
 ```
 
 The invariance under rescaling is critically important for data visualization, because it implies that our visualizations will generally not depend on the units that we choose to show the data in. For example, if we plot temperature over time, it doesn't matter whether we plot it in Farenheit or Celsius (which is both rescaled and translated relative to Farenheit), the curve will look the same. Only the numbers that are displayed along the axis will change. Because units are arbitrary, and we can measure quantities in any units that we want to use, if a visualization were to change under a change of units it would have to be considered arbitrary and not objective.
+
+*Talk about fixed vs. variable aspect ratio. E.g., temperature vs. time can have any aspect ratio, but temperature at one place vs. at another should have a fixed aspect ratio.*
+
+```{r}
+temps_wide <- filter(ncdc_normals,
+                station_id %in% c(
+                  "USW00014819", # Chicago, IL 60638
+                  "USC00516128", # Honolulu, HI 96813
+                  "USW00027502", # Barrow, AK 99723, coldest point in the US
+                  "USC00042319" # Death Valley, CA 92328 hottest point in the US
+                )) %>%
+  mutate(location = fct_recode(factor(station_id),
+                               "Chicago, IL" = "USW00014819",
+                               "Honolulu, HI" = "USC00516128",
+                               "Barrow, AK" = "USW00027502",
+                               "Death Valley, CA" = "USC00042319")) %>%
+  select(-station_id, -flag) %>%
+  spread(location, temperature) %>%
+  arrange(date) %>%
+  mutate(label = ifelse(date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
+                        format(date, "%b 1st"), ""))
+
+ggplot(temps_wide, aes(x = `Barrow, AK`, y = `Death Valley, CA`, color = as.numeric(date))) +
+  geom_point(size = 1) +
+  geom_text_repel(aes(label = label), point.padding = .4, color = "black") +
+  coord_fixed(xlim = c(-25, 48), ylim = c(40, 110), expand = FALSE) +
+  scale_color_continuous_qualitative(guide = "none") +
+  #scale_y_continuous(limits = c(-30, 110), expand = c(0, 0), breaks = seq(-30, 90, by=30), name = "temperature (F)") +
+  theme_minimal_grid()
+```
 
 ## Nonlinear axes
 
@@ -114,9 +149,6 @@ Make a figure of mean temperature across the year, as circular chart?
 (ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. Death Valley, CA is the hottest place in the continental U.S. and Barrow, AK the coldest. Honolulu, HI and Chicago, IL were chosen as representative tropical and temperate locations, respectively. Source: NOAA.
 
 ```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
-library(lubridate)
-library(forcats)
-
 temps <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
