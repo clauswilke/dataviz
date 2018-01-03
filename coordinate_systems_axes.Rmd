@@ -9,6 +9,49 @@ source("_common.R")
 
 Discuss aspect ratio, fixed vs. fluid
 
+(ref:cartesian-coord) Standard cartesian coordinate system. (a) The horizontal axis is conventially called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. (b) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added two to all *x* values (translation) and have multiplied all *y* values by five (rescaling) for the data points in part (a), yet the relative location of the points remains unchanged.
+
+```{r cartesian-coord, fig.width = 8.5, fig.asp = 0.42, fig.cap = '(ref:cartesian-coord)'}
+df_points <- data.frame(x = c(-1, 0, 2),
+                        y = c(-1, 0, 1),
+                        label = c("(-1, -1)", "(0, 0)", "(2, 1)"),
+                        vjust = c(0.5, -.8, -.8),
+                        hjust = c(1.2, 0.5, 0.5))
+
+df_points_scaled <- mutate(df_points,
+                           x = x + 2,
+                           y = 5*y,
+                           label = c("(1, -5)", "(2, 0)", "(4, 5)"))
+
+df_labels <- data.frame(x = c(-1, -.5, 1, 2),
+                        y = c(-.6, 0, 0, 0.5),
+                        vjust = c(.5, 1.3, -.3, .5),
+                        hjust = c(-.1, .5, .5, -.1),
+                        label = c("y = -1", "x = -1", "x = 2", "y = 1"))
+
+p_cart <- ggplot(df_points, aes(x, y)) + 
+  geom_path(data = data.frame(x = c(-1, -1, 2, 2), y = c(-1, 0, 0, 1)), linetype = 2) +
+  geom_point(size = 3, color = "#0072B2") +
+  geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
+  geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
+  expand_limits(x = c(-2.1, 3.1), y = c(-2.1, 2.1)) +
+  coord_fixed() +
+  theme_minimal_grid()
+
+p_cart_scaled <- ggplot(df_points_scaled, aes(x, y)) + 
+  #geom_path(data = data.frame(x = c(-1, -1, 2, 2), y = c(-1, 0, 0, 1)), linetype = 2) +
+  geom_point(size = 3, color = "#0072B2") +
+  geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
+  #geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
+  expand_limits(x = c(-2.1, 3.1) + 2, y = 5 * c(-2.1, 2.1)) +
+  coord_fixed(ratio = 1/5) +
+  theme_minimal_grid()
+
+plot_grid(p_cart, p_cart_scaled, labels = "auto")
+```
+
+The invariance under rescaling is critically important for data visualization, because it implies that our visualizations will generally not depend on the units that we choose to show the data in. For example, if we plot temperature over time, it doesn't matter whether we plot it in Farenheit or Celsius (which is both rescaled and translated relative to Farenheit), the curve will look the same. Only the numbers that are displayed along the axis will change. Because units are arbitrary, and we can measure quantities in any units that we want to use, if a visualization were to change under a change of units it would have to be considered arbitrary and not objective.
+
 ## Nonlinear axes
 
 *Introduce the concept of logarithmic scales. They are linear in multiplication, a unit step on the scale corresponds to multiplication with a fixed factor.*
@@ -62,7 +105,7 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 ```
 
-*A few sentences about square-root scales?*
+*A few sentences about square-root scales? They are only invariant under multiplication, but not under addition/subtraction.*
 
 ## Polar coordinates
 
