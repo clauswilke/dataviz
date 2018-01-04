@@ -45,9 +45,9 @@ ggplot(df_points, aes(x, y)) +
 ```
 
 
-(ref:cartesian-coord-scaled) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added two to all *x* values (translation) and have multiplied all *y* values by five (rescaling) for the data of Figure \@ref(fig:cartesian-coord-scaled), yet the relative location of the points remains unchanged.
+(ref:cartesian-coord-scaled) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added 2 to all *x* values (translation) and have multiplied all *y* values by 5 (rescaling) for the data of Figure \@ref(fig:cartesian-coord-scaled), yet the relative location of the points remains unchanged.
 
-```{r cartesian-coord-scaled, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord-scaled)'}
+```{r cartesian-coord-scaled, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord-scaled)'}
 df_points_scaled <- mutate(df_points,
                            x = x + 2,
                            y = 5*y,
@@ -60,10 +60,10 @@ df_labels_scaled <- mutate(df_labels,
 
 
 ggplot(df_points_scaled, aes(x, y)) + 
-  geom_path(data = data.frame(x = c(1, 1, 4, 4), y = c(-5, 0, 0, 5)), linetype = 2) +
+  #geom_path(data = data.frame(x = c(1, 1, 4, 4), y = c(-5, 0, 0, 5)), linetype = 2) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
-  geom_text(data = df_labels_scaled, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
+  #geom_text(data = df_labels_scaled, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
   expand_limits(x = c(-2.1, 3.1) + 2, y = 5 * c(-2.1, 2.1)) +
   coord_fixed(ratio = 1/5) +
   theme_minimal_grid()
