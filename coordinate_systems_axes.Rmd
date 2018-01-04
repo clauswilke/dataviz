@@ -94,11 +94,14 @@ temps_wide <- filter(ncdc_normals,
                                "Salt Lake City, UT" = "USC00427606")) %>%
   select(-station_id, -flag) %>%
   spread(location, temperature) %>%
-  arrange(date) %>%
-  mutate(label = ifelse(date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
-                        format(date, "%b 1st"), ""))
+  arrange(date)
 
-temp_plot <- ggplot(temps_wide, aes(x = date, y = `Houston, TX`)) +
+temps_wide_label <- mutate(temps_wide,
+                           label = ifelse(date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), 
+                                                      ymd("0000-07-01"), ymd("0000-10-01")),
+                                          format(date, "%b 1st"), ""))
+
+temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston, TX`)) +
   geom_line(size = 1, color = "#0072B2") +
   scale_x_date(name="date", expand=c(0, 0)) + 
   scale_y_continuous(limits = c(50, 90),
@@ -110,7 +113,7 @@ plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto")
 ```
 
 ```{r fig.width = 8.5, fig.asp = 0.5}
-tempsplot_F <- ggplot(temps_wide, aes(x = `San Diego, CA`, y = `Houston, TX`)) +
+tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego, CA`, y = `Houston, TX`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
                   min.segment.length = 0) +
@@ -126,7 +129,7 @@ tempsplot_F <- ggplot(temps_wide, aes(x = `San Diego, CA`, y = `Houston, TX`)) +
 
 F2C <- function(t) {(t-32)*5/9}
 
-tempsplot_C <- ggplot(temps_wide, aes(x = F2C(`San Diego, CA`), y = F2C(`Houston, TX`))) +
+tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego, CA`), y = F2C(`Houston, TX`))) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
                   min.segment.length = 0) +
@@ -203,39 +206,36 @@ Make a figure of mean temperature across the year, as circular chart?
 (ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. Death Valley, CA is the hottest place in the continental U.S. and Barrow, AK the coldest. Honolulu, HI and Chicago, IL were chosen as representative tropical and temperate locations, respectively. Source: NOAA.
 
 ```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
-temps <- filter(ncdc_normals,
-                station_id %in% c(
-                  "USW00014819", # Chicago, IL 60638
-                  "USC00516128", # Honolulu, HI 96813
-                  "USW00027502", # Barrow, AK 99723, coldest point in the US
-                  "USC00042319" # Death Valley, CA 92328 hottest point in the US
-                )) %>%
-  mutate(location = fct_recode(factor(station_id),
-                               "Chicago, IL" = "USW00014819",
-                               "Honolulu, HI" = "USC00516128",
-                               "Barrow, AK" = "USW00027502",
-                               "Death Valley, CA" = "USC00042319"))
+temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
+  filter(location %in% c("Chicago, IL",
+                         "Honolulu, HI",
+                         "Houston, TX",
+                         "San Diego, CA")) %>%
+  mutate(location = factor(location, levels = c("Houston, TX",
+                                                "Honolulu, HI",
+                                                "San Diego, CA",
+                                                "Chicago, IL")))
 
-ggplot(temps, aes(x = date, y = temperature, color = location)) +
+ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
   scale_x_date(name="date", expand=c(0, 0)) + 
-  scale_y_continuous(limits = c(-30, 110), expand = c(0, 0),
+  scale_y_continuous(limits = c(0, 90),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (F)") +
   theme_minimal_grid()
 ```
 
-(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged clockwise starting with Jan. 1st at the 12:00 position.
+(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
 ```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
-ggplot(temps, aes(x = date, y = temperature, color = location)) +
+ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
   scale_x_date(name="date", expand=c(0, 0)) + 
-  scale_y_continuous(limits = c(-30, 110), expand = c(0, 0),
+  scale_y_continuous(limits = c(0, 90), expand = c(0, 0),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (F)") +
   theme_minimal() +
-  coord_polar(theta = "x") +
+  coord_polar(theta = "x", start = pi, direction = -1) +
   theme_minimal_grid()
 ```
 
