@@ -14,9 +14,9 @@ library(ggrepel)
 
 Discuss aspect ratio, fixed vs. fluid
 
-(ref:cartesian-coord) Standard cartesian coordinate system. (a) The horizontal axis is conventially called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. (b) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added two to all *x* values (translation) and have multiplied all *y* values by five (rescaling) for the data points in part (a), yet the relative location of the points remains unchanged.
+(ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventially called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
 
-```{r cartesian-coord, fig.width = 8.5, fig.asp = 0.42, fig.cap = '(ref:cartesian-coord)'}
+```{r cartesian-coord, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord)'}
 df_points <- data.frame(x = c(-1, 0, 2),
                         y = c(-1, 0, 1),
                         label = c("(-1, -1)", "(0, 0)", "(2, 1)"),
@@ -29,12 +29,12 @@ df_points_scaled <- mutate(df_points,
                            label = c("(1, -5)", "(2, 0)", "(4, 5)"))
 
 df_labels <- data.frame(x = c(-1, -.5, 1, 2),
-                        y = c(-.6, 0, 0, 0.5),
+                        y = c(-.5, 0, 0, 0.5),
                         vjust = c(.5, 1.3, -.3, .5),
                         hjust = c(-.1, .5, .5, -.1),
-                        label = c("y = -1", "x = -1", "x = 2", "y = 1"))
+                        label = c("Δy = -1", "Δx = -1", "Δx = 2", "Δy = 1"))
 
-p_cart <- ggplot(df_points, aes(x, y)) + 
+ggplot(df_points, aes(x, y)) + 
   geom_path(data = data.frame(x = c(-1, -1, 2, 2), y = c(-1, 0, 0, 1)), linetype = 2) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
@@ -42,49 +42,103 @@ p_cart <- ggplot(df_points, aes(x, y)) +
   expand_limits(x = c(-2.1, 3.1), y = c(-2.1, 2.1)) +
   coord_fixed() +
   theme_minimal_grid()
+```
 
-p_cart_scaled <- ggplot(df_points_scaled, aes(x, y)) + 
-  #geom_path(data = data.frame(x = c(-1, -1, 2, 2), y = c(-1, 0, 0, 1)), linetype = 2) +
+
+(ref:cartesian-coord-scaled) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added two to all *x* values (translation) and have multiplied all *y* values by five (rescaling) for the data of Figure \@ref(fig:cartesian-coord-scaled), yet the relative location of the points remains unchanged.
+
+```{r cartesian-coord-scaled, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord-scaled)'}
+df_points_scaled <- mutate(df_points,
+                           x = x + 2,
+                           y = 5*y,
+                           label = c("(1, -5)", "(2, 0)", "(4, 5)"))
+
+df_labels_scaled <- mutate(df_labels,
+                           x = x + 2,
+                           y = 5*y,
+                           label = c("Δy = -5", "Δx = -1", "Δx = 2", "Δy = 5"))
+
+
+ggplot(df_points_scaled, aes(x, y)) + 
+  geom_path(data = data.frame(x = c(1, 1, 4, 4), y = c(-5, 0, 0, 5)), linetype = 2) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
-  #geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
+  geom_text(data = df_labels_scaled, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
   expand_limits(x = c(-2.1, 3.1) + 2, y = 5 * c(-2.1, 2.1)) +
   coord_fixed(ratio = 1/5) +
   theme_minimal_grid()
-
-plot_grid(p_cart, p_cart_scaled, labels = "auto")
 ```
 
 The invariance under rescaling is critically important for data visualization, because it implies that our visualizations will generally not depend on the units that we choose to show the data in. For example, if we plot temperature over time, it doesn't matter whether we plot it in Farenheit or Celsius (which is both rescaled and translated relative to Farenheit), the curve will look the same. Only the numbers that are displayed along the axis will change. Because units are arbitrary, and we can measure quantities in any units that we want to use, if a visualization were to change under a change of units it would have to be considered arbitrary and not objective.
 
 *Talk about fixed vs. variable aspect ratio. E.g., temperature vs. time can have any aspect ratio, but temperature at one place vs. at another should have a fixed aspect ratio.*
 
-```{r}
+```{r fig.width = 7.5}
 temps_wide <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
                   "USC00516128", # Honolulu, HI 96813
                   "USW00027502", # Barrow, AK 99723, coldest point in the US
-                  "USC00042319" # Death Valley, CA 92328 hottest point in the US
+                  "USC00042319", # Death Valley, CA 92328 hottest point in the US
+                  "USW00093107", # San Diego, CA 92145
+                  "USW00012918", # Houston, TX 77061
+                  "USC00427606"  # Salt Lake City, UT 84103
                 )) %>%
   mutate(location = fct_recode(factor(station_id),
                                "Chicago, IL" = "USW00014819",
                                "Honolulu, HI" = "USC00516128",
                                "Barrow, AK" = "USW00027502",
-                               "Death Valley, CA" = "USC00042319")) %>%
+                               "Death Valley, CA" = "USC00042319",
+                               "San Diego, CA" = "USW00093107",
+                               "Houston, TX" = "USW00012918",
+                               "Salt Lake City, UT" = "USC00427606")) %>%
   select(-station_id, -flag) %>%
   spread(location, temperature) %>%
   arrange(date) %>%
   mutate(label = ifelse(date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
                         format(date, "%b 1st"), ""))
 
-ggplot(temps_wide, aes(x = `Barrow, AK`, y = `Death Valley, CA`, color = as.numeric(date))) +
-  geom_point(size = 1) +
-  geom_text_repel(aes(label = label), point.padding = .4, color = "black") +
-  coord_fixed(xlim = c(-25, 48), ylim = c(40, 110), expand = FALSE) +
-  scale_color_continuous_qualitative(guide = "none") +
-  #scale_y_continuous(limits = c(-30, 110), expand = c(0, 0), breaks = seq(-30, 90, by=30), name = "temperature (F)") +
+temp_plot <- ggplot(temps_wide, aes(x = date, y = `Houston, TX`)) +
+  geom_line(size = 1, color = "#0072B2") +
+  scale_x_date(name="date", expand=c(0, 0)) + 
+  scale_y_continuous(limits = c(50, 90),
+                     name = "temperature (F)") +
   theme_minimal_grid()
+
+plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
+          temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
+```
+
+```{r fig.width = 8.5, fig.asp = 0.5}
+tempsplot_F <- ggplot(temps_wide, aes(x = `San Diego, CA`, y = `Houston, TX`)) +
+  geom_path(size = 1, color = "#0072B2") +
+  geom_text_repel(aes(label = label), point.padding = .4, color = "black",
+                  min.segment.length = 0) +
+  coord_fixed(xlim = c(45, 85), ylim = c(48, 88),
+              expand = FALSE) +
+  scale_color_continuous_qualitative(guide = "none") +
+  scale_x_continuous(breaks = c(10*(5:8))) +
+  xlab("temperature in San Diego, CA (F)") +
+  ylab("temperature in Houston, TX (F)") +
+  theme_minimal_grid()
+
+# Farenheit to Celsius conversion
+
+F2C <- function(t) {(t-32)*5/9}
+
+tempsplot_C <- ggplot(temps_wide, aes(x = F2C(`San Diego, CA`), y = F2C(`Houston, TX`))) +
+  geom_path(size = 1, color = "#0072B2") +
+  geom_text_repel(aes(label = label), point.padding = .4, color = "black",
+                  min.segment.length = 0) +
+  coord_fixed(xlim = F2C(c(45, 85)), ylim = F2C(c(48, 88)),
+              expand = FALSE) +
+  scale_color_continuous_qualitative(guide = "none") +
+  scale_x_continuous(breaks = c(5*(2:6))) +
+  xlab("Temperature in San Diego, CA (C)") +
+  ylab("Temperature in Houston, TX (C)") +
+  theme_minimal_grid()
+
+plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
 ```
 
 ## Nonlinear axes
@@ -183,4 +237,41 @@ ggplot(temps, aes(x = date, y = temperature, color = location)) +
   theme_minimal() +
   coord_polar(theta = "x") +
   theme_minimal_grid()
+```
+
+## Geospatial coordinate systems
+
+```{r fig.width = 8.5}
+library(sf)
+library(maps)
+usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))
+
+p1 <- ggplot(usa) + 
+  geom_sf() +
+  theme_minimal_grid() + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"))
+
+usa_laea <- st_transform(usa, st_crs("+proj=laea +lat_0=30 +lon_0=-100")) # Lambert equal area
+p2 <- ggplot(usa_laea) +
+  geom_sf() +
+  theme_minimal_grid() + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"))
+
+usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercartor
+p3 <- ggplot(usa_tmerc) +
+  geom_sf() +
+  theme_minimal_grid() + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"))
+
+usa_robin <- st_transform(usa, st_crs("+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0")) # 
+p4 <- ggplot(usa_robin) +
+  geom_sf() +
+  theme_minimal_grid() + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"))
+
+plot_grid(p1, p4, p2, p3)
 ```
