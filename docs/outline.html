@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="common-pitfalls-of-color-use.html">
-<link rel="next" href="outline.html">
+<link rel="prev" href="image-file-formats.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -147,103 +147,87 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="image-file-formats" class="section level1">
-<h1><span class="header-section-number">12</span> Understanding the most commonly used image file formats</h1>
-<p>Anybody who is making figures for data visualization will eventually have to know a few things about how figures are stored on the computer. There are many different image file formats, and each has its own set of benefits and disadvantages. Choosing the right file format and the right workflow can alleviate many figure-preparation headaches.</p>
-<p>My own preference is to use pdf for high-quality publication-ready files and generally whenever possible, png for online documents and other scenarios where bitmap graphics are required, and jpeg as the final resort if the png files are too large. In the following, I explain the key differences between these file formats and their respective benefits and drawbacks.</p>
-<div id="bitmap-and-vector-graphics" class="section level2">
-<h2><span class="header-section-number">12.1</span> Bitmap and vector graphics</h2>
-<p>The most important difference between the various graphics formats is whether they are bitmap or vector (Table <a href="image-file-formats.html#tab:file-formats">12.1</a>). Bitmaps or raster graphics store the image as a grid of individual points (called pixels), each with a specified color. By contrast, vector graphics store the geometric arrangement of individual graphical elements in the image. Thus, a vector image contains information such as “there’s a black line from the top left corner to the bottom right corner, and a red line from the bottom left corner to the top right corner,” and the actual image is recreated on the fly as it is displayed on screen or printed.</p>
-<table>
-<caption><span id="tab:file-formats">Table 12.1: </span> Commonly used image file formats</caption>
-<thead>
-<tr class="header">
-<th align="left">Acronym</th>
-<th align="left">Name</th>
-<th align="left">Type</th>
-<th align="left">Application</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">pdf</td>
-<td align="left">Portable Document Format</td>
-<td align="left">vector</td>
-<td align="left">general purpose</td>
-</tr>
-<tr class="even">
-<td align="left">eps</td>
-<td align="left">Encapsulated PostScript</td>
-<td align="left">vector</td>
-<td align="left">general purpose, outdated; use pdf</td>
-</tr>
-<tr class="odd">
-<td align="left">svg</td>
-<td align="left">Scalable Vector Graphics</td>
-<td align="left">vector</td>
-<td align="left">online use</td>
-</tr>
-<tr class="even">
-<td align="left">png</td>
-<td align="left">Portable Network Graphics</td>
-<td align="left">bitmap</td>
-<td align="left">optimized for line drawings</td>
-</tr>
-<tr class="odd">
-<td align="left">jpeg</td>
-<td align="left">Joint Photographic Experts Group</td>
-<td align="left">bitmap</td>
-<td align="left">optimized for photographic images</td>
-</tr>
-<tr class="even">
-<td align="left">tiff</td>
-<td align="left">Tagged Image File Format</td>
-<td align="left">bitmap</td>
-<td align="left">print production, accurate color reproduction</td>
-</tr>
-<tr class="odd">
-<td align="left">raw</td>
-<td align="left">Raw Image File</td>
-<td align="left">bitmap</td>
-<td align="left">digital photography, needs post-processing</td>
-</tr>
-<tr class="even">
-<td align="left">gif</td>
-<td align="left">Graphics Interchange Format</td>
-<td align="left">bitmap</td>
-<td align="left">outdated, do not use</td>
-</tr>
-</tbody>
-</table>
-<p>Vector graphics are also called “resolution-independent,” because they can be magnified to arbitrary size without losing detail or sharpness. See Figure <a href="image-file-formats.html#fig:iris-zoom">12.1</a> for a demonstration.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:iris-zoom"></span>
-<img src="figures/iris_zoom.png" alt="Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square around the number seven indicates the area we’re magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated and blurry as we zoom in further. (c) As part (b), but now for a vector representatin of the image. The image maintains perfect sharpness at arbitrary magnification levels." width="2430" />
-<p class="caption">
-Figure 12.1: Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square around the number seven indicates the area we’re magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated and blurry as we zoom in further. (c) As part (b), but now for a vector representatin of the image. The image maintains perfect sharpness at arbitrary magnification levels.
-</p>
+<div id="outline" class="section level1 unnumbered">
+<h1>Outline</h1>
+<p>Chapters for which some material exists at this time are marked with stars, as follows:</p>
+<p>*Chapter started; made relevant figures and/or wrote rudimentary first draft<br />
+**Chapter mostly complete</p>
+<div id="part-i-from-data-to-visualization" class="section level2 unnumbered">
+<h2>Part I: From data to visualization</h2>
+<ol>
+<li><p><strong>Mapping data onto aesthetics</strong>*<br />
+Explains the basic concept of aesthetic mapping, which lies at the heart of any data visualization.</p></li>
+<li><p><strong>Coordinate systems and axes</strong>*<br />
+Explains coordinate systems and positional scales (including nonlinear scales).</p></li>
+<li><p><strong>Effective use of color</strong>**<br />
+Covers basic concepts of color use, as a tool to distinguish, as a tool to represent a value, and as a tool to highlight. Introduces the three basic types of color scales: qualitative, directional, diverging.</p></li>
+<li><p><strong>Directory of visualizations</strong>*<br />
+Provides a graphical guide to the most commonly used types of data visualizations, with pointers to the relevant chapters covering them.</p></li>
+<li><p><strong>Visualizing amounts</strong><br />
+Visualizing amounts using bars, areas, and colors.</p></li>
+<li><p><strong>Visualizing paired data</strong><br />
+Discusses common strategies for paired data, including scatter plots and paired dot plots.</p></li>
+<li><p><strong>Visualizing time series</strong><br />
+Discusses common strategies for time series, including line plots and sparklines</p></li>
+<li><p><strong>Visualizing distributions I: Histograms and density plots</strong>**<br />
+Discusses strategies for visualizing individual distributions, including pros and cons of histograms and density plots.</p></li>
+<li><p><strong>Visualizing distributions II: Cumulative density functions and q-q plots</strong>**<br />
+Discusses strategies for visualizing distributions that are exact and non-arbitrary (unlike histograms and density plots) but are more difficult to interpret.</p></li>
+<li><p><strong>Visualizing many distributions at once: boxplots, violins, and ridgeline plots</strong>**<br />
+Discusses strategies for visualizing many distributions, including boxplots, violin plots, jittered points, and others.</p></li>
+<li><p><strong>Visualizing proportions I: Pie charts, stacked bar plots, and stacked densities</strong>**<br />
+Discusses stacked bar plots, stacked density plots, and pie charts.</p></li>
+<li><p><strong>Visualizing proportions II: Nested or changing proportions</strong><br />
+Discusses treemaps and parallel sets (sankeys).</p></li>
+<li><p><strong>Visualizing trends</strong><br />
+Discusses various approaches to smoothing data (linear regression line, GAMs, splines), and common pitfalls (many smoothers are unreliable or misleading at the edges of the data range).</p></li>
+<li><p><strong>Visualizing uncertainty</strong><br />
+Discusses error bars, confidence bands, credible intervals, posterior distributions, etc.</p></li>
+<li><p><strong>Visualizing geospatial data</strong><br />
+Basic intro to maps</p></li>
+</ol>
 </div>
-<p>Vector graphics have two down-sides that can and often do cause trouble in real-world applications. First, because vector graphics are redrawn on the fly by the graphics program with which they are displayed, it can happen that there are differences in how the same graphic looks in two different programs, or on two different computers. This problem occurs most frequently with text, for example when the required font is not available and the rendering software substitutes a different font. Font substitutions will typically allow the viewer to read the text as intended, but the resulting image rarely looks good. There are ways to avoid these problems, such as outlining or embedding all fonts in a pdf file, but they may require special software and/or special technical knowledge to achieve. By contrast, bitmap images will always look correct.</p>
-<p>Second, for very large and/or complex figures, vector graphics can grow to enourmous file sizes and be slow to render. For example, a scatter plot of millions of data points will contain the x and y coordinates of every individual point, and each point needs to be drawn when the image is rendered, even if points overlap and/or are hidden by other graphical elements. As a consequence, the file may be many megabytes in size, and it may take the rendering software some time to display the figure. When I was a postdoc in the early 2000s, I once created a pdf file that at the time took almost an hour to display in the Acrobat reader. While modern computers are much faster and rendering times of many minutes are all but unheard of these days, even a rendering time of a few seconds can be disruptive if you want to embed your figure into a larger document and your pdf reader grinds to a halt every time you display the page with that one offending figure. Of course, on the flip side, simple figures with only a small number of elements (a few data points and some text, say) will often be much smaller as vector graphics than as bitmaps, and the viewing software may even render such figures faster than it would the corresponding bitmap images.</p>
+<div id="part-ii-principles-of-figure-design" class="section level2 unnumbered">
+<h2>Part II: Principles of figure design</h2>
+<ol start="16" style="list-style-type: decimal">
+<li><p><strong>Figure titles and captions</strong><br />
+Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure.</p></li>
+<li><p><strong>Your axis labels are too small</strong>**<br />
+Discusses the widespread problem of excessively small axis labels.</p></li>
+<li><p><strong>Choosing the right axis settings</strong><br />
+Covers various aspects related to axis choice, including linear vs. logarithmic axes, as well as issues of axis expansion beyond the data range. Also takes up the topic of aspect ratio once again.</p></li>
+<li><p><strong>Background grids</strong>*<br />
+Discusses when and how to use background grids and other guide lines in figures.</p></li>
+<li><p><strong>Don’t box yourself in</strong><br />
+Argues to avoid boxes and frames around figure parts. Also discusses the general principle of maximizing the ink used to convey information. Could be combined with chapter on background grids.</p></li>
+<li><p><strong>The principle of proportional ink</strong>*<br />
+Explains that the size of colored areas needs to be proportional to the data value they represent.</p></li>
+<li><p><strong>Handling overlapping points</strong>**<br />
+Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.</p></li>
+<li><p><strong>Avoid line drawings</strong>**<br />
+Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.</p></li>
+<li><p><strong>Common pitfalls of color use</strong>**<br />
+Also contains a section on designing for colorblindness.</p></li>
+<li><p><strong>Redundant coding</strong>*<br />
+Explains how to make sure that key information in the figure is provided in multiple, reduant ways, for example through color and location or color and direct labeling.</p></li>
+<li><p><strong>Multi-part figures</strong><br />
+Discusses issues that arise in multi-part figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-part figures.</p></li>
+<li><p><strong>Don’t go 3d</strong><br />
+Argues why 3d plots are generally problematic (figures are fundamentally a 2d medium, and in 3d plots data is subjected to an additional, non-obvious transformation from 3d to 2d) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.</p></li>
+</ol>
 </div>
-<div id="lossless-and-lossy-compression-of-bitmap-graphics" class="section level2">
-<h2><span class="header-section-number">12.2</span> Lossless and lossy compression of bitmap graphics</h2>
-<p>Most bitmap file formats employ some form of data compression to keep file sizes manageable. There are two fundamental types of compression: lossless and lossy. Lossless compression guarantees that the compressed image is pixel-for-pixel identical to the original image, whereas lossy compression accepts some image degradation in return for smaller file sizes.</p>
-<p>To understand which approach is appropriate when, it is helpful to have a basic understanding of how these different compression algorithms work. Let’s first consider lossless compression. Imagine an image with a black background, where large areas of the image are solid black and thus many black pixels appear right next to each other. Each black pixel can be represented by three zeroes in a row: 0 0 0, representing zero intensities in the red, green, and blue color channels of the image. The areas of black background in the image correspond to thousands of zeros in the image file. Now assume somewhere in the image are 1000 consecutive black pixels, corresponding to 3000 zeros. Instead of writing out all these zeros, we could store simply the total number of zeros we need, e.g. by writing 3000 0. In this way, we have conveyed the exact same information with only two numbers, the count (here, 3000) and the value (here, 0). Over the years, many clever tricks along these lines have been developed, and modern lossless image formats (such as png) can store bitmap data with impressive efficiency. However, all lossless compression algorithms perform best when images have large areas of uniform color, and therefore Table <a href="image-file-formats.html#tab:file-formats">12.1</a> lists png as optimized for line drawings.</p>
-<p>Photographic images rarely have multiple pixels of identical color and brightness right next to each other. Instead they have gradients and other somewhat regular patterns on many different scales. Therefore, lossless compression of these images often doesn’t work very well, and lossy compression has been developed as an alternative. The key idea of lossy compression is that some details in an image are too subtle for the human eye, and those can be discarded without obvious degradation in the image quality. For example, consider a gradient of 1000 pixels, each with a slightly different color value. Chances are the gradient will look nearly the same if it is drawn with only 200 different colors and coloring every five adjacent pixels in the exact same color.</p>
-<p>The most widely used lossy image format is jpeg (Table <a href="image-file-formats.html#tab:file-formats">12.1</a>), and indeed many digital cameras output images as jpeg by default. Jpeg compression works exceptionally well for photographic images, and huge reductions in file-size can often be obtained with very little degradation in image quality. However, jpeg compression fails when images contain sharp edges, such as created by line drawings or by text. In those cases, jpeg compression can result in very noticeable artifacts (Figure <a href="image-file-formats.html#fig:jpeg-example">12.2</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:jpeg-example"></span>
-<img src="figures/jpeg_example_combined.jpg" alt="Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. Image credit: Claus O. Wilke" width="806" />
-<p class="caption">
-Figure 12.2: Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. <em>Image credit: Claus O. Wilke</em>
-</p>
-</div>
-</div>
-<div id="converting-between-image-formats" class="section level2">
-<h2><span class="header-section-number">12.3</span> Converting between image formats</h2>
-<p>It is generally possible to convert any image format into any other image format. For example, on a Mac, you can open an image with Preview and then export to a number of different formats. In this process, though, important information can get lost, and information is never regained. For example, after saving a vector graphic into a bitmap format, e.g. a pdf file as a jpeg, the resolution independence that is a key feature of the vector graphic has been lost. Conversely, saving a jpeg image into a pdf file does not magically turn the image into a vector graphic. The image will still be a bitmap image, just stored inside the pdf file. Similarly, converting a jpeg file into a png file does not remove any artifacts that may have been introduced by the jpeg compression algorithm.</p>
-<p>It is therefore a good rule of thumb to always store the original image in the format that maintains maximum resolution, accuracy, and flexibility. Thus, for data visualizations, create your figure as pdf and then convert into png or jpg when necessary. Similarly, for images that are only available as bitmaps, such as digital photographs, store them in a format that doesn’t use lossy compression, or if that can’t be done, compress as little as possible. Also, store the image in as high a resolution as possible, and down-scale when needed.</p>
+<div id="part-iii-miscellaneous-topics" class="section level2 unnumbered">
+<h2>Part III: Miscellaneous topics</h2>
+<ol start="28" style="list-style-type: decimal">
+<li><p><strong>Understanding the most commonly used image file formats</strong>**<br />
+Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.</p></li>
+<li><p><strong>Choosing the right plotting software</strong><br />
+Discusses the pros and cons of different software available to make graphs.</p></li>
+<li><p><strong>Selecting figures for a report, paper, or presentation</strong><br />
+Discusses how to compile larger sets of figures to tell a story; e.g., always move from less processed to more processed data representations; also, avoid repeating the same type of figure many times.</p></li>
+<li><p><strong>Annotated bibliography</strong><br />
+Provides a list of other reading material on related topics, with a brief paragraph describing the contents of each reference.</p></li>
+</ol>
 
 </div>
 </div>
@@ -252,8 +236,8 @@ Figure 12.2: Illustration of jpeg artifacts. (a) The same image is reproduced mu
           </div>
         </div>
       </div>
-<a href="common-pitfalls-of-color-use.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="outline.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="image-file-formats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

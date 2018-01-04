@@ -37,7 +37,7 @@ ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_
 ```
 
 ```{r}
-hawaii_income_diff <- select(hawaii_income, -median_income_moe) %>%
+hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
   spread(year, median_income) %>%
   mutate(income_diff = `2015` - `2010`)
 

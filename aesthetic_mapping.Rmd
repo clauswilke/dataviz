@@ -7,6 +7,43 @@ source("_common.R")
 
 ## Geometric objects
 
+Introduce basic data types, with table showing examples:
+
+- numerical continuous
+- numerical discrete
+- categorical
+- ordered factor
+- date/time
+- text
+
+Table: (\#tab:basic-data-types) Types of data. **Table and caption need work.**
+
+---------------------------------------------------------------------------------------------------------------
+Type                     Examples              Appropriate scale       Description
+------------------------ --------------------- ----------------------- -------------------------------
+quantitative/numerical   1.3, 5.7, 83, 1.5e-2          continuous              Numbers.
+continuous
+ 
+quantitative/numerical   1, 2, 3, 4            discrete                Also numbers.
+discrete
+ 
+qualitative/categorical  dog, cat, fish        discrete                Categories without order.
+
+qualitative ordered      good, fair, poor      discrete                Categories with order
+
+date or time             Jan. 5 2018, 8:03am   continuous or discrete  Specific days and/or times or
+                                                                       generics (May 1st, Dec. 25)
+
+text                     The quick brown fox   none, or discrete       Free-form text. Can be treated
+                         jumps over the lazy                           as categorical if needed.
+                         dog.
+--------------------------------------------------------------------------------------------------------------
+
+
+Discuss how all of these can be mapped onto any type of scale. To map categorical data onto position scales, we count them and use the counts.
+
+Show first few lines of temperature table and explain month, day, temperature, city, weather station?
+
 ## Scales
 
 Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
@@ -23,5 +60,6 @@ ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) +
   guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
          size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
                              title = "weight (1000 lbs)")) +
+  theme_half_open() + background_grid() +
   theme(legend.title.align = 0.5)
 ```

@@ -1,4 +1,4 @@
-new_session: no
+new_session: yes
 output_dir: "_book_final"
 delete_merged_file: true
 
@@ -9,26 +9,31 @@ rmd_files: [
 
   # Part I
   #"aesthetic_mapping.Rmd",
-  "color_basics.Rmd",
-  "pitfalls_of_color_use.Rmd", # completed
-  #"redundant_coding.Rmd",
-  "small_axis_labels.Rmd", # completed
-  ##"aspect_ratio.Rmd",
-  "background_grids.Rmd", # completed
-  ##"proportional_ink.Rmd",
-  "overlapping_points.Rmd", # completed
-  "avoid_line_drawings.Rmd", # completed
-
-  # Part II
+  #"coordinate_systems_axes.Rmd",
+  "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
   ##"visualizing_amounts.Rmd",
-  "visualizing_proportions.Rmd", # completed
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
+  "visualizing_proportions.Rmd", # completed
+
+  # Part II
+
+  "small_axis_labels.Rmd", # completed
+  ##"aspect_ratio.Rmd",
+
+  "background_grids.Rmd", # completed
+  #"proportional_ink.Rmd",
+  "overlapping_points.Rmd", # completed
+  "avoid_line_drawings.Rmd", # completed
+  "pitfalls_of_color_use.Rmd", # completed
+  #"redundant_coding.Rmd",
 
   # Part III
   "image_file_formats.Rmd", # completed
+
+  "outline.Rmd",
 
   #"notes.Rmd",
 

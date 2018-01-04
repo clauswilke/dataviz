@@ -7,8 +7,6 @@ library(ggforce)
 library(ggridges)
 ```
 
-# (PART\*) Part II: A visualization for every occasion {-}
-
 # Directory of visualizations
 
 ```{r}

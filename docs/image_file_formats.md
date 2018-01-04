@@ -2,7 +2,7 @@
 
 # (PART\*) Part III: Miscellaneous topics {-}
 
-# Understanding the most commonly used image file formats
+# Understanding the most commonly used image file formats {#image-file-formats}
 
 Anybody who is making figures for data visualization will eventually have to know a few things about how figures are stored on the computer. There are many different image file formats, and each has its own set of benefits and disadvantages. Choosing the right file format and the right workflow can alleviate many figure-preparation headaches. 
 
