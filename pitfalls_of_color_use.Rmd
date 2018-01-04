@@ -248,7 +248,7 @@ reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60,
  
 While there are several good, cvd-safe color scales readily available, we need to recognize that they are no magic bullets. It is very possible to use a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In the end, in addition to the various color-design considerations discussed in this chapter and the previous one, I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
 
-(ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, and four thin lines, all colored in the same four colors. We can see that the colors become more difficult to distinguish the thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
+(ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, four thin lines, and four groups of points, all colored in the same four colors. We can see that the colors become more difficult to distinguish the smaller or thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
 
 ```{r colors-thin-lines, fig.width = 6.5, fig.asp = 0.8, fig.cap = '(ref:colors-thin-lines)'}
 tiles_df <- data.frame(x = c(1, 2, 1, 2),
@@ -261,12 +261,19 @@ segments_df <- data.frame(x0 = rep(0.55, 4),
                           y1 = seq(.9, .6, -.1),
                           type = c("A", "B", "C", "D"))
 
+points_df <- data.frame(x = rep(1.58 + .28*(0:3), 4),
+                        y = rep(seq(.4, .1, -.1), each = 4),
+                        size = rep(c(3, 2, 1, .5), 4),
+                        type = rep(c("A", "B", "C", "D"), each = 4))
+
 p <- ggplot() + 
   geom_tile(data = tiles_df, aes(x, y, fill = type), width = 0.9, height = 0.45) +
   geom_segment(data = segments_df, aes(x = x0, xend = x1, y = y0, yend = y1, color = type), size = 1.5) +
-  geom_segment(data = segments_df, aes(x = x0, xend = x1, y = y0 - .5, yend = y1 - .5, color = type), size = .5) +
+  geom_segment(data = segments_df, aes(x = x0, xend = x0 + .9, y = y0 - .5, yend = y1 - .5, color = type), size = .5) +
+  geom_point(data = points_df, aes(x, y, color = type, size = size)) +
   scale_fill_OkabeIto(order = c(1, 4, 2, 3)) +
   scale_color_OkabeIto(order = c(1, 4, 2, 3)) +
+  scale_size_identity() +
   coord_cartesian(xlim = c(0.5, 2.5), ylim = c(0.05, 2.05), expand = FALSE) +
   theme_nothing()
 
