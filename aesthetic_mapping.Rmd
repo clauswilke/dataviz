@@ -1,6 +1,9 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(forcats)
+library(gtable)
 ```
 
 # Visualizing data: mapping data onto aesthetics
@@ -65,7 +68,10 @@ ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) +
   theme_half_open() + background_grid() +
   theme(legend.title.align = 0.5)
 ```
-```{r fig.asp = .45}
+```{r fig.width = 8.5, fig.asp = .45}
+month_names <- c("01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",
+                   "07" = "Jul", "08" = "Aug", "09" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")
+
 mean_temps <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
@@ -77,27 +83,86 @@ mean_temps <- filter(ncdc_normals,
                   "USW00012918" # Houston, TX 77061
                 )) %>%
   mutate(location = fct_recode(factor(station_id),
-                               "Chicago, IL" = "USW00014819",
+                               "Chicago" = "USW00014819",
                                #"Honolulu, HI" = "USC00516128",
                                #"Barrow, AK" = "USW00027502",
-                               "Death Valley, CA" = "USC00042319",
-                               "San Diego, CA" = "USW00093107",
+                               "Death Valley" = "USC00042319",
+                               "San Diego" = "USW00093107",
                                #"Salt Lake City, UT" = "USC00427606",
-                               "Houston, TX" = "USW00012918")) %>%
+                               "Houston" = "USW00012918")) %>%
   group_by(location, month) %>%
   summarize(mean = mean(temperature)) %>%
-  mutate(location = factor(location, levels = c()))
+  ungroup() %>%
+  mutate(location = factor(location, levels = c("Death Valley", "Houston", "San Diego", "Chicago")),
+         month = month_names[month]) %>%
+  mutate(month = factor(month, levels = unname(month_names)))
 
-ggplot(mean_temps, aes(x = month, y = location, fill = mean)) + 
+p <- ggplot(mean_temps, aes(x = month, y = location, fill = mean)) + 
   geom_tile(width = .95, height = 0.95) + 
-  scale_fill_viridis_c(option = "B", begin = 0.15, end = 0.98) + 
+  scale_fill_viridis_c(option = "B", begin = 0.15, end = 0.98,
+                       name = "temperature (F)") + 
+  scale_y_discrete(name = NULL) +
   coord_fixed(expand = FALSE) +
   theme_half_open() +
-  theme(axis.line = element_blank())
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        #axis.text.y = element_text(size = 14),
+        legend.title = element_text(size = 12))
+
+# fix legend
+# extract legend
+g <- plot_to_gtable(p)
+grobs <- g$grobs
+legend_index <- which(sapply(grobs, function(x) x$name) == "guide-box")
+legend <- grobs[[legend_index]]
+
+# extract guides table
+guides_index <- which(sapply(legend$grobs, function(x) x$name) == "layout")
+guides <- legend$grobs[[guides_index]]
+
+# add extra column for spacing
+# guides$width[5] is the extra spacing from the end of the legend text
+# to the end of the legend title. If we instead distribute it 50:50 on
+# both sides, we get a centered legend
+guides <- gtable_add_cols(guides, 0.5*guides$width[5], 1)
+guides$widths[6] <- guides$widths[2]
+title_index <- guides$layout$name == "title"
+guides$layout$l[title_index] <- 2
+
+# reconstruct legend and write back
+legend$grobs[[guides_index]] <- guides
+g$grobs[[legend_index]] <- legend
+
+ggdraw(g)
 ```
 
-```{r}
-titanic_groups <- titanic_all %>% filter(class != "*") %>% select(class, sex) %>% group_by(class, sex) %>% tally()
+```{r fig.width = 5.5}
+titanic_groups <- titanic_all %>% filter(class != "*") %>% 
+  select(class, sex) %>% 
+  group_by(class, sex) %>% 
+  tally() %>% arrange(class, desc(sex)) %>%
+  mutate(sex = factor(sex, levels = c("female", "male"))) %>%
+  group_by(class) %>%
+  mutate(nlabel = cumsum(n) - n/2) %>%
+  ungroup() %>%
+  mutate(class = paste(class, "class"))
 
-ggplot(titanic_groups, aes(x=class, y=n, fill=sex)) +geom_col(position="stack", color = "white", size = 2, width = 1)
+ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
+  geom_col(position = "stack", color = "white", size = 1, width = 1) +
+  geom_text(aes(y = nlabel, label = n), color = "white", size = 14/.pt) +
+  scale_x_discrete(expand = c(0, 0), name = NULL) +
+  scale_y_continuous(expand = c(0, 0), breaks = NULL, name = NULL) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2"),
+                    breaks = c("female", "male"),
+                    labels = c("female passengers   ", "male passengers"),
+                    name = NULL) +
+  theme_minimal_grid() +
+  theme(panel.grid.major = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_text(size = 14),
+        #legend.position = c(0.13, 0.6),
+        #legend.justification = c(0, 0),
+        legend.position = "bottom",
+        legend.justification = "center",
+        legend.background = element_rect(fill = "white"))
 ```
