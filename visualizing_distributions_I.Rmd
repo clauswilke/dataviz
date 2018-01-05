@@ -22,9 +22,13 @@ age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21-
                        count = age_counts,
                        check.names = FALSE)
 
+age_hist_display <- rename(age_hist,
+                           `Age range` = `age range`,
+                           Count = count)
+
 knitr::kable(
   list(
-    age_hist[1:6,], age_hist[7:12,], age_hist[13:15,]
+    age_hist_display[1:6,], age_hist_display[7:12,], age_hist_display[13:15,]
   ),
   caption = 'Numbers of passenger with known age on the Titanic.', booktabs = TRUE,
   row.names = FALSE

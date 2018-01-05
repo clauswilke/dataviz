@@ -44,10 +44,84 @@ text                     The quick brown fox   none, or discrete       Free-form
                          dog.
 --------------------------------------------------------------------------------------------------------------------
 
+Table: (\#tab:data-example) First 12 rows of a dataset listing daily temperature normals for four weather stations. Source: NOAA.
+
+ Month   Day  Location      Station ID   Temperature
+------- ----- ------------ ------------ -------------
+  Jan     1   Chicago      USW00014819        25.6
+  Jan     1   San Diego    USW00093107        55.2
+  Jan     1   Houston      USW00012918        53.9
+  Jan     1   Death Valley USC00042319        51.0
+  Jan     2   Chicago      USW00014819        25.5
+  Jan     2   San Diego    USW00093107        55.3
+  Jan     2   Houston      USW00012918        53.8
+  Jan     2   Death Valley USC00042319        51.2
+  Jan     3   Chicago      USW00014819        25.3
+  Jan     3   San Diego    USW00093107        55.3
+  Jan     3   Death Valley USC00042319        51.3
+  Jan     3   Houston      USW00012918        53.8
+
+
 
 Discuss how all of these can be mapped onto any type of scale. To map categorical data onto position scales, we count them and use the counts.
 
-Show first few lines of temperature table and explain month, day, temperature, city, weather station?
+(ref:common-aesthetics) Commonly used aesthetics in data visualization: position, size, line width, color, shape, line type. Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can only represent discrete data (shape, line type).
+
+```{r common-aesthetics, fig.width = 7.5, fig.asp = 0.45, fig.cap = '(ref:common-aesthetics)'}
+aes_pos <- ggdraw() + 
+  geom_segment(data = data.frame(x = c(0, 0.5),
+                                 xend = c(1, 0.5),
+                                 y = c(0.5, 0),
+                                 yend = c(0.5, 1)),
+                aes(x = x, y = y, xend = xend, yend = yend),
+                arrow = arrow(length = grid::unit(12, "pt")), size = .75) +
+  draw_text("y", .5, 1, size = 14, vjust = 1, hjust = 2) +
+  draw_text("x", 1, .5, size = 14, vjust = 1.5, hjust = 1) + 
+  coord_cartesian(xlim = c(-.2, 1.2), ylim = c(-.2, 1.2))
+
+aes_color <- ggdraw() +
+  geom_tile(data = data.frame(x = 0.15 + .2333*(0:3)),
+            aes(x, y = .5, fill = factor(x)), width = .2, height = .6) +
+  scale_fill_OkabeIto(guide = "none")
+
+aes_shape <- ggdraw() +
+  geom_point(data = data.frame(x = (.5 + 0:3)/4),
+             aes(x, y = .5, shape = factor(x)), size = 8, fill = "grey80") +
+  scale_shape_manual(values = 21:24)
+
+aes_size <- ggdraw() +
+  geom_point(data = data.frame(x = (.5 + 0:3)/4),
+             aes(x, y = .5, size = factor(x)), shape = 21, fill = "grey80") +
+  scale_size_manual(values = c(2, 5, 8, 11))
+
+aes_lwd <- ggdraw() +
+  geom_segment(data = data.frame(x = rep(0.05, 4),
+                                 xend = rep(0.95, 4),
+                                 y = (1.5 + 0:3)/6,
+                                 yend = (1.5 + 0:3)/6,
+                                 size = 4:1),
+               aes(x = x, y = y, xend = xend, yend = yend, size = size)) +
+  scale_size_identity()
+
+aes_ltp <- ggdraw() +
+  geom_segment(data = data.frame(x = rep(0.05, 4),
+                                 xend = rep(0.95, 4),
+                                 y = (1.5 + 0:3)/6,
+                                 yend = (1.5 + 0:3)/6,
+                                 linetype = 4:1),
+               aes(x = x, y = y, xend = xend, yend = yend, linetype = linetype), size = 1) +
+  scale_linetype_identity()
+
+
+plot_grid(aes_pos, aes_size, aes_lwd,
+          aes_color, aes_shape, aes_ltp,
+          ncol = 3,
+          labels = c("position", "size", "line width", "color", "shape", "line type"),
+          label_x = 0.05, label_y = 0.95, hjust = 0, vjust = 1,
+          label_fontface = "plain")
+```
+
+
 
 ## Scales
 
@@ -66,7 +140,7 @@ ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) +
          size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
                              title = "weight (1000 lbs)")) +
   theme_half_open() + background_grid() +
-  theme(legend.title.align = 0.5)
+  theme(legend.title = element_text(size = 12))
 ```
 ```{r fig.width = 8.5, fig.asp = .45}
 month_names <- c("01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",

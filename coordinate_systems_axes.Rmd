@@ -85,12 +85,12 @@ temps_wide <- filter(ncdc_normals,
                   "USC00427606"  # Salt Lake City, UT 84103
                 )) %>%
   mutate(location = fct_recode(factor(station_id),
-                               "Chicago, IL" = "USW00014819",
-                               "Honolulu, HI" = "USC00516128",
+                               "Chicago" = "USW00014819",
+                               "Honolulu" = "USC00516128",
                                "Barrow, AK" = "USW00027502",
                                "Death Valley, CA" = "USC00042319",
-                               "San Diego, CA" = "USW00093107",
-                               "Houston, TX" = "USW00012918",
+                               "San Diego" = "USW00093107",
+                               "Houston" = "USW00012918",
                                "Salt Lake City, UT" = "USC00427606")) %>%
   select(-station_id, -flag) %>%
   spread(location, temperature) %>%
@@ -101,7 +101,7 @@ temps_wide_label <- mutate(temps_wide,
                                                       ymd("0000-07-01"), ymd("0000-10-01")),
                                           format(date, "%b 1st"), ""))
 
-temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston, TX`)) +
+temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   geom_line(size = 1, color = "#0072B2") +
   scale_x_date(name="date", expand=c(0, 0)) + 
   scale_y_continuous(limits = c(50, 90),
@@ -113,7 +113,7 @@ plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto")
 ```
 
 ```{r fig.width = 8.5, fig.asp = 0.5}
-tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego, CA`, y = `Houston, TX`)) +
+tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
                   min.segment.length = 0) +
@@ -121,15 +121,15 @@ tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego, CA`, y = `Houston, T
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(10*(5:8))) +
-  xlab("temperature in San Diego, CA (F)") +
-  ylab("temperature in Houston, TX (F)") +
+  xlab("temperature in San Diego (F)") +
+  ylab("temperature in Houston (F)") +
   theme_minimal_grid()
 
 # Farenheit to Celsius conversion
 
 F2C <- function(t) {(t-32)*5/9}
 
-tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego, CA`), y = F2C(`Houston, TX`))) +
+tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houston`))) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
                   min.segment.length = 0) +
@@ -137,8 +137,8 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego, CA`), y = F2C(`H
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(5*(2:6))) +
-  xlab("Temperature in San Diego, CA (C)") +
-  ylab("Temperature in Houston, TX (C)") +
+  xlab("Temperature in San Diego (C)") +
+  ylab("Temperature in Houston (C)") +
   theme_minimal_grid()
 
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
@@ -207,14 +207,14 @@ Make a figure of mean temperature across the year, as circular chart?
 
 ```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
-  filter(location %in% c("Chicago, IL",
-                         "Honolulu, HI",
-                         "Houston, TX",
-                         "San Diego, CA")) %>%
-  mutate(location = factor(location, levels = c("Houston, TX",
-                                                "Honolulu, HI",
-                                                "San Diego, CA",
-                                                "Chicago, IL")))
+  filter(location %in% c("Chicago",
+                         "Honolulu",
+                         "Houston",
+                         "San Diego")) %>%
+  mutate(location = factor(location, levels = c("Houston",
+                                                "Honolulu",
+                                                "San Diego",
+                                                "Chicago")))
 
 ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
@@ -222,6 +222,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   scale_y_continuous(limits = c(0, 90),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (F)") +
+  scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
   theme_minimal_grid()
 ```
 
@@ -234,6 +235,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   scale_y_continuous(limits = c(0, 90), expand = c(0, 0),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (F)") +
+  scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
   theme_minimal() +
   coord_polar(theta = "x", start = pi, direction = -1) +
   theme_minimal_grid()
@@ -273,5 +275,9 @@ p4 <- ggplot(usa_robin) +
   theme(panel.grid.major = element_line(color = "gray30"),
         axis.text = element_text(color = "gray30"))
 
-plot_grid(p1, p4, p2, p3)
+plot_grid(p1, p4, p2, p3,
+          labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercartor"),
+          label_x = 0.02, label_y = 0.98,
+          hjust = 0, vjust = 1,
+          label_fontface = "plain")
 ```
