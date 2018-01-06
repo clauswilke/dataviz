@@ -3,7 +3,7 @@
 source("_common.R")
 
 library(forcats)
-library(gtable)
+library(egg)
 ```
 
 # Visualizing data: mapping data onto aesthetics
@@ -125,12 +125,68 @@ plot_grid(aes_pos, aes_size, aes_lwd,
 
 ## Scales
 
+(ref:basic-scales-example) The numbers 1, 2, 3, 4 mapped onto a position scale, a color scale, and a shape scale. For each scale, each number corresponds to a unique position, color, or shape and vice versa.
+
+```{r basic-scales-example, fig.width = 5.5, fig.asp = 0.3, fig.cap = '(ref:basic-scales-example)'}
+df <- data.frame(x = c(1:4))
+
+scale_num <- ggplot(df, aes(x)) + 
+  geom_point(size = 3, color = "#0072B2", y = 1) + 
+  scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1, label = "position  ") +
+  scale_x_continuous(limits = c(.7, 4.4), breaks = 1:5, labels = c("1", "2", "3", "4", "5"), name = NULL, position = "top") +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.text = element_text(size = 14),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.margin = margin(3.5, 20, 3.5, 3.5))
+
+scale_color <- ggplot(df, aes(x, color = factor(x), fill = factor(x))) + 
+  geom_point(size = 5, shape = 22, y = 1) + 
+  scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1, label = "color  ") +
+  scale_x_continuous(limits = c(.7, 4.4), breaks = NULL) +
+  scale_color_manual(values = darken(c("#0082A6", "#4EBBB9", "#9CDFC2", "#D8F0CD"), .1), guide = "none") +
+  scale_fill_manual(values = c("#0082A6", "#4EBBB9", "#9CDFC2", "#D8F0CD"), guide = "none") +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 14),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.major = element_blank(),
+        plot.margin = margin(3.5, 20, 3.5, 3.5)) 
+
+scale_shape <- ggplot(df, aes(x, shape = factor(x))) + 
+  geom_point(size = 4, color = "grey30", y = 1, fill = "grey80") + 
+  scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1, label = "shape  ") +
+  scale_x_continuous(limits = c(.7, 4.4), breaks = NULL) +
+  scale_shape_manual(values = 21:24, guide = "none") +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 14),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.major = element_blank(),
+        plot.margin = margin(3.5, 20, 3.5, 3.5)) 
+
+# workaround so ggarrange doesn't produce empty plot
+cur_dev <- grDevices::dev.cur()
+grDevices::pdf(NULL)
+scales_grob <- ggarrange(scale_num, scale_color, scale_shape, ncol = 1)
+x <- grDevices::dev.off() # assign output to x to catch it
+x <- grDevices::dev.set(cur_dev)
+ggdraw(scales_grob)
+
+#plot_grid(scale_num, scale_color, scale_shape, ncol = 1, align = 'v', rel_heights = c(1, 1, .7))
+```
+
 Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
 
 (ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars (1973--74 models). This figure uses five separate scales to represent data: (i) the *x* axis (displacement); (ii) the *y* axis (fuel efficiency); (iii) the color of the data points (power); (iv) the size of the data points (weight); and (v) the shape of the data points (number of cylinders). Four of the five variables displayed (displacement, fuel efficiency, power, and weight) are numerical continuous. The remaining one (number of cylinders) can be considered to be either numerical discrete or qualitative ordered.
 
-```{r mtcars-five-scale, fig.width = 7.5, fig.cap = '(ref:mtcars-five-scale)'}
-ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
+```{r mtcars-five-scale, fig.width = 6.5, fig.asp = .8, fig.cap = '(ref:mtcars-five-scale)'}
+p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
   geom_point(color = "white") +
   scale_shape_manual(values = c(23, 24, 21), name = "cylinders") +
   scale_fill_continuous_carto(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
@@ -140,9 +196,22 @@ ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) +
          size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
                              title = "weight (1000 lbs)")) +
   theme_half_open() + background_grid() +
-  theme(legend.title = element_text(size = 12))
+  theme(#legend.title = element_text(size = 12),
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        legend.position = "top",
+        legend.direction = "vertical",
+        legend.justification = "center")
+
+legend <- get_legend(align_legend(p_mtcars))
+
+ggdraw() + 
+  draw_plot(p_mtcars + theme(legend.position = "none")) + 
+  draw_grob(legend, x = .36, y = .7, width = .7, height = .3)
 ```
-```{r fig.width = 8.5, fig.asp = .45}
+
+(ref:four-locations-temps-by-month) Monthly normal mean temperatures for four locations in the U.S. Source: NOAA 
+
+```{r four-locations-temps-by-month, fig.width = 8.5, fig.asp = .45, fig.cap = '(ref:four-locations-temps-by-month)'}
 month_names <- c("01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",
                    "07" = "Jul", "08" = "Aug", "09" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")
 
@@ -183,34 +252,13 @@ p <- ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
         #axis.text.y = element_text(size = 14),
         legend.title = element_text(size = 12))
 
-# fix legend
-# extract legend
-g <- plot_to_gtable(p)
-grobs <- g$grobs
-legend_index <- which(sapply(grobs, function(x) x$name) == "guide-box")
-legend <- grobs[[legend_index]]
-
-# extract guides table
-guides_index <- which(sapply(legend$grobs, function(x) x$name) == "layout")
-guides <- legend$grobs[[guides_index]]
-
-# add extra column for spacing
-# guides$width[5] is the extra spacing from the end of the legend text
-# to the end of the legend title. If we instead distribute it 50:50 on
-# both sides, we get a centered legend
-guides <- gtable_add_cols(guides, 0.5*guides$width[5], 1)
-guides$widths[6] <- guides$widths[2]
-title_index <- guides$layout$name == "title"
-guides$layout$l[title_index] <- 2
-
-# reconstruct legend and write back
-legend$grobs[[guides_index]] <- guides
-g$grobs[[legend_index]] <- legend
-
-ggdraw(g)
+# fix legend (make it centered)
+ggdraw(align_legend(p))
 ```
 
-```{r fig.width = 5.5}
+(ref:titanic-passengers-by-class-sex) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class.
+
+```{r titanic-passengers-by-class-sex, fig.width = 5.5, fig.cap = '(ref:titanic-passengers-by-class-sex)'}
 titanic_groups <- titanic_all %>% filter(class != "*") %>% 
   select(class, sex) %>% 
   group_by(class, sex) %>% 
