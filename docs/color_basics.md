@@ -1,6 +1,6 @@
 
 
-# Effective use of color in figures {#color-basics}
+# Color scales {#color-basics}
 
 
 There are three fundamental use cases for color in data visualizations: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we use and the way in which we use them are quite different for these three cases.

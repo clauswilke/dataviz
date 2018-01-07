@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="overlapping-points.html">
-<link rel="next" href="common-pitfalls-of-color-use.html">
+<link rel="prev" href="outline.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -152,79 +152,53 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="avoid-line-drawings" class="section level1">
-<h1><span class="header-section-number">11</span> Avoid line drawings</h1>
-<p>Whenever possible, visualize your data with solid, colored shapes rather than with lines that outline those shapes. Solid shapes are more easily perceived, are less likely to create visual artifacts or optical illusions, and do more immediately convey amounts than do outlines. In my experience, visualizations using solid shapes are both clearer and more pleasant to look at than equivalent versions that use line drawings. Thus, I avoid line drawings as much as possible. However, I want to emphasize that this recommendation does not supersede the principle of proportional ink (Chapter <a href="#proportional-ink"><strong>??</strong></a>).</p>
-<p>Line drawings have a long history in the field of data visualization because throughout most of the 20th century, scientific visualizations were drawn by hand and had to be reproducible in black-and-white. This precluded the use of areas filled with solid colors, including solid gray-scale fills. Instead, filled areas were sometimes simulated by applying hatch, cross-hatch, or stipple patterns. Early plotting software imitated the hand-drawn simulations and similarly made extensive use of line drawings, dashed or dotted line patterns, and hatching. While modern visualization tools and modern reproduction and publishing platforms have none of the earlier limitations, many plotting softwares still default to outlines and empty shapes rather than filled areas. To raise your awareness of this issue, here I’ll show you several examples of the same figures drawn with both lines and filled shapes.</p>
-<p>The most common and at the same time most inappropriate use of line drawings is seen in histograms and bar plots. The problem with bars drawn as outlines is that it is not immediately apparent which side of any given line is inside a bar and which side is outside. As a consequence, in particular when there are gaps between bars, we end up with a confusing visual pattern that detracts from the main message of the figure (Figure <a href="avoid-line-drawings.html#fig:titanic-ages-lines">11.1</a>). Filling the bars with a light color, or with gray if color reproduction is not possible, avoids this problem (Figure <a href="avoid-line-drawings.html#fig:titanic-ages-filled">11.2</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:titanic-ages-lines"></span>
-<img src="avoid_line_drawings_files/figure-html4/titanic-ages-lines-1.png" alt="Histogram of the ages of Titanic passengers, drawn with empty bars. The empty bars create a confusing visual pattern. In the center of the histogram, it is difficult to tell which parts are inside of bars and which parts are outside." width="576" />
-<p class="caption">
-Figure 11.1: Histogram of the ages of Titanic passengers, drawn with empty bars. The empty bars create a confusing visual pattern. In the center of the histogram, it is difficult to tell which parts are inside of bars and which parts are outside.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:titanic-ages-filled"></span>
-<img src="avoid_line_drawings_files/figure-html4/titanic-ages-filled-1.png" alt="The same histogram of Figure 11.1, now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure." width="576" />
-<p class="caption">
-Figure 11.2: The same histogram of Figure <a href="avoid-line-drawings.html#fig:titanic-ages-lines">11.1</a>, now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure.
-</p>
-</div>
-<p>Next, let’s take a look at an old-school density plot. I’m showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure <a href="avoid-line-drawings.html#fig:iris-densities-lines">11.3</a>). The distributions are shown just by their outlines, and because the figure is in black-and-white, we’re using different line styles to distinguish them. This figure has two main problems. First, the dashed line styles do not provide a clear separation between the area under the curve and the area above it. While our visual system is quite good at connecting the individual line elements into a continuous line, the dashed lines nevertheless look porous and do not serve as a strong boundary of the enclosed area. Second, because the lines intersect and the areas they enclose are not shaded, we can perceive six different distinct shapes and we need to expend some additional mental energy to merge the correct shapes together. This effect would have been even stronger had I used solid rather than dashed lines for all three distributions.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:iris-densities-lines"></span>
-<img src="avoid_line_drawings_files/figure-html4/iris-densities-lines-1.png" alt="Density estimates of the sepal lengths of three different iris species. The broken line styles used for versicolor and virginica detract from the perception that the areas under the curves are distinct from the areas above them." width="576" />
-<p class="caption">
-Figure 11.3: Density estimates of the sepal lengths of three different iris species. The broken line styles used for versicolor and virginica detract from the perception that the areas under the curves are distinct from the areas above them.
-</p>
-</div>
-<p>We can attempt to address the problem of porous boundaries by using colored lines rather than dashed lines (Figure <a href="avoid-line-drawings.html#fig:iris-densities-colored-lines">11.4</a>). However, the density areas in the resulting plot still have little visual presence. Overall, I find the version with filled areas (Figure <a href="avoid-line-drawings.html#fig:iris-densities-filled">11.5</a>) the most clear and intuitive. It is important, however, to make the filled areas partially transparent, so that the complete distribution for each species is visible.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:iris-densities-colored-lines"></span>
-<img src="avoid_line_drawings_files/figure-html4/iris-densities-colored-lines-1.png" alt="Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure 11.3 that the areas below and above the lines seem to be connected. However, we still don’t have a strong sense of the size of the area under each curve. Also, the colored labels are hard to read." width="576" />
-<p class="caption">
-Figure 11.4: Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure <a href="avoid-line-drawings.html#fig:iris-densities-lines">11.3</a> that the areas below and above the lines seem to be connected. However, we still don’t have a strong sense of the size of the area under each curve. Also, the colored labels are hard to read.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:iris-densities-filled"></span>
-<img src="avoid_line_drawings_files/figure-html4/iris-densities-filled-1.png" alt="Density estimates of the sepal lengths of three different iris species, shown as partially transparent shaded areas." width="576" />
-<p class="caption">
-Figure 11.5: Density estimates of the sepal lengths of three different iris species, shown as partially transparent shaded areas.
-</p>
-</div>
-<p>Line drawings also arise in the context of scatter plots, when different point types are drawn as open circles, triangles, crosses, etc. As an example, consider Figure <a href="avoid-line-drawings.html#fig:mpg-linespoints">11.6</a>. The figure contains a lot of visual noise, and the different point types do not strongly separate from each other. Drawing the same figure with solidly colored shapes addresses this issue (Figure <a href="avoid-line-drawings.html#fig:mpg-filledpoints">11.7</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-linespoints"></span>
-<img src="avoid_line_drawings_files/figure-html4/mpg-linespoints-1.png" alt="City fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). The different point styles, all black-and-white line-drawn symbols, create substantial visual noise and make it difficult to read the figure." width="528" />
-<p class="caption">
-Figure 11.6: City fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). The different point styles, all black-and-white line-drawn symbols, create substantial visual noise and make it difficult to read the figure.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-filledpoints"></span>
-<img src="avoid_line_drawings_files/figure-html4/mpg-filledpoints-1.png" alt="City fuel economy versus engine displacement. By using both different colors and different solid shapes for the different drive-train variants, this figure clearly separates the drive-train variants while remaining reproducible in gray scale if needed." width="528" />
-<p class="caption">
-Figure 11.7: City fuel economy versus engine displacement. By using both different colors and different solid shapes for the different drive-train variants, this figure clearly separates the drive-train variants while remaining reproducible in gray scale if needed.
-</p>
-</div>
-<p>I strongly prefer solid points over open points, because the solid points have much more visual presence. The argument that I sometimes hear in favor of open points is that they help with overplotting, since the empty areas in the middle of each point allow us to see other points that may be lying underneath. In my opinion, the benefit from being able to see overplotted points does not, in general, outweight the detriment from the added visual noise of open symbols. There are other approaches for dealing with overplotting, see Chapter <a href="overlapping-points.html#overlapping-points">10</a> for some suggestions.</p>
-<p>Finally, let’s consider boxplots. Boxplots are commonly drawn with empty boxes, as in Figure <a href="avoid-line-drawings.html#fig:lincoln-weather-box-empty">11.8</a>. I prefer a light shading for the box, as in Figure <a href="avoid-line-drawings.html#fig:lincoln-weather-box-filled">11.9</a>. The shading separates the box more clearly from the plot background, and it helps in particular when we’re showing many boxplots right next to each other, as is the case in Figures <a href="avoid-line-drawings.html#fig:lincoln-weather-box-empty">11.8</a> and <a href="avoid-line-drawings.html#fig:lincoln-weather-box-filled">11.9</a>. In Figure <a href="avoid-line-drawings.html#fig:lincoln-weather-box-empty">11.8</a>, the large number of boxes and lines can again create the illusion of background areas outside of boxes being actually on the inside of some other shape, just as we saw in Figure <a href="avoid-line-drawings.html#fig:titanic-ages-lines">11.1</a>. This problem is eliminated in Figure <a href="avoid-line-drawings.html#fig:lincoln-weather-box-filled">11.9</a>. I have sometimes heard the critique that shading the inside of the box gives too much weight to the center 50% of the data, but I don’t buy that argument. It is inherent to the boxplot, shaded box or not, to give more weight to the center 50% of the data than to the rest. If you don’t want this emphasis, then don’t use a boxplot. Instead, use a violin plot, jittered points, or a sina plot (Chapter <a href="boxplots-violins.html#boxplots-violins">6</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:lincoln-weather-box-empty"></span>
-<img src="avoid_line_drawings_files/figure-html4/lincoln-weather-box-empty-1.png" alt="Distributions of daily mean temperatures in Lincoln, Nebraska, in 2016. Boxes are drawn in the draditional way, without shading." width="576" />
-<p class="caption">
-Figure 11.8: Distributions of daily mean temperatures in Lincoln, Nebraska, in 2016. Boxes are drawn in the draditional way, without shading.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:lincoln-weather-box-filled"></span>
-<img src="avoid_line_drawings_files/figure-html4/lincoln-weather-box-filled-1.png" alt="Distributions of daily mean temperatures in Lincoln, Nebraska, in 2016. By giving the boxes a light gray shading, we can make them stand out better against the background." width="576" />
-<p class="caption">
-Figure 11.9: Distributions of daily mean temperatures in Lincoln, Nebraska, in 2016. By giving the boxes a light gray shading, we can make them stand out better against the background.
-</p>
-</div>
+<div id="technical-notes" class="section level1 unnumbered">
+<h1>Technical notes</h1>
+<p>The entire book was written in R Markdown, using the <strong>bookdown</strong>, <strong>rmarkdown</strong>, and <strong>knitr</strong> packages. All figures were made with <strong>ggplot2</strong>, with the help of add-on packages <strong>cowplot</strong>, <strong>egg</strong>, <strong>ggforce</strong>, <strong>ggrepel</strong>, and <strong>ggridges</strong>. Color manipulations were done with the <strong>colorspace</strong> and <strong>colorblindr</strong> packages. For many of these packages, the current development version is required to compile all parts of the book.</p>
+<p>The source code for the book is available here: <a href="https://github.com/clauswilke/dataviz" class="uri">https://github.com/clauswilke/dataviz</a>. The book also requires a supporting R package, <strong>dviz.supp</strong>, whose code is available here: <a href="https://github.com/clauswilke/dviz.supp" class="uri">https://github.com/clauswilke/dviz.supp</a>.</p>
+<p>The book was last compiled using the following environment:</p>
+<pre><code>## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Sierra 10.12.6
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] ggrepel_0.7.0       ggforce_0.1.1       lubridate_1.7.1    
+##  [4] ggridges_0.4.1.9990 egg_0.2.0           gridExtra_2.3      
+##  [7] forcats_0.2.0       stringr_1.2.0       purrr_0.2.4        
+## [10] readr_1.1.1         tidyr_0.7.2         tibble_1.3.4       
+## [13] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.7.4        
+## [16] colorblindr_0.1.0   colorspace_1.4-0    cowplot_0.9.2.9900 
+## [19] ggplot2_2.2.1.9000 
+## 
+## loaded via a namespace (and not attached):
+##  [1] reshape2_1.4.3    haven_1.1.0       lattice_0.20-35  
+##  [4] htmltools_0.3.6   yaml_2.1.16       rlang_0.1.4      
+##  [7] foreign_0.8-69    glue_1.2.0        tweenr_0.1.5     
+## [10] modelr_0.1.1      readxl_1.0.0      bindrcpp_0.2     
+## [13] bindr_0.1         plyr_1.8.4        munsell_0.4.3    
+## [16] gtable_0.2.0      cellranger_1.1.0  rvest_0.3.2      
+## [19] psych_1.7.8       evaluate_0.10.1   knitr_1.18       
+## [22] parallel_3.4.2    broom_0.4.2       Rcpp_0.12.14     
+## [25] udunits2_0.13     scales_0.5.0.9000 backports_1.1.1  
+## [28] jsonlite_1.5      deldir_0.1-14     mnormt_1.5-5     
+## [31] hms_0.3           digest_0.6.13     stringi_1.1.5    
+## [34] bookdown_0.5.14   grid_3.4.2        rprojroot_1.2    
+## [37] cli_1.0.0         tools_3.4.2       magrittr_1.5     
+## [40] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
+## [43] MASS_7.3-47       xml2_1.1.1        rstudioapi_0.7   
+## [46] assertthat_0.2.0  rmarkdown_1.8     httr_1.3.1       
+## [49] R6_2.2.2          units_0.4-6       nlme_3.1-131     
+## [52] compiler_3.4.2</code></pre>
 
 </div>
             </section>
@@ -232,8 +206,8 @@ Figure 11.9: Distributions of daily mean temperatures in Lincoln, Nebraska, in 2
           </div>
         </div>
       </div>
-<a href="overlapping-points.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="common-pitfalls-of-color-use.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="outline.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

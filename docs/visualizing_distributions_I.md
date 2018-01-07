@@ -15,7 +15,7 @@ We can obtain a sense of the age distribution among the passengers by grouping a
   <tr>
    <td> 
 
-age range    count
+Age range    Count
 ----------  ------
 0--5            36
 6--10           19
@@ -27,7 +27,7 @@ age range    count
  </td>
    <td> 
 
-age range    count
+Age range    Count
 ----------  ------
 31--35          76
 36--40          74
@@ -39,7 +39,7 @@ age range    count
  </td>
    <td> 
 
-age range    count
+Age range    Count
 ----------  ------
 61--65          16
 66--70           3
