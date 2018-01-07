@@ -34,6 +34,7 @@ rmd_files: [
   "image_file_formats.Rmd", # completed
 
   "outline.Rmd",
+  "technical_notes.Rmd",
 
   "notes.Rmd",
 

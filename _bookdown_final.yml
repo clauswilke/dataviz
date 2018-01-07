@@ -8,7 +8,7 @@ rmd_files: [
   "introduction.Rmd",
 
   # Part I
-  #"aesthetic_mapping.Rmd",
+  "aesthetic_mapping.Rmd",
   #"coordinate_systems_axes.Rmd",
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
@@ -34,6 +34,7 @@ rmd_files: [
   "image_file_formats.Rmd", # completed
 
   "outline.Rmd",
+  "technical_notes.Rmd",
 
   #"notes.Rmd",
 

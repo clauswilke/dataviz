@@ -203,7 +203,7 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 Make a figure of mean temperature across the year, as circular chart?
 
-(ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. Death Valley, CA is the hottest place in the continental U.S. and Barrow, AK the coldest. Honolulu, HI and Chicago, IL were chosen as representative tropical and temperate locations, respectively. Source: NOAA.
+(ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. **Caption needs updating.** Source: NOAA.
 
 ```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%

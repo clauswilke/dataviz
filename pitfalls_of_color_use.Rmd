@@ -2,7 +2,6 @@
 # run setup script
 source("_common.R")
 
-library(viridis)
 library(ggridges)
 ```
 
