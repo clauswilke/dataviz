@@ -8,64 +8,13 @@ library(egg)
 
 # Visualizing data: mapping data onto aesthetics
 
-## Geometric objects
+Whenever we are visualizing data, we are taking data values and convert them in a systematic and logical way into the visual elements that make up the final graphic. Even though there are myriad different data visualizations, and on first glance a scatter plot, a pie chart, and a heatmap don't seem to have much in common, all these visualizations can be described with a common language that captures how data values are turned into blobs of ink on paper or colored pixels on screen. The key insight is the following: All data visualizations map data values into quantifiable features of the resulting graphic. We refer to these features as *aesthetics.*
 
-Introduce basic data types, with table showing examples:
+## Aesthetics and types of data
 
-- numerical continuous
-- numerical discrete
-- categorical
-- ordered factor
-- date/time
-- text
+Aesthetics describe every aspect of a given graphical element. A few examples are provided in Figure \@ref(fig:common-aesthetics). A critical component of every graphical element is of course its *position,* which describes where the element is located. In standard 2d graphics, we describe positions by an *x* and  *y* value, but other coordinate systems and one- or three-dimensional visualizations are possible. Next, all graphical elements have a *shape*, a *size*, and a *color.* Even if we are preparing a black-and-white drawing, graphical elements need to have a color to be visible, for example black if the background is white or white if the background is black. Finally, to the extent we are using lines to visualize data, these lines may have different widths or dash--dot patterns. Beyond the examples shown in Figure \@ref(fig:common-aesthetics), there are many other aesthetics we may encounter in a data visualization. For example, if we want to display text, we may have to specify font family, font face, and font size, and if graphical objects overlap, we may have to specify whether they are partially transparent.
 
-Table: (\#tab:basic-data-types) Types of data. **Table and caption need work.**
-
---------------------------------------------------------------------------------------------------------------------
-Type of variable         Examples              Appropriate scale       Description
------------------------- --------------------- ----------------------- ---------------------------------------------
-quantitative/numerical   1.3, 5.7, 83,         continuous              Numbers.
-continuous               1.5x10^-2^
- 
-quantitative/numerical   1, 2, 3, 4            discrete                Also numbers.
-discrete
- 
-qualitative/categorical  dog, cat, fish        discrete                Categories without order. These variables are
-                                                                       also called *factors*.
-                                                                       
-qualitative ordered      good, fair, poor      discrete                Categories with order. These variables are
-                                                                       also called *ordered factors*.
-
-date or time             Jan. 5 2018, 8:03am   continuous or discrete  Specific days and/or times or
-                                                                       generics (May 1st, Dec. 25)
-
-text                     The quick brown fox   none, or discrete       Free-form text. Can be treated
-                         jumps over the lazy                           as categorical if needed.
-                         dog.
---------------------------------------------------------------------------------------------------------------------
-
-Table: (\#tab:data-example) First 12 rows of a dataset listing daily temperature normals for four weather stations. Source: NOAA.
-
- Month   Day  Location      Station ID   Temperature
-------- ----- ------------ ------------ -------------
-  Jan     1   Chicago      USW00014819        25.6
-  Jan     1   San Diego    USW00093107        55.2
-  Jan     1   Houston      USW00012918        53.9
-  Jan     1   Death Valley USC00042319        51.0
-  Jan     2   Chicago      USW00014819        25.5
-  Jan     2   San Diego    USW00093107        55.3
-  Jan     2   Houston      USW00012918        53.8
-  Jan     2   Death Valley USC00042319        51.2
-  Jan     3   Chicago      USW00014819        25.3
-  Jan     3   San Diego    USW00093107        55.3
-  Jan     3   Death Valley USC00042319        51.3
-  Jan     3   Houston      USW00012918        53.8
-
-
-
-Discuss how all of these can be mapped onto any type of scale. To map categorical data onto position scales, we count them and use the counts.
-
-(ref:common-aesthetics) Commonly used aesthetics in data visualization: position, size, line width, color, shape, line type. Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can only represent discrete data (shape, line type).
+(ref:common-aesthetics) Commonly used aesthetics in data visualization: position, shape, size, color, line width, line type. Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can only represent discrete data (shape, line type).
 
 ```{r common-aesthetics, fig.width = 7.5, fig.asp = 0.45, fig.cap = '(ref:common-aesthetics)'}
 aes_pos <- ggdraw() + 
@@ -75,8 +24,8 @@ aes_pos <- ggdraw() +
                                  yend = c(0.5, 1)),
                 aes(x = x, y = y, xend = xend, yend = yend),
                 arrow = arrow(length = grid::unit(12, "pt")), size = .75) +
-  draw_text("y", .5, 1, size = 14, vjust = 1, hjust = 2) +
-  draw_text("x", 1, .5, size = 14, vjust = 1.5, hjust = 1) + 
+  draw_text("y", .5, 1, size = 14, vjust = 1, hjust = 2.5) +
+  draw_text("x", 1, .5, size = 14, vjust = 2, hjust = 1) + 
   coord_cartesian(xlim = c(-.2, 1.2), ylim = c(-.2, 1.2))
 
 aes_color <- ggdraw() +
@@ -113,19 +62,79 @@ aes_ltp <- ggdraw() +
   scale_linetype_identity()
 
 
-plot_grid(aes_pos, aes_size, aes_lwd,
-          aes_color, aes_shape, aes_ltp,
+plot_grid(aes_pos, aes_shape, aes_size,
+          aes_color, aes_lwd, aes_ltp,
           ncol = 3,
-          labels = c("position", "size", "line width", "color", "shape", "line type"),
+          labels = c("position", "shape", "size", "color", "line width", "line type"),
           label_x = 0.05, label_y = 0.95, hjust = 0, vjust = 1,
           label_fontface = "plain")
 ```
 
 
+All aesthetics fall into one of two groups: Those that can represent continuous data and those that can not. Continuous data values are values for which arbitrarily fine intermediates exist. For example, time duration is a continuous value. Between any two durations, say 50 seconds and 51 seconds, there are arbitrarily many intermediates, such as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By contrast, number of persons in a room is a discrete value. A room can hold 5 persons or 6, but not 5.5. For the examples in Figure \@ref(fig:common-aesthetics), position, size, color, and line width can represent continuous data, but  shape and line type can only represent discrete data.
 
-## Scales
+Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of discrete categories, which may be either unordered or ordered, in the form of dates or times, and as text (Table \@ref(tab:basic-data-types)). To examine a concrete example of these various types of data, take a look at Table \@ref(tab:data-example), which shows daily temperature normals (average daily temperatures over a 30-year window) for four U.S. locations for the first three days in January. This table holds five variables: month, day, location, station ID, and temperature (in degrees Farenheit). Month is an ordered factor (an ordered qualitative variable), day is a discrete numerical value, location is an unordered factor (an unordered qualitative variable), station ID is similarly an unordered factor, and temperature is a continuous numerical value.
 
-(ref:basic-scales-example) The numbers 1, 2, 3, 4 mapped onto a position scale, a color scale, and a shape scale. For each scale, each number corresponds to a unique position, color, or shape and vice versa.
+Table: (\#tab:basic-data-types) Types of variables encountered in typical data visualization scenarios.
+
+---------------------------------------------------------------------------------------------------------------------
+Type of variable         Examples              Appropriate scale       Description
+------------------------ --------------------- ----------------------- ----------------------------------------------
+quantitative/numerical   1.3, 5.7, 83,         continuous              Arbitrary numerical values. These can be
+continuous               1.5x10^-2^                                    integers, rational numbers, or real numbers.
+ 
+quantitative/numerical   1, 2, 3, 4            discrete                Numbers in discrete units. These are most
+discrete                                                               commonly but not necessarily integers.
+                                                                       For example, the numbers 0.5, 1.0, 1.5 could
+                                                                       also be treated as discrete if intermediate
+                                                                       values cannot exist in the given dataset.
+ 
+qualitative/categorical  dog, cat, fish        discrete                Categories without order. These are discrete
+                                                                       and unique categories that have no inherent
+                                                                       order. These variables are
+                                                                       also called *factors*.
+                                                                       
+qualitative ordered      good, fair, poor      discrete                Categories with order. These are discrete
+                                                                       and unique categories with an order. For
+                                                                       example, "fair" always lies between "good"
+                                                                       and "poor". These variables are
+                                                                       also called *ordered factors*.
+
+date or time             Jan. 5 2018, 8:03am   continuous or discrete  Specific days and/or times. Also
+                                                                       generic dates, such as July 4 or Dec. 25
+                                                                       (without year).
+
+text                     The quick brown fox   none, or discrete       Free-form text. Can be treated
+                         jumps over the lazy                           as categorical if needed.
+                         dog.
+---------------------------------------------------------------------------------------------------------------------
+
+
+
+Table: (\#tab:data-example) First 12 rows of a dataset listing daily temperature normals for four weather stations. Source: NOAA.
+
+ Month   Day  Location      Station ID   Temperature
+------- ----- ------------ ------------ -------------
+  Jan     1   Chicago      USW00014819        25.6
+  Jan     1   San Diego    USW00093107        55.2
+  Jan     1   Houston      USW00012918        53.9
+  Jan     1   Death Valley USC00042319        51.0
+  Jan     2   Chicago      USW00014819        25.5
+  Jan     2   San Diego    USW00093107        55.3
+  Jan     2   Houston      USW00012918        53.8
+  Jan     2   Death Valley USC00042319        51.2
+  Jan     3   Chicago      USW00014819        25.3
+  Jan     3   San Diego    USW00093107        55.3
+  Jan     3   Death Valley USC00042319        51.3
+  Jan     3   Houston      USW00012918        53.8
+
+
+
+## Scales map data values onto aesthetics
+
+To map data values onto aesthetics, we need to specify which data values correspond to which specific aesthetics values. For example, if our graphic has an *x* axis, then we need to specify which data values fall onto particular positions along this axis. Similarly, we may need to specify which data values are represented by particular shapes or colors. This mapping between data values and aesthetics values is created via *scales*. A scale defines a unique mapping between data and aesthetics (Figure \@ref(fig:basic-scales-example)). Importantly, a scale must be one-to-one, such that for each specific data value there is exactly one aesthetics value and vice versa. If a scale isn't one-to-one, then the data visualization becomes ambiguous.
+
+(ref:basic-scales-example) Scales link data values to aesthetics. Here, the numbers 1 through 4 have been mapped onto a position scale, a shape scale, and a color scale. For each scale, each number corresponds to a unique position, shape, or color and vice versa.
 
 ```{r basic-scales-example, fig.width = 5.5, fig.asp = 0.3, fig.cap = '(ref:basic-scales-example)'}
 df <- data.frame(x = c(1:4))
@@ -173,7 +182,7 @@ scale_shape <- ggplot(df, aes(x, shape = factor(x))) +
 # workaround so ggarrange doesn't produce empty plot
 cur_dev <- grDevices::dev.cur()
 grDevices::pdf(NULL)
-scales_grob <- ggarrange(scale_num, scale_color, scale_shape, ncol = 1)
+scales_grob <- ggarrange(scale_num, scale_shape, scale_color, ncol = 1)
 x <- grDevices::dev.off() # assign output to x to catch it
 x <- grDevices::dev.set(cur_dev)
 ggdraw(scales_grob)
@@ -181,37 +190,14 @@ ggdraw(scales_grob)
 #plot_grid(scale_num, scale_color, scale_shape, ncol = 1, align = 'v', rel_heights = c(1, 1, .7))
 ```
 
-Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
+Let's put things into practice.
 
-(ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars (1973--74 models). This figure uses five separate scales to represent data: (i) the *x* axis (displacement); (ii) the *y* axis (fuel efficiency); (iii) the color of the data points (power); (iv) the size of the data points (weight); and (v) the shape of the data points (number of cylinders). Four of the five variables displayed (displacement, fuel efficiency, power, and weight) are numerical continuous. The remaining one (number of cylinders) can be considered to be either numerical discrete or qualitative ordered.
+*Discuss how all of these can be mapped onto any type of scale. To map categorical data onto position scales, we count them and use the counts.*
 
-```{r mtcars-five-scale, fig.width = 6.5, fig.asp = .8, fig.cap = '(ref:mtcars-five-scale)'}
-p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
-  geom_point(color = "white") +
-  scale_shape_manual(values = c(23, 24, 21), name = "cylinders") +
-  scale_fill_continuous_carto(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
-  xlab("displacement (cu. in.)") +
-  ylab("fuel efficiency (mpg)") +
-  guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
-         size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
-                             title = "weight (1000 lbs)")) +
-  theme_half_open() + background_grid() +
-  theme(#legend.title = element_text(size = 12),
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        legend.position = "top",
-        legend.direction = "vertical",
-        legend.justification = "center")
-
-legend <- get_legend(align_legend(p_mtcars))
-
-ggdraw() + 
-  draw_plot(p_mtcars + theme(legend.position = "none")) + 
-  draw_grob(legend, x = .36, y = .7, width = .7, height = .3)
-```
 
 (ref:four-locations-temps-by-month) Monthly normal mean temperatures for four locations in the U.S. Source: NOAA 
 
-```{r four-locations-temps-by-month, fig.width = 8.5, fig.asp = .45, fig.cap = '(ref:four-locations-temps-by-month)'}
+```{r four-locations-temps-by-month, fig.width = 8.5, fig.asp = .3, fig.cap = '(ref:four-locations-temps-by-month)'}
 month_names <- c("01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",
                    "07" = "Jul", "08" = "Aug", "09" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")
 
@@ -255,6 +241,39 @@ p <- ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
 # fix legend (make it centered)
 ggdraw(align_legend(p))
 ```
+
+
+
+Provide an example of a figure with 4-5 scales, including x, y, color, shape, size
+
+
+
+(ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars (1973--74 models). This figure uses five separate scales to represent data: (i) the *x* axis (displacement); (ii) the *y* axis (fuel efficiency); (iii) the color of the data points (power); (iv) the size of the data points (weight); and (v) the shape of the data points (number of cylinders). Four of the five variables displayed (displacement, fuel efficiency, power, and weight) are numerical continuous. The remaining one (number of cylinders) can be considered to be either numerical discrete or qualitative ordered.
+
+```{r mtcars-five-scale, fig.width = 6.7, fig.asp = .8, fig.cap = '(ref:mtcars-five-scale)'}
+p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
+  geom_point(color = "white") +
+  scale_shape_manual(values = c(23, 24, 21), name = "cylinders") +
+  scale_fill_continuous_carto(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
+  xlab("displacement (cu. in.)") +
+  ylab("fuel efficiency (mpg)") +
+  guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
+         size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
+                             title = "weight (1000 lbs)")) +
+  theme_half_open() + background_grid() +
+  theme(#legend.title = element_text(size = 12),
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        legend.position = "top",
+        legend.direction = "vertical",
+        legend.justification = "center")
+
+legend <- get_legend(align_legend(p_mtcars))
+
+ggdraw() + 
+  draw_plot(p_mtcars + theme(legend.position = "none")) + 
+  draw_grob(legend, x = .36, y = .7, width = .7, height = .3)
+```
+
 
 (ref:titanic-passengers-by-class-sex) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class.
 
