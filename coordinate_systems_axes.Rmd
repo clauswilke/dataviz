@@ -199,6 +199,49 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 *A few sentences about square-root scales? They are only invariant under multiplication, but not under addition/subtraction.*
 
+(ref:sqrt-scales) Relationship between linear and square-root scales. The dots correspond to data values 0, 1, 4, 9, 16, 25, 36, 49, which are evenly-spaced numbers on a square-root scale, since they are the squares of the integers from 0 to 7. We can display these data points on a linear scale, we can square-root-transform them and then show on a linear scale, or we can show them on a square-root scale. 
+
+```{r sqrt-scales, fig.width = 7.5, fig.asp = 0.464, fig.cap = '(ref:sqrt-scales)'}
+df <- data.frame(x = c(0, 1, 4, 9, 16, 25, 36, 49))
+
+xaxis_lin <- ggplot(df, aes(x, y = 1)) + 
+  geom_point(size = 3, color = "#0072B2") + 
+  scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.title = element_text(face = "plain"),
+        plot.margin = margin(3.5, 20, 3.5, 20))
+
+xaxis_sqrt <- ggplot(df, aes(sqrt(x), y = 1)) + 
+  geom_point(size = 3, color = "#0072B2") + 
+  scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        plot.title = element_text(face = "plain"),
+        plot.margin = margin(3.5, 20, 3.5, 20))
+
+plotlist <- 
+  align_plots(xaxis_lin + scale_x_continuous(limits = c(0, 50)) + 
+                ggtitle("original data, linear scale"),
+              xaxis_sqrt + scale_x_continuous(limits = c(0, 7.07)) +
+                xlab(expression(sqrt(x))) + 
+                ggtitle("square-root-transformed data, linear scale"),
+              xaxis_sqrt + scale_x_continuous(limits = c(0, 7.07), breaks = sqrt(10*(0:5)), labels = 10*(0:5), name = "x") + 
+                expand_limits(expand = c(0, 1)) +
+                ggtitle("original data, square-root scale"),
+              align = 'vh')
+
+plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1)
+
+```
+
+
 ## Polar coordinates
 
 Make a figure of mean temperature across the year, as circular chart?
