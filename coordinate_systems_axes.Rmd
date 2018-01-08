@@ -213,7 +213,7 @@ ggplot(tx_counties, aes(x = index, y = popratio)) +
                 labels = label_log10) +
   scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
                      breaks = NULL, #c(1, 50*(1:5)),
-                     name = "counties, fom most to least populous") +
+                     name = "Texas counties, from most to least populous") +
   theme_minimal_hgrid() +
   theme(axis.line = element_blank(),
         plot.margin = margin(7, 14, 7, 7))
@@ -228,7 +228,7 @@ counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   scale_y_continuous(name = "population number / median") +
   scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
                      breaks = NULL, #c(1, 50*(1:5)),
-                     name = "counties, fom most to least populous") +
+                     name = "Texas counties, from most to least populous") +
   theme_minimal_hgrid() +
   theme(axis.line = element_blank(),
         plot.margin = margin(7, 14, 7, 7))

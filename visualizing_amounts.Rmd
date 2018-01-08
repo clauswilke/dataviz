@@ -43,6 +43,8 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
 
 I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.
 
+Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.
+
 ## Don't use a logscale y axis with a bargraph
 
 You can use either a bargraph or a logscale y axis, but not both in combination.
