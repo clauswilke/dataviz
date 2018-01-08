@@ -219,10 +219,10 @@ temps_long <- filter(ncdc_normals,
 
 ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
-  scale_x_date(name="month", limits = c(ymd("0000-01-01"), ymd("0001-01-05")),
+  scale_x_date(name="month", limits = c(ymd("0000-01-01"), ymd("0001-01-04")),
                breaks = c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"),
                           ymd("0000-10-01"), ymd("0001-01-01")),
-               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(0, 0)) + 
+               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(1/366, 0)) + 
   scale_y_continuous(limits = c(15, 110),
                      breaks = seq(20, 100, by=20),
                      name = "temperature (°F)") +
