@@ -10,9 +10,12 @@ library(ggrepel)
 
 # Coordinate systems and axes
 
+To make any sort of data visualization, we need to define position scales, which determine where in a graphic different data values are located. We cannot visualize data without placing different data points at different locations, even if we just arrange them next to each other along a line. For regular 2d visualizations, two numbers are required to uniquely specify a point, and therefore we need two position scales. These two scales are usually but not necessarily the *x* and *y* axis of the plot. We also have to specify the relative geometric arrangement of these scales. Conventionally, the *x* axis runs horizontally and the *y* axis vertically, but we could choose other arrangements. For example, we could have the *y* axis run at an acute angle relative to the *x* axis, or we could have one axis run in a circle and the other run radially. The combination of a set of position scales and their relative geometric arrangement is called a *coordinate system.*
+
+
 ## Cartesian coordinates
 
-Discuss aspect ratio, fixed vs. fluid
+The most widely used coordinate system for data visualization is the 2d *Cartesian coordinate system*, where each location is uniquely specified by an *x* and a *y* value. The *x* and *y* axes run orthogonally to each other, and data values are placed in an even spacing along both axes (Figure \@ref(fig:cartesian-coord)). The two axes are continuous position scales, and they can represent both positive and negative real numbers. To fully specify the coordinate system, we need to specify the range of numbers each axis covers. In Figure \@ref(fig:cartesian-coord), the *x* axis runs from -2.2 to 3.2 and the *y* axis runs from -2.2 to 2.2. Any data values between these axis limits are placed at the respectice location in the plot. For example, the point (0, 0), which corresponds to *x* = 0 and *y* = 0, is shown 2.2 data units to the right of the left border of the plot area and 2.2 data units above the bottom border of the plot area. Any data values outside the axis limits are discarded. 
 
 (ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventially called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
 
@@ -20,60 +23,42 @@ Discuss aspect ratio, fixed vs. fluid
 df_points <- data.frame(x = c(-1, 0, 2),
                         y = c(-1, 0, 1),
                         label = c("(-1, -1)", "(0, 0)", "(2, 1)"),
-                        vjust = c(0.5, -.8, -.8),
-                        hjust = c(1.2, 0.5, 0.5))
+                        vjust = c(1.4, -.8, -.8),
+                        hjust = c(1.1, 1.1, -.1))
 
-df_points_scaled <- mutate(df_points,
-                           x = x + 2,
-                           y = 5*y,
-                           label = c("(1, -5)", "(2, 0)", "(4, 5)"))
+df_segments <- data.frame(x0 = c(0, 2, 0, -1),
+                          x1 = c(2, 2, -1, -1),
+                          y0 = c(1, 0, -1, 0),
+                          y1 = c(1, 1, -1, -1))
 
 df_labels <- data.frame(x = c(-1, -.5, 1, 2),
-                        y = c(-.5, 0, 0, 0.5),
+                        y = c(-.5, -1, 1, 0.5),
                         vjust = c(.5, 1.3, -.3, .5),
-                        hjust = c(-.1, .5, .5, -.1),
-                        label = c("Δy = -1", "Δx = -1", "Δx = 2", "Δy = 1"))
+                        hjust = c(1.1, .5, .5, -.1),
+                        label = c("y = -1", "x = -1", "x = 2", "y = 1"))
 
-ggplot(df_points, aes(x, y)) + 
-  geom_path(data = data.frame(x = c(-1, -1, 2, 2), y = c(-1, 0, 0, 1)), linetype = 2) +
+ggplot(df_points, aes(x, y)) +
+  geom_hline(yintercept = 0, color = "gray60") +
+  geom_vline(xintercept = 0, color = "gray60") +
+  geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
+               linetype = 2) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
   geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
-  expand_limits(x = c(-2.1, 3.1), y = c(-2.1, 2.1)) +
-  coord_fixed() +
-  theme_minimal_grid()
+  coord_fixed(xlim = c(-2.2, 3.2), ylim = c(-2.2, 2.2), expand = FALSE) +
+  xlab("x axis") +
+  ylab("y axis") +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"))
 ```
 
 
-(ref:cartesian-coord-scaled) The cartesian coordinate system is invariant under rescaling or translation. Here, we have added 2 to all *x* values (translation) and have multiplied all *y* values by 5 (rescaling) for the data of Figure \@ref(fig:cartesian-coord-scaled), yet the relative location of the points remains unchanged.
-
-```{r cartesian-coord-scaled, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord-scaled)'}
-df_points_scaled <- mutate(df_points,
-                           x = x + 2,
-                           y = 5*y,
-                           label = c("(1, -5)", "(2, 0)", "(4, 5)"))
-
-df_labels_scaled <- mutate(df_labels,
-                           x = x + 2,
-                           y = 5*y,
-                           label = c("Δy = -5", "Δx = -1", "Δx = 2", "Δy = 5"))
-
-
-ggplot(df_points_scaled, aes(x, y)) + 
-  #geom_path(data = data.frame(x = c(1, 1, 4, 4), y = c(-5, 0, 0, 5)), linetype = 2) +
-  geom_point(size = 3, color = "#0072B2") +
-  geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
-  #geom_text(data = df_labels_scaled, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
-  expand_limits(x = c(-2.1, 3.1) + 2, y = 5 * c(-2.1, 2.1)) +
-  coord_fixed(ratio = 1/5) +
-  theme_minimal_grid()
-```
-
-The invariance under rescaling is critically important for data visualization, because it implies that our visualizations will generally not depend on the units that we choose to show the data in. For example, if we plot temperature over time, it doesn't matter whether we plot it in Farenheit or Celsius (which is both rescaled and translated relative to Farenheit), the curve will look the same. Only the numbers that are displayed along the axis will change. Because units are arbitrary, and we can measure quantities in any units that we want to use, if a visualization were to change under a change of units it would have to be considered arbitrary and not objective.
 
 *Talk about fixed vs. variable aspect ratio. E.g., temperature vs. time can have any aspect ratio, but temperature at one place vs. at another should have a fixed aspect ratio.*
 
-```{r fig.width = 7.5}
+(ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Source: NOAA.
+
+```{r temperature-normals-Houston, fig.width = 7.5, fig.cap = '(ref:temperature-normals-Houston)'}
 temps_wide <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
@@ -88,7 +73,7 @@ temps_wide <- filter(ncdc_normals,
                                "Chicago" = "USW00014819",
                                "Honolulu" = "USC00516128",
                                "Barrow, AK" = "USW00027502",
-                               "Death Valley, CA" = "USC00042319",
+                               "Death Valley" = "USC00042319",
                                "San Diego" = "USW00093107",
                                "Houston" = "USW00012918",
                                "Salt Lake City, UT" = "USC00427606")) %>%
@@ -103,7 +88,10 @@ temps_wide_label <- mutate(temps_wide,
 
 temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   geom_line(size = 1, color = "#0072B2") +
-  scale_x_date(name="date", expand=c(0, 0)) + 
+  scale_x_date(name="month", limits = c(ymd("0000-01-01"), ymd("0001-01-05")),
+               breaks = c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"),
+                          ymd("0000-10-01"), ymd("0001-01-01")),
+               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(0, 0)) + 
   scale_y_continuous(limits = c(50, 90),
                      name = "temperature (F)") +
   theme_minimal_grid()
@@ -112,7 +100,10 @@ plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto")
           temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
 ```
 
-```{r fig.width = 8.5, fig.asp = 0.5}
+
+(ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Farenheit. (b) Temperatures are shown in degrees Celsius. Source: NOAA.
+
+```{r temperature-normals-Houston-San-Diego, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
@@ -143,6 +134,9 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houst
 
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
 ```
+
+The invariance under rescaling is critically important for data visualization, because it implies that our visualizations will generally not depend on the units that we choose to show the data in. For example, if we plot temperature over time, it doesn't matter whether we plot it in Farenheit or Celsius (which is both rescaled and translated relative to Farenheit), the curve will look the same. Only the numbers that are displayed along the axis will change. Because units are arbitrary, and we can measure quantities in any units that we want to use, if a visualization were to change under a change of units it would have to be considered arbitrary and not objective.
+
 
 ## Nonlinear axes
 
@@ -197,6 +191,52 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 ```
 
+(ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighed by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Source: U.S. Census 2010.
+
+```{r texas-counties-pop-ratio-log, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
+set.seed(3878)
+US_census %>% filter(state == "Texas") %>%
+  select(name, pop2010) %>%
+  extract(name, "county", regex = "(.+) County") %>%
+  mutate(popratio = pop2010/median(pop2010)) %>%
+  arrange(desc(popratio)) %>%
+  mutate(index = 1:n(),
+         label = ifelse(index <= 3 | index > n()-3 | runif(n()) < .04, county, ""),
+         label_large = ifelse(index <= 6, county, "")) -> tx_counties
+
+ggplot(tx_counties, aes(x = index, y = popratio)) +
+  geom_hline(yintercept = 1, linetype = 2, color = "grey40") +
+  geom_point(size = 0.5, color = "#0072B2") +
+  geom_text_repel(aes(label = label), point.padding = .4, color = "black", min.segment.length = 0) +
+  scale_y_log10(breaks = c(.01, .1, 1, 10, 100),
+                name = "population number / median",
+                labels = label_log10) +
+  scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
+                     breaks = NULL, #c(1, 50*(1:5)),
+                     name = "counties, fom most to least populous") +
+  theme_minimal_hgrid() +
+  theme(axis.line = element_blank(),
+        plot.margin = margin(7, 14, 7, 7))
+```
+
+(ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. Source: U.S. Census 2010.
+
+```{r texas-counties-pop-ratio-lin, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
+counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
+  geom_point(size = 0.5, color = "#0072B2") +
+  geom_text_repel(aes(label = label_large), point.padding = .4, color = "black", min.segment.length = 0) +
+  scale_y_continuous(name = "population number / median") +
+  scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
+                     breaks = NULL, #c(1, 50*(1:5)),
+                     name = "counties, fom most to least populous") +
+  theme_minimal_hgrid() +
+  theme(axis.line = element_blank(),
+        plot.margin = margin(7, 14, 7, 7))
+
+stamp_bad(counties_lin)
+```
+
+
 *A few sentences about square-root scales? They are only invariant under multiplication, but not under addition/subtraction.*
 
 (ref:sqrt-scales) Relationship between linear and square-root scales. The dots correspond to data values 0, 1, 4, 9, 16, 25, 36, 49, which are evenly-spaced numbers on a square-root scale, since they are the squares of the integers from 0 to 7. We can display these data points on a linear scale, we can square-root-transform them and then show on a linear scale, or we can show them on a square-root scale. 
@@ -232,7 +272,8 @@ plotlist <-
               xaxis_sqrt + scale_x_continuous(limits = c(0, 7.07)) +
                 xlab(expression(sqrt(x))) + 
                 ggtitle("square-root-transformed data, linear scale"),
-              xaxis_sqrt + scale_x_continuous(limits = c(0, 7.07), breaks = sqrt(10*(0:5)), labels = 10*(0:5), name = "x") + 
+              xaxis_sqrt + scale_x_continuous(limits = c(0, 7.07), breaks = c(0, 1, sqrt(10*(1:5))),
+                                              labels = c(0, 1, 10*(1:5)), name = "x") + 
                 expand_limits(expand = c(0, 1)) +
                 ggtitle("original data, square-root scale"),
               align = 'vh')
@@ -241,41 +282,60 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1)
 
 ```
 
+(ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a linear scale. (b) Areas shown on a square-root scale. Source: Google. 
+
+```{r northeast-state-areas, fig.width = 8.5, fig.asp = 0.4, fig.cap = '(ref:northeast-state-areas)'}
+# areas in square miles
+# source: Google, 01/07/2018
+northeast_areas <- read.csv(text = "state_abr,area
+NY,54556
+PA,46055
+ME,35385
+MA,10565
+VT,9616
+NH,9349
+NJ,8723
+CT,5543
+RI,1212")
+
+northeast_areas$state_abr <- factor(northeast_areas$state_abr, levels = northeast_areas$state_abr)
+
+areas_base <- ggplot(northeast_areas, aes(x=state_abr, y=area)) +
+  geom_col(fill = "#56B4E9") +
+  ylab("area (square miles)") +
+  xlab("state") +
+  theme_minimal_hgrid()
+  
+p1 <- areas_base + scale_y_continuous(limits = c(0, 55000), breaks = 10000*(0:6), expand = c(0, 0))
+
+p2 <- areas_base + scale_y_sqrt(limits = c(0, 55000), breaks = c(0, 1000, 10000*(1:5)), 
+                                expand = c(0, 0))
+
+plot_grid(p1, p2, labels = "auto")
+```
+
+*Problems with square-root scales: It's not clear what the axis ticks should be. Squares would be evenly spaced, but are not numbers we are used to think in. Also, it's difficult to estimate intermediate values. For example, what's the area of CT? We can see from part (a) that it's around 5000 square miles, but this is not at all obvious from part (b). *
 
 ## Polar coordinates
 
-Make a figure of mean temperature across the year, as circular chart?
 
-(ref:temperature-normals-cartesian) Daily temperature normals for four selected locations in the U.S. **Caption needs updating.** Source: NOAA.
+(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
-```{r temperature-normals-cartesian, fig.cap = '(ref:temperature-normals-cartesian)'}
+```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
   filter(location %in% c("Chicago",
-                         "Honolulu",
+                         "Death Valley",
                          "Houston",
                          "San Diego")) %>%
-  mutate(location = factor(location, levels = c("Houston",
-                                                "Honolulu",
+  mutate(location = factor(location, levels = c("Death Valley",
+                                                "Houston",
                                                 "San Diego",
                                                 "Chicago")))
 
 ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
   scale_x_date(name="date", expand=c(0, 0)) + 
-  scale_y_continuous(limits = c(0, 90),
-                     breaks = seq(-30, 90, by=30),
-                     name = "temperature (F)") +
-  scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
-  theme_minimal_grid()
-```
-
-(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
-
-```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
-ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
-  geom_line(size = 1) +
-  scale_x_date(name="date", expand=c(0, 0)) + 
-  scale_y_continuous(limits = c(0, 90), expand = c(0, 0),
+  scale_y_continuous(limits = c(0, 105), expand = c(0, 0),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
