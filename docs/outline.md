@@ -46,7 +46,7 @@
   Discusses error bars, confidence bands, credible intervals, posterior distributions, etc.
 
 #. **Visualizing geospatial data**  
-  Basic intro to maps
+  Provides a basic intro to making maps.
   
 ## Part II: Principles of figure design {-}
 

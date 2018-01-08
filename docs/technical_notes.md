@@ -24,31 +24,32 @@ The book was last compiled using the following environment:
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] ggrepel_0.7.0       ggforce_0.1.1       lubridate_1.7.1    
-##  [4] ggridges_0.4.1.9990 egg_0.2.0           gridExtra_2.3      
-##  [7] forcats_0.2.0       stringr_1.2.0       purrr_0.2.4        
-## [10] readr_1.1.1         tidyr_0.7.2         tibble_1.3.4       
-## [13] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.7.4        
-## [16] colorblindr_0.1.0   colorspace_1.4-0    cowplot_0.9.2.9900 
-## [19] ggplot2_2.2.1.9000 
+##  [1] maps_3.2.0          sf_0.5-5            ggrepel_0.7.0      
+##  [4] ggforce_0.1.1       lubridate_1.7.1     ggridges_0.4.1.9990
+##  [7] egg_0.2.0           gridExtra_2.3       forcats_0.2.0      
+## [10] stringr_1.2.0       purrr_0.2.4         readr_1.1.1        
+## [13] tidyr_0.7.2         tibble_1.3.4        tidyverse_1.2.1    
+## [16] dviz.supp_0.1.0     dplyr_0.7.4         colorblindr_0.1.0  
+## [19] colorspace_1.4-0    cowplot_0.9.2.9900  ggplot2_2.2.1.9000 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] reshape2_1.4.3    haven_1.1.0       lattice_0.20-35  
-##  [4] htmltools_0.3.6   yaml_2.1.16       rlang_0.1.4      
-##  [7] foreign_0.8-69    glue_1.2.0        tweenr_0.1.5     
-## [10] modelr_0.1.1      readxl_1.0.0      bindrcpp_0.2     
-## [13] bindr_0.1         plyr_1.8.4        munsell_0.4.3    
-## [16] gtable_0.2.0      cellranger_1.1.0  rvest_0.3.2      
-## [19] psych_1.7.8       evaluate_0.10.1   knitr_1.18       
-## [22] parallel_3.4.2    broom_0.4.2       Rcpp_0.12.14     
-## [25] udunits2_0.13     scales_0.5.0.9000 backports_1.1.1  
-## [28] jsonlite_1.5      deldir_0.1-14     mnormt_1.5-5     
-## [31] hms_0.3           digest_0.6.13     stringi_1.1.5    
-## [34] bookdown_0.5.14   grid_3.4.2        rprojroot_1.2    
-## [37] cli_1.0.0         tools_3.4.2       magrittr_1.5     
-## [40] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
-## [43] MASS_7.3-47       xml2_1.1.1        rstudioapi_0.7   
-## [46] assertthat_0.2.0  rmarkdown_1.8     httr_1.3.1       
-## [49] R6_2.2.2          units_0.4-6       nlme_3.1-131     
-## [52] compiler_3.4.2
+##  [1] Rcpp_0.12.14      lattice_0.20-35   deldir_0.1-14    
+##  [4] class_7.3-14      assertthat_0.2.0  rprojroot_1.2    
+##  [7] digest_0.6.13     psych_1.7.8       R6_2.2.2         
+## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.1  
+## [13] e1071_1.6-8       evaluate_0.10.1   httr_1.3.1       
+## [16] rlang_0.1.4       lazyeval_0.2.1    readxl_1.0.0     
+## [19] rstudioapi_0.7    rmarkdown_1.8     udunits2_0.13    
+## [22] foreign_0.8-69    munsell_0.4.3     broom_0.4.2      
+## [25] compiler_3.4.2    modelr_0.1.1      pkgconfig_2.0.1  
+## [28] mnormt_1.5-5      htmltools_0.3.6   bookdown_0.5.14  
+## [31] crayon_1.3.4      MASS_7.3-47       grid_3.4.2       
+## [34] nlme_3.1-131      jsonlite_1.5      gtable_0.2.0     
+## [37] DBI_0.7           magrittr_1.5      units_0.4-6      
+## [40] scales_0.5.0.9000 cli_1.0.0         stringi_1.1.5    
+## [43] reshape2_1.4.3    bindrcpp_0.2      xml2_1.1.1       
+## [46] tools_3.4.2       glue_1.2.0        tweenr_0.1.5     
+## [49] hms_0.3           parallel_3.4.2    yaml_2.1.16      
+## [52] classInt_0.1-24   rvest_0.3.2       knitr_1.18       
+## [55] bindr_0.1         haven_1.1.0
 ```
