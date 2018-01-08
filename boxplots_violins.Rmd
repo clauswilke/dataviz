@@ -42,7 +42,7 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
                fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
                fatten = 5) +
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_bad(lincoln_errbar)
@@ -81,7 +81,7 @@ plot_grid(p_points, p_boxplot, rel_widths = c(.65, 1), nrow = 1)
 lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot(fill = 'grey90') + 
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_box)
@@ -128,7 +128,7 @@ When we visualize the Lincoln temperature data with violins, we obtain Figure \@
 lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_violin(fill = 'grey90') +
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_violin)
@@ -143,7 +143,7 @@ Because violin plots are derived from density estimates, they have similar short
 lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point() + 
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_bad(lincoln_points)
@@ -156,7 +156,7 @@ stamp_bad(lincoln_points)
 lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point(position = position_jitter(width = .15, height = 0, seed = 320)) +
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_jitter)
@@ -176,7 +176,7 @@ lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F
   geom_violin(color = "transparent", fill = "gray90") + 
   stat_sina(maxwidth = 0.8) + 
   xlab("month") + 
-  ylab("mean temperature (F)") +
+  ylab("mean temperature (°F)") +
   theme_half_open()
 
 stamp_phantom(lincoln_sina)
@@ -199,7 +199,7 @@ ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
                       bandwidth = bandwidth, fill = lighten("#56B4E9", .3), color = "white") +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
-  xlab("mean temperature (F)") +
+  xlab("mean temperature (°F)") +
   theme_ridges(grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
 ```
@@ -219,7 +219,7 @@ p_binline <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
                fill = lighten("#56B4E9", .3), color = "black", alpha = 1) +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
-  xlab("mean temperature (F)") +
+  xlab("mean temperature (°F)") +
   theme_ridges(grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
 

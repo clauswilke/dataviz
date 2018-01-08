@@ -225,7 +225,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
                labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(0, 0)) + 
   scale_y_continuous(limits = c(15, 110),
                      breaks = seq(20, 100, by=20),
-                     name = "temperature (F)") +
+                     name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +
   theme_minimal_grid() +
   theme(legend.title.align = 0.5)
@@ -250,7 +250,7 @@ mean_temps <- temps_long %>%
 p <- ggplot(mean_temps, aes(x = month, y = location, fill = mean)) + 
   geom_tile(width = .95, height = 0.95) + 
   scale_fill_viridis_c(option = "B", begin = 0.15, end = 0.98,
-                       name = "temperature (F)") + 
+                       name = "temperature (°F)") + 
   scale_y_discrete(name = NULL) +
   coord_fixed(expand = FALSE) +
   theme_half_open() +

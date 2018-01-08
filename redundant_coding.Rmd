@@ -247,7 +247,7 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
-  xlab("mean temperature (F)") +
+  xlab("mean temperature (°F)") +
   guides(fill = "none") +
   theme_ridges(center = TRUE, grid = TRUE) +
   theme(axis.title.y = element_blank())

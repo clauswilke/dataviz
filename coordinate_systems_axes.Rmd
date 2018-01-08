@@ -93,7 +93,7 @@ temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
                           ymd("0000-10-01"), ymd("0001-01-01")),
                labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(0, 0)) + 
   scale_y_continuous(limits = c(50, 90),
-                     name = "temperature (F)") +
+                     name = "temperature (°F)") +
   theme_minimal_grid()
 
 plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
@@ -113,8 +113,8 @@ tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(10*(5:8))) +
-  xlab("temperature in San Diego (F)") +
-  ylab("temperature in Houston (F)") +
+  xlab("temperature in San Diego (°F)") +
+  ylab("temperature in Houston (°F)") +
   theme_minimal_grid()
 
 # Farenheit to Celsius conversion
@@ -129,8 +129,8 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houst
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(5*(2:6))) +
-  xlab("Temperature in San Diego (C)") +
-  ylab("Temperature in Houston (C)") +
+  xlab("Temperature in San Diego (°C)") +
+  ylab("Temperature in Houston (°C)") +
   theme_minimal_grid()
 
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
@@ -321,6 +321,8 @@ plot_grid(p1, p2, labels = "auto")
 ## Polar coordinates
 
 
+The temperature normals from Figure \@ref(fig:temp-normals-vs-time) can be displayed in a polar coordinate system, because the temperature normals repeat each year. 
+
 (ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
 ```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
@@ -339,7 +341,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   scale_x_date(name="date", expand=c(0, 0)) + 
   scale_y_continuous(limits = c(0, 105), expand = c(0, 0),
                      breaks = seq(-30, 90, by=30),
-                     name = "temperature (F)") +
+                     name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
   theme_minimal() +
   coord_polar(theta = "x", start = pi, direction = -1) +
@@ -348,39 +350,51 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
 
 ## Geospatial coordinate systems
 
-```{r fig.width = 8.5}
+
+
+Figure \@ref(fig:continental-usa-four-projections) shows four different projections that are commonly used.
+
+(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. The Robinson projection is commonly used to project the entire world. It preserves neigher areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercartor projection preserves angles but distorts areas.
+
+```{r continental-usa-four-projections, fig.width = 8.5, fig.cap = '(ref:continental-usa-four-projections)'}
 library(sf)
 library(maps)
 usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))
 
 p1 <- ggplot(usa) + 
   geom_sf() +
-  theme_minimal_grid() + 
+  theme_minimal_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
-        axis.text = element_text(color = "gray30"))
-
-usa_laea <- st_transform(usa, st_crs("+proj=laea +lat_0=30 +lon_0=-100")) # Lambert equal area
-p2 <- ggplot(usa_laea) +
-  geom_sf() +
-  theme_minimal_grid() + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.text = element_text(color = "gray30"))
-
-usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercartor
-p3 <- ggplot(usa_tmerc) +
-  geom_sf() +
-  theme_minimal_grid() + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.text = element_text(color = "gray30"))
+        axis.text = element_text(color = "gray30"),
+        plot.margin = margin(11, 21, 7, 7))
 
 usa_robin <- st_transform(usa, st_crs("+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0")) # 
-p4 <- ggplot(usa_robin) +
+p2 <- ggplot(usa_robin) +
   geom_sf() +
-  theme_minimal_grid() + 
+  theme_minimal_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
-        axis.text = element_text(color = "gray30"))
+        axis.text = element_text(color = "gray30"),
+        plot.margin = margin(11, 21, 7, 7))
 
-plot_grid(p1, p4, p2, p3,
+
+usa_laea <- st_transform(usa, st_crs("+proj=laea +lat_0=30 +lon_0=-100")) # Lambert equal area
+p3 <- ggplot(usa_laea) +
+  geom_sf() +
+  theme_minimal_grid(12) + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"),
+        plot.margin = margin(21, 21, 7, 7))
+
+usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercartor
+p4 <- ggplot(usa_tmerc) +
+  geom_sf() +
+  theme_minimal_grid(12) + 
+  theme(panel.grid.major = element_line(color = "gray30"),
+        axis.text = element_text(color = "gray30"),
+        plot.margin = margin(21, 21, 7, 7))
+
+
+plot_grid(p1, p2, p3, p4,
           labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercartor"),
           label_x = 0.02, label_y = 0.98,
           hjust = 0, vjust = 1,
