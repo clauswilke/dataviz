@@ -122,7 +122,7 @@ In principle, we can use histograms instead of density plots in a ridgeline visu
 
 Ridgeline plots scale to very large numbers of distributions. For example, Figure \@ref(fig:movies-ridgeline) shows the distributions of movie lengths from 1913 to 2005. This figure contains almost 100 distinct distributions and yet it is very easy to read. We can see that in the 1920s, movies came in many different lengths, but since about 1960 movie length has standardized to approximately 90 minutes.
 
-(ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. (Source: Internet Movie Database, IMDB)
+(ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. Data source: Internet Movie Database, IMDB
 
 <div class="figure" style="text-align: center">
 <img src="boxplots_violins_files/figure-html4/movies-ridgeline-1.png" alt="(ref:movies-ridgeline)" width="480" />

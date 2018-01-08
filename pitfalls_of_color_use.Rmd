@@ -245,7 +245,7 @@ Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B 
 reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
           gray       #999999       -  0, 0, 0, 60     153, 153, 153     60, 60, 60
  
-While there are several good, cvd-safe color scales readily available, we need to recognize that they are no magic bullets. It is very possible to use a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In the end, in addition to the various color-design considerations discussed in this chapter and the previous one, I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
+While there are several good, cvd-safe color scales readily available, we need to recognize that they are no magic bullets. It is very possible to use a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In addition to the various color-design considerations discussed in this chapter and in Chapter \@ref(color-basics), I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
 
 (ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, four thin lines, and four groups of points, all colored in the same four colors. We can see that the colors become more difficult to distinguish the smaller or thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
 
@@ -286,9 +286,6 @@ To make sure your figures work for people with cvd, don't just rely on specific 
 
 ```{r eval = FALSE, include = FALSE} 
 ## Notes, entered as R comment so as to not appear in the printed output
-
-# add diagrams of simple color scales in cvd simulation, e.g. red-green or blue-green
-
 
 #Some useful posts on color-blind friendly palettes:
 #
