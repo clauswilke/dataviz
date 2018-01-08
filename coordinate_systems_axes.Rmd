@@ -285,9 +285,9 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1)
 
 ```
 
-I see two significant problems with square-root scales, and I therefore do not normally recommend their use. First, while on a linear scale one unit step corresponds to addition or subtraction of a constant value and on a log scale it corresponds to multiplication with or division by a constant value, no such rule exists for a square-root scale. The meaning of a unit step on a square-root scale depends on the scale value at which we're starting. Second, it is unclear how to best place axis ticks on a square-root scale. To obtain evenly spaced ticks, we would have to place them at squares, but axis ticks at, for example, positions 0, 4, 25, 49, 81 (every second square) would be highly unintuitive. Alternatively, we could place them at linear intervals (10, 20, 30, etc), but this would result in either too few axis ticks near the low end of the scale or too many near the high end. In Figure \@ref(fig:sqrt-scales), I placed the axis ticks at positions 0, 1, 5, 10, 20, 30, 40, and 50 on the square-root scale. These values are arbitrary but provide a reasonable covering of the data range.
+I see two significant problems with square-root scales. First, while on a linear scale one unit step corresponds to addition or subtraction of a constant value and on a log scale it corresponds to multiplication with or division by a constant value, no such rule exists for a square-root scale. The meaning of a unit step on a square-root scale depends on the scale value at which we're starting. Second, it is unclear how to best place axis ticks on a square-root scale. To obtain evenly spaced ticks, we would have to place them at squares, but axis ticks at, for example, positions 0, 4, 25, 49, 81 (every second square) would be highly unintuitive. Alternatively, we could place them at linear intervals (10, 20, 30, etc), but this would result in either too few axis ticks near the low end of the scale or too many near the high end. In Figure \@ref(fig:sqrt-scales), I placed the axis ticks at positions 0, 1, 5, 10, 20, 30, 40, and 50 on the square-root scale. These values are arbitrary but provide a reasonable covering of the data range.
 
-Despite these problems with square-root scales, they are valid position scales and I do not discount the possibility that they have appropriate applications. For example, just like a log scale is the natural scale for ratios, one could argue that the square-root scale is the natural scale for data that come in squares. Such data could be areas, for example. If we show areas on a square-root scale, we are highlighting the linear size of the area on a map, which is related to its extent from East to West or North to South. These extents are relevant, for example, if we are wondering how long it would take to drive across such an area. Figure \@ref(fig:northeast-state-areas) shows the areas of states in the U.S. Northeast on both a linear and a square-root scale. Even though the areas of these states are quite different (Figure \@ref(fig:northeast-state-areas)a), the times it will take to drive across each one will more closely resemble the figure on the square-root scale (Figure \@ref(fig:northeast-state-areas)b) than the figure on the linear scale (Figure \@ref(fig:northeast-state-areas)a).
+Despite these problems with square-root scales, they are valid position scales and I do not discount the possibility that they have appropriate applications. For example, just like a log scale is the natural scale for ratios, one could argue that the square-root scale is the natural scale for data that come in squares. Such data could be areas, for example. If we show areas on a square-root scale, we are highlighting the linear size of the area on a map, which is related to its extent from East to West or North to South. These extents are relevant if we are wondering how long it would take to drive across such an area. Figure \@ref(fig:northeast-state-areas) shows the areas of states in the U.S. Northeast on both a linear and a square-root scale. Even though the areas of these states are quite different (Figure \@ref(fig:northeast-state-areas)a), the times it will take to drive across each one will more closely resemble the figure on the square-root scale (Figure \@ref(fig:northeast-state-areas)b) than the figure on the linear scale (Figure \@ref(fig:northeast-state-areas)a).
 
 (ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a square-root scale. (b) Areas shown on a linear scale. Source: Google. 
 
@@ -321,9 +321,11 @@ p2 <- areas_base + scale_y_continuous(limits = c(0, 55000), breaks = 10000*(0:6)
 plot_grid(p2, p1, labels = "auto")
 ```
 
-## Polar coordinates
+## Coordinate systems with curved axes
 
-(ref:polar-coord) **Figure caption needed.**
+All coordinate systems we have encountered so far used two straight axes positioned at a right angle to each other, even if the axes themselves established a non-linear mapping from data values to positions. There are other coordinate systems, however, where the axes themselves are curved. In particular, in the *polar* coordinate system, we specify positions via an angle and a radial distance from the origin, and therefore the angle axis is circular (Figure \@ref(fig:polar-coord)).
+
+(ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
 ```{r polar-coord, fig.width = 7.5, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
 df_points <- data.frame(x = c(1, 3.5, 0),
@@ -334,6 +336,12 @@ df_points <- data.frame(x = c(1, 3.5, 0),
                         vjust_cart = c(1.6, 1.6, -.6),
                         hjust_cart = c(0.5, 1.1, -.1))
 
+df_segments <- data.frame(x0 = c(0, 1, 2, 3, 0, 0, 0, 0),
+                          x1 = c(0, 1, 2, 3, 4, 4, 4, 4),
+                          y0 = c(0, 0, 0, 0, 1, 2, 3, 4),
+                          y1 = c(4, 4, 4, 4, 1, 2, 3, 4))
+
+
 p_cart <- ggplot(df_points, aes(x, y)) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust_cart, hjust = hjust_cart), size = 12/.pt) +
@@ -343,18 +351,22 @@ p_cart <- ggplot(df_points, aes(x, y)) +
   xlab("x axis") +
   ylab("y axis") +
   theme_minimal_grid() +
-  theme(axis.ticks = element_blank())
+  theme(axis.ticks = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"))
 
 
 p_polar <- ggplot(df_points, aes(x, y)) +
+  geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
+               size = theme_minimal_grid()$panel.grid.major$size, color = theme_minimal_grid()$panel.grid.major$colour) +
   geom_point(size = 3, color = "#0072B2") +
   geom_text(aes(label = label, vjust = vjust_polar, hjust = hjust_polar), size = 12/.pt) +
   scale_x_continuous(limits = c(0, 4)) +
-  scale_y_continuous(limits = c(0, 4), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 4)) +
   coord_polar() +
   xlab("x values (circular axis)") +
   ylab("y values (radial axis)") +
   theme_minimal_grid() +
+  background_grid(major = "none") +
   theme(axis.line.x = element_blank(),
         axis.ticks = element_line(color = "black"))
 
@@ -362,7 +374,7 @@ plot_grid(p_cart, p_polar, labels = "auto")
 
 ```
 
-The temperature normals from Figure \@ref(fig:temp-normals-vs-time) can be displayed in a polar coordinate system, because the temperature normals repeat each year. 
+Polar coordinates can be useful for data of a periodic nature, such that data values on one end of the scale can be logically joined to data values on the other end. For example, consider the days in a year. December 31st is the last day of the year, but it is also one day before the first day of the year. If we want to show how some quantity varies over the year, it can be appropriate to use polar coordinates with the angle coordinate specifying each day. Let's apply this concept to the temperature normals of Figure \@ref(fig:temp-normals-vs-time). Because temperature normals are average temperatures that are not tied to any specific year, Dec. 31st can be thought of as 366 days later (including Feb. 29) than Jan. 1st and also one day earlier. By plotting the temperature normals in a polar coordinate system, we can emphasize this cyclical property they have (Figure \@ref(fig:temperature-normals-polar)). In comparison to Figure \@ref(fig:temp-normals-vs-time), the polar version highlights how similar temperatures are in Death Valley, Houston, and San Diego from late fall to early spring. In the Cartesian coordinate system, this fact is obscured because the temperature values in late December and early January are shown in opposite parts of the figure and therefore don't form a single visual unit.
 
 (ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
@@ -389,13 +401,10 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   theme_minimal_grid()
 ```
 
-## Geospatial coordinate systems
 
+A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their latitude and longitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:continental-usa-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:continental-usa-four-projections)).
 
-
-Figure \@ref(fig:continental-usa-four-projections) shows four different projections that are commonly used.
-
-(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. The Robinson projection is commonly used to project the entire world. It preserves neigher areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercartor projection preserves angles but distorts areas.
+(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles shown relative to the true state and country boundaries. The Robinson projection is commonly used to project the entire world. It preserves neigher areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercartor projection preserves angles but distorts areas.
 
 ```{r continental-usa-four-projections, fig.width = 8.5, fig.cap = '(ref:continental-usa-four-projections)'}
 library(sf)
