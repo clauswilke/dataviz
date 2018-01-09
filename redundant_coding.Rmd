@@ -11,78 +11,96 @@ library(ggridges)
 
 *Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
 
-```{r}
-iris %>%
-  select(Sepal.Width, Sepal.Length, species=Species) %>%
-  ggplot(aes(x = Sepal.Length, y = Sepal.Width, fill = species, color = species)) + 
-    geom_point(size=2.5, shape=21) +
+(ref:iris-scatter-one-shape) Sepal width versus sepal length for three different iris species. A small amount of jitter has been applied to all point positions to prevent points to be plotted on top of each other. 
+
+```{r iris-scatter-one-shape, fig.cap = '(ref:iris-scatter-one-shape)'}
+iris_scatter <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, fill = Species, color = Species)) + 
+    geom_point(size=2.5, shape=21,
+               position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
+                                          height = 0.01 * diff(range(iris$Sepal.Width)),
+                                          seed = 3942)) +
     scale_color_manual(values = darken(c("#E69F00", "#56B4E9", "#009E73"), 0.3),
-                       breaks = c("setosa", "virginica", "versicolor")) +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     scale_fill_manual(values = c("#E69F0080", "#56B4E980", "#009E7380"),
-                      breaks = c("setosa", "virginica", "versicolor")) +
-    xlab("sepal length") +
-    ylab("sepal width") +
-    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
-    scale_y_continuous(limits = c(1.95, 4.6), expand = c(0, 0)) -> iris_scatter
+                      breaks = c("setosa", "virginica", "versicolor"),
+                      name = "species") +
+    scale_x_continuous(limits = c(3.95, 8.2), expand = c(0, 0),
+                       labels = c("4.0", "5.0", "6.0", "7.0", "8.0"),
+                       name = "sepal length") +
+    scale_y_continuous(limits = c(1.9, 4.6), expand = c(0, 0),
+                       name = "sepal width") +
+    theme_minimal_grid()
 
-stamp_bad(plot_grid(NULL, iris_scatter + theme_minimal_grid(), NULL,
-                    nrow = 1, rel_widths = c(0.02, 1, 0.04)))
+stamp_bad(iris_scatter)
 ```
 
-There are two problems with this figure: 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors.
+There are two problems with Figure \@ref(fig:iris-scatter-one-shape): 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors (Figure \@ref(fig:iris-scatter-three-shapes)). Notice how it has become easier to distinguish virginica and versicolor.
 
-```{r}
-iris %>%
-  select(Sepal.Width, Sepal.Length, species = Species) %>%
-  ggplot(aes(x = Sepal.Length, y = Sepal.Width, shape = species, fill = species, color = species)) + 
-    geom_point(size = 2.5) +
+(ref:iris-scatter-three-shapes) Sepal width versus sepal length for three different iris species.
+
+```{r iris-scatter-three-shapes, fig.cap = '(ref:iris-scatter-three-shapes)'}
+iris_scatter2 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Species, fill = Species, color = Species)) + 
+    geom_point(size = 2.5,
+               position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
+                                          height = 0.01 * diff(range(iris$Sepal.Width)),
+                                          seed = 3942)) +
     scale_shape_manual(values = c(21, 22, 23),
-                       breaks = c("setosa", "virginica", "versicolor")) +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                       breaks = c("setosa", "virginica", "versicolor")) +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                       breaks = c("setosa", "virginica", "versicolor")) +
-    xlab("sepal length") +
-    ylab("sepal width") +
-    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
-    scale_y_continuous(limits = c(1.95, 4.6), expand = c(0, 0)) -> iris_scatter2
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
+    scale_x_continuous(limits = c(3.95, 8.2), expand = c(0, 0),
+                       labels = c("4.0", "5.0", "6.0", "7.0", "8.0"),
+                       name = "sepal length") +
+    scale_y_continuous(limits = c(1.9, 4.6), expand = c(0, 0),
+                       name = "sepal width") +
+    theme_minimal_grid()
 
-stamp_phantom(plot_grid(NULL, iris_scatter2 + theme_minimal_grid(), NULL,
-                        nrow = 1, rel_widths = c(0.02, 1, 0.04)))
+stamp_phantom(iris_scatter2)
 ```
 
-Notice how it has become easier to distinguish virginica and versicolor. Also, now that we use different shapes, we see that some virginica points fully overlap with some versicolor points. (These points appear as little stars, because the square representing versicolor is shown underneath the diamond representing virginica.) To learn more about ways to handle overlapping points, see Chapter \@ref(overlapping-points).
 
+(ref:iris-scatter-with-ellipses) Sepal width versus sepal length for three different iris species.
 
-```{r}
-label_df <- data.frame(species = c("setosa", "virginica", "versicolor"),
+```{r iris-scatter-with-ellipses, fig.width = 4.6, fig.asp = 0.8, fig.cap = '(ref:iris-scatter-with-ellipses)'}
+label_df <- data.frame(Species = c("setosa", "virginica", "versicolor"),
                      Sepal.Width = c(4.2, 3.76, 2.08),
                      Sepal.Length = c(5.7, 7, 5.1),
                      hjust = c(0, 0.5, 0),
                      vjust = c(0, 0.5, 1))
 
-iris %>%
-  select(Sepal.Width, Sepal.Length, species = Species) %>%
-  ggplot(aes(x = Sepal.Length, y = Sepal.Width, shape = species, fill = species, color = species)) + 
-    geom_point(size = 2.5) +
+iris_scatter3 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Species, fill = Species, color = Species)) + 
+    geom_point(size = 2.5,
+               position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
+                                          height = 0.01 * diff(range(iris$Sepal.Width)),
+                                          seed = 3942)) +
     stat_ellipse(size = 0.5) +
     geom_text(data = label_df,
-              aes(label = species, hjust = hjust, vjust = vjust),
+              aes(label = Species, hjust = hjust, vjust = vjust),
               size = 14/.pt) +
     scale_shape_manual(values = c(21, 22, 23),
-                       breaks = c("setosa", "virginica", "versicolor")) +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                       breaks = c("setosa", "virginica", "versicolor")) +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                       breaks = c("setosa", "virginica", "versicolor")) +
-    xlab("sepal length") +
-    ylab("sepal width") +
+                       breaks = c("setosa", "virginica", "versicolor"),
+                       name = "species") +
     guides(fill = "none", color = "none", shape = "none") +
-    scale_x_continuous(limits = c(3.95, 8.1), expand = c(0, 0)) +
-    scale_y_continuous(limits = c(1.8, 4.6), expand = c(0, 0)) -> iris_scatter3
+    scale_x_continuous(limits = c(3.95, 8.2), expand = c(0, 0),
+                       labels = c("4.0", "5.0", "6.0", "7.0", "8.0"),
+                       name = "sepal length") +
+    scale_y_continuous(limits = c(1.9, 4.6), expand = c(0, 0),
+                       name = "sepal width") +
+    theme_half_open()
 
-stamp_phantom(plot_grid(NULL, iris_scatter3 + theme_half_open(), NULL,
-                        nrow=1, rel_widths = c(0.02, .8, 0.24)))
+iris_scatter3
 ```
 
 
@@ -95,7 +113,9 @@ Whenever possible, design your figures so they don't need a legend.
 
 Let's consider another example that also demonstrates a very common visualization mistake.
 
-```{r}
+(ref:tech-stocks-bad-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+
+```{r tech-stocks-bad-legend, fig.cap = '(ref:tech-stocks-bad-legend)'}
 price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
@@ -118,7 +138,9 @@ The figure contains four lines, representing the stock prices of four different 
 
 This problem arises commonly with plotting software that autogenerates legends, as is the case for instance with R's ggplot2. The plotting software has no concept of the visual order that the viewer will perceive in the data, and it will instead sort the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data.
 
-```{r}
+(ref:tech-stocks-good-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+
+```{r tech-stocks-good-legend, fig.cap = '(ref:tech-stocks-good-legend)'}
 price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   geom_line() +
   scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
@@ -139,7 +161,9 @@ stamp_phantom(price_plot)
 
 While the above figure is a major improvement, we can still do better. Even with the correct ordering, a legend imposes an unnecessary mental burden on the viewer of the figure. The viewer has to match the colors in the legend to the colors in the figure and translate which company name goes with which data line. It is better to get rid of the legend altogether and instead draw the company names right next to the data lines.
 
-```{r}
+(ref:tech-stocks-good-no-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+
+```{r tech-stocks-good-no-legend, fig.cap = '(ref:tech-stocks-good-no-legend)'}
 yann <- axis_canvas(price_plot, axis = "y") +
   geom_text(data = filter(tech_stocks, date == "2017-06-02"),
             aes(y = price_indexed, label = paste0(" ", company)),
@@ -228,7 +252,7 @@ ydens <- axis_canvas(iris_scatter2, axis = "y", coord_flip = TRUE) +
                     guide = "none") +
   coord_flip()
 
-p1 <- insert_xaxis_grob(iris_scatter2 + theme_minimal_grid() + 
+p1 <- insert_xaxis_grob(iris_scatter2 + 
                           theme(legend.position = "none"),
                         xdens, grid::unit(.2, "null"), position = "top")
 p2 <- insert_yaxis_grob(p1, ydens, grid::unit(.15, "null"), position = "right")
