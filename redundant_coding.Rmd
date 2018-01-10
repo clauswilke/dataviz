@@ -9,9 +9,9 @@ library(ggridges)
 
 # Redundant coding {#redundant-coding}
 
-*Need some intro text here about the concept of redundant coding, showing the same information with multiple visua elements that reinforce each other.*
+At the end of Chapter \@ref(color-pitfalls), I argued that even if colors are visually distinct in principle, this distinction can disappear when the colored elements are small. To demonstrate this effect on an actual figure, I have drawn Figure \@ref(fig:iris-scatter-one-shape), which uses the first three colors from the Okabe-Ito color scale (Figure \@ref(fig:palette-Okabe-Ito)). The *virginica* points in green and the *versicolor* points in blue blend into each other (Figure \@ref(fig:iris-scatter-one-shape)), even though the two colors are clearly distinct in principle.
 
-(ref:iris-scatter-one-shape) Sepal width versus sepal length for three different iris species. A small amount of jitter has been applied to all point positions to prevent points to be plotted on top of each other. 
+(ref:iris-scatter-one-shape) Sepal width versus sepal length for three different iris species (*Iris setosa*, *Iris virginica*, and *Iris versicolor*). Each point represents the measurements for one plant sample. A small amount of jitter has been applied to all point positions to prevent overplotting. The figure is labeled bad because the *virginica* points in green and the *versicolor* points in blue are difficult to distinguish from each other.
 
 ```{r iris-scatter-one-shape, fig.cap = '(ref:iris-scatter-one-shape)'}
 iris_scatter_base <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, fill = Species, color = Species)) + 
@@ -39,6 +39,7 @@ iris_scatter <- iris_scatter_base +
 stamp_bad(iris_scatter)
 ```
 
+Surprisingly, the green and blue points look more distinct for people with red--green color-vision-deficiency (deuteranomaly or protanomaly) than for people with normal color vision (compare Figure \@ref(fig:iris-scatter-one-shape-cvd), top row to Figure \@ref(fig:iris-scatter-one-shape)). On the other hand, for people with blue--yellow deficiency (tritanomaly) the blue and green points look very similar (Figure \@ref(fig:iris-scatter-one-shape-cvd), bottom left). And, if we print out the figure in gray-scale (i.e., we *desaturate* the figure), we cannot distinguish any of the iris species (Figure \@ref(fig:iris-scatter-one-shape-cvd), bottom right).
 
 (ref:iris-scatter-one-shape-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-one-shape).
 
@@ -55,9 +56,9 @@ cvd_sim2(iris_scatter_small,
          scale = 1, label_x = 0.03)
 ```
 
-There are two problems with Figure \@ref(fig:iris-scatter-one-shape): 1. All points have the same shape. 2. The two colors that are more similar to each other (blue and green) are used for the data points that are the most intermingled (virginica and versicolor). We address these two problems by using different shapes and switching out the colors (Figure \@ref(fig:iris-scatter-three-shapes)). Notice how it has become easier to distinguish virginica and versicolor.
+There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-one-shape) to alleviate these issues. First, we can swap the colors used for *setosa* and *versicolor*, so that the blue is no longer directly next to the green (Figure \@ref(fig:iris-scatter-three-shapes)). Second, we can use three different symbol shapes, so that the points don't all look the same. With these two changes, both the original version of the plot (Figure \@ref(fig:iris-scatter-three-shapes)) and the versions under color-vision-deficiency and in grayscale (Figure \@ref(fig:iris-scatter-three-shapes-cvd)) become legible.
 
-(ref:iris-scatter-three-shapes) Sepal width versus sepal length for three different iris species.
+(ref:iris-scatter-three-shapes) Sepal width versus sepal length for three different iris species. Compared to Figure \@ref(fig:iris-scatter-one-shape), we have swapped the colors for *Iris setosa* and *Iris versicolor* and we have given each iris species its own point shape.
 
 ```{r iris-scatter-three-shapes, fig.cap = '(ref:iris-scatter-three-shapes)'}
 iris_scatter2_base <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Species, fill = Species, color = Species)) +     scale_shape_manual(values = c(21, 22, 23),
@@ -86,7 +87,7 @@ stamp_phantom(iris_scatter2)
 ```
 
 
-(ref:iris-scatter-three-shapes-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-three-shapes).
+(ref:iris-scatter-three-shapes-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-three-shapes). Because of the use of different point shapes, even the fully desaturated gray-scale version of the plot is legible.
 
 ```{r iris-scatter-three-shapes-cvd, fig.width = 8.5, fig.asp = 0.65, fig.cap = '(ref:iris-scatter-three-shapes-cvd)'}
 iris_scatter2_small <- iris_scatter2_base +
@@ -100,6 +101,8 @@ iris_scatter2_small <- iris_scatter2_base +
 cvd_sim2(iris_scatter2_small,
          scale = 1, label_x = 0.03)
 ```
+
+**Now some text here to describe the general concept of redundant coding, what is it, why do we do it.**
 
 
 (ref:iris-scatter-with-ellipses) Sepal width versus sepal length for three different iris species.
