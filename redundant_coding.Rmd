@@ -306,13 +306,16 @@ stamp_phantom(plot_grid(p2, NULL, rel_widths = c(8, 1)))
 ```
 
 
-And finally, here is an example where the color bar (representing temperature) is integrated into the temperature axis.
+And finally, Figure \@ref(fig:temp-ridgeline-colorbar) shows a case where a color bar representing temperature is integrated into the temperature axis.
 
-```{r}
+
+(ref:temp-ridgeline-colorbar) Temperatures in Lincoln, Nebraska, in 2016. This figure is a variation of Figure \@ref(fig:temp-ridgeline). Temperature is now shown both by location along the *x* axis and by color, and a color bar along the *x* axis visualizes the scale that converts temperatures into colors.
+
+```{r temp-ridgeline-colorbar, fig.asp = 0.652, fig.cap = '(ref:temp-ridgeline-colorbar)'}
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
-  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.001, bandwidth = bandwidth,
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01, bandwidth = bandwidth,
                                color = "black", size = 0.25) +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
@@ -340,5 +343,6 @@ xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0)
 
 lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
-stamp_phantom(plot_grid(lincoln_final, NULL, rel_widths = c(8, 1)))
+
+ggdraw(lincoln_final)
 ```
