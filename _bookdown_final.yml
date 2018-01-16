@@ -28,7 +28,7 @@ rmd_files: [
   "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "pitfalls_of_color_use.Rmd", # completed
-  #"redundant_coding.Rmd",
+  "redundant_coding.Rmd", # completed
 
   # Part III
   "image_file_formats.Rmd", # completed
