@@ -285,7 +285,8 @@ p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size =
         legend.box.background = element_rect(fill = "white", color = "white"),
         legend.position = "top",
         legend.direction = "vertical",
-        legend.justification = "center")
+        legend.justification = "center",
+        legend.box.margin = margin(7, 7, 7, 7))
 
 legend <- get_legend(align_legend(p_mtcars))
 

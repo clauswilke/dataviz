@@ -395,7 +395,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   scale_y_continuous(limits = c(0, 105), expand = c(0, 0),
                      breaks = seq(-30, 90, by=30),
                      name = "temperature (°F)") +
-  scale_color_OkabeIto(order = c(1:3, 7), name = "city") +
+  scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +
   theme_minimal() +
   coord_polar(theta = "x", start = pi, direction = -1) +
   theme_minimal_grid()

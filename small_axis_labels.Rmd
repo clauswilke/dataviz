@@ -33,7 +33,7 @@ p <- ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=spo
     scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
     ylab("% bodyfat")
 
-stamp_bad(p + theme_minimal_grid(7))
+stamp_bad(p + theme_minimal_grid(7) + theme(plot.margin = margin(7, 14, 7, 7)))
 ```
 
 A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athletes-ugly). I think the fonts are still too small, and that's why I have labeled the figure as ugly. However, we are moving in the right direction. This figure might be passable under some circumstances. My main criticism here is not so much that the labels aren't legible as that the figure is not balanced; the text elements are too small compared to the rest of the figure.
@@ -41,7 +41,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athlet
 (ref:Aus-athletes-ugly) Percent bodyfat versus height in male athletes. This figure is an improvement over Figure \@ref(fig:Aus-athletes-small), but the text elements remain too small and the figure is not balanced.
 
 ```{r Aus-athletes-ugly, fig.width = 7, fig.cap='(ref:Aus-athletes-ugly)'}
-stamp_ugly(p + theme_minimal_grid(10))
+stamp_ugly(p + theme_minimal_grid(10) + theme(plot.margin = margin(7, 14, 7, 7)))
 ```
 
 
@@ -50,7 +50,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 (ref:Aus-athletes-good) Percent bodyfat versus height in male athletes. All figure elements are appropriately scaled.
 
 ```{r Aus-athletes-good, fig.width = 7, fig.cap='(ref:Aus-athletes-good)'}
-stamp_phantom(p + theme_minimal_grid())
+stamp_phantom(p + theme_minimal_grid() + theme(plot.margin = margin(7, 14, 7, 7)))
 ```
 
 Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-athletes-big-ugly)). Sometimes we need big labels, for example if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In Figure \@ref(fig:Aus-athletes-big-ugly), the points used to visualize the data are too small relative to the text.  Once we fix this issue, the figure becomes acceptable again (Figure \@ref(fig:Aus-athletes-big-good)).
@@ -58,7 +58,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-
 (ref:Aus-athletes-big-ugly) Percent bodyfat versus height in male athletes. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements.
 
 ```{r Aus-athletes-big-ugly, fig.width = 7, fig.cap='(ref:Aus-athletes-big-ugly)'}
-stamp_ugly(p + theme_minimal_grid(19) + theme(legend.key.size = grid::unit(1.3, "lines")))
+stamp_ugly(p + theme_minimal_grid(19))
 ```
 
 
@@ -71,8 +71,7 @@ p2 <- ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=sp
   scale_color_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.3) +
   scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
   ylab("% bodyfat") +
-  theme_minimal_grid(19) +
-  theme(legend.key.size = grid::unit(1.3, "lines"))
+  theme_minimal_grid(19)
 
 stamp_phantom(p2)
 ```
