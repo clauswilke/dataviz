@@ -1,6 +1,6 @@
 
 
-# Common pitfalls of color use
+# Common pitfalls of color use {#color-pitfalls}
 
 Color can be an incredibly effective tool to enhance data visualizations. At the same time, poor color choices can ruin an otherwise excellent visualization. Color needs to be applied to serve a purpose, it must be clear, and it must not distract.
 
