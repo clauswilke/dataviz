@@ -14,38 +14,48 @@ The principle of proportional ink:
 
 **The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
 
-```{r}
-ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_income)), y = median_income)) +
-  geom_col() +
-  coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50000, 75000), expand = FALSE) +
+
+(ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is misleading, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
+
+```{r hawaii-income-bars-bad, fig.cap = '(ref:hawaii-income-bars-bad)'}
+p_income_base <- ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_income)), y = median_income)) +
+  geom_col(fill = "#56B4E9") +
   xlab("county") +
+  theme_minimal_hgrid() +
+  theme(plot.margin = margin(7, 14, 7, 7))
+
+p_income_bad <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50000, 75000), expand = FALSE) +
   scale_y_continuous(name = "median income", 
                      breaks = 10000*(5:7),
-                     labels = function(x) paste0("$", scales::comma(x))) +
-  theme_minimal_hgrid()
+                     labels = function(x) paste0("$", scales::comma(x)))
+
+stamp_bad(p_income_bad)
 ```
 
-```{r}
-ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(median_income)), y = median_income)) +
-  geom_col() +
-  coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0, 78000), expand = FALSE) +
-  xlab("county") +
-  scale_y_continuous(name = "median income", 
+(ref:hawaii-income-bars-good) Median income in the five counties of the state of Hawaii. Here, the *y* axis scale starts at \$0 and therefore the relative magnitudes of the median incomes in the five counties are accurately shown. Data source: 2015 Five-Year American Community Survey.
+
+```{r hawaii-income-bars-good, fig.cap = '(ref:hawaii-income-bars-good)'}
+p_income_good <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0, 78000), expand = FALSE) +
+    scale_y_continuous(name = "median income", 
                      breaks = 20000*(0:3),
-                     labels = function(x) paste0("$", scales::comma(x))) +
-  theme_minimal_hgrid()
+                     labels = function(x) paste0("$", scales::comma(x)))
+
+stamp_phantom(p_income_good)
 ```
+
+
 
 ```{r}
 hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
   spread(year, median_income) %>%
-  mutate(income_diff = `2015` - `2010`)
+  mutate(income_diff = `2015` - `2010`,
+         income_ratio = `2015` / `2010`)
 
 ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
                                y = income_diff)) + 
-  geom_col() +
+  geom_col(fill = "#56B4E9") +
   xlab("county") +
-  scale_y_continuous(name = "change in median income", 
+  scale_y_continuous(name = "5-year change in median income", 
                      limits = c(-5000, 25000),
                      expand = c(0, 0),
                      labels = function(x) paste0("$", scales::comma(x))) +
@@ -66,9 +76,10 @@ fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
                expand=c(0, 0)) + 
   scale_y_continuous(name="stock price (USD)",
                      limits = c(110, 135),
-                     expand=c(0, 0)) +
+                     expand=c(0, 0)) + 
   theme_half_open() +
-  theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
+  background_grid(major = 'y', minor = 'none') +
+  theme(plot.margin = margin(14, 14, 7, 7))
 
 stamp_bad(fb_drop_bad)
 ```
@@ -86,17 +97,85 @@ fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
                      limits = c(0, 150),
                      expand=c(0,0)) +
   theme_half_open() +
-  theme(panel.grid.major.y = element_line(size = 0.5, color = "grey90"))
+  background_grid(major = 'y', minor = 'none') +
+  theme(plot.margin = margin(14, 14, 7, 7))
 
 stamp_phantom(fb_drop_good)
 ```
 
-## Non-linear coordinate systems
 
-```{r}
-ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(county, desc(population)), y = population)) +
-  geom_col() +
-  theme_minimal_hgrid() +
-  scale_y_sqrt(expand = c(0, 0))
+## Non-linear scales
 
+
+```{r fig.width = 7, fig.asp = 0.5}
+library(gapminder)
+
+df_oceania <- filter(gapminder_unfiltered, year == 2007, continent == "Oceania") %>%
+  mutate(GDP = pop*gdpPercap) %>%
+  arrange(desc(GDP))
+
+oc_bad <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
+  geom_col(fill = "#56B4E9") + 
+  scale_y_continuous(breaks = log10(c(3.1e8, 1e9, 3.e9, 1e10, 3.e10, 1e11, 3.e11, 1e12)),
+                     labels = c("0.3", "1.0", "3.0", "10", "30", "100", "300", "1000"),
+                     name = "GDP (billion USD)") +
+  scale_x_discrete(name = NULL) +
+  coord_flip(ylim = log10(c(3.1e8, 9.9e11)), expand = FALSE) +
+  theme_minimal_vgrid()
+
+stamp_bad(oc_bad)
 ```
+
+```{r fig.width = 7, fig.asp = 0.5}
+oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
+  geom_col(fill = "#56B4E9") + 
+  scale_y_continuous(breaks = 2*(0:6),
+                     labels = function(x) label_log10(10^x/1e9),
+                     name = "GDP (billion USD)") +
+  scale_x_discrete(name = NULL) +
+  coord_flip(ylim = log10(c(1, 9.9e11)), expand = FALSE) +
+  theme_minimal_vgrid()
+
+stamp_bad(oc_bad2)
+```
+
+By placing the country names right next to the points, we avoid implying a magnitude by the horizontal distance from the country name to the point.
+
+
+```{r fig.width = 7, fig.asp = 0.5}
+ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
+  geom_point(size = 4, color = "#0072B2") + 
+  geom_label(aes(label = country, y = log10(GDP) - .08), hjust = 1, size = 12/.pt,
+             fill = "white", alpha = 0.5, label.padding = grid::unit(2, "pt"),
+             label.r = grid::unit(0, "pt"), label.size = 0) +
+  scale_y_continuous(breaks = log10(c(3e8, 1e9, 3.e9, 1e10, 3.e10, 1e11, 3.e11, 1e12)),
+                     labels = c("0.3", "1.0", "3.0", "10", "30", "100", "300", "1000"),
+                     name = "              GDP (billion USD)",
+                     limits = log10(c(3e7, 9.9e11)),
+                     expand = c(0, 0)) +
+  scale_x_discrete(name = NULL, breaks = NULL) +
+  coord_flip() +
+  theme_minimal_vgrid()
+```
+
+```{r fig.width = 7, fig.asp = 0.5}
+GDP_PNG <- filter(df_oceania, country == "Papua New Guinea")$GDP
+
+df_oceania_ratios <- mutate(df_oceania, gdp_ratio = GDP/GDP_PNG) %>%
+  filter(country != "Papua New Guinea")
+
+ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) + 
+  geom_col(fill = "#56B4E9") + 
+  scale_y_log10(breaks = c(1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, 32, 64),
+                labels = c("1/16", "1/8", "1/4", "1/2", "1", "2", "4", "8", "16", "32", "64"),
+                name = "GDP relative to Papua New Guinea",
+                limits = c(.055, 70),
+                expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
+  coord_flip() +
+  theme_minimal_vgrid() +
+  theme(axis.line = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks.y = element_blank())
+```
+
