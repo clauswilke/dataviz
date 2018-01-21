@@ -5,14 +5,21 @@ source("_common.R")
 library(tidyr)
 library(lubridate)
 library(ggridges)
+library(ggforce)
+library(treemapify)
 ```
 
 
 # The principle of proportional ink {#proportional-ink}
 
-The principle of proportional ink:
+In many different visualization scenarios, we represent data values by the extent of a graphical element. For example, in a bar plot, we draw bars that begin at 0 and end at the data value they represent. In this case, the data value is not only encoded in the end point of the bar but also in the height or length of the bar. If we drew a bar that started at a different value than 0, then the length of the bar and the bar endpoint would convey contradicting information, and the visualization would be misleading. Contrast this to a scenario where we visualize the data value with a dot. In this case, the value is only encoded in the location of the dot but not in the size or shape of the dot.
 
-**The sizes of shaded areas in a plot need to be proportional to the data values they represent.**
+Similar issues will arise whenever we use graphical elements such as bars, rectangles, shaded areas of arbitrary shape, or any other elements that have a clear visual extent which can be either consistent or inconsistent with the data value shown. In all these cases, we need to make sure that there is no inconsistency. We refer to this concept as the *principle of proportional ink*:
+
+> **The principle of proportional ink**  
+> The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
+
+## Visualizations along linear axes
 
 
 (ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is misleading, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
@@ -43,9 +50,9 @@ p_income_good <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0
 stamp_phantom(p_income_good)
 ```
 
+(ref:hawaii-income-change) Change in median income in Hawaiian counties from 2010 to 2015. Data source: 2010 and 2015 Five-Year American Community Surveys.
 
-
-```{r}
+```{r hawaii-income-change, fig.cap = '(ref:hawaii-income-change)'}
 hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
   spread(year, median_income) %>%
   mutate(income_diff = `2015` - `2010`,
@@ -104,10 +111,12 @@ stamp_phantom(fb_drop_good)
 ```
 
 
-## Non-linear scales
+## Visualizations along logarithmic axes
 
 
-```{r fig.width = 7, fig.asp = 0.5}
+(ref:oceania-gdp-logbars) GDP in 2007 of countries in Oceania. Data source: Gapminder.
+
+```{r oceania-gdp-logbars, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-logbars)'}
 library(gapminder)
 
 df_oceania <- filter(gapminder_unfiltered, year == 2007, continent == "Oceania") %>%
@@ -126,7 +135,9 @@ oc_bad <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
 stamp_bad(oc_bad)
 ```
 
-```{r fig.width = 7, fig.asp = 0.5}
+(ref:oceania-gdp-logbars-long) GDP in 2007 of countries in Oceania. Data source: Gapminder.
+
+```{r oceania-gdp-logbars-long, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-logbars-long)'}
 oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
   geom_col(fill = "#56B4E9") + 
   scale_y_continuous(breaks = 2*(0:6),
@@ -141,8 +152,9 @@ stamp_bad(oc_bad2)
 
 By placing the country names right next to the points, we avoid implying a magnitude by the horizontal distance from the country name to the point.
 
+(ref:oceania-gdp-dots) GDP in 2007 of countries in Oceania. Data source: Gapminder.
 
-```{r fig.width = 7, fig.asp = 0.5}
+```{r oceania-gdp-dots, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-dots)'}
 ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
   geom_point(size = 4, color = "#0072B2") + 
   geom_label(aes(label = country, y = log10(GDP) - .08), hjust = 1, size = 12/.pt,
@@ -158,7 +170,9 @@ ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   theme_minimal_vgrid()
 ```
 
-```{r fig.width = 7, fig.asp = 0.5}
+(ref:oceania-gdp-relative) GDP in 2007 of countries in Oceania, relative to the GDP of Papua New Guinea. Data source: Gapminder.
+
+```{r oceania-gdp-relative, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-relative)'}
 GDP_PNG <- filter(df_oceania, country == "Papua New Guinea")$GDP
 
 df_oceania_ratios <- mutate(df_oceania, gdp_ratio = GDP/GDP_PNG) %>%
@@ -179,3 +193,71 @@ ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) +
         axis.ticks.y = element_blank())
 ```
 
+## Visualizations without axes
+
+While technically the data values are mapped onto angles, which are represented by a circular axis, in practice we are not judging the angles but instead the areas of the pie wedges.
+
+(ref:RI-pop-pie) Number of inhabitants in Rhode Island counties. Data source: 2010 Decennial U.S. Census.
+
+```{r PI-pop-pie, fig.cap = '(ref:RI-pop-pie)'}
+RI_pop <- US_census %>% 
+  filter(state == "Rhode Island") %>%
+  extract(name, "county", regex = "(.+) County") %>%
+  select(county, pop2010) %>%
+  mutate(label_pop = scales::comma(signif(pop2010, 3)),
+         label_comb = paste(county, label_pop, sep = "\n")) %>%
+  arrange(desc(pop2010))
+
+RI_pop$county = factor(RI_pop$county, levels = RI_pop$county)
+
+RI_pie <- RI_pop %>%
+  mutate(total = sum(pop2010),
+         end_angle = 2*pi*cumsum(pop2010)/total,      # ending angle for each pie slice
+         start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+         mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+         hjust = ifelse(mid_angle>pi, 1, 0),
+         vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1))
+
+rpie = 1
+
+RI_pie$rlabel = c(.3, .4, .4, 1., 1.) * rpie
+RI_pie$size = c(16, 14, 14, 12, 12)/.pt
+
+plot_RI_pies <- ggplot(RI_pie) + 
+  geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
+                   start = start_angle, end = end_angle, fill = county), color = "white", size = 0.75) +
+  geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = label_pop,
+                hjust = hjust, vjust = vjust, size = size)) +
+  coord_fixed() +
+  scale_x_continuous(limits = c(-1.1, 1.1), expand = c(0, 0), name = NULL, breaks = NULL, labels = NULL) +
+  scale_y_continuous(limits = c(-1.1, 1.1), expand = c(0, 0),name = NULL, breaks = NULL, labels = NULL) +
+  #scale_fill_brewer(type = "qual", palette = "Pastel1") +
+  scale_fill_OkabeIto(darken = -.4) +
+  scale_size_identity() +
+  guides(fill = guide_legend(override.aes = list(size = 1.))) +
+  theme_half_open() +
+  theme(axis.line.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.title.align = 0.5,
+        legend.key.size = grid::unit(25, "pt"),
+        legend.spacing.x = grid::unit(2, "pt"),
+        legend.spacing.y = grid::unit(2, "pt"),
+        plot.margin = margin(7, 7, 0, 7))
+
+plot_RI_pies
+```
+
+(ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties. Data source: 2010 Decennial U.S. Census.
+
+```{r RI-pop-treemap, fig.width = 4.5, fig.asp = .75, fig.cap = '(ref:RI-pop-treemap)'}
+
+p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) + 
+  geom_treemap(color = "white", size = .75*.pt) + 
+  geom_treemap_text(fontface = "plain", colour = "black", place = "centre",
+                    grow = FALSE) +
+  scale_fill_OkabeIto(darken = -.4, guide = "none")
+  #scale_fill_brewer(type = "qual", palette = "Pastel1", guide = "none")
+
+p
+```

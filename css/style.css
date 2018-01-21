@@ -29,6 +29,12 @@ pre {
   word-break: normal;
   word-wrap: normal;
 }
+
 pre code {
   white-space: inherit;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal blockquote {
+  color: #252525;
+  border-left: 4px solid #858585
 }
