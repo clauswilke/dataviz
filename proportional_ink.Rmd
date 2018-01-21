@@ -19,8 +19,11 @@ Similar issues will arise whenever we use graphical elements such as bars, recta
 > **The principle of proportional ink**  
 > The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
 
+Violations of this principle are incredibly common, in particular in the popular press and the world of finance.
+
 ## Visualizations along linear axes
 
+Figure \@ref(fig:hawaii-income-bars-bad) shows the median income in the five counties that make up the state of Hawaii. It is a typical figure one might encounter in a newspaper article. A quick glance at the figure suggests that the county of Hawaii is incredibly poor while the county of Honolulu is much richer than the other counties. However, Figure \@ref(fig:hawaii-income-bars-bad) is quite misleading, because all bars begin at \$50,000 median income. Thus, while the endpoint of each bar correctly represents the actual median income in each county, the bar height represents the extent to which median incomes exceed $50,000, an arbitrary number. And human perception is such that the bar height is the key quantity we perceive when looking at this figure, not the location of the bar endpoint relative to the *y* axis.
 
 (ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is misleading, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
 
@@ -39,6 +42,9 @@ p_income_bad <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50
 stamp_bad(p_income_bad)
 ```
 
+
+An appropriate visualization of these data makes for a less exciting story (Figure \@ref(fig:hawaii-income-bars-good)). While there are differences in median income between the counties, they are nowhere near as big as Figure \@ref(fig:hawaii-income-bars-bad) suggested. Overall, the median incomes in the different counties are comparable.
+
 (ref:hawaii-income-bars-good) Median income in the five counties of the state of Hawaii. Here, the *y* axis scale starts at \$0 and therefore the relative magnitudes of the median incomes in the five counties are accurately shown. Data source: 2015 Five-Year American Community Survey.
 
 ```{r hawaii-income-bars-good, fig.cap = '(ref:hawaii-income-bars-good)'}
@@ -50,25 +56,8 @@ p_income_good <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0
 stamp_phantom(p_income_good)
 ```
 
-(ref:hawaii-income-change) Change in median income in Hawaiian counties from 2010 to 2015. Data source: 2010 and 2015 Five-Year American Community Surveys.
 
-```{r hawaii-income-change, fig.cap = '(ref:hawaii-income-change)'}
-hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
-  spread(year, median_income) %>%
-  mutate(income_diff = `2015` - `2010`,
-         income_ratio = `2015` / `2010`)
-
-ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
-                               y = income_diff)) + 
-  geom_col(fill = "#56B4E9") +
-  xlab("county") +
-  scale_y_continuous(name = "5-year change in median income", 
-                     limits = c(-5000, 25000),
-                     expand = c(0, 0),
-                     labels = function(x) paste0("$", scales::comma(x))) +
-  theme_minimal_hgrid()
-```
-
+Similar visualization problems frequently arise in the visualization of time series, such as stock price. Figure \@ref(fig:fb-stock-drop-bad) suggests a massive collapse in the stock price of Facebook occurred around Nov. 1, 2016. In reality, the price decline was moderate relative to the total price of the stock (Figure \@ref(fig:fb-stock-drop-good)).
 
 (ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 21, 2016 to Jan. 20, 2017. This figure seems to imply that the Facebook stock pice collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
 
@@ -110,9 +99,32 @@ fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
 stamp_phantom(fb_drop_good)
 ```
 
+In the two preceding examples, the data values were encoded by the bar height or area height, measured as the distance from the *y* value of the data to *y* = 0. **some more text here.**
+
+
+(ref:hawaii-income-change) Change in median income in Hawaiian counties from 2010 to 2015. Data source: 2010 and 2015 Five-Year American Community Surveys.
+
+```{r hawaii-income-change, fig.cap = '(ref:hawaii-income-change)'}
+hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
+  spread(year, median_income) %>%
+  mutate(income_diff = `2015` - `2010`,
+         income_ratio = `2015` / `2010`)
+
+ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
+                               y = income_diff)) + 
+  geom_col(fill = "#56B4E9") +
+  xlab("county") +
+  scale_y_continuous(name = "5-year change in median income", 
+                     limits = c(-5000, 25000),
+                     expand = c(0, 0),
+                     labels = function(x) paste0("$", scales::comma(x))) +
+  theme_minimal_hgrid()
+```
+
 
 ## Visualizations along logarithmic axes
 
+Whenever we are visualizing data along a linear scale, as we did in the previous subsection, the areas of bars, rectangles, or other shapes are automatically proportional to the data values. The same is not true if we're using a logarithmic scale. 
 
 (ref:oceania-gdp-logbars) GDP in 2007 of countries in Oceania. Data source: Gapminder.
 
@@ -170,6 +182,8 @@ ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   theme_minimal_vgrid()
 ```
 
+
+
 (ref:oceania-gdp-relative) GDP in 2007 of countries in Oceania, relative to the GDP of Papua New Guinea. Data source: Gapminder.
 
 ```{r oceania-gdp-relative, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-relative)'}
@@ -195,9 +209,9 @@ ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) +
 
 ## Visualizations without axes
 
-While technically the data values are mapped onto angles, which are represented by a circular axis, in practice we are not judging the angles but instead the areas of the pie wedges.
+All preceding examples visualized data along one linear dimension, so that the data value was encoded both by area and by location along the *x* or *y* axis. Other visualizations represent the data value only by area. The most common one is the pie chart (Figure \@ref(fig:RI-pop-pie)). Even though technically the data values are mapped onto angles, which are represented by location along a circular axis, in practice we are often not judging the angles of a pie chart. Instead, the first visual property we notice is the size of the areas of the pie wedges.
 
-(ref:RI-pop-pie) Number of inhabitants in Rhode Island counties. Data source: 2010 Decennial U.S. Census.
+(ref:RI-pop-pie) Number of inhabitants in Rhode Island counties, shown as a pie chart. Data source: 2010 Decennial U.S. Census.
 
 ```{r PI-pop-pie, fig.cap = '(ref:RI-pop-pie)'}
 RI_pop <- US_census %>% 
@@ -248,7 +262,26 @@ plot_RI_pies <- ggplot(RI_pie) +
 plot_RI_pies
 ```
 
-(ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties. Data source: 2010 Decennial U.S. Census.
+Because the area of each pie wedge is proportional to its angle which in turn is proportional to the data value the wedge represents, pie charts satisfy the principle of proportional ink. However, we perceive the area in a pie chart differently from the same area in a bar plot. 
+
+(ref:RI-pop-bars) Number of inhabitants in Rhode Island counties, shown as bars. Data source: 2010 Decennial U.S. Census.
+
+```{r PI-pop-bars, fig.width = 5.5, fig.cap = '(ref:RI-pop-bars)'}
+ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill = county)) + 
+  geom_col() +
+  scale_fill_OkabeIto(darken = -.4, guide = "none") +
+  scale_y_continuous(expand = c(0, 0), labels = label_log10,
+                     name = "number of inhabitants") +
+  scale_x_discrete(name = "county") +
+  coord_flip() +
+  theme_minimal_vgrid() +
+  theme(axis.line = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks.y = element_blank())
+
+```
+
+(ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties, shown as a treemap. Data source: 2010 Decennial U.S. Census.
 
 ```{r RI-pop-treemap, fig.width = 4.5, fig.asp = .75, fig.cap = '(ref:RI-pop-treemap)'}
 
