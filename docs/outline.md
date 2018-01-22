@@ -59,11 +59,8 @@
 #. **Choosing the right axis settings**  
   Covers various aspects related to axis choice, including linear vs. logarithmic axes, as well as issues of axis expansion beyond the data range. Also takes up the topic of aspect ratio once again.
 
-#. **Background grids**  
-  Discusses when and how to use background grids and other guide lines in figures.
-
-#. **Don't box yourself in**  
-  Argues to avoid boxes and frames around figure parts. Also discusses the general principle of maximizing the ink used to convey information. Could be combined with chapter on background grids.
+#. **Maximizing the data signal in visualizations**  
+  Discusses the general principle of maximizing the ink used to convey information. Argues to avoid boxes and frames around figure parts. Also discusses when and how to use background grids and other guide lines in figures.
 
 #. **The principle of proportional ink**  
   Explains that the size of colored areas needs to be proportional to the data value they represent.
@@ -89,7 +86,7 @@
 
 ## Part III: Miscellaneous topics {-}
 
-28. **Understanding the most commonly used image file formats**  
+27. **Understanding the most commonly used image file formats**  
   Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.
 
 #. **Choosing the right plotting software**  

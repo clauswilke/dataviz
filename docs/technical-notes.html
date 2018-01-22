@@ -76,10 +76,10 @@
 <li class="chapter" data-level="1.1" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>1.1</b> Aesthetics and types of data</a></li>
 <li class="chapter" data-level="1.2" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>1.2</b> Scales map data values onto aesthetics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html"><i class="fa fa-check"></i><b>2</b> Coordinate systems and axes</a><ul>
-<li class="chapter" data-level="2.1" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>2.1</b> Cartesian coordinates</a></li>
-<li class="chapter" data-level="2.2" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>2.2</b> Nonlinear axes</a></li>
-<li class="chapter" data-level="2.3" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>2.3</b> Coordinate systems with curved axes</a></li>
+<li class="chapter" data-level="2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>2</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="2.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>2.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="2.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>2.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="2.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>2.3</b> Coordinate systems with curved axes</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>3</b> Color scales</a><ul>
 <li class="chapter" data-level="3.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>3.1</b> Color as a tool to distinguish</a></li>
@@ -112,7 +112,11 @@
 </ul></li>
 <li class="part"><span><b>Part II: Principles of figure design</b></span></li>
 <li class="chapter" data-level="9" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>9</b> Your axis labels are too small</a></li>
-<li class="chapter" data-level="10" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>10</b> Background grids</a></li>
+<li class="chapter" data-level="10" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>10</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="10.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>10.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="10.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>10.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="10.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>10.3</b> Direct area visualizations</a></li>
+</ul></li>
 <li class="chapter" data-level="11" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>11</b> Handling overlapping points</a><ul>
 <li class="chapter" data-level="11.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>11.1</b> Partial transparency and jittering</a></li>
 <li class="chapter" data-level="11.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>11.2</b> 2d histograms</a></li>
@@ -181,34 +185,36 @@
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] maps_3.2.0          sf_0.5-5            ggrepel_0.7.0      
-##  [4] ggforce_0.1.1       lubridate_1.7.1     ggridges_0.4.1.9990
-##  [7] egg_0.2.0           gridExtra_2.3       forcats_0.2.0      
-## [10] stringr_1.2.0       purrr_0.2.4         readr_1.1.1        
-## [13] tidyr_0.7.2         tibble_1.3.4        tidyverse_1.2.1    
-## [16] dviz.supp_0.1.0     dplyr_0.7.4         colorblindr_0.1.0  
-## [19] colorspace_1.4-0    cowplot_0.9.2.9900  ggplot2_2.2.1.9000 
+##  [1] maps_3.2.0          sf_0.5-5            treemapify_2.4.0   
+##  [4] ggrepel_0.7.0       ggforce_0.1.1       lubridate_1.7.1    
+##  [7] ggridges_0.4.1.9990 egg_0.2.0           gridExtra_2.3      
+## [10] forcats_0.2.0       stringr_1.2.0       purrr_0.2.4        
+## [13] readr_1.1.1         tidyr_0.7.2         tibble_1.3.4       
+## [16] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.7.4        
+## [19] colorblindr_0.1.0   colorspace_1.4-0    cowplot_0.9.2.9900 
+## [22] ggplot2_2.2.1.9000 
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.14      lattice_0.20-35   deldir_0.1-14    
 ##  [4] class_7.3-14      assertthat_0.2.0  rprojroot_1.2    
-##  [7] digest_0.6.13     psych_1.7.8       R6_2.2.2         
+##  [7] digest_0.6.14     psych_1.7.8       R6_2.2.2         
 ## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.1  
 ## [13] e1071_1.6-8       evaluate_0.10.1   httr_1.3.1       
-## [16] rlang_0.1.4       lazyeval_0.2.1    readxl_1.0.0     
+## [16] rlang_0.1.6.9003  lazyeval_0.2.1    readxl_1.0.0     
 ## [19] rstudioapi_0.7    rmarkdown_1.8     udunits2_0.13    
 ## [22] foreign_0.8-69    munsell_0.4.3     broom_0.4.2      
 ## [25] compiler_3.4.2    modelr_0.1.1      pkgconfig_2.0.1  
-## [28] mnormt_1.5-5      htmltools_0.3.6   bookdown_0.5.14  
-## [31] crayon_1.3.4      MASS_7.3-47       grid_3.4.2       
-## [34] nlme_3.1-131      jsonlite_1.5      gtable_0.2.0     
-## [37] DBI_0.7           magrittr_1.5      units_0.4-6      
-## [40] scales_0.5.0.9000 cli_1.0.0         stringi_1.1.5    
-## [43] reshape2_1.4.3    bindrcpp_0.2      xml2_1.1.1       
-## [46] tools_3.4.2       glue_1.2.0        tweenr_0.1.5     
-## [49] hms_0.3           parallel_3.4.2    yaml_2.1.16      
-## [52] classInt_0.1-24   rvest_0.3.2       knitr_1.18       
-## [55] bindr_0.1         haven_1.1.0</code></pre>
+## [28] mnormt_1.5-5      htmltools_0.3.6   ggfittext_0.5.0  
+## [31] bookdown_0.5.14   crayon_1.3.4      withr_2.1.1.9000 
+## [34] MASS_7.3-47       grid_3.4.2        DBI_0.7          
+## [37] nlme_3.1-131      jsonlite_1.5      gtable_0.2.0     
+## [40] magrittr_1.5      units_0.4-6       scales_0.5.0.9000
+## [43] cli_1.0.0         stringi_1.1.5     reshape2_1.4.3   
+## [46] bindrcpp_0.2      xml2_1.1.1        tools_3.4.2      
+## [49] glue_1.2.0        tweenr_0.1.5      hms_0.3          
+## [52] parallel_3.4.2    yaml_2.1.16       classInt_0.1-24  
+## [55] rvest_0.3.2       knitr_1.18        bindr_0.1        
+## [58] haven_1.1.0</code></pre>
 
 </div>
             </section>

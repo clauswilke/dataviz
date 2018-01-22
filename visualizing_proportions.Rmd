@@ -44,7 +44,7 @@ rlabel = 1.05 * rpie
 
 ggplot(bund_pie) + 
   geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
-                   start = start_angle, end = end_angle, fill = party)) +
+                   start = start_angle, end = end_angle, fill = party), color = "white", size = 0.5) +
   geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = party,
                 hjust = hjust, vjust = vjust)) +
   geom_text(aes(x = 0.6*sin(mid_angle), y = 0.6*cos(mid_angle), label = seats),
@@ -68,7 +68,7 @@ bundestag <- mutate(bundestag,
                     label_y = cumsum(seats) - seats/2)
 
 bt_bars_stacked_base <- ggplot(bundestag, aes(x = 1, y = seats, fill = factor(party, levels = rev(party)))) + 
-  geom_col(position = "stack") + 
+  geom_col(position = "stack", color = "white") + 
   geom_text(aes(x = 1., y = label_y, label = seats), size = main_size, color = c("white", "white", "black")) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_x_discrete(expand = c(0, 0), breaks = NULL, name = "") +
@@ -220,9 +220,9 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
 
 ## A case for stacked bars and stacked densities {#stacked-densities}
 
-In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be exceptionally clear. As an example, consider the proportion of women in a country's national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament memebers. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered. (See Chapter \@ref(background-grids) for further discussion on such lines.)
+In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be exceptionally clear. As an example, consider the proportion of women in a country's national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament memebers. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered.
 
-(ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Source: Inter-Parliamentary Union (IPU), ipu.org.
+(ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org.
 
 ```{r women-parliament, fig.width = 7.5, fig.asp = .55, fig.cap = '(ref:women-parliament)'}
 ccode = "RWA" # Rwanda
@@ -238,13 +238,13 @@ women_parliaments %>% filter(country_code == ccode & year > 1990) %>%
   mutate(gender = factor(gender, levels = c("women", "men"))) -> women_rwanda
 
 plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
-    geom_col(position = "stack", width = .9) +
+    geom_col(position = "stack", width = .9, color = "white") +
     geom_hline(yintercept = c(50), color = "#FFFFFFA0") +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
-    scale_fill_OkabeIto(guide = "none") +
+    scale_fill_OkabeIto(guide = "none", darken = c(0.1, -0.2)) +
     theme_half_open() + 
-    theme(axis.ticks.y = element_blank(),
+    theme(#axis.ticks.y = element_blank(),
           #axis.ticks.x = element_blank(),
           axis.line.x = element_blank(),
           axis.line.y = element_blank())
@@ -287,7 +287,8 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
   theme(axis.ticks.y = element_blank(),
         #axis.ticks.x = element_blank(),
         axis.line.x = element_blank(),
-        axis.line.y = element_blank())
+        axis.line.y = element_blank(),
+        plot.margin = margin(7, 10, 7, 7))
 
 df_marital <- select(productplots::happy, age, marital) %>%
   na.omit() %>%
@@ -304,7 +305,8 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
   theme_half_open() + 
   theme(axis.ticks.y = element_blank(),
         axis.line.x = element_blank(),
-        axis.line.y = element_blank())
+        axis.line.y = element_blank(),
+        plot.margin = margin(7, 10, 7, 7))
 
 p_aligned <- align_plots(p_health, p_marital, align = 'v')
 ggdraw(p_aligned[[1]])
@@ -342,7 +344,7 @@ To provide a second example, let's consider a different variable from the same s
 (ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret. 
 
 ```{r marital-vs-age, fig.asp = 0.5, fig.cap='(ref:marital-vs-age)'}
-stamp_bad(p_marital)
+stamp_bad(p_aligned[[2]])
 ```
 
 The same dataset visualized as partial densities is much clearer (Figure \@ref(fig:marital-vs-age-facets)). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.

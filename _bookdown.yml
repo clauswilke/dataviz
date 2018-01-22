@@ -21,10 +21,9 @@ rmd_files: [
   # Part II
 
   "small_axis_labels.Rmd", # completed
-  ##"aspect_ratio.Rmd",
 
-  "background_grids.Rmd", # completed
-  "proportional_ink.Rmd",
+  "maximize_data_signal.Rmd",
+  "proportional_ink.Rmd", # completed
   "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "pitfalls_of_color_use.Rmd", # completed

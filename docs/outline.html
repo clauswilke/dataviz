@@ -76,10 +76,10 @@
 <li class="chapter" data-level="1.1" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>1.1</b> Aesthetics and types of data</a></li>
 <li class="chapter" data-level="1.2" data-path="visualizing-data-mapping-data-onto-aesthetics.html"><a href="visualizing-data-mapping-data-onto-aesthetics.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>1.2</b> Scales map data values onto aesthetics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html"><i class="fa fa-check"></i><b>2</b> Coordinate systems and axes</a><ul>
-<li class="chapter" data-level="2.1" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>2.1</b> Cartesian coordinates</a></li>
-<li class="chapter" data-level="2.2" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>2.2</b> Nonlinear axes</a></li>
-<li class="chapter" data-level="2.3" data-path="coordinate-systems-and-axes.html"><a href="coordinate-systems-and-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>2.3</b> Coordinate systems with curved axes</a></li>
+<li class="chapter" data-level="2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>2</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="2.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>2.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="2.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>2.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="2.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>2.3</b> Coordinate systems with curved axes</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>3</b> Color scales</a><ul>
 <li class="chapter" data-level="3.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>3.1</b> Color as a tool to distinguish</a></li>
@@ -112,7 +112,11 @@
 </ul></li>
 <li class="part"><span><b>Part II: Principles of figure design</b></span></li>
 <li class="chapter" data-level="9" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>9</b> Your axis labels are too small</a></li>
-<li class="chapter" data-level="10" data-path="background-grids.html"><a href="background-grids.html"><i class="fa fa-check"></i><b>10</b> Background grids</a></li>
+<li class="chapter" data-level="10" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>10</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="10.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>10.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="10.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>10.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="10.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>10.3</b> Direct area visualizations</a></li>
+</ul></li>
 <li class="chapter" data-level="11" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>11</b> Handling overlapping points</a><ul>
 <li class="chapter" data-level="11.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>11.1</b> Partial transparency and jittering</a></li>
 <li class="chapter" data-level="11.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>11.2</b> 2d histograms</a></li>
@@ -207,10 +211,8 @@ Discusses when to use and not to use figure titles. For captioned figures, the t
 Discusses the widespread problem of excessively small axis labels.</p></li>
 <li><p><strong>Choosing the right axis settings</strong><br />
 Covers various aspects related to axis choice, including linear vs. logarithmic axes, as well as issues of axis expansion beyond the data range. Also takes up the topic of aspect ratio once again.</p></li>
-<li><p><strong>Background grids</strong><br />
-Discusses when and how to use background grids and other guide lines in figures.</p></li>
-<li><p><strong>Don’t box yourself in</strong><br />
-Argues to avoid boxes and frames around figure parts. Also discusses the general principle of maximizing the ink used to convey information. Could be combined with chapter on background grids.</p></li>
+<li><p><strong>Maximizing the data signal in visualizations</strong><br />
+Discusses the general principle of maximizing the ink used to convey information. Argues to avoid boxes and frames around figure parts. Also discusses when and how to use background grids and other guide lines in figures.</p></li>
 <li><p><strong>The principle of proportional ink</strong><br />
 Explains that the size of colored areas needs to be proportional to the data value they represent.</p></li>
 <li><p><strong>Handling overlapping points</strong><br />
@@ -229,7 +231,7 @@ Argues why 3d plots are generally problematic (figures are fundamentally a 2d me
 </div>
 <div id="part-iii-miscellaneous-topics" class="section level2 unnumbered">
 <h2>Part III: Miscellaneous topics</h2>
-<ol start="28" style="list-style-type: decimal">
+<ol start="27" style="list-style-type: decimal">
 <li><p><strong>Understanding the most commonly used image file formats</strong><br />
 Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.</p></li>
 <li><p><strong>Choosing the right plotting software</strong><br />
