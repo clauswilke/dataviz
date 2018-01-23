@@ -16,9 +16,9 @@ In many different visualization scenarios, we represent data values by the exten
 
 Similar issues will arise whenever we use graphical elements such as bars, rectangles, shaded areas of arbitrary shape, or any other elements that have a clear visual extent which can be either consistent or inconsistent with the data value shown. In all these cases, we need to make sure that there is no inconsistency. This concept has been termed by Bergstrom and West as the *principle of proportional ink* [@BergstromWest2016]:
 
-> **Bergstrom and West's principle of proportional ink:** The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
+> **The principle of proportional ink:** The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
 
-Violations of this principle are incredibly common, in particular in the popular press andin the world of finance.
+Violations of this principle are incredibly common, in particular in the popular press and in the world of finance.
 
 ## Visualizations along linear axes
 
