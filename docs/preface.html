@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="proportional-ink.html">
-<link rel="next" href="avoid-line-drawings.html">
+<link rel="prev" href="index.html">
+<link rel="next" href="visualizing-data-mapping-data-onto-aesthetics.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -165,114 +165,47 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="overlapping-points" class="section level1">
-<h1><span class="header-section-number">11</span> Handling overlapping points</h1>
-<p>When we want to visualize large or very large datasets, we often experience the challenge that simple <em>x</em>–<em>y</em> scatter plots do not work very well because many points lie on top of each other and partially or fully overlap. And similar problems can arise even in small datasets if data values were recorded with low precision or rounded, such that multiple observations have exactly the same numeric values. The technical term commonly used to describe this situation is “overplotting”, i.e., plotting many points on top of each other. Here I describe several strategies you can pursue when encountering this challenge.</p>
-<div id="partial-transparency-and-jittering" class="section level2">
-<h2><span class="header-section-number">11.1</span> Partial transparency and jittering</h2>
-<p>We first consider a scenario with only a moderate number of data points but with extensive rounding. Our dataset contains fuel economy during city driving and engine displacement for 234 popular car models released between 1999 and 2008 (Figure <a href="overlapping-points.html#fig:mpg-cty-displ-solid">11.1</a>). In this dataset, fuel economy is measured in miles per gallon (mpg) and is rounded to the nearest integer value. Engine displacement is measured in liters and is rounded to the nearest deciliter. Due to this rounding, many car models have exactly identical values. For example, there are 21 cars total with 2.0 liter engine displacement, and as a group they have only four different fuel economy values, 19, 20, 21, or 22 mpg. Therefore, in Figure <a href="overlapping-points.html#fig:mpg-cty-displ-solid">11.1</a> these 21 cars are represented by only four distinct points, so that 2.0 liter engines appear much less popular than they actually are.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-cty-displ-solid"></span>
-<img src="overlapping_points_files/figure-html4/mpg-cty-displ-solid-1.png" alt="City fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled “bad” because many points are plotted on top of others and obscure them." width="528" />
-<p class="caption">
-Figure 11.1: City fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled “bad” because many points are plotted on top of others and obscure them.
-</p>
+<div id="preface" class="section level1 unnumbered">
+<h1>Preface</h1>
+<p>If you are a scientist, an analyst, a consultant, or anybody else who has to prepare technical documents or reports, one of the most important skills you need to have is the ability to make compelling data visualizations, generally in the form of figures. Figures will typically carry the weight of your arguments. They need to be clear, attractive, and convincing. The difference between good and bad figures can be the difference between a highly influential or a obscure paper, a grant or contract won or lost, a job interview gone well or poorly. And yet, there are surprisingly few resources to teach you how to make compelling data visualizations. Few colleges offer courses on this topic, and there are not that many books on this topic either. (Some exist, of course.) Tutorials for plotting sofware typically focus on how to achieve specific visual effects rather than explaining why certain choices are preferred and others not. In your day-to-day work, you are simply expected to know how to make good figures, and if you’re lucky you have a patient adviser who teaches you a few tricks as you’re writing your first scientific papers.</p>
+<p>In the context of writing, experienced editors talk about “ear”, the ability to hear (internally, as you read a piece of prose) whether the writing is any good. I think that when it comes to figures and other visualizations, we similarly need “eye”, the ability to look at a figure and see whether it is balanced, clear, and compelling. And just as is the case with writing, the ability to see whether a figure works or not can be learned. Having eye means primarily that you are aware of a larger collection of simple rules and principles of good visualization, and that you pay attention to little details that other people might not.</p>
+<p>In my experience, again just as in writing, you don’t develop eye by reading a book over the weekend. It is a lifelong process, and concepts that are too complex or too subtle for you today may make much more sense five years from now. I can say for myself that I continue to evolve in my understanding of figure preparation. I routinely try to expose myself to new approaches, and I pay attention to the visual and design choices others make in their figures. I’m also open to change my mind. I might today consider a given figure great, but next month I might find a reason to criticize it. So with this in mind, please don’t take anything I say as gospel. Think critically about my reasoning for certain choices and decide whether you want to adopt them or not.</p>
+<p>While the materials in this book are presented in a logical progression, most chapters can stand on their own, and there is no need to read the book cover to cover. Feel free to skip around, to pick out a specific section that you’re interested in at the moment, or one that covers a specific design choice you’re pondering. In fact, I think you will get the most out of this book if you don’t read it all at once, but rather read it piecemeal over longer stretches of time, try to apply just a few concepts from the book in your figuremaking, and come back to read about other concepts or re-read concepts you learned about a while back. You may find that the same chapter tells you different things if you re-read it after a few months of time have passed.</p>
+<p>Even though all the figures in this book were made with R and ggplot2, I do not see this as an R book. I am talking about general principles of figure preparation. The software used to make the figures is incidental. You can use any plotting software you want to generate the kinds of figures I’m showing here, even if ggplot2 and similar packages make many of the techniques I’m using much simpler than other plotting libraries. Importantly, because this is not an R book, I do not discuss code or programming techniques anywhere in this book. I want you to focus on the concepts and the figures, not on the code. If you are curious how any of the figures were made, you can check out the book’s source code at its GitHub repository, <a href="https://github.com/clauswilke/dataviz" class="uri">https://github.com/clauswilke/dataviz</a>.</p>
+<div id="thoughts-on-graphing-software-and-figure-preparation-pipelines" class="section level2 unnumbered">
+<h2>Thoughts on graphing software and figure-preparation pipelines</h2>
+<p>I have over two decades of experience preparing figures for scientific publications and have made thousands of figures. If there is one constant over these two decades, it’s the change in figure preparation pipelines. Every few years, a new plotting library is developed or a new paradigm arises, and large groups of scientists switch over to the hot new toolkit. I have made figures using gnuplot, Xfig, Mathematica, Matlab, matplotlib in python, base R, ggplot2 in R, and possibly others I can’t currently remember. My current preferred approach is ggplot2 in R, but I don’t expect that I’ll continue using it until I retire.</p>
+<p>This constant change in software platforms is one of the key reasons why this book is not a programming book and why I have left out all code examples. I want this book to be useful to you regardless of which software you use, and I want it to remain valuable even once everybody has moved on from ggplot2 and uses the next new thing. I realize that this choice may be frustrating to some ggplot2 users who would like to know how I made a given figure. To them I say, read the source code of the book. It is available. Also, in the future I may release a supplementary document focused just on the code.</p>
+<p>One thing I have learned over the years is that automation is your friend. I think figures should be autogenerated as part of the data analysis pipeline (which should also be automated), and they should come out of the pipeline ready to be sent to the printer, no manual post-processing needed. I see a lot of trainees autogenerate rough drafts of their figures, which they then import into Illustrator for sprucing up. There are several reasons why this is a bad idea. First, the moment you manually edit a figure, your final figure becomes irreproducible. A third party cannot generate the exact same figure you did. While this may not matter much if all you did was change the font of the axis labels, the lines are blurry, and it’s easy to cross over into territory where things are less clear cut. As an example, let’s say to manually replaced cryptic labels with more readable ones. A third party may not be able to verify that the label replacement was appropriate. Second, if you add a lot of manual post-processing to your figure-preparation pipeline then you will be more reluctant to make any changes or redo your work. Thus, you may ignore reasonable requests for change made by collaborators or colleagues, or you may be tempted to re-use an old figure even though you actually regenerated all the data. These are not made-up examples. I’ve seen all of them play out with real people and real papers. Third, you may yourself forget what exactly you did to prepare a given figure, or you may not be able to generate a future figure on new data that exactly visually matches your earlier figure.</p>
+<p>For all the above reasons, interactive plot programs are a bad idea. They inherently force you to manually prepare your figures. In fact, it’s probably better to auto-generate a figure draft and spruce it up in Illustrator than make the entire figure by hand in some interactive plot program. Please be aware that Excel is an interactive plot program as well and is not recommended for figure preparation (or data analysis).</p>
+<p>One critical component in a book on data visualization is feasibility of the proposed visualizations. It’s nice to invent some elegant new way of visualization, but if nobody can easily generate figures using this visualization then there isn’t much use to it. For example, when Tufte first proposed sparklines nobody had an easy way of making them. While we need visionaries who move the world foward by pushing the envelope of what’s possible, I envision this book to be practical and directly applicable to working data scientists preparing figures for their publications. Therefore, every visualization I propose in the subsequent chapters can be generated with a few lines of R code via ggplot2 and readily available extension packages. In fact, every figure in this book, with the exception of two in Chapter <a href="image-file-formats.html#image-file-formats">15</a>, was autogenerated exactly as shown, using R and ggplot2.</p>
 </div>
-<p>One way to ameliorate this problem is to use partial transparency. If we make individual points partially transparent, then overplotted points appear as darker points and thus the shade of the points reflects the density of points in that location of the graph (Figure <a href="overlapping-points.html#fig:mpg-cty-displ-transp">11.2</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-cty-displ-transp"></span>
-<img src="overlapping_points_files/figure-html4/mpg-cty-displ-transp-1.png" alt="City fuel economy versus engine displacement. Because points have been made partially transparent, points that lie on top of other points can now be identified by their darker shade." width="528" />
-<p class="caption">
-Figure 11.2: City fuel economy versus engine displacement. Because points have been made partially transparent, points that lie on top of other points can now be identified by their darker shade.
-</p>
+<div id="good-bad-and-ugly-figures" class="section level2 unnumbered">
+<h2>Good, bad, and ugly figures</h2>
+<p>Throughout this book, I show many different versions of the same figures, some as examples of how make a good visualization and some as examples of how not to. To provide a simple visual guideline of which examples should be emulated and which should be avoided, I am clearly labeling problematic figures as either “ugly” or “bad”:</p>
+<ul>
+<li><strong>ugly</strong>—A figure that has one or more shortcomings that should be remediated, or a figure that I personally don’t find aesthetically pleasing.</li>
+<li><strong>bad</strong>—A figure that has one or more objective flaws that make it unsuitable for publication.</li>
+</ul>
+<p>I am not explicitly labeling good figures. Any figure that isn’t clearly labeled as “bad” or “ugly” should be assumed to be at least acceptable. It is a figure that is informative, looks appealing, and could be printed as is. Note that among the good figures, there will still be differences in quality, and some good figures will be better than others.</p>
+<p>I generally provide my rationale for specific ratings, but some are a matter of taste. In particular when it comes to the difference between “ugly” and “good”, reasonable people may disagree. I encourage you to develop your own eye and to critically evaluate my choices.</p>
 </div>
-<p>However, making points partially transparent is not always sufficient to solve the issue of overplotting. For example, even though we can see in Figure <a href="overlapping-points.html#fig:mpg-cty-displ-transp">11.2</a> that some points have a darker shade than others, it is difficult to estimate how many points were plotted on top of each other in each location. In addition, while the differences in shading are clearly visible, they are not self-explanatory. A reader who sees this figure for the first time will likely wonder why some points are darker than others and will not realize that those points are in fact multiple points stacked on top of each other. A simple trick that helps in this situation is to apply a small amount of jitter to the points, i.e., to displace each point randomly by a small amount in either the <em>x</em> or the <em>y</em> direction or both. With jitter, it is immediately apparent that the darker areas arise from points that are plotted on top of each other (Figure <a href="overlapping-points.html#fig:mpg-cty-displ-jitter">11.3</a>).</p>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-cty-displ-jitter"></span>
-<img src="overlapping_points_files/figure-html4/mpg-cty-displ-jitter-1.png" alt="City fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overplotted points more clearly visible without substantially distorting the message of the plot." width="528" />
-<p class="caption">
-Figure 11.3: City fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overplotted points more clearly visible without substantially distorting the message of the plot.
-</p>
-</div>
-<p>One downside of jittering is that it does change the data and therefore has to be performed with care. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset. The result is a misleading visualization of the data. See Figure <a href="overlapping-points.html#fig:mpg-cty-displ-jitter-extreme">11.4</a> as an example.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:mpg-cty-displ-jitter-extreme"></span>
-<img src="overlapping_points_files/figure-html4/mpg-cty-displ-jitter-extreme-1.png" alt="City fuel economy versus engine displacement. By adding too much jitter to the points, we have created a visualization that does not accurately reflect the underlying dataset." width="528" />
-<p class="caption">
-Figure 11.4: City fuel economy versus engine displacement. By adding too much jitter to the points, we have created a visualization that does not accurately reflect the underlying dataset.
-</p>
-</div>
-</div>
-<div id="d-histograms" class="section level2">
-<h2><span class="header-section-number">11.2</span> 2d histograms</h2>
-<p>When the number of individual points gets very large, partial transparency (with or without jittering) will not be sufficient to resolve the overplotting issue. What will typically happen is that areas with high point density will appear as uniform blobs of dark color while in areas with low point density the individual points are barely visible (Figure <a href="overlapping-points.html#fig:nycflights-points">11.5</a>). And changing the transparency level of individual points will either ameliorate one or the other of these problems while worsening the other; no transparency setting can address both at the same time.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:nycflights-points"></span>
-<img src="overlapping_points_files/figure-html4/nycflights-points-1.png" alt="Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure." width="576" />
-<p class="caption">
-Figure 11.5: Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure.
-</p>
-</div>
-<p>Figure <a href="overlapping-points.html#fig:nycflights-points">11.5</a> shows departure delays for over 100,000 individual flights, with each dot representing one flight departure. Even though we have made the individual dots fairly transparent, the majority of them just forms a black band between 0 and 300 minutes departure delay. This band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the dots.</p>
-<p>In such cases, instead of plotting individual points, we can make a 2d histogram, where we subdivide the entire <em>x</em>–<em>y</em> plane into small rectangles, count how many observations fall into each rectangles, and then color the rectangles by that count. Figure <a href="overlapping-points.html#fig:nycflights-2d-bins">11.6</a> shows the result of this approach for the departure-delay data. This visualization clearly highlights several important features of the flight-departure data. First, the vast majority of departures during the day (6am to about 9pm) actually depart without delay or even early (negative delay). However, a modest number of departures has a substantial delay. Moreover, the later a plane departs in the day the more of a delay it can have. Importantly, the departure time is the actual time of departure, not the scheduled time of departure. So this figure does not necessarily tell us that planes scheduled to depart early never experience delay. What it does tell us, though, is that if a plane departs early it either has little delay or, in very rare cases, a delay of around 900 minutes.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:nycflights-2d-bins"></span>
-<img src="overlapping_points_files/figure-html4/nycflights-2d-bins-1.png" alt="Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle." width="576" />
-<p class="caption">
-Figure 11.6: Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle.
-</p>
-</div>
-<p>As an alternative to binning the data into rectangle, we can also bin into hexagons. This approach, first proposed by
-<span class="citation">Carr et al. (<a href="#ref-Carr-et-al-1987">1987</a>)</span>, has the advantage that the points in a hexagon are, on average, closer to the hexagon center than the points in an equal-area square are to the center of the square. Therefore, the colored hexagon represents the data slightly more accurately than the colored rectangle does. Figure <a href="overlapping-points.html#fig:nycflights-hex-bins">11.7</a> shows the flight departure data with hexagon binning rather than rectangular binning.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:nycflights-hex-bins"></span>
-<img src="overlapping_points_files/figure-html4/nycflights-hex-bins-1.png" alt="Departure delay in minutes versus the flight departure time. Each colored hexagon represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that hexagon." width="576" />
-<p class="caption">
-Figure 11.7: Departure delay in minutes versus the flight departure time. Each colored hexagon represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that hexagon.
-</p>
-</div>
-</div>
-<div id="contour-lines" class="section level2">
-<h2><span class="header-section-number">11.3</span> Contour lines</h2>
-<p>Instead of binning data points into rectangles or hexagons, we can also estimate the point density across the plot area and indicate regions of different point densities with contour lines. This technique works well when the point density changes slowly across both the <em>x</em> and the <em>y</em> dimensions.</p>
-<p>As an example for this approach, we consider the relationship between population number and area for counties in the Midwest. We have data for 1055 counties, and a scatter plot looks like a cloud of points (Figure <a href="overlapping-points.html#fig:midwest-scatter">11.8</a>). We can highlight the distribution of points more clearly by making them very small and partially transparent and ploting them on top of contour lines that delineate regions of comparable point density (Figure <a href="overlapping-points.html#fig:midwest-density-dots">11.9</a>). We can also plot just the contour lines, without the individual points (Figure <a href="overlapping-points.html#fig:midwest-density-smooth">11.10</a>). In this case, it can be helpful to add a trendline that shows the overall trend in the data. Here, there isn’t much of a trend, and the shape of the trendline (approximately flat) reflects this lack of a trend.</p>
-
-<div class="figure" style="text-align: center"><span id="fig:midwest-scatter"></span>
-<img src="overlapping_points_files/figure-html4/midwest-scatter-1.png" alt="Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county." width="576" />
-<p class="caption">
-Figure 11.8: Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:midwest-density-dots"></span>
-<img src="overlapping_points_files/figure-html4/midwest-density-dots-1.png" alt="Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Individual counties are shown as light blue dots." width="576" />
-<p class="caption">
-Figure 11.9: Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Individual counties are shown as light blue dots.
-</p>
-</div>
-
-<div class="figure" style="text-align: center"><span id="fig:midwest-density-smooth"></span>
-<img src="overlapping_points_files/figure-html4/midwest-density-smooth-1.png" alt="Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data." width="576" />
-<p class="caption">
-Figure 11.10: Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
-</p>
-</div>
+<div id="acknowledgments" class="section level2 unnumbered">
+<h2>Acknowledgments</h2>
+<p>This project would not have been possible without the fantastic work the RStudio team has put into turning the R universe into a first-rate publishing platform. In particular, I have to thank Hadley Wickham for creating ggplot2, the plotting software that was used to make all the figures throughout this book. I would also like to thank Yihui Xie for creating the knitr package, R Markdown, and bookdown. I don’t think I would have started this project without these tools ready to go. However, writing R Markdown files is fun, and it’s easy to collect material and gain momentum. I would also like to thank all the other contributors to the tidyverse and the R community more broadly. There truly is an R package for any visualization challenge one may encounter. All these packages have been developed by a strong community of thousands of data scientists and statisticians, and many of them have in some form contributed to the making of this book.</p>
 
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Carr-et-al-1987">
-<p>Carr, D. B., R. J. Littlefield, W. L. Nicholson, and J. S. Littlefield. 1987. “Scatterplot Matrix Techniques for Large N.” <em>J. Am. Stat. Assoc.</em> 82: 424–36.</p>
-</div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="proportional-ink.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="avoid-line-drawings.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizing-data-mapping-data-onto-aesthetics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

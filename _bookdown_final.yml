@@ -5,7 +5,7 @@ delete_merged_file: true
 rmd_files: [
   "index.Rmd",
 
-  "introduction.Rmd",
+  "preface.Rmd",
 
   # Part I
   "aesthetic_mapping.Rmd", # completed
