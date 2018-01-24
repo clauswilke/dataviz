@@ -15,7 +15,7 @@ small_size <- small_rel * main_size
 
 # Visualizing proportions {#visualizing-proportions}
 
-We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypical such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypal such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
 
 ```{block type='rmdtip', echo=TRUE}
 Remember: You always need to pick the visualization that best fits your specific dataset and that highlights the key data features you want to show.
@@ -319,11 +319,11 @@ Nevertheless, this figure has a major limitation: By visualizing the porportions
 
 Side-by-side bars have the problem that they don't clearly visualize the size of the individual parts relative to the whole and stacked bars have the problem that the different bars cannot be compared easily because they have different baselines. We can resolve these two issues by making a separate plot for each part and in each plot showing the respective part relative to the whole. For the health dataset of Figure \@ref(fig:health-vs-age), this procedure results in Figure \@ref(fig:health-vs-age-facets). The overall age distribution in the dataset is shown as the shaded gray areas, and the age distributions for each health status are shown in blue. This figure highlights that in absolute terms, the number people with excellent or good health declines past ages 30--40, while the number of people with fair health remains approximately constant across all ages.
 
-(ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution.
+(ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status, respectively, and the gray areas show the overall age distribution.
 
 ```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:health-vs-age-facets)'}
 ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..)) +
-  geom_density_line(data=select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
+  geom_density_line(data = select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~health, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
@@ -341,7 +341,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
 
 To provide a second example, let's consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure \@ref(fig:marital-vs-age)).
 
-(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret. 
+(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret. 
 
 ```{r marital-vs-age, fig.asp = 0.5, fig.cap='(ref:marital-vs-age)'}
 stamp_bad(p_aligned[[2]])
@@ -349,11 +349,11 @@ stamp_bad(p_aligned[[2]])
 
 The same dataset visualized as partial densities is much clearer (Figure \@ref(fig:marital-vs-age-facets)). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.
 
-(ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution.
+(ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 
 ```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
 ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
-  geom_density_line(data=select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
+  geom_density_line(data = select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~marital, nrow = 1) +
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +

@@ -9,7 +9,7 @@ library(ggridges) # for geom_density_line()
 
 # Visualizing distributions: Histograms and density plots {#histograms-density-plots}
 
-We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the ship Titanic, which sank on April 15, 1912. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the *age distribution* of the passengers.
+We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset. To give a concrete example, consider the passengers of the Titanic, which sank on April 15, 1912. There were approximately 1317 passengers on the Titanic (not counting crew), and we have reported ages for 756 of them. We might want to know how many passengers of what ages there were on the Titanic, i.e., how many children, young adults, middle-aged people, seniors, and so on. We call the relative proportions of different ages among the passengers the *age distribution* of the passengers.
 
 ## Visualizing a single distribution
 
@@ -17,7 +17,7 @@ We can obtain a sense of the age distribution among the passengers by grouping a
 ```{r titanic-ages}
 library(readr)
 titanic <- titanic_all
-age_counts <- hist(titanic$age, breaks=(0:15)*5+.01, plot = FALSE)$counts
+age_counts <- hist(titanic$age, breaks = (0:15) * 5 + .01, plot = FALSE)$counts
 age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
                        count = age_counts,
                        check.names = FALSE)
@@ -41,9 +41,9 @@ We can visualize this table by drawing filled rectangles whose heights correspon
 (ref:titanic-ages-hist1) Histogram of the ages of Titanic passengers.
 
 ```{r titanic-ages-hist1, fig.cap='(ref:titanic-ages-hist1)'}
-age_hist <- cbind(age_hist, age = (1:15)*5-2.5)
+age_hist <- cbind(age_hist, age = (1:15) * 5 - 2.5)
 h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#56B4E9")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid()
 h1
@@ -56,27 +56,27 @@ For the age distribution of Titanic passengers, we can see that a bin width of o
 (ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
 ```{r titanic-ages-hist-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-hist-grid)'}
-age_hist_1 <- data.frame(age = (1:75)-0.5, 
-                         count = hist(titanic$age, breaks=(0:75) + .01, plot = FALSE)$counts)
+age_hist_1 <- data.frame(age = (1:75) - 0.5, 
+                         count = hist(titanic$age, breaks = (0:75) + .01, plot = FALSE)$counts)
 
-age_hist_3 <- data.frame(age = (1:25)*3-1.5, 
-                         count = hist(titanic$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts)
+age_hist_3 <- data.frame(age = (1:25) * 3 - 1.5, 
+                         count = hist(titanic$age, breaks = (0:25) * 3 + .01, plot = FALSE)$counts)
 
-age_hist_15 <- data.frame(age = (1:5)*15-7.5, 
-                         count = hist(titanic$age, breaks=(0:5)*15 + .01, plot = FALSE)$counts)
+age_hist_15 <- data.frame(age = (1:5) * 15 - 7.5, 
+                         count = hist(titanic$age, breaks = (0:5) * 15 + .01, plot = FALSE)$counts)
 
 h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#56B4E9")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 10*(0:5)) +
+  scale_y_continuous(expand = c(0, 0), breaks = 10 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
 h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 25*(0:5)) +
+  scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
 h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
-  scale_y_continuous(expand = c(0, 0), breaks = 100*(0:4)) +
+  scale_y_continuous(expand = c(0, 0), breaks = 100 * (0:4)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
@@ -94,7 +94,7 @@ Histograms have been a popular visualization option since at least the 18th cent
 (ref:titanic-ages-dens1) Kernel density estimate of the age distribution of passengers on the Titanic. The height of the curve is scaled such that the area under the curve equals one. The density estimate was performed with a Gaussian kernel and a bandwidth of 2.
 
 ```{r titanic-ages-dens1, fig.cap='(ref:titanic-ages-dens1)'}
-ggplot(titanic, aes(x=age)) + 
+ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
@@ -106,25 +106,25 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 (ref:titanic-ages-dens-grid) Kernel density estimates depend on the chosen kernel and bandwidth. Here, the same age distribution of Titanic passengers is shown for four different combinations of these parameters: (a) Gaussian kernel, bandwidth = 0.5; (b) Gaussian kernel, bandwidth = 2; (c) Gaussian kernel, bandwidth = 5; (d) Rectangular kernel, bandwidth = 2.
 
 ```{r titanic-ages-dens-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-dens-grid)'}
-pdens1 <- ggplot(titanic, aes(x=age)) + 
+pdens1 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
-pdens2 <- ggplot(titanic, aes(x=age)) + 
+pdens2 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
-pdens3 <- ggplot(titanic, aes(x=age)) + 
+pdens3 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", bw = 5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
-pdens4 <- ggplot(titanic, aes(x=age)) + 
+pdens4 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", bw = 2, kernel = "rectangular") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
@@ -142,7 +142,7 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 (ref:titanic-ages-dens-negative) Kernel density estimates can extend the tails of the distribution into areas where no data exist and no data are even possible. Here, the density estimate has been allowed to extend into the negative age range. This is clearly nonsensical and should be avoided.
 
 ```{r titanic-ages-dens-negative, fig.cap='(ref:titanic-ages-dens-negative)'}
-pdens_neg <- ggplot(titanic, aes(x=age)) + 
+pdens_neg <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
@@ -164,14 +164,14 @@ In many scenarios we have multiple distributions we would like to visualize simu
 (ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender.
 
 ```{r titanic-age-stacked-hist, fig.cap='(ref:titanic-age-stacked-hist)'}
-data.frame(age = (1:25)*3-1.5, 
-           male = hist(filter(titanic, sex == "male")$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts,
-           female = hist(filter(titanic, sex == "female")$age, breaks=(0:25)*3 + .01, plot = FALSE)$counts) %>%
+data.frame(age = (1:25)*3 - 1.5, 
+           male = hist(filter(titanic, sex == "male")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts,
+           female = hist(filter(titanic, sex == "female")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts) %>%
   gather(gender, count, -age) -> gender_counts
 
 gender_counts$gender <- factor(gender_counts$gender, levels = c("female", "male"))
 
-p_hist_stacked <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) + 
+p_hist_stacked <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) + 
   geom_col(position = "stack") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
@@ -191,12 +191,12 @@ We could try to address these problems by having all bars start at zero and maki
 (ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
 
 ```{r titanic-age-overlapping-hist, fig.cap='(ref:titanic-age-overlapping-hist)'}
-p_hist_overlapped <- ggplot(gender_counts, aes(x=age, y=count, fill = gender)) + 
+p_hist_overlapped <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) + 
   geom_col(position = "identity", alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"),
-                    guide = guide_legend(reverse=TRUE)) +
+                    guide = guide_legend(reverse = TRUE)) +
   theme_minimal_hgrid() +
   theme(legend.position = c(.9, .90),
         legend.justification = c("right", "top"),
@@ -214,7 +214,7 @@ Overlapping density plots don't typically have the problem that overlapping hist
 ```{r titanic-age-overlapping-dens, fig.cap='(ref:titanic-age-overlapping-dens)'}
 titanic2 <- titanic
 titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
-p_dens_overlapped <- ggplot(titanic2, aes(x=age, y=..count.., fill = sex)) + 
+p_dens_overlapped <- ggplot(titanic2, aes(x = age, y = ..count.., fill = sex)) + 
   geom_density_line(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 20), name = "scaled density", expand = c(0, 0)) +
@@ -233,8 +233,8 @@ A solution that works well for this dataset is to show the age distributions of 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
 ```{r titanic-age-fractional-dens, fig.width = 8.5, fig.asp = .45, fig.cap='(ref:titanic-age-fractional-dens)'}
-p_dens_fraction <- ggplot(titanic2, aes(x=age, y=..count..)) +
-  geom_density_line(data=select(titanic, -sex), aes(fill = "all passengers"),
+p_dens_fraction <- ggplot(titanic2, aes(x = age, y = ..count..)) +
+  geom_density_line(data = select(titanic, -sex), aes(fill = "all passengers"),
                     color = "transparent") + 
   geom_density_line(aes(fill = sex), bw = 2, color = "transparent") +
   scale_x_continuous(limits = c(0, 75), name = "passenger age", expand = c(0, 0)) +
@@ -259,7 +259,7 @@ Finally, when we want to visualize exactly two distributions, we can also make t
 (ref:titanic-age-pyramid) The age distributions of male and female Titanic passengers visualized as an age pyramid.
 
 ```{r titanic-age-pyramid, fig.cap='(ref:titanic-age-pyramid)'}
-ggplot(gender_counts, aes(x=age, y=ifelse(gender == "male",-1, 1)*count, fill = gender)) + 
+ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fill = gender)) + 
   geom_col() +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(name = "count", breaks = 20*(-2:1)) +

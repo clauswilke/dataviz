@@ -133,42 +133,42 @@ Changing the point shape is a simple strategy for scatter plots but it doesn't n
 (ref:tech-stocks-bad-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as bad because it takes considerable mental energy to match the company names in the legend to the data curves.
 
 ```{r tech-stocks-bad-legend, fig.cap = '(ref:tech-stocks-bad-legend)'}
-price_plot_base <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
+price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
   geom_line() +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
-                     name="",
-                     breaks=c("GOOG", "AAPL", "FB", "MSFT"),
-                     labels=c("Alphabet", "Apple", "Facebook", "Microsoft")) +
-  scale_x_date(name="year",
-               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
-               expand=c(0,0)) + 
-  scale_y_continuous(name="stock price, indexed",
+  scale_color_manual(values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name = "",
+                     breaks = c("GOOG", "AAPL", "FB", "MSFT"),
+                     labels = c("Alphabet", "Apple", "Facebook", "Microsoft")) +
+  scale_x_date(name = "year",
+               limits = c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand = c(0,0)) + 
+  scale_y_continuous(name = "stock price, indexed",
                      limits = c(0, 560),
-                     expand=c(0,0))
+                     expand = c(0,0))
 
 stamp_bad(price_plot_base + theme_minimal_hgrid())
 ```
 
 
-The figure contains four lines representing the stock prices of the four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft inbetween, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of mental effort to match data lines with company names.
+The figure contains four lines representing the stock prices of the four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft in between, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of mental effort to match data lines with company names.
 
 This problem arises commonly with plotting software that autogenerates legends. The plotting software has no concept of the visual order the viewer will perceive. Instead, the software sorts the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data (Figure \@ref(fig:tech-stocks-good-legend)). The result is a figure that makes it much easier to match the legend to the data.
 
 (ref:tech-stocks-good-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
 
 ```{r tech-stocks-good-legend, fig.cap = '(ref:tech-stocks-good-legend)'}
-price_plot_base_good <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
+price_plot_base_good <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
   geom_line() +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
-                     name="",
-                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
-                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
-  scale_x_date(name="year",
-               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
-               expand=c(0,0)) + 
-  scale_y_continuous(name="stock price, indexed",
+  scale_color_manual(values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+                     name = "",
+                     breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+                     labels = c("Facebook", "Alphabet", "Microsoft", "Apple")) +
+  scale_x_date(name = "year",
+               limits = c(ymd("2012-06-01"), ymd("2017-05-31")),
+               expand = c(0,0)) + 
+  scale_y_continuous(name = "stock price, indexed",
                      limits = c(0, 560),
-                     expand=c(0,0))
+                     expand = c(0,0))
 
 stamp_phantom(price_plot_base_good + theme_minimal_hgrid())
 ```
@@ -260,7 +260,7 @@ iris_scatter3 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Spe
 iris_scatter3
 ```
 
-For density plots, we can similarly direct-label the curves rather than providing a color-coded legend (Figure \@ref(fig:iris-densities-direct-label)). In both Figures \@ref(fig:iris-scatter-with-ellipses) and \@ref(fig:iris-densities-direct-label), I have colored the text labels in the same colors as the data. Colored labels can greatly enhance the direct labeling effect, but they can also turn out very poorly. If the text lables are printed in a color that is too light, then the labels become difficult to read. And, because text consists of very thin lines, colored text often appears to be lighter than an adjacent filled area of the same color. I generally circumvent these issues by using two different shades of each color, a light one for filled areas and a dark one for lines, outlines, and text. If you carefully inspect Figure \@ref(fig:iris-scatter-with-ellipses) or \@ref(fig:iris-densities-direct-label), you will see how each data point or shaded area is filled with a light color and has an outline drawn in a darker color of the same hue. And the text labels are drawn in the same darker colors. 
+For density plots, we can similarly direct-label the curves rather than providing a color-coded legend (Figure \@ref(fig:iris-densities-direct-label)). In both Figures \@ref(fig:iris-scatter-with-ellipses) and \@ref(fig:iris-densities-direct-label), I have colored the text labels in the same colors as the data. Colored labels can greatly enhance the direct labeling effect, but they can also turn out very poorly. If the text labels are printed in a color that is too light, then the labels become difficult to read. And, because text consists of very thin lines, colored text often appears to be lighter than an adjacent filled area of the same color. I generally circumvent these issues by using two different shades of each color, a light one for filled areas and a dark one for lines, outlines, and text. If you carefully inspect Figure \@ref(fig:iris-scatter-with-ellipses) or \@ref(fig:iris-densities-direct-label), you will see how each data point or shaded area is filled with a light color and has an outline drawn in a darker color of the same hue. And the text labels are drawn in the same darker colors. 
 
 (ref:iris-densities-direct-label) Density estimates of the sepal lengths of three different iris species. Each density estimate is directly labeled with the respective species name.
 

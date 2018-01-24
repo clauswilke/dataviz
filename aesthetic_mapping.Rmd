@@ -76,7 +76,7 @@ plot_grid(aes_pos, aes_shape, aes_size,
 ```
 
 
-All aesthetics fall into one of two groups: Those that can represent continuous data and those that can not. Continuous data values are values for which arbitrarily fine intermediates exist. For example, time duration is a continuous value. Between any two durations, say 50 seconds and 51 seconds, there are arbitrarily many intermediates, such as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By contrast, number of persons in a room is a discrete value. A room can hold 5 persons or 6, but not 5.5. For the examples in Figure \@ref(fig:common-aesthetics), position, size, color, and line width can represent continuous data, but  shape and line type can only represent discrete data.
+All aesthetics fall into one of two groups: Those that can represent continuous data and those that can not. Continuous data values are values for which arbitrarily fine intermediates exist. For example, time duration is a continuous value. Between any two durations, say 50 seconds and 51 seconds, there are arbitrarily many intermediates, such as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By contrast, number of persons in a room is a discrete value. A room can hold 5 persons or 6, but not 5.5. For the examples in Figure \@ref(fig:common-aesthetics), position, size, color, and line width can represent continuous data, but shape and line type can only represent discrete data.
 
 Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of discrete categories, in the form of dates or times, and as text (Table \@ref(tab:basic-data-types)). When data is numerical we also call it *quantitative* and when it is categorical we call it *qualitative*. Variables holding qualitative data are *factors*, and the different categories are called *levels*. The levels of a factor are most commonly without order (as in the example of "dog", "cat", "fish" in Table \@ref(tab:basic-data-types)), but factors can also be ordered, when there is an intrinsic order among the levels of the factor (as in the example of "good", "fair", "poor" in Table \@ref(tab:basic-data-types)).
 
@@ -114,7 +114,7 @@ text                     The quick brown fox   none, or discrete       Free-form
                          dog.
 ---------------------------------------------------------------------------------------------------------------------
 
-To examine a concrete example of these various types of data, take a look at Table \@ref(tab:data-example). It shows the first few rows of a dataset providing the daily temperature normals (average daily temperatures over a 30-year window) for four U.S. locations. This table contains five variables: month, day, location, station ID, and temperature (in degrees Farenheit). Month is an ordered factor, day is a discrete numerical value, location is an unordered factor, station ID is similarly an unordered factor, and temperature is a continuous numerical value.
+To examine a concrete example of these various types of data, take a look at Table \@ref(tab:data-example). It shows the first few rows of a dataset providing the daily temperature normals (average daily temperatures over a 30-year window) for four U.S. locations. This table contains five variables: month, day, location, station ID, and temperature (in degrees Fahrenheit). Month is an ordered factor, day is a discrete numerical value, location is an unordered factor, station ID is similarly an unordered factor, and temperature is a continuous numerical value.
 
 Table: (\#tab:data-example) First 12 rows of a dataset listing daily temperature normals for four weather stations. Data source: NOAA.
 
@@ -195,7 +195,7 @@ ggdraw(scales_grob)
 #plot_grid(scale_num, scale_color, scale_shape, ncol = 1, align = 'v', rel_heights = c(1, 1, .7))
 ```
 
-Let's put things into practice. We can take the dataset shown in Table \@ref(tab:data-example), map tempterature onto the *y* axis, day of the year onto the *x* axis, location onto color, and visualize these aesthetics with solid lines. The result is a standard line plot showing the temperature normals at the four locations as they change during the year (Figure 
+Let's put things into practice. We can take the dataset shown in Table \@ref(tab:data-example), map temperature onto the *y* axis, day of the year onto the *x* axis, location onto color, and visualize these aesthetics with solid lines. The result is a standard line plot showing the temperature normals at the four locations as they change during the year (Figure 
 \@ref(fig:temp-normals-vs-time)).
 
 (ref:temp-normals-vs-time) Daily temperature normals for four selected locations in the U.S. Temperature is mapped to the *y* axis, day of the year to the *x* axis, and location to line color. Data source: NOAA.
@@ -223,12 +223,12 @@ temps_long <- filter(ncdc_normals,
 
 ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
-  scale_x_date(name="month", limits = c(ymd("0000-01-01"), ymd("0001-01-04")),
+  scale_x_date(name = "month", limits = c(ymd("0000-01-01"), ymd("0001-01-04")),
                breaks = c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"),
                           ymd("0000-10-01"), ymd("0001-01-01")),
-               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(1/366, 0)) + 
+               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand = c(1/366, 0)) + 
   scale_y_continuous(limits = c(15, 110),
-                     breaks = seq(20, 100, by=20),
+                     breaks = seq(20, 100, by = 20),
                      name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +
   theme_minimal_grid() +
