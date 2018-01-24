@@ -91,14 +91,14 @@ As an example for this approach, we consider the relationship between population
 </div>
 
 
-(ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Individual counties are shown as light blue dots.
+(ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
 
 <div class="figure" style="text-align: center">
 <img src="overlapping_points_files/figure-html4/midwest-density-dots-1.png" alt="(ref:midwest-density-dots)" width="576" />
 <p class="caption">(\#fig:midwest-density-dots)(ref:midwest-density-dots)</p>
 </div>
 
-(ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combintation of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
+(ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
 
 <div class="figure" style="text-align: center">
 <img src="overlapping_points_files/figure-html4/midwest-density-smooth-1.png" alt="(ref:midwest-density-smooth)" width="576" />

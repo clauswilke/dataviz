@@ -35,7 +35,7 @@ Ascending cumulative distribution functions are more widely known and more commo
 
 In practical applications, it is quite common to draw the ecdf without highlighting the individual points and to normalize the ranks by the maximum rank, so that the *y* axis represents the cumulative frequency (Figure \@ref(fig:student-grades-normalized)). 
 
-(ref:student-grades-normalized) Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the *y* values plotted correspond to the fraction of student in the class with at most that many points.
+(ref:student-grades-normalized) Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the *y* values plotted correspond to the fraction of students in the class with at most that many points.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_II_files/figure-html4/student-grades-normalized-1.png" alt="(ref:student-grades-normalized)" width="576" />

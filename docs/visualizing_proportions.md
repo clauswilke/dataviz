@@ -3,7 +3,7 @@
 
 # Visualizing proportions {#visualizing-proportions}
 
-We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypical such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of men and women in a group of people, the percentages of people voting for different political parties in an election, or the market shares of companies. The archetypal such visualization is the pie chart, omnipresent in any business presentation and much maligned among data scientists. As we will see, visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions. There is no single ideal visualization that always works. To illustrate this issue, I discuss a few different scenarios that each call for a different type of visualization.
 
 <div class="rmdtip">
 <p>Remember: You always need to pick the visualization that best fits your specific dataset and that highlights the key data features you want to show.</p>
@@ -131,7 +131,7 @@ Nevertheless, this figure has a major limitation: By visualizing the porportions
 
 Side-by-side bars have the problem that they don't clearly visualize the size of the individual parts relative to the whole and stacked bars have the problem that the different bars cannot be compared easily because they have different baselines. We can resolve these two issues by making a separate plot for each part and in each plot showing the respective part relative to the whole. For the health dataset of Figure \@ref(fig:health-vs-age), this procedure results in Figure \@ref(fig:health-vs-age-facets). The overall age distribution in the dataset is shown as the shaded gray areas, and the age distributions for each health status are shown in blue. This figure highlights that in absolute terms, the number people with excellent or good health declines past ages 30--40, while the number of people with fair health remains approximately constant across all ages.
 
-(ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different health status, respectively, and the gray areas show the overall age distribution.
+(ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_proportions_files/figure-html4/health-vs-age-facets-1.png" alt="(ref:health-vs-age-facets)" width="816" />
@@ -142,7 +142,7 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 
 To provide a second example, let's consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure \@ref(fig:marital-vs-age)).
 
-(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of maried and divorced people are highly distorted and difficult to interpret. 
+(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret. 
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_proportions_files/figure-html4/marital-vs-age-1.png" alt="(ref:marital-vs-age)" width="576" />
@@ -151,7 +151,7 @@ To provide a second example, let's consider a different variable from the same s
 
 The same dataset visualized as partial densities is much clearer (Figure \@ref(fig:marital-vs-age-facets)). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.
 
-(ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages people with different marital status, respectively, and the gray areas show the overall age distribution.
+(ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_proportions_files/figure-html4/marital-vs-age-facets-1.png" alt="(ref:marital-vs-age-facets)" width="816" />
