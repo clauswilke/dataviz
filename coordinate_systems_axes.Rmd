@@ -15,9 +15,9 @@ To make any sort of data visualization, we need to define position scales, which
 
 ## Cartesian coordinates
 
-The most widely used coordinate system for data visualization is the 2d *Cartesian coordinate system*, where each location is uniquely specified by an *x* and a *y* value. The *x* and *y* axes run orthogonally to each other, and data values are placed in an even spacing along both axes (Figure \@ref(fig:cartesian-coord)). The two axes are continuous position scales, and they can represent both positive and negative real numbers. To fully specify the coordinate system, we need to specify the range of numbers each axis covers. In Figure \@ref(fig:cartesian-coord), the *x* axis runs from -2.2 to 3.2 and the *y* axis runs from -2.2 to 2.2. Any data values between these axis limits are placed at the respectice location in the plot. Any data values outside the axis limits are discarded. 
+The most widely used coordinate system for data visualization is the 2d *Cartesian coordinate system*, where each location is uniquely specified by an *x* and a *y* value. The *x* and *y* axes run orthogonally to each other, and data values are placed in an even spacing along both axes (Figure \@ref(fig:cartesian-coord)). The two axes are continuous position scales, and they can represent both positive and negative real numbers. To fully specify the coordinate system, we need to specify the range of numbers each axis covers. In Figure \@ref(fig:cartesian-coord), the *x* axis runs from -2.2 to 3.2 and the *y* axis runs from -2.2 to 2.2. Any data values between these axis limits are placed at the respective location in the plot. Any data values outside the axis limits are discarded. 
 
-(ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventially called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
+(ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventionally called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
 
 ```{r cartesian-coord, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord)'}
 df_points <- data.frame(x = c(-1, 0, 2),
@@ -52,9 +52,9 @@ ggplot(df_points, aes(x, y)) +
   theme(axis.ticks.length = grid::unit(0, "pt"))
 ```
 
-Data values usually aren't just numbers, however. They come with units. For example, if we're measuring temperature, the values may be measured in degrees Celsius or Farenheit. Similarly, if we're measuring distance, the values may be measured in kilometers or miles, and if we're measuring duration, the values may be measured in minutes, hours, or days. In a Cartesian coordinate system, the spacing between grid lines along an axis corresponds to discrete steps in these data units. In a temperature scale, for example, we may have a grid line every 10 degrees Farenheit, and in a distance scale, we may have a grid line every 5 kilometers.
+Data values usually aren't just numbers, however. They come with units. For example, if we're measuring temperature, the values may be measured in degrees Celsius or Fahrenheit. Similarly, if we're measuring distance, the values may be measured in kilometers or miles, and if we're measuring duration, the values may be measured in minutes, hours, or days. In a Cartesian coordinate system, the spacing between grid lines along an axis corresponds to discrete steps in these data units. In a temperature scale, for example, we may have a grid line every 10 degrees Fahrenheit, and in a distance scale, we may have a grid line every 5 kilometers.
 
-A Cartesian coordinate system can have two axes representing two different units. This situation arises quite commonly whenever we're mapping two different types of variables to *x* and *y*. For example, in Figure \@ref(fig:temp-normals-vs-time), we plotted temperature vs. days of the year. The *y* axis of Figure \@ref(fig:temp-normals-vs-time) is measured in degrees Farenheit, with a grid line every at 20 degrees, and the *x* axis is measured in months, with a grid line at the first of every third month. Whenever the two axes are measured in different units, we can stretch or compress one relative to the other and maintain a valid visualization of the data (Figure \@ref(fig:temperature-normals-Houston)). Which version is preferable may depend on the story we want to convey. A tall and narrow figure emphasizes change along the *y* axis and a short and wide figure does the opposite. Ideally, we want to choose an aspect ratio that provides a clear and accurate presentation of the data.
+A Cartesian coordinate system can have two axes representing two different units. This situation arises quite commonly whenever we're mapping two different types of variables to *x* and *y*. For example, in Figure \@ref(fig:temp-normals-vs-time), we plotted temperature vs. days of the year. The *y* axis of Figure \@ref(fig:temp-normals-vs-time) is measured in degrees Fahrenheit, with a grid line every at 20 degrees, and the *x* axis is measured in months, with a grid line at the first of every third month. Whenever the two axes are measured in different units, we can stretch or compress one relative to the other and maintain a valid visualization of the data (Figure \@ref(fig:temperature-normals-Houston)). Which version is preferable may depend on the story we want to convey. A tall and narrow figure emphasizes change along the *y* axis and a short and wide figure does the opposite. Ideally, we want to choose an aspect ratio that provides a clear and accurate presentation of the data.
 
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
@@ -88,10 +88,10 @@ temps_wide_label <- mutate(temps_wide,
 
 temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   geom_line(size = 1, color = "#0072B2") +
-  scale_x_date(name="month", limits = c(ymd("0000-01-01"), ymd("0001-01-03")),
+  scale_x_date(name = "month", limits = c(ymd("0000-01-01"), ymd("0001-01-03")),
                breaks = c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"),
                           ymd("0000-10-01"), ymd("0001-01-01")),
-               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand=c(2/366, 0)) + 
+               labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand = c(2/366, 0)) + 
   scale_y_continuous(limits = c(50, 90),
                      name = "temperature (°F)") +
   theme_minimal_grid()
@@ -102,7 +102,7 @@ plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto")
 
 If on the other hand the *x* and the *y* axes are measured in the same units, then the grid spacings for the two axes should be equal, such that the same distance along the *x* or *y* axis corresponds to the same number of data units. As an example, we can plot the temperature in Houston, TX against the temperature in San Diego, CA, for every day of the year (Figure \@ref(fig:temperature-normals-Houston-San-Diego)a). Since the same quantity is plotted along both axes, we need to make sure that the grid lines form perfect squares, as is the case in Figure \@ref(fig:temperature-normals-Houston-San-Diego).
 
-(ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Farenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
+(ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Fahrenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
 
 ```{r temperature-normals-Houston-San-Diego, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
@@ -117,7 +117,7 @@ tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   ylab("temperature in Houston (°F)") +
   theme_minimal_grid()
 
-# Farenheit to Celsius conversion
+# Fahrenheit to Celsius conversion
 
 F2C <- function(t) {(t-32)*5/9}
 
@@ -136,7 +136,7 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houst
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
 ```
 
-You may wonder what happens if you change the units of your data. After all, units are arbitrary, and your preferences might be different from somebody else's. A change in units is a linear transformation, where we add or subtract a number to or from all data values and/or multiply all data values with another number. Fortunately, Cartesian coordinate systems are invariant under such linear transformations. Therefore, you can change the units of your data and the resulting figure will not change as long as you change the axes accordingly. As an example, compare Figures \@ref(fig:temperature-normals-Houston-San-Diego)a and \@ref(fig:temperature-normals-Houston-San-Diego)b. Both show the same data, but in part (a) the temperature units are degrees Farenheit and in part (b) they are degrees Celsius. Even though the grid lines are in different locations and the numbers along the axes are different, the two data visualizations look exactly the same.
+You may wonder what happens if you change the units of your data. After all, units are arbitrary, and your preferences might be different from somebody else's. A change in units is a linear transformation, where we add or subtract a number to or from all data values and/or multiply all data values with another number. Fortunately, Cartesian coordinate systems are invariant under such linear transformations. Therefore, you can change the units of your data and the resulting figure will not change as long as you change the axes accordingly. As an example, compare Figures \@ref(fig:temperature-normals-Houston-San-Diego)a and \@ref(fig:temperature-normals-Houston-San-Diego)b. Both show the same data, but in part (a) the temperature units are degrees Fahrenheit and in part (b) they are degrees Celsius. Even though the grid lines are in different locations and the numbers along the axes are different, the two data visualizations look exactly the same.
 
 
 ## Nonlinear axes
@@ -193,7 +193,7 @@ plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]),
 
 Because multiplication on a log scale looks like addition on a linear scale, log scales are the natural choice for any data that have been obtained by multiplication or division. In particular, ratios should generally be shown on a log scale. As an example, I have taken the number of inhabitants in each county in Texas and have divided it by the median number of inhabitants across all Texas counties. The resulting ratio is a number that can be larger or smaller than 1. A ratio of exactly 1 implies that the corresponding county has the median number of inhabitants. When visualizing these ratios on a log scale, we can see clearly that the population numbers in Texas counties are symmetrically distributed around the median, and that the most populous counties have over 100 times more inhabitants than the median while the least populous counties have over 100 times fewer inhabitants (Figure \@ref(fig:texas-counties-pop-ratio-log)). By contrast, for the same data, a linear scale obscures the differences between a county with median population number and a county with a much smaller population number than median (Figure \@ref(fig:texas-counties-pop-ratio-lin)).
 
-(ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighed by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
+(ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighted by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
 
 ```{r texas-counties-pop-ratio-log, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
 set.seed(3878)
@@ -307,7 +307,7 @@ RI,1212")
 
 northeast_areas$state_abr <- factor(northeast_areas$state_abr, levels = northeast_areas$state_abr)
 
-areas_base <- ggplot(northeast_areas, aes(x=state_abr, y=area)) +
+areas_base <- ggplot(northeast_areas, aes(x = state_abr, y = area)) +
   geom_col(fill = "#56B4E9") +
   ylab("area (square miles)") +
   xlab("state") +
@@ -376,7 +376,7 @@ plot_grid(p_cart, p_polar, labels = "auto")
 
 Polar coordinates can be useful for data of a periodic nature, such that data values at one end of the scale can be logically joined to data values at the other end. For example, consider the days in a year. December 31st is the last day of the year, but it is also one day before the first day of the year. If we want to show how some quantity varies over the year, it can be appropriate to use polar coordinates with the angle coordinate specifying each day. Let's apply this concept to the temperature normals of Figure \@ref(fig:temp-normals-vs-time). Because temperature normals are average temperatures that are not tied to any specific year, Dec. 31st can be thought of as 366 days later than Jan. 1st (temperature normals include Feb. 29) and also one day earlier. By plotting the temperature normals in a polar coordinate system, we emphasize this cyclical property they have (Figure \@ref(fig:temperature-normals-polar)). In comparison to Figure \@ref(fig:temp-normals-vs-time), the polar version highlights how similar the temperatures are in Death Valley, Houston, and San Diego from late fall to early spring. In the Cartesian coordinate system, this fact is obscured because the temperature values in late December and in early January are shown in opposite parts of the figure and therefore don't form a single visual unit.
 
-(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Farenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
+(ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Fahrenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
 ```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
@@ -391,9 +391,9 @@ temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
 
 ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
-  scale_x_date(name="date", expand=c(0, 0)) + 
+  scale_x_date(name = "date", expand = c(0, 0)) + 
   scale_y_continuous(limits = c(0, 105), expand = c(0, 0),
-                     breaks = seq(-30, 90, by=30),
+                     breaks = seq(-30, 90, by = 30),
                      name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +
   theme_minimal() +
@@ -404,7 +404,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
 
 A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their latitude and longitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:continental-usa-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:continental-usa-four-projections)).
 
-(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3d globe. The Robinson projection is commonly used to project the entire world. It preserves neigher areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercartor projection preserves angles but distorts areas.
+(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3d globe. The Robinson projection is commonly used to project the entire world. It preserves neither areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercator projection preserves angles but distorts areas.
 
 ```{r continental-usa-four-projections, fig.width = 8.5, fig.cap = '(ref:continental-usa-four-projections)'}
 library(sf)
@@ -435,7 +435,7 @@ p3 <- ggplot(usa_laea) +
         axis.text = element_text(color = "gray30"),
         plot.margin = margin(21, 21, 7, 7))
 
-usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercartor
+usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercator
 p4 <- ggplot(usa_tmerc) +
   geom_sf() +
   theme_minimal_grid(12) + 
@@ -445,7 +445,7 @@ p4 <- ggplot(usa_tmerc) +
 
 
 plot_grid(p1, p2, p3, p4,
-          labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercartor"),
+          labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercator"),
           label_x = 0.02, label_y = 0.98,
           hjust = 0, vjust = 1,
           label_fontface = "plain")
