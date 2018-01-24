@@ -90,7 +90,7 @@ To map data values onto aesthetics, we need to specify which data values corresp
 <p class="caption">(\#fig:basic-scales-example)(ref:basic-scales-example)</p>
 </div>
 
-Let's put things into practice. We can take the dataset shown in Table \@ref(tab:data-example), map tempterature onto the *y* axis, day of the year onto the *x* axis, location onto color, and visualize these aesthetics with solid lines. The result is a standard line plot showing the temperature normals at the four locations as they change during the year (Figure 
+Let's put things into practice. We can take the dataset shown in Table \@ref(tab:data-example), map temperature onto the *y* axis, day of the year onto the *x* axis, location onto color, and visualize these aesthetics with solid lines. The result is a standard line plot showing the temperature normals at the four locations as they change during the year (Figure 
 \@ref(fig:temp-normals-vs-time)).
 
 (ref:temp-normals-vs-time) Daily temperature normals for four selected locations in the U.S. Temperature is mapped to the *y* axis, day of the year to the *x* axis, and location to line color. Data source: NOAA.

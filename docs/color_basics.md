@@ -12,7 +12,7 @@ We frequently use color as a means to distinguish discrete items or groups that 
 
 Many appropriate qualitative color scales are readily available. Figure \@ref(fig:qualitative-scales) shows three representative examples. In particular, the ColorBrewer project provides a nice selection of qualitative color scales, including both fairly light and fairly dark colors [@ColorBrewer]. 
 
-(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default qualitqtive scale in the widely used plotting software ggplot2.
+(ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default qualitative scale in the widely used plotting software ggplot2.
 
 <div class="figure" style="text-align: center">
 <img src="color_basics_files/figure-html4/qualitative-scales-1.png" alt="(ref:qualitative-scales)" width="624" />
