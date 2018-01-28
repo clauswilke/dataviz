@@ -239,7 +239,7 @@ p_dens_fraction <- ggplot(titanic2, aes(x = age, y = ..count..)) +
   geom_density_line(aes(fill = sex), bw = 2, color = "transparent") +
   scale_x_continuous(limits = c(0, 75), name = "passenger age", expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 26), name = "scaled density", expand = c(0, 0)) +
-  scale_fill_manual(values = c("#b3b3b3a0", "#0072B2", "#D55E00"), 
+  scale_fill_manual(values = c("#b3b3b3a0", "#D55E00", "#0072B2"), 
                     breaks = c("all passengers", "male", "female"),
                     labels = c("all passengers  ", "males  ", "females"),
                     name = "") +
