@@ -15,7 +15,6 @@ We frequently encounter the situation where we would like to understand how a pa
 
 We can obtain a sense of the age distribution among the passengers by grouping all passengers into bins with comparable ages and then counting the number of passengers in each bin. This procedure results in a table such as Table \@ref(tab:titanic-ages). 
 ```{r titanic-ages}
-library(readr)
 titanic <- titanic_all
 age_counts <- hist(titanic$age, breaks = (0:15) * 5 + .01, plot = FALSE)$counts
 age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
@@ -95,7 +94,7 @@ Histograms have been a popular visualization option since at least the 18th cent
 
 ```{r titanic-ages-dens1, fig.cap='(ref:titanic-ages-dens1)'}
 ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid()
@@ -107,25 +106,25 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 
 ```{r titanic-ages-dens-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-dens-grid)'}
 pdens1 <- ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9", bw = .5, kernel = "gaussian") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
 pdens2 <- ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "gaussian") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
 pdens3 <- ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9", bw = 5, kernel = "gaussian") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
 
 pdens4 <- ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9", bw = 2, kernel = "rectangular") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "rectangular") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_minimal_hgrid(12)
@@ -143,7 +142,7 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 
 ```{r titanic-ages-dens-negative, fig.cap='(ref:titanic-ages-dens-negative)'}
 pdens_neg <- ggplot(titanic, aes(x = age)) + 
-  geom_density_line(fill = "#56B4E9") + 
+  geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5)) + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
   theme_minimal_hgrid()
@@ -214,11 +213,12 @@ Overlapping density plots don't typically have the problem that overlapping hist
 ```{r titanic-age-overlapping-dens, fig.cap='(ref:titanic-age-overlapping-dens)'}
 titanic2 <- titanic
 titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
-p_dens_overlapped <- ggplot(titanic2, aes(x = age, y = ..count.., fill = sex)) + 
+p_dens_overlapped <- ggplot(titanic2, aes(x = age, y = ..count.., fill = sex, color = sex)) + 
   geom_density_line(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 20), name = "scaled density", expand = c(0, 0)) +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
+  scale_color_manual(values = darken(c("#0072B2", "#D55E00"), 0.5), name = "gender") +
   guides(fill = guide_legend(override.aes = list(linetype = 0))) +
   theme_minimal_hgrid() +
   theme(legend.position = c(.9, .92),
