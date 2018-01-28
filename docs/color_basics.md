@@ -84,7 +84,7 @@ Color can also be an effective tool to highlight specific elements in the data. 
 <p class="caption">(\#fig:accent-scales)(ref:accent-scales)</p>
 </div>
 
-As an example of how the same data can support differing stories with different coloring approaches, I have created a variant of Figure \@ref(fig:popgrowth-US) where now I highlight two specific states, Texas and Louisiana (Figure \@ref(fig:popgrowth-US-highlight)). Both states are in the South, they are immediate neighbors, and yet one state (Texas) was the fifth-fastest growing state within the U.S. where as the other was the third slowest growing from 2000 to 2010.
+As an example of how the same data can support differing stories with different coloring approaches, I have created a variant of Figure \@ref(fig:popgrowth-US) where now I highlight two specific states, Texas and Louisiana (Figure \@ref(fig:popgrowth-US-highlight)). Both states are in the South, they are immediate neighbors, and yet one state (Texas) was the fifth-fastest growing state within the U.S. whereas the other was the third slowest growing from 2000 to 2010.
 
 (ref:popgrowth-US-highlight) From 2000 to 2010, the two neighboring southern states Texas and Louisiana have experienced among the highest and lowest population growth across the U.S.
 

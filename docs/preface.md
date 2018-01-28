@@ -27,7 +27,7 @@ One critical component in a book on data visualization is feasibility of the pro
 
 ## Good, bad, and ugly figures {-}
 
-Throughout this book, I show many different versions of the same figures, some as examples of how make a good visualization and some as examples of how not to. To provide a simple visual guideline of which examples should be emulated and which should be avoided, I am clearly labeling problematic figures as either "ugly" or "bad":
+Throughout this book, I show many different versions of the same figures, some as examples of how to make a good visualization and some as examples of how not to. To provide a simple visual guideline of which examples should be emulated and which should be avoided, I am clearly labeling problematic figures as either "ugly" or "bad":
 
 - **ugly**---A figure that has one or more shortcomings that should be remediated, or a figure that I personally don't find aesthetically pleasing.
 - **bad**---A figure that has one or more objective flaws that make it unsuitable for publication.
