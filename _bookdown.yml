@@ -1,5 +1,5 @@
 new_session: yes
-output_dir: "_book"
+output_dir: "_book_final"
 delete_merged_file: true
 
 rmd_files: [
@@ -9,7 +9,7 @@ rmd_files: [
 
   # Part I
   "aesthetic_mapping.Rmd", # completed
-  "coordinate_systems_axes.Rmd",
+  "coordinate_systems_axes.Rmd", # completed
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
   ##"visualizing_amounts.Rmd",
@@ -22,7 +22,7 @@ rmd_files: [
 
   "small_axis_labels.Rmd", # completed
 
-  "maximize_data_signal.Rmd",
+  ##"maximize_data_signal.Rmd",
   "proportional_ink.Rmd", # completed
   "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
@@ -35,7 +35,7 @@ rmd_files: [
   "outline.Rmd",
   "technical_notes.Rmd",
 
-  "notes.Rmd",
+  #"notes.Rmd",
 
   "references.Rmd"
 ]
