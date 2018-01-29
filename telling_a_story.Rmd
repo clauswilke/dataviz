@@ -18,6 +18,88 @@ When you're trying to show too much data at once you may end up not showing anyt
 ```
 
 
+(ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the New York City area in 2013, by airline. **complete caption.**
+
+```{r mean-arrival-delay-nyc, fig.cap = '(ref:mean-arrival-delay-nyc)'}
+library(nycflights13)
+carrier_names <- data.frame(carrier = c("9E", "AA", "B6", "DL", "EV", "MQ", "UA", "US", "WN", "--"),
+                            name= c("Endeavor", "American", "JetBlue", "Delta", "ExpressJet", "Envoy", "United",
+                                    "US Airways", "Southwest", "other"))
+
+flights %>% mutate(carrier = ifelse(carrier %in% c("OO", "HA", "YV", "F9", "AS", "FL", "VX"), "--", carrier)) %>%
+    left_join(carrier_names) %>%
+    group_by(name) -> flights_grouped
+
+flights_grouped %>%
+  summarize(mean_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  na.omit() %>%
+  mutate(highlight = ifelse(name %in% c("Delta", "American"), "yes", "no")) %>%
+  ggplot(aes(x=reorder(name, desc(mean_delay)), y=mean_delay, fill = highlight)) + 
+    scale_fill_manual(values = c("#B0B0B0D0", "#BD3828D0"), guide = "none") +
+    scale_y_continuous(expand = c(0, 0), name = "mean arrival delay (min.)") +
+    scale_x_discrete(name = NULL) +
+    geom_col() + 
+    coord_flip() +
+    theme_minimal_vgrid() +
+    theme(axis.ticks.y = element_blank())
+```
+
+
+(ref:number-of-flights-nyc) Number of flights out of the New York City area in 2013, by airline. **complete caption.**
+
+```{r number-of-flights-nyc, fig.cap = '(ref:number-of-flights-nyc)'}
+flights_grouped %>%
+  tally() %>%
+  mutate(highlight = ifelse(name %in% c("Delta", "American"), "yes", "no")) %>%
+  ggplot(aes(x=reorder(name, n), y=n, fill = highlight)) + 
+    scale_fill_manual(values = c("#B0B0B0D0", "#BD3828D0"), guide = "none") +
+    scale_y_continuous(expand = c(0, 0), name = "number of flights") +
+    scale_x_discrete(name = NULL) +
+    geom_col() + 
+    coord_flip() +
+    theme_minimal_vgrid() +
+    theme(axis.ticks.y = element_blank())
+```
+
+
+
+(ref:arrival-delay-vs-distance) Mean arrival delay versus distance. **complete caption.**
+
+```{r arrival-delay-vs-distance, fig.width = 8, fig.cap = '(ref:arrival-delay-vs-distance)'}
+flights_clean <- filter(flights,
+                !dest %in% c("HNL", "ANC") # remove Honolulu and Anchorage because they're so far
+                ) %>%
+  mutate(carrier = ifelse(carrier %in% c("DL", "AA"), carrier, "--")) %>%
+  left_join(carrier_names) %>%
+  select(name, distance, arr_delay, dest) %>%
+  na.omit()
+
+flights_clean$name <- factor(flights_clean$name, levels = c("other", "Delta", "American"))
+
+delay <- flights_clean %>%
+  group_by(name, dest) %>%
+  summarise(count = n(),
+            distance = mean(distance, na.rm = TRUE),
+            arr_delay = mean(arr_delay, na.rm = TRUE))
+
+ggplot(delay, aes(x = distance, y = arr_delay, color = name, fill = name)) +
+  geom_point(aes(size = count), alpha = .5, pch = 21) +
+  geom_smooth(data = flights_clean, aes(x = distance, y = arr_delay, color = name),
+              se = FALSE, inherit.aes = FALSE, size = 0.75,
+              method = 'gam', formula = y ~ s(x, bs = "cs", k = 3), show.legend = FALSE) +
+  scale_x_continuous(limits = c(0, 3020),
+                     expand = c(0, 0),
+                     name = "distance (miles)") +
+  scale_y_continuous(name = "mean arrival delay (min.)") +
+  scale_size(breaks = c(4000, 8000, 12000), name = "# of flights",
+             range = c(2, 8)) +
+  scale_color_OkabeIto(name = "airline", darken = .2) +
+  scale_fill_OkabeIto(name = "airline") +
+  guides(color = guide_legend(override.aes = list(size = 4, alpha = .7)),
+         size = guide_legend(override.aes = list(fill = "gray70"))) +
+  theme_minimal_grid()
+```
+
 ## Build up towards complexity
 
 
