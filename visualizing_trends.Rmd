@@ -6,14 +6,43 @@ source("_common.R")
 # Visualizing trends {#visualizing-trends}
 
 
-```{r}
-library(MASS)
-ggplot(Cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point() + geom_smooth(se = FALSE) +
-  geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "red") +
-  geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 10), color = "green") +
-  geom_smooth(se = FALSE, method = "nls", formula = y ~ param1*x/(x+param2) + param3, color = "purple")
+
+(ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
+
+```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
+cars93 <- MASS::Cars93
+
+cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
+  scale_x_continuous(name = "price (USD)",
+                     breaks = c(20, 40, 60),
+                     labels = c("$20,000", "$40,000", "$60,000")) +
+  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  theme_minimal_grid(12)  
+  
+p1 <- cars_base + geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2")
+p2 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 5, bs = 'cr'), color = "#0072B2")
+p3 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "#0072B2")
+p4 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 6, bs = 'gp'), color = "#0072B2")
+
+plot_grid(p1, p2, p3, p4, align = 'hv',
+          labels = 'auto', label_fontface = "plain")
 
 # See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
 ```
 
 
+(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$.
+
+```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
+fit.out <- nls(Fuel.tank.capacity ~ a*Price/(Price + b) + c, data = cars93, start = c(a = -45, b = -1, c = 70))
+fit.df <- data.frame(Price = 7:62,
+                     Fuel.tank.capacity = predict(fit.out, data.frame(Price = 7:62)))
+
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
+  geom_line(data = fit.df, size = 1, color = "#0072B2") +
+  scale_x_continuous(name = "price (USD)",
+                     breaks = c(20, 40, 60),
+                     labels = c("$20,000", "$40,000", "$60,000")) +
+  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  theme_minimal_grid()
+```

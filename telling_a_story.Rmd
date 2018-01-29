@@ -7,6 +7,9 @@ source("_common.R")
 
 ## Make a figure for the generals
 
+For several years, I was in charge of a large research project funded by the U.S. Army. For our annual progress reports, I was instructed to not include a lot of figures. And any figure I did include should show very clearly how our project was succeeding. A general, I was told, should be able to look at the figure and immediately see how what we were doing was improving upon or exceeding prior capabilities. Yet many of the figures I was sent by the various participating laboratories did not meet this criterion. The figures usually were overly complex, were labeled in confusing, technical terms, or did not make any particular point at all. Most scientists are not trained to make figures for the generals.
+
+
 
 ```{block type='rmdtip', echo=TRUE}
 When you're trying to show too much data at once you may end up not showing anything.
