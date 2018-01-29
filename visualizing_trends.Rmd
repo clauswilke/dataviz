@@ -5,7 +5,12 @@ source("_common.R")
 
 # Visualizing trends {#visualizing-trends}
 
+Topics to cover:
 
+- linear fits
+- non-linear fits
+- exponential growth
+- averaging/detrending?
 
 (ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
 

@@ -9,7 +9,9 @@ source("_common.R")
 
 For several years, I was in charge of a large research project funded by the U.S. Army. For our annual progress reports, I was instructed to not include a lot of figures. And any figure I did include should show very clearly how our project was succeeding. A general, I was told, should be able to look at the figure and immediately see how what we were doing was improving upon or exceeding prior capabilities. Yet many of the figures I was sent by the various participating laboratories did not meet this criterion. The figures usually were overly complex, were labeled in confusing, technical terms, or did not make any particular point at all. Most scientists are not trained to make figures for the generals.
 
+Some might hear this story and conclude that the generals are not very smart or just not that into science. I think that's exactly the wrong take-home message. The generals are simply very busy. They can't spend 30 minutes trying to decypher a cryptic figure. When they give millions of dollars of taxpayer funds to scientists to do basic research, the least they can expect in return is a handful of clear demonstrations that something worthwhile and interesting was achieved with that funding.
 
+This story should also not be misconstrued about being about military funding in particular. The generals are a metaphor for anybody you may want to reach with your visualization. It can be a scientific reviewer for your paper or grant proposal, it can be a newspaper editor, or it can be your supervisor or your supervisor's boss at the company you're working.
 
 ```{block type='rmdtip', echo=TRUE}
 When you're trying to show too much data at once you may end up not showing anything.
