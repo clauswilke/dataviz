@@ -29,7 +29,10 @@ Chapter on trends:
 
 ```{r}
 library(MASS)
-ggplot(Cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point() + geom_smooth(se = FALSE)
+ggplot(Cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point() + geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "red") +
+  geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 10), color = "green") +
+  geom_smooth(se = FALSE, method = "nls", formula = y ~ param1*x/(x+param2) + param3, color = "purple")
 ```
 See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
 
