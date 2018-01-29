@@ -92,7 +92,7 @@
 #. **Choosing the right plotting software**  
   Discusses the pros and cons of different software available to make graphs.
   
-#. **Selecting figures for a report, paper, or presentation**  
+#. **Telling a story with data**  
   Discusses how to compile larger sets of figures to tell a story; e.g., always move from less processed to more processed data representations; also, avoid repeating the same type of figure many times.
   
 #. **Annotated bibliography**  

@@ -1,0 +1,24 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+# Telling a story with data {#telling-a-story}
+
+## Make a figure for the generals
+
+
+```{block type='rmdtip', echo=TRUE}
+When you're trying to show too much data at once you may end up not showing anything.
+```
+
+
+## Build up towards complexity
+
+
+## Don't be repetitive
+
+*If you're showing the same type of figure over and over you will bore your readers.*
+
+## Use a consistent visual language
+

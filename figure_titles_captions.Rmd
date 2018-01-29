@@ -1,0 +1,7 @@
+```{r echo = FALSE, message = FALSE}
+# run setup script
+source("_common.R")
+```
+
+# Figure titles and captions {#figure-titles-captions}
+

@@ -17,9 +17,11 @@ rmd_files: [
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
+  "visualizing_trends.Rmd",
 
   # Part II
 
+  "figure_titles_captions.Rmd", # needs Part II heading from subsequent chapter
   "small_axis_labels.Rmd", # completed
 
   "maximize_data_signal.Rmd",
@@ -31,6 +33,7 @@ rmd_files: [
 
   # Part III
   "image_file_formats.Rmd", # completed
+  "telling_a_story.Rmd",
 
   "outline.Rmd",
   "technical_notes.Rmd",
