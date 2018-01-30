@@ -14,15 +14,60 @@ For several years, I was in charge of a large research project funded by the U.S
 Some might hear this story and conclude that the generals are not very smart or just not that into science. I think that's exactly the wrong take-home message. The generals are simply very busy. They can't spend 30 minutes trying to decypher a cryptic figure. When they give millions of dollars of taxpayer funds to scientists to do basic research, the least they can expect in return is a handful of clear demonstrations that something worthwhile and interesting was accomplished. This story should also not be misconstrued as being about military funding in particular. The generals are a metaphor for anybody you may want to reach with your visualization. It can be a scientific reviewer for your paper or grant proposal, it can be a newspaper editor, or it can be your supervisor or your supervisor's boss at the company you're working. If you want your story to come across, you need to make figures that are appropriate for all these generals.
 
 
+(ref:arrival-delay-vs-distance) Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistenly lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled.  This figure is labeled as bad because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
-(ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the New York City area in 2013, by airline. **complete caption.**
-
-```{r mean-arrival-delay-nyc, fig.cap = '(ref:mean-arrival-delay-nyc)'}
+```{r arrival-delay-vs-distance, fig.width = 8, fig.cap = '(ref:arrival-delay-vs-distance)'}
 library(nycflights13)
 carrier_names <- data.frame(carrier = c("9E", "AA", "B6", "DL", "EV", "MQ", "UA", "US", "WN", "--"),
                             name= c("Endeavor", "American", "JetBlue", "Delta", "ExpressJet", "Envoy", "United",
                                     "US Airways", "Southwest", "other"))
 
+flights_clean <- filter(flights,
+                !dest %in% c("HNL", "ANC") # remove Honolulu and Anchorage because they're so far
+                ) %>%
+  mutate(carrier = ifelse(carrier %in% c("DL", "AA"), carrier, "--")) %>%
+  left_join(carrier_names) %>%
+  select(name, distance, arr_delay, dest) %>%
+  na.omit()
+
+flights_clean$name <- factor(flights_clean$name, levels = c("American", "Delta", "other"))
+
+delay <- flights_clean %>%
+  group_by(name, dest) %>%
+  summarise(count = n(),
+            distance = mean(distance, na.rm = TRUE),
+            arr_delay = mean(arr_delay, na.rm = TRUE))
+
+p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name, fill = name)) +
+  geom_point(aes(size = count), alpha = .5, pch = 21) +
+  geom_smooth(data = flights_clean, aes(x = distance, y = arr_delay, color = name),
+              se = FALSE, inherit.aes = FALSE, size = 0.75,
+              method = 'gam', formula = y ~ s(x, bs = "cs", k = 3), show.legend = FALSE) +
+  scale_x_continuous(limits = c(0, 3050),
+                     expand = c(0, 0),
+                     name = "distance (miles)") +
+  scale_y_continuous(name = "mean arrival delay (min.)") +
+  scale_size(breaks = c(4000, 8000, 12000), name = "# of flights",
+             range = c(2, 8)) +
+  scale_color_OkabeIto(name = "airline", darken = .2, order = c(2, 7, 1)) +
+  scale_fill_OkabeIto(name = "airline", order = c(2, 7, 1)) +
+  guides(color = guide_legend(order = 1),
+         fill = guide_legend(override.aes = list(size = 4, alpha = .7), order = 1),
+         size = guide_legend(override.aes = list(fill = "gray70"), order = 2)) +
+  theme_minimal_grid() +
+  theme(plot.margin = margin(7, 10, 7, 7))
+
+stamp_bad(p_delay_distance) 
+```
+
+```{block type='rmdtip', echo=TRUE}
+When you're trying to show too much data at once you may end up not showing anything.
+```
+
+
+(ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the New York City area in 2013, by airline. **complete caption.** Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+
+```{r mean-arrival-delay-nyc, fig.cap = '(ref:mean-arrival-delay-nyc)'}
 flights %>% mutate(carrier = ifelse(carrier %in% c("OO", "HA", "YV", "F9", "AS", "FL", "VX"), "--", carrier)) %>%
     left_join(carrier_names) %>%
     group_by(name) -> flights_grouped
@@ -42,7 +87,7 @@ flights_grouped %>%
 ```
 
 
-(ref:number-of-flights-nyc) Number of flights out of the New York City area in 2013, by airline. **complete caption.**
+(ref:number-of-flights-nyc) Number of flights out of the New York City area in 2013, by airline. **complete caption.** Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 ```{r number-of-flights-nyc, fig.cap = '(ref:number-of-flights-nyc)'}
 flights_grouped %>%
@@ -60,79 +105,69 @@ flights_grouped %>%
 
 
 
-(ref:arrival-delay-vs-distance) Mean arrival delay versus distance. This figure is labeled as bad because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. **complete caption.**
-
-```{r arrival-delay-vs-distance, fig.width = 8, fig.cap = '(ref:arrival-delay-vs-distance)'}
-flights_clean <- filter(flights,
-                !dest %in% c("HNL", "ANC") # remove Honolulu and Anchorage because they're so far
-                ) %>%
-  mutate(carrier = ifelse(carrier %in% c("DL", "AA"), carrier, "--")) %>%
-  left_join(carrier_names) %>%
-  select(name, distance, arr_delay, dest) %>%
-  na.omit()
-
-flights_clean$name <- factor(flights_clean$name, levels = c("other", "Delta", "American"))
-
-delay <- flights_clean %>%
-  group_by(name, dest) %>%
-  summarise(count = n(),
-            distance = mean(distance, na.rm = TRUE),
-            arr_delay = mean(arr_delay, na.rm = TRUE))
-
-p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name, fill = name)) +
-  geom_point(aes(size = count), alpha = .5, pch = 21) +
-  geom_smooth(data = flights_clean, aes(x = distance, y = arr_delay, color = name),
-              se = FALSE, inherit.aes = FALSE, size = 0.75,
-              method = 'gam', formula = y ~ s(x, bs = "cs", k = 3), show.legend = FALSE) +
-  scale_x_continuous(limits = c(0, 3050),
-                     expand = c(0, 0),
-                     name = "distance (miles)") +
-  scale_y_continuous(name = "mean arrival delay (min.)") +
-  scale_size(breaks = c(4000, 8000, 12000), name = "# of flights",
-             range = c(2, 8)) +
-  scale_color_OkabeIto(name = "airline", darken = .2) +
-  scale_fill_OkabeIto(name = "airline") +
-  guides(color = guide_legend(override.aes = list(size = 4, alpha = .7)),
-         size = guide_legend(override.aes = list(fill = "gray70"))) +
-  theme_minimal_grid() +
-  theme(plot.margin = margin(7, 10, 7, 7))
-
-stamp_bad(p_delay_distance) 
-```
-
-```{block type='rmdtip', echo=TRUE}
-When you're trying to show too much data at once you may end up not showing anything.
-```
 
 
+## Build up towards complex figures
 
-## Build up towards complexity
+Sometimes, however, we do want to show more complex figures that contain a large amount of information at once. In those cases, we can make things easier for our readers if we first show them a simplfied version of the figure before we show the final one in its full complexity. The same approach is also highly recommended for presentations. Never jump straight to a highly complex figure; first show an easily digested subset.
 
-```{r fig.width = 8.5, fig.asp = .4}
+This recommendation is particularly relevant if the final figure is a trellis plot showing a grid of subplots with similar structure. The full grid is much easier to digest if the reader has first seen a single subplot by itself. For example, Figure \@ref(fig:united-departures-weekdays) shows the aggregate numbers of United Airlines departures out of Newark Airport (EWR) in 2013, broken down by weekday. Once we have seen and processed this figure, seeing the same information for ten airlines and three airports at once is much easier to process (Figure \@ref(fig:all-departures-weekdays)).
+
+(ref:united-departures-weekdays) United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekedays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+
+```{r united-departures-weekdays, fig.width = 3.5, fig.asp = 1, fig.cap = '(ref:united-departures-weekdays)'}
 flights_grouped$name <- factor(flights_grouped$name,
                                levels = c("United", "ExpressJet", "JetBlue", "Delta", "American",
                                           "Endeavor", "Envoy", "US Airways", "Southwest", "other"))
 
-p <- ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
+filter(flights_grouped, name == "United" & origin == "EWR") %>%
+  ggplot(aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
+    geom_bar(fill = "#0072B2D0", color = "white", size = 1, width = .97) + 
+    #facet_grid(origin ~ name) +
+    ggtitle("United departures, EWR") +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 7500)) +
+    scale_x_discrete(labels = c("M", "T", "W", "T", "F", "S", "S"),
+                     expand = c(0, 0.05),
+                     name = "weekday") +
+    theme_minimal_hgrid() +
+    theme(strip.text = element_text(face = "bold",
+                                    margin = margin(4, 4, 4, 4)),
+          axis.line.x = element_blank(),
+          panel.spacing.x = grid::unit(6.5, "pt"),
+          panel.spacing.y = grid::unit(6.5, "pt"),
+          panel.grid.major = element_line(color = "gray80"),
+          panel.background = element_rect(fill = "gray90"),
+          plot.title = element_text(hjust = 0.5, vjust = 0.5,
+                                    margin = margin(4, 4, 4, 4)))
+```
+
+
+(ref:all-departures-weekdays) Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR),  JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+ 
+```{r all-departures-weekdays, fig.width = 8.5, fig.asp = .4, fig.cap = '(ref:all-departures-weekdays)'}
+ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
   geom_bar(fill = "#0072B2D0", color = "white") + 
   facet_grid(origin ~ name) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 7500)) +
   scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
                    expand = c(0, 0.05),
                    name = "weekday") +
-  theme_minimal_hgrid(10) +
-  panel_border() +
-  #background_grid(major = 'y') +
-  theme(panel.spacing.x = grid::unit(10, "pt"),
-        panel.spacing.y = grid::unit(10, "pt"))
-
-p
+  theme_minimal_hgrid(11) +
+  #panel_border() +
+  theme(strip.text = element_text(face = "bold",
+                                  margin = margin(3, 3, 3, 3)),
+        axis.line.x = element_blank(),
+        panel.spacing.x = grid::unit(5, "pt"),
+        panel.spacing.y = grid::unit(5, "pt"),
+        panel.grid.major = element_line(color = "gray80"),
+        panel.background = element_rect(fill = "gray90"),
+        plot.margin = margin(5.5, 1, 5.5, 1))
 ```
 
 
-## Don't be repetitive
+## Use a consistent visual language but avoid repetition
+
+
 
 *If you're showing the same type of figure over and over you will bore your readers.*
-
-## Use a consistent visual language
 
