@@ -1,21 +1,18 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(lubridate)
 ```
 
 # Telling a story with data {#telling-a-story}
 
 ## Make a figure for the generals
 
-For several years, I was in charge of a large research project funded by the U.S. Army. For our annual progress reports, I was instructed to not include a lot of figures. And any figure I did include should show very clearly how our project was succeeding. A general, I was told, should be able to look at the figure and immediately see how what we were doing was improving upon or exceeding prior capabilities. Yet many of the figures I was sent by the various participating laboratories did not meet this criterion. The figures usually were overly complex, were labeled in confusing, technical terms, or did not make any particular point at all. Most scientists are not trained to make figures for the generals.
+For several years, I was in charge of a large research project funded by the U.S. Army. For our annual progress reports, I was instructed by the program managers to not include a lot of figures. And any figure I did include should show very clearly how our project was succeeding. A general, the program mangers told me, should be able to look at each figure and immediately see how what we were doing was improving upon or exceeding prior capabilities. Yet when my colleagues who were part of this project sent me figures for the annual progress report, many of them would not meet this criterion. The figures usually were overly complex, were labeled in confusing, technical terms, or did not make any obvious point at all. Most scientists are not trained to make figures for the generals.
 
-Some might hear this story and conclude that the generals are not very smart or just not that into science. I think that's exactly the wrong take-home message. The generals are simply very busy. They can't spend 30 minutes trying to decypher a cryptic figure. When they give millions of dollars of taxpayer funds to scientists to do basic research, the least they can expect in return is a handful of clear demonstrations that something worthwhile and interesting was achieved with that funding.
+Some might hear this story and conclude that the generals are not very smart or just not that into science. I think that's exactly the wrong take-home message. The generals are simply very busy. They can't spend 30 minutes trying to decypher a cryptic figure. When they give millions of dollars of taxpayer funds to scientists to do basic research, the least they can expect in return is a handful of clear demonstrations that something worthwhile and interesting was accomplished. This story should also not be misconstrued as being about military funding in particular. The generals are a metaphor for anybody you may want to reach with your visualization. It can be a scientific reviewer for your paper or grant proposal, it can be a newspaper editor, or it can be your supervisor or your supervisor's boss at the company you're working. If you want your story to come across, you need to make figures that are appropriate for all these generals.
 
-This story should also not be misconstrued about being about military funding in particular. The generals are a metaphor for anybody you may want to reach with your visualization. It can be a scientific reviewer for your paper or grant proposal, it can be a newspaper editor, or it can be your supervisor or your supervisor's boss at the company you're working.
-
-```{block type='rmdtip', echo=TRUE}
-When you're trying to show too much data at once you may end up not showing anything.
-```
 
 
 (ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the New York City area in 2013, by airline. **complete caption.**
@@ -87,7 +84,7 @@ p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name,
   geom_smooth(data = flights_clean, aes(x = distance, y = arr_delay, color = name),
               se = FALSE, inherit.aes = FALSE, size = 0.75,
               method = 'gam', formula = y ~ s(x, bs = "cs", k = 3), show.legend = FALSE) +
-  scale_x_continuous(limits = c(0, 3020),
+  scale_x_continuous(limits = c(0, 3050),
                      expand = c(0, 0),
                      name = "distance (miles)") +
   scale_y_continuous(name = "mean arrival delay (min.)") +
@@ -103,7 +100,34 @@ p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name,
 stamp_bad(p_delay_distance) 
 ```
 
+```{block type='rmdtip', echo=TRUE}
+When you're trying to show too much data at once you may end up not showing anything.
+```
+
+
+
 ## Build up towards complexity
+
+```{r fig.width = 8.5, fig.asp = .4}
+flights_grouped$name <- factor(flights_grouped$name,
+                               levels = c("United", "ExpressJet", "JetBlue", "Delta", "American",
+                                          "Endeavor", "Envoy", "US Airways", "Southwest", "other"))
+
+p <- ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
+  geom_bar(fill = "#0072B2D0", color = "white") + 
+  facet_grid(origin ~ name) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 7500)) +
+  scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
+                   expand = c(0, 0.05),
+                   name = "weekday") +
+  theme_minimal_hgrid(10) +
+  panel_border() +
+  #background_grid(major = 'y') +
+  theme(panel.spacing.x = grid::unit(10, "pt"),
+        panel.spacing.y = grid::unit(10, "pt"))
+
+p
+```
 
 
 ## Don't be repetitive
