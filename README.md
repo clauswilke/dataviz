@@ -15,7 +15,7 @@ This work is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 Int
 
 **1\. Can you include the R code for the figures as part of the book?**
 
-No. The book is very purposefully designed to not be a programming book. The moment a book contains even one line of computer code, some people who don't use the chosen language will dismiss the book as not relevant to them. That's why the famous Numerical Recipes books had to be rewritten in so many different versions: Numerical Recipes in C, Numerical Recipes in Fortran, Numerical Recipes in C++. The recipes were always the same, but the C users didn't want to read the Fortran book and vice versa. At this time, I don't want to write a book about data visualization in R. I want to write a book about data visualization independently of the chose visualization toolchain.
+No. The book is very purposefully designed to not be a programming book. The moment a book contains even one line of computer code, some people who don't use the chosen language will dismiss the book as not relevant to them. That's why the famous Numerical Recipes books had to be rewritten in so many different versions: Numerical Recipes in C, Numerical Recipes in Fortran, Numerical Recipes in C++. The recipes were always the same, but the C users didn't want to read the Fortran book and vice versa. At this time, I don't want to write a book about data visualization in R. I want to write a book about fundamental principles of data visualization that hold regardless of the chosen visualization toolchain.
 
 **2\. Can you at least provide direct links from the figures to the code chunks in the markdown files?**
 
