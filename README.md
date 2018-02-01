@@ -11,6 +11,16 @@ If you notice typos or other issues, feel free to open an issue on GitHub or sen
 
 This work is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) License. 
 
+## Frequently Asked Questions
+
+**1\. Can you include the R code for the figures as part of the book?**
+
+No. The book is very purposefully designed to not be a programming book. The moment a book contains even one line of computer code, some people who don't use the chosen language will dismiss the book as not relevant to them. That's why the famous Numerical Recipes book had to be rewritten in so many different versions: Numerical Recipes in C, Numerical Recipes in Fortran, Numerical Recipes in C++. The recipes were always the same, but the C users didn't want to read the Fortran book and vice versa. At this time, I don't want to write a book about data visualization in R. I want to write a book about data visualization, period.
+
+**2\. Can you at least provide direct links from the figures to the code chunks in the markdown files?**
+
+No. First, this is really a feature request for R Markdown. If R Markdown provided this feature I might consider turning it on. Second, however, for many figures in the book there is no single self-contained code chunk that generates the figure. Instead, a later figure in a chapter may depend on computations that were performed in an earlier chunk for a different figure. In general, even though the R Markdown files for individual chapters are self-contained, the code chunks within each file build on top of each other. Therefore, to understand how a specific figure was made, you may have to read through the entire R Markdown file for that chapter.
+
 ## Disclaimer
 
 This is a personal repository that is not meant for public use at this time. It is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. No installation or technical support will be provided.
