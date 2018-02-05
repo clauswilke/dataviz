@@ -7,29 +7,20 @@ source("_common.R")
 
 ```{r fig.width = 7, fig.asp = 0.75}
 
-trendline <- factor("y ~ log(x)", levels = c("Middle East and North Africa",
-                          "Sub Saharan Africa",
-                          "Americas",
-                          "Asia Pacific",
-                          "Europe and Central Asia",
-                          "y ~ log(x)"))
-
-
 corruption %>% filter(year == 2015) %>% na.omit() %>%
-  mutate(region = factor(region,
-                         levels = c("Middle East and North Africa",
-                                    "Sub Saharan Africa",
-                                    "Americas",
-                                    "Asia Pacific",
-                                    "Europe and Central Asia",
-                                    "y ~ log(x)"))) %>%
+  mutate(region = case_when(
+    region == "Middle East and North Africa" ~ "Middle East\nand North Africa",
+    region == "Europe and Central Asia" ~ "Europe and\nCentral Asia",
+    region == "Sub Saharan Africa" ~ "Sub Saharan\nAfrica",
+    TRUE ~ region)
+    ) %>%
   ggplot(aes(cpi, hdi)) + 
-    geom_smooth(aes(color = trendline, fill = trendline, shape = trendline),
+    geom_smooth(color = "gray50",
                 method = 'lm', formula = y~log(x), se = FALSE) +
     geom_point(aes(color = region, shape = region, fill = region),
                size = 2.5, alpha = 0.7) + 
-    scale_fill_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_color_OkabeIto(name = NULL, darken = 0.3, order = c(1:5, 8)) +
+    scale_fill_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_shape_manual(values = c(21:25, NA), name = NULL) +
     scale_y_continuous(limits = c(0.3, 1), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
                        expand = c(0, 0),
@@ -38,9 +29,11 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
                        breaks = c(20, 40, 60, 80, 100),
                        expand = c(0, 0),
                        name = "Corruption Perceptions Index\n(100 = least corrupt)") +
-    guides(colour = guide_legend(ncol = 3,
-             override.aes = list(linetype = c(rep("blank", 5), "solid")))) +
+    guides(color = guide_legend(nrow = 1)) +
+  #  guides(color = guide_legend(nrow = 1,
+  #           override.aes = list(linetype = c(rep("blank", 5), "solid")))) +
     theme_minimal_hgrid() +
-    theme(legend.position = "bottom",
-          legend.justification = "right")
+    theme(legend.position = "top",
+          legend.justification = "right",
+          legend.text = element_text(size = 10))
 ```
