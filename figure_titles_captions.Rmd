@@ -1,7 +1,38 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(forcats)
 ```
 
 # Figure titles and captions {#figure-titles-captions}
 
+```{r fig.width = 7, fig.asp = 0.75}
+corruption %>% filter(year == 2015) %>% na.omit() %>%
+  mutate(region = fct_relevel(region,
+                              c("Middle East and North Africa",
+                                "Sub Saharan Africa",
+                                "Americas",
+                                "Asia Pacific",
+                                "Europe and Central Asia"))) %>%
+  ggplot(aes(cpi, hdi)) + 
+    geom_smooth(method = 'lm', formula = y~log(x), color = "gray50", se = FALSE) +
+    geom_point(aes(color = region, shape = region, fill = region),
+               size = 2.5, alpha = 0.7) + 
+    scale_fill_OkabeIto(name = NULL,
+                        guide = guide_legend(ncol = 3)) +
+    scale_color_OkabeIto(name = NULL,
+                         #guide = guide_legend(ncol = 3),
+                         darken = 0.3) +
+    scale_shape_manual(values = 21:25, name = NULL) +
+    scale_y_continuous(limits = c(0.3, 1), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
+                       expand = c(0, 0),
+                       name = "Human Development Index\n(1.0 = most developed)") +
+    scale_x_continuous(limits = c(10, 95),
+                       breaks = c(20, 40, 60, 80, 100),
+                       expand = c(0, 0),
+                       name = "Corruption Perceptions Index\n(100 = least corrupt)") +
+    theme_minimal_hgrid() +
+    theme(legend.position = "bottom",
+          legend.justification = "right")
+```
