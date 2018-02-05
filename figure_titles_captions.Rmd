@@ -1,28 +1,36 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+library(ggrepel)
 ```
 
 # Figure titles and captions {#figure-titles-captions}
 
-```{r fig.width = 7, fig.asp = 0.75}
+(ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
+
+```{r corruption-development, fig.width = 7, fig.asp = 0.7, fig.cap = '(ref:corruption-development)'}
+country_highlight <- c("Germany", "Norway", "United States", "Greece", "Singapore", "Rwanda", "Russia", "Venezuela", "Sudan", "Iraq", "Ghana", "Niger", "Chad", "Kuwait", "Qatar", "Myanmar", "Nepal", "Chile", "Brazil", "Japan", "China")
+
 
 corruption %>% filter(year == 2015) %>% na.omit() %>%
   mutate(region = case_when(
     region == "Middle East and North Africa" ~ "Middle East\nand North Africa",
     region == "Europe and Central Asia" ~ "Europe and\nCentral Asia",
     region == "Sub Saharan Africa" ~ "Sub Saharan\nAfrica",
-    TRUE ~ region)
+    TRUE ~ region),
+    label = ifelse(country %in% country_highlight, country, "")
     ) %>%
   ggplot(aes(cpi, hdi)) + 
     geom_smooth(color = "gray50",
-                method = 'lm', formula = y~log(x), se = FALSE) +
-    geom_point(aes(color = region, shape = region, fill = region),
-               size = 2.5, alpha = 0.7) + 
-    scale_color_OkabeIto(name = NULL, darken = 0.3, order = c(1:5, 8)) +
+                method = 'lm', formula = y~log(x), se = FALSE, fullrange = TRUE) +
+    geom_point(aes(color = region, fill = region),
+               size = 2.5, alpha = 0.5) + 
+    geom_text_repel(aes(label = label), color = "black", size = 10/.pt,
+                    point.padding = 0.5, box.padding = .4, force = .5,
+                    min.segment.length = 0) +
+    scale_color_OkabeIto(name = NULL) +
     scale_fill_OkabeIto(name = NULL, order = c(1:5, 8)) +
-    scale_shape_manual(values = c(21:25, NA), name = NULL) +
-    scale_y_continuous(limits = c(0.3, 1), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
+    scale_y_continuous(limits = c(0.3, 1.05), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
                        expand = c(0, 0),
                        name = "Human Development Index\n(1.0 = most developed)") +
     scale_x_continuous(limits = c(10, 95),
@@ -30,10 +38,23 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
                        expand = c(0, 0),
                        name = "Corruption Perceptions Index\n(100 = least corrupt)") +
     guides(color = guide_legend(nrow = 1)) +
-  #  guides(color = guide_legend(nrow = 1,
-  #           override.aes = list(linetype = c(rep("blank", 5), "solid")))) +
     theme_minimal_hgrid() +
     theme(legend.position = "top",
           legend.justification = "right",
-          legend.text = element_text(size = 10))
+          legend.text = element_text(size = 10),
+          axis.title = element_text(size = rel(0.857)),
+          plot.title = element_text(size = 16),
+          plot.subtitle = element_text(size = 14),
+          plot.caption = element_text(size = 10)) -> plot_corrupt_base
+
+plot_corrupt_base
+```
+
+
+(ref:corruption-development-infographic) Figure \@ref(fig:corruption-development-infographic) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
+
+```{r corruption-development-infographic, fig.width = 7, fig.asp = 0.8, fig.cap = '(ref:corruption-development-infographic)'}
+plot_corrupt_base + labs(title = "Corruption and human development",
+                         subtitle = "The most developed countries experience\nthe least corruption",
+                         caption = "Data sources: Transparency International & UN Human Development Report")
 ```
