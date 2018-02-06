@@ -21,14 +21,14 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
     label = ifelse(country %in% country_highlight, country, "")
     ) %>%
   ggplot(aes(cpi, hdi)) + 
-    geom_smooth(color = "gray50",
+    geom_smooth(aes(color = "y ~ log(x)", fill = "y ~ log(x)"),
                 method = 'lm', formula = y~log(x), se = FALSE, fullrange = TRUE) +
     geom_point(aes(color = region, fill = region),
                size = 2.5, alpha = 0.5) + 
     geom_text_repel(aes(label = label), color = "black", size = 10/.pt,
                     point.padding = 0.5, box.padding = .4, force = .5,
                     min.segment.length = 0) +
-    scale_color_OkabeIto(name = NULL) +
+    scale_color_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_fill_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_y_continuous(limits = c(0.3, 1.05), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
                        expand = c(0, 0),
@@ -36,25 +36,44 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
     scale_x_continuous(limits = c(10, 95),
                        breaks = c(20, 40, 60, 80, 100),
                        expand = c(0, 0),
-                       name = "Corruption Perceptions Index\n(100 = least corrupt)") +
-    guides(color = guide_legend(nrow = 1)) +
+                       name = "Corruption Perceptions Index (100 = least corrupt)") +
+    guides(color = guide_legend(nrow = 1,
+      override.aes = list(linetype = c(rep("blank", 5), "solid"),
+                          shape = c(rep(21, 5), NA)))) +
     theme_minimal_hgrid() +
     theme(legend.position = "top",
           legend.justification = "right",
           legend.text = element_text(size = 10),
           axis.title = element_text(size = rel(0.857)),
-          plot.title = element_text(size = 16),
-          plot.subtitle = element_text(size = 14),
-          plot.caption = element_text(size = 10)) -> plot_corrupt_base
+          plot.margin = margin(0, 7, 0, 7)) -> plot_corrupt_base
 
-plot_corrupt_base
+cur_dev <- grDevices::dev.cur()
+grDevices::pdf(NULL, width = 7, height = 4.9)
+grob_corrupt_base <- grid::forceGrob(ggplotGrob(plot_corrupt_base))
+null <- grDevices::dev.off()
+null <- grDevices::dev.set(cur_dev)
+
+ggdraw(grob_corrupt_base)
 ```
 
 
-(ref:corruption-development-infographic) Figure \@ref(fig:corruption-development-infographic) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
+(ref:corruption-development-infographic) Figure \@ref(fig:corruption-development) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
 
-```{r corruption-development-infographic, fig.width = 7, fig.asp = 0.8, fig.cap = '(ref:corruption-development-infographic)'}
-plot_corrupt_base + labs(title = "Corruption and human development",
-                         subtitle = "The most developed countries experience\nthe least corruption",
-                         caption = "Data sources: Transparency International & UN Human Development Report")
+```{r corruption-development-infographic, fig.width = 7, fig.asp = 0.84, fig.cap = '(ref:corruption-development-infographic)'}
+plot_corrupt_title <- ggdraw() +
+  labs(title = "Corruption and human development",
+       subtitle = "The most developed countries experience the least corruption") +
+  theme_map() +
+  theme(plot.title = element_text(size = 14, hjust = 0),
+        plot.subtitle = element_text(size = 12, hjust = 0),
+        plot.margin = margin(7, 7, 0, 7))
+
+plot_corrupt_caption <- ggplot() +
+  labs(caption = "Data sources: Transparency International & UN Human Development Report") +
+  theme_map() +
+  theme(plot.caption = element_text(size = 10, hjust = 1),
+        plot.margin = margin(0, 7, 7, 7))
+
+plot_grid(plot_corrupt_title, grob_corrupt_base, plot_corrupt_caption,
+          ncol = 1, rel_heights = c(.15, 1, .05))
 ```
