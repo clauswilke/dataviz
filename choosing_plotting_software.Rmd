@@ -6,6 +6,10 @@ source("_common.R")
 # Choosing the right plotting software
 
 
+Throughout much of the 20th century, data visualizations were drawn by hand, mostly by technical illustrators who did so for a living. 
+
+One notable example is Randall Munroe, creator of the web comic XKCD, 
+
 ```{block type='rmdtip', echo=TRUE}
 The best plotting software is the one that allows you to make the visualizations you need.
 ```
@@ -28,5 +32,26 @@ We can apply these concepts to data visualizations with minor modifications. A v
 A good plotting software allows you to think separately about content and design. 
 
 **Refer back to the figure from the previous subsection which shows the same content using different designs.**
+
+(ref:unemploy-themes) Number of unemployed persons in the U.S. from 1970 to 2015. The same figure is displayed using four different themes that are part of the R package ggplot2: (a) theme gray (the ggplot2 default); (b) theme linedraw; (c) theme classic; (d) theme minimal.  Data source: U.S. Bureau of Labor Statistics
+
+```{r unemploy-themes, fig.width = 8.5, fig.cap = '(ref:unemploy-themes)'}
+unemploy_plot <- ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line(color = "#0072B2", size = .5) +
+  scale_y_continuous(name = "unemployed (x1000)",
+                     limits = c(0, 17000),
+                     breaks = c(0, 5000, 10000, 15000),
+                     labels = c("0", "5000", "10,000", "15,000"),
+                     expand = c(0, 0)) +
+  scale_x_date(name = "year",
+               expand = c(0.01, 0))
+
+plot_grid(unemploy_plot + theme_gray(),
+          unemploy_plot + theme_linedraw(),
+          unemploy_plot + theme_classic(),
+          unemploy_plot + theme_minimal(),
+          labels = "auto", label_fontface = "plain",
+          scale = 1)
+```
 
 ## Rapid iteration

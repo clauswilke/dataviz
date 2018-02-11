@@ -12,7 +12,7 @@ rmd_files: [
   "coordinate_systems_axes.Rmd",
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
-  ##"visualizing_amounts.Rmd",
+  "visualizing_amounts.Rmd",
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed

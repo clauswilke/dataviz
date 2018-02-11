@@ -1,10 +1,71 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+library(forcats)
 ```
 
 
 # Visualizing amounts
+
+```{r boxoffice-vertical, fig.width = 4, fig.asp = .9}
+# source: Box Office Mojo
+# URL: http://www.boxofficemojo.com/weekend/chart/?view=&yr=2017&wknd=51&p=.htm
+# downloaded: 2018-02-11
+
+boxoffice <- data.frame(rank = 1:5,
+                        title = c("Star Wars: The Last Jedi", "Jumanji: Welcome to the Jungle", "Pitch Perfect 3", "The Greatest Showman", "Ferdinand"),
+                        title_short = c("Star Wars", "Jumanji", "Pitch Perfect 3", "Greatest Showman", "Ferdinand"),
+                        amount = c(71565498, 36169328, 19928525, 8805843, 7316746),
+                        amount_text = c("$71,565,498", "$36,169,328", "$19,928,525", "$8,805,843", "$7,316,746"))
+
+boxoffice %>% filter(rank < 4) %>%
+  ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
+    geom_col(fill = "#56B4E9") +
+    scale_y_continuous(expand = c(0, 0),
+                       breaks = c(0, 2e7, 4e7, 6e7),
+                       labels = c("0", "20", "40", "60"),
+                       name = "weekend gross ($1M)") +
+    scale_x_discrete(name = NULL,
+                     expand = c(0, 0.5)) +
+    theme_minimal_hgrid() +
+    theme(axis.ticks.length = grid::unit(0, "pt"),
+          axis.ticks = element_blank(),
+          axis.title = element_text(size = 12))
+```
+
+```{r boxoffice-horizontal}
+
+ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
+  geom_col(fill = "#56B4E9") +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = c(0, 2e7, 4e7, 6e7),
+                     labels = c("0", "20", "40", "60"),
+                     name = "weekend gross ($1M)") +
+  scale_x_discrete(name = NULL,
+                   expand = c(0, 0.5)) +
+  coord_flip() +
+  theme_minimal_vgrid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank(),
+        axis.title = element_text(size = 12))
+```
+
+
+(ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
+
+```{r Americas-life-expect, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect)'}
+library(gapminder)
+gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Americas")
+ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
+  geom_point(color = "#0072B2", size = 2.5) +
+  scale_x_continuous(name = "life expectancy (years)",
+                     limits = c(59.7, 81.5),
+                     expand = c(0, 0)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.title = element_text(size = 12))
+```
 
 
 (ref:titanic-passengers-by-class-sex) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class.
@@ -43,8 +104,4 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
 
 I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.
 
-Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.
-
-## Don't use a logscale y axis with a bargraph
-
-You can use either a bargraph or a logscale y axis, but not both in combination.
+**Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.**
