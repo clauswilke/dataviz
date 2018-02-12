@@ -7,7 +7,7 @@ library(forcats)
 
 # Visualizing amounts
 
-```{r boxoffice-vertical, fig.width = 4, fig.asp = .9}
+```{r}
 # source: Box Office Mojo
 # URL: http://www.boxofficemojo.com/weekend/chart/?view=&yr=2017&wknd=51&p=.htm
 # downloaded: 2018-02-11
@@ -18,26 +18,66 @@ boxoffice <- data.frame(rank = 1:5,
                         amount = c(71565498, 36169328, 19928525, 8805843, 7316746),
                         amount_text = c("$71,565,498", "$36,169,328", "$19,928,525", "$8,805,843", "$7,316,746"))
 
-boxoffice %>% filter(rank < 4) %>%
+boxoffice_display <- boxoffice %>%
+  mutate(A = " ", B = " ", C = " ") %>%
+  select(A, rank, title, amount_text, B, C) %>%
+  rename(` ` = A,
+         Rank = rank,
+         Title = title,
+         `Weekend gross` = amount_text,
+         ` ` = B,
+         ` ` = C)
+
+knitr::kable(
+  boxoffice_display,
+  caption = 'Highest grossing movies for the weekend of December 22-24, 2017. Data source: Box Office Mojo. Used with permission', booktabs = TRUE,
+  row.names = FALSE,
+  align = c('c', 'c', 'l', 'r', 'c', 'c')#,
+  #format = "html",
+  #table.attr = "style = \"width: 75%\""
+)
+```
+
+```{r boxoffice-vertical, fig.width = 8, fig.asp = .5}
+boxoffice %>%
   ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
-    geom_col(fill = "#56B4E9") +
+    geom_col(fill = "#56B4E9", width = 0.6, alpha = 0.9) +
     scale_y_continuous(expand = c(0, 0),
                        breaks = c(0, 2e7, 4e7, 6e7),
                        labels = c("0", "20", "40", "60"),
                        name = "weekend gross ($1M)") +
     scale_x_discrete(name = NULL,
-                     expand = c(0, 0.5)) +
+                     expand = c(0, 0.4)) +
     theme_minimal_hgrid() +
     theme(axis.ticks.length = grid::unit(0, "pt"),
           axis.ticks = element_blank(),
           axis.title = element_text(size = 12))
 ```
 
-```{r boxoffice-horizontal}
+```{r boxoffice-rot-axis-tick-labels, fig.asp = 0.85}
+boxoffice %>%
+  ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
+    geom_col(fill = "#56B4E9", alpha = 0.9) +
+    scale_y_continuous(expand = c(0, 0),
+                       breaks = c(0, 2e7, 4e7, 6e7),
+                       labels = c("0", "20", "40", "60"),
+                       name = "weekend gross ($1M)") +
+    scale_x_discrete(name = NULL) +
+    theme_minimal_hgrid() +
+    theme(axis.ticks.length = grid::unit(0, "pt"),
+          axis.ticks = element_blank(),
+          axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+          axis.title = element_text(size = 12),
+          plot.margin = margin(7, 14, 7, 7)) -> p_box_axrot
 
+stamp_ugly(p_box_axrot)
+```
+
+```{r boxoffice-horizontal}
 ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
-  geom_col(fill = "#56B4E9") +
-  scale_y_continuous(expand = c(0, 0),
+  geom_col(fill = "#56B4E9", alpha = 0.9) +
+  scale_y_continuous(limits = c(0, 7.5e7),
+                     expand = c(0, 0),
                      breaks = c(0, 2e7, 4e7, 6e7),
                      labels = c("0", "20", "40", "60"),
                      name = "weekend gross ($1M)") +
@@ -50,21 +90,129 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
         axis.title = element_text(size = 12))
 ```
 
-
-(ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
-
-```{r Americas-life-expect, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect)'}
-library(gapminder)
-gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Americas")
-ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
-  geom_point(color = "#0072B2", size = 2.5) +
-  scale_x_continuous(name = "life expectancy (years)",
-                     limits = c(59.7, 81.5),
-                     expand = c(0, 0)) +
-  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
-  theme_minimal_grid() +
+```{r boxoffice-horizontal-alphabetic}
+p <- ggplot(boxoffice, aes(x = fct_rev(title_short), y = amount)) +
+  geom_col(fill = "#56B4E9", alpha = 0.9) +
+  scale_y_continuous(limits = c(0, 7.5e7),
+                     expand = c(0, 0),
+                     breaks = c(0, 2e7, 4e7, 6e7),
+                     labels = c("0", "20", "40", "60"),
+                     name = "weekend gross ($1M)") +
+  scale_x_discrete(name = NULL,
+                   expand = c(0, 0.5)) +
+  coord_flip() +
+  theme_minimal_vgrid() +
   theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank(),
         axis.title = element_text(size = 12))
+
+stamp_bad(p)
+```
+
+
+```{r income-by-age}
+income_by_age %>% filter(race == "all") %>%
+  ggplot(aes(x = age, y = median_income)) +
+    geom_col(fill = "#56B4E9", alpha = 0.9) +
+    scale_y_continuous(expand = c(0, 0),
+                       name = "median income (USD)",
+                       breaks = c(0, 20000, 40000, 60000),
+                       labels = c("$0", "$20,000", "$40,000", "$60,000")) +
+    xlab("age (years)") +
+    theme_minimal_hgrid() +
+    theme(axis.ticks.length = grid::unit(0, "pt"),
+          axis.ticks = element_blank(),
+          axis.line = element_blank(),
+          plot.margin = margin(7, 14, 7, 7))
+```
+
+```{r income-by-age-sorted}
+income_by_age %>% filter(race == "all") %>%
+  ggplot(aes(x = fct_reorder(age, desc(median_income)), y = median_income)) +
+    geom_col(fill = "#56B4E9", alpha = 0.9) +
+    scale_y_continuous(expand = c(0, 0),
+                       name = "median income (USD)",
+                       breaks = c(0, 20000, 40000, 60000),
+                       labels = c("$0", "$20,000", "$40,000", "$60,000")) +
+    xlab("age (years)") +
+    theme_minimal_hgrid() +
+    theme(axis.ticks.length = grid::unit(0, "pt"),
+          axis.ticks = element_blank(),
+          axis.line = element_blank(),
+          plot.margin = margin(7, 14, 7, 7)) -> p_income_sorted
+
+stamp_bad(p_income_sorted)
+```
+
+
+```{r income-by-age-race-dodged, fig.width = 8, fig.asp = 0.5}
+income_by_age %>% filter(race %in% c("white", "asian", "black", "hispanic")) %>%
+   mutate(race = fct_relevel(race, c("asian", "white", "hispanic", "black")),
+          age = fct_recode(age, "≥ 75" = "> 74")) -> income_df
+
+# Take the darkest four colors from 5-class ColorBrewer palette "PuBu"
+colors_four = RColorBrewer::brewer.pal(5, "PuBu")[5:2]
+
+ggplot(income_df, aes(x = age, y = median_income, fill = race)) +
+  geom_col(position = "dodge", alpha = 0.9) +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "median income (USD)",
+                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  scale_fill_manual(values = colors_four, name = NULL) +
+  xlab("age (years)") +
+  theme_minimal_hgrid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        plot.margin = margin(7, 14, 7, 7)) -> p_income_race_dodged
+
+stamp_ugly(p_income_race_dodged)
+```
+
+```{r income-by-race-age-dodged, fig.width = 8, fig.asp = 0.4}
+# Take the darkest seven colors from 8-class ColorBrewer palette "PuBu"
+colors_seven = RColorBrewer::brewer.pal(8, "PuBu")[2:8]
+
+ggplot(income_df, aes(x = race, y = median_income, fill = age)) +
+  geom_col(position = "dodge", alpha = 0.9) +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "median income (USD)",
+                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  scale_fill_manual(values = colors_seven, name = "age (yrs)") +
+  xlab(label = NULL) +
+  theme_minimal_hgrid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        legend.title.align = 0.5,
+        plot.margin = margin(7, 14, 7, 7)) -> p_income_age_dodged
+
+stamp_phantom(p_income_age_dodged)
+```
+
+```{r income-by-age-race-faceted, fig.width = 8.5}
+income_df %>%
+   mutate(age = fct_recode(age, "15–24" = "15 to 24", "25–34" = "25 to 34", "35–44" = "35 to 44",
+                                "45–54" = "45 to 54", "55–64" = "55 to 64", "65–74" = "65 to 74")) -> income_age_abbrev_df
+
+ggplot(income_age_abbrev_df, aes(x = age, y = median_income)) +
+  geom_col(fill = "#56B4E9", alpha = 0.9) +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "median income (USD)",
+                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  xlab(label = "age (years)") +
+  facet_wrap(~race, scales = "free_x") +
+  theme_minimal_hgrid(12) +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        strip.text = element_text(size = 12),
+        plot.margin = margin(6, 12, 6, 6)) -> p_income_age_dodged
+
+stamp_phantom(p_income_age_dodged)
 ```
 
 
@@ -105,3 +253,38 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
 I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.
 
 **Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.**
+
+
+(ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
+
+```{r Americas-life-expect, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect)'}
+library(gapminder)
+gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Americas")
+ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
+  geom_point(color = "#0072B2", size = 2.5) +
+  scale_x_continuous(name = "life expectancy (years)",
+                     limits = c(59.7, 81.5),
+                     expand = c(0, 0)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.title = element_text(size = 12),
+        plot.margin = margin(7, 21, 7, 7))
+```
+
+(ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. **More text here.** Data source: Gapminder project
+
+```{r Americas-life-expect-bad, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect-bad)'}
+p <- ggplot(gap_asia_2007, aes(x = lifeExp, y = country)) +
+  geom_point(color = "#0072B2", size = 2.5) +
+  scale_x_continuous(name = "life expectancy (years)",
+                     limits = c(59.7, 81.5),
+                     expand = c(0, 0)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  theme_minimal_grid() +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.title = element_text(size = 12),
+        plot.margin = margin(7, 21, 7, 7))
+
+stamp_bad(p)
+```

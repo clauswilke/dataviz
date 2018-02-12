@@ -10,6 +10,7 @@ library(ggrepel)
 library(treemapify)
 library(sf)
 library(maps)
+library(RColorBrewer)
 ```
 
 # Technical notes {-}
