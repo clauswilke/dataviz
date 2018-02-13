@@ -30,7 +30,7 @@ boxoffice_display <- boxoffice %>%
 
 knitr::kable(
   boxoffice_display,
-  caption = 'Highest grossing movies for the weekend of December 22-24, 2017. Data source: Box Office Mojo. Used with permission', booktabs = TRUE,
+  caption = 'Highest grossing movies for the weekend of December 22-24, 2017. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission', booktabs = TRUE,
   row.names = FALSE,
   align = c('c', 'c', 'l', 'r', 'c', 'c')#,
   #format = "html",
@@ -287,4 +287,53 @@ p <- ggplot(gap_asia_2007, aes(x = lifeExp, y = country)) +
         plot.margin = margin(7, 21, 7, 7))
 
 stamp_bad(p)
+```
+
+
+(ref:internet-over-time) Internet adoption over time, for select countries. Data source: World Bank
+
+```{r internet-over-time, fig.width = 8.5, fig.cap = '(ref:internet-over-time)'}
+country_list = c("United States", "China", "India", "Japan", "Algeria",
+                 "Brazil", "Germany", "France", "United Kingdom", "Italy", "New Zealand",
+                 "Canada", "Mexico", "Chile", "Argentina", "Norway", "South Africa", "Kenya",
+                 "Israel", "South Africa", "Iceland")
+
+internet_short <- filter(internet, country %in% country_list) %>%
+  mutate(users = ifelse(is.na(users), 0, users))
+
+internet_summary <- internet_short %>%
+  group_by(country) %>%
+  summarize(year1 = min(year[users > 0]),
+            last = users[n()]) %>%
+  arrange(last, desc(year1))
+
+internet_short <- internet_short %>%
+  mutate(country = factor(country, levels = internet_summary$country))
+
+ggplot(filter(internet_short, year > 1993),
+       aes(x = year, y = country, fill = users)) +
+  geom_tile(color = "white", size = 0.25) +
+  scale_fill_viridis_c(option = "A", begin = 0.05, end = 0.98,
+                       limits = c(0, 100),
+                       name = "internet users / 100 people",
+                       guide = guide_colorbar(direction = "horizontal",
+                                              label.position = "bottom",
+                                              title.position = "top",
+                                              ticks = FALSE,
+                                              barwidth = grid::unit(3.5, "in"),
+                                              barheight = grid::unit(0.2, "in"))) +
+  scale_x_continuous(expand = c(0, 0), name = NULL) +
+  scale_y_discrete(name = NULL, position = "right") +
+  theme_half_open(12) +
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 12),
+        plot.caption = element_text(size = 10),
+        legend.position = "top",
+        legend.justification = "left",
+        legend.title.align = 0.5,
+        legend.title = element_text(size = 10.286),
+        plot.margin = margin(14, 14, 7, 14))
 ```
