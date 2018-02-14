@@ -7,7 +7,7 @@ library(forcats)
 
 # Visualizing amounts
 
-*Introductory sentences for chapter.*
+*Introductory sentences for chapter. State somewhere: We're primarily dealing with categories and corresponding numerical values.*
 
 ## Bar plots
 
@@ -108,8 +108,10 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
         axis.title = element_text(size = 12))
 ```
 
-(ref:boxoffice-horizontal-bad-order) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in **alphabetic order** based on the movie titles. This arrangement of bars makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+Regardless of whether we place bars vertically or horizontally, we need to pay attention to the order in which the bars are arranged. I often see bar plots where the bars are arranged arbitrarily or by some criterion that is not meaningful in the context of the figure. Some plotting programs arrange bars by default in alphabetic order of the labels, and other, similarly arbitrary arrangements are possible (Figure \@ref(fig:boxoffice-horizontal-bad-order)). In general, the resulting figures are more confusing and less intuitive than figures where bars are arranged in order of their size.  
 
+
+(ref:boxoffice-horizontal-bad-order) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in descending order of the lengths of the movie titles. This arrangement of bars is arbitrary, it doesn't serve a meaningful purpose, and it makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 ```{r boxoffice-horizontal-bad-order, fig.cap = '(ref:boxoffice-horizontal-bad-order)'}
 p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 5, 3, 4)]),
@@ -130,6 +132,8 @@ p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 
 
 stamp_bad(p)
 ```
+
+We should only rearrange bars, however, when there is no natural ordering to the categories the bars represent. Whenever there is a natural ordering (i.e., when our categorical variable is an ordered factor) we should retain that ordering in the visualization. For example, Figure \@ref(fig:income-by-age) shows the median annual income in the U.S. by age groups. In this case, the bars should be arranged in order of increasing age. Sorting by bar height while shuffling the age groups makes no sense (Figure \@ref(fig:income-by-age-sorted)).
 
 
 (ref:income-by-age) 2016 median U.S. annual household income versus age group. The 45--54 year age group has the highest median income. Data source: United States Census Bureau
@@ -173,7 +177,7 @@ stamp_bad(p_income_sorted)
 
 ## Grouped and stacked bars
 
-
+All examples from the previous subsection showed how a quantitative amount varied with respect to one categorical variable.
 
 (ref:income-by-age-race-dodged) *Figure caption goes here.* Data source: United States Census Bureau
 
