@@ -7,6 +7,8 @@ library(forcats)
 
 # Visualizing amounts
 
+*Introductory sentences for chapter.*
+
 ## Bar plots
 
 For example, we may be interested in the total ticket sales for the most popular movies on a given weekend. Table \@ref(tab:boxoffice-gross) shows the top-five weekend gross ticket sales on the Christmas weekend of 2017. The movie "Star Wars: The Last Jedi" was by far the most popular movie on that weekend, outselling the fourth- and fifth-ranked movies "The Greatest Showman" and "Ferdinand" by almost a factor of 10.
@@ -62,10 +64,9 @@ boxoffice %>%
           axis.title = element_text(size = 12))
 ```
 
-
+One problem we commonly encounter with vertical bars is that the labels identifying each bar take up a lot of horizontal space. In fact, I had to make Figure \@ref(fig:boxoffice-vertical) fairly wide and space out the bars so that I could place the movie titles underneath. To save horizontal space, we could place the bars closer together and rotate the labels (Figure \@ref(fig:boxoffice-rot-axis-tick-labels)). However, I am not a big proponent of rotated labels. I find the resulting plots awkward and difficult to read. And, in my experience, whenever the labels are too long to place horizontally they also don't look good rotated.
 
 (ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot with rotated axis tick labels. Rotated axis tick labels tend to be difficult to read and require awkward space use undearneath the plot. For these reasons, I generally consider plots with rotated tick labels to be ugly. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
-
 
 ```{r boxoffice-rot-axis-tick-labels, fig.asp = 0.85, fig.cap = '(ref:boxoffice-rot-axis-tick-labels)'}
 boxoffice %>%
@@ -86,6 +87,8 @@ boxoffice %>%
 stamp_ugly(p_box_axrot)
 ```
 
+The better solution for long labels is usually to swap the *x* and the *y* axis, so that the bars run horizontally (Figure \@ref(fig:boxoffice-horizontal)). After swapping the axes, we obtain a compact figure in which all visual elements, including all text, are horizontally oriented. As a result, the figure is much easier to read than Figure \@ref(fig:boxoffice-rot-axis-tick-labels) or even Figure \@ref(fig:boxoffice-vertical).
+
 (ref:boxoffice-horizontal) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 ```{r boxoffice-horizontal, fig.cap = '(ref:boxoffice-horizontal)'}
@@ -105,11 +108,12 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
         axis.title = element_text(size = 12))
 ```
 
-(ref:boxoffice-horizontal-alphabetic) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in alphabetic order based on the movie titles. This arrangement of bars makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+(ref:boxoffice-horizontal-bad-order) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in **alphabetic order** based on the movie titles. This arrangement of bars makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 
-```{r boxoffice-horizontal-alphabetic, fig.cap = '(ref:boxoffice-horizontal-alphabetic)'}
-p <- ggplot(boxoffice, aes(x = fct_rev(title_short), y = amount)) +
+```{r boxoffice-horizontal-bad-order, fig.cap = '(ref:boxoffice-horizontal-bad-order)'}
+p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 5, 3, 4)]),
+                           y = amount)) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
   scale_y_continuous(limits = c(0, 7.5e7),
                      expand = c(0, 0),
