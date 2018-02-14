@@ -7,7 +7,11 @@ library(forcats)
 
 # Visualizing amounts
 
-```{r}
+## Bar plots
+
+For example, we may be interested in the total ticket sales for the most popular movies on a given weekend. Table \@ref(tab:boxoffice-gross) shows the top-five weekend gross ticket sales on the Christmas weekend of 2017. The movie "Star Wars: The Last Jedi" was by far the most popular movie on that weekend, outselling the fourth- and fifth-ranked movies "The Greatest Showman" and "Ferdinand" by almost a factor of 10.
+
+```{r boxoffice-gross}
 # source: Box Office Mojo
 # URL: http://www.boxofficemojo.com/weekend/chart/?view=&yr=2017&wknd=51&p=.htm
 # downloaded: 2018-02-11
@@ -38,14 +42,18 @@ knitr::kable(
 )
 ```
 
-```{r boxoffice-vertical, fig.width = 8, fig.asp = .5}
+This kind of data is commonly visualized with vertical bars. For each movie, we draw a bar that starts at zero and extends all the way to the dollar value for that movie's weekend gross (Figure \@ref(fig:boxoffice-vertical)). This visualization is called a *bar plot* or *bar chart*. Bar plots are most effective if, as is the case here, the bars are placed in order such that the values are continuously decreasing or increasing.
+
+(ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+
+```{r boxoffice-vertical, fig.width = 8, fig.asp = .5, fig.cap = '(ref:boxoffice-vertical)'}
 boxoffice %>%
   ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
     geom_col(fill = "#56B4E9", width = 0.6, alpha = 0.9) +
     scale_y_continuous(expand = c(0, 0),
                        breaks = c(0, 2e7, 4e7, 6e7),
                        labels = c("0", "20", "40", "60"),
-                       name = "weekend gross ($1M)") +
+                       name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL,
                      expand = c(0, 0.4)) +
     theme_minimal_hgrid() +
@@ -54,14 +62,19 @@ boxoffice %>%
           axis.title = element_text(size = 12))
 ```
 
-```{r boxoffice-rot-axis-tick-labels, fig.asp = 0.85}
+
+
+(ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot with rotated axis tick labels. Rotated axis tick labels tend to be difficult to read and require awkward space use undearneath the plot. For these reasons, I generally consider plots with rotated tick labels to be ugly. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+
+
+```{r boxoffice-rot-axis-tick-labels, fig.asp = 0.85, fig.cap = '(ref:boxoffice-rot-axis-tick-labels)'}
 boxoffice %>%
   ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
     geom_col(fill = "#56B4E9", alpha = 0.9) +
     scale_y_continuous(expand = c(0, 0),
                        breaks = c(0, 2e7, 4e7, 6e7),
                        labels = c("0", "20", "40", "60"),
-                       name = "weekend gross ($1M)") +
+                       name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL) +
     theme_minimal_hgrid() +
     theme(axis.ticks.length = grid::unit(0, "pt"),
@@ -73,14 +86,16 @@ boxoffice %>%
 stamp_ugly(p_box_axrot)
 ```
 
-```{r boxoffice-horizontal}
+(ref:boxoffice-horizontal) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+
+```{r boxoffice-horizontal, fig.cap = '(ref:boxoffice-horizontal)'}
 ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
   scale_y_continuous(limits = c(0, 7.5e7),
                      expand = c(0, 0),
                      breaks = c(0, 2e7, 4e7, 6e7),
                      labels = c("0", "20", "40", "60"),
-                     name = "weekend gross ($1M)") +
+                     name = "weekend gross (million USD)") +
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
   coord_flip() +
@@ -90,14 +105,17 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
         axis.title = element_text(size = 12))
 ```
 
-```{r boxoffice-horizontal-alphabetic}
+(ref:boxoffice-horizontal-alphabetic) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in alphabetic order based on the movie titles. This arrangement of bars makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+
+
+```{r boxoffice-horizontal-alphabetic, fig.cap = '(ref:boxoffice-horizontal-alphabetic)'}
 p <- ggplot(boxoffice, aes(x = fct_rev(title_short), y = amount)) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
   scale_y_continuous(limits = c(0, 7.5e7),
                      expand = c(0, 0),
                      breaks = c(0, 2e7, 4e7, 6e7),
                      labels = c("0", "20", "40", "60"),
-                     name = "weekend gross ($1M)") +
+                     name = "weekend gross (million USD)") +
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
   coord_flip() +
@@ -110,7 +128,9 @@ stamp_bad(p)
 ```
 
 
-```{r income-by-age}
+(ref:income-by-age) 2016 median U.S. annual household income versus age group. The 45--54 year age group has the highest median income. Data source: United States Census Bureau
+
+```{r income-by-age, fig.cap = '(ref:income-by-age)'}
 income_by_age %>% filter(race == "all") %>%
   ggplot(aes(x = age, y = median_income)) +
     geom_col(fill = "#56B4E9", alpha = 0.9) +
@@ -126,7 +146,9 @@ income_by_age %>% filter(race == "all") %>%
           plot.margin = margin(7, 14, 7, 7))
 ```
 
-```{r income-by-age-sorted}
+(ref:income-by-age-sorted) 2016 median U.S. annual household income versus age group, sorted by income. While this order of bars looks visually appealing, the order of the age groups is now confusing. Data source: United States Census Bureau
+
+```{r income-by-age-sorted, fig.cap = '(ref:income-by-age-sorted)'}
 income_by_age %>% filter(race == "all") %>%
   ggplot(aes(x = fct_reorder(age, desc(median_income)), y = median_income)) +
     geom_col(fill = "#56B4E9", alpha = 0.9) +
@@ -145,7 +167,13 @@ stamp_bad(p_income_sorted)
 ```
 
 
-```{r income-by-age-race-dodged, fig.width = 8, fig.asp = 0.5}
+## Grouped and stacked bars
+
+
+
+(ref:income-by-age-race-dodged) *Figure caption goes here.* Data source: United States Census Bureau
+
+```{r income-by-age-race-dodged, fig.width = 8, fig.asp = 0.5, fig.cap = '(ref:income-by-age-race-dodged)'}
 income_by_age %>% filter(race %in% c("white", "asian", "black", "hispanic")) %>%
    mutate(race = fct_relevel(race, c("asian", "white", "hispanic", "black")),
           age = fct_recode(age, "≥ 75" = "> 74")) -> income_df
@@ -170,7 +198,10 @@ ggplot(income_df, aes(x = age, y = median_income, fill = race)) +
 stamp_ugly(p_income_race_dodged)
 ```
 
-```{r income-by-race-age-dodged, fig.width = 8, fig.asp = 0.4}
+(ref:income-by-race-age-dodged) *Figure caption goes here.* Data source: United States Census Bureau
+
+
+```{r income-by-race-age-dodged, fig.width = 8, fig.asp = 0.4, fig.cap = '(ref:income-by-race-age-dodged) '}
 # Take the darkest seven colors from 8-class ColorBrewer palette "PuBu"
 colors_seven = RColorBrewer::brewer.pal(8, "PuBu")[2:8]
 
@@ -192,7 +223,9 @@ ggplot(income_df, aes(x = race, y = median_income, fill = age)) +
 stamp_phantom(p_income_age_dodged)
 ```
 
-```{r income-by-age-race-faceted, fig.width = 8.5}
+(ref:income-by-age-race-faceted) *Figure caption goes here.* Data source: United States Census Bureau
+
+```{r income-by-age-race-faceted, fig.width = 8.5, fig.cap = '(ref:income-by-age-race-faceted)'}
 income_df %>%
    mutate(age = fct_recode(age, "15–24" = "15 to 24", "25–34" = "25 to 34", "35–44" = "35 to 44",
                                 "45–54" = "45 to 54", "55–64" = "55 to 64", "65–74" = "65 to 74")) -> income_age_abbrev_df
@@ -254,6 +287,7 @@ I have also added the actual numerical values that each bar represents. Whenever
 
 **Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.**
 
+## Other visualization approaches
 
 (ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
 
