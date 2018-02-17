@@ -5,7 +5,7 @@ library(forcats)
 ```
 
 
-# Visualizing amounts
+# Visualizing amounts {#visualizing-amounts}
 
 *Introductory sentences for chapter. State somewhere: We're primarily dealing with categories and corresponding numerical values.*
 
@@ -177,9 +177,9 @@ stamp_bad(p_income_sorted)
 
 ## Grouped and stacked bars
 
-All examples from the previous subsection showed how a quantitative amount varied with respect to one categorical variable. Frequently, however, we are interested in two categorical variables at the same time. For example, the U.S. Census Bureau provides median income levels broken down by both age and race. We can visualize this dataset with a grouped bar plot (Figure \@ref(fig:income-by-age-race-dodged)).
+All examples from the previous subsection showed how a quantitative amount varied with respect to one categorical variable. Frequently, however, we are interested in two categorical variables at the same time. For example, the U.S. Census Bureau provides median income levels broken down by both age and race. We can visualize this dataset with a *grouped bar plot* (Figure \@ref(fig:income-by-age-race-dodged)). In a grouped bar plot, we draw a group of bars at each position along the *x* axis, determined by one categorical variable, and then we draw bars within each group according to the other categorical variable.
 
-(ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. *one more sentence.* Data source: United States Census Bureau
+(ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. Age groups are shown along the *x* axis, and for each age group there are four bars, corresponding to the median income of asian, white, hispanic, and black people, respectively. Data source: United States Census Bureau
 
 ```{r income-by-age-race-dodged, fig.width = 8, fig.asp = 0.5, fig.cap = '(ref:income-by-age-race-dodged)'}
 income_by_age %>% filter(race %in% c("white", "asian", "black", "hispanic")) %>%
@@ -207,8 +207,9 @@ ggplot(income_df, aes(x = age, y = median_income, fill = race)) +
 p_income_race_dodged
 ```
 
-(ref:income-by-race-age-dodged) 2016 median U.S. annual household income versus age group and race. *one more sentence.* Data source: United States Census Bureau
+Grouped bar plots show a lot of information at once and they can be confusing. In fact, even though I have not labeled Figure \@ref(fig:income-by-age-race-dodged) as bad or ugly, I find it difficult to read. In particular, it is difficult to compare median incomes across age groups for a given racial group. So this figure is only appropriate if we are primarily interested in the differences in income levels among racial groups, separately for specific age groups. If we care more about the overall pattern of income levels among racial groups, it may be preferable to show race along the *x* axis and show ages as distinct bars within each racial group (Figure \@ref(fig:income-by-race-age-dodged)).
 
+(ref:income-by-race-age-dodged) 2016 median U.S. annual household income versus age group and race. In contrast to Figure \@ref(fig:income-by-age-race-dodged), now race is shown along the *x* axis, and for each race we show seven bars according to the seven age groups. Data source: United States Census Bureau
 
 ```{r income-by-race-age-dodged, fig.width = 8, fig.asp = 0.4, fig.cap = '(ref:income-by-race-age-dodged) '}
 # Take the darkest seven colors from 8-class ColorBrewer palette "PuBu"
@@ -232,7 +233,9 @@ ggplot(income_df, aes(x = race, y = median_income, fill = age)) +
 stamp_phantom(p_income_age_dodged)
 ```
 
-(ref:income-by-age-race-faceted) *Figure caption goes here.* Data source: United States Census Bureau
+Both Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-age-dodged) encode one categorical variable by position along the *x* axis and the other by bar color. And in both cases, the encoding by position is easy to read while the encoding by bar color requires more mental effort, as we have to mentally match the colors of the bars against the colors in the legend. We can avoid this added mental effort by showing four separate regular bar plots rather than one grouped bar plot (Figure \@ref(fig:income-by-age-race-faceted)). Which of these various options we choose is ultimately a matter of taste. I would likely choose Figure \@ref(fig:income-by-age-race-faceted), because it circumvents the need for different bar colors.
+
+(ref:income-by-age-race-faceted) 2016 median U.S. annual household income versus age group and race. Instead of displaying this data as a grouped bar plot, as in Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-age-dodged), we now show the data as four separate regular bar plots. This choice has the advantage that we don't need to encode either categorical variable by bar color. Data source: United States Census Bureau
 
 ```{r income-by-age-race-faceted, fig.width = 8.5, fig.cap = '(ref:income-by-age-race-faceted)'}
 income_df %>%
@@ -252,11 +255,15 @@ ggplot(income_age_abbrev_df, aes(x = age, y = median_income)) +
         axis.ticks = element_blank(),
         axis.line = element_blank(),
         strip.text = element_text(size = 12),
+        panel.spacing.y = grid::unit(12, "pt"),
         plot.margin = margin(6, 12, 6, 6)) -> p_income_age_dodged
 
 stamp_phantom(p_income_age_dodged)
 ```
 
+Instead of drawing groups of bars side-by-side, it is sometimes preferable to stack bars on top of each other. Stacking is useful when the sum of the amounts represented by the individual stacked bars is in itself a meaningful amount. So, while it would not make sense to stack the median income values of Figure \@ref(fig:income-by-age-race-dodged) (the sum of two median income values is not a meaningful value), it might make sense to stack the weekend gross values of Figure \@ref(fig:boxoffice-vertical) (the sum of the weekend gross values of two movies is the total gross for the two movies combined). Stacking is also appropriate when the individual bars represent counts. For example, in a dataset of people, we can either count men and women separately or we can count them together. If we stack a bar representing a count of women on top of a bar representing a count of men, then the combined bar height represents the total count of people regardless of gender.
+
+I will demonstrate this principle using a dataset about the passengers of the transatlantic ocean liner Titanic, which sank on April 15, 1912. On board were approximately 1300 passengers, not counting crew. The passengers were traveling in one of three classes (1st, 2nd, or 3rd), and there were almost twice as many male as female passengers on the ship. To visualize the breakdown of passengers by class and gender, we can draw separate bars for each class and gender and stack the bars representing women on top of the bars representing men, separately for each class (Figure \@ref(fig:titanic-passengers-by-class-sex)). The combined bars represent the total number of passengers in each class.
 
 (ref:titanic-passengers-by-class-sex) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class.
 
@@ -291,12 +298,10 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
         legend.background = element_rect(fill = "white"))
 ```
 
+Figure \@ref(fig:titanic-passengers-by-class-sex) differs from the previous bar plots I have shown in that there is no explicit *y* axis. I have instead shown the actual numerical values that each bar represents. Whenever a plot is meant to display only a small number of different values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by the plot without adding much visual noise, and it removes the need for an explicity axis.
 
-I have also added the actual numerical values that each bar represents. Whenever your plot is meant to display only a small number of key values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by your plot without adding much visual noise.
 
-**Mention that class cannot be reordered, because it is an ordered factor and it has its own intrinsic order.**
-
-## Other visualization approaches
+## Dot plots and heatmaps
 
 Bars are not the only option for visualizing amounts. One important limitation of bars is that they need to start at zero, so that the bar length is proportional to the amount shown. For some datasets, this can be impractical or may obscure key features. In this case, we can indicate amounts by placing dots at the appropriate locations along the *x* or *y* axis.
 
@@ -338,9 +343,9 @@ life_bars <- ggplot(df_Americas, aes(y = lifeExp, x = fct_reorder(country, lifeE
 stamp_bad(life_bars)
 ```
 
-Regardless of whether we use bars or dots, however, we need to pay attention to the ordering of the data values. In Figures \@ref(fig:Americas-life-expect) and \@ref(fig:Americas-life-expect-bars), the countries were ordered in descending order of life expectancy. If we instead ordered them alphabetically, we'd end up with a disordered cloud of points that is confusing and fails to convey a clear message (Figure \@ref(fig:Americas-life-expect-bad)). 
+Regardless of whether we use bars or dots, however, we need to pay attention to the ordering of the data values. In Figures \@ref(fig:Americas-life-expect) and \@ref(fig:Americas-life-expect-bars), the countries are ordered in descending order of life expectancy. If we instead ordered them alphabetically, we'd end up with a disordered cloud of points that is confusing and fails to convey a clear message (Figure \@ref(fig:Americas-life-expect-bad)). 
 
-(ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled bad. Data source: Gapminder project
+(ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled as bad. Data source: Gapminder project
 
 ```{r Americas-life-expect-bad, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect-bad)'}
 p <- ggplot(df_Americas, aes(x = lifeExp, y = fct_rev(country))) +
@@ -357,16 +362,17 @@ p <- ggplot(df_Americas, aes(x = lifeExp, y = fct_rev(country))) +
 stamp_bad(p)
 ```
 
-All examples so far have represented amounts by location along a position scale, either through the end point of a bar or the placement of a dot. 
+All examples so far have represented amounts by location along a position scale, either through the end point of a bar or the placement of a dot. For very large datasets, neither of these options may be appropriate, because the resulting figure would become too busy. We had already seen in Figure \@ref(fig:income-by-age-race-dodged) that just seven groups of four data values can result in a figure that is complex and not that easy to read. If we had 20 groups of 20 data values, a similar figure would likely be highly confusing.
 
+As an alternative to mapping data values onto positions via bars or dots, we can map data values onto colors. Such a figure is called a *heatmap*. Figure \@ref(fig:internet-over-time) uses this approach to show the percentage of internet users over time in 20 countries and for 23 years, from 1994 to 2016. While this visualization makes it harder to determine the exact data values shown (e.g., what's the exact percentage of internet users in the United States in 2015?), it does an excellent job of highlighting broader trends. We can see clearly in which countries internet use began early and which it did not, and we can also see clearly which countries have high internet penetration in the final year covered by the dataset (2016).
 
-(ref:internet-over-time) Internet adoption over time, for select countries. Data source: World Bank
+(ref:internet-over-time) Internet adoption over time, for select countries. Color represents the percent of internet users for the respective country and year. Countries were ordered by percent internet users in 2016. Data source: World Bank
 
 ```{r internet-over-time, fig.width = 8.5, fig.cap = '(ref:internet-over-time)'}
 country_list = c("United States", "China", "India", "Japan", "Algeria",
                  "Brazil", "Germany", "France", "United Kingdom", "Italy", "New Zealand",
                  "Canada", "Mexico", "Chile", "Argentina", "Norway", "South Africa", "Kenya",
-                 "Israel", "South Africa", "Iceland")
+                 "Israel", "Iceland")
 
 internet_short <- filter(internet, country %in% country_list) %>%
   mutate(users = ifelse(is.na(users), 0, users))
@@ -407,3 +413,48 @@ ggplot(filter(internet_short, year > 1993),
         legend.title = element_text(size = 10.286),
         plot.margin = margin(14, 14, 7, 14))
 ```
+
+As is the case with all other visualization approaches discussed in this chapter, we need to pay attention to the ordering of the categorical data values when making heatmaps. In Figure \@ref(fig:internet-over-time), countries are ordered by the percentage of internet users in 2016. This ordering places the United Kingdom, Japan, Canada, and Germany above the United States, because all these countries have higher internet penetration in 2016 than the United States does, even though the United States saw significant internet use at an earlier time. Alternatively, we could order countries by how early they started to see significant internet usage. In Figure \@ref(fig:internet-over-time2), countries are ordered by the year in which internet usage first rose to above 20%. In this figure, the United States fall into the third position from the top, and they stand out for having relatively low internet usage in 2016 compared to how early they started. A similar pattern can be seen for Italy. Israel and France, by contrast, started relatively late but gained ground rapidly.
+
+(ref:internet-over-time2) Internet adoption over time, for select countries. Countries were ordered by the year in which their internet usage first exceeded 20%. Data source: World Bank
+
+
+```{r internet-over-time2, fig.width = 8.5, fig.cap = '(ref:internet-over-time2)'}
+internet_summary <- internet_short %>%
+  group_by(country) %>%
+  summarize(year1 = min(year[users > 20]),
+            last = users[n()]) %>%
+  arrange(desc(year1), last)
+
+internet_short <- internet_short %>%
+  mutate(country = factor(country, levels = internet_summary$country))
+
+ggplot(filter(internet_short, year > 1993),
+       aes(x = year, y = country, fill = users)) +
+  geom_tile(color = "white", size = 0.25) +
+  scale_fill_viridis_c(option = "A", begin = 0.05, end = 0.98,
+                       limits = c(0, 100),
+                       name = "internet users / 100 people",
+                       guide = guide_colorbar(direction = "horizontal",
+                                              label.position = "bottom",
+                                              title.position = "top",
+                                              ticks = FALSE,
+                                              barwidth = grid::unit(3.5, "in"),
+                                              barheight = grid::unit(0.2, "in"))) +
+  scale_x_continuous(expand = c(0, 0), name = NULL) +
+  scale_y_discrete(name = NULL, position = "right") +
+  theme_half_open(12) +
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 12),
+        plot.caption = element_text(size = 10),
+        legend.position = "top",
+        legend.justification = "left",
+        legend.title.align = 0.5,
+        legend.title = element_text(size = 10.286),
+        plot.margin = margin(14, 14, 7, 14))
+```
+
+Both Figures \@ref(fig:internet-over-time) and \@ref(fig:internet-over-time2) are valid representations of the data. Which one is prefered depends on the story we want to convey. If our story is about internet usage in 2016, then Figures \@ref(fig:internet-over-time) is probably the better choice. If, however, our story is about how early or late adoption of the internet relates to current-day usage, then Figure \@ref(fig:internet-over-time2) is preferable.
