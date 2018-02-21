@@ -89,7 +89,7 @@
 27. **Understanding the most commonly used image file formats**  
   Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.
 
-#. **Choosing the right plotting software**  
+#. **Choosing the right visualization software**  
   Discusses the pros and cons of different software available to make graphs.
   
 #. **Telling a story with data**  

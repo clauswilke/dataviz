@@ -1,19 +1,34 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(ggthemes)
+library(forcats)
 ```
 
-# Choosing the right plotting software
+# Choosing the right visualization software
+
+Throughout this book, I have purposefully avoided one critical question of data visualization: How do we actually generate our figures? What tools should we use? This question can generate heated discussions, as many people have strong emotional bonds to the specific tools they are familiar with. I have often seen people vigorously defend their own preferred tools instead of investing time to learn a new approach, even if the new approach has objective benefits. And I will say that sticking with the tools you know is not entirely unreasonable. Learning any new tool will require time and effort, and you will have to go through a painful transition period where getting things done with the new tool is much more difficult than it was with the old tool. Whether going through this period is worth the effort can usually only be evaluated in retrospect, after one has fully made the transition. Therefore, regardless of the pros and cons of different tools and approaches, the overriding principle is that you need to pick one that works for you. If you can make the figures you want to make, without excessive effort, then that's all that matters. 
+
+```{block type='rmdtip', echo=TRUE}
+The best visualization software is the one that allows you to make the figures you need.
+```
+
+Having said this, I do think there are general principles we can use to assess the relative merits of different approaches to producing visualizations. These principles roughly break down by how easy it is to rapidly explore the data, how reproducible the resulting visualizations are, and to what extent the visual appearance of the output can be tweaked.
+
+
+## Data exploration versus publication-ready figures
 
 
 Throughout much of the 20th century, data visualizations were drawn by hand, mostly by technical illustrators who did so for a living. 
 
 One notable example is Randall Munroe, creator of the web comic XKCD, 
 
-```{block type='rmdtip', echo=TRUE}
-The best plotting software is the one that allows you to make the visualizations you need.
-```
+(ref:sequencing-cost) After the introduction of next-gen sequencing methods, the sequencing cost per genome has declined much more rapidly than predicted by Moore's law. Data source: National Human Genome Research Institute
 
+```{r sequencing-cost, out.width = "70%", fig.cap='(ref:sequencing-cost)'}
+knitr::include_graphics("figures/sequencing_costs.png", auto_pdf = FALSE)
+```
 
 
 
@@ -26,6 +41,42 @@ We can apply these concepts to data visualizations with minor modifications. A v
 
 **Make an example of a figure that reproduces but doesn't repeat another figure. Use a different theme, colors, point sizes, etc. Maybe also use altered jitter. And also refer to Chapter \@ref(avoid-line-drawings) which has several more such examples.**
 
+(ref:lincoln-lincoln-repro) Repeat and reproduction of a figure. Part (a) is a near-complete repeat of Figure \@ref(fig:lincoln-temp-jittered). With exception of the exact sizes of the text elements and points, which were adjusted so the figure remains legible at the reduced size, the two figures are identical down to the random jitter that was applied to each point. By contrast, part (b) is a reproduction but not a repeat. In particular, the jitter in part (b) differs from the jitter in part (a) or Figure \@ref(fig:lincoln-temp-jittered).
+
+```{r lincoln-repro, fig.width = 8.5, fig.asp = .32, fig.cap = '(ref:lincoln-lincoln-repro)'}
+ggridges::lincoln_weather %>% mutate(month_short = fct_recode(Month,
+                                                    Jan = "January",
+                                                    Feb = "February",
+                                                    Mar = "March",
+                                                    Apr = "April",
+                                                    May = "May",
+                                                    Jun = "June",
+                                                    Jul = "July",
+                                                    Aug = "August",
+                                                    Sep = "September",
+                                                    Oct = "October",
+                                                    Nov = "November",
+                                                    Dec = "December")) %>%
+  mutate(month_short = fct_rev(month_short)) -> lincoln_df
+
+lincoln1 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_point(position = position_jitter(width = .15, height = 0, seed = 320),
+             size = .75) +
+  xlab("month") + 
+  ylab("mean temperature (°F)") +
+  theme_half_open(12)
+
+lincoln2 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
+  geom_point(position = position_jitter(width = .2, height = 0, seed = 321),
+             size = .5, color = darken("#0072B2", .3)) +
+  xlab("month") + 
+  ylab("mean temperature (°F)") +
+  theme_minimal_grid(12) + theme(axis.ticks.length = grid::unit(0, "pt"),
+                                 axis.ticks = element_blank())
+
+plot_grid(lincoln1, lincoln2, labels = "auto", label_fontface = "plain", ncol = 2)
+```
+
 
 ## Separation of content and design
 
@@ -33,25 +84,37 @@ A good plotting software allows you to think separately about content and design
 
 **Refer back to the figure from the previous subsection which shows the same content using different designs.**
 
-(ref:unemploy-themes) Number of unemployed persons in the U.S. from 1970 to 2015. The same figure is displayed using four different themes that are part of the R package ggplot2: (a) theme gray (the ggplot2 default); (b) theme linedraw; (c) theme classic; (d) theme minimal.  Data source: U.S. Bureau of Labor Statistics
+(ref:unemploy-themes) Number of unemployed persons in the U.S. from 1970 to 2015. The same figure is displayed using four different designs: (a) the default design for this book; (b) the default design of ggplot2, the plotting software I have used to make all figures in this book; (c) a design similar to visualizations shown in the Econommist; (d) a design similar to visualizations shown by FiveThiryEight. FiveThirtyEight often foregos axis labels in favor of plot titles and subtitles. Data source: U.S. Bureau of Labor Statistics
 
-```{r unemploy-themes, fig.width = 8.5, fig.cap = '(ref:unemploy-themes)'}
-unemploy_plot <- ggplot(economics, aes(x = date, y = unemploy)) +
-  geom_line(color = "#0072B2", size = .5) +
+```{r unemploy-themes, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:unemploy-themes)'}
+unemploy_base <- ggplot(economics, aes(x = date, y = unemploy)) +
   scale_y_continuous(name = "unemployed (x1000)",
                      limits = c(0, 17000),
                      breaks = c(0, 5000, 10000, 15000),
                      labels = c("0", "5000", "10,000", "15,000"),
-                     expand = c(0, 0)) +
+                     expand = c(0.04, 0)) +
   scale_x_date(name = "year",
                expand = c(0.01, 0))
 
-plot_grid(unemploy_plot + theme_gray(),
-          unemploy_plot + theme_linedraw(),
-          unemploy_plot + theme_classic(),
-          unemploy_plot + theme_minimal(),
-          labels = "auto", label_fontface = "plain",
-          scale = 1)
-```
+unemploy_p1 <- unemploy_base + theme_minimal_grid(12) +
+  geom_line(color = "#0072B2") +
+  theme(axis.ticks.length = grid::unit(0, "pt"),
+        axis.ticks = element_blank())
+unemploy_p2 <- unemploy_base + geom_line() + theme_gray()
+unemploy_p3 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = FALSE, size = .75) +
+  theme_economist() + scale_color_economist() +
+  theme(panel.grid.major = element_line(size = .75))
+unemploy_p4 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = FALSE) +
+  scale_color_fivethirtyeight() +
+  labs(title = "United States unemployment",
+       subtitle = "Unemployed persons (in thousands) from 1967\nto 2015") +
+  theme_fivethirtyeight() +
+  theme(plot.title = element_text(size = 14))
 
-## Rapid iteration
+plot_grid(unemploy_p1, NULL, unemploy_p2, 
+          NULL, NULL, NULL,
+          unemploy_p3, NULL, unemploy_p4,
+          labels = c("a", "", "b", "", "", "", "c", "", "d"), label_fontface = "plain",
+          rel_widths = c(1, .02, 1),
+          rel_heights = c(1, .02, 1))
+```
