@@ -6,6 +6,13 @@ library(ggrepel)
 
 # Figure titles and captions {#figure-titles-captions}
 
+Topics to cover in this chapter:
+
+- Figure and table captions.
+- Locations of figure and table captions. (Figure captions below, table captions above.)
+- Axis and legend titles (when do we need them, when can we leave them out?)
+
+
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
 
 ```{r corruption-development, fig.width = 7, fig.asp = 0.7, fig.cap = '(ref:corruption-development)'}

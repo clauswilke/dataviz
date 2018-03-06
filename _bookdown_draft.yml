@@ -6,6 +6,7 @@ rmd_files: [
   "index.Rmd",
 
   "preface.Rmd",
+  "introduction.Rmd",
 
   # Part I
   "aesthetic_mapping.Rmd", # completed
@@ -33,7 +34,7 @@ rmd_files: [
 
   # Part III
   "image_file_formats.Rmd", # completed
-  "choosing_plotting_software.Rmd",
+  "choosing_plotting_software.Rmd", # completed
   "telling_a_story.Rmd",
 
   "outline.Rmd",

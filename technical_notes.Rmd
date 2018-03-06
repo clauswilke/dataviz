@@ -11,6 +11,7 @@ library(treemapify)
 library(sf)
 library(maps)
 library(RColorBrewer)
+library(gapminder)
 ```
 
 # Technical notes {-}
