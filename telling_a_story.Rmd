@@ -168,6 +168,58 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
 ## Use a consistent visual language but avoid repetition
 
 
-
 *If you're showing the same type of figure over and over you will bore your readers.*
+
+
+```{r}
+male_sport <- unique(filter(Aus_athletes, sex=="m")$sport)
+female_sport <- unique(filter(Aus_athletes, sex=="f")$sport)
+both_sport <- male_sport[male_sport %in% female_sport]
+athletes_df <- filter(Aus_athletes, sport %in% both_sport) %>%
+  mutate(sport = case_when(sport == "track (400m)" ~ "track",
+                           sport == "track (sprint)" ~ "track",
+                           TRUE ~ sport),
+         sex = factor(sex, levels = c("f", "m")))
+
+p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
+  geom_bar() +
+  scale_y_continuous(limits = c(0, 85), expand = c(0, 0), name = "number") +
+  scale_x_discrete(name = NULL, labels = c("female", "male")) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  theme_minimal_hgrid() + 
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"))
+p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
+  geom_point(pch = 21, color = "white", size = 2.5) +
+  scale_x_continuous(limits = c(3.8, 6.75), position = "top") +
+  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0)) +
+  scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  xlab("RBC count") +
+  ylab("WBC count") +
+  theme_minimal_grid()
+
+GeomBP <- GeomBoxplot
+GeomBP$draw_key <- draw_key_polygon
+
+p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) + 
+  stat_boxplot(width = 0.5, geom = GeomBP) +
+  scale_color_manual(values = c("#D55E00", "#0072B2"), name = NULL,
+                     labels = c("female   ", "male")) +
+  scale_fill_manual(values = c("#D55E0040", "#0072B240"), guide = "none") +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = "% body fat") +
+  guides(color = guide_legend(override.aes = list(fill = c("#D55E00", "#0072B2"),
+                                                  color = "white", size = 2),
+                              direction = "horizontal")) +
+  theme_minimal_hgrid() +
+  theme(axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt"),
+    legend.position = c(1., 0.9),
+    legend.justification = "right")
+
+p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
+```
 
