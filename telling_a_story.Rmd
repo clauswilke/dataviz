@@ -3,6 +3,7 @@
 source("_common.R")
 
 library(lubridate)
+library(tidyr)
 ```
 
 # Telling a story with data {#telling-a-story}
@@ -223,3 +224,29 @@ p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
 ```
 
+```{r}
+cc_df <- athletes_df %>%
+  select(sex, rcc, wcc) %>%
+  gather(variable, value, -sex) %>%
+  group_by(sex, variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value))
+
+p2 <- ggplot(cc_df, aes(x = variable, y = mean, fill = sex)) + 
+  geom_col(position = "dodge") +
+  geom_linerange(aes(ymin = mean - sd, ymax = mean + sd), position = position_dodge(width = .9))
+
+bf_df <- athletes_df %>%
+  select(sex, sport, pcBfat) %>%
+  group_by(sex, sport) %>%
+  summarize(mean = mean(pcBfat),
+            sd = sd(pcBfat))
+
+p3 <- ggplot(bf_df, aes(x = sport, y = mean, fill = sex)) + 
+  geom_col(position = "dodge") +
+  geom_linerange(aes(ymin = mean - sd, ymax = mean + sd), position = position_dodge(width = .9))
+
+p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
+
+```
