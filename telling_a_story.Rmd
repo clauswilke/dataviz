@@ -3,6 +3,7 @@
 source("_common.R")
 
 library(lubridate)
+library(forcats)
 library(tidyr)
 ```
 
@@ -171,8 +172,9 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
 
 *If you're showing the same type of figure over and over you will bore your readers.*
 
+(ref:athletes-composite-inconsistent) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of $10^{12}$ per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport.
 
-```{r}
+```{r athletes-composite-inconsistent, fig.width = 7, fig.cap = '(ref:athletes-composite-inconsistent)'}
 male_sport <- unique(filter(Aus_athletes, sex=="m")$sport)
 female_sport <- unique(filter(Aus_athletes, sex=="f")$sport)
 both_sport <- male_sport[male_sport %in% female_sport]
@@ -182,11 +184,62 @@ athletes_df <- filter(Aus_athletes, sport %in% both_sport) %>%
                            TRUE ~ sport),
          sex = factor(sex, levels = c("f", "m")))
 
+p1 <- ggplot(athletes_df, aes(x = sex)) + 
+  geom_bar(fill = "#56B4E9E0") +
+  scale_y_continuous(limits = c(0, 85), expand = c(0.01, 0), name = "number") +
+  scale_x_discrete(name = NULL, labels = c("female", "male")) +
+  theme_minimal_hgrid() + 
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"))
+p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
+  geom_point(size = 2.5) +
+  scale_x_continuous(limits = c(3.8, 6.75), position = "top") +
+  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0)) +
+  scale_shape_manual(values = c(21, 22),
+                     labels = c("female   ", "male"), name = NULL,
+                     guide = guide_legend(direction = "horizontal")) +
+  scale_color_manual(values = c("#CC79A7", "#56B4E9"), name = NULL,
+                     labels = c("female   ", "male"),
+                     guide = guide_legend(direction = "horizontal")) +
+  scale_fill_manual(values = c("#CC79A7D0", "#56B4E9D0"), name = NULL,
+                     labels = c("female   ", "male"),
+                     guide = guide_legend(direction = "horizontal")) +
+  xlab("RBC count") +
+  ylab("WBC count") +
+  theme_minimal_grid() +
+  theme(legend.position = c(1., 0),
+        legend.justification = "right",
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(7, 14, 7, 7))
+
+p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
+                              fill = fct_relevel(sex, "m"))) + 
+  geom_boxplot(width = 0.5) +
+  scale_color_manual(values = c("#009E73", "#56B4E9"), name = NULL,
+                     labels = c("male", "female")) +
+  scale_fill_manual(values = c("#009E7340", "#56B4E940"), name = NULL,
+                     labels = c("male", "female")) +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = "% body fat") +
+  theme_minimal_hgrid() +
+  theme(axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt"),
+    plot.margin = margin(7, 14, 7, 7))
+
+p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain"))
+```
+
+(ref:athletes-composite-good) Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure \@ref(fig:athletes-composite-inconsistent), but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure.
+
+```{r athletes-composite-good, fig.width = 7, fig.cap = '(ref:athletes-composite-good)'}
 p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
   geom_bar() +
-  scale_y_continuous(limits = c(0, 85), expand = c(0, 0), name = "number") +
+  scale_y_continuous(limits = c(0, 85), expand = c(0.01, 0), name = "number") +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
-  scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_minimal_hgrid() + 
   theme(axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
@@ -195,10 +248,11 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
   geom_point(pch = 21, color = "white", size = 2.5) +
   scale_x_continuous(limits = c(3.8, 6.75), position = "top") +
   scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0)) +
-  scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   xlab("RBC count") +
   ylab("WBC count") +
-  theme_minimal_grid()
+  theme_minimal_grid() +
+  theme(plot.margin = margin(7, 14, 7, 7))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -210,7 +264,7 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
   scale_fill_manual(values = c("#D55E0040", "#0072B240"), guide = "none") +
   scale_x_discrete(name = NULL) +
   scale_y_continuous(name = "% body fat") +
-  guides(color = guide_legend(override.aes = list(fill = c("#D55E00", "#0072B2"),
+  guides(color = guide_legend(override.aes = list(fill = c("#D55E00D0", "#0072B2D0"),
                                                   color = "white", size = 2),
                               direction = "horizontal")) +
   theme_minimal_hgrid() +
@@ -218,35 +272,64 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
     axis.ticks.x = element_blank(),
     axis.ticks.length = grid::unit(0, "pt"),
     legend.position = c(1., 0.9),
-    legend.justification = "right")
+    legend.justification = "right",
+    plot.margin = margin(7, 14, 7, 7))
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
 ```
 
-```{r}
+(ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results.
+
+```{r athletes-composite-repetitive, fig.width = 7, fig.cap = '(ref:athletes-composite-repetitive)'}
 cc_df <- athletes_df %>%
   select(sex, rcc, wcc) %>%
   gather(variable, value, -sex) %>%
   group_by(sex, variable) %>%
   summarize(mean = mean(value),
-            sd = sd(value))
+            se = sd(value)/sqrt(n()))
 
-p2 <- ggplot(cc_df, aes(x = variable, y = mean, fill = sex)) + 
-  geom_col(position = "dodge") +
-  geom_linerange(aes(ymin = mean - sd, ymax = mean + sd), position = position_dodge(width = .9))
+p2 <- ggplot(cc_df, aes(x = sex, y = mean, fill = sex)) + 
+  geom_col() +
+  geom_linerange(aes(ymin = mean - se, ymax = mean + se)) +
+  facet_wrap(~variable, scales = "free_y",
+             labeller = as_labeller(function(label) {
+               ifelse(label == "wcc", "WBC", "RBC")})) +
+  scale_y_continuous(limits = c(0, 7.8), expand = c(0.01, 0), name = "mean count") +
+  scale_x_discrete(name = NULL, labels = c("female", "male")) +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+  theme_minimal_hgrid() + 
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.margin = margin(7, 14, 7, 7))
 
 bf_df <- athletes_df %>%
   select(sex, sport, pcBfat) %>%
   group_by(sex, sport) %>%
   summarize(mean = mean(pcBfat),
-            sd = sd(pcBfat))
+            se = sd(pcBfat)/sqrt(n()))
 
 p3 <- ggplot(bf_df, aes(x = sport, y = mean, fill = sex)) + 
   geom_col(position = "dodge") +
-  geom_linerange(aes(ymin = mean - sd, ymax = mean + sd), position = position_dodge(width = .9))
+  geom_linerange(aes(ymin = mean - se, ymax = mean + se), position = position_dodge(width = .9)) +
+  scale_y_continuous(limits = c(0, 24.7), expand = c(0.01, 0), name = "% body fat") +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), name = NULL,
+                    labels = c("female   ", "male")) +
+  guides(fill = guide_legend(override.aes = list(color = "white", size = 2),
+                              direction = "horizontal")) +
+  theme_minimal_hgrid() + 
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        legend.position = c(1., 0.9),
+        legend.justification = "right",
+        plot.margin = margin(7, 14, 7, 7))
+
+
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
-plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
+stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain"))
 
 ```
