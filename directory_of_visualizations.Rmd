@@ -5,6 +5,7 @@ source("_common.R")
 library(dplyr)
 library(ggforce)
 library(ggridges)
+library(forcats)
 ```
 
 # Directory of visualizations
@@ -13,9 +14,8 @@ library(ggridges)
 ## general setup code
 
 # theme
-theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
-  line_size <- .8
-  font_size <- 10
+theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
+                            line_size = .75, font_size = 10) {
   theme_half_open() %+replace% theme(
     axis.text.x       = element_blank(),
     axis.text.y       = element_blank(),
@@ -37,6 +37,41 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400") {
   )
 }
 
+theme_plot_icon_hgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
+                                  line_size = .75, font_size = 10) {
+  theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
+      # make grid lines
+      #panel.grid.major.y   = element_line(colour = paste0(line_color, "30"),
+      #                                    size = 0.5),
+
+      # remove x axis
+      axis.ticks.x        = element_blank(),
+      axis.line.x         = element_blank()
+  )
+}
+
+theme_plot_icon_vgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
+                                  line_size = .75, font_size = 10) {
+  theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
+      # make grid lines
+      #panel.grid.major.x   = element_line(colour = paste0(line_color, "30"),
+      #                                    size = 0.5),
+
+      # remove y axis
+      axis.ticks.y        = element_blank(),
+      axis.line.y         = element_blank()
+  )
+}
+
+theme_plot_icon_blank <- function(bg_color = "#F5F8EA", line_color = "#243400",
+                                  line_size = .75, font_size = 10) {
+  theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
+      axis.ticks          = element_blank(),
+      axis.line.x         = element_blank(),
+      axis.line.y         = element_blank(),
+      axis.ticks.length    = grid::unit(0, "pt")
+  )
+}
 
 # data sets
 set.seed(5142)
@@ -54,12 +89,15 @@ df_fractions <- data.frame(y = c(.3, .39, .48, .6, .25, .13, .22, .24, .45, .48,
                  x = factor(rep(1:4, 3)),
                  type = rep(c("A", "B", "C"), each = 4))
 
+df_multi_amounts <- mutate(df_fractions,
+                           y = c(1.0, 1.1, 1.4, 1.2)[x]*y)
+
 n <- 70
 df_multi_dist <- data.frame(y = c(rnorm(n, 1, .8), rnorm(n, 2, .7), rnorm(n, 0, .5)),
                  type = rep(c("A", "B", "C"), each = n),
                  number = rep(c(2, 1, 3), each = n))
 
-df_props = data.frame(value = c(60, 30, 10),
+df_props = data.frame(value = c(55, 30, 15),
                       group = c("A", "B", "C"))
 
 
@@ -89,23 +127,95 @@ pal_ocean_blue <- sequential_hcl(n = npal, h1 = 241, c1 = 80, c2 = 10, l1 = 18, 
 pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
 ```
 
+## Amounts
+
+```{r amounts, fig.width = 8, fig.asp = 1/4}
+palette <- pal_earth_brown
+
+p1 <- ggplot(df_props, aes(x = group, y = value)) + 
+  geom_col(position="identity", color = palette[npal], fill = palette[3],
+           width = .8) +
+  scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Bars") +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
+
+p2 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) + 
+  geom_col(position="identity", color = palette[npal], fill = palette[3],
+           width = .8) +
+  scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
+  scale_fill_manual(values = palette[2:4]) +
+  coord_flip() +
+  labs(title = "Bars") +
+  theme_plot_icon_vgrid(palette[npal], palette[1])
+
+p3 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
+                                   fill=factor(type, levels = c("A", "C", "B")))) + 
+  geom_col(position="dodge", color = palette[npal],
+           width = .7) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, .7)) +
+  scale_fill_manual(values = palette[2:4]) +
+  labs(title = "Grouped bars") +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
+
+p4 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
+                                   fill=factor(type, levels = c("B", "C", "A")))) + 
+  geom_col(position="dodge", color = palette[npal],
+           width = .7) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, .7)) +
+  scale_fill_manual(values = rev(palette[2:4])) +
+  coord_flip() +
+  labs(title = "Grouped bars") +
+  theme_plot_icon_vgrid(palette[npal], palette[1])
+
+p5 <- ggplot(df_multi_amounts, aes(x, y, fill=factor(type, levels = c("B", "C", "A")))) + 
+  geom_col(position="stack", color = palette[npal]) +
+  scale_y_continuous(limits = c(0, 1.55),
+                     expand = c(0, 0)) +
+  scale_fill_manual(values = rev(palette[2:4])) +
+  labs(title = "Stacked bars") +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
+
+p6 <- p5 + coord_flip() + theme_plot_icon_vgrid(palette[npal], palette[1])
+
+p7 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) + 
+  geom_point(color = palette[2], size = 3) +
+  scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
+  coord_flip() + 
+  labs(title = "Dots") +
+  theme_plot_icon_vgrid(palette[npal], palette[1])
+
+p8 <- ggplot(filter(df_multi_amounts, x != 1), aes(x, y = factor(type, levels = c("A", "C", "B")), fill = y)) + 
+  geom_tile(color = palette[5], size = 1.5) +
+  scale_fill_continuous_sequential(h1 = 71, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5,
+                                   begin = 0.2, end = 0.75) +
+  labs(title = "Heatmap") +
+  theme_plot_icon_blank(palette[npal], palette[1])
+
+plot_grid(p1, p2, p7, ncol = 4, scale = .9)
+```
+
+
+```{r amounts_multi, fig.width = 8, fig.asp = 1/2}
+plot_grid(p3, p4, p5, p6, 
+          p8, ncol = 4, scale = .9)
+```
+
 ## Proportions
 
 ```{r proportions, fig.width = 8, fig.asp = 1/4}
 palette <- pal_brown_green
 
 p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
-  geom_col(position = "stack", color = palette[1]) + 
+  geom_col(position = "stack", color = palette[npal]) + 
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Pie chart") +
-  theme_plot_icon(palette[npal], palette[1]) +
-  theme(axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank())
+  theme_plot_icon_blank(palette[npal], palette[1])
 
 # make sure plot background is fully filled, as in the other plots
 p1 <- ggdraw(p1_main) +
@@ -113,101 +223,97 @@ p1 <- ggdraw(p1_main) +
                                        color = "transparent"))
 
 p2 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
-  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[1]) + 
-  scale_y_continuous(limits = c(0, 110), expand = c(0, 0)) +
+  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[npal]) + 
+  scale_y_continuous(limits = c(0, 108), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked bars") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p3 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
-  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[1]) + 
+  geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[npal]) + 
   #scale_y_continuous(limits = c(0, 110), expand = c(0, 0), position = "right") +
   scale_y_continuous(limits = c(0, 110), expand = c(0, 0)) +
   coord_flip() +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked bars") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_vgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
-  geom_col(position="identity", color = palette[1],
+  geom_col(position="identity", color = palette[npal],
            width = .8) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "Side-by-side bars") +
-  theme_plot_icon(palette[npal], palette[1])
+  labs(title = "Bars") +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
-plot_grid(p1, p4, p2, p3, ncol = 4, scale = .9)
+p5 <- ggplot(df_props, aes(x = fct_rev(group), y = value, fill = group)) + 
+  geom_col(position="identity", color = palette[npal],
+           width = .8) +
+  scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
+  scale_fill_manual(values = palette[2:4]) +
+  coord_flip() +
+  labs(title = "Bars") +
+  theme_plot_icon_vgrid(palette[npal], palette[1])
+
+
+plot_grid(p1, p4, p5, p2, ncol = 4, scale = .9)
 ```
 
-Proportions can be visualized as pie charts, side-by-side bars, or stacked bars, the latter arranged either vertically or horizontally (Chapter \@ref(visualizing-proportions)). Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
+Proportions can be visualized as pie charts, side-by-side bars, or stacked bars (Chapter \@ref(visualizing-proportions)), and bars can generally be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
 
 
 ```{r proportions-comp, fig.width = 8, fig.asp = 1/4}
-palette <- pal_earth_brown
-
 p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
                                    fill=factor(type, levels = c("A", "C", "B")))) + 
-  geom_col(position="dodge", color = palette[1],
+  geom_col(position="dodge", color = palette[npal],
            width = .7) +
   scale_y_continuous(expand = c(0, 0),
                      limits = c(0, .58)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "Side-by-side bars") +
-  theme_plot_icon(palette[npal], palette[1])
+  labs(title = "Grouped bars") +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p6 <- ggplot(df_fractions, aes(x, y, fill=type)) + 
-  geom_col(position="stack", color = palette[1]) +
-  scale_y_continuous(expand = c(0, 0)) +
+  geom_col(position="stack", color = palette[npal]) +
+  scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked bars") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p7 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
-  geom_density(alpha = 0.7, color = palette[1], position = "fill") +
+  geom_density(color = palette[npal], position = "fill") +
   scale_fill_manual(values = palette[2:4]) +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0.04, 0)) +
+  scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
   labs(title = "Stacked densities") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p8_a <- ggplot(filter(df_fractions, x==1), aes(x = 1, y = y, fill = type)) + 
-  geom_col(position = "stack", color = palette[1]) + 
+  geom_col(position = "stack", color = palette[npal]) + 
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon(palette[npal], palette[1]) +
-  theme(axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.background = element_blank())
+  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme(plot.background = element_blank())
 
 p8_b <- ggplot(filter(df_fractions, x==2), aes(x = 1, y = y, fill = type)) + 
-  geom_col(position = "stack", color = palette[1]) + 
+  geom_col(position = "stack", color = palette[npal]) + 
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon(palette[npal], palette[1]) +
-  theme(axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.background = element_blank())
+  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme(plot.background = element_blank())
 
 p8_c <- ggplot(filter(df_fractions, x==3), aes(x = 1, y = y, fill = type)) + 
-  geom_col(position = "stack", color = palette[1]) + 
+  geom_col(position = "stack", color = palette[npal]) + 
   coord_polar(theta = "y") +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon(palette[npal], palette[1]) +
-  theme(axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.background = element_blank())
+  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme(plot.background = element_blank())
 
 
 # combine
@@ -220,7 +326,7 @@ p8 <- ggdraw(plot_grid(p8_a, p8_b, p8_c, ncol = 3, scale = 1.4)) +
 plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 ```
 
-When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Side-by-side bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
+When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
 ## Individual distributions
 
@@ -229,30 +335,30 @@ When visualizing multiple sets of proportions or changes in proportions across c
 palette <- pal_brown_red
 
 p1 <- ggplot(df_one_dist, aes(x)) +
-  geom_histogram(fill = palette[4], color = palette[2], bins = 18) +
+  geom_histogram(fill = palette[3], color = palette[npal], bins = 18) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, 290), 
+  scale_y_continuous(limits = c(0, 270), 
                      expand = c(0, 0)) +
   labs(title = "Histogram") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 
 p2 <- ggplot(df_one_dist, aes(x)) +
-  geom_density(fill = palette[4], color = palette[2], bw = .35) +
+  geom_density(fill = palette[3], color = palette[npal], bw = .35) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, .29), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, .27), expand = c(0, 0)) +
   labs(title = "Density plot") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p3 <- ggplot(df_one_normal, aes(x)) +
   stat_ecdf(color = palette[2], size = .7) +
   scale_x_continuous(expand = c(0.05, 0)) +
-  scale_y_continuous(limits = c(0, 1.1), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
   labs(title = "Cumulative density") +
   theme_plot_icon(palette[npal], palette[1])
 
 p4 <- ggplot(df_one_normal, aes(sample = x)) +
-  geom_abline(intercept = 0, slope = 1, color = palette[4]) +
+  geom_abline(intercept = 0, slope = 1, color = palette[3]) +
   geom_qq(color = palette[2]) +
   labs(title = "q-q plot") +
   theme_plot_icon(palette[npal], palette[1])
@@ -269,44 +375,44 @@ palette <- pal_ocean_blue
 
 p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_boxplot(color = palette[1], fill = palette[4]) +
   labs(title = "Boxplots") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 
-p2 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_violin(color = palette[1], fill = palette[4]) +
+p2 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_violin(color = palette[npal], fill = palette[3]) +
   labs(title = "Violin plots") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p3 <- ggplot(df_multi_dist, aes(x = type, y = y)) + geom_jitter(color = palette[1], width = 0.3, size = .8) +
   labs(title = "Jittered points") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
   geom_sina(color = palette[1], size = 0.8) +
   labs(title = "Sina plot") +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
-  geom_histogram(color = palette[1], bins = 12) +
+  geom_histogram(color = palette[npal], bins = 12) +
   scale_fill_manual(values = palette[2:4]) +
   labs(title = "Stacked histograms") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 49), expand = c(0, 0)) +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p6 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
-  geom_density(alpha = 0.7, color = palette[1]) +
-  scale_fill_manual(values = palette[2:4]) +
+  geom_density(alpha = 0.7, color = palette[npal]) +
+  scale_fill_manual(values = palette[1:3]) +
   labs(title = "Overlapping densities") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, .95), expand = c(0, 0)) +
-  theme_plot_icon(palette[npal], palette[1])
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p7 <- ggplot(df_multi_dist, aes(x = y, y = number, group = number)) + 
-  geom_density_ridges(alpha = 0.7, color = palette[1], fill = palette[3], scale = 2.0) +
+  geom_density_ridges(alpha = 0.7, color = palette[npal], fill = palette[2], scale = 2.0) +
   labs(title = "Ridgeline plot") +
   scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(limits = c(1, 6.5), expand = c(0, 0)) +
-  theme_plot_icon(palette[npal], palette[1])
+  scale_y_continuous(limits = c(1, 5.5), expand = c(0, 0)) +
+  theme_plot_icon_hgrid(palette[npal], palette[1])
 
 
 plot_grid(p1, p2, p3, p4, 
