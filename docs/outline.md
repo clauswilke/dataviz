@@ -1,9 +1,11 @@
 # Outline {-}
 
 
+#. **Introduction**
+
 ## Part I: From data to visualization {-}
 
-#. **Mapping data onto aesthetics**   
+2. **Mapping data onto aesthetics**   
   Explains the basic concept of aesthetic mapping, which lies at the heart of any data visualization.
 
 #. **Coordinate systems and axes**  
@@ -50,7 +52,7 @@
   
 ## Part II: Principles of figure design {-}
 
-16. **Figure titles and captions**  
+17. **Figure titles and captions**  
   Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
 
 #. **Your axis labels are too small**  
@@ -86,13 +88,13 @@
 
 ## Part III: Miscellaneous topics {-}
 
-27. **Understanding the most commonly used image file formats**  
+28. **Understanding the most commonly used image file formats**  
   Provides an introduction to vector and bitmap graphics and describes the pros and cons of the various most commonly used file formats.
 
-#. **Choosing the right plotting software**  
+#. **Choosing the right visualization software**  
   Discusses the pros and cons of different software available to make graphs.
   
-#. **Selecting figures for a report, paper, or presentation**  
+#. **Telling a story with data**  
   Discusses how to compile larger sets of figures to tell a story; e.g., always move from less processed to more processed data representations; also, avoid repeating the same type of figure many times.
   
 #. **Annotated bibliography**  
