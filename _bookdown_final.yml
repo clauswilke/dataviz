@@ -13,7 +13,7 @@ rmd_files: [
   "coordinate_systems_axes.Rmd", # completed
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
-  ##"visualizing_amounts.Rmd",
+  "visualizing_amounts.Rmd", # completed
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
@@ -32,7 +32,7 @@ rmd_files: [
 
   # Part III
   "image_file_formats.Rmd", # completed
-  #"choosing_plotting_software.Rmd", # completed
+  "choosing_plotting_software.Rmd", # completed
 
   "outline.Rmd",
   "technical_notes.Rmd",
