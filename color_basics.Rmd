@@ -242,7 +242,7 @@ ggplot(male_Aus, aes(x=height, y=pcBfat, shape=sport, color = sport, fill = spor
   scale_color_manual(values = colors) +
   scale_fill_manual(values = fills) +
   xlab("height (cm)") +
-  ylab("% bodyfat") +
+  ylab("% body fat") +
   theme_minimal_grid()
 ```
 

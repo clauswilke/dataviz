@@ -88,7 +88,7 @@ bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
   coord_flip()
 
 bt_bars_hstacked <- insert_xaxis_grob(bt_bars_stacked_base + coord_flip() +
-                                        scale_y_continuous(expand = c(0, 0), position = "top") +
+                                        scale_y_continuous(expand = c(0, 0), position = "right") +
                                         theme_minimal_vgrid(),
                                       bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
 
@@ -108,7 +108,8 @@ bt_bars <- ggplot(bundestag, aes(x = factor(party, levels = bundestag$party), y 
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = bundestag$colors[order(bundestag$party)], guide = "none") + 
   #geom_hline(yintercept = c(50, 100, 150, 200), color = "#ffffff70", size = .5) +
-  theme_minimal_hgrid()
+  theme_minimal_hgrid() +
+  theme(axis.ticks.x = element_blank())
 
 bt_bars
 ```
@@ -285,7 +286,7 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
   theme_half_open() + 
-  theme(axis.ticks.y = element_blank(),
+  theme(#axis.ticks.y = element_blank(),
         #axis.ticks.x = element_blank(),
         axis.line.x = element_blank(),
         axis.line.y = element_blank(),
@@ -304,7 +305,7 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
   theme_half_open() + 
-  theme(axis.ticks.y = element_blank(),
+  theme(#axis.ticks.y = element_blank(),
         axis.line.x = element_blank(),
         axis.line.y = element_blank(),
         plot.margin = margin(7, 10, 7, 7))

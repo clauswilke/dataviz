@@ -31,7 +31,8 @@ p_income_base <- ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(cou
   geom_col(fill = "#56B4E9") +
   xlab("county") +
   theme_minimal_hgrid() +
-  theme(plot.margin = margin(7, 14, 7, 7))
+  theme(axis.ticks.x = element_blank(),
+        plot.margin = margin(7, 14, 7, 7))
 
 p_income_bad <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50000, 75000), expand = FALSE) +
   scale_y_continuous(name = "median income", 
@@ -67,7 +68,7 @@ df_fb_drop <- filter(tech_stocks, ticker == "FB", date >= ymd("2016-10-22") & da
 
 fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
   geom_ridgeline(alpha = 0.7) +
-  scale_x_date(name = "day",
+  scale_x_date(name = NULL, #name = "day",
                breaks = ymd(c("2016-11-01", "2016-12-01", "2017-01-01")),
                labels = c("Nov 1, 2016", "Dec 1, 2016", "Jan 1, 2017"),
                expand=c(0, 0)) + 
@@ -86,7 +87,7 @@ stamp_bad(fb_drop_bad)
 ```{r fb-stock-drop-good, fig.cap = '(ref:fb-stock-drop-good)'}
 fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
   geom_ridgeline(alpha = 0.7) +
-  scale_x_date(name = "day",
+  scale_x_date(name = NULL, #name = "day",
                breaks = ymd(c("2016-11-01", "2016-12-01", "2017-01-01")),
                labels = c("Nov 1, 2016", "Dec 1, 2016", "Jan 1, 2017"),
                expand=c(0,0)) + 
@@ -118,7 +119,8 @@ ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, ye
                      limits = c(-5000, 25000),
                      expand = c(0, 0),
                      labels = function(x) paste0("$", scales::comma(x))) +
-  theme_minimal_hgrid()
+  theme_minimal_hgrid() + 
+  theme(axis.ticks.x = element_blank())
 ```
 
 Similarly, we can draw the change in Facebook stock price over time as the difference from its temporary high point on Oct. 22, 2016 (Figure \@ref(fig:fb-stock-drop-inverse)). By shading an area that represents the distance from the high point, we are accurately representing the absolute magnitude of the price drop without making any implicit statement about the magnitude of the price drop relative to the total stock price.
@@ -132,7 +134,7 @@ df_fb_drop2 <- filter(tech_stocks,
 
 fb_drop_inverse <- ggplot(df_fb_drop2, aes(x=date, height=price_drop, y = 0)) +
   geom_ridgeline(alpha = 0.7, min_height = -50) +
-  scale_x_date(name = "day",
+  scale_x_date(name = NULL, #name = "day",
                breaks = ymd(c("2016-11-01", "2016-12-01", "2017-01-01")),
                labels = c("Nov 1, 2016", "Dec 1, 2016", "Jan 1, 2017"),
                expand=c(0, 0)) + 
@@ -168,7 +170,8 @@ oc_bad <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
                      name = "GDP (billion USD)") +
   scale_x_discrete(name = NULL) +
   coord_flip(ylim = log10(c(3.1e8, 9.9e11)), expand = FALSE) +
-  theme_minimal_vgrid()
+  theme_minimal_vgrid() +
+  theme(axis.ticks.y = element_blank())
 
 stamp_bad(oc_bad)
 ```
@@ -185,7 +188,8 @@ oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
                      name = "GDP (billion USD)") +
   scale_x_discrete(name = NULL) +
   coord_flip(ylim = log10(c(1, 9.9e11)), expand = FALSE) +
-  theme_minimal_vgrid()
+  theme_minimal_vgrid() +
+  theme(axis.ticks.y = element_blank())
 
 stamp_bad(oc_bad2)
 ```
@@ -268,7 +272,7 @@ RI_pie <- RI_pop %>%
 
 rpie = 1
 
-RI_pie$rlabel = c(.3, .4, .4, 1., 1.) * rpie
+RI_pie$rlabel = c(.3, .4, .4, 1.02, 1.02) * rpie
 RI_pie$size = c(16, 14, 14, 12, 12)/.pt
 
 plot_RI_pies <- ggplot(RI_pie) + 
@@ -280,7 +284,7 @@ plot_RI_pies <- ggplot(RI_pie) +
   scale_x_continuous(limits = c(-1.1, 1.1), expand = c(0, 0), name = NULL, breaks = NULL, labels = NULL) +
   scale_y_continuous(limits = c(-1.1, 1.1), expand = c(0, 0),name = NULL, breaks = NULL, labels = NULL) +
   #scale_fill_brewer(type = "qual", palette = "Pastel1") +
-  scale_fill_OkabeIto(darken = -.4) +
+  scale_fill_OkabeIto(darken = -.3) +
   scale_size_identity() +
   guides(fill = guide_legend(override.aes = list(size = 1.))) +
   theme_half_open() +
@@ -303,7 +307,7 @@ Because the area of each pie wedge is proportional to its angle which is proport
 ```{r RI-pop-bars, fig.width = 5.5, fig.cap = '(ref:RI-pop-bars)'}
 ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill = county)) + 
   geom_col() +
-  scale_fill_OkabeIto(darken = -.4, guide = "none") +
+  scale_fill_OkabeIto(darken = -.3, guide = "none") +
   scale_y_continuous(expand = c(0, 0),
                      breaks = c(0, 2e5, 4e5, 6e5),
                      labels = c("0", "200,000", "400,000", "600,000"),
@@ -311,8 +315,8 @@ ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill =
   scale_x_discrete(name = "county") +
   coord_flip() +
   theme_minimal_vgrid() +
-  theme(axis.line = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
+  theme(#axis.line = element_blank(),
+        #axis.ticks.length = grid::unit(0, "pt"),
         axis.ticks.y = element_blank(),
         plot.margin = margin(7, 14, 7, 7))
 
@@ -328,8 +332,7 @@ p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) +
   geom_treemap(color = "white", size = .75*.pt) + 
   geom_treemap_text(fontface = "plain", colour = "black", place = "centre",
                     grow = FALSE) +
-  scale_fill_OkabeIto(darken = -.4, guide = "none")
-  #scale_fill_brewer(type = "qual", palette = "Pastel1", guide = "none")
+  scale_fill_OkabeIto(darken = -.3, guide = "none")
 
 p
 ```

@@ -10,11 +10,11 @@
 
 <img src="directory_of_visualizations_files/figure-html4/amounts-1.png" width="768" style="display: block; margin: auto;" />
 
-The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged (Chapter \@ref(visualizing-amounts)). However, instead of using bars, we can also place dots at the location where the corresponding bar would end.
+The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged (Chapter \@ref(visualizing-amounts)). However, instead of using bars, we can also place dots at the location where the corresponding bar would end (Chapter \@ref(visualizing-amounts)).
 
 <img src="directory_of_visualizations_files/figure-html4/amounts_multi-1.png" width="768" style="display: block; margin: auto;" />
 
-If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars (Chapter \@ref(visualizing-amounts)). We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap. 
+If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars (Chapter \@ref(visualizing-amounts)). We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap (Chapter \@ref(visualizing-amounts)). 
 
 
 ## Distributions
@@ -32,7 +32,7 @@ Boxplots, violin plots, jittered points, and sina plots are useful when we want 
 
 <img src="directory_of_visualizations_files/figure-html4/proportions-1.png" width="768" style="display: block; margin: auto;" />
 
-Proportions can be visualized as pie charts, side-by-side bars, or stacked bars (Chapter \@ref(visualizing-proportions)), and as was the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
+Proportions can be visualized as pie charts, side-by-side bars, or stacked bars (Chapter \@ref(visualizing-proportions)), and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
 
 
 <img src="directory_of_visualizations_files/figure-html4/proportions-comp-1.png" width="768" style="display: block; margin: auto;" />

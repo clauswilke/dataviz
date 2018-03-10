@@ -105,7 +105,7 @@ Grid lines that run perpendicular to the key variable of interest tend to be the
 
 Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:Aus-athletes-grid) provides an example.
 
-(ref:Aus-athletes-grid) Percent bodyfat versus height in professional male Australian athletes. (Each point represents one athlete.) 
+(ref:Aus-athletes-grid) Percent body fat versus height in professional male Australian athletes. (Each point represents one athlete.) 
 
 ```{r Aus-athletes-grid, fig.width = 7, fig.cap='(ref:Aus-athletes-grid)'}
 male_Aus <- filter(Aus_athletes, sex=="m") %>%
@@ -123,7 +123,7 @@ ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=sport)) 
     scale_shape_manual(values = 21:25) +
     scale_color_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.3) +
     scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
-    ylab("% bodyfat") + theme_minimal_grid()
+    ylab("% body fat") + theme_minimal_grid()
 ```
 
 For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad.
