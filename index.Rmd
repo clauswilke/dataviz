@@ -4,7 +4,10 @@ author: "Claus O. Wilke"
 description: "A guide to making visualizations that accurately reflect the data, tell a story, and look professional."
 github-repo: clauswilke/dataviz
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output:
+  bookdown::gitbook:
+    includes:
+      in_header: html_includes/google_analytics.html
 bibliography: "bibliography.bib"
 biblio-style: "apalike"
 link-citations: true
