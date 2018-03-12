@@ -189,7 +189,8 @@ p1 <- ggplot(athletes_df, aes(x = sex)) +
   scale_y_continuous(limits = c(0, 85), expand = c(0.01, 0), name = "number") +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   theme_minimal_hgrid() + 
-  theme(axis.line.x = element_blank(),
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"))
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
@@ -208,7 +209,8 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill =
   xlab("RBC count") +
   ylab("WBC count") +
   theme_minimal_grid() +
-  theme(legend.position = c(1., 0),
+  theme(axis.title = element_text(size = 0.857*14),
+        legend.position = c(1., 0),
         legend.justification = "right",
         legend.box.background = element_rect(fill = "white", color = "white"),
         plot.margin = margin(7, 14, 7, 7))
@@ -223,10 +225,11 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m
   scale_x_discrete(name = NULL) +
   scale_y_continuous(name = "% body fat") +
   theme_minimal_hgrid() +
-  theme(axis.line.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.length = grid::unit(0, "pt"),
-    plot.margin = margin(7, 14, 7, 7))
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.margin = margin(7, 14, 7, 7))
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain"))
@@ -241,7 +244,8 @@ p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_minimal_hgrid() + 
-  theme(axis.line.x = element_blank(),
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"))
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
@@ -252,7 +256,8 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
   xlab("RBC count") +
   ylab("WBC count") +
   theme_minimal_grid() +
-  theme(plot.margin = margin(7, 14, 7, 7))
+  theme(axis.title = element_text(size = 0.857*14),
+        plot.margin = margin(7, 14, 7, 7))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -268,12 +273,13 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
                                                   color = "white", size = 2),
                               direction = "horizontal")) +
   theme_minimal_hgrid() +
-  theme(axis.line.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.length = grid::unit(0, "pt"),
-    legend.position = c(1., 0.9),
-    legend.justification = "right",
-    plot.margin = margin(7, 14, 7, 7))
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        legend.position = c(1., 0.9),
+        legend.justification = "right",
+        plot.margin = margin(7, 14, 7, 7))
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
@@ -299,7 +305,8 @@ p2 <- ggplot(cc_df, aes(x = sex, y = mean, fill = sex)) +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_minimal_hgrid() + 
-  theme(axis.line.x = element_blank(),
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         plot.margin = margin(7, 14, 7, 7))
@@ -320,7 +327,8 @@ p3 <- ggplot(bf_df, aes(x = sport, y = mean, fill = sex)) +
   guides(fill = guide_legend(override.aes = list(color = "white", size = 2),
                               direction = "horizontal")) +
   theme_minimal_hgrid() + 
-  theme(axis.line.x = element_blank(),
+  theme(axis.title = element_text(size = 0.857*14),
+        axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         legend.position = c(1., 0.9),
