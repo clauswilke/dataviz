@@ -19,7 +19,7 @@ The most widely used coordinate system for data visualization is the 2d *Cartesi
 
 (ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventionally called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
 
-```{r cartesian-coord, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord)'}
+```{r cartesian-coord, fig.height = 6 * 0.8, fig.cap = '(ref:cartesian-coord)'}
 df_points <- data.frame(x = c(-1, 0, 2),
                         y = c(-1, 0, 1),
                         label = c("(-1, -1)", "(0, 0)", "(2, 1)"),
@@ -37,7 +37,7 @@ df_labels <- data.frame(x = c(-1, -.5, 1, 2),
                         hjust = c(1.1, .5, .5, -.1),
                         label = c("y = -1", "x = -1", "x = 2", "y = 1"))
 
-ggplot(df_points, aes(x, y)) +
+p <- ggplot(df_points, aes(x, y)) +
   geom_hline(yintercept = 0, color = "gray60") +
   geom_vline(xintercept = 0, color = "gray60") +
   geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
@@ -50,6 +50,8 @@ ggplot(df_points, aes(x, y)) +
   ylab("y axis") +
   theme_minimal_grid() +
   theme(axis.ticks.length = grid::unit(0, "pt"))
+
+pad_figure(p, fig.width = 6)
 ```
 
 Data values usually aren't just numbers, however. They come with units. For example, if we're measuring temperature, the values may be measured in degrees Celsius or Fahrenheit. Similarly, if we're measuring distance, the values may be measured in kilometers or miles, and if we're measuring duration, the values may be measured in minutes, hours, or days. In a Cartesian coordinate system, the spacing between grid lines along an axis corresponds to discrete steps in these data units. In a temperature scale, for example, we may have a grid line every 10 degrees Fahrenheit, and in a distance scale, we may have a grid line every 5 kilometers.
@@ -58,7 +60,7 @@ A Cartesian coordinate system can have two axes representing two different units
 
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
-```{r temperature-normals-Houston, fig.width = 7.5, fig.cap = '(ref:temperature-normals-Houston)'}
+```{r temperature-normals-Houston, fig.height = 7.5 * 0.618, fig.cap = '(ref:temperature-normals-Houston)'}
 temps_wide <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
@@ -96,15 +98,17 @@ temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
                      name = "temperature (°F)") +
   theme_minimal_grid()
 
-plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
-          temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
+pad_figure(
+  plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
+          temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1),
+  fig.width = 7.5)
 ```
 
 If on the other hand the *x* and the *y* axes are measured in the same units, then the grid spacings for the two axes should be equal, such that the same distance along the *x* or *y* axis corresponds to the same number of data units. As an example, we can plot the temperature in Houston, TX against the temperature in San Diego, CA, for every day of the year (Figure \@ref(fig:temperature-normals-Houston-San-Diego)a). Since the same quantity is plotted along both axes, we need to make sure that the grid lines form perfect squares, as is the case in Figure \@ref(fig:temperature-normals-Houston-San-Diego).
 
 (ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Fahrenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
 
-```{r temperature-normals-Houston-San-Diego, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
+```{r temperature-normals-Houston-San-Diego, fig.height = 8.5 * 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
@@ -147,7 +151,7 @@ The most commonly used nonlinear scale is the *logarithmic scale* or *log scale*
 
 (ref:linear-log-scales) Relationship between linear and logarithmic scales. The dots correspond to data values 1, 3.16, 10, 31.6, 100, which are evenly-spaced numbers on a logarithmic scale. We can display these data points on a linear scale, we can log-transform them and then show on a linear scale, or we can show them on a logarithmic scale. Importantly, the correct axis title for a logarithmic scale is the name of the variable shown, not the logarithm of that variable.
 
-```{r linear-log-scales, fig.width = 7.5, fig.cap = '(ref:linear-log-scales)'}
+```{r linear-log-scales, fig.height = 7.5 * 0.618, fig.cap = '(ref:linear-log-scales)'}
 df <- data.frame(x = c(1, 3.16, 10, 31.6, 100))
 
 xaxis_lin <- ggplot(df, aes(x, y = 1)) + 
@@ -187,15 +191,16 @@ plotlist <-
                 ggtitle("logarithmic scale with incorrect axis title"),
               align = 'vh')
 
-plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]), ncol = 1)
-
+pad_figure(
+  plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]), ncol = 1),
+  fig.width = 7.5)
 ```
 
 Because multiplication on a log scale looks like addition on a linear scale, log scales are the natural choice for any data that have been obtained by multiplication or division. In particular, ratios should generally be shown on a log scale. As an example, I have taken the number of inhabitants in each county in Texas and have divided it by the median number of inhabitants across all Texas counties. The resulting ratio is a number that can be larger or smaller than 1. A ratio of exactly 1 implies that the corresponding county has the median number of inhabitants. When visualizing these ratios on a log scale, we can see clearly that the population numbers in Texas counties are symmetrically distributed around the median, and that the most populous counties have over 100 times more inhabitants than the median while the least populous counties have over 100 times fewer inhabitants (Figure \@ref(fig:texas-counties-pop-ratio-log)). By contrast, for the same data, a linear scale obscures the differences between a county with median population number and a county with a much smaller population number than median (Figure \@ref(fig:texas-counties-pop-ratio-lin)).
 
 (ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighted by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
 
-```{r texas-counties-pop-ratio-log, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
+```{r texas-counties-pop-ratio-log, fig.height = 7.5 * 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
 set.seed(3878)
 US_census %>% filter(state == "Texas") %>%
   select(name, pop2010) %>%
@@ -206,7 +211,7 @@ US_census %>% filter(state == "Texas") %>%
          label = ifelse(index <= 3 | index > n()-3 | runif(n()) < .04, county, ""),
          label_large = ifelse(index <= 6, county, "")) -> tx_counties
 
-ggplot(tx_counties, aes(x = index, y = popratio)) +
+p <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   geom_hline(yintercept = 1, linetype = 2, color = "grey40") +
   geom_point(size = 0.5, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black", min.segment.length = 0) +
@@ -219,11 +224,13 @@ ggplot(tx_counties, aes(x = index, y = popratio)) +
   theme_minimal_hgrid() +
   theme(axis.line = element_blank(),
         plot.margin = margin(7, 14, 7, 7))
+
+pad_figure(p, fig.width = 7.5)
 ```
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
 
-```{r texas-counties-pop-ratio-lin, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
+```{r texas-counties-pop-ratio-lin, fig.height = 7.5 * 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
 counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   geom_point(size = 0.5, color = "#0072B2") +
   geom_text_repel(aes(label = label_large), point.padding = .4, color = "black", min.segment.length = 0) +
@@ -235,7 +242,7 @@ counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   theme(axis.line = element_blank(),
         plot.margin = margin(7, 14, 7, 7))
 
-stamp_bad(counties_lin)
+pad_figure(stamp_bad(counties_lin), fig.width = 7.5)
 ```
 
 On a log scale, the value 1 is the natural midpoint, similar to the value 0 on a linear scale. We can think of values greater than 1 as representing multiplications and values less than 1 divisions. For example, we can write $10 = 1\times 10$ and $0.1 = 1/10$. The value 0, on the other hand, can never appear on a log scale. It lies infinitely far from 1. One way to see this is to consider that $\log(0) = -\infty$. Or, alternatively, consider that to go from 1 to 0, it takes either an infinite number of divisions by a finite value (e.g., $1/10/10/10/10/10/10\dots = 0$) or alternatively one division by infinity (i.e., $1/\infty = 0$).
@@ -244,7 +251,7 @@ Log scales are frequently used when the data set contains numbers of very differ
 
 (ref:sqrt-scales) Relationship between linear and square-root scales. The dots correspond to data values 0, 1, 4, 9, 16, 25, 36, 49, which are evenly-spaced numbers on a square-root scale, since they are the squares of the integers from 0 to 7. We can display these data points on a linear scale, we can square-root-transform them and then show on a linear scale, or we can show them on a square-root scale. 
 
-```{r sqrt-scales, fig.width = 7.5, fig.asp = 0.464, fig.cap = '(ref:sqrt-scales)'}
+```{r sqrt-scales, fig.height = 7.5 * 0.464, fig.cap = '(ref:sqrt-scales)'}
 df <- data.frame(x = c(0, 1, 4, 9, 16, 25, 36, 49))
 
 xaxis_lin <- ggplot(df, aes(x, y = 1)) + 
@@ -281,8 +288,8 @@ plotlist <-
                 ggtitle("original data, square-root scale"),
               align = 'vh')
 
-plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1)
-
+pad_figure(plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1),
+           fig.width = 7.5)
 ```
 
 I see two problems with square-root scales. First, while on a linear scale one unit step corresponds to addition or subtraction of a constant value and on a log scale it corresponds to multiplication with or division by a constant value, no such rule exists for a square-root scale. The meaning of a unit step on a square-root scale depends on the scale value at which we're starting. Second, it is unclear how to best place axis ticks on a square-root scale. To obtain evenly spaced ticks, we would have to place them at squares, but axis ticks at, for example, positions 0, 4, 25, 49, 81 (every second square) would be highly unintuitive. Alternatively, we could place them at linear intervals (10, 20, 30, etc), but this would result in either too few axis ticks near the low end of the scale or too many near the high end. In Figure \@ref(fig:sqrt-scales), I have placed the axis ticks at positions 0, 1, 5, 10, 20, 30, 40, and 50 on the square-root scale. These values are arbitrary but provide a reasonable covering of the data range.
@@ -291,7 +298,7 @@ Despite these problems with square-root scales, they are valid position scales a
 
 (ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a linear scale. (b) Areas shown on a square-root scale. Data source: Google. 
 
-```{r northeast-state-areas, fig.width = 8.5, fig.asp = 0.4, fig.cap = '(ref:northeast-state-areas)'}
+```{r northeast-state-areas, fig.height = 8.5 * 0.4, fig.cap = '(ref:northeast-state-areas)'}
 # areas in square miles
 # source: Google, 01/07/2018
 northeast_areas <- read.csv(text = "state_abr,area
@@ -327,7 +334,7 @@ All coordinate systems we have encountered so far used two straight axes positio
 
 (ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
-```{r polar-coord, fig.width = 7.5, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
+```{r polar-coord, fig.height = 7.5 * 0.5, fig.cap = '(ref:polar-coord)'}
 df_points <- data.frame(x = c(1, 3.5, 0),
                         y = c(3, 4, 0),
                         label = c("(1, 3)", "(3.5, 4)", "(0, 0)"),
@@ -370,15 +377,15 @@ p_polar <- ggplot(df_points, aes(x, y)) +
   theme(axis.line.x = element_blank(),
         axis.ticks = element_line(color = "black"))
 
-plot_grid(p_cart, p_polar, labels = "auto")
-
+pad_figure(plot_grid(p_cart, p_polar, labels = "auto"),
+           fig.width = 7.5)
 ```
 
 Polar coordinates can be useful for data of a periodic nature, such that data values at one end of the scale can be logically joined to data values at the other end. For example, consider the days in a year. December 31st is the last day of the year, but it is also one day before the first day of the year. If we want to show how some quantity varies over the year, it can be appropriate to use polar coordinates with the angle coordinate specifying each day. Let's apply this concept to the temperature normals of Figure \@ref(fig:temp-normals-vs-time). Because temperature normals are average temperatures that are not tied to any specific year, Dec. 31st can be thought of as 366 days later than Jan. 1st (temperature normals include Feb. 29) and also one day earlier. By plotting the temperature normals in a polar coordinate system, we emphasize this cyclical property they have (Figure \@ref(fig:temperature-normals-polar)). In comparison to Figure \@ref(fig:temp-normals-vs-time), the polar version highlights how similar the temperatures are in Death Valley, Houston, and San Diego from late fall to early spring. In the Cartesian coordinate system, this fact is obscured because the temperature values in late December and in early January are shown in opposite parts of the figure and therefore don't form a single visual unit.
 
 (ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Fahrenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
-```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
+```{r temperature-normals-polar, fig.height = 7.5 * 0.618, fig.cap = '(ref:temperature-normals-polar)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
   filter(location %in% c("Chicago",
                          "Death Valley",
@@ -389,7 +396,7 @@ temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
                                                 "San Diego",
                                                 "Chicago")))
 
-ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
+p <- ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   geom_line(size = 1) +
   scale_x_date(name = "date", expand = c(0, 0)) + 
   scale_y_continuous(limits = c(0, 105), expand = c(0, 0),
@@ -399,6 +406,8 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
   theme_minimal() +
   coord_polar(theta = "x", start = pi, direction = -1) +
   theme_minimal_grid()
+
+pad_figure(p, fig.width = 7.5)
 ```
 
 
@@ -406,7 +415,7 @@ A second setting in which we encounter curved axes is in the context of geospati
 
 (ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3d globe. The Robinson projection is commonly used to project the entire world. It preserves neither areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercator projection preserves angles but distorts areas.
 
-```{r continental-usa-four-projections, fig.width = 8.5, fig.cap = '(ref:continental-usa-four-projections)'}
+```{r continental-usa-four-projections, fig.height = 8.5 * .618, fig.cap = '(ref:continental-usa-four-projections)'}
 library(sf)
 library(maps)
 usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))

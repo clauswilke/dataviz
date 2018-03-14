@@ -133,7 +133,7 @@ pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, 
 
 ## Amounts
 
-```{r amounts, fig.width = 8, fig.asp = 1/4}
+```{r amounts, fig.height = 8/4}
 palette <- pal_earth_brown
 
 p1 <- ggplot(df_props, aes(x = group, y = value)) + 
@@ -198,14 +198,15 @@ p8 <- ggplot(filter(df_multi_amounts, x != 1), aes(x, y = factor(type, levels = 
   labs(title = "Heatmap") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
-plot_grid(p1, p2, p7, ncol = 4, scale = .9)
+pad_figure(plot_grid(p1, p2, p7, ncol = 4, scale = .9),
+           fig.width = 8)
 ```
 
 The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged (Chapter \@ref(visualizing-amounts)). However, instead of using bars, we can also place dots at the location where the corresponding bar would end (Chapter \@ref(visualizing-amounts)).
 
-```{r amounts_multi, fig.width = 8, fig.asp = 1/2}
-plot_grid(p3, p4, p5, p6, 
-          p8, ncol = 4, scale = .9)
+```{r amounts_multi, fig.height = 8/2}
+pad_figure(plot_grid(p3, p4, p5, p6, 
+                     p8, ncol = 4, scale = .9), fig.width = 8)
 ```
 
 If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars (Chapter \@ref(visualizing-amounts)). We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap (Chapter \@ref(visualizing-amounts)). 
@@ -213,7 +214,7 @@ If there are two or more sets of categories for which we want to show amounts, w
 
 ## Distributions
 
-```{r single-distributions, fig.width = 8, fig.asp = 1/4}
+```{r single-distributions, fig.height = 8/4}
 
 palette <- pal_ocean_blue
 
@@ -246,13 +247,14 @@ p4 <- ggplot(df_one_normal, aes(sample = x)) +
   labs(title = "q-q plot") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
+pad_figure(plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9),
+           fig.width = 8)
 ```
 
 Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
 
 
-```{r multiple-distributions, fig.width = 8, fig.asp = 1/2}
+```{r multiple-distributions, fig.height = 8/2}
 palette <- pal_ocean_blue
 
 p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
@@ -299,16 +301,16 @@ p7 <- ggplot(df_multi_dist, aes(x = y, y = number, group = number)) +
   scale_y_continuous(limits = c(1, 6.5), expand = c(0, 0)) +
   theme_plot_icon(palette[npal], palette[1])
 
-
-plot_grid(p1, p2, p3, p4, 
-          p5, p6, p7, ncol = 4, scale = .9)
+pad_figure(plot_grid(p1, p2, p3, p4, 
+                     p5, p6, p7, ncol = 4, scale = .9),
+           fig.width = 8)
 ```
 
 Boxplots, violin plots, jittered points, and sina plots are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions (Chapter \@ref(boxplots-violins)). Stacked histograms and overlapping densities allow a more in-depth comparison of a smaller number of distributions, though stacked histograms can be difficult to interpret and are best avoided (Chapter \@ref(histograms-density-plots)). Ridgeline plots can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time (Chapter \@ref(boxplots-violins)).
 
 ## Proportions
 
-```{r proportions, fig.width = 8, fig.asp = 1/4}
+```{r proportions, fig.height = 8/4}
 palette <- pal_brown_green
 
 p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
@@ -358,14 +360,14 @@ p5 <- ggplot(df_props, aes(x = fct_rev(group), y = value, fill = group)) +
   labs(title = "Bars") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
-
-plot_grid(p1, p4, p5, p2, ncol = 4, scale = .9)
+pad_figure(plot_grid(p1, p4, p5, p2, ncol = 4, scale = .9),
+           fig.width = 8)
 ```
 
 Proportions can be visualized as pie charts, side-by-side bars, or stacked bars (Chapter \@ref(visualizing-proportions)), and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
 
 
-```{r proportions-comp, fig.width = 8, fig.asp = 1/4}
+```{r proportions-comp, fig.height = 8/4}
 p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
                                    fill=factor(type, levels = c("A", "C", "B")))) + 
   geom_col(position="dodge", color = palette[npal],
@@ -426,13 +428,14 @@ p8 <- ggdraw(plot_grid(p8_a, p8_b, p8_c, ncol = 3, scale = 1.4)) +
                                       size = 10, margin = margin(1, 0, 2, 0)),
             plot.background = element_rect(fill = palette[npal], color = "transparent"))
 
-plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
+pad_figure(plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9),
+           fig.width = 8)
 ```
 
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
 
-```{r fig.width = 8, fig.asp = 1/4, include = FALSE}
+```{r fig.height = 8/4, include = FALSE}
 ## Other
 
 palette <- pal_steel_blue
@@ -445,7 +448,7 @@ p1 <- ggplot(df_scatter_xy, aes(x, y)) +
   labs(title = "Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, ncol = 4, scale = .9)
+pad_figure(plot_grid(p1, ncol = 4, scale = .9), fig.width = 8)
 
 ## plots to add:
 
