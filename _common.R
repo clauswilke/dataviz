@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   fig.height = 0.618 * 6,
   #fig.asp = 0.618,  # 1 / phi
   fig.show = "hold",
-  dpi = 300
+  dpi = 600
 )
 
 options(dplyr.print_min = 6, dplyr.print_max = 6)

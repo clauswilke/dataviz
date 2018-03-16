@@ -24,15 +24,13 @@ set.seed(4211)
 points = round(c(rnorm(47, mean = 82, sd = 10), 45, 51, 67))
 points[points > 100] <- 100
 student_data <- data.frame(points, rank = rank(points, ties.method = "random"))
-p <- ggplot(student_data, aes(x = points, y = 50*..y..)) + 
+ggplot(student_data, aes(x = points, y = 50*..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2") +
   geom_point(aes(y = rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (ascending)") +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
-
-pad_figure(p, fig.width = 6)
 ```
 
 
@@ -41,7 +39,7 @@ You may wonder what happens if we rank the students the other way round, in desc
 (ref:student-grades-desc) Distribution of student grades plotted as a descending ecdf.
 
 ```{r student-grades-desc, fig.cap='(ref:student-grades-desc)'}
-p <- ggplot(student_data, aes(x = points, y = 51-50*..y..)) + 
+ggplot(student_data, aes(x = points, y = 51-50*..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2") +
   geom_point(aes(y = 51-rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
@@ -49,7 +47,6 @@ p <- ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 
-pad_figure(p, fig.width = 6)
 ```
 
 Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see Section \@ref(skewed-distributions)).
@@ -59,14 +56,12 @@ In practical applications, it is quite common to draw the ecdf without highlight
 (ref:student-grades-normalized) Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the *y* values plotted correspond to the fraction of students in the class with at most that many points.
 
 ```{r student-grades-normalized, fig.cap='(ref:student-grades-normalized)'}
-p <- ggplot(student_data, aes(x = points, y = ..y..)) + 
+ggplot(student_data, aes(x = points, y = ..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "cumulative frequency") +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
-
-pad_figure(p, fig.width = 6)
 ```
 
 We can directly read off key properties of the student grade distribution from this plot. For example, approximately a quarter of the students (25%) received less than 75 points. The median point value (corresponding to a cumulative frequency of 0.5) is 81. Approximately 20% of the students received 90 points or more.
@@ -81,7 +76,7 @@ Here, I will first discuss the number of people living in different US counties 
 
 (ref:county-populations) Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations, fig.height = 8.5 * 0.309, fig.cap='(ref:county-populations)'}
+```{r county-populations, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations)'}
 p1 <- ggplot(US_census, aes(x=pop2010)) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
@@ -109,7 +104,7 @@ The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak righ
 
 (ref:county-populations-log) Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations-log, fig.height = 8.5 * 0.309, fig.cap='(ref:county-populations-log)'}
+```{r county-populations-log, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations-log)'}
 p1_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
@@ -130,7 +125,7 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 (ref:county-populations-tail-log-log) Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants.
 
 ```{r county-populations-tail-log-log, fig.cap='(ref:county-populations-tail-log-log)'}
-p <- ggplot(US_census, aes(x=pop2010, y = 1-..y..)) + 
+ggplot(US_census, aes(x=pop2010, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0),
                 breaks = c(1e2, 1e3, 1e4, 1e5, 1e6, 1e7),
@@ -139,8 +134,6 @@ p <- ggplot(US_census, aes(x=pop2010, y = 1-..y..)) +
                 name = "number of county inhabitants") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
   theme_minimal_grid()
-
-pad_figure(p, fig.width = 6)
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
@@ -149,7 +142,7 @@ As a second example, I will use the distribution of word frequencies for all wor
 
 ```{r word-counts-tail-log-log, fig.cap='(ref:word-counts-tail-log-log)' }
 wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
-p <- ggplot(wc, aes(x=count, y = 1-..y..)) + 
+ggplot(wc, aes(x=count, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0), breaks = c(1, 10, 100, 1000, 10000),
                 name = "number of times word is used") +
@@ -158,8 +151,6 @@ p <- ggplot(wc, aes(x=count, y = 1-..y..)) +
                            expression(10^-2), expression(10^-1), expression(10^0)),
                 name = "fraction of words") +
   theme_minimal_grid()
-
-pad_figure(p, fig.width = 6)
 ```
 
 ## Quantile--quantile plots {#qq-plots}
@@ -173,14 +164,12 @@ When we perform this procedure for the student grades distribution from the begi
 ```{r student-grades-qq, fig.cap='(ref:student-grades-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(student_data$points, "normal")$estimate)
-p <- ggplot(student_data, aes(sample = points)) + 
+ggplot(student_data, aes(sample = points)) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 10*(5:10)) +
   scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
   theme_half_open()
-
-pad_figure(p, fig.width = 6)
 ```
 
 The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal). We see that the student grades follow mostly a normal distribution, with a few deviations at the bottom and at the top (a few students performed worse than expected on either end). The deviations from the distribution at the top end are caused by the maximum point value of 100 in the hypothetical exam; regardless of how good the best student is, he or she could at most obtain 100 points.
@@ -193,14 +182,12 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 ```{r county-populations-qq, fig.cap='(ref:county-populations-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(log(US_census$pop2010), "normal")$estimate)
-p <- ggplot(US_census, aes(sample = log(pop2010))) + 
+ggplot(US_census, aes(sample = log(pop2010))) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 5+2.5*(0:4)) +
   scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
   theme_half_open()
-
-pad_figure(p, fig.width = 6)
 ```
 
 
