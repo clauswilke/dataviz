@@ -45,7 +45,7 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_bad(lincoln_errbar)
+pad_figure(stamp_bad(lincoln_errbar))
 ```
 
 We can address all four shortcomings of Figure \@ref(fig:lincoln-temp-points-errorbars) by using a traditional and commonly used method for visualizing distributions, the boxplot. A boxplot divides the data into quartiles and visualizes them in a standardized manner (Figure \@ref(fig:boxplot-schematic)). Boxplots are simple yet informative, and they work well when plotted next to each other to visualize many distributions at once. For the Lincoln temperature data, using boxplots leads to Figure \@ref(fig:boxplot-schematic). In that figure, we can now see that temperature is highly skewed in December (most days are moderately cold and a few are extremely cold) and not very skewed at all in some other months, for example in July.
@@ -71,7 +71,7 @@ p_points <- ggplot(data.frame(y), aes(x = 0, y = y)) +
   scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
   theme_nothing()
 
-plot_grid(p_points, p_boxplot, rel_widths = c(.65, 1), nrow = 1)
+pad_figure(plot_grid(p_points, p_boxplot, rel_widths = c(.65, 1), nrow = 1))
 ```
 
 
@@ -84,7 +84,7 @@ lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_phantom(lincoln_box)
+pad_figure(lincoln_box)
 ```
 
 Boxplots were invented by the statistician John Tukey in the early 1970s, and they quickly gained popularity because they were highly informative while being easy to draw by hand. Most data visualizations were drawn by hand at that time. However, with modern computing and visualization capabilities, we are not limited to what is easily drawn by hand. Therefore, more recently, we see boxplots being replaced by violin plots, which are equivalent to the density estimates discussed in Chapter \@ref(histograms-density-plots) but rotated by 90 degrees and then mirrored (Figure \@ref(fig:violin-schematic)). Violins can be used whenever one would otherwise use a boxplot, and they provide a much more nuanced picture of the data. In particular, violin plots will accurately represent bimodal data whereas a boxplot will not.
@@ -111,7 +111,7 @@ p_points <- ggplot(data.frame(y), aes(x = 0, y = y)) +
   scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
   theme_nothing()
 
-plot_grid(p_points, p_violin, rel_widths = c(.65, 1), nrow = 1)
+pad_figure(plot_grid(p_points, p_violin, rel_widths = c(.65, 1), nrow = 1))
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -131,7 +131,7 @@ lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_phantom(lincoln_violin)
+pad_figure(lincoln_violin)
 ```
 
 
@@ -146,7 +146,7 @@ lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_bad(lincoln_points)
+pad_figure(stamp_bad(lincoln_points))
 ```
 
 
@@ -159,7 +159,7 @@ lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_phantom(lincoln_jitter)
+pad_figure(lincoln_jitter)
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -179,7 +179,7 @@ lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F
   ylab("mean temperature (°F)") +
   theme_half_open()
 
-stamp_phantom(lincoln_sina)
+pad_figure(lincoln_sina)
 ```
 
 
@@ -194,7 +194,7 @@ The standard ridgeline plot uses density estimates (Figure \@ref(fig:temp-ridgel
 ```{r temp-ridgeline, fig.cap = '(ref:temp-ridgeline)'}
 bandwidth <- 3.4
 
-ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
+p <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   geom_density_ridges(scale = 3, rel_min_height = 0.01,
                       bandwidth = bandwidth, fill = lighten("#56B4E9", .3), color = "white") +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
@@ -202,6 +202,8 @@ ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   xlab("mean temperature (°F)") +
   theme_ridges(grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
+
+pad_figure(p)
 ```
 
 Because the *x* axis shows the response variable and the *y* axis shows the grouping variable, there is no separate axis for the density estimates in a ridgeline plot. Density estimates are shown alongside the grouping variable. This is no different from the violin plot, where densities are also shown alongside the grouping variable, without a separate, explicit scale. In both cases, the purpose of the plot is not to show specific density values but instead to allow for easy comparison of density shapes and relative heights across groups.
@@ -223,7 +225,7 @@ p_binline <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   theme_ridges(grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
 
-stamp_ugly(p_binline) 
+pad_figure(stamp_ugly(p_binline)) 
 ```
 
 
@@ -232,20 +234,22 @@ Ridgeline plots scale to very large numbers of distributions. For example, Figur
 
 (ref:movies-ridgeline) Evolution of movie lengths over time. Since the 1960s, the majority of all movies are approximately 90 minutes long. Data source: Internet Movie Database, IMDB
 
-```{r movies-ridgeline, fig.width = 5, fig.asp = 1, fig.cap = '(ref:movies-ridgeline)'}
-ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
+```{r movies-ridgeline, fig.height = 5 * 1, fig.cap = '(ref:movies-ridgeline)'}
+p <- ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
   geom_density_ridges(scale = 10, size = 0.25, rel_min_height = 0.03, fill = "grey85") +
   theme_ridges(center = TRUE) +
   scale_x_continuous(limits = c(0, 200), expand = c(0, 0), name = "length (minutes)") +
   scale_y_reverse(breaks = c(2000, 1980, 1960, 1940, 1920),
                   limits = c(2005, 1903), expand = c(0, 0))
+
+pad_figure(p, fig.width = 5)
 ```
 
 Ridgeline plots also work well if we want to compare two trends over time. This is a scenario that arises commonly if we want to analyze the voting patterns of the members of two different parties. We can make this comparison by staggering the distributions vertically by time and drawing two differently colored distributions at each time point, representing the two parties (Figure \@ref(fig:dw-nominate-ridgeline)).
 
 (ref:dw-nominate-ridgeline) Voting patterns in the U.S. House of Representatives have become increasingly polarized. DW-NOMINATE scores are frequently used to compare voting patterns of representatives between parties and over time. Here, score distributions are shown for each Congress from 1963 to 2013 separately for Democrats and Republicans. Each Congress is represented by its first year. Original figure concept: @McDonald-DW-NOMINATE.
 
-```{r dw-nominate-ridgeline, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:dw-nominate-ridgeline)'}
+```{r dw-nominate-ridgeline, fig.height = 8.5 * 0.5, fig.cap = '(ref:dw-nominate-ridgeline)'}
 # U.S. House 1963-2013
 all_house_88_113 <- dw_nominate_house %>% 
   filter(congress >= 88 & cd !=0 & cd != 98 & cd != 99) %>%

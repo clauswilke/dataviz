@@ -4,7 +4,7 @@ source("_common.R")
 ```
 
 
-# Introduction
+# Introduction {#introduction}
 
 *Write about visualizations vs. figures. This book is specifically about static visualizations presented in print, online, or in presentations. The book does not cover interactive visuals or movies. For this reason, we will use the words "visualization" and "figure" somewhat interchangeably.*
 

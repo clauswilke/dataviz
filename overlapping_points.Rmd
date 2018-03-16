@@ -16,7 +16,7 @@ We first consider a scenario with only a moderate number of data points but with
 
 (ref:mpg-cty-displ-solid) City fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled "bad" because many points are plotted on top of others and obscure them. 
 
-```{r mpg-cty-displ-solid, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-solid)'}
+```{r mpg-cty-displ-solid, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-cty-displ-solid)'}
 p_mpg_solid <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   geom_point(size = 3, shape = 21) + 
   ylab("fuel economy (mpg)") +
@@ -32,14 +32,14 @@ p_mpg_solid <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   theme_half_open() +
   theme(legend.position = c(.7, .8))
 
-stamp_bad(p_mpg_solid)
+pad_figure(stamp_bad(p_mpg_solid), fig.width = 5.5)
 ```
 
 One way to ameliorate this problem is to use partial transparency. If we make individual points partially transparent, then overplotted points appear as darker points and thus the shade of the points reflects the density of points in that location of the graph (Figure \@ref(fig:mpg-cty-displ-transp)).
 
 (ref:mpg-cty-displ-transp) City fuel economy versus engine displacement. Because points have been made partially transparent, points that lie on top of other points can now be identified by their darker shade. 
 
-```{r mpg-cty-displ-transp, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-transp)'}
+```{r mpg-cty-displ-transp, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-cty-displ-transp)'}
 p_mpg_transp <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   geom_point(size = 3, shape = 21) + 
   ylab("fuel economy (mpg)") +
@@ -55,14 +55,14 @@ p_mpg_transp <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   theme_half_open() +
   theme(legend.position = c(.7, .8))
 
-stamp_phantom(p_mpg_transp)
+pad_figure(p_mpg_transp, fig.width = 5.5)
 ```
 
 However, making points partially transparent is not always sufficient to solve the issue of overplotting. For example, even though we can see in Figure \@ref(fig:mpg-cty-displ-transp) that some points have a darker shade than others, it is difficult to estimate how many points were plotted on top of each other in each location. In addition, while the differences in shading are clearly visible, they are not self-explanatory. A reader who sees this figure for the first time will likely wonder why some points are darker than others and will not realize that those points are in fact multiple points stacked on top of each other. A simple trick that helps in this situation is to apply a small amount of jitter to the points, i.e., to displace each point randomly by a small amount in either the *x* or the *y* direction or both. With jitter, it is immediately apparent that the darker areas arise from points that are plotted on top of each other (Figure \@ref(fig:mpg-cty-displ-jitter)).
 
 (ref:mpg-cty-displ-jitter) City fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overplotted points more clearly visible without substantially distorting the message of the plot.
 
-```{r mpg-cty-displ-jitter, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-jitter)'}
+```{r mpg-cty-displ-jitter, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-cty-displ-jitter)'}
 p_mpg_jitter <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   geom_point(size = 3, shape = 21,
              position = position_jitter(width = 0.01 * diff(range(mpg$displ)),
@@ -81,14 +81,14 @@ p_mpg_jitter <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   theme_half_open() +
   theme(legend.position = c(.7, .8))
 
-stamp_phantom(p_mpg_jitter)
+pad_figure(p_mpg_jitter, fig.width = 5.5)
 ```
 
 One downside of jittering is that it does change the data and therefore has to be performed with care. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset. The result is a misleading visualization of the data. See Figure \@ref(fig:mpg-cty-displ-jitter-extreme) as an example.
 
 (ref:mpg-cty-displ-jitter-extreme) City fuel economy versus engine displacement. By adding too much jitter to the points, we have created a visualization that does not accurately reflect the underlying dataset.
 
-```{r mpg-cty-displ-jitter-extreme, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-cty-displ-jitter-extreme)'}
+```{r mpg-cty-displ-jitter-extreme, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-cty-displ-jitter-extreme)'}
 p_mpg_jitter_extreme <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
   geom_point(size = 3, shape = 21,
              position = position_jitter(width = 0.1 * diff(range(mpg$displ)),
@@ -107,7 +107,7 @@ p_mpg_jitter_extreme <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = 
   theme_half_open() +
   theme(legend.position = c(.7, .8))
 
-stamp_bad(p_mpg_jitter_extreme)
+pad_figure(stamp_bad(p_mpg_jitter_extreme), fig.width = 5.5)
 ```
 
 ## 2d histograms
@@ -116,7 +116,7 @@ When the number of individual points gets very large, partial transparency (with
 
 (ref:nycflights-points) Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure.
 
-```{r nycflights-points, fig.asp = 0.75, fig.cap = '(ref:nycflights-points)'}
+```{r nycflights-points, fig.height = 6 * 0.75, fig.cap = '(ref:nycflights-points)'}
 # break points along the x axis
 breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
@@ -128,7 +128,7 @@ p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (
   
 p_flights_scatter <- p_flights_base + geom_point(alpha = 0.2)
 
-stamp_bad(p_flights_scatter)
+pad_figure(stamp_bad(p_flights_scatter), fig.width = 6)
 ```
 
 Figure \@ref(fig:nycflights-points) shows departure delays for over 100,000 individual flights, with each dot representing one flight departure. Even though we have made the individual dots fairly transparent, the majority of them just forms a black band between 0 and 300 minutes departure delay. This band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the dots.
@@ -137,12 +137,13 @@ In such cases, instead of plotting individual points, we can make a 2d histogram
 
 (ref:nycflights-2d-bins) Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle.
 
-```{r nycflights-2d-bins, fig.asp = 0.75, fig.cap = '(ref:nycflights-2d-bins)'}
+```{r nycflights-2d-bins, fig.height = 6 * 0.75, fig.cap = '(ref:nycflights-2d-bins)'}
 p_flights_2d_bins <- p_flights_base +
   geom_bin2d(bins=50) +
   scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
   theme(legend.position = c(0.85, .85))
-stamp_phantom(p_flights_2d_bins)
+
+pad_figure(p_flights_2d_bins, fig.width = 6)
 ```
 
 
@@ -151,12 +152,13 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 
 (ref:nycflights-hex-bins) Departure delay in minutes versus the flight departure time. Each colored hexagon represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that hexagon.
 
-```{r nycflights-hex-bins, fig.asp = 0.75, fig.cap = '(ref:nycflights-hex-bins)'}
+```{r nycflights-hex-bins, fig.height = 6 * 0.75, fig.cap = '(ref:nycflights-hex-bins)'}
 p_flights_hex_bins <- p_flights_base +
   geom_hex(bins=50) +
   scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
   theme(legend.position = c(0.85, .85))
-stamp_phantom(p_flights_hex_bins)
+
+pad_figure(p_flights_hex_bins, fig.width = 6)
 ```
 
 
@@ -168,7 +170,7 @@ As an example for this approach, we consider the relationship between population
 
 (ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
 
-```{r midwest-scatter, fig.asp = 0.8, fig.cap = '(ref:midwest-scatter)'}
+```{r midwest-scatter, fig.height = 6 * 0.8, fig.cap = '(ref:midwest-scatter)'}
 county_midwest <- left_join(US_census, US_regions) %>%
   filter(region == "Midwest")
 
@@ -183,24 +185,29 @@ p_midwest_base <- ggplot(county_midwest, aes(area, pop2010)) +
   xlab("area (square miles)") +
   theme_minimal_grid()
 
-p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7)
+pad_figure(p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7),
+           fig.width = 6)
 ```
 
 
 (ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
 
-```{r midwest-density-dots, fig.asp = 0.8, fig.cap = '(ref:midwest-density-dots)'}
-p_midwest_base + 
+```{r midwest-density-dots, fig.height = 6 * 0.8, fig.cap = '(ref:midwest-density-dots)'}
+p <- p_midwest_base + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
   geom_point(color = "navy", size = .5, alpha = .4)
+
+pad_figure(p, fig.width = 6)
 ```
 
 (ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
 
-```{r midwest-density-smooth, fig.asp = 0.8, fig.cap = '(ref:midwest-density-smooth)'}
-p_midwest_base + 
+```{r midwest-density-smooth, fig.height = 6 * 0.8, fig.cap = '(ref:midwest-density-smooth)'}
+p <- p_midwest_base + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
   geom_smooth(color = "navy", se = FALSE, size = 0.5)
+
+pad_figure(p, fig.width = 6)
 ```
 
 

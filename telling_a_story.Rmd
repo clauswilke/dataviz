@@ -1,6 +1,6 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
-source("_common.R")
+source("_common2.R")
 
 library(lubridate)
 library(forcats)
@@ -18,7 +18,7 @@ Some might hear this story and conclude that the generals are not very smart or 
 
 (ref:arrival-delay-vs-distance) Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistenly lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled.  This figure is labeled as bad because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
-```{r arrival-delay-vs-distance, fig.width = 8, fig.cap = '(ref:arrival-delay-vs-distance)'}
+```{r arrival-delay-vs-distance, fig.cap = '(ref:arrival-delay-vs-distance)'}
 library(nycflights13)
 carrier_names <- data.frame(carrier = c("9E", "AA", "B6", "DL", "EV", "MQ", "UA", "US", "WN", "--"),
                             name= c("Endeavor", "American", "JetBlue", "Delta", "ExpressJet", "Envoy", "United",
@@ -59,7 +59,8 @@ p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name,
   theme_minimal_grid() +
   theme(plot.margin = margin(7, 10, 7, 7))
 
-stamp_bad(p_delay_distance) 
+stamp_bad(p_delay_distance)
+#pad_figure(stamp_bad(p_delay_distance), fig.width = 8) 
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -85,7 +86,10 @@ flights_grouped %>%
     geom_col() + 
     coord_flip() +
     theme_minimal_vgrid() +
-    theme(axis.ticks.y = element_blank())
+    theme(axis.ticks.y = element_blank()) -> p
+
+p
+#pad_figure(p)
 ```
 
 
@@ -102,7 +106,10 @@ flights_grouped %>%
     geom_col() + 
     coord_flip() +
     theme_minimal_vgrid() +
-    theme(axis.ticks.y = element_blank())
+    theme(axis.ticks.y = element_blank()) -> p
+
+p
+#pad_figure(p)
 ```
 
 
@@ -117,7 +124,7 @@ This recommendation is particularly relevant if the final figure is a trellis pl
 
 (ref:united-departures-weekdays) United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekedays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
-```{r united-departures-weekdays, fig.width = 3.5, fig.asp = 1, fig.cap = '(ref:united-departures-weekdays)'}
+```{r united-departures-weekdays, fig.width = 4, fig.asp = 1, fig.cap = '(ref:united-departures-weekdays)'}
 flights_grouped$name <- factor(flights_grouped$name,
                                levels = c("United", "ExpressJet", "JetBlue", "Delta", "American",
                                           "Endeavor", "Envoy", "US Airways", "Southwest", "other"))
@@ -140,30 +147,34 @@ filter(flights_grouped, name == "United" & origin == "EWR") %>%
           panel.grid.major = element_line(color = "gray80"),
           panel.background = element_rect(fill = "gray90"),
           plot.title = element_text(hjust = 0.5, vjust = 0.5,
-                                    margin = margin(4, 4, 4, 4)))
+                                    margin = margin(4, 4, 4, 4))) -> p
+
+p
+#pad_figure(p, fig.width = 4.5)
 ```
 
 
 (ref:all-departures-weekdays) Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR),  JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
  
-```{r all-departures-weekdays, fig.width = 8.5, fig.asp = .4, fig.cap = '(ref:all-departures-weekdays)'}
+```{r all-departures-weekdays, fig.width = 5, fig.asp = 0.4, fig.cap = '(ref:all-departures-weekdays)'}
 ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
-  geom_bar(fill = "#0072B2D0", color = "white") + 
+  geom_bar(fill = "#0072B2D0", color = "white", size = 0.3) + 
   facet_grid(origin ~ name) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 7500)) +
   scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
                    expand = c(0, 0.05),
                    name = "weekday") +
-  theme_minimal_hgrid(11) +
+  theme_minimal_hgrid(7) +
   #panel_border() +
-  theme(strip.text = element_text(face = "bold",
-                                  margin = margin(3, 3, 3, 3)),
+  theme(strip.text = element_text(face = "plain",
+                                  margin = margin(2, 2, 2, 2)),
         axis.line.x = element_blank(),
-        panel.spacing.x = grid::unit(5, "pt"),
-        panel.spacing.y = grid::unit(5, "pt"),
-        panel.grid.major = element_line(color = "gray80"),
+        axis.ticks = element_line(size = 0.25),
+        panel.spacing.x = grid::unit(2, "pt"),
+        panel.spacing.y = grid::unit(2, "pt"),
+        panel.grid.major = element_line(color = "gray80", size = 0.25),
         panel.background = element_rect(fill = "gray90"),
-        plot.margin = margin(5.5, 1, 5.5, 1))
+        plot.margin = margin(5, 1, 5, 1))
 ```
 
 
@@ -174,7 +185,7 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
 
 (ref:athletes-composite-inconsistent) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of $10^{12}$ per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport.
 
-```{r athletes-composite-inconsistent, fig.width = 7, fig.cap = '(ref:athletes-composite-inconsistent)'}
+```{r athletes-composite-inconsistent, fig.cap = '(ref:athletes-composite-inconsistent)'}
 male_sport <- unique(filter(Aus_athletes, sex=="m")$sport)
 female_sport <- unique(filter(Aus_athletes, sex=="f")$sport)
 both_sport <- male_sport[male_sport %in% female_sport]
@@ -188,15 +199,15 @@ p1 <- ggplot(athletes_df, aes(x = sex)) +
   geom_bar(fill = "#56B4E9E0") +
   scale_y_continuous(limits = c(0, 85), expand = c(0.01, 0), name = "number") +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
-  theme_minimal_hgrid() + 
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) + 
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"))
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
-  geom_point(size = 2.5) +
+  geom_point(size = 2.) +
   scale_x_continuous(limits = c(3.8, 6.75), position = "top") +
-  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(2.2, 11.5), expand = c(0, 0)) +
   scale_shape_manual(values = c(21, 22),
                      labels = c("female   ", "male"), name = NULL,
                      guide = guide_legend(direction = "horizontal")) +
@@ -208,12 +219,12 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill =
                      guide = guide_legend(direction = "horizontal")) +
   xlab("RBC count") +
   ylab("WBC count") +
-  theme_minimal_grid() +
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_grid(12) +
+  theme(axis.title = element_text(size = 0.857*12),
         legend.position = c(1., 0),
         legend.justification = "right",
         legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(6, 12, 6, 6))
 
 p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
                               fill = fct_relevel(sex, "m"))) + 
@@ -224,40 +235,41 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m
                      labels = c("male", "female")) +
   scale_x_discrete(name = NULL) +
   scale_y_continuous(name = "% body fat") +
-  theme_minimal_hgrid() +
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) +
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(6, 12, 6, 6))
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain"))
 ```
 
 (ref:athletes-composite-good) Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure \@ref(fig:athletes-composite-inconsistent), but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure.
 
-```{r athletes-composite-good, fig.width = 7, fig.cap = '(ref:athletes-composite-good)'}
+```{r athletes-composite-good, fig.cap = '(ref:athletes-composite-good)'}
 p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
   geom_bar() +
   scale_y_continuous(limits = c(0, 85), expand = c(0.01, 0), name = "number") +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-  theme_minimal_hgrid() + 
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) + 
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"))
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
-  geom_point(pch = 21, color = "white", size = 2.5) +
+  geom_point(pch = 21, color = "white", size = 2.) +
   scale_x_continuous(limits = c(3.8, 6.75), position = "top") +
-  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(2.2, 11.5), expand = c(0, 0)) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   xlab("RBC count") +
   ylab("WBC count") +
-  theme_minimal_grid() +
-  theme(axis.title = element_text(size = 0.857*14),
-        plot.margin = margin(7, 14, 7, 7))
+  theme_minimal_grid(12) +
+  theme(axis.title = element_text(size = 0.857*12),
+        plot.margin = margin(6, 12, 6, 6))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -272,22 +284,23 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
   guides(color = guide_legend(override.aes = list(fill = c("#D55E00D0", "#0072B2D0"),
                                                   color = "white", size = 2),
                               direction = "horizontal")) +
-  theme_minimal_hgrid() +
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) +
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         legend.position = c(1., 0.9),
         legend.justification = "right",
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(6, 12, 6, 6))
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain")
 ```
 
 (ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results.
 
-```{r athletes-composite-repetitive, fig.width = 7, fig.cap = '(ref:athletes-composite-repetitive)'}
+```{r athletes-composite-repetitive, fig.cap = '(ref:athletes-composite-repetitive)'}
 cc_df <- athletes_df %>%
   select(sex, rcc, wcc) %>%
   gather(variable, value, -sex) %>%
@@ -304,12 +317,12 @@ p2 <- ggplot(cc_df, aes(x = sex, y = mean, fill = sex)) +
   scale_y_continuous(limits = c(0, 7.8), expand = c(0.01, 0), name = "mean count") +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-  theme_minimal_hgrid() + 
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) + 
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(6, 12, 6, 6))
 
 bf_df <- athletes_df %>%
   select(sex, sport, pcBfat) %>%
@@ -326,18 +339,19 @@ p3 <- ggplot(bf_df, aes(x = sport, y = mean, fill = sex)) +
                     labels = c("female   ", "male")) +
   guides(fill = guide_legend(override.aes = list(color = "white", size = 2),
                               direction = "horizontal")) +
-  theme_minimal_hgrid() + 
-  theme(axis.title = element_text(size = 0.857*14),
+  theme_minimal_hgrid(12) + 
+  theme(axis.title = element_text(size = 0.857*12),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         legend.position = c(1., 0.9),
         legend.justification = "right",
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(6, 12, 6, 6))
 
 
 
 p_row <- plot_grid(p1, p2, labels = "auto", label_fontface = "plain", rel_widths = c(0.7, 1))
+
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c"), label_fontface = "plain"))
 
 ```

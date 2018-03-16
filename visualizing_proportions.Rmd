@@ -42,7 +42,7 @@ bund_pie <- bundestag %>%
 rpie = 1
 rlabel = 1.05 * rpie
 
-ggplot(bund_pie) + 
+p <- ggplot(bund_pie) + 
   geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
                    start = start_angle, end = end_angle, fill = party), color = "white", size = 0.5) +
   geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = party,
@@ -57,13 +57,14 @@ ggplot(bund_pie) +
   theme_nothing() #+
   #theme(plot.background = element_rect(fill = "#C0C0C0"))
 
+pad_figure(p)
 ```
 
 A pie chart breaks a circle into slices such that the area of each slice is proportional to the fraction of the total it represents. The same procedure can be performed on a rectangle, and the result is a stacked bar chart (Figure \@ref(fig:bundestag-stacked-bars)). Depending on whether we slice the bar vertically or horizontally, we obtain vertically stacked bars (Figure \@ref(fig:bundestag-stacked-bars)a) or horizontally stacked bars (Figure \@ref(fig:bundestag-stacked-bars)b).
 
 (ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
-```{r, bundestag-stacked-bars, fig.width = 8.5, fig.cap='(ref:bundestag-stacked-bars)'}
+```{r, bundestag-stacked-bars, fig.height = 8.5 * 0.618, fig.cap='(ref:bundestag-stacked-bars)'}
 bundestag <- mutate(bundestag,
                     label_y = cumsum(seats) - seats/2)
 
@@ -111,7 +112,7 @@ bt_bars <- ggplot(bundestag, aes(x = factor(party, levels = bundestag$party), y 
   theme_minimal_hgrid() +
   theme(axis.ticks.x = element_blank())
 
-bt_bars
+pad_figure(bt_bars)
 ```
 
 Many authors categorically reject pie charts and argue in favor of side-by-side or stacked bars. Others defend the use of pie charts in some applications. My own opinion is that none of these visualizations is consistently superior over any other. Depending on the features of the dataset and the specific story you want to tell, you may want to favor one or the other approach. In the case of the 8th German Bundestag, I think that a pie chart is the best option. It shows clearly that the ruling coalition of SPD and FDP jointly had a small majority over the CDU/CSU (Figure \@ref(fig:bundestag-pie)). This fact is not visually obvious in any of the other plots (Figures \@ref(fig:bundestag-stacked-bars) and \@ref(fig:bundestag-bars-side-by-side)). 
@@ -153,7 +154,7 @@ I will now demonstrate a case where pie charts fail. This example is modeled aft
 
 (ref:marketshare-pies) Market share of five hypothetical companies, A--E, for the years 2015--2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
 
-```{r marketshare-pies, fig.width = 8.5, fig.asp = .35, fig.cap='(ref:marketshare-pies)'}
+```{r marketshare-pies, fig.height = 8.5 * 0.35, fig.cap='(ref:marketshare-pies)'}
 # calculate the start and end angles for each pie
 market_pies_df <- marketshare %>%
   group_by(year) %>%
@@ -201,7 +202,7 @@ stacked_bars <- ggplot(marketshare, aes(x = year, y = percent, fill = company)) 
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
   theme_half_open()
 
-stamp_bad(stacked_bars)
+pad_figure(stamp_bad(stacked_bars))
 ```
 
 For this hypothetical data set, side-by-side bars are the best choice (Figure \@ref(fig:marketshare-side-by-side)). This visualization highlights that both companies A and B have increased their market share from 2015 to 2017 while both companies D and E have reduced theirs. It also shows that market shares increase sequentially from company A to E in 2015 and similarly decrease in 2017.
@@ -209,13 +210,15 @@ For this hypothetical data set, side-by-side bars are the best choice (Figure \@
 (ref:marketshare-side-by-side) Market share of five hypothetical companies for the years 2015--2017, visualized as side-by-side bars.
 
 ```{r marketshare-side-by-side, fig.cap='(ref:marketshare-side-by-side)'}
-ggplot(marketshare, aes(x = company, y = percent, fill = company)) + 
+p <- ggplot(marketshare, aes(x = company, y = percent, fill = company)) + 
   geom_col() + 
   facet_wrap(~year) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4), guide = "none") + 
   theme_half_open() +
   theme(strip.background = element_blank())
+
+pad_figure(p)
 ```
 
 
@@ -225,7 +228,7 @@ In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend seq
 
 (ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org.
 
-```{r women-parliament, fig.width = 7.5, fig.asp = .55, fig.cap = '(ref:women-parliament)'}
+```{r women-parliament, fig.height = 7.5 * 0.55, fig.cap = '(ref:women-parliament)'}
 ccode = "RWA" # Rwanda
 #ccode = "BEL" # Belgium
 #ccode = "ARB" # Arab world
@@ -260,7 +263,8 @@ yax <- axis_canvas(plot_base, axis = "y") +
   geom_text(data = labels, aes(y = pos, label = paste0(" ", gender)),
             x = 0, hjust = 0, size = 14/.pt)
 
-ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
+pad_figure(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")),
+           fig.width = 7.5)
 
 ```
 
@@ -270,7 +274,7 @@ To give an example where stacked densities may be appropriate, consider the heal
 
 (ref:health-vs-age) Health status by age, as reported by the general social survey (GSS).
 
-```{r health-vs-age, fig.asp = .5, fig.cap='(ref:health-vs-age)'}
+```{r health-vs-age, fig.height = 6 * 0.5, fig.cap='(ref:health-vs-age)'}
 df_health <- select(happy, age, health) %>%
   na.omit()
 
@@ -311,7 +315,7 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
         plot.margin = margin(7, 10, 7, 7))
 
 p_aligned <- align_plots(p_health, p_marital, align = 'v')
-ggdraw(p_aligned[[1]])
+pad_figure(p_aligned[[1]], fig.width = 6)
 ```
 
 Nevertheless, this figure has a major limitation: By visualizing the porportions of the four health conditions as percent of the total, the figure obscures that there are many more young people than old people in the dataset. Thus, even though the *percentage* of people reporting to be in good health remains approximately unchanged across ages spanning seven decades, the *absolute number* of people in good health declines as the total number of people at a given age declines. I will present a potential solution to this problem in the next section.
@@ -323,7 +327,7 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 
 (ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution.
 
-```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:health-vs-age-facets)'}
+```{r health-vs-age-facets, fig.height = 8.5 * 0.35, fig.cap='(ref:health-vs-age-facets)'}
 ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..)) +
   geom_density_line(data = select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
@@ -345,15 +349,15 @@ To provide a second example, let's consider a different variable from the same s
 
 (ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret. 
 
-```{r marital-vs-age, fig.asp = 0.5, fig.cap='(ref:marital-vs-age)'}
-stamp_bad(p_aligned[[2]])
+```{r marital-vs-age, fig.height = 6 * 0.5, fig.cap='(ref:marital-vs-age)'}
+pad_figure(stamp_bad(p_aligned[[2]]), fig.width = 6)
 ```
 
 The same dataset visualized as partial densities is much clearer (Figure \@ref(fig:marital-vs-age-facets)). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.
 
 (ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 
-```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
+```{r marital-vs-age-facets, fig.height = 8.5 * 0.35, fig.cap='(ref:marital-vs-age-facets)'}
 ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
   geom_density_line(data = select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
@@ -367,15 +371,4 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
         legend.justification = "right",
         legend.margin = margin(0, 0, 0.2, 0, "cm"),
         legend.spacing.x = grid::unit(0.2, "cm"))
-```
-
-
-
-```{r}
-
-# **Additional ideas, for a separate chapter on nested proportions: treemaps and Sankey diagrams.**
-
-#Notes:
-#  https://github.com/wilkox/treemapify
-#  Also possibly use survival on Titanic, as.data.frame(Titanic)
 ```

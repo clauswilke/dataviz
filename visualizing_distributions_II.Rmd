@@ -32,7 +32,7 @@ p <- ggplot(student_data, aes(x = points, y = 50*..y..)) +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 
@@ -49,7 +49,7 @@ p <- ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 Ascending cumulative distribution functions are more widely known and more commonly used than descending ones, but both have important applications. Descending cumulative distribution functions are critical when we want to visualize highly skewed distributions (see Section \@ref(skewed-distributions)).
@@ -66,7 +66,7 @@ p <- ggplot(student_data, aes(x = points, y = ..y..)) +
   theme_minimal_grid() +
   theme(axis.line.x = element_blank())
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 We can directly read off key properties of the student grade distribution from this plot. For example, approximately a quarter of the students (25%) received less than 75 points. The median point value (corresponding to a cumulative frequency of 0.5) is 81. Approximately 20% of the students received 90 points or more.
@@ -140,7 +140,7 @@ p <- ggplot(US_census, aes(x=pop2010, y = 1-..y..)) +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
   theme_minimal_grid()
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
@@ -159,7 +159,7 @@ p <- ggplot(wc, aes(x=count, y = 1-..y..)) +
                 name = "fraction of words") +
   theme_minimal_grid()
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 ## Quantile--quantile plots {#qq-plots}
@@ -180,7 +180,7 @@ p <- ggplot(student_data, aes(sample = points)) +
   scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
   theme_half_open()
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal). We see that the student grades follow mostly a normal distribution, with a few deviations at the bottom and at the top (a few students performed worse than expected on either end). The deviations from the distribution at the top end are caused by the maximum point value of 100 in the hypothetical exam; regardless of how good the best student is, he or she could at most obtain 100 points.
@@ -200,7 +200,7 @@ p <- ggplot(US_census, aes(sample = log(pop2010))) +
   scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
   theme_half_open()
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 

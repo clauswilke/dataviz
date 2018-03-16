@@ -109,7 +109,7 @@ p <- ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)
         axis.ticks.y = element_blank(),
         axis.title = element_text(size = 12))
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 Regardless of whether we place bars vertically or horizontally, we need to pay attention to the order in which the bars are arranged. I often see bar plots where the bars are arranged arbitrarily or by some criterion that is not meaningful in the context of the figure. Some plotting programs arrange bars by default in alphabetic order of the labels, and other, similarly arbitrary arrangements are possible (Figure \@ref(fig:boxoffice-horizontal-bad-order)). In general, the resulting figures are more confusing and less intuitive than figures where bars are arranged in order of their size.  
@@ -134,7 +134,7 @@ p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 
         axis.ticks.y = element_blank(),
         axis.title = element_text(size = 12))
 
-pad_figure(stamp_bad(p), fig.width = 6)
+pad_figure(stamp_bad(p))
 ```
 
 We should only rearrange bars, however, when there is no natural ordering to the categories the bars represent. Whenever there is a natural ordering (i.e., when our categorical variable is an ordered factor) we should retain that ordering in the visualization. For example, Figure \@ref(fig:income-by-age) shows the median annual income in the U.S. by age groups. In this case, the bars should be arranged in order of increasing age. Sorting by bar height while shuffling the age groups makes no sense (Figure \@ref(fig:income-by-age-sorted)).
@@ -157,7 +157,7 @@ income_by_age %>% filter(race == "all") %>%
           #axis.line = element_blank(),
           plot.margin = margin(7, 14, 7, 7)) -> p
 
-pad_figure(p, fig.width = 6)
+pad_figure(p)
 ```
 
 (ref:income-by-age-sorted) 2016 median U.S. annual household income versus age group, sorted by income. While this order of bars looks visually appealing, the order of the age groups is now confusing. Data source: United States Census Bureau
@@ -177,7 +177,7 @@ income_by_age %>% filter(race == "all") %>%
           #axis.line = element_blank(),
           plot.margin = margin(7, 14, 7, 7)) -> p_income_sorted
 
-pad_figure(stamp_bad(p_income_sorted), fig.width = 6)
+pad_figure(stamp_bad(p_income_sorted))
 ```
 
 

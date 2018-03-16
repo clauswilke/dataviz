@@ -29,7 +29,7 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
   theme_half_open() +
   background_grid(major = "y", minor = "none")
 
-stamp_bad(h3_bad)
+pad_figure(stamp_bad(h3_bad))
 ```
 
 (ref:titanic-ages-filled) The same histogram of Figure \@ref(fig:titanic-ages-lines), now drawn with filled bars. The shape of the age distribution is much more easily discernible in this variation of the figure.
@@ -41,7 +41,7 @@ h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, f
   theme_half_open() +
   background_grid(major = "y", minor = "none")
 
-stamp_phantom(h3_good)
+pad_figure(h3_good)
 ```
 
 Next, let's take a look at an old-school density plot. I'm showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure \@ref(fig:iris-densities-lines)). The distributions are shown just by their outlines, and because the figure is in black-and-white, we're using different line styles to distinguish them. This figure has two main problems. First, the dashed line styles do not provide a clear separation between the area under the curve and the area above it. While our visual system is quite good at connecting the individual line elements into a continuous line, the dashed lines nevertheless look porous and do not serve as a strong boundary of the enclosed area. Second, because the lines intersect and the areas they enclose are not shaded, we can perceive six different distinct shapes and we need to expend some additional mental energy to merge the correct shapes together. This effect would have been even stronger had I used solid rather than dashed lines for all three distributions.
@@ -76,7 +76,7 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_half_open()
 
-stamp_bad(iris_lines)
+pad_figure(stamp_bad(iris_lines))
 ```
 
 We can attempt to address the problem of porous boundaries by using colored lines rather than dashed lines (Figure \@ref(fig:iris-densities-colored-lines)). However, the density areas in the resulting plot still have little visual presence. Overall, I find the version with filled areas (Figure \@ref(fig:iris-densities-filled)) the most clear and intuitive. It is important, however, to make the filled areas partially transparent, so that the complete distribution for each species is visible.
@@ -97,7 +97,7 @@ iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_half_open()
 
-stamp_ugly(iris_colored_lines)
+pad_figure(stamp_ugly(iris_colored_lines))
 ```
 
 
@@ -120,14 +120,14 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_half_open()
   
-stamp_phantom(iris_filled)
+pad_figure(iris_filled)
 ```
 
 Line drawings also arise in the context of scatter plots, when different point types are drawn as open circles, triangles, crosses, etc. As an example, consider Figure \@ref(fig:mpg-linespoints). The figure contains a lot of visual noise, and the different point types do not strongly separate from each other. Drawing the same figure with solidly colored shapes addresses this issue (Figure \@ref(fig:mpg-filledpoints)).
 
 (ref:mpg-linespoints) City fuel economy versus engine displacement, for cars with front-wheel drive (FWD), rear-wheel drive (RWD), and all-wheel drive (4WD). The different point styles, all black-and-white line-drawn symbols, create substantial visual noise and make it difficult to read the figure.
 
-```{r mpg-linespoints, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-linespoints)'}
+```{r mpg-linespoints, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-linespoints)'}
 mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
   geom_point(size = 2,
              position = position_jitter(width = 0.01 * diff(range(mpg$displ)),
@@ -140,13 +140,14 @@ mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
   theme(legend.position = c(.7, .8))
-stamp_bad(mpg_linespoints)
+
+pad_figure(stamp_bad(mpg_linespoints), fig.width = 5.5)
 ```
 
 
 (ref:mpg-filledpoints) City fuel economy versus engine displacement. By using both different colors and different solid shapes for the different drive-train variants, this figure clearly separates the drive-train variants while remaining reproducible in gray scale if needed.
 
-```{r mpg-filledpoints, fig.width=5.5, fig.asp=.7416, fig.cap='(ref:mpg-filledpoints)'}
+```{r mpg-filledpoints, fig.height = 5.5 * 0.7416, fig.cap='(ref:mpg-filledpoints)'}
 mpg_filledpoints <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv, shape = drv)) +
   geom_point(size = 3,
              position = position_jitter(width = 0.01 * diff(range(mpg$displ)),
@@ -169,7 +170,7 @@ mpg_filledpoints <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv,
   theme_half_open() +
   theme(legend.position = c(.7, .8))
         
-stamp_phantom(mpg_filledpoints)
+pad_figure(mpg_filledpoints, fig.width = 5.5)
 ```
 
 I strongly prefer solid points over open points, because the solid points have much more visual presence. The argument that I sometimes hear in favor of open points is that they help with overplotting, since the empty areas in the middle of each point allow us to see other points that may be lying underneath. In my opinion, the benefit from being able to see overplotted points does not, in general, outweigh the detriment from the added visual noise of open symbols. There are other approaches for dealing with overplotting, see Chapter \@ref(overlapping-points) for some suggestions.
@@ -197,7 +198,7 @@ lincoln_weather %>% mutate(month_short = fct_recode(Month,
 lincoln_box_empty <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot() + xlab("Month")
 
-lincoln_box_empty
+pad_figure(lincoln_box_empty)
 ```
 
 
@@ -207,5 +208,5 @@ lincoln_box_empty
 lincoln_box_filled <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_boxplot(fill = 'grey90') + xlab("Month")
 
-lincoln_box_filled
+pad_figure(lincoln_box_filled)
 ```

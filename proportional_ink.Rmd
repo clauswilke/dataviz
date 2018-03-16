@@ -39,7 +39,7 @@ p_income_bad <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50
                      breaks = 10000*(5:7),
                      labels = function(x) paste0("$", scales::comma(x)))
 
-stamp_bad(p_income_bad)
+pad_figure(stamp_bad(p_income_bad))
 ```
 
 An appropriate visualization of these data makes for a less exciting story (Figure \@ref(fig:hawaii-income-bars-good)). While there are differences in median income between the counties, they are nowhere near as big as Figure \@ref(fig:hawaii-income-bars-bad) suggested. Overall, the median incomes in the different counties are somewhat comparable.
@@ -52,7 +52,7 @@ p_income_good <- p_income_base + coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0
                      breaks = 20000*(0:3),
                      labels = function(x) paste0("$", scales::comma(x)))
 
-stamp_phantom(p_income_good)
+pad_figure(p_income_good)
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -79,7 +79,7 @@ fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
   background_grid(major = 'y', minor = 'none') +
   theme(plot.margin = margin(14, 14, 7, 7))
 
-stamp_bad(fb_drop_bad)
+pad_figure(stamp_bad(fb_drop_bad))
 ```
 
 (ref:fb-stock-drop-good) Stock price of Facebook (FB) from Oct. 22, 2016 to Jan. 21, 2017. By showing the stock price on a *y* scale from $0 to $150, this figure more accurately relays the magnitude of the FB price drop around Nov. 1, 2016.
@@ -98,7 +98,7 @@ fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
   background_grid(major = 'y', minor = 'none') +
   theme(plot.margin = margin(14, 14, 7, 7))
 
-stamp_phantom(fb_drop_good)
+pad_figure(fb_drop_good)
 ```
 
 The examples of Figures \@ref(fig:hawaii-income-bars-good) and Figure \@ref(fig:fb-stock-drop-good) could suggest that bars and shaded areas are not useful to represent small changes over time or differences between conditions, since we always have to draw the whole bar or area starting from 0. However, this is not the case. It is perfectly valid to use bars or shaded areas to show differences between conditions, as long as we make it explicit which differences we are showing. For example, we can use bars to visualize the change in median income in Hawaiian counties from 2010 to 2015 (Figure \@ref(fig:hawaii-income-change)). For all counties except Kalawao, this change amounts to less than $5000. (Kalawao is an unusual county, with fewer than 100 inhabitants, and it can experience large swings in median income from a small number of people moving into or out of the county.) And for Hawaii County, the change is negative, i.e., the median income in 2015 was lower than it was in 2010. We represent negative values by drawing bars that go in the opposite direction, i.e., that extend from 0 down rather than up.
@@ -111,7 +111,7 @@ hawaii_income_diff <- select(hawaii_income, county, year, median_income) %>%
   mutate(income_diff = `2015` - `2010`,
          income_ratio = `2015` / `2010`)
 
-ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
+p <- ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, year == 2015)$median_income)),
                                y = income_diff)) + 
   geom_col(fill = "#56B4E9") +
   xlab("county") +
@@ -121,6 +121,8 @@ ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, ye
                      labels = function(x) paste0("$", scales::comma(x))) +
   theme_minimal_hgrid() + 
   theme(axis.ticks.x = element_blank())
+
+pad_figure(p)
 ```
 
 Similarly, we can draw the change in Facebook stock price over time as the difference from its temporary high point on Oct. 22, 2016 (Figure \@ref(fig:fb-stock-drop-inverse)). By shading an area that represents the distance from the high point, we are accurately representing the absolute magnitude of the price drop without making any implicit statement about the magnitude of the price drop relative to the total stock price.
@@ -145,7 +147,7 @@ fb_drop_inverse <- ggplot(df_fb_drop2, aes(x=date, height=price_drop, y = 0)) +
   background_grid(major = 'y', minor = 'none') +
   theme(plot.margin = margin(14, 14, 7, 7))
 
-stamp_phantom(fb_drop_inverse)
+pad_figure(fb_drop_inverse)
 ```
 
 ## Visualizations along logarithmic axes
@@ -156,7 +158,7 @@ In Chapter \@ref(coordinate-systems-axes), I have explained that a log scale is 
 
 (ref:oceania-gdp-logbars) GDP in 2007 of countries in Oceania. The lengths of the bars do not accurately reflect the data values shown, since bars start at the arbitrary value of 0.3 billion USD. Data source: Gapminder.
 
-```{r oceania-gdp-logbars, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-logbars)'}
+```{r oceania-gdp-logbars, fig.height = 7 * 0.5, fig.cap = '(ref:oceania-gdp-logbars)'}
 library(gapminder)
 
 df_oceania <- filter(gapminder_unfiltered, year == 2007, continent == "Oceania") %>%
@@ -173,14 +175,14 @@ oc_bad <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   theme_minimal_vgrid() +
   theme(axis.ticks.y = element_blank())
 
-stamp_bad(oc_bad)
+pad_figure(stamp_bad(oc_bad), fig.width = 7)
 ```
 
 However, the visualization with bars on a log scale (Figure \@ref(fig:oceania-gdp-logbars)) does not work either. The bars start at an arbitrary value of 0.3 billion USD, and at a minimum the figure suffers from the same problem of Figure \@ref(fig:hawaii-income-bars-bad), that the bar lengths are not representative of the data values. The added difficulty with a log scale, though, is that we cannot simply let the bars start at 0. In Figure \@ref(fig:oceania-gdp-logbars), the value 0 would lie infinitely far to the left. Therefore, we could make our bars arbitrary long by pushing their origin further and further way, see e.g. Figure \@ref(fig:oceania-gdp-logbars-long). This problem always arises when we try to visualize amounts (which is what the GDP values are) on a log scale.
 
 (ref:oceania-gdp-logbars-long) GDP in 2007 of countries in Oceania. The lengths of the bars do not accurately reflect the data values shown, since bars start at the arbitrary value of 10<sup>-9</sup> billion USD. Data source: Gapminder.
 
-```{r oceania-gdp-logbars-long, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-logbars-long)'}
+```{r oceania-gdp-logbars-long, fig.height = 7 * 0.5, fig.cap = '(ref:oceania-gdp-logbars-long)'}
 oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
   geom_col(fill = "#56B4E9") + 
   scale_y_continuous(breaks = 2*(0:6),
@@ -191,15 +193,15 @@ oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   theme_minimal_vgrid() +
   theme(axis.ticks.y = element_blank())
 
-stamp_bad(oc_bad2)
+pad_figure(stamp_bad(oc_bad2), fig.width = 7)
 ```
 
 For the data of Figure \@ref(fig:oceania-gdp-logbars), I think bars are inappropriate. Instead, we can simply place a dot at the appropriate location along the scale for each country's GDP and avoid the issue of bar lengths altogether (Figure \@ref(fig:oceania-gdp-dots)). Importantly, by placing the country names right next to the dots rather than along the *y* axis, we avoid generating the visual perception of a magnitude conveyed by the distance from the country name to the dot.
 
 (ref:oceania-gdp-dots) GDP in 2007 of countries in Oceania. Data source: Gapminder.
 
-```{r oceania-gdp-dots, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-dots)'}
-ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
+```{r oceania-gdp-dots, fig.height = 7 * 0.5, fig.cap = '(ref:oceania-gdp-dots)'}
+p <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) + 
   geom_point(size = 4, color = "#0072B2") + 
   geom_label(aes(label = country, y = log10(GDP) - .08), hjust = 1, size = 12/.pt,
              fill = "white", alpha = 0.5, label.padding = grid::unit(2, "pt"),
@@ -212,19 +214,21 @@ ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   scale_x_discrete(name = NULL, breaks = NULL) +
   coord_flip() +
   theme_minimal_vgrid()
+
+pad_figure(p, fig.width = 7)
 ```
 
 If we want to visualize ratios rather than amounts, however, bars on a log scale are a perfectly good option. In fact, they are preferable over bars on a linear scale in that case. As an example, let's visualize the GDP values of countries in Oceania relative to the GDP of Papua New Guinea. The resulting figure does a good job highlighting the key relationships between the GDPs of the various countries (Figure \@ref(fig:oceania-gdp-relative)). We can see that New Zealand has over eight times the GDP of Papua New Guinea and Australia over 64 times, while Tonga and the Federated States of Micronesia have less than one-sixteenth of the GDP of Papua New Guinea. French Polynesia and New Caledonia are close but have a slightly smaller GDPs than Papua New Guinea does.
 
 (ref:oceania-gdp-relative) GDP in 2007 of countries in Oceania, relative to the GDP of Papua New Guinea. Data source: Gapminder.
 
-```{r oceania-gdp-relative, fig.width = 7, fig.asp = 0.5, fig.cap = '(ref:oceania-gdp-relative)'}
+```{r oceania-gdp-relative, fig.height = 7 * 0.5, fig.cap = '(ref:oceania-gdp-relative)'}
 GDP_PNG <- filter(df_oceania, country == "Papua New Guinea")$GDP
 
 df_oceania_ratios <- mutate(df_oceania, gdp_ratio = GDP/GDP_PNG) %>%
   filter(country != "Papua New Guinea")
 
-ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) + 
+p <- ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) + 
   geom_col(fill = "#56B4E9") + 
   scale_y_log10(breaks = c(1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, 32, 64),
                 labels = c("1/16", "1/8", "1/4", "1/2", "1", "2", "4", "8", "16", "32", "64"),
@@ -237,6 +241,8 @@ ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) +
   theme(axis.line = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         axis.ticks.y = element_blank())
+
+pad_figure(p, fig.width = 7)
 ```
 
 Figure \@ref(fig:oceania-gdp-relative) also highlights that the natural midpoint of a log scale is 1, with bars representing numbers above 1 going in one direction and bars representing numbers below one going in the other direction. Bars on a log scale represent ratios and must always start at 1, and bars on a linear scale represent amounts and must always start at 0.
@@ -297,15 +303,15 @@ plot_RI_pies <- ggplot(RI_pie) +
         legend.spacing.y = grid::unit(2, "pt"),
         plot.margin = margin(7, 7, 0, 7))
 
-plot_RI_pies
+pad_figure(plot_RI_pies)
 ```
 
 Because the area of each pie wedge is proportional to its angle which is proportional to the data value the wedge represents, pie charts satisfy the principle of proportional ink. However, we perceive the area in a pie chart differently from the same area in a bar plot. The fundamental reason is that human perception primarily judges distances and not areas. Thus, if a data value is encoded entirely as a distance, as is the case with the length of a bar, we perceive it more accurately than when the data value is encoded through a combination of two or more distances that jointly create an area. To see this difference, compare Figure \@ref(fig:RI-pop-pie) to Figure \@ref(fig:RI-pop-bars), which shows the same data as bars. The difference in the number of inhabitants between Providence County and the other counties appears larger in Figure  \@ref(fig:RI-pop-bars) than in Figure \@ref(fig:RI-pop-pie).
 
 (ref:RI-pop-bars) Number of inhabitants in Rhode Island counties, shown as bars. The length of each bar is proportional to the number of inhabitants in the respective county. Data source: 2010 Decennial U.S. Census.
 
-```{r RI-pop-bars, fig.width = 5.5, fig.cap = '(ref:RI-pop-bars)'}
-ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill = county)) + 
+```{r RI-pop-bars, fig.height = 5.5 * 0.618, fig.cap = '(ref:RI-pop-bars)'}
+p <- ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill = county)) + 
   geom_col() +
   scale_fill_OkabeIto(darken = -.3, guide = "none") +
   scale_y_continuous(expand = c(0, 0),
@@ -320,13 +326,14 @@ ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill =
         axis.ticks.y = element_blank(),
         plot.margin = margin(7, 14, 7, 7))
 
+pad_figure(p, fig.width = 5.5)
 ```
 
 The problem that human perception is better at judging distances than at judging areas also arises in treemaps (Figure \@ref(fig:RI-pop-treemap)), which can be thought of as a square versions of pie charts. Again, in comparison to Figure \@ref(fig:RI-pop-bars), the differences in the number of inhabitants among the counties appears less pronounced in Figure \@ref(fig:RI-pop-treemap).
 
 (ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties, shown as a treemap. The area of each rectangle is proportional to the number of inhabitants in the respective county.  Data source: 2010 Decennial U.S. Census.
 
-```{r RI-pop-treemap, fig.width = 4.5, fig.asp = .75, fig.cap = '(ref:RI-pop-treemap)'}
+```{r RI-pop-treemap, fig.height = 4.5 * 0.75, fig.cap = '(ref:RI-pop-treemap)'}
 
 p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) + 
   geom_treemap(color = "white", size = .75*.pt) + 
@@ -334,5 +341,5 @@ p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) +
                     grow = FALSE) +
   scale_fill_OkabeIto(darken = -.3, guide = "none")
 
-p
+pad_figure(p, fig.width = 4.5)
 ```

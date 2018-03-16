@@ -15,7 +15,7 @@ Topics to cover in this chapter:
 
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
 
-```{r corruption-development, fig.width = 7, fig.asp = 0.7, fig.cap = '(ref:corruption-development)'}
+```{r corruption-development, fig.height = 7 * 0.7, fig.cap = '(ref:corruption-development)'}
 country_highlight <- c("Germany", "Norway", "United States", "Greece", "Singapore", "Rwanda", "Russia", "Venezuela", "Sudan", "Iraq", "Ghana", "Niger", "Chad", "Kuwait", "Qatar", "Myanmar", "Nepal", "Chile", "Brazil", "Japan", "China")
 
 
@@ -60,13 +60,13 @@ grob_corrupt_base <- grid::forceGrob(ggplotGrob(plot_corrupt_base))
 null <- grDevices::dev.off()
 null <- grDevices::dev.set(cur_dev)
 
-ggdraw(grob_corrupt_base)
+pad_figure(grob_corrupt_base, fig.width = 7)
 ```
 
 
 (ref:corruption-development-infographic) Figure \@ref(fig:corruption-development) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
 
-```{r corruption-development-infographic, fig.width = 7, fig.asp = 0.84, fig.cap = '(ref:corruption-development-infographic)'}
+```{r corruption-development-infographic, fig.height = 7 * 0.84, fig.cap = '(ref:corruption-development-infographic)'}
 plot_corrupt_title <- ggdraw() +
   labs(title = "Corruption and human development",
        subtitle = "The most developed countries experience the least corruption") +
@@ -81,6 +81,7 @@ plot_corrupt_caption <- ggplot() +
   theme(plot.caption = element_text(size = 10, hjust = 1),
         plot.margin = margin(0, 7, 7, 7))
 
-plot_grid(plot_corrupt_title, grob_corrupt_base, plot_corrupt_caption,
-          ncol = 1, rel_heights = c(.15, 1, .05))
+pad_figure(plot_grid(plot_corrupt_title, grob_corrupt_base, plot_corrupt_caption,
+                     ncol = 1, rel_heights = c(.15, 1, .05)),
+           fig.width = 7)
 ```

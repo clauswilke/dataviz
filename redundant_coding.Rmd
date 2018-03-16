@@ -48,14 +48,14 @@ iris_scatter <- iris_scatter_base +
         legend.spacing.y = unit(3.5, "pt"),
         plot.margin = margin(7, 14, 7, 7))
 
-stamp_bad(iris_scatter)
+pad_figure(stamp_bad(iris_scatter))
 ```
 
 Surprisingly, the green and blue points look more distinct for people with red--green color-vision-deficiency (deuteranomaly or protanomaly) than for people with normal color vision (compare Figure \@ref(fig:iris-scatter-one-shape-cvd), top row, to Figure \@ref(fig:iris-scatter-one-shape)). On the other hand, for people with blue--yellow deficiency (tritanomaly) the blue and green points look very similar (Figure \@ref(fig:iris-scatter-one-shape-cvd), bottom left). And if we print out the figure in gray-scale (i.e., we *desaturate* the figure), we cannot distinguish any of the iris species (Figure \@ref(fig:iris-scatter-one-shape-cvd), bottom right).
 
 (ref:iris-scatter-one-shape-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-one-shape).
 
-```{r iris-scatter-one-shape-cvd, fig.width = 8.5, fig.asp = 0.65, fig.cap = '(ref:iris-scatter-one-shape-cvd)'}
+```{r iris-scatter-one-shape-cvd, fig.height = 8.5 * 0.65, fig.cap = '(ref:iris-scatter-one-shape-cvd)'}
 iris_scatter_small <- iris_scatter_base +
   geom_point(size=2., shape=21,
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
@@ -106,13 +106,13 @@ iris_scatter2 <- iris_scatter2_base +
         legend.spacing.y = unit(3.5, "pt"),
         plot.margin = margin(7, 14, 7, 7))
 
-stamp_phantom(iris_scatter2)
+pad_figure(iris_scatter2)
 ```
 
 
 (ref:iris-scatter-three-shapes-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-three-shapes). Because of the use of different point shapes, even the fully desaturated gray-scale version of the figure is legible.
 
-```{r iris-scatter-three-shapes-cvd, fig.width = 8.5, fig.asp = 0.65, fig.cap = '(ref:iris-scatter-three-shapes-cvd)'}
+```{r iris-scatter-three-shapes-cvd, fig.height = 8.5 * 0.65, fig.cap = '(ref:iris-scatter-three-shapes-cvd)'}
 iris_scatter2_small <- iris_scatter2_base +
   geom_point(size=2.,
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
@@ -146,7 +146,7 @@ price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = 
                      limits = c(0, 560),
                      expand = c(0,0))
 
-stamp_bad(price_plot_base + theme_minimal_hgrid())
+pad_figure(stamp_bad(price_plot_base + theme_minimal_hgrid()))
 ```
 
 
@@ -170,7 +170,7 @@ price_plot_base_good <- ggplot(tech_stocks, aes(x = date, y = price_indexed, col
                      limits = c(0, 560),
                      expand = c(0,0))
 
-stamp_phantom(price_plot_base_good + theme_minimal_hgrid())
+pad_figure(price_plot_base_good + theme_minimal_hgrid())
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -182,7 +182,7 @@ Matching the legend order to the data order is always helpful, but the benefits 
 
 (ref:tech-stocks-good-legend-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:tech-stocks-good-legend).
 
-```{r tech-stocks-good-legend-cvd, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:tech-stocks-good-legend-cvd)'}
+```{r tech-stocks-good-legend-cvd, fig.height = 8.5 * 0.6, fig.cap = '(ref:tech-stocks-good-legend-cvd)'}
 cvd_sim2(price_plot_base_good + theme_minimal_hgrid(12) + theme(plot.margin = margin(18, 6, 6, 6)),
          scale = 1, label_x = 0.03)
 ```
@@ -206,7 +206,7 @@ yann <- axis_canvas(price_plot, axis = "y") +
 
 price_plot_ann <- insert_yaxis_grob(price_plot + theme(legend.position = "none"), yann,
                                     width = grid::unit(0.3, "null"))
-stamp_phantom(price_plot_ann)
+pad_figure(price_plot_ann)
 ```
 
 
@@ -218,7 +218,7 @@ We can also apply the direct labeling concept to the iris data from the beginnin
 
 (ref:iris-scatter-with-ellipses) Sepal width versus sepal length for three different iris species. I have removed the background grid from this figure because otherwise the figure was becoming too busy.
 
-```{r iris-scatter-with-ellipses, fig.width = 4.6, fig.asp = 0.8, fig.cap = '(ref:iris-scatter-with-ellipses)'}
+```{r iris-scatter-with-ellipses, fig.height = 5.5 * 0.8, fig.cap = '(ref:iris-scatter-with-ellipses)'}
 label_df <- data.frame(
   Species = c("setosa", "virginica", "versicolor"),
   label = c("Iris setosa", "Iris virginica", "Iris versicolor"),
@@ -257,7 +257,7 @@ iris_scatter3 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Spe
                        name = "sepal width") +
     theme_half_open()
 
-iris_scatter3
+pad_figure(iris_scatter3, fig.width = 5.5)
 ```
 
 For density plots, we can similarly direct-label the curves rather than providing a color-coded legend (Figure \@ref(fig:iris-densities-direct-label)). In both Figures \@ref(fig:iris-scatter-with-ellipses) and \@ref(fig:iris-densities-direct-label), I have colored the text labels in the same colors as the data. Colored labels can greatly enhance the direct labeling effect, but they can also turn out very poorly. If the text labels are printed in a color that is too light, then the labels become difficult to read. And, because text consists of very thin lines, colored text often appears to be lighter than an adjacent filled area of the same color. I generally circumvent these issues by using two different shades of each color, a light one for filled areas and a dark one for lines, outlines, and text. If you carefully inspect Figure \@ref(fig:iris-scatter-with-ellipses) or \@ref(fig:iris-densities-direct-label), you will see how each data point or shaded area is filled with a light color and has an outline drawn in a darker color of the same hue. And the text labels are drawn in the same darker colors. 
@@ -298,14 +298,14 @@ iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species, c
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_minimal_hgrid()
   
-iris_p
+pad_figure(iris_p)
 ```
 
 We can also use density plots such as the one in Figure \@ref(fig:iris-densities-direct-label) as a legend replacement, by placing the density plots into the margins of a scatter plot (Figure \@ref(fig:iris-scatter-dens)). This allows us to direct-label the marginal density plots rather than the central scatter plot and hence results in a figure that is somewhat less cluttered than Figure \@ref(fig:iris-scatter-with-ellipses) with directly-labeled ellipses.
 
 (ref:iris-scatter-dens) Sepal width versus sepal length for three different iris species, with marginal density estimates of each variable for each species.
 
-```{r iris-scatter-dens, fig.asp=0.85, fig.cap = '(ref:iris-scatter-dens)'}
+```{r iris-scatter-dens, fig.height = 6.5 * 0.85, fig.cap = '(ref:iris-scatter-dens)'}
 # compute densities for sepal lengths
 iris_dens2 <- group_by(iris, Species) %>%
   do(ggplot2:::compute_density(.$Sepal.Width, NULL)) %>%
@@ -357,14 +357,14 @@ p1 <- insert_xaxis_grob(iris_scatter2 +
                         xdens, grid::unit(3*14, "pt"), position = "top")
 p2 <- insert_yaxis_grob(p1, ydens, grid::unit(3*14, "pt"), position = "right")
 
-ggdraw(p2)
+pad_figure(p2, fig.width = 6)
 ```
 
 And finally, whenever we encode a single variable in multiple aesthetics, we don't normally want multiple separate legends for the different aesthetics. Instead, there should be only a single legend-like visual element that conveys all mappings at once. In the case where we map the same variable onto a position along a major axis and onto color, this implies that the reference color bar should run along and be integrated into the same axis. Figure \@ref(fig:temp-ridgeline-colorbar) shows a case where we map temperature to both a position along the *x* axis and onto color, and where we therefore have integrated the color legend into the *x* axis.
 
 (ref:temp-ridgeline-colorbar) Temperatures in Lincoln, Nebraska, in 2016. This figure is a variation of Figure \@ref(fig:temp-ridgeline). Temperature is now shown both by location along the *x* axis and by color, and a color bar along the *x* axis visualizes the scale that converts temperatures into colors.
 
-```{r temp-ridgeline-colorbar, fig.asp = 0.652, fig.cap = '(ref:temp-ridgeline-colorbar)'}
+```{r temp-ridgeline-colorbar, fig.height = 6 * 0.652, fig.cap = '(ref:temp-ridgeline-colorbar)'}
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
@@ -397,5 +397,5 @@ xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
 
 lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
 
-ggdraw(lincoln_final)
+pad_figure(lincoln_final, fig.width = 6)
 ```

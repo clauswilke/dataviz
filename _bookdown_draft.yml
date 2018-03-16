@@ -34,7 +34,7 @@ rmd_files: [
 
   # Part III
   "image_file_formats.Rmd", # completed
-  "choosing_plotting_software.Rmd", # completed
+  "choosing_visualization_software.Rmd", # completed
   "telling_a_story.Rmd",
 
   "outline.Rmd",
