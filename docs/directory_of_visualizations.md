@@ -1,6 +1,6 @@
 
 
-# Directory of visualizations
+# Directory of visualizations {#directory-of-visualizations}
 
 *This chapter is a work in progress and will be updated as additional chapters on different visualization scenarios are written.*
 

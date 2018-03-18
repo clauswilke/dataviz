@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.5.14 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="choosing-visualization-software.html">
+<link rel="next" href="outline.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#good-bad-and-ugly-figures"><i class="fa fa-check"></i>Good, bad, and ugly figures</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>1</b> Visualizing data: mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="1.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>1.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="1.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>1.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>2</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="2.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>2.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="2.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>2.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="2.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>2.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>3</b> Color scales</a><ul>
+<li class="chapter" data-level="3.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>3.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="3.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>3.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="3.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>3.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>4</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="4.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>4.1</b> Amounts</a></li>
+<li class="chapter" data-level="4.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>4.2</b> Distributions</a></li>
+<li class="chapter" data-level="4.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>4.3</b> Proportions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>5</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="5.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>5.1</b> Bar plots</a></li>
+<li class="chapter" data-level="5.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>5.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="5.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>5.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>6</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="6.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>6.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="6.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>6.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Empirical cumulative density functions and q-q plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-density-functions"><i class="fa fa-check"></i><b>7.1</b> Empirical cumulative density functions</a></li>
+<li class="chapter" data-level="7.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>7.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="7.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>7.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>8</b> Visualizing many distributions at once: boxplots, violins, and ridgeline plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#visualizing-distributions-along-the-vertical-axis"><i class="fa fa-check"></i><b>8.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="8.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#visualizing-distributions-along-the-horizontal-axis"><i class="fa fa-check"></i><b>8.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>9</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="9.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>9.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="9.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>9.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="9.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>9.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="9.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>9.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="10" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>10</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="11" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>11</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="11.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>11.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="11.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>11.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="11.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>11.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>12</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="12.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>12.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="12.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>12.2</b> 2d histograms</a></li>
+<li class="chapter" data-level="12.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>12.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>13</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="14" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>14</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="14.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>14.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="14.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>14.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="14.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>14.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>15</b> Redundant coding</a><ul>
+<li class="chapter" data-level="15.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>15.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="15.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>15.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="16" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>16</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="16.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>16.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="16.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>16.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="16.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>16.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>17</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="17.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>17.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="17.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>17.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="17.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>17.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>18</b> Telling a story with data</a><ul>
+<li class="chapter" data-level="18.1" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>18.1</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="18.2" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>18.2</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="18.3" data-path="telling-a-story.html"><a href="telling-a-story.html#use-a-consistent-visual-language"><i class="fa fa-check"></i><b>18.3</b> Use a consistent visual language</a></li>
+<li class="chapter" data-level="18.4" data-path="telling-a-story.html"><a href="telling-a-story.html#dont-be-repetitive"><i class="fa fa-check"></i><b>18.4</b> Don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html"><i class="fa fa-check"></i>Outline</a><ul>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-i-from-data-to-visualization"><i class="fa fa-check"></i>Part I: From data to visualization</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-ii-principles-of-figure-design"><i class="fa fa-check"></i>Part II: Principles of figure design</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-iii-miscellaneous-topics"><i class="fa fa-check"></i>Part III: Miscellaneous topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="telling-a-story" class="section level1">
+<h1><span class="header-section-number">18</span> Telling a story with data</h1>
+<p>Most data visualization is done for the purpose of communication. We have an insight about a dataset, and we have a potential audience, and we want to convey our insights to our audience. To communicate our insights successfully, we will have to present the audience with a clear and exciting story. The need for a story may seem disturbing to scientists and engineers, who may equate it with making things up, putting a spin on things, or overselling results. However, this perspective misses a fundamental truth about how human cognition works: All our thinking is based on stories. We get excited when we hear a good story, and we get bored when the story is bad or when there is none. Moreover, any communication creates a story in the audience’s minds. If we don’t provide a clear story ourselves, then our audience will make one up. In the best-case scenario, the story they make up is reasonably close to our own view of the material presented. However, it can be and often is much worse. The made-up story could be “this is boring,” “the author is wrong,” or “the author is incompetent.”</p>
+<p>Your goal in telling a story with data should be to use facts and data to get your audience interested and excited. Let me tell you a story about the theoretical physicist Stephen Hawking. He was diagnosed with motor neuron disease at age 21—one year into his PhD—and was given two years to live. Hawking did not accept this predicament and started pouring all his energy into doing science. Hawking ended up living to be 76, became one of the most influential physicists of his time, and did all of his seminal work while being severely disabled. I’d argue that this is a compelling story. It’s also entirely true.</p>
+<p>Good stories tend to be structured according to standard patterns that resonate with human cognition. For example, the Hawking story of the preceding paragraph follows the Opening–Challenge–Action–Resolution structure. My goal in this chapter is not to describe these standard forms of story telling. There are excellent resources that cover this material <span class="citation">(see e.g. Schimel <a href="#ref-Schimel2011">2011</a>)</span>. Instead, I want to address a few specific issues that tend to arise when we try to tell a story with data visualizations. I have four specific recommendations: (i) prepare figures that make simple and clear points, (ii) build up from simpler to more complex visualizations, (iii) use a consistent visual language, and (iv) don’t be repetitive.</p>
+<div id="make-a-figure-for-the-generals" class="section level2">
+<h2><span class="header-section-number">18.1</span> Make a figure for the generals</h2>
+<p>Throughout the preceding chapters, I have discussed numerous dos and don’ts of data visualization. Even if you follow all of them, however, you might still prepare a figure that confuses your audience. When this happens, the underlying cause is likely one of two common misconceptions, that the audience can extract the story from the data presented and/or that the audience can rapidly process complex visualizations and understand the key trends and relationships that are shown. Neither of these misconceptions is true. We need to do everything we can to help our readers understand the points we’re trying to make and see the same patterns in the data that we see. This usually means less is more. Simplify your figures as much as possible. Remove all features that are tangential to your story. Only the important points should remain. I refer to this concept as “making a figure for the generals.”</p>
+<p>For several years, I was in charge of a large research project funded by the U.S. Army. For our annual progress reports, I was instructed by the program managers to not include a lot of figures. And any figure I did include should show very clearly how our project was succeeding. A general, the program mangers told me, should be able to look at each figure and immediately see how what we were doing was improving upon or exceeding prior capabilities. Yet when my colleagues who were part of this project sent me figures for the annual progress report, many of the figures did not meet this criterion. The figures usually were overly complex, were labeled in confusing, technical terms, or did not make any obvious point at all. Most scientists are not trained to make figures for the generals.</p>
+<div class="rmdtip">
+<p>
+Never assume your audience can rapidly process complex visual displays.
+</p>
+</div>
+<p>Some might hear this story and conclude that the generals are not very smart or just not that into science. I think that’s exactly the wrong take-home message. The generals are simply very busy. They can’t spend 30 minutes trying to decypher a cryptic figure. When they give millions of dollars of taxpayer funds to scientists to do basic research, the least they can expect in return is a handful of clear demonstrations that something worthwhile and interesting was accomplished. This story should also not be misconstrued as being about military funding in particular. The generals are a metaphor for anybody you may want to reach with your visualization. It can be a scientific reviewer for your paper or grant proposal, it can be a newspaper editor, or it can be your supervisor or your supervisor’s boss at the company you’re working. If you want your story to come across, you need to make figures that are appropriate for all these generals.</p>
+<p>The first thing that will get in the way of making a figure for the generals is, ironically, the ease with which modern visualization software allows us to make sophisticated data visualizations. With nearly limitless power of visualization, it becomes tempting to keep piling on more dimensions of data. And in fact, I see a trend in the world of data visualization to make the most complex, multi-faceted visualizations possible. These visualizations may look very impressive, but they are unlikely to convey a clear story. Consider Figure <a href="telling-a-story.html#fig:arrival-delay-vs-distance">18.1</a>, which shows the arrival delays for all flights departing out of the New York City area in 2013. I suspect it will take you a while to process this figure.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:arrival-delay-vs-distance"></span>
+<img src="telling_a_story_files/figure-html4/arrival-delay-vs-distance-1.png" alt="Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination in 2013. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistenly lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled. This figure is labeled as bad because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics." width="768" />
+<p class="caption">
+Figure 18.1: Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination in 2013. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistenly lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled. This figure is labeled as bad because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+</p>
+</div>
+<p>I think the most important feature of Figure <a href="telling-a-story.html#fig:arrival-delay-vs-distance">18.1</a> is that American and Delta have the shortest arrival delays. This insight is much better conveyed in a simple bar graph (Figure <a href="telling-a-story.html#fig:mean-arrival-delay-nyc">18.2</a>). Therefore, Figure <a href="telling-a-story.html#fig:mean-arrival-delay-nyc">18.2</a> is the correct figure to show if the story is about arrival delays of airlines, even if making that graph doesn’t challenge your data visualization skills. And if you’re then wondering whether these airlines have small delays because they don’t fly that much out of New York City, you could present a second bar graph highlighting that both American and Delta are major carriers in the New York City area (Figure <a href="telling-a-story.html#fig:number-of-flights-nyc">18.3</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:mean-arrival-delay-nyc"></span>
+<img src="telling_a_story_files/figure-html4/mean-arrival-delay-nyc-1.png" alt="Mean arrival delay for flights out of the New York City area in 2013, by airline. American and Delta have the lowest mean arrival delays of all airlines flying out of the New York City area. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics." width="576" />
+<p class="caption">
+Figure 18.2: Mean arrival delay for flights out of the New York City area in 2013, by airline. American and Delta have the lowest mean arrival delays of all airlines flying out of the New York City area. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:number-of-flights-nyc"></span>
+<img src="telling_a_story_files/figure-html4/number-of-flights-nyc-1.png" alt="Number of flights out of the New York City area in 2013, by airline. Delta and American are fourth and fifths largest carrier by flights out of the New York City area. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics." width="576" />
+<p class="caption">
+Figure 18.3: Number of flights out of the New York City area in 2013, by airline. Delta and American are fourth and fifths largest carrier by flights out of the New York City area. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+</p>
+</div>
+<div class="rmdtip">
+<p>
+When you’re trying to show too much data at once you may end up not showing anything.
+</p>
+</div>
+</div>
+<div id="build-up-towards-complex-figures" class="section level2">
+<h2><span class="header-section-number">18.2</span> Build up towards complex figures</h2>
+<p>Sometimes, however, we do want to show more complex figures that contain a large amount of information at once. In those cases, we can make things easier for our readers if we first show them a simplfied version of the figure before we show the final one in its full complexity. The same approach is also highly recommended for presentations. Never jump straight to a highly complex figure; first show an easily digestable subset.</p>
+<p>This recommendation is particularly relevant if the final figure is a trellis plot showing a grid of subplots with similar structure. The full grid is much easier to digest if the audience has first seen a single subplot by itself. For example, Figure <a href="telling-a-story.html#fig:united-departures-weekdays">18.4</a> shows the aggregate numbers of United Airlines departures out of Newark Airport (EWR) in 2013, broken down by weekday. Once we have seen and digested this figure, seeing the same information for ten airlines and three airports at once is much easier to process (Figure <a href="telling-a-story.html#fig:all-departures-weekdays">18.5</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:united-departures-weekdays"></span>
+<img src="telling_a_story_files/figure-html4/united-departures-weekdays-1.png" alt="United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekedays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics." width="336" />
+<p class="caption">
+Figure 18.4: United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekedays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:all-departures-weekdays"></span>
+<img src="telling_a_story_files/figure-html4/all-departures-weekdays-1.png" alt="Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR), JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics." width="816" />
+<p class="caption">
+Figure 18.5: Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR), JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
+</p>
+</div>
+</div>
+<div id="use-a-consistent-visual-language" class="section level2">
+<h2><span class="header-section-number">18.3</span> Use a consistent visual language</h2>
+<p>When writing a report, scientific paper, or article, or when giving a presentation, we will usually have multiple figures that jointly convey the story. In this context, we need to think about how these figures fit together. It is possible to make a set of figures that individually are fine but jointly cause problems. In particular, we need to employ a consistent visual language. By “visual language” I mean the colors, symbols, fonts, and so on that we use to display the data. And keeping the language consistent means, in a nutshell, that the same things look the same or at least substantively similar across figures.</p>
+<p>Let’s look at an example that violates this principle. Figure <a href="telling-a-story.html#fig:athletes-composite-inconsistent">18.6</a> is a three-panel figure visualizing a dataset about the physiology and body-composition of male and female athletes. Part (a) shows the number of men and women in the dataset, part (b) shows the counts of red and white blood cells for men and women, and part (c) shows the body fat percentage of men and women, broken down by sport. Each panel individually is an acceptable figure. However, in combination the three panels do not work, because they don’t share a common visual language. First, part (a) uses the same blue color for both male and female athletes, part (b) uses it only for male athletes, and part (c) uses it for female athletes. Moreover, parts (b) and (c) introduce additional colors, but these colors differ between the two parts. It would have been better to use the same two colors consistently for male and female athletes, and to apply the same coloring scheme to part (a) as well. Second, in parts (a) and (b) women are on the left and men on the right, but in part (c) the order is reversed. The order of the boxplots in part (c) should be switched so it matches parts (a) and (b).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:athletes-composite-inconsistent"></span>
+<img src="telling_a_story_files/figure-html4/athletes-composite-inconsistent-1.png" alt="Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of \(10^{12}\) per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of \(10^{9}\) per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: Telford and Cunningham (1991)" width="672" />
+<p class="caption">
+Figure 18.6: Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of <span class="math inline">\(10^{12}\)</span> per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of <span class="math inline">\(10^{9}\)</span> per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+<p>Figure <a href="telling-a-story.html#fig:athletes-composite-good">18.7</a> fixes all these issues. In this figure, female athletes are consistently shown in orange and to the left of male athletes, who are shown in blue. Notice how much easier it is to read this figure than Figure <a href="telling-a-story.html#fig:athletes-composite-inconsistent">18.6</a>. When we use a consistent visual language, it doesn’t take much mental effort to determine which visual elements in the different parts represent women and which men. Figure <a href="telling-a-story.html#fig:athletes-composite-inconsistent">18.6</a>, on the other hand, can be quite confusing. In particular, on first glance it may generate the impression that men tend to have higher body fat percentages than women. Notice also that we need only a single legend in Figure <a href="telling-a-story.html#fig:athletes-composite-good">18.7</a> but needed two in Figure <a href="telling-a-story.html#fig:athletes-composite-inconsistent">18.6</a>. Since the visual language is consistent, the same legend works for parts (b) and (c).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:athletes-composite-good"></span>
+<img src="telling_a_story_files/figure-html4/athletes-composite-good-1.png" alt="Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure 18.6, but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure. Data source: Telford and Cunningham (1991)" width="672" />
+<p class="caption">
+Figure 18.7: Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure <a href="telling-a-story.html#fig:athletes-composite-inconsistent">18.6</a>, but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+</div>
+<div id="dont-be-repetitive" class="section level2">
+<h2><span class="header-section-number">18.4</span> Don’t be repetitive</h2>
+<p>Using a consistent visual language does not mean, however, that everything should look exactly the same. On the contrary. It is important that figures describing different analyses look visually distinct, so that your audience can easily recognize where one analysis ends and another one starts. This is best achieved by using different visualization approaches for different parts of the overarching story. If you have used a bar plot already, next use a scatterplot, or a boxplot, or a line plot. Otherwise, the different analyses will blur together in your audience’s mind, and they will have a hard time distinguishing one part of the story from another. For example, if we re-design Figure <a href="telling-a-story.html#fig:athletes-composite-good">18.7</a> so it uses only bar plots, the result is noticeable less distinct and more confusing (Figre <a href="telling-a-story.html#fig:athletes-composite-repetitive">18.8</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:athletes-composite-repetitive"></span>
+<img src="telling_a_story_files/figure-html4/athletes-composite-repetitive-1.png" alt="Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure 18.7 and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: Telford and Cunningham (1991)" width="672" />
+<p class="caption">
+Figure 18.8: Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure <a href="telling-a-story.html#fig:athletes-composite-good">18.7</a> and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+<div class="rmdtip">
+<p>
+When preparing a presentation or report, aim to use a different type of visualization for each distinct analysis.
+</p>
+</div>
+<p>Sets of repetitive figures are often a consequence of multi-part stories where each part is based on the same type of raw data. In those scenarios, it can be tempting to use the same type of visualization for each part. However, in aggregate, these figures will not hold the audience’s attention. As an example, let’s consider a story about the Facebook stock, in two parts: (i) the Facebook stock price has increased rapidly from 2012 to 2017; (ii) the price increase has outpaced that of other large tech companies. You might want to visualize these two statements with two figures showing stock price over time, as demonstrated in Figure <a href="telling-a-story.html#fig:tech-stocks-repetitive">18.9</a>. However, while Figure <a href="telling-a-story.html#fig:tech-stocks-repetitive">18.9</a>a serves a clear purpose and should remain as is, Figure <a href="telling-a-story.html#fig:tech-stocks-repetitive">18.9</a>b is at the same time repetitive and obscures the main point. We don’t particularly care about the exact temporal evolution of the stock price of Alphabet, Apple, and Microsoft, we just want to highlight that it grew less than the stock price of Facebook.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tech-stocks-repetitive"></span>
+<img src="telling_a_story_files/figure-html4/tech-stocks-repetitive-1.png" alt="Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around $25/share in mid-2012 to $150/share in mid-2017. (b) The prices of other large tech companies did not rise comparably over the same time period. Prices have been indexed to 100 on June 1, 2012 to allow for easy comparison. This figure is labeled as bad because parts (a) and (b) are repetitive. Data source: Google Finance" width="576" />
+<p class="caption">
+Figure 18.9: Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around $25/share in mid-2012 to $150/share in mid-2017. (b) The prices of other large tech companies did not rise comparably over the same time period. Prices have been indexed to 100 on June 1, 2012 to allow for easy comparison. This figure is labeled as bad because parts (a) and (b) are repetitive. Data source: Google Finance
+</p>
+</div>
+<p>I would recommend to leave part (a) as is but replace part (b) with a bar plot showing percent increase (Figure <a href="telling-a-story.html#fig:tech-stocks-diverse">18.10</a>). Now we have two distinct figures that each tell a unique, clear story and that work well in combination. Part (a) allows the reader to get familiar with the raw, underlying data and part (b) highlights the magnitude of the effect while removing any tangential information.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tech-stocks-diverse"></span>
+<img src="telling_a_story_files/figure-html4/tech-stocks-diverse-1.png" alt="Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around $25/share in mid-2012 to $150/share in mid-2017, an increase of almost 450%. (b) The prices of other large tech companies did not rise comparably over the same time period. Price increases ranged from 90% to 240%. Data source: Google Finance" width="576" />
+<p class="caption">
+Figure 18.10: Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around $25/share in mid-2012 to $150/share in mid-2017, an increase of almost 450%. (b) The prices of other large tech companies did not rise comparably over the same time period. Price increases ranged from 90% to 240%. Data source: Google Finance
+</p>
+</div>
+<p>Figure <a href="telling-a-story.html#fig:tech-stocks-diverse">18.10</a> highlights a general principle that I follow when preparing sets of figures to tell a story: I start with a figure that is as close as possible to showing the raw data, and in subsequent figures I show increasingly more derived quantities. Derived quantities (such as percent increases, averages, coefficients of fitted models, and so on) are useful to summarize key trends in large and complex datasets. However, because they are derived they are less intuitive, and if we show a derived quantity before we have shown the raw data our audience will find it difficult to follow. On the flip side, if we try to show all trends by showing raw data we will end up needing too many figures and/or being repetitive.</p>
+<p>How many figures you should you use to tell your story? The answer depends on the publication venue. For a short blog post or tweet, make one figure. For scientific papers, I recommend between three and six figures. If I have many more than six figures for a scientific paper, then some of them need to be moved into an appendix or supplementary materials section. It is good to document all the evidence we have collected, but we must not wear out our audience by presenting excessive numbers of mostly similar-looking figures. In other contexts, a larger number of figures may be appropriate. However, in those contexts, we will usually be telling multiple stories, or an overarching story with subplots. For example, if I am asked to give an hour-long scientific presentation, I usually aim to tell three distinct stories. Similarly, a book or thesis will contain more than one story, and in fact may contain one story per chapter or section. In those scenarios, each distinct story-line or subplot should be presented with no more than three to six figures. In this book, you will find that I follow this principle at the level of sections within chapter. Each section is approximately self-contained and will typically show no more than six figures.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Schimel2011">
+<p>Schimel, J. 2011. <em>Writing Science: How to Write Papers That Get Cited and Proposals That Get Funded</em>. Oxford University Press.</p>
+</div>
+<div id="ref-Telford-Cunningham-1991">
+<p>Telford, R. D., and R. B. Cunningham. 1991. “Sex, Sport, and Body-Size Dependency of Hematology in Highly Trained Athletes.” <em>Medicine and Science in Sports and Exercise</em> 23: 788–94.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="choosing-visualization-software.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="outline.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-[[choosing-the-right-visualization-software]]
+[[choosing-visualization-software]]
 Choosing the right visualization software
 -----------------------------------------
 
