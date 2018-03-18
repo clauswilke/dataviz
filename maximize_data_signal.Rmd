@@ -6,7 +6,7 @@ library(readr)
 library(lubridate)
 ```
 
-# Maximizing the data signal in visualizations {#background-grids}
+# Maximizing the data signal in visualizations {#maximize-data-signal}
 
 
 With the rising popularity of the R package ggplot2, which uses a gray background grid as default, graphs with this style have become widespread. With apologies to ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don't find this style particularly attractive. In general, I find that the gray background detracts from the actual data. As an example, consider Figure \@ref(fig:price-plot-ggplot-default), which shows the stock price of four major tech companies, indexed to their value in June 2012. The grid is too busy, and the gray background in the legend is distracting.

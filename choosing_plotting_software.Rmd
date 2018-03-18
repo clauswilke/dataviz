@@ -6,7 +6,7 @@ library(ggthemes)
 library(forcats)
 ```
 
-# Choosing the right visualization software
+# Choosing the right visualization software {#choosing-visualization-software}
 
 Throughout this book, I have purposefully avoided one critical question of data visualization: How do we actually generate our figures? What tools should we use? This question can generate heated discussions, as many people have strong emotional bonds to the specific tools they are familiar with. I have often seen people vigorously defend their own preferred tools instead of investing time to learn a new approach, even if the new approach has objective benefits. And I will say that sticking with the tools you know is not entirely unreasonable. Learning any new tool will require time and effort, and you will have to go through a painful transition period where getting things done with the new tool is much more difficult than it was with the old tool. Whether going through this period is worth the effort can usually only be evaluated in retrospect, after one has made the investment to learn the new tool. Therefore, regardless of the pros and cons of different tools and approaches, the overriding principle is that you need to pick a tool that works for you. If you can make the figures you want to make, without excessive effort, then that's all that matters. 
 
