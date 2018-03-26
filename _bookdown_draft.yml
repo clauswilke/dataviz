@@ -14,28 +14,36 @@ rmd_files: [
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
   "visualizing_amounts.Rmd", # completed
+  "paired_data.Rmd",
+  "time_series.Rmd",
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
+  "nested_proportions.Rmd",
   "visualizing_trends.Rmd",
+  "visualizing_uncertainty.Rmd",
+  "geospatial_data.Rmd",
 
   # Part II
 
   "figure_titles_captions.Rmd", # needs Part II heading from subsequent chapter
   "small_axis_labels.Rmd", # completed
-
+  "axis_settings.Rmd",
   "maximize_data_signal.Rmd",
   "proportional_ink.Rmd", # completed
   "overlapping_points.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd", # completed
+  "multi-part_figures.Rmd",
+  "no_3d.Rmd",
 
   # Part III
   "image_file_formats.Rmd", # completed
-  "choosing_plotting_software.Rmd", # completed
+  "choosing_visualization_software.Rmd", # completed
   "telling_a_story.Rmd", # completed
+  "annotated_bibliography.Rmd",
 
   "outline.Rmd",
   "technical_notes.Rmd",

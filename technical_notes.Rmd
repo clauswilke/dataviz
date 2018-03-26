@@ -2,16 +2,23 @@
 # run setup script
 source("_common.R")
 library(tidyverse)
-library(egg)
-library(ggridges)
 library(lubridate)
+library(egg)
 library(ggforce)
 library(ggrepel)
+library(ggridges)
+library(ggthemes)
 library(treemapify)
+library(hexbin)
+library(magick)
+library(plot3D)
+library(rgeos)
+library(maptools)
 library(sf)
 library(maps)
 library(RColorBrewer)
 library(gapminder)
+library(nycflights13)
 ```
 
 # Technical notes {-}

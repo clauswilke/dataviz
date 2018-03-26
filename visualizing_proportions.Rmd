@@ -292,7 +292,7 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
         axis.line.y = element_blank(),
         plot.margin = margin(7, 10, 7, 7))
 
-df_marital <- select(productplots::happy, age, marital) %>%
+df_marital <- select(happy, age, marital) %>%
   na.omit() %>%
   filter(marital != "separated") %>% # remove separated to make plot simpler
   mutate(marital = factor(marital, levels = c("widowed", "divorced", "married", "never married")))

@@ -1,0 +1,96 @@
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+# run setup script
+source("_common.R")
+```
+
+# Don't go 3D {#no-3d}
+
+3d visualizations are quite popular. They are also almost always inappropriately used.
+
+## Gratuitous 3d
+
+
+A poplar approach to add slickness and polish to visualiations is to turn the figure elements into three-dimensional objects. The most ... 3d pie chart; columns instead of bars; bands instead of lines. These are unequivocally bad and should be erased from the visual vocabulary of data scientists.
+
+(ref:rotated-pie) The same 3D pie chart shown in four different perspectives. Rotating a pie into the third dimension makes pie slices in the front appear larger than they really are and pie slices in the back appear smaller. Here, in parts (a), (b), and (c), the blue slice corresponding to 25% of the data visually occupies more than 25% of the area representing the pie. Only part (d) is an accurate representation of the data.
+
+```{r rotated-pie, fig.asp = 5.1/6, fig.cap = '(ref:rotated-pie)'}
+ggdraw() + draw_image("figures/3d/3d-pie-assembled.png")
+```
+
+Figure \@ref(fig:titanic-passengers-by-class-sex) of Chapter \@ref(visualizing-amounts).
+
+(ref:titanic-3d) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class, shown as a 3D stacked bar plot. The total numbers of passengers in 1st, 2nd, and 3rd class are 322, 279, and 711, respectively (see Figure \@ref(fig:titanic-passengers-by-class-sex)). Yet in this plot, the 1st class bar appears to represent fewer than 300 passengers, the 3rd class bar appears to represent fewer than 700 passengers, and the 2nd class bar seems to be closer to 210--220 passengers than the actual 279 passengers. Furthermore, the 3rd class bar visually dominates the figure and makes the number of passengers in 3rd class appear larger than it actually is. 
+
+```{r titanic-3d, fig.asp = 4.5/6, fig.cap = '(ref:titanic-3d)'}
+ggdraw() + draw_image("figures/3d/titanic-3d-bars-assembled.png")
+```
+
+
+## 3d position scales
+
+```{r fig.asp = 1.1}
+library(plot3D)
+library(cowplot)
+set_null_device("png")
+
+colors <- c("#0072B2", "#CC79A7", "#E69F00")
+
+cyls <- data.frame(cyl = factor(c(4, 6, 8)))
+
+p <- ggplot(cyls, aes(cyl, cyl, color = cyl)) + geom_point() +
+  scale_color_manual(values = colors, name = "cylinders") +
+  theme_half_open(font_size = 12, font_family = "Myriad Pro") +
+  theme(legend.position = "top",
+        legend.justification = "right")
+legend <- get_legend(p)
+
+pfun <- function(theta = 30, phi = 20) {
+  function() {
+    par(xpd = NA,
+        bg = "transparent",
+        mai = c(0, 0.1, 0, 0),
+        family = "Myriad Pro Condensed"
+    )
+    scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
+              col = colors,
+              pch = 19, bty ="b2", theta = theta, phi = phi, colkey = FALSE, 
+              xlab = "displacement (cu. in.)", ylab ="power (hp)", zlab = "efficiency (mpg)",
+              cex.lab = 0.857)
+  }
+}
+
+plot_grid(pfun(30, 20), pfun(-30, 20), 
+          NULL, legend,
+          pfun(30, 40), pfun(-30, 40),
+          rel_heights = c(1, 0.1, 1), ncol = 2,
+          labels = c("a", "b", "", "", "c", "d"),
+          label_fontface = "plain", label_fontfamily = "Myriad Pro")
+```
+
+```{r fig.asp = 1.1}
+pfun2 <- function(theta = 30, phi = 20) {
+  function() {
+    par(xpd = NA,
+        bg = "transparent",
+        mai = c(0, 0.1, 0, 0),
+        family = "Myriad Pro Condensed"
+    )
+    scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
+              col = colors,
+              pch = 19, axes = FALSE, theta = theta, phi = phi, colkey = FALSE, box = FALSE,
+              cex.lab = 0.857)
+  }
+}
+
+
+plot_grid(pfun2(30, 20), pfun2(-30, 20), 
+          NULL, legend,
+          pfun2(30, 40), pfun2(-30, 40),
+          rel_heights = c(1, 0.1, 1), ncol = 2,
+          labels = c("a", "b", "", "", "c", "d"),
+          label_fontface = "plain", label_fontfamily = "Myriad Pro")
+
+```
+
+## Appropriate use of 3d visualizations

@@ -82,8 +82,8 @@
 #. **Multi-part figures**  
   Discusses issues that arise in multi-part figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-part figures. 
   
-#. **Don't go 3d**  
-  Argues why 3d plots are generally problematic (figures are fundamentally a 2d medium, and in 3d plots data is subjected to an additional, non-obvious transformation from 3d to 2d) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.
+#. **Don't go 3D**  
+  Argues why 3d plots are generally problematic (figures are fundamentally a 2D medium, and in 3D plots data is subjected to an additional, non-obvious transformation from 3D to 2D) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.
 
 
 ## Part III: Miscellaneous topics {-}
