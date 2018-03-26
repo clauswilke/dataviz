@@ -5,12 +5,11 @@ source("_common.R")
 
 # Don't go 3D {#no-3d}
 
-3d visualizations are quite popular. They are also almost always inappropriately used.
+3D visualizations are quite popular. They are also almost always inappropriately used.
 
-## Gratuitous 3d
+## Gratuitous 3D
 
-
-A poplar approach to add slickness and polish to visualiations is to turn the figure elements into three-dimensional objects. The most ... 3d pie chart; columns instead of bars; bands instead of lines. These are unequivocally bad and should be erased from the visual vocabulary of data scientists.
+A poplar approach to add slickness and polish to visualiations is to turn the figure elements into three-dimensional objects. Most commonly, we see 3D pie charts, columns instead of bars for bar plots, and bands instead of lines for line plots. All these visualizations are unequivocally bad and should be erased from the visual vocabulary of data scientists.
 
 (ref:rotated-pie) The same 3D pie chart shown in four different perspectives. Rotating a pie into the third dimension makes pie slices in the front appear larger than they really are and pie slices in the back appear smaller. Here, in parts (a), (b), and (c), the blue slice corresponding to 25% of the data visually occupies more than 25% of the area representing the pie. Only part (d) is an accurate representation of the data.
 
@@ -27,7 +26,9 @@ ggdraw() + draw_image("figures/3d/titanic-3d-bars-assembled.png")
 ```
 
 
-## 3d position scales
+## 3D position scales
+
+A seemingly more appropriate use of 3D is using three position scales (*x*, *y*, and *z*).
 
 ```{r fig.asp = 1.1}
 library(plot3D)
@@ -93,4 +94,11 @@ plot_grid(pfun2(30, 20), pfun2(-30, 20),
 
 ```
 
-## Appropriate use of 3d visualizations
+## Appropriate use of 3D visualizations
+
+Appropriate uses:
+
+- Interactive visualizations where the figure can be rotated by the viewer
+- Animations where the figure is slowly rotating
+- VR or augmented reality visualizations
+- Data mapped onto inherently 3D objects (e.g., protein structures)
