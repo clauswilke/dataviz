@@ -30,7 +30,10 @@ ggdraw() + draw_image("figures/3d/titanic-3d-bars-assembled.png")
 
 A seemingly more appropriate use of 3D is using three position scales (*x*, *y*, and *z*).
 
-```{r fig.asp = 1.1}
+(ref:mtcars-3d) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
+
+
+```{r mtcars-3d, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d)'}
 library(plot3D)
 library(cowplot)
 set_null_device("png")
@@ -57,7 +60,7 @@ pfun <- function(theta = 30, phi = 20) {
               col = colors,
               pch = 19, bty ="b2", theta = theta, phi = phi, colkey = FALSE, 
               xlab = "displacement (cu. in.)", ylab ="power (hp)", zlab = "efficiency (mpg)",
-              cex.lab = 0.857)
+              cex.lab = 1) #0.857)
   }
 }
 
@@ -69,7 +72,10 @@ plot_grid(pfun(30, 20), pfun(-30, 20),
           label_fontface = "plain", label_fontfamily = "Myriad Pro")
 ```
 
-```{r fig.asp = 1.1}
+(ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
+
+
+```{r mtcars-3d-no-axes, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d-no-axes)'}
 pfun2 <- function(theta = 30, phi = 20) {
   function() {
     par(xpd = NA,
@@ -80,7 +86,7 @@ pfun2 <- function(theta = 30, phi = 20) {
     scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
               col = colors,
               pch = 19, axes = FALSE, theta = theta, phi = phi, colkey = FALSE, box = FALSE,
-              cex.lab = 0.857)
+              cex.lab = 1) #0.857)
   }
 }
 
@@ -94,7 +100,53 @@ plot_grid(pfun2(30, 20), pfun2(-30, 20),
 
 ```
 
+(ref:mtcars-2d-multiple) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
+
+```{r mtcars-2d-multiple, fig.asp = .45, fig.cap = '(ref:mtcars-2d-multiple)'}
+p1 <- ggplot(mtcars, aes(x = disp, y = mpg, color = factor(cyl))) +
+  geom_point(size = 1.5) + 
+  scale_color_manual(values = colors, name = "cylinders", guide = "none") +
+  xlab("displacement (cu. in.)") +
+  ylab("efficiency (mpg)") +
+  theme_half_open(12)
+
+p2 <- ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) +
+  geom_point(size = 1.5) + 
+  scale_color_manual(values = colors, name = "cylinders") +
+  xlab("power (hp)") +
+  ylab("efficiency (mpg)") +
+  theme_half_open(12) +
+  theme(legend.position = c(1, 1),
+        legend.justification = c(1, 1))
+
+
+plot_grid(p1, p2)
+```
+
+(ref:mtcars-2d-size) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
+
+```{r mtcars-2d-size, fig.width = 5.5, fig.asp = 0.75, fig.cap = '(ref:mtcars-2d-size)'}
+p <- ggplot(mtcars, aes(x = disp, y = hp, size = mpg, fill = factor(cyl))) +
+  geom_point(color = "white", pch = 21) + 
+  scale_fill_manual(values = colors, name = "cylinders",
+                     guide = guide_legend(override.aes = list(size = 3))) +
+  scale_size(name = "    mpg    ",
+             range = c(1, 8),
+             limits = c(8, 40),
+             breaks = c(5, 10, 20, 40),
+             guide = guide_legend(override.aes = list(fill = "gray50"))) +
+  xlab("displacement (cu. in.)") +
+  ylab("power (hp)") +
+  theme_half_open() +
+  theme(legend.title.align = 0.5)
+
+ggdraw(align_legend(p))
+```
+
 ## Appropriate use of 3D visualizations
+
+Visualizations using 3D position scales can be appropriate, however. First, the issues described in the preceding section are of lesser concern if the visualization is interactive and can be rotated by the viewer, or alternatively, if it is shown in a VR or augmented reality environment where it can be inspected from multiple angles. Second, even if the visualization isn't interactive, showing it slowly rotating, as a movie, rather than as a static image from one perspective will allow the viewer to discern where in 3D space different graphical elements reside. The human brain is very good at reconstructing a 3D scene from a series of images taken from different angles, and the slow rotation of the graphic provides exactly these images.
+
 
 Appropriate uses:
 
@@ -102,3 +154,9 @@ Appropriate uses:
 - Animations where the figure is slowly rotating
 - VR or augmented reality visualizations
 - Data mapped onto inherently 3D objects (e.g., protein structures)
+
+(ref:protein-3d) Patterns of evolutionary variation in a protein. Dark sites indicate conserved amino acids and light sites indicate variable amino acids.
+
+```{r protein-3d, fig.width = 4.5, fig.asp = 16/19, fig.cap = '(ref:protein-3d)'}
+ggdraw() +  draw_image("figures/3d/1AKO-cropped.png")
+```

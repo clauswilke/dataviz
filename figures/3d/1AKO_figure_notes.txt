@@ -1,0 +1,7 @@
+cd /Users/wilke/Dropbox/projects/books/dataviz/experiments/3d-protein-structure/
+load 1AKO.pse
+run spectrumany.py
+spectrumany b, brown yellow white, 1AKO, minimum=10, maximum=30
+# brown: 0.65, 0.32, 0.17 (166, 82, 43)
+ray 2000, 2000
+png 1AKO.png
