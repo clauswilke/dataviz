@@ -270,7 +270,6 @@ ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fil
   theme_minimal_grid() +
   theme(axis.title.x = element_text(hjust = 0.61))
 
-
 ```
 
 Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For example, to visualize the length distributions of sepals for three different iris species, density plots are by far the best choice (Figure \@ref(fig:iris-densities)).
