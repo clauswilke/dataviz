@@ -42,7 +42,7 @@ rmd_files: [
   # Part III
   "image_file_formats.Rmd", # completed
   "choosing_visualization_software.Rmd", # completed
-  "telling_a_story.Rmd", # completed
+  "telling_a_story_revised.Rmd", # completed
   "annotated_bibliography.Rmd",
 
   "outline.Rmd",

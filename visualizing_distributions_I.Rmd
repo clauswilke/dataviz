@@ -262,7 +262,7 @@ Finally, when we want to visualize exactly two distributions, we can also make t
 ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fill = gender)) + 
   geom_col() +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  scale_y_continuous(name = "count", breaks = 20*(-2:1)) +
+  scale_y_continuous(name = "count", breaks = 20*(-2:1), labels = c("40", "20", "0", "20")) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
   draw_text(x = 70, y = -39, "male", hjust = 0) +
   draw_text(x = 70, y = 21, "female", hjust = 0) +

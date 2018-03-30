@@ -4,3 +4,23 @@ source("_common.R")
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
+
+```{r fig.asp = 1.2}
+n <- c(10, 30, 100, 300, 1000)
+
+df <- data.frame(n = unlist(lapply(n, function(x) rep(x, x))),
+                 x = c(rnorm(sum(n))))
+
+df %>% group_by(n) %>%
+  summarize(mean = mean(x),
+            se = sd(x)/sqrt(n())) -> df_mean
+
+p1 <- ggplot(df, aes(x = factor(n), y = x)) + 
+  geom_point(size = 0.5, position = position_jitter(width = 0.3))
+p2 <- ggplot(df, aes(x = factor(n), y = x)) + geom_boxplot()
+p3 <- ggplot(df_mean, aes(x = factor(n), y = mean)) + 
+  geom_pointrange(aes(ymin = mean - se, ymax = mean + se))
+
+plot_grid(p1, p2, p3, ncol = 1, align = 'v')
+
+```
