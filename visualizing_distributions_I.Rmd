@@ -273,42 +273,45 @@ ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fil
 
 ```
 
-Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For example, to visualize the length distributions of sepals for three different iris species, density plots are by far the best choice (Figure \@ref(fig:iris-densities)).
+Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For multiple distributions, histograms tend to become highly confusing, whereas density plots work well as long as the distributions are somewhat distinct. For example, to visualize the distribution of butterfat percentage among cows from four different cattle breeds, density plots are fine (Figure \@ref(fig:butterfat-densitites)).
 
-(ref:iris-densities) Density estimates of the sepal lengths of three different iris species.
+(ref:butterfat-densitites) Density estimates of the butterfat percentage in the milk of four cattle breeds. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
-```{r iris-densities, fig.cap='(ref:iris-densities)'}
+```{r butterfat-densitites, fig.cap='(ref:butterfat-densitites)'}
+cows %>% filter(breed != "Canadian") -> cows_filtered
+
 # compute densities for sepal lengths
-iris_dens <- group_by(iris, Species) %>%
-  do(ggplot2:::compute_density(.$Sepal.Length, NULL)) %>%
-  rename(Sepal.Length = x)
+cows_dens <- group_by(cows_filtered, breed) %>%
+  do(ggplot2:::compute_density(.$butterfat, NULL)) %>%
+  rename(butterfat = x)
 
 # get the maximum values
-iris_max <- filter(iris_dens, density == max(density)) %>%
+cows_max <- filter(cows_dens, density == max(density)) %>%
   ungroup() %>%
-  mutate(hjust = c(0, 0.4, 0),
-         vjust = c(1, 0, 1),
-         nudge_x = c(0.11, 0, 0.2),
-         nudge_y = c(-0.02, 0.02, -0.02) 
+  mutate(hjust = c(0, 0, 0, 0),
+         vjust = c(0, 0, 0, 0),
+         nudge_x = c(-0.2, -0.2, 0.1, 0.23),
+         nudge_y = c(0.03, 0.03, -0.2, -0.06) 
         )
 
-iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species, fill = Species)) + 
+cows_p <- ggplot(cows_dens, aes(x = butterfat, y = density, color = breed, fill = breed)) + 
   geom_density_line(stat = "identity") +
-  geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
-                                 x = Sepal.Length + nudge_x, 
+  geom_text(data = cows_max, aes(label = breed, hjust = hjust, vjust = vjust,
+                                 color = breed,
+                                 x = butterfat + nudge_x, 
                                  y = density + nudge_y),
             inherit.aes = FALSE, size = 12/.pt) +
-  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                    breaks = c("virginica", "versicolor", "setosa"),
+  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#D55E00", "#009E73"), 0.3),
+                     breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
+                     guide = "none") +
+  scale_fill_manual(values = c("#56B4E950", "#E69F0050", "#D55E0050", "#009E7350"),
+                    breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
                     guide = "none") +
-  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
-  scale_x_continuous(expand = c(0, 0), name = "sepal length") +
-  scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0), name = "% butterfat") +
+  scale_y_continuous(limits = c(0, 1.99), expand = c(0, 0)) +
   theme_minimal_hgrid()
   
-iris_p
+cows_p
 ```
 
 ```{block type='rmdtip', echo=TRUE}
