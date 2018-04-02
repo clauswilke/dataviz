@@ -3,6 +3,7 @@
 source("_common.R")
 
 library(ggridges)
+library(lubridate)
 ```
 
 # Visualizing time series {#time-series}
@@ -19,7 +20,7 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_point(color = "#0072B2") +
 ```
 
 ```{r}
-ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
+ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
@@ -28,7 +29,7 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
 
 ```{r}
 ggplot(biorxiv_growth, aes(date, height = count, y = 0)) + 
-  geom_ridgeline(color = "#0072B2", fill = "#0072B240") +
+  geom_ridgeline(color = "#0072B2", fill = "#0072B240", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
@@ -36,7 +37,8 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
 ```
 
 ```{r}
-ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
+ggplot(biorxiv_growth, aes(date, count)) + 
+  geom_line(color = "#0072B2", size = .75) +
   scale_y_log10(limits = c(30, 1600),
                 breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
                 labels = c("", "", "50", "", "", "", "",
@@ -47,8 +49,82 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
   theme_half_open()
 ```
 
+While individual dots are fine for a single time course, they don't work well when there are multiple ones.
+
+```{r}
+preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")) %>%
+  filter(count > 0) %>%
+  mutate(archive = factor(archive, levels = c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")))-> preprints
+
+p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
+  geom_point(color = "white", size = 2) +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = NULL) + 
+  scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL,
+               limits = c(min(biorxiv_growth$date), ymd("2017-01-01"))) +
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  theme_half_open() +
+  theme(legend.title.align = 0.5,
+        legend.position = c(0.1, .9),
+        legend.just = c(0, 1))
+
+stamp_bad(p)
+```
+
+```{r}
+p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
+  geom_line() + geom_point(color = "white", size = 2) +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = NULL) + 
+  scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL,
+               limits = c(min(biorxiv_growth$date), ymd("2017-01-01"))) +
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  theme_half_open() +
+  theme(legend.title.align = 0.5,
+        legend.position = c(0.1, .9),
+        legend.just = c(0, 1))
+
+p
+```
+
+
+```{r}
+preprints_final <- filter(preprints, date == ymd("2017-01-01"))
+
+p <- ggplot(preprints, aes(date, count, color = archive)) + 
+  geom_line(size = .75) +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = NULL) + 
+  scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
+                name = "preprints / month",
+                sec.axis = dup_axis(breaks = preprints_final$count,
+                                    labels = c("bioRxiv", "PeerJ\nPreprints", "arXiv\nq-bio"),
+                                    name = NULL)) + 
+  scale_x_date(name = NULL,
+               limits = c(min(biorxiv_growth$date), ymd("2017-01-01")),
+               expand = expand_scale(mult = c(0.05, 0))) +
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73")) +
+  theme_half_open() +
+  theme(legend.position = "none") +
+  theme(axis.line.y.right = element_blank(),
+        axis.ticks.y.right = element_blank(),
+        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
+
+p
+```
 
 Other types of time-series visualizations:
 
+- Styling: dots with lines, little gaps between dots and lines, etc?
 - x-y plane with lines connecting subsequent time points
 - bubbles along x axis
