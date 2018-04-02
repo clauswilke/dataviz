@@ -125,6 +125,5 @@ p
 
 Other types of time-series visualizations:
 
-- Styling: dots with lines, little gaps between dots and lines, etc?
 - x-y plane with lines connecting subsequent time points
-- bubbles along x axis
+- bubbles along x axis, maybe use earthquake data? http://www.ldeo.columbia.edu/~felixw/NCAeqDD/

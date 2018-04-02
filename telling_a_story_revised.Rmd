@@ -26,7 +26,7 @@ df_final_qbio <- filter(df_final, archive == "arXiv q-bio")
 
 ggplot(filter(df_preprints, archive == "arXiv q-bio"),
        aes(date, count, color = archive)) + 
-  geom_line() +
+  geom_line(size = 0.75) +
   scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
                 name = "preprints / month",
                 sec.axis = dup_axis(breaks = df_final_qbio$count,
@@ -34,18 +34,22 @@ ggplot(filter(df_preprints, archive == "arXiv q-bio"),
                                     name = NULL)) + 
   scale_x_date(name = NULL, expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
-  theme_minimal_grid()
+  theme_minimal_grid() +
+  theme(axis.ticks.y.right = element_blank(),
+        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
 ```
 
 ```{r}
-ggplot(df_preprints, aes(date, count, color = archive)) + geom_line() +
+ggplot(df_preprints, aes(date, count, color = archive)) + geom_line(size = 0.75) +
   scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
                 name = "preprints / month",
                 sec.axis = dup_axis(breaks = df_final$count, labels = df_final$archive,
                                     name = NULL)) + 
   scale_x_date(name = NULL, expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
-  theme_minimal_grid()
+  theme_minimal_grid() +
+  theme(axis.ticks.y.right = element_blank(),
+        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
 ```
 
 ## Make a figure for the generals

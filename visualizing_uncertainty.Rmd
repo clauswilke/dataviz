@@ -1,6 +1,8 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(forcats)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -23,4 +25,30 @@ p3 <- ggplot(df_mean, aes(x = factor(n), y = mean)) +
 
 plot_grid(p1, p2, p3, ncol = 1, align = 'v')
 
+```
+
+
+```{r fig.width = 5}
+cows %>% filter(breed != "Canadian") %>%
+  group_by(breed) %>%
+  summarize(mean = mean(butterfat),
+            se = sd(butterfat)/sqrt(n())) %>%
+  mutate(breed = fct_reorder(breed, desc(mean)))-> cow_means
+
+ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) +
+  geom_pointrange() +
+  scale_x_discrete(labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
+                   name = NULL) +
+  scale_y_continuous(name = "mean % butterfat", expand = c(0, 0)) +
+  theme_minimal_hgrid()
+```
+
+```{r fig.width = 5}
+ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) +
+  geom_col(fill = "gray70") +
+  geom_linerange() +
+  scale_x_discrete(labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
+                   name = NULL) +
+  scale_y_continuous(name = "mean % butterfat", expand = c(0, 0)) +
+  theme_minimal_hgrid()
 ```
