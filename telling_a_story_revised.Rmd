@@ -17,6 +17,36 @@ Your goal in telling a story with data should be to use facts and data to get yo
 
 Good stories tend to be structured according to standard patterns that resonate with human cognition. For example, the Hawking story of the preceding paragraph follows the Opening--Challenge--Action--Resolution structure. My goal in this chapter is not to describe these standard forms of story telling. There are excellent resources that cover this material [see e.g. @Schimel2011]. Instead, I want to address a few specific issues that tend to arise when we try to tell a story with data visualizations. I have four specific recommendations: (i) prepare figures that make simple and clear points, (ii) build up from simpler to more complex visualizations, (iii) use a consistent visual language, and (iv) don't be repetitive.
 
+```{r}
+preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio")) %>%
+filter(count > 0) -> df_preprints
+
+df_final <- filter(df_preprints, date == max(date))
+df_final_qbio <- filter(df_final, archive == "arXiv q-bio")
+
+ggplot(filter(df_preprints, archive == "arXiv q-bio"),
+       aes(date, count, color = archive)) + 
+  geom_line() +
+  scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
+                name = "preprints / month",
+                sec.axis = dup_axis(breaks = df_final_qbio$count,
+                                    labels = df_final_qbio$archive,
+                                    name = NULL)) + 
+  scale_x_date(name = NULL, expand = c(0, 0)) +
+  scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  theme_minimal_grid()
+```
+
+```{r}
+ggplot(df_preprints, aes(date, count, color = archive)) + geom_line() +
+  scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
+                name = "preprints / month",
+                sec.axis = dup_axis(breaks = df_final$count, labels = df_final$archive,
+                                    name = NULL)) + 
+  scale_x_date(name = NULL, expand = c(0, 0)) +
+  scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
+  theme_minimal_grid()
+```
 
 ## Make a figure for the generals
 

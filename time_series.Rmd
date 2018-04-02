@@ -1,6 +1,54 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(ggridges)
 ```
 
 # Visualizing time series {#time-series}
+
+```{r}
+preprint_growth %>% filter(archive == "bioRxiv") %>%
+  filter(count > 0) -> biorxiv_growth
+
+ggplot(biorxiv_growth, aes(date, count)) + geom_point(color = "#0072B2") +
+  scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL) +
+  theme_half_open()
+```
+
+```{r}
+ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
+  scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL) +
+  theme_half_open()
+```
+
+```{r}
+ggplot(biorxiv_growth, aes(date, height = count, y = 0)) + 
+  geom_ridgeline(color = "#0072B2", fill = "#0072B240") +
+  scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL) +
+  theme_half_open()
+```
+
+```{r}
+ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2") +
+  scale_y_log10(limits = c(30, 1600),
+                breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
+                labels = c("", "", "50", "", "", "", "",
+                           "100", "", "", "", "500", "", "", "", "",
+                           "1000", ""), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL) +
+  theme_half_open()
+```
+
+
+Other types of time-series visualizations:
+
+- x-y plane with lines connecting subsequent time points
+- bubbles along x axis
