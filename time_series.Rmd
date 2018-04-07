@@ -108,7 +108,7 @@ p <- ggplot(preprints, aes(date, count, color = archive)) +
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month",
                 sec.axis = dup_axis(breaks = preprints_final$count,
-                                    labels = c("bioRxiv", "PeerJ\nPreprints", "arXiv\nq-bio"),
+                                    labels = c("arXiv\nq-bio", "PeerJ\nPreprints", "bioRxiv"),
                                     name = NULL)) + 
   scale_x_date(name = NULL,
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01")),

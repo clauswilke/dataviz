@@ -4,3 +4,44 @@ source("_common.R")
 ```
 
 # Multi-part figures {#multi-part-figures}
+
+```{r}
+titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
+  ggplot(aes(sex, fill = sex)) + geom_bar() +
+    facet_grid(class ~ surv) +
+  theme_dviz_hgrid()
+```
+
+```{r fig.width = 8.5, fig.asp = 0.8}
+BA_degrees %>% group_by(field) %>%
+  summarize(mean_perc = mean(perc)) %>%
+  arrange(desc(mean_perc)) -> BA_top
+
+top_fields <- filter(BA_top, mean_perc>0.04)$field
+
+BA_top_degrees <- filter(BA_degrees, field %in% top_fields) %>%
+  mutate(field = factor(field, levels = top_fields)) %>%
+  arrange(field)
+
+p <- ggplot(BA_top_degrees, aes(year, perc)) + 
+  geom_line(color = "#0072B2") + 
+  facet_wrap(~field, labeller = label_wrap_gen(width = 25), ncol = 3,
+             scales = "free") +
+  ylab("Percent") +
+  theme_dviz_hgrid() +
+  theme(strip.text = element_text(margin = margin(7, 7, 0, 7))) 
+
+stamp_bad(p)
+```
+
+```{r fig.width = 8.5, fig.asp = 0.8}
+ggplot(BA_top_degrees, aes(year, perc)) + 
+  geom_line(color = "#0072B2") + 
+  facet_wrap(~field, labeller = label_wrap_gen(width = 25), ncol = 3,
+             scales = "free") +
+  scale_y_continuous(limits = c(0, 0.241), expand = c(0, 0),
+                     name = "Percent") +
+  theme_dviz_hgrid() +
+  theme(strip.text = element_text(margin = margin(7, 7, 0, 7))) 
+
+```

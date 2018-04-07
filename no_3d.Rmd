@@ -157,6 +157,34 @@ Appropriate uses:
 
 (ref:protein-3d) Patterns of evolutionary variation in a protein. Dark sites indicate conserved amino acids and light sites indicate variable amino acids.
 
-```{r protein-3d, fig.width = 4.5, fig.asp = 16/19, fig.cap = '(ref:protein-3d)'}
-ggdraw() +  draw_image("figures/3d/1AKO-cropped.png")
+
+```{r protein-3d, fig.width = 4.5, fig.asp = (16+4)/19, fig.cap = '(ref:protein-3d)'}
+# Make legend via ggplot2
+df <- data.frame(x = 1:10,
+                 fill = runif(10))
+
+p <- ggplot(df, aes(x, y = 1, fill = fill)) + geom_tile() +
+  scale_fill_gradient2(low = darken("#A6522B", .07), mid = darken("#FFFF00", .05),
+                       high = darken("#FFFFFF", .02),
+                       midpoint = .5,
+                       limits = c(0, 1),
+                       breaks = c(0, 1),
+                       labels = c("highly\nconserved", "highly\nvariable"),
+                       name = "sequence conservation",
+                       guide = guide_colorbar(direction = "horizontal",
+                                              label.position = "bottom",
+                                              title.position = "top",
+                                              ticks = FALSE,
+                                              barwidth = grid::unit(3.5, "in"),
+                                              barheight = grid::unit(0.2, "in"))) +
+  theme_half_open(12) +
+  theme(legend.title.align = 0.5,
+        legend.background = element_blank(),
+        legend.box.background = element_blank(),
+        legend.justification = "center")
+
+legend <- get_legend(p)
+
+plot_grid(ggdraw() +  draw_image("figures/3d/1AKO-cropped.png"),
+          legend, ncol = 1, rel_heights = c(16, 4))
 ```

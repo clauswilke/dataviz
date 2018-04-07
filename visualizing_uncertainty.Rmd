@@ -3,6 +3,7 @@
 source("_common.R")
 
 library(forcats)
+library(patchwork)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -18,12 +19,23 @@ df %>% group_by(n) %>%
             se = sd(x)/sqrt(n())) -> df_mean
 
 p1 <- ggplot(df, aes(x = factor(n), y = x)) + 
-  geom_point(size = 0.5, position = position_jitter(width = 0.3))
-p2 <- ggplot(df, aes(x = factor(n), y = x)) + geom_boxplot()
+  geom_point(size = 0.5, position = position_jitter(width = 0.3)) +
+  scale_x_discrete(breaks = NULL, name = NULL) +
+  scale_y_continuous(breaks = c(-2, 0, 2)) +
+  theme_minimal_hgrid()
+p2 <- ggplot(df, aes(x = factor(n), y = x)) + 
+  geom_boxplot(fill = "gray90") +
+  scale_x_discrete(breaks = NULL, name = NULL) +
+  scale_y_continuous(breaks = c(-2, 0, 2)) +
+  theme_minimal_hgrid()
 p3 <- ggplot(df_mean, aes(x = factor(n), y = mean)) + 
-  geom_pointrange(aes(ymin = mean - se, ymax = mean + se))
+  geom_pointrange(aes(ymin = mean - se, ymax = mean + se)) +
+  scale_x_discrete(name = "n") +
+  scale_y_continuous(breaks = c(-.2, 0, .2), name = "mean(x)") +
+  theme_minimal_hgrid()
 
-plot_grid(p1, p2, p3, ncol = 1, align = 'v')
+p1 + p2 + p3 + plot_layout(ncol = 1)
+#plot_grid(p1, p2, p3, ncol = 1, align = 'v')
 
 ```
 
