@@ -34,7 +34,8 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
                size = 2.5, alpha = 0.5) + 
     geom_text_repel(aes(label = label), color = "black", size = 10/.pt,
                     point.padding = 0.5, box.padding = .4, force = .5,
-                    min.segment.length = 0) +
+                    min.segment.length = 0,
+                    family = dviz_font_family) +
     scale_color_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_fill_OkabeIto(name = NULL, order = c(1:5, 8)) +
     scale_y_continuous(limits = c(0.3, 1.05), breaks = c(0.2, 0.4, 0.6, 0.8, 1.0),
@@ -47,40 +48,41 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
     guides(color = guide_legend(nrow = 1,
       override.aes = list(linetype = c(rep("blank", 5), "solid"),
                           shape = c(rep(21, 5), NA)))) +
-    theme_minimal_hgrid() +
+    theme_dviz_hgrid(12, rel_small = 1) +
     theme(legend.position = "top",
           legend.justification = "right",
-          legend.text = element_text(size = 10),
-          axis.title = element_text(size = rel(0.857)),
-          plot.margin = margin(0, 7, 0, 7)) -> plot_corrupt_base
+          legend.text = element_text(size = 10)) -> plot_corrupt_base
 
-cur_dev <- grDevices::dev.cur()
-grDevices::pdf(NULL, width = 7, height = 4.9)
-grob_corrupt_base <- grid::forceGrob(ggplotGrob(plot_corrupt_base))
-null <- grDevices::dev.off()
-null <- grDevices::dev.set(cur_dev)
+#cur_dev <- grDevices::dev.cur()
+#cowplot::png_null_device(width = 7, height = 4.9)
+#null_dev <- dev.cur()
+#grob_corrupt_base <- grid::forceGrob(ggplotGrob(plot_corrupt_base))
+#null <- grDevices::dev.off(null_dev)
+#null <- grDevices::dev.set(cur_dev)
+ggsave("figures/corruption_plot_base.png", plot_corrupt_base, width = 7, height = 4.9,
+       dpi = 600)
 
-ggdraw(grob_corrupt_base)
+ggdraw() + draw_image("figures/corruption_plot_base.png")
 ```
 
 
 (ref:corruption-development-infographic) Figure \@ref(fig:corruption-development) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
 
-```{r corruption-development-infographic, fig.width = 7, fig.asp = 0.84, fig.cap = '(ref:corruption-development-infographic)'}
+```{r corruption-development-infographic, fig.width = 7, fig.asp = 4.9*(0.12+1+.07)/7, fig.cap = '(ref:corruption-development-infographic)'}
 plot_corrupt_title <- ggdraw() +
   labs(title = "Corruption and human development",
        subtitle = "The most developed countries experience the least corruption") +
-  theme_map() +
-  theme(plot.title = element_text(size = 14, hjust = 0),
-        plot.subtitle = element_text(size = 12, hjust = 0),
-        plot.margin = margin(7, 7, 0, 7))
+  theme_dviz_map(12, rel_small = 1) +
+  theme(plot.margin = margin(6, 0, 0, 0))
 
 plot_corrupt_caption <- ggplot() +
   labs(caption = "Data sources: Transparency International & UN Human Development Report") +
-  theme_map() +
-  theme(plot.caption = element_text(size = 10, hjust = 1),
-        plot.margin = margin(0, 7, 7, 7))
+  theme_dviz_map(12) +
+  theme(plot.margin = margin(0, 0, 6, 0))
 
-plot_grid(plot_corrupt_title, grob_corrupt_base, plot_corrupt_caption,
-          ncol = 1, rel_heights = c(.15, 1, .05))
+
+plot_grid(plot_corrupt_title,
+          ggdraw() + draw_image("figures/corruption_plot_base.png"),
+          plot_corrupt_caption,
+          ncol = 1, rel_heights = c(.12, 1, .07))
 ```

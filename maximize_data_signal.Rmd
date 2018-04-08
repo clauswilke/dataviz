@@ -167,3 +167,28 @@ stamp_bad(plot_grid(nrg_plot2, NULL, nrow=1, rel_widths=c(1, 0.2)))
 
 
 In summary, there is no simple choice of background grid that always works. I encourage you to think carefully about which specific grid or guidelines are most informative for the plot you are making, and to only show those. In general, less is more. Too many or overly thick and dark grid lines can distract your reader's attention away from the data you want to show.
+
+
+## Boxes and frames
+
+If we overdo removing boxes, frames, grid lines, etc. then we may end up with a figure where elements seem to float in space and are not connected to each other.
+
+**This chapter probably has to come after multi-part figures if we want to discuss figures such as the next one.**
+
+```{r}
+titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
+  ggplot(aes(sex, fill = sex)) + geom_bar() +
+    facet_grid(class ~ surv, scales = "free_x") +
+    scale_x_discrete(name = NULL) + 
+    scale_y_continuous(limits = c(0, 195), expand = c(0, 0)) +
+    scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+    theme_dviz_open(rel_small = 1) +
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          #axis.text.x = element_text(margin = margin(7, 0, 0, 0)),
+          strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
+          strip.background  = element_blank(),
+          plot.margin = margin(3.5, 14, 3.5, 0)) -> p
+
+stamp_bad(p)
+```
