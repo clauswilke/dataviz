@@ -17,7 +17,10 @@ Your goal in telling a story with data should be to use facts and data to get yo
 
 Good stories tend to be structured according to standard patterns that resonate with human cognition. For example, the Hawking story of the preceding paragraph follows the Opening--Challenge--Action--Resolution structure. My goal in this chapter is not to describe these standard forms of story telling. There are excellent resources that cover this material [see e.g. @Schimel2011]. Instead, I want to address a few specific issues that tend to arise when we try to tell a story with data visualizations. I have four specific recommendations: (i) prepare figures that make simple and clear points, (ii) build up from simpler to more complex visualizations, (iii) use a consistent visual language, and (iv) don't be repetitive.
 
-```{r}
+
+(ref:q-bio-monthly-growth) Growth in monthly submissions to the quantitative biology (q-bio) section of the preprint server arXiv.org. A sharp transition in the rate of growth can be seen around 2014. While growth was rapid up to 2014, almost no growth occurred from 2014 to 2018. Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r q-bio-monthly-growth, fig.asp = 0.75, fig.cap = '(ref:q-bio-monthly-growth)'}
 preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio")) %>%
 filter(count > 0) -> df_preprints
 
@@ -27,27 +30,29 @@ df_final_qbio <- filter(df_final, archive == "arXiv q-bio")
 ggplot(filter(df_preprints, archive == "arXiv q-bio"),
        aes(date, count, color = archive)) + 
   geom_line(size = 0.75) +
-  scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
+  scale_y_log10(limits = c(40, 400), breaks = c(50, 100, 200, 300), expand = c(0, 0),
                 name = "preprints / month",
                 sec.axis = dup_axis(breaks = df_final_qbio$count,
                                     labels = df_final_qbio$archive,
                                     name = NULL)) + 
-  scale_x_date(name = NULL, expand = c(0, 0)) +
+  scale_x_date(name = "year", expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.ticks.y.right = element_blank(),
         axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
 ```
 
-```{r}
+(ref:q-bio-bioRxiv-monthly-growth) The leveling off of submission growth to q-bio coincided with the introduction of the bioRxiv server. Shown are the growth in monthly submissions to the q-bio section of the general-purpose preprint server arxiv.org and to the dedicated biology preprint server bioRxiv. The bioRxiv server went live in November 2013, and its submission rate has grown exponentially since. It seems likely that many scientists who otherwise would have submitted preprints to q-bio chose to submit to bioRxiv instead. Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r q-bio-bioRxiv-monthly-growth, fig.asp = 0.75, fig.cap = '(ref:q-bio-bioRxiv-monthly-growth)'}
 ggplot(df_preprints, aes(date, count, color = archive)) + geom_line(size = 0.75) +
   scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
                 name = "preprints / month",
                 sec.axis = dup_axis(breaks = df_final$count, labels = df_final$archive,
                                     name = NULL)) + 
-  scale_x_date(name = NULL, expand = c(0, 0)) +
+  scale_x_date(name = "year", expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.ticks.y.right = element_blank(),
         axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
 ```
@@ -107,8 +112,8 @@ p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name,
   guides(color = guide_legend(order = 1),
          fill = guide_legend(override.aes = list(size = 4, alpha = .7), order = 1),
          size = guide_legend(override.aes = list(fill = "gray70"), order = 2)) +
-  theme_minimal_grid() +
-  theme(plot.margin = margin(7, 10, 7, 7))
+  theme_dviz_grid() +
+  theme(plot.margin = margin(3.5, 14, 3.5, 0))
 
 stamp_bad(p_delay_distance) 
 ```
@@ -132,7 +137,7 @@ flights_grouped %>%
     scale_x_discrete(name = NULL) +
     geom_col() + 
     coord_flip() +
-    theme_minimal_vgrid() +
+    theme_dviz_vgrid() +
     theme(axis.ticks.y = element_blank())
 ```
 
@@ -148,7 +153,7 @@ flights_grouped %>%
     scale_x_discrete(name = NULL) +
     geom_col() + 
     coord_flip() +
-    theme_minimal_vgrid() +
+    theme_dviz_vgrid() +
     theme(axis.ticks.y = element_blank())
 ```
 
