@@ -94,7 +94,7 @@ p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) +
   theme(#axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(2, 7, 0, 0))
+        plot.margin = margin(3, 6, 0, 0))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
   geom_point(pch = 21, color = "white", size = 2.5) +
@@ -102,12 +102,12 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
   scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_dviz_hgrid(12, rel_small = 1) +
-  theme(plot.margin = margin(2, 0, 0, 0))
+  theme(plot.margin = margin(3, 0, 0, 0))
 
 p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
   draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
             family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 7, 0))
+  theme(plot.margin = margin(0, 0, 12, 0))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -129,5 +129,6 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
         legend.position = c(1., 0.9),
         legend.justification = "right")
 
-plot_grid(p_row, p3, ncol = 1, labels = c("", "c"))
+plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
+            theme(plot.margin = margin(6, 12, 0, 0))
 ```
