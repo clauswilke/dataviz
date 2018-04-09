@@ -49,7 +49,7 @@ This kind of data is commonly visualized with vertical bars. For each movie, we 
 
 (ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
-```{r boxoffice-vertical, fig.width = 8, fig.asp = .5, fig.cap = '(ref:boxoffice-vertical)'}
+```{r boxoffice-vertical, fig.width = 7, fig.asp = .5, fig.cap = '(ref:boxoffice-vertical)'}
 boxoffice %>%
   ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
     geom_col(fill = "#56B4E9", width = 0.6, alpha = 0.9) +
@@ -59,10 +59,9 @@ boxoffice %>%
                        name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL,
                      expand = c(0, 0.4)) +
-    theme_minimal_hgrid() +
+    theme_dviz_hgrid(12, rel_small = 1) +
     theme(#axis.ticks.length = grid::unit(0, "pt"),
-          axis.ticks.x = element_blank(),
-          axis.title = element_text(size = 12))
+          axis.ticks.x = element_blank())
 ```
 
 One problem we commonly encounter with vertical bars is that the labels identifying each bar take up a lot of horizontal space. In fact, I had to make Figure \@ref(fig:boxoffice-vertical) fairly wide and space out the bars so that I could place the movie titles underneath. To save horizontal space, we could place the bars closer together and rotate the labels (Figure \@ref(fig:boxoffice-rot-axis-tick-labels)). However, I am not a big proponent of rotated labels. I find the resulting plots awkward and difficult to read. And, in my experience, whenever the labels are too long to place horizontally they also don't look good rotated.
@@ -78,12 +77,11 @@ boxoffice %>%
                        labels = c("0", "20", "40", "60"),
                        name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL) +
-    theme_minimal_hgrid() +
+    theme_dviz_hgrid(rel_small = 1) +
     theme(#axis.ticks.length = grid::unit(0, "pt"),
           axis.ticks.x = element_blank(),
           axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-          axis.title = element_text(size = 12),
-          plot.margin = margin(7, 14, 7, 7)) -> p_box_axrot
+          plot.margin = margin(3, 7, 3, 0)) -> p_box_axrot
 
 stamp_ugly(p_box_axrot)
 ```
@@ -103,10 +101,9 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
   coord_flip() +
-  theme_minimal_vgrid() +
+  theme_dviz_vgrid(rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank(),
-        axis.title = element_text(size = 12))
+        axis.ticks.y = element_blank())
 ```
 
 Regardless of whether we place bars vertically or horizontally, we need to pay attention to the order in which the bars are arranged. I often see bar plots where the bars are arranged arbitrarily or by some criterion that is not meaningful in the context of the figure. Some plotting programs arrange bars by default in alphabetic order of the labels, and other, similarly arbitrary arrangements are possible (Figure \@ref(fig:boxoffice-horizontal-bad-order)). In general, the resulting figures are more confusing and less intuitive than figures where bars are arranged in order of their size.  
@@ -126,10 +123,9 @@ p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
   coord_flip() +
-  theme_minimal_vgrid() +
+  theme_dviz_vgrid(rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank(),
-        axis.title = element_text(size = 12))
+        axis.ticks.y = element_blank())
 
 stamp_bad(p)
 ```
@@ -148,11 +144,11 @@ income_by_age %>% filter(race == "all") %>%
                        breaks = c(0, 20000, 40000, 60000),
                        labels = c("$0", "$20,000", "$40,000", "$60,000")) +
     xlab("age (years)") +
-    theme_minimal_hgrid() +
+    theme_dviz_hgrid() +
     theme(#axis.ticks.length = grid::unit(0, "pt"),
           axis.ticks.x = element_blank(),
           #axis.line = element_blank(),
-          plot.margin = margin(7, 14, 7, 7))
+          plot.margin = margin(3, 7, 3, 0))
 ```
 
 (ref:income-by-age-sorted) 2016 median U.S. annual household income versus age group, sorted by income. While this order of bars looks visually appealing, the order of the age groups is now confusing. Data source: United States Census Bureau
@@ -166,11 +162,11 @@ income_by_age %>% filter(race == "all") %>%
                        breaks = c(0, 20000, 40000, 60000),
                        labels = c("$0", "$20,000", "$40,000", "$60,000")) +
     xlab("age (years)") +
-    theme_minimal_hgrid() +
+    theme_dviz_hgrid() +
     theme(#axis.ticks.length = grid::unit(0, "pt"),
           axis.ticks.x = element_blank(),
           #axis.line = element_blank(),
-          plot.margin = margin(7, 14, 7, 7)) -> p_income_sorted
+          plot.margin = margin(3, 7, 3, 0)) -> p_income_sorted
 
 stamp_bad(p_income_sorted)
 ```
@@ -198,11 +194,8 @@ ggplot(income_df, aes(x = age, y = median_income, fill = race)) +
                      labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
   scale_fill_manual(values = colors_four, name = NULL) +
   xlab("age (years)") +
-  theme_minimal_hgrid() +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.x = element_blank(),
-        #axis.line = element_blank(),
-        plot.margin = margin(7, 14, 7, 7)) -> p_income_race_dodged
+  theme_dviz_hgrid() +
+  theme(axis.ticks.x = element_blank()) -> p_income_race_dodged
 
 #stamp_ugly(p_income_race_dodged)
 p_income_race_dodged
@@ -224,14 +217,11 @@ ggplot(income_df, aes(x = race, y = median_income, fill = age)) +
                      labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
   scale_fill_manual(values = colors_seven, name = "age (yrs)") +
   xlab(label = NULL) +
-  theme_minimal_hgrid() +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.x = element_blank(),
-        #axis.line = element_blank(),
-        legend.title.align = 0.5,
-        plot.margin = margin(7, 14, 7, 7)) -> p_income_age_dodged
+  theme_dviz_hgrid() +
+  theme(axis.ticks.x = element_blank(),
+        legend.title.align = 0.5) -> p_income_age_dodged
 
-stamp_phantom(p_income_age_dodged)
+p_income_age_dodged
 ```
 
 Both Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-age-dodged) encode one categorical variable by position along the *x* axis and the other by bar color. And in both cases, the encoding by position is easy to read while the encoding by bar color requires more mental effort, as we have to mentally match the colors of the bars against the colors in the legend. We can avoid this added mental effort by showing four separate regular bar plots rather than one grouped bar plot (Figure \@ref(fig:income-by-age-race-faceted)). Which of these various options we choose is ultimately a matter of taste. I would likely choose Figure \@ref(fig:income-by-age-race-faceted), because it circumvents the need for different bar colors.
@@ -251,15 +241,14 @@ ggplot(income_age_abbrev_df, aes(x = age, y = median_income)) +
                      labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
   xlab(label = "age (years)") +
   facet_wrap(~race, scales = "free_x") +
-  theme_minimal_hgrid(12) +
+  theme_dviz_hgrid(14) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
         axis.ticks.x = element_blank(),
         #axis.line = element_blank(),
-        strip.text = element_text(size = 12),
-        panel.spacing.y = grid::unit(12, "pt"),
-        plot.margin = margin(6, 12, 6, 6)) -> p_income_age_dodged
+        strip.text = element_text(size = 14),
+        panel.spacing.y = grid::unit(14, "pt")) -> p_income_age_dodged
 
-stamp_phantom(p_income_age_dodged)
+p_income_age_dodged
 ```
 
 Instead of drawing groups of bars side-by-side, it is sometimes preferable to stack bars on top of each other. Stacking is useful when the sum of the amounts represented by the individual stacked bars is in itself a meaningful amount. So, while it would not make sense to stack the median income values of Figure \@ref(fig:income-by-age-race-dodged) (the sum of two median income values is not a meaningful value), it might make sense to stack the weekend gross values of Figure \@ref(fig:boxoffice-vertical) (the sum of the weekend gross values of two movies is the total gross for the two movies combined). Stacking is also appropriate when the individual bars represent counts. For example, in a dataset of people, we can either count men and women separately or we can count them together. If we stack a bar representing a count of women on top of a bar representing a count of men, then the combined bar height represents the total count of people regardless of gender.
@@ -281,19 +270,18 @@ titanic_groups <- titanic_all %>% filter(class != "*") %>%
 
 ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
   geom_col(position = "stack", color = "white", size = 1, width = 1) +
-  geom_text(aes(y = nlabel, label = n), color = "white", size = 14/.pt) +
+  geom_text(aes(y = nlabel, label = n), color = "white", size = 14/.pt,
+            family = dviz_font_family) +
   scale_x_discrete(expand = c(0, 0), name = NULL) +
   scale_y_continuous(expand = c(0, 0), breaks = NULL, name = NULL) +
   scale_fill_manual(values = c("#D55E00", "#0072B2"),
                     breaks = c("female", "male"),
                     labels = c("female passengers   ", "male passengers"),
                     name = NULL) +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(panel.grid.major = element_blank(),
         axis.ticks = element_blank(),
         axis.text = element_text(size = 14),
-        #legend.position = c(0.13, 0.6),
-        #legend.justification = c(0, 0),
         legend.position = "bottom",
         legend.justification = "center",
         legend.background = element_rect(fill = "white"))
@@ -310,7 +298,7 @@ Figure \@ref(fig:Americas-life-expect) demonstrates this visualization approach 
 
 (ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
 
-```{r Americas-life-expect, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect)'}
+```{r Americas-life-expect, fig.width = 6., fig.asp = .9, fig.cap = '(ref:Americas-life-expect)'}
 library(gapminder)
 df_Americas <- gapminder %>% filter(year == 2007, continent == "Americas")
 ggplot(df_Americas, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
@@ -319,15 +307,15 @@ ggplot(df_Americas, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
                      limits = c(59.7, 81.5),
                      expand = c(0, 0)) +
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
-  theme_minimal_grid() +
+  theme_dviz_grid(12, rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.title = element_text(size = 12),
-        plot.margin = margin(7, 21, 7, 7))
+        #axis.title = element_text(size = 12),
+        plot.margin = margin(18, 6, 3, 0))
 ```
 
 (ref:Americas-life-expect-bars) Life expectancies of countries in the Americas, for the year 2007, shown as bars. This dataset is not suitable for being visualized with bars. The bars are too long and they draw attention away from the key feature of the data, the differences in life expectancy among the different countries. Data source: Gapminder project
 
-```{r Americas-life-expect-bars, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect-bars)'}
+```{r Americas-life-expect-bars, fig.width = 6., fig.asp = .9, fig.cap = '(ref:Americas-life-expect-bars)'}
 life_bars <- ggplot(df_Americas, aes(y = lifeExp, x = fct_reorder(country, lifeExp))) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
   scale_y_continuous(name = "life expectancy (years)",
@@ -335,11 +323,11 @@ life_bars <- ggplot(df_Americas, aes(y = lifeExp, x = fct_reorder(country, lifeE
                      expand = c(0, 0)) +
   scale_x_discrete(name = NULL, expand = c(0, 0.5)) +
   coord_flip() +
-  theme_minimal_vgrid() +
+  theme_dviz_vgrid(12, rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
         axis.ticks.y = element_blank(),
-        axis.title = element_text(size = 12),
-        plot.margin = margin(7, 14, 7, 7))
+        #axis.title = element_text(size = 12),
+        plot.margin = margin(18, 6, 3, 0))
 
 stamp_bad(life_bars)
 ```
@@ -348,17 +336,17 @@ Regardless of whether we use bars or dots, however, we need to pay attention to 
 
 (ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled as bad. Data source: Gapminder project
 
-```{r Americas-life-expect-bad, fig.width = 7., fig.asp = .8, fig.cap = '(ref:Americas-life-expect-bad)'}
+```{r Americas-life-expect-bad, fig.width = 6., fig.asp = .9, fig.cap = '(ref:Americas-life-expect-bad)'}
 p <- ggplot(df_Americas, aes(x = lifeExp, y = fct_rev(country))) +
   geom_point(color = "#0072B2", size = 3) +
   scale_x_continuous(name = "life expectancy (years)",
                      limits = c(59.7, 81.5),
                      expand = c(0, 0)) +
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
-  theme_minimal_grid() +
+  theme_dviz_grid(12, rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.title = element_text(size = 12),
-        plot.margin = margin(7, 21, 7, 7))
+        #axis.title = element_text(size = 12),
+        plot.margin = margin(18, 6, 3, 0))
 
 stamp_bad(p)
 ```
@@ -401,18 +389,14 @@ ggplot(filter(internet_short, year > 1993),
                                               barheight = grid::unit(0.2, "in"))) +
   scale_x_continuous(expand = c(0, 0), name = NULL) +
   scale_y_discrete(name = NULL, position = "right") +
-  theme_half_open(12) +
+  theme_dviz_open(12) +
   theme(axis.line = element_blank(),
         axis.ticks = element_blank(),
         #axis.ticks.length = grid::unit(0, "pt"),
-        plot.title = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 12),
-        plot.caption = element_text(size = 10),
         legend.position = "top",
         legend.justification = "left",
         legend.title.align = 0.5,
-        legend.title = element_text(size = 10.286),
-        plot.margin = margin(14, 14, 7, 14))
+        legend.title = element_text(size = 12*12/14))
 ```
 
 As is the case with all other visualization approaches discussed in this chapter, we need to pay attention to the ordering of the categorical data values when making heatmaps. In Figure \@ref(fig:internet-over-time), countries are ordered by the percentage of internet users in 2016. This ordering places the United Kingdom, Japan, Canada, and Germany above the United States, because all these countries have higher internet penetration in 2016 than the United States does, even though the United States saw significant internet use at an earlier time. Alternatively, we could order countries by how early they started to see significant internet usage. In Figure \@ref(fig:internet-over-time2), countries are ordered by the year in which internet usage first rose to above 20%. In this figure, the United States falls into the third position from the top, and it stands out for having relatively low internet usage in 2016 compared to how early internet usage started there. A similar pattern can be seen for Italy. Israel and France, by contrast, started relatively late but gained ground rapidly.
@@ -444,18 +428,14 @@ ggplot(filter(internet_short, year > 1993),
                                               barheight = grid::unit(0.2, "in"))) +
   scale_x_continuous(expand = c(0, 0), name = NULL) +
   scale_y_discrete(name = NULL, position = "right") +
-  theme_half_open(12) +
+  theme_dviz_open(12) +
   theme(axis.line = element_blank(),
         axis.ticks = element_blank(),
         #axis.ticks.length = grid::unit(0, "pt"),
-        plot.title = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 12),
-        plot.caption = element_text(size = 10),
         legend.position = "top",
         legend.justification = "left",
         legend.title.align = 0.5,
-        legend.title = element_text(size = 10.286),
-        plot.margin = margin(14, 14, 7, 14))
+        legend.title = element_text(size = 12*12/14))
 ```
 
 Both Figures \@ref(fig:internet-over-time) and \@ref(fig:internet-over-time2) are valid representations of the data. Which one is prefered depends on the story we want to convey. If our story is about internet usage in 2016, then Figures \@ref(fig:internet-over-time) is probably the better choice. If, however, our story is about how early or late adoption of the internet relates to current-day usage, then Figure \@ref(fig:internet-over-time2) is preferable.
