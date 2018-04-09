@@ -5,6 +5,11 @@ source("_common.R")
 
 # Multi-part figures {#multi-part-figures}
 
+
+## Trellis or faceted plots
+
+The idea of Trellis plots was developed in the 1990 by Becker, Cleveland, and colleagues at Bell Labs [@Becker-Cleveland-Shyu-1996].
+
 (ref:titanic-passenger-breakdown) Breakdown of passengers on the Titanic by gender, survival, and class in which they traveled (1st, 2nd, or 3rd).
 
 ```{r titanic-passenger-breakdown, fig.cap = '(ref:titanic-passenger-breakdown)'}
@@ -25,6 +30,26 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
           panel.border = element_rect(colour = "grey80", fill = NA, linetype = 1,
                                       size = 1.))
 ```
+
+(ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th Century, and a negative relationship can be seen in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
+
+```{r movie-rankings, fig.width = 8.5, fig.asp = 1, fig.cap = '(ref:movie-rankings)'}
+library(ggplot2movies)
+
+ggplot(filter(movies, year > 1905), aes(y = rating, x = votes)) + 
+  geom_point(color = "#0072B250", size = 0.1) + 
+  geom_smooth(method = 'lm', se = FALSE, size = 1.25, color = '#D55E00',
+              fullrange = TRUE) + 
+  scale_x_log10(labels = label_log10) + 
+  scale_y_continuous(limits = c(0, 10), expand = c(0, 0),
+                     breaks = c(0, 5, 10)) + 
+  facet_wrap(~year, ncol = 10) +
+  theme_dviz_grid(10, rel_small = 1, line_size = 0.25) +
+  theme(strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
+        panel.border = element_rect(colour = "grey80", fill = NA, linetype = 1,
+                                    size = 1.))
+```
+
 
 (ref:BA-degrees-variable-y-lims) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. This figure is labeled as bad because all panels use different *y*-axis ranges, and this choice obscures the relative sizes of the different degree areas. Data Source: National Center for Education Statistics
 
