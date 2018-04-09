@@ -2,6 +2,7 @@
 # run setup script
 source("_common.R")
 
+library(forcats)
 library(stringr)
 library(ggridges)
 ```
@@ -11,11 +12,11 @@ library(ggridges)
 
 ## Trellis or faceted plots
 
-The idea of Trellis plots was developed in the 1990 by Becker, Cleveland, and colleagues at Bell Labs [@Becker-Cleveland-Shyu-1996].
+The idea of Trellis plots was developed in the 1990 by Cleveland, Becker, and colleagues at Bell Labs [@Cleveland1993; @Becker-Cleveland-Shyu-1996].
 
 (ref:titanic-passenger-breakdown) Breakdown of passengers on the Titanic by gender, survival, and class in which they traveled (1st, 2nd, or 3rd).
 
-```{r titanic-passenger-breakdown, fig.cap = '(ref:titanic-passenger-breakdown)'}
+```{r titanic-passenger-breakdown, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:titanic-passenger-breakdown)'}
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
   ggplot(aes(sex, fill = sex)) + geom_bar() +
     facet_grid(class ~ surv, scales = "free_x") +
@@ -34,7 +35,9 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
                                       size = 1.))
 ```
 
-(ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th century, and a negative relationship can be seen in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
+Trellis plots are a powerful tool to visualize large amounts of data at once. For example, Figure \@ref(fig:movie-rankings) shows the relationship between the average ranking of a movie on the Internet Movie Database (IMDB) and the number of votes the movie has received, separately for movies released over a 100 year time period. This visualization shows that there is an overall relationship between average ranking and number of votes, such that movies with more votes tend to have higher rankings. However, the visualization also shows that the strength of this trend varies with year, and that for movies released in the early 2000s there is no relationship or even a negative one.
+
+(ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th century, and a negative relationship can be seen for movies released in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
 
 ```{r movie-rankings, fig.width = 8.5, fig.asp = 1, fig.cap = '(ref:movie-rankings)'}
 library(ggplot2movies)
@@ -53,8 +56,11 @@ ggplot(filter(movies, year > 1905), aes(y = rating, x = votes)) +
                                     size = 1.))
 ```
 
+*Discuss: Faceting labels can be provided as row and column labels or as labels for each plot. See Figures \@ref(fig:titanic-passenger-breakdown) and \@ref(fig:movie-rankings), respectively.*
 
-(ref:BA-degrees-variable-y-lims) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. This figure is labeled as bad because all panels use different *y*-axis ranges, and this choice obscures the relative sizes of the different degree areas. Data Source: National Center for Education Statistics
+*Comment on axis range here.*
+
+(ref:BA-degrees-variable-y-lims) Trends in Bachelor's degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. This figure is labeled as bad because all panels use different *y*-axis ranges, and this choice obscures the relative sizes of the different degree areas. Data Source: National Center for Education Statistics
 
 ```{r BA-degrees-variable-y-lims, fig.width = 8.5, fig.asp = 0.8, fig.cap = '(ref:BA-degrees-variable-y-lims)'}
 BA_degrees %>% 
@@ -84,7 +90,7 @@ p <- ggplot(BA_top_degrees, aes(year, perc)) +
 stamp_bad(p)
 ```
 
-(ref:BA-degrees-fixed-y-lims) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. Data Source: National Center for Education Statistics
+(ref:BA-degrees-fixed-y-lims) Trends in Bachelor's degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. Data Source: National Center for Education Statistics
 
 ```{r BA-degrees-fixed-y-lims, fig.width = 8.5, fig.asp = 0.8, fig.cap = '(ref:BA-degrees-fixed-y-lims)'}
 ggplot(BA_top_degrees, aes(year, perc)) + 
@@ -99,6 +105,13 @@ ggplot(BA_top_degrees, aes(year, perc)) +
         plot.margin = margin(3.5, 14, 3.5, 0)) 
 
 ```
+
+
+## Compound figures
+
+Not every figure with multiple panels can be thought of as a Trellis plot, however. Sometimes we simply want to combine several independent plots into a combined figure that conveys one overarching point. In this case, we can take the indivdiual plots and arrange them in rows, columns, or other, more complex arrangements, and call the entire arrangement one figure. For an example, see Figure \@ref(fig:BA-degrees-compound), which continues the analysis of trends in Bachelor's degrees converred by U.S. institutions of higher learning. Part (a) of Figure \@ref(fig:BA-degrees-compound) shows the growth in total number of degrees awarded from 1971 to 2015, a time span during which the number of degrees awarded approximately doubled. Part (b) instead shows the change in the percent of degrees awarded over the same time period in the five most popular degree areas. We can see that social sciences, history, and education have experienced massive declines from 1971 to 2015, whereas business and health professions have seen substantial growth.
+
+Notice how unlike in a Trellis plot, the individual parts of the compound figure are labeled. It is conventional to use lower or upper case letters from the Latin alphabet. The labeling is needed to uniquely specify a particular subfigure. For example, when I want to talk about the part of Figure \@ref(fig:BA-degrees-compound) showing the changes in percent of degrees awarded, I can refer to part (b) of that figure or simply to Figure \@ref(fig:BA-degrees-compound)b. Without labeling, I would have to awkwardly talk about the "right panel" or the "left panel" of Figure \@ref(fig:BA-degrees-compound), and referring to specific panels would be even more awkward for more complex panel arrangements. Labeling is not needed and not normally done for Trellis plots, however, because each panel is uniquely specified by the faceting variable(s) that are provided as figure labels.
 
 
 (ref:BA-degrees-compound) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. (a) From 1970 to 2015, the total number of degrees nearly doubled. (b) Among the most popular degree areas, social sciences, history, and education experienced a major decline, while business and health professions grew. Data Source: National Center for Education Statistics
@@ -143,7 +156,7 @@ p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
                      name = NULL,
                      position = "top") +
   scale_y_continuous(limits = c(0.02, 0.22), expand = c(0, 0), name = "percent of degrees",
-                     sec.axis = dup_axis(breaks = filter(BA_top_pairs, year == 2015)$perc,
+                     sec.axis = dup_axis(breaks = filter(BA_top_pairs, year == 2015)$perc + 0.0001,
                                          labels = filter(BA_top_pairs, year == 2015)$field_wrapped,
                                          name = NULL)) +
   theme_dviz_open() +
@@ -165,9 +178,13 @@ p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
 plot_grid(p1, p2, labels = "auto", rel_widths = c(1.2, 1), align = 'h')
 ```
 
-(ref:Aus-athletes-composite) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell counts (RBC count, reported in units of $10^{12}$ per liter) than female athletes, but there are no such differences for white blood cell counts (WBC count, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: @Telford-Cunningham-1991
+Whenever we prepare compound figures, we need to pay attention to how the individual figures fit together. It is possible to make a set of figures that individually are fine but jointly cause problems. In particular, we need to employ a consistent visual language. By "visual language" I mean the colors, symbols, fonts, and so on that we use to display the data. And keeping the language consistent means, in a nutshell, that the same things look the same or at least substantively similar across figures.
 
-```{r Aus-athletes-composite, fig.asp = 0.75, fig.cap = '(ref:Aus-athletes-composite)'}
+Let's look at an example that violates this principle. Figure \@ref(fig:athletes-composite-inconsistent) is a three-panel figure visualizing a dataset about the physiology and body-composition of male and female athletes. Part (a) shows the number of men and women in the dataset, part (b) shows the counts of red and white blood cells for men and women, and part (c) shows the body fat percentage of men and women, broken down by sport. Each panel individually is an acceptable figure. However, in combination the three panels do not work, because they don't share a common visual language. First, part (a) uses the same blue color for both male and female athletes, part (b) uses it only for male athletes, and part (c) uses it for female athletes. Moreover, parts (b) and (c) introduce additional colors, but these colors differ between the two parts. It would have been better to use the same two colors consistently for male and female athletes, and to apply the same coloring scheme to part (a) as well. Second, in parts (a) and (b) women are on the left and men on the right, but in part (c) the order is reversed. The order of the boxplots in part (c) should be switched so it matches parts (a) and (b).
+
+(ref:athletes-composite-inconsistent) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of $10^{12}$ per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: @Telford-Cunningham-1991
+
+```{r athletes-composite-inconsistent, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-inconsistent)'}
 male_sport <- unique(filter(Aus_athletes, sex=="m")$sport)
 female_sport <- unique(filter(Aus_athletes, sex=="f")$sport)
 both_sport <- male_sport[male_sport %in% female_sport]
@@ -177,6 +194,62 @@ athletes_df <- filter(Aus_athletes, sport %in% both_sport) %>%
                            TRUE ~ sport),
          sex = factor(sex, levels = c("f", "m")))
 
+p1 <- ggplot(athletes_df, aes(x = sex)) + 
+  geom_bar(fill = "#56B4E9E0") +
+  scale_y_continuous(limits = c(0, 95), expand = c(0, 0), name = "number") +
+  scale_x_discrete(name = NULL, labels = c("female", "male")) +
+  theme_dviz_hgrid(12, rel_small = 1) + 
+  theme(axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.margin = margin(3, 6, 0, 0))
+
+p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
+  geom_point(size = 2.5) +
+  scale_x_continuous(limits = c(3.8, 6.75), name = NULL) +
+  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
+  scale_shape_manual(values = c(21, 22),
+                     labels = c("female   ", "male"), name = NULL,
+                     guide = guide_legend(direction = "horizontal")) +
+  scale_color_manual(values = c("#CC79A7", "#56B4E9"), name = NULL,
+                     labels = c("female   ", "male"),
+                     guide = guide_legend(direction = "horizontal")) +
+  scale_fill_manual(values = c("#CC79A780", "#56B4E980"), name = NULL,
+                     labels = c("female   ", "male"),
+                     guide = guide_legend(direction = "horizontal")) +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(legend.position = c(1, .1),
+        legend.justification = "right",
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(3, 0, 0, 0))
+
+p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
+  draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
+            family = dviz_font_family) + 
+  theme(plot.margin = margin(0, 0, 12, 0))
+
+p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
+                              fill = fct_relevel(sex, "m"))) + 
+  geom_boxplot(width = 0.5) +
+  scale_color_manual(values = c("#009E73", "#56B4E9"), name = NULL,
+                     labels = c("male", "female")) +
+  scale_fill_manual(values = c("#009E7340", "#56B4E940"), name = NULL,
+                     labels = c("male", "female")) +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = "% body fat") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.length = grid::unit(0, "pt"))
+
+stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
+            theme(plot.margin = margin(6, 12, 0, 0)))
+```
+
+Figure \@ref(fig:athletes-composite-good) fixes all these issues. In this figure, female athletes are consistently shown in orange and to the left of male athletes, who are shown in blue. Notice how much easier it is to read this figure than Figure \@ref(fig:athletes-composite-inconsistent). When we use a consistent visual language, it doesn't take much mental effort to determine which visual elements in the different parts represent women and which men. Figure \@ref(fig:athletes-composite-inconsistent), on the other hand, can be quite confusing. In particular, on first glance it may generate the impression that men tend to have higher body fat percentages than women. Notice also that we need only a single legend in Figure \@ref(fig:athletes-composite-good) but needed two in Figure \@ref(fig:athletes-composite-inconsistent). Since the visual language is consistent, the same legend works for parts (b) and (c).
+
+(ref:athletes-composite-good) Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure \@ref(fig:athletes-composite-inconsistent), but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure. Data source: @Telford-Cunningham-1991
+
+```{r athletes-composite-good, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-good)'}
 p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
   geom_bar() +
   scale_y_continuous(limits = c(0, 95), expand = c(0, 0), name = "number") +

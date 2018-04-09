@@ -186,15 +186,16 @@ filter(flights_grouped, name == "United" & origin == "EWR") %>%
     scale_x_discrete(labels = c("M", "T", "W", "T", "F", "S", "S"),
                      expand = c(0, 0.05),
                      name = "weekday") +
-    theme_minimal_hgrid() +
-    theme(strip.text = element_text(face = "bold",
+    theme_dviz_hgrid(14, "Myriad Pro Condensed") +
+    theme(strip.text = element_text(family = "Myriad Pro Bold Condensed",
                                     margin = margin(4, 4, 4, 4)),
           axis.line.x = element_blank(),
           panel.spacing.x = grid::unit(6.5, "pt"),
           panel.spacing.y = grid::unit(6.5, "pt"),
           panel.grid.major = element_line(color = "gray80"),
           panel.background = element_rect(fill = "gray90"),
-          plot.title = element_text(hjust = 0.5, vjust = 0.5,
+          plot.title = element_text(family = "Myriad Pro Bold Condensed",
+                                    hjust = 0.5, vjust = 0.5,
                                     margin = margin(4, 4, 4, 4)))
 ```
 
@@ -209,9 +210,9 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
   scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
                    expand = c(0, 0.05),
                    name = "weekday") +
-  theme_minimal_hgrid(11) +
+  theme_dviz_hgrid(12, "Myriad Pro Condensed") +
   #panel_border() +
-  theme(strip.text = element_text(face = "bold",
+  theme(strip.text = element_text(family = "Myriad Pro Bold Condensed",
                                   margin = margin(3, 3, 3, 3)),
         axis.line.x = element_blank(),
         panel.spacing.x = grid::unit(5, "pt"),
@@ -222,15 +223,13 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
 ```
 
 
-## Use a consistent visual language
+## Don't be repetitive
 
-When writing a report, scientific paper, or article, or when giving a presentation, we will usually have multiple figures that jointly convey the story. In this context, we need to think about how these figures fit together. It is possible to make a set of figures that individually are fine but jointly cause problems. In particular, we need to employ a consistent visual language. By "visual language" I mean the colors, symbols, fonts, and so on that we use to display the data. And keeping the language consistent means, in a nutshell, that the same things look the same or at least substantively similar across figures.
+Using a consistent visual language does not mean, however, that everything should look exactly the same. On the contrary. It is important that figures describing different analyses look visually distinct, so that your audience can easily recognize where one analysis ends and another one starts. This is best achieved by using different visualization approaches for different parts of the overarching story. If you have used a bar plot already, next use a scatterplot, or a boxplot, or a line plot. Otherwise, the different analyses will blur together in your audience's mind, and they will have a hard time distinguishing one part of the story from another. For example, if we re-design Figure \@ref(fig:athletes-composite-good) so it uses only bar plots, the result is noticeable less distinct and more confusing (Figre \@ref(fig:athletes-composite-repetitive)).
 
-Let's look at an example that violates this principle. Figure \@ref(fig:athletes-composite-inconsistent) is a three-panel figure visualizing a dataset about the physiology and body-composition of male and female athletes. Part (a) shows the number of men and women in the dataset, part (b) shows the counts of red and white blood cells for men and women, and part (c) shows the body fat percentage of men and women, broken down by sport. Each panel individually is an acceptable figure. However, in combination the three panels do not work, because they don't share a common visual language. First, part (a) uses the same blue color for both male and female athletes, part (b) uses it only for male athletes, and part (c) uses it for female athletes. Moreover, parts (b) and (c) introduce additional colors, but these colors differ between the two parts. It would have been better to use the same two colors consistently for male and female athletes, and to apply the same coloring scheme to part (a) as well. Second, in parts (a) and (b) women are on the left and men on the right, but in part (c) the order is reversed. The order of the boxplots in part (c) should be switched so it matches parts (a) and (b).
+(ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: @Telford-Cunningham-1991
 
-(ref:athletes-composite-inconsistent) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of $10^{12}$ per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: @Telford-Cunningham-1991
-
-```{r athletes-composite-inconsistent, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-inconsistent)'}
+```{r athletes-composite-repetitive, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-repetitive)'}
 male_sport <- unique(filter(Aus_athletes, sex=="m")$sport)
 female_sport <- unique(filter(Aus_athletes, sex=="f")$sport)
 both_sport <- male_sport[male_sport %in% female_sport]
@@ -240,117 +239,6 @@ athletes_df <- filter(Aus_athletes, sport %in% both_sport) %>%
                            TRUE ~ sport),
          sex = factor(sex, levels = c("f", "m")))
 
-p1 <- ggplot(athletes_df, aes(x = sex)) + 
-  geom_bar(fill = "#56B4E9E0") +
-  scale_y_continuous(limits = c(0, 95), expand = c(0, 0), name = "number") +
-  scale_x_discrete(name = NULL, labels = c("female", "male")) +
-  theme_dviz_hgrid(12, rel_small = 1) + 
-  theme(axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 6, 0, 0))
-
-p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
-  geom_point(size = 2.5) +
-  scale_x_continuous(limits = c(3.8, 6.75), name = NULL) +
-  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
-  scale_shape_manual(values = c(21, 22),
-                     labels = c("female   ", "male"), name = NULL,
-                     guide = guide_legend(direction = "horizontal")) +
-  scale_color_manual(values = c("#CC79A7", "#56B4E9"), name = NULL,
-                     labels = c("female   ", "male"),
-                     guide = guide_legend(direction = "horizontal")) +
-  scale_fill_manual(values = c("#CC79A780", "#56B4E980"), name = NULL,
-                     labels = c("female   ", "male"),
-                     guide = guide_legend(direction = "horizontal")) +
-  theme_dviz_hgrid(12, rel_small = 1) +
-  theme(legend.position = c(1, .1),
-        legend.justification = "right",
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(3, 0, 0, 0))
-
-p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
-  draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
-            family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 12, 0))
-
-p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
-                              fill = fct_relevel(sex, "m"))) + 
-  geom_boxplot(width = 0.5) +
-  scale_color_manual(values = c("#009E73", "#56B4E9"), name = NULL,
-                     labels = c("male", "female")) +
-  scale_fill_manual(values = c("#009E7340", "#56B4E940"), name = NULL,
-                     labels = c("male", "female")) +
-  scale_x_discrete(name = NULL) +
-  scale_y_continuous(name = "% body fat") +
-  theme_dviz_hgrid(12, rel_small = 1) +
-  theme(axis.line.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"))
-
-stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0)))
-```
-
-Figure \@ref(fig:athletes-composite-good) fixes all these issues. In this figure, female athletes are consistently shown in orange and to the left of male athletes, who are shown in blue. Notice how much easier it is to read this figure than Figure \@ref(fig:athletes-composite-inconsistent). When we use a consistent visual language, it doesn't take much mental effort to determine which visual elements in the different parts represent women and which men. Figure \@ref(fig:athletes-composite-inconsistent), on the other hand, can be quite confusing. In particular, on first glance it may generate the impression that men tend to have higher body fat percentages than women. Notice also that we need only a single legend in Figure \@ref(fig:athletes-composite-good) but needed two in Figure \@ref(fig:athletes-composite-inconsistent). Since the visual language is consistent, the same legend works for parts (b) and (c).
-
-(ref:athletes-composite-good) Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure \@ref(fig:athletes-composite-inconsistent), but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure. Data source: @Telford-Cunningham-1991
-
-```{r athletes-composite-good, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-good)'}
-p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
-  geom_bar() +
-  scale_y_continuous(limits = c(0, 95), expand = c(0, 0), name = "number") +
-  scale_x_discrete(name = NULL, labels = c("female", "male")) +
-  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-  theme_dviz_hgrid(12, rel_small = 1) + 
-  theme(#axis.line.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 6, 0, 0))
-
-p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
-  geom_point(pch = 21, color = "white", size = 2.5) +
-  scale_x_continuous(limits = c(3.8, 6.75), name = NULL) +
-  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
-  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-  theme_dviz_hgrid(12, rel_small = 1) +
-  theme(plot.margin = margin(3, 0, 0, 0))
-
-p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
-  draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
-            family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 12, 0))
-
-GeomBP <- GeomBoxplot
-GeomBP$draw_key <- draw_key_polygon
-
-p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) + 
-  stat_boxplot(width = 0.5, geom = GeomBP) +
-  scale_color_manual(values = c("#D55E00", "#0072B2"), name = NULL,
-                     labels = c("female   ", "male")) +
-  scale_fill_manual(values = c("#D55E0040", "#0072B240"), guide = "none") +
-  scale_x_discrete(name = NULL) +
-  scale_y_continuous(name = "% body fat") +
-  guides(color = guide_legend(override.aes = list(fill = c("#D55E00D0", "#0072B2D0"),
-                                                  color = "white", size = 2),
-                              direction = "horizontal")) +
-  theme_dviz_hgrid(12, rel_small = 1) +
-  theme(axis.line.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
-        legend.position = c(1., 0.9),
-        legend.justification = "right")
-
-plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0))
-```
-
-## Don't be repetitive
-
-Using a consistent visual language does not mean, however, that everything should look exactly the same. On the contrary. It is important that figures describing different analyses look visually distinct, so that your audience can easily recognize where one analysis ends and another one starts. This is best achieved by using different visualization approaches for different parts of the overarching story. If you have used a bar plot already, next use a scatterplot, or a boxplot, or a line plot. Otherwise, the different analyses will blur together in your audience's mind, and they will have a hard time distinguishing one part of the story from another. For example, if we re-design Figure \@ref(fig:athletes-composite-good) so it uses only bar plots, the result is noticeable less distinct and more confusing (Figre \@ref(fig:athletes-composite-repetitive)).
-
-(ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: @Telford-Cunningham-1991
-
-```{r athletes-composite-repetitive, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-repetitive)'}
 cc_df <- athletes_df %>%
   select(sex, rcc, wcc) %>%
   gather(variable, value, -sex) %>%
