@@ -1,6 +1,9 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(stringr)
+library(ggridges)
 ```
 
 # Multi-part figures {#multi-part-figures}
@@ -31,7 +34,7 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
                                       size = 1.))
 ```
 
-(ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th Century, and a negative relationship can be seen in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
+(ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th century, and a negative relationship can be seen in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
 
 ```{r movie-rankings, fig.width = 8.5, fig.asp = 1, fig.cap = '(ref:movie-rankings)'}
 library(ggplot2movies)
@@ -40,9 +43,9 @@ ggplot(filter(movies, year > 1905), aes(y = rating, x = votes)) +
   geom_point(color = "#0072B250", size = 0.1) + 
   geom_smooth(method = 'lm', se = FALSE, size = 1.25, color = '#D55E00',
               fullrange = TRUE) + 
-  scale_x_log10(labels = label_log10) + 
+  scale_x_log10(labels = label_log10, name = "number of votes") + 
   scale_y_continuous(limits = c(0, 10), expand = c(0, 0),
-                     breaks = c(0, 5, 10)) + 
+                     breaks = c(0, 5, 10), name = "average rating") + 
   facet_wrap(~year, ncol = 10) +
   theme_dviz_grid(10, rel_small = 1, line_size = 0.25) +
   theme(strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
@@ -97,6 +100,70 @@ ggplot(BA_top_degrees, aes(year, perc)) +
 
 ```
 
+
+(ref:BA-degrees-compound) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. (a) From 1970 to 2015, the total number of degrees nearly doubled. (b) Among the most popular degree areas, social sciences, history, and education experienced a major decline, while business and health professions grew. Data Source: National Center for Education Statistics
+
+```{r BA-degrees-compound, fig.asp = 0.4, fig.width = 8.5, fig.cap = '(ref:BA-degrees-compound)'}
+BA_degrees %>% 
+  mutate(field = ifelse(field == "Communication, journalism, and related programs",
+                        "Communication, journalism, and related", field)) -> BA_df
+
+BA_df %>% group_by(year) %>%
+  summarize(total = sum(count)) -> BA_totals
+
+textcol <- "gray30"
+
+p1 <- ggplot(BA_totals, aes(year, total/1e6)) + 
+  geom_density_line(stat = "identity", color = "#0072B2",
+                    fill = desaturate(lighten("#0072B280", .3), .4)) + 
+  scale_y_continuous(limits = c(0, 2.05), expand = c(0, 0),
+                     name = "degrees awarded (millions)") +
+  scale_x_continuous(limits = c(1970, 2016), expand = c(0, 0), name = NULL) +
+  theme_dviz_hgrid() +
+  theme(axis.title = element_text(color = textcol),
+        axis.text = element_text(color = textcol),
+        plot.margin = margin(3, 7, 3, 0))
+
+BA_df %>% group_by(field) %>%
+  summarize(mean_perc = mean(perc)) %>%
+  arrange(desc(mean_perc)) -> BA_top
+
+top_fields <- filter(BA_top, mean_perc>0.055)$field
+
+BA_top_pairs <- filter(BA_df, field %in% top_fields,
+                       year %in% c(1971, 2015)) %>%
+  mutate(field_wrapped = str_wrap(field, 25))
+
+p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
+  geom_line(aes(group = field), color = "gray60") +
+  geom_point(fill = "#0072B2", color = "white", shape = 21, size = 3, stroke = 1.5) +
+  scale_x_continuous(limits = c(1971, 2015), breaks = c(1971, 2015),
+                     labels = c("1970-71", "2014-15"),
+                     expand = expand_scale(mult = c(0.1, 0.04)),
+                     name = NULL,
+                     position = "top") +
+  scale_y_continuous(limits = c(0.02, 0.22), expand = c(0, 0), name = "percent of degrees",
+                     sec.axis = dup_axis(breaks = filter(BA_top_pairs, year == 2015)$perc,
+                                         labels = filter(BA_top_pairs, year == 2015)$field_wrapped,
+                                         name = NULL)) +
+  theme_dviz_open() +
+  theme(axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(color = textcol),
+        axis.text.y = element_text(color = textcol),
+        axis.line.y.left = element_line(color = textcol),
+        axis.text.y.right = element_text(hjust = 0, vjust = .5,
+                                         margin = margin(0, 0, 0, 0),
+                                         #family = "Myriad Pro Condensed",
+                                         color = "black",
+                                         lineheight = 0.8
+                                         ),
+        axis.line.y.right = element_blank(),
+        axis.ticks.y.right = element_blank(),
+        plot.margin = margin(3, 0, 3, 0))
+
+plot_grid(p1, p2, labels = "auto", rel_widths = c(1.2, 1), align = 'h')
+```
 
 (ref:Aus-athletes-composite) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell counts (RBC count, reported in units of $10^{12}$ per liter) than female athletes, but there are no such differences for white blood cell counts (WBC count, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: @Telford-Cunningham-1991
 
