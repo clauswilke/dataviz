@@ -43,12 +43,14 @@ ggplot(df_points, aes(x, y)) +
   geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
                linetype = 2) +
   geom_point(size = 3, color = "#0072B2") +
-  geom_text(aes(label = label, vjust = vjust, hjust = hjust), size = 12/.pt) +
-  geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust), size = 12/.pt) +
+  geom_text(aes(label = label, vjust = vjust, hjust = hjust),
+            size = 12/.pt, family = dviz_font_family) +
+  geom_text(data = df_labels, aes(label = label, hjust = hjust, vjust = vjust),
+            size = 12/.pt, family = dviz_font_family) +
   coord_fixed(xlim = c(-2.2, 3.2), ylim = c(-2.2, 2.2), expand = FALSE) +
   xlab("x axis") +
   ylab("y axis") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.ticks.length = grid::unit(0, "pt"))
 ```
 
@@ -58,7 +60,7 @@ A Cartesian coordinate system can have two axes representing two different units
 
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
-```{r temperature-normals-Houston, fig.width = 7.5, fig.cap = '(ref:temperature-normals-Houston)'}
+```{r temperature-normals-Houston, fig.width = 6, fig.asp = 3/4, fig.cap = '(ref:temperature-normals-Houston)'}
 temps_wide <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
@@ -94,7 +96,8 @@ temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
                labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand = c(2/366, 0)) + 
   scale_y_continuous(limits = c(50, 90),
                      name = "temperature (°F)") +
-  theme_minimal_grid()
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
           temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
@@ -108,14 +111,16 @@ If on the other hand the *x* and the *y* axes are measured in the same units, th
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
-                  min.segment.length = 0) +
+                  min.segment.length = 0,
+                  family = dviz_font_family) +
   coord_fixed(xlim = c(45, 85), ylim = c(48, 88),
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(10*(5:8))) +
   xlab("temperature in San Diego (°F)") +
   ylab("temperature in Houston (°F)") +
-  theme_minimal_grid()
+  theme_dviz_grid() +
+  theme(plot.margin = margin(3, 14, 3, 0))
 
 # Fahrenheit to Celsius conversion
 
@@ -131,7 +136,9 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houst
   scale_x_continuous(breaks = c(5*(2:6))) +
   xlab("Temperature in San Diego (°C)") +
   ylab("Temperature in Houston (°C)") +
-  theme_minimal_grid()
+  theme_dviz_grid() +
+  theme(plot.margin = margin(3, 14, 3, 0))
+
 
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
 ```
@@ -147,30 +154,30 @@ The most commonly used nonlinear scale is the *logarithmic scale* or *log scale*
 
 (ref:linear-log-scales) Relationship between linear and logarithmic scales. The dots correspond to data values 1, 3.16, 10, 31.6, 100, which are evenly-spaced numbers on a logarithmic scale. We can display these data points on a linear scale, we can log-transform them and then show on a linear scale, or we can show them on a logarithmic scale. Importantly, the correct axis title for a logarithmic scale is the name of the variable shown, not the logarithm of that variable.
 
-```{r linear-log-scales, fig.width = 7.5, fig.cap = '(ref:linear-log-scales)'}
+```{r linear-log-scales, fig.width = 6, fig.asp = 3/4, fig.cap = '(ref:linear-log-scales)'}
 df <- data.frame(x = c(1, 3.16, 10, 31.6, 100))
 
 xaxis_lin <- ggplot(df, aes(x, y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
   scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
-  theme_minimal_grid() +
+  theme_dviz_grid(14, rel_large = 1) +
   theme(axis.ticks.length = grid::unit(0, "pt"),
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3.5, 20, 3.5, 20))
+        plot.margin = margin(3, 14, 3, 0))
 
 xaxis_log <- ggplot(df, aes(log10(x), y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
   scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
-  theme_minimal_grid() +
+  theme_dviz_grid(14, rel_large = 1) +
   theme(axis.ticks.length = grid::unit(0, "pt"),
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3.5, 20, 3.5, 20))
+        plot.margin = margin(3, 14, 3, 0))
 
 plotlist <- 
   align_plots(xaxis_lin + scale_x_continuous(limits = c(0, 100)) + 
@@ -209,16 +216,17 @@ US_census %>% filter(state == "Texas") %>%
 ggplot(tx_counties, aes(x = index, y = popratio)) +
   geom_hline(yintercept = 1, linetype = 2, color = "grey40") +
   geom_point(size = 0.5, color = "#0072B2") +
-  geom_text_repel(aes(label = label), point.padding = .4, color = "black", min.segment.length = 0) +
+  geom_text_repel(aes(label = label), point.padding = .4, color = "black",
+                  min.segment.length = 0, family = dviz_font_family) +
   scale_y_log10(breaks = c(.01, .1, 1, 10, 100),
                 name = "population number / median",
                 labels = label_log10) +
   scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
                      breaks = NULL, #c(1, 50*(1:5)),
                      name = "Texas counties, from most to least populous") +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(axis.line = element_blank(),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(3, 7, 3, 0))
 ```
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
@@ -226,14 +234,15 @@ ggplot(tx_counties, aes(x = index, y = popratio)) +
 ```{r texas-counties-pop-ratio-lin, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
 counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   geom_point(size = 0.5, color = "#0072B2") +
-  geom_text_repel(aes(label = label_large), point.padding = .4, color = "black", min.segment.length = 0) +
+  geom_text_repel(aes(label = label_large), point.padding = .4, color = "black",
+                  min.segment.length = 0, family = dviz_font_family) +
   scale_y_continuous(name = "population number / median") +
   scale_x_continuous(limits = c(.5, nrow(tx_counties) + .5), expand = c(0, 0),
                      breaks = NULL, #c(1, 50*(1:5)),
                      name = "Texas counties, from most to least populous") +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(axis.line = element_blank(),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(counties_lin)
 ```
@@ -244,30 +253,30 @@ Log scales are frequently used when the data set contains numbers of very differ
 
 (ref:sqrt-scales) Relationship between linear and square-root scales. The dots correspond to data values 0, 1, 4, 9, 16, 25, 36, 49, which are evenly-spaced numbers on a square-root scale, since they are the squares of the integers from 0 to 7. We can display these data points on a linear scale, we can square-root-transform them and then show on a linear scale, or we can show them on a square-root scale. 
 
-```{r sqrt-scales, fig.width = 7.5, fig.asp = 0.464, fig.cap = '(ref:sqrt-scales)'}
+```{r sqrt-scales, fig.width = 6, fig.asp = 3*(3/4)/4, fig.cap = '(ref:sqrt-scales)'}
 df <- data.frame(x = c(0, 1, 4, 9, 16, 25, 36, 49))
 
 xaxis_lin <- ggplot(df, aes(x, y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
   scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
-  theme_minimal_grid() +
+  theme_dviz_grid(14, rel_large = 1) +
   theme(axis.ticks.length = grid::unit(0, "pt"),
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3.5, 20, 3.5, 20))
+        plot.margin = margin(3, 14, 3, 0))
 
 xaxis_sqrt <- ggplot(df, aes(sqrt(x), y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
   scale_y_continuous(limits = c(0.8, 1.2), expand = c(0, 0), breaks = 1) +
-  theme_minimal_grid() +
+  theme_dviz_grid(14, rel_large = 1) +
   theme(axis.ticks.length = grid::unit(0, "pt"),
         axis.text.y = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3.5, 20, 3.5, 20))
+        plot.margin = margin(3, 14, 3, 0))
 
 plotlist <- 
   align_plots(xaxis_lin + scale_x_continuous(limits = c(0, 50)) + 
@@ -282,7 +291,6 @@ plotlist <-
               align = 'vh')
 
 plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], ncol = 1)
-
 ```
 
 I see two problems with square-root scales. First, while on a linear scale one unit step corresponds to addition or subtraction of a constant value and on a log scale it corresponds to multiplication with or division by a constant value, no such rule exists for a square-root scale. The meaning of a unit step on a square-root scale depends on the scale value at which we're starting. Second, it is unclear how to best place axis ticks on a square-root scale. To obtain evenly spaced ticks, we would have to place them at squares, but axis ticks at, for example, positions 0, 4, 25, 49, 81 (every second square) would be highly unintuitive. Alternatively, we could place them at linear intervals (10, 20, 30, etc), but this would result in either too few axis ticks near the low end of the scale or too many near the high end. In Figure \@ref(fig:sqrt-scales), I have placed the axis ticks at positions 0, 1, 5, 10, 20, 30, 40, and 50 on the square-root scale. These values are arbitrary but provide a reasonable covering of the data range.
@@ -311,7 +319,8 @@ areas_base <- ggplot(northeast_areas, aes(x = state_abr, y = area)) +
   geom_col(fill = "#56B4E9") +
   ylab("area (square miles)") +
   xlab("state") +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid() +
+  theme(plot.margin = margin(3, 14, 3, 0))
 
 p1 <- areas_base + scale_y_sqrt(limits = c(0, 55000), breaks = c(0, 1000, 5000, 10000*(1:5)), 
                                 expand = c(0, 0))
@@ -327,7 +336,7 @@ All coordinate systems we have encountered so far used two straight axes positio
 
 (ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
-```{r polar-coord, fig.width = 7.5, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
+```{r polar-coord, fig.width = 6, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
 df_points <- data.frame(x = c(1, 3.5, 0),
                         y = c(3, 4, 0),
                         label = c("(1, 3)", "(3.5, 4)", "(0, 0)"),
@@ -343,42 +352,45 @@ df_segments <- data.frame(x0 = c(0, 1, 2, 3, 0, 0, 0, 0),
 
 
 p_cart <- ggplot(df_points, aes(x, y)) +
-  geom_point(size = 3, color = "#0072B2") +
-  geom_text(aes(label = label, vjust = vjust_cart, hjust = hjust_cart), size = 12/.pt) +
+  geom_point(size = 2, color = "#0072B2") +
+  geom_text(aes(label = label, vjust = vjust_cart, hjust = hjust_cart),
+            size = 12/.pt, family = dviz_font_family) +
   scale_x_continuous(limits = c(-0.5, 4.5), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-0.5, 4.5), expand = c(0, 0)) +
   coord_fixed() +
   xlab("x axis") +
   ylab("y axis") +
-  theme_minimal_grid() +
+  theme_dviz_grid(12) +
   theme(axis.ticks = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"))
+        axis.ticks.length = grid::unit(0, "pt"),
+        plot.margin = margin(3, 12, 3, 0))
 
 
 p_polar <- ggplot(df_points, aes(x, y)) +
   geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
                size = theme_minimal_grid()$panel.grid.major$size, color = theme_minimal_grid()$panel.grid.major$colour) +
-  geom_point(size = 3, color = "#0072B2") +
-  geom_text(aes(label = label, vjust = vjust_polar, hjust = hjust_polar), size = 12/.pt) +
+  geom_point(size = 2, color = "#0072B2") +
+  geom_text(aes(label = label, vjust = vjust_polar, hjust = hjust_polar),
+            size = 12/.pt, family = dviz_font_family) +
   scale_x_continuous(limits = c(0, 4)) +
   scale_y_continuous(limits = c(0, 4)) +
   coord_polar() +
   xlab("x values (circular axis)") +
   ylab("y values (radial axis)") +
-  theme_minimal_grid() +
+  theme_dviz_grid(12) +
   background_grid(major = "none") +
   theme(axis.line.x = element_blank(),
-        axis.ticks = element_line(color = "black"))
+        axis.ticks = element_line(color = "black"),
+        plot.margin = margin(3, 12, 3, 0))
 
 plot_grid(p_cart, p_polar, labels = "auto")
-
 ```
 
 Polar coordinates can be useful for data of a periodic nature, such that data values at one end of the scale can be logically joined to data values at the other end. For example, consider the days in a year. December 31st is the last day of the year, but it is also one day before the first day of the year. If we want to show how some quantity varies over the year, it can be appropriate to use polar coordinates with the angle coordinate specifying each day. Let's apply this concept to the temperature normals of Figure \@ref(fig:temp-normals-vs-time). Because temperature normals are average temperatures that are not tied to any specific year, Dec. 31st can be thought of as 366 days later than Jan. 1st (temperature normals include Feb. 29) and also one day earlier. By plotting the temperature normals in a polar coordinate system, we emphasize this cyclical property they have (Figure \@ref(fig:temperature-normals-polar)). In comparison to Figure \@ref(fig:temp-normals-vs-time), the polar version highlights how similar the temperatures are in Death Valley, Houston, and San Diego from late fall to early spring. In the Cartesian coordinate system, this fact is obscured because the temperature values in late December and in early January are shown in opposite parts of the figure and therefore don't form a single visual unit.
 
 (ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Fahrenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
-```{r temperature-normals-polar, fig.width = 7.5, fig.cap = '(ref:temperature-normals-polar)'}
+```{r temperature-normals-polar, fig.width = 6, fig.cap = '(ref:temperature-normals-polar)'}
 temps_long <- gather(temps_wide, location, temperature, -month, -day, -date) %>%
   filter(location %in% c("Chicago",
                          "Death Valley",
@@ -396,9 +408,8 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
                      breaks = seq(-30, 90, by = 30),
                      name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +
-  theme_minimal() +
   coord_polar(theta = "x", start = pi, direction = -1) +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 
@@ -413,40 +424,40 @@ usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))
 
 p1 <- ggplot(usa) + 
   geom_sf() +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
         axis.text = element_text(color = "gray30"),
-        plot.margin = margin(11, 21, 7, 7))
+        plot.margin = margin(11, 21, 7, 0))
 
 usa_robin <- st_transform(usa, st_crs("+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0")) # 
 p2 <- ggplot(usa_robin) +
   geom_sf() +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
         axis.text = element_text(color = "gray30"),
-        plot.margin = margin(11, 21, 7, 7))
+        plot.margin = margin(12, 18, 6, 0))
 
 
 usa_laea <- st_transform(usa, st_crs("+proj=laea +lat_0=30 +lon_0=-100")) # Lambert equal area
 p3 <- ggplot(usa_laea) +
   geom_sf() +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
         axis.text = element_text(color = "gray30"),
-        plot.margin = margin(21, 21, 7, 7))
+        plot.margin = margin(18, 18, 6, 0))
 
 usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercator
 p4 <- ggplot(usa_tmerc) +
   geom_sf() +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
         axis.text = element_text(color = "gray30"),
-        plot.margin = margin(21, 21, 7, 7))
+        plot.margin = margin(18, 18, 6, 0))
 
 
 plot_grid(p1, p2, p3, p4,
           labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercator"),
-          label_x = 0.02, label_y = 0.98,
+          label_x = 0, label_y = 0.98,
           hjust = 0, vjust = 1,
           label_fontface = "plain")
 ```

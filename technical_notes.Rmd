@@ -3,7 +3,7 @@
 source("_common.R")
 library(tidyverse)
 library(lubridate)
-library(egg)
+library(patchwork)
 library(ggforce)
 library(ggrepel)
 library(ggridges)

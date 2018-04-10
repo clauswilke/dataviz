@@ -203,7 +203,7 @@ If we overdo removing boxes, frames, grid lines, etc. then we may end up with a 
 
 **This chapter probably has to come after multi-part figures if we want to discuss figures such as the next one.**
 
-```{r}
+```{r fig.width = 5, fig.asp = 3/4}
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
   ggplot(aes(sex, fill = sex)) + geom_bar() +
     facet_grid(class ~ surv, scales = "free_x") +
@@ -220,7 +220,7 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 
 stamp_bad(p)
 ```
-```{r}
+```{r fig.width = 5, fig.asp = 3/4}
 colors <- desaturate(lighten(c("#56B4E9", "#56B4E9"), c(.8, -.4)), .8)
 
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
