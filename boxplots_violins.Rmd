@@ -43,7 +43,8 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
                fatten = 5) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(lincoln_errbar)
 ```
@@ -60,7 +61,8 @@ df <- data.frame(y = c(s$stats, max(y)),
                  x = c(1.03, 1.405, 1.405, 1.405, 1.03, 1.04),
                  label = c("minimum", "first quartile", "median", "third quartile", "maximum within upper fence", "outlier"))
 p_boxplot <- ggplot(data.frame(y), aes(x = 1, y = y)) + geom_boxplot(fill = 'grey90') +
-  geom_text(data = df, aes(x, y, label = label), hjust = 0, size = 12/.pt) +
+  geom_text(data = df, aes(x, y, label = label), hjust = 0,
+            size = 12/.pt, family = dviz_font_family) +
   scale_x_continuous(limits = c(0, 3.5), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
   theme_nothing()
@@ -82,9 +84,10 @@ lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]
   geom_boxplot(fill = 'grey90') + 
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(lincoln_box)
+lincoln_box
 ```
 
 Boxplots were invented by the statistician John Tukey in the early 1970s, and they quickly gained popularity because they were highly informative while being easy to draw by hand. Most data visualizations were drawn by hand at that time. However, with modern computing and visualization capabilities, we are not limited to what is easily drawn by hand. Therefore, more recently, we see boxplots being replaced by violin plots, which are equivalent to the density estimates discussed in Chapter \@ref(histograms-density-plots) but rotated by 90 degrees and then mirrored (Figure \@ref(fig:violin-schematic)). Violins can be used whenever one would otherwise use a boxplot, and they provide a much more nuanced picture of the data. In particular, violin plots will accurately represent bimodal data whereas a boxplot will not.
@@ -100,7 +103,8 @@ df <- data.frame(y = c(min(y), d$x[which(d$y == max(d$y))], max(y)),
                  x = c(1.1, 1.5, 1.08),
                  label = c("minimum data value", "maximum point density", "maximum data value"))
 p_violin <- ggplot(data.frame(y), aes(x = 1, y = y)) + geom_violin(fill = 'grey90') +
-  geom_text(data = df, aes(x, y, label = label), hjust = 0, size = 12/.pt) +
+  geom_text(data = df, aes(x, y, label = label), hjust = 0,
+            size = 12/.pt, family = dviz_font_family) +
   scale_x_continuous(limits = c(0, 3.5), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-2.8, 3.5), expand = c(0, 0)) +
   theme_nothing()
@@ -129,9 +133,10 @@ lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   geom_violin(fill = 'grey90') +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(lincoln_violin)
+lincoln_violin
 ```
 
 
@@ -144,7 +149,8 @@ lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   geom_point() + 
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(lincoln_points)
 ```
@@ -157,9 +163,10 @@ lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   geom_point(position = position_jitter(width = .15, height = 0, seed = 320)) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(lincoln_jitter)
+lincoln_jitter
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -177,9 +184,10 @@ lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F
   stat_sina(maxwidth = 0.8) + 
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(lincoln_sina)
+lincoln_sina
 ```
 
 
@@ -200,7 +208,7 @@ ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
   xlab("mean temperature (°F)") +
-  theme_ridges(grid = TRUE, center = TRUE) +
+  theme_ridges(font_family = dviz_font_family, grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
 ```
 
@@ -220,7 +228,7 @@ p_binline <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
   scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
   xlab("mean temperature (°F)") +
-  theme_ridges(grid = TRUE, center = TRUE) +
+  theme_ridges(font_family = dviz_font_family, grid = TRUE, center = TRUE) +
   theme(axis.title.y = element_blank())
 
 stamp_ugly(p_binline) 
@@ -235,7 +243,7 @@ Ridgeline plots scale to very large numbers of distributions. For example, Figur
 ```{r movies-ridgeline, fig.width = 5, fig.asp = 1, fig.cap = '(ref:movies-ridgeline)'}
 ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
   geom_density_ridges(scale = 10, size = 0.25, rel_min_height = 0.03, fill = "grey85") +
-  theme_ridges(center = TRUE) +
+  theme_ridges(font_family = dviz_font_family, center = TRUE) +
   scale_x_continuous(limits = c(0, 200), expand = c(0, 0), name = "length (minutes)") +
   scale_y_reverse(breaks = c(2000, 1980, 1960, 1940, 1920),
                   limits = c(2005, 1903), expand = c(0, 0))
@@ -262,12 +270,12 @@ ggplot(all_house_88_113,
   scale_x_continuous(limits=c(-.8, 1.3), expand = c(0.01, 0), breaks=c(-1,-.75,-.5,-.25,0,.25,.5,.75,1)) +
   scale_y_reverse(expand = c(0, 0), breaks=c(seq(2013, 1963, -10))) +
   scale_fill_cyclical(breaks = c("100.1963", "200.1963"),
-                      labels = c(`100.1963` = "Democrats", `200.1963` = "Republicans"),
+                      labels = c(`100.1963` = "Democrats  ", `200.1963` = "Republicans"),
                       values = c("#4040ff", "#ff4040", "#6060ff", "#ff6060"),
                       name = NULL, guide = "legend") +
   ylab("year") + # ylab("first year of each congress") +
   xlab("DW-NOMINATE score") +
-  theme_ridges(center = TRUE) +
+  theme_ridges(font_family = dviz_font_family, center = TRUE) +
   theme(legend.position = c(1, .95),
         legend.justification = "right",
         legend.direction = "horizontal",
