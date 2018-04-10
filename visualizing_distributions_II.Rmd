@@ -29,7 +29,7 @@ ggplot(student_data, aes(x = points, y = 50*..y..)) +
   geom_point(aes(y = rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (ascending)") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
 
@@ -44,7 +44,7 @@ ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
   geom_point(aes(y = 51-rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (descending)") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 
 ```
@@ -57,10 +57,10 @@ In practical applications, it is quite common to draw the ecdf without highlight
 
 ```{r student-grades-normalized, fig.cap='(ref:student-grades-normalized)'}
 ggplot(student_data, aes(x = points, y = ..y..)) + 
-  stat_ecdf(geom = "step", color = "#0072B2") +
+  stat_ecdf(geom = "step", color = "#0072B2", size = 0.75) +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "cumulative frequency") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
 
@@ -76,48 +76,52 @@ Here, I will first discuss the number of people living in different US counties 
 
 (ref:county-populations) Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations)'}
+```{r county-populations, fig.width = 5, fig.asp = 2*0.618, fig.cap='(ref:county-populations)'}
 p1 <- ggplot(US_census, aes(x=pop2010)) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
-                     limits = c(0, 4.3e6),
-                     breaks = 1e6*(0:4),
+                     limits = c(0, 2.3e6),
+                     breaks = 0.5e6*(0:4),
                      labels = label_log10) +
   scale_y_continuous(expand = c(0, 0), name = expression(paste("density [x", 10^-5, "]")),
-                     breaks = c(0, 4e-6, 8e-6, 1.2e-5),
-                     labels = label_log10) +
-  theme_minimal_grid(12)
+                     breaks = c(0, 4e-6, 8e-6, 1.2e-5, 1.6e-5),
+                     labels = c(0, 0.4, 0.8, 1.2, 1.6)) +
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(3, 0, 12, 0))
 
 p2 <- ggplot(US_census, aes(x=pop2010)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_continuous(expand = c(0.01, 0), name = "number of inhabitants",
-                     limits = c(0, 4.3e6),
-                     breaks = 1e6*(0:4),
+                     limits = c(0, 2.3e6),
+                     breaks = 0.5e6*(0:4),
                      labels = label_log10) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
-  theme_minimal_grid(12)
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(3, 0, 12, 0))
 
-plot_grid(p1, p2, labels = 'auto', label_fontface = 'plain')
+plot_grid(p1, p2, ncol = 1, align = 'v', labels = 'auto')
 ```
 
 The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak right at 0 and virtually no details of the distribution are visible. Similarly, the ecdf (Figure \@ref(fig:county-populations)b) shows a rapid rise near 0 and again no details of the distribution are visible. For this particular dataset, we can log-transform the data and visualize the distribution of the log-transformed values. This transformation works here because the population numbers in counties is not actually a power law, but instead follow a nearly perfect log-normal distribution (see Section \@ref(qq-plots)). Indeed, the density plot of the log-transformed values shows a nice bell curve and the corresponding ecdf shows a nice sigmoidal shape (Figure \@ref(fig:county-populations-log)).
 
 (ref:county-populations-log) Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 
-```{r county-populations-log, fig.width = 8.5, fig.asp = 0.309, fig.cap='(ref:county-populations-log)'}
+```{r county-populations-log, fig.width = 5, fig.asp = 2*0.618, fig.cap='(ref:county-populations-log)'}
 p1_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0, 0), name = "density") +
-  theme_minimal_grid(12)
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(3, 0, 12, 0))
 
 p2_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
   scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
-  theme_minimal_grid(12)
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(3, 0, 12, 0))
 
-plot_grid(p1_log, p2_log, labels = 'auto', label_fontface = 'plain')
+plot_grid(p1_log, p2_log, ncol = 1, align = 'v', labels = 'auto')
 ```
 
 To see that this distribution is not a power law, we plot it as a descending ecdf with logarithmic *x* and *y* axes. In this visualization, a power law appears as a perfect straight line. For the population counts in counties, the right tail forms almost but not quite a straight line on the descending log-log ecdf plot (Figure \@ref(fig:county-populations-tail-log-log)).
@@ -126,14 +130,14 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 
 ```{r county-populations-tail-log-log, fig.cap='(ref:county-populations-tail-log-log)'}
 ggplot(US_census, aes(x=pop2010, y = 1-..y..)) + 
-  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  stat_ecdf(geom = "step", color = "#0072B2", size = 0.75, pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0),
                 breaks = c(1e2, 1e3, 1e4, 1e5, 1e6, 1e7),
                 labels = c(expression(10^2), expression(10^3), expression(10^4),
                            expression(10^5), expression(10^6), expression(10^7)),
                 name = "number of county inhabitants") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
@@ -143,14 +147,14 @@ As a second example, I will use the distribution of word frequencies for all wor
 ```{r word-counts-tail-log-log, fig.cap='(ref:word-counts-tail-log-log)' }
 wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
 ggplot(wc, aes(x=count, y = 1-..y..)) + 
-  stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
+  stat_ecdf(geom = "step", color = "#0072B2", size = 0.75, pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0), breaks = c(1, 10, 100, 1000, 10000),
                 name = "number of times word is used") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1),
                 labels = c(expression(10^-5), expression(10^-4), expression(10^-3),
                            expression(10^-2), expression(10^-1), expression(10^0)),
                 name = "fraction of words") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 ## Quantile--quantile plots {#qq-plots}
@@ -169,7 +173,7 @@ ggplot(student_data, aes(sample = points)) +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 10*(5:10)) +
   scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
-  theme_half_open()
+  theme_dviz_open()
 ```
 
 The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal). We see that the student grades follow mostly a normal distribution, with a few deviations at the bottom and at the top (a few students performed worse than expected on either end). The deviations from the distribution at the top end are caused by the maximum point value of 100 in the hypothetical exam; regardless of how good the best student is, he or she could at most obtain 100 points.
@@ -187,7 +191,7 @@ ggplot(US_census, aes(sample = log(pop2010))) +
   stat_qq(dparams = params, color = "#0072B2") +
   scale_x_continuous(breaks = 5+2.5*(0:4)) +
   scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
-  theme_half_open()
+  theme_dviz_open()
 ```
 
 

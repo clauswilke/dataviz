@@ -44,7 +44,8 @@ age_hist <- cbind(age_hist, age = (1:15) * 5 - 2.5)
 h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 h1
 ```
 
@@ -67,20 +68,25 @@ age_hist_15 <- data.frame(age = (1:5) * 15 - 7.5,
 h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 10 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 100 * (0:4)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
-plot_grid(h2, h3, h1 + theme_minimal_hgrid(12), h4, align = 'hv',
-          labels = 'auto', label_fontface = "plain")
+
+plot_grid(h2, h3,
+          h1 + theme_dviz_hgrid(12) + theme(plot.margin = margin(3, 12, 12, 0)), h4,
+          align = 'hv', labels = 'auto')
 
 ```
 
@@ -97,7 +103,8 @@ ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 ```
 
 Just as is the case with histograms, the exact visual appearance of a density plot depends on the kernel and bandwidth choices (Figure \@ref(fig:titanic-ages-dens-grid)). The bandwidth parameter behaves similarly to the bin width in histograms. If the bandwidth is too small, then the density estimate can become overly peaky and visually busy and the main trends in the data may be obscured. On the other hand, if the bandwidth is too large, then smaller features in the distribution of the data may disappear. In addition, the choice of the kernel affects the shape of the density curve. For example, a Gaussian kernel will have a tendency to produce density estimates that look Gaussian-like, with smooth features and tails. By contrast, a rectangular kernel can generate the appearance of steps in the density curve (Figure \@ref(fig:titanic-ages-dens-grid)d). In general, the more data points there are in the data set, the less the choice of the kernel matters. Therefore, density plots tend to be quite reliable and informative for large data sets but can be misleading for data sets of only a few points.
@@ -109,28 +116,32 @@ pdens1 <- ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 pdens2 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 pdens3 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 pdens4 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "rectangular") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_minimal_hgrid(12)
+  theme_dviz_hgrid(12) +
+  theme(plot.margin = margin(3, 12, 12, 0))
 
 plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv',
-          labels = 'auto', label_fontface = "plain")
+          labels = 'auto')
 ```
 
 Density curves are usually scaled such that the area under the curve equals one. This convention can make the *y* axis scale confusing, because it depends on the units of the *x* axis. For example, in the case of the age distribution, the data range on the *x* axis goes from 0 to approximately 75. Therefore, we expect the mean height of the density curve to be 1/75 = 0.013. Indeed, when looking at the age density curves (e.g., Figure \@ref(fig:titanic-ages-dens-grid)), we see that the *y* values range from 0 to approximately 0.04, with an average of somewhere close to 0.01.
@@ -145,7 +156,8 @@ pdens_neg <- ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5)) + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(pdens_neg)
 ```
@@ -173,12 +185,13 @@ gender_counts$gender <- factor(gender_counts$gender, levels = c("female", "male"
 p_hist_stacked <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) + 
   geom_col(position = "stack") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 89), expand = c(0, 0), name = "count") +
   scale_fill_manual(values = c("#D55E00", "#0072B2")) +
-  theme_minimal_hgrid() +
-  theme(legend.position = c(.9, .92),
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .87),
         legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"))
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(p_hist_stacked)
 ```
@@ -193,13 +206,14 @@ We could try to address these problems by having all bars start at zero and maki
 p_hist_overlapped <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) + 
   geom_col(position = "identity", alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  scale_y_continuous(name = "count", expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 56), expand = c(0, 0), name = "count") +
   scale_fill_manual(values = c("#D55E00", "#0072B2"),
                     guide = guide_legend(reverse = TRUE)) +
-  theme_minimal_hgrid() +
-  theme(legend.position = c(.9, .90),
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .87),
         legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"))
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(p_hist_overlapped)
 ```
@@ -216,14 +230,15 @@ titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
 p_dens_overlapped <- ggplot(titanic2, aes(x = age, y = ..count.., fill = sex, color = sex)) + 
   geom_density_line(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, 20), name = "scaled density", expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 19), expand = c(0, 0), name = "scaled density") +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
   scale_color_manual(values = darken(c("#0072B2", "#D55E00"), 0.5), name = "gender") +
   guides(fill = guide_legend(override.aes = list(linetype = 0))) +
-  theme_minimal_hgrid() +
-  theme(legend.position = c(.9, .92),
+  theme_dviz_hgrid() +
+  theme(legend.position = c(.9, .87),
         legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"))
+        legend.box.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_phantom(p_dens_overlapped)
 ```
@@ -244,7 +259,7 @@ p_dens_fraction <- ggplot(titanic2, aes(x = age, y = ..count..)) +
                     labels = c("all passengers  ", "males  ", "females"),
                     name = "") +
   facet_wrap(~sex, labeller = labeller(sex = function(sex) paste(sex, "passengers"))) +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(legend.position = "bottom",
         legend.justification = "right",
         legend.margin = margin(0, 0, 0.2, 0, "cm"),
@@ -267,7 +282,7 @@ ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fil
   draw_text(x = 70, y = -39, "male", hjust = 0) +
   draw_text(x = 70, y = 21, "female", hjust = 0) +
   coord_flip() +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(axis.title.x = element_text(hjust = 0.61))
 
 
@@ -309,7 +324,7 @@ cows_p <- ggplot(cows_dens, aes(x = butterfat, y = density, color = breed, fill 
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "% butterfat") +
   scale_y_continuous(limits = c(0, 1.99), expand = c(0, 0)) +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid()
   
 cows_p
 ```
