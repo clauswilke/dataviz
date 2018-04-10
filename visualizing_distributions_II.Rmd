@@ -165,7 +165,7 @@ When we perform this procedure for the student grades distribution from the begi
 
 (ref:student-grades-qq) q-q plot of student grades.
 
-```{r student-grades-qq, fig.cap='(ref:student-grades-qq)'}
+```{r student-grades-qq, fig.width = 5, fig.asp = 0.9, fig.cap='(ref:student-grades-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(student_data$points, "normal")$estimate)
 ggplot(student_data, aes(sample = points)) + 
@@ -183,7 +183,7 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 
 (ref:county-populations-qq) q-q plot of the logarithm of the number of inhabitants in US counties.
 
-```{r county-populations-qq, fig.cap='(ref:county-populations-qq)'}
+```{r county-populations-qq, fig.width = 5, fig.asp = 0.9, fig.cap='(ref:county-populations-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(log(US_census$pop2010), "normal")$estimate)
 ggplot(US_census, aes(sample = log(pop2010))) + 

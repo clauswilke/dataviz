@@ -18,7 +18,7 @@ library(forcats)
 # theme
 theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
                             line_size = .6, font_size = 10) {
-  theme_half_open() %+replace% theme(
+  theme_dviz_open() %+replace% theme(
     axis.text.x       = element_blank(),
     axis.text.y       = element_blank(),
     axis.title.x      = element_blank(),
@@ -32,9 +32,11 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
     axis.ticks.length = grid::unit(4, "pt"),
     legend.position   = "none",
     plot.margin       = margin(2, font_size, font_size, font_size),
-    plot.title        = element_text(hjust = 0.5, face = "bold", color = line_color,
+    plot.title        = element_text(hjust = 0.5,
+                                     family = dviz_font_family_bold,
+                                     color = line_color,
                                      size = font_size,
-                                     margin = margin(1, 0, 2, 0)),
+                                     margin = margin(2, 0, 2, 0)),
     plot.background   = element_rect(fill = bg_color)
   )
 }
@@ -397,7 +399,7 @@ p8_a <- ggplot(filter(df_fractions, x==1), aes(x = 1, y = y, fill = type)) +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme_plot_icon_blank(palette[npal], palette[1], font_size = 5) +
   theme(plot.background = element_blank())
 
 p8_b <- ggplot(filter(df_fractions, x==2), aes(x = 1, y = y, fill = type)) + 
@@ -406,7 +408,7 @@ p8_b <- ggplot(filter(df_fractions, x==2), aes(x = 1, y = y, fill = type)) +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme_plot_icon_blank(palette[npal], palette[1], font_size = 5) +
   theme(plot.background = element_blank())
 
 p8_c <- ggplot(filter(df_fractions, x==3), aes(x = 1, y = y, fill = type)) + 
@@ -415,16 +417,19 @@ p8_c <- ggplot(filter(df_fractions, x==3), aes(x = 1, y = y, fill = type)) +
   scale_y_continuous(breaks = NULL, name = "") +
   scale_x_continuous(breaks = NULL, name = "") +
   scale_fill_manual(values = palette[2:4]) +
-  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme_plot_icon_blank(palette[npal], palette[1], font_size = 5) +
   theme(plot.background = element_blank())
 
 
 # combine
 p8 <- ggdraw(plot_grid(p8_a, p8_b, p8_c, ncol = 3, scale = 1.4)) +
       labs(title = "Multiple pie charts") +        
-      theme(plot.title = element_text(hjust = 0.5, face = "bold", color = palette[1],
-                                      size = 10, margin = margin(1, 0, 2, 0)),
-            plot.background = element_rect(fill = palette[npal], color = "transparent"))
+      theme(plot.title = element_text(hjust = 0.5, size = 10,
+                                      family = dviz_font_family_bold,
+                                      color = palette[1],
+                                      margin = margin(2, 0, 2, 0)),
+            plot.background = element_rect(fill = palette[npal], color = "transparent"),
+            plot.margin = margin(2, 10, 10, 10))
 
 plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 ```
