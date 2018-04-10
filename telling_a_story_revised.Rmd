@@ -186,15 +186,15 @@ filter(flights_grouped, name == "United" & origin == "EWR") %>%
     scale_x_discrete(labels = c("M", "T", "W", "T", "F", "S", "S"),
                      expand = c(0, 0.05),
                      name = "weekday") +
-    theme_dviz_hgrid(14, "Myriad Pro Condensed") +
-    theme(strip.text = element_text(family = "Myriad Pro Bold Condensed",
+    theme_dviz_hgrid(14, dviz_font_family_condensed) +
+    theme(strip.text = element_text(family = dviz_font_family_bold_condensed,
                                     margin = margin(4, 4, 4, 4)),
           axis.line.x = element_blank(),
           panel.spacing.x = grid::unit(6.5, "pt"),
           panel.spacing.y = grid::unit(6.5, "pt"),
           panel.grid.major = element_line(color = "gray80"),
           panel.background = element_rect(fill = "gray90"),
-          plot.title = element_text(family = "Myriad Pro Bold Condensed",
+          plot.title = element_text(family = dviz_font_family_bold_condensed,
                                     hjust = 0.5, vjust = 0.5,
                                     margin = margin(4, 4, 4, 4)))
 ```
@@ -210,9 +210,9 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
   scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
                    expand = c(0, 0.05),
                    name = "weekday") +
-  theme_dviz_hgrid(12, "Myriad Pro Condensed") +
+  theme_dviz_hgrid(12, dviz_font_family_condensed) +
   #panel_border() +
-  theme(strip.text = element_text(family = "Myriad Pro Bold Condensed",
+  theme(strip.text = element_text(family = dviz_font_family_bold_condensed,
                                   margin = margin(3, 3, 3, 3)),
         axis.line.x = element_blank(),
         panel.spacing.x = grid::unit(5, "pt"),

@@ -44,7 +44,7 @@ cyls <- data.frame(cyl = factor(c(4, 6, 8)))
 
 p <- ggplot(cyls, aes(cyl, cyl, color = cyl)) + geom_point() +
   scale_color_manual(values = colors, name = "cylinders") +
-  theme_half_open(font_size = 12, font_family = "Myriad Pro") +
+  theme_half_open(font_size = 12, font_family = dviz_font_family) +
   theme(legend.position = "top",
         legend.justification = "right")
 legend <- get_legend(p)
@@ -54,7 +54,7 @@ pfun <- function(theta = 30, phi = 20) {
     par(xpd = NA,
         bg = "transparent",
         mai = c(0, 0.1, 0, 0),
-        family = "Myriad Pro Condensed"
+        family = dviz_font_family_condensed
     )
     scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
               col = colors,
@@ -69,7 +69,7 @@ plot_grid(pfun(30, 20), pfun(-30, 20),
           pfun(30, 40), pfun(-30, 40),
           rel_heights = c(1, 0.1, 1), ncol = 2,
           labels = c("a", "b", "", "", "c", "d"),
-          label_fontface = "plain", label_fontfamily = "Myriad Pro")
+          label_fontface = "plain", label_fontfamily = dviz_font_family)
 ```
 
 (ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
@@ -81,7 +81,7 @@ pfun2 <- function(theta = 30, phi = 20) {
     par(xpd = NA,
         bg = "transparent",
         mai = c(0, 0.1, 0, 0),
-        family = "Myriad Pro Condensed"
+        family = dviz_font_family_condensed
     )
     scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
               col = colors,
@@ -96,7 +96,7 @@ plot_grid(pfun2(30, 20), pfun2(-30, 20),
           pfun2(30, 40), pfun2(-30, 40),
           rel_heights = c(1, 0.1, 1), ncol = 2,
           labels = c("a", "b", "", "", "c", "d"),
-          label_fontface = "plain", label_fontfamily = "Myriad Pro")
+          label_fontface = "plain", label_fontfamily = dviz_font_family)
 
 ```
 
@@ -177,7 +177,7 @@ p <- ggplot(df, aes(x, y = 1, fill = fill)) + geom_tile() +
                                               ticks = FALSE,
                                               barwidth = grid::unit(3.5, "in"),
                                               barheight = grid::unit(0.2, "in"))) +
-  theme_half_open(12) +
+  theme_dviz_open(12) +
   theme(legend.title.align = 0.5,
         legend.background = element_blank(),
         legend.box.background = element_blank(),

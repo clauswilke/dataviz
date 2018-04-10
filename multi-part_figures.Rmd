@@ -167,7 +167,6 @@ p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
         axis.line.y.left = element_line(color = textcol),
         axis.text.y.right = element_text(hjust = 0, vjust = .5,
                                          margin = margin(0, 0, 0, 0),
-                                         #family = "Myriad Pro Condensed",
                                          color = "black",
                                          lineheight = 0.8
                                          ),
