@@ -15,7 +15,7 @@ One common mistake is trying to give color a job that is too big for it to handl
 
 (ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 U.S. states and the Discrict of Columbia. Every state is marked in a different color. Because there are so many states, it is very difficult to match the colors in the legend to the dots in the scatter plot.
 
-```{r popgrowth-vs-popsize-colored, fig.width = 7, fig.asp = 2*0.618, fig.cap = '(ref:popgrowth-vs-popsize-colored)'}
+```{r popgrowth-vs-popsize-colored, fig.width = 6, fig.asp = 2*0.618, fig.cap = '(ref:popgrowth-vs-popsize-colored)'}
 
 popgrowth_df <- left_join(US_census, US_regions) %>%
     group_by(region, division, state) %>%
@@ -44,12 +44,13 @@ p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.ch
   scale_color_manual(values = colors, name = "state") +
   xlab("population size in 2000") +
   ylab("population growth (%)\n2000 to 2010    ") +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(legend.text = element_text(size = 10),
-        legend.justification = "center")
+        legend.justification = "center",
+        plot.margin = margin(14, 14, 3, 0))
 
 p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
-stamp_bad(plot_grid(NULL, p_comb, NULL, rel_widths = c(.5, 6, .5), nrow = 1))
+stamp_bad(p_comb)
 ```
 
 As a rule of thumb, qualitative color scales work best when there are three to five different categories that need to be colored. Once we reach eight to ten different categories or more, the task of matching colors to categories becomes too burdensome to be useful, even if the colors remain sufficiently different to be distinguishable in principle. For the dataset of Figure \@ref(fig:popgrowth-vs-popsize-colored), it is probably best to use color only to indicate the geographic region of each state and to identify individual states by direct labeling, i.e., by placing appropriate text labels adjacent to the data points (Figure \@ref(fig:popgrowth-vs-popsize-bw)). Even though we cannot label every individual state without making the figure too crowded, direct labeling is the right choice for this figure. In general, for figures such as this one, we don't need to label every single data point. It is sufficient to label a representative subset, for example a set of states we specifically want to call out in the text that will accompany the figure. We always have the option to also provide the underlying data as a table if we want to make sure the reader has access to it in its entirety.
@@ -71,19 +72,21 @@ df_repel <- select(popgrowth_df, x = pop2000, y = popgrowth, state) %>%
   mutate(label = ifelse(state %in% labeled_states, as.character(state), ""))
 
 ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = region)) +
-  geom_point(size = 2) +
   geom_text_repel(data = df_repel,
                   aes(x, 100*y, label = label),
-                  segment.alpha = 0.5, point.padding = 0.45,
-                  box.padding = .4,
+                  segment.alpha = 0.5, point.padding = 0.25,
+                  box.padding = .8,
                   force = 1,
                   min.segment.length = 0.1,
+                  family = dviz_font_family,
                   size = 10/.pt, inherit.aes = FALSE) +
+  geom_point(size = 3, color = "white") +
+  geom_point(size = 2) +
   scale_x_log10(labels = label_log10) +
   #scale_color_manual(values = region_colors) +
   xlab("population size in 2000") +
   ylab("population growth (%)\n2000 to 2010    ") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 
@@ -95,19 +98,20 @@ A second common problem is coloring for the sake of coloring, without having a c
 
 (ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
 
-```{r popgrowth-US-rainbow, fig.width = 6.5, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
+```{r popgrowth-US-rainbow, fig.width = 6, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
 popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = state)) + 
   geom_col() + 
   scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
-                     name = "population growth (%)\n2000 to 2010    ") +
+                     name = "percent population growth, 2000 to 2010") +
   scale_fill_hue(c = 140, l = 55) +
   coord_flip() + 
-  theme_minimal_vgrid() +
+  theme_dviz_vgrid(12, rel_small = 1) +
   theme(axis.title.y = element_blank(),
         axis.line.y = element_blank(),
         axis.ticks.length = unit(0, "pt"),
         axis.text.y = element_text(size = 10),
-        legend.position = "none")
+        legend.position = "none",
+        plot.margin = margin(18, 0, 3, 0))
 
 stamp_bad(popgrowth_bars_rainbow)
 ```
@@ -126,8 +130,10 @@ In Chapter \@ref(color-basics), I listed two critical conditions for designing s
 (ref:rainbow-desaturated) The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale.
 
 ```{r rainbow-desaturated, fig.width=6.5, fig.asp=2*.14, fig.cap = '(ref:rainbow-desaturated)'}
-p1 <- gg_color_gradient() + scale_fill_gradientn(colors = rainbow(10)) + ggtitle("rainbow scale")
-p2 <- gg_color_gradient() + scale_fill_gradientn(colors = desaturate(rainbow(10))) + ggtitle("rainbow converted to grayscale")
+p1 <- gg_color_gradient(title_family = dviz_font_family) + 
+  scale_fill_gradientn(colors = rainbow(10)) + ggtitle("rainbow scale")
+p2 <- gg_color_gradient(title_family = dviz_font_family) + 
+  scale_fill_gradientn(colors = desaturate(rainbow(10))) + ggtitle("rainbow converted to grayscale")
 plot_grid(p1, p2, ncol = 1)
 ```
 
@@ -136,7 +142,7 @@ In a visualization of actual data, the rainbow scale tends to obscure data featu
 
 (ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. The rainbow color scale is not an appropriate scale to visualize continuous data values, because it tends to place emphasis on arbitrary features of the data. Here, it emphasizes counties in which approximately 75% of the population identify as white.
 
-```{r map-Texas-rainbow, fig.width = 7, fig.asp = 0.75, fig.cap = '(ref:map-Texas-rainbow)'}
+```{r map-Texas-rainbow, fig.width = 6, fig.asp = 0.75, fig.cap = '(ref:map-Texas-rainbow)'}
 library(sf)
 
 # we reuse the geometries from texas_income
@@ -145,7 +151,7 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
   ggplot(aes(fill = pct)) +
     geom_sf(color = "white") +
     coord_sf(xlim = c(-110, -93.5), datum = NA) + 
-    theme_map() +
+    theme_dviz_map() +
     scale_fill_gradientn(colors = rainbow(10),
                          limits = c(0, 100),
                          breaks = 25*(0:4),
@@ -155,7 +161,7 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
                                                 label.position = "bottom",
                                                 title.position = "top",
                                                 ticks = FALSE,
-                                                barwidth = grid::unit(3.5, "in"),
+                                                barwidth = grid::unit(3.0, "in"),
                                                 barheight = grid::unit(0.2, "in"))) +
     theme(legend.title.align = 0.5,
           legend.text.align = 0.5,
@@ -174,9 +180,9 @@ As discussed in Chapter \@ref(color-basics), there are three fundamental types o
 
 (ref:heat-cvd-sim) Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly simulations. Even though the specific colors look different under the three types of cvd, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
 
-```{r heat-cvd-sim, fig.width = 6.5, fig.asp = 2*.14, fig.cap = '(ref:heat-cvd-sim)'}
+```{r heat-cvd-sim, fig.width = 6, fig.asp = 2*.14, fig.cap = '(ref:heat-cvd-sim)'}
 grad_heat <- gg_color_gradient(plot_margin = margin(12, 0, 0, 0),
-                                    ymargin = 0.05) + 
+                               ymargin = 0.05) + 
                scale_fill_continuous_sequential("Heat")
 
 cvd_sim(grad_heat)
@@ -186,7 +192,7 @@ Things become more complicated for diverging scales, because popular color contr
 
 (ref:red-green-cvd-sim) A red--green contrast becomes indistinguishable under red--green cvd (deuteranomaly or protanomaly).
 
-```{r red-green-cvd-sim, fig.width = 6.5, fig.asp = 2*.14, fig.cap = '(ref:red-green-cvd-sim)'}
+```{r red-green-cvd-sim, fig.width = 6, fig.asp = 2*.14, fig.cap = '(ref:red-green-cvd-sim)'}
 cols <- scales::colour_ramp(c("#FF1B1B", "#F9F1CE", high = "#057905"))(seq(0, 1, .25))
 
 grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
@@ -198,7 +204,7 @@ cvd_sim(grad_red_green)
 
 (ref:blue-green-cvd-sim) A blue--green contrast becomes indistinguishable under blue--yellow cvd (tritanomaly).
 
-```{r blue-green-cvd-sim, fig.width = 6.5, fig.asp = 2*.14, fig.cap = '(ref:blue-green-cvd-sim)'}
+```{r blue-green-cvd-sim, fig.width = 6, fig.asp = 2*.14, fig.cap = '(ref:blue-green-cvd-sim)'}
 cols <- scales::colour_ramp(c("#284F9B", "grey90", high = "#056D05"))(seq(0, 1, .25))
 
 grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
@@ -212,7 +218,7 @@ With these examples, it might seem that it is nearly impossible to find two cont
 
 (ref:PiYG-cvd-sim) The ColorBrewer PiYG (pink to yellow-green) scale from Figure \@ref(fig:diverging-scales) looks like a red--green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is actually pink (a mix of red and blue) while the greenish color also contains yellow. The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans.
 
-```{r PiYG-cvd-sim, fig.width = 6.5, fig.asp = 2*.14, fig.cap = '(ref:PiYG-cvd-sim)'}
+```{r PiYG-cvd-sim, fig.width = 6, fig.asp = 2*.14, fig.cap = '(ref:PiYG-cvd-sim)'}
 grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
                                     ymargin = 0.05) + 
                   scale_fill_brewer(type = "div", palette = "PiYG")
@@ -228,7 +234,7 @@ Things are most complicated for qualitative scales, because there we need many d
 # from: http://jfly.iam.u-tokyo.ac.jp/color/
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
 
-palette_plot(cbPalette, label_size = 4)
+palette_plot(cbPalette, label_size = 5, label_family = dviz_font_family)
 ```
 
 
