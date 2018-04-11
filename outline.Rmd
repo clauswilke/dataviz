@@ -52,17 +52,11 @@
   
 ## Part II: Principles of figure design {-}
 
-17. **Figure titles and captions**  
-  Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
-
-#. **Your axis labels are too small**  
+17. **Your axis labels are too small**  
   Discusses the widespread problem of excessively small axis labels.
 
 #. **Choosing the right axis settings**  
   Covers various aspects related to axis choice, including linear vs. logarithmic axes, as well as issues of axis expansion beyond the data range. Also takes up the topic of aspect ratio once again.
-
-#. **Maximizing the data signal in visualizations**  
-  Discusses the general principle of maximizing the ink used to convey information. Argues to avoid boxes and frames around figure parts. Also discusses when and how to use background grids and other guide lines in figures.
 
 #. **The principle of proportional ink**  
   Explains that the size of colored areas needs to be proportional to the data value they represent.
@@ -70,18 +64,24 @@
 #. **Handling overlapping points**  
   Describes different strategies to handle the problems of overlapping points or large point clouds. These problems frequently arise in large datasets, and helpful strategies include using partially transparent points, 2d density plots, hex grids, or smoothers.
   
-#. **Avoid line drawings**  
-  Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
-
 #. **Common pitfalls of color use**  
   Also contains a section on designing for colorblindness.
 
 #. **Redundant coding**  
   Explains how to make sure that key information in the figure is provided in multiple, reduant ways, for example through color and location or color and direct labeling.
 
-#. **Multi-part figures**  
-  Discusses issues that arise in multi-part figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-part figures. 
+#. **Multi-panel figures**  
+  Discusses issues that arise in multi-panel figures, including proper labeling, alignment between subfigures, shared legends, and overly complex multi-panel figures. 
   
+#. **Figure titles and captions**  
+  Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
+  
+#. **Avoid line drawings**  
+  Argues that filled shapes and solid colors are almost always preferable to shapes shown as outlines or with hatching or cross-hatching.
+
+#. **Maximizing the data signal in visualizations**  
+  Discusses the general principle of maximizing the ink used to convey information. Argues to avoid boxes and frames around figure parts. Also discusses when and how to use background grids and other guide lines in figures.
+
 #. **Don't go 3D**  
   Argues why 3d plots are generally problematic (figures are fundamentally a 2D medium, and in 3D plots data is subjected to an additional, non-obvious transformation from 3D to 2D) and suggests alternatives to visualize high-dimensional datasets, including encoding additional variables in color, size, or symbol shape, and/or using faceting.
 
