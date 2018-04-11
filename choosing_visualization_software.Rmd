@@ -47,17 +47,17 @@ lincoln1 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`))
              size = .75) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_half_open(12)
+  theme_dviz_open(12) + theme(plot.margin = margin(3, 12, 3, 0))
 
 lincoln2 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point(position = position_jitter(width = .2, height = 0, seed = 321),
              size = .5, color = darken("#0072B2", .3)) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_minimal_grid(12) + theme(axis.ticks.length = grid::unit(0, "pt"),
+  theme_dviz_grid(12) + theme(axis.ticks.length = grid::unit(0, "pt"),
                                  axis.ticks = element_blank())
 
-plot_grid(lincoln1, lincoln2, labels = "auto", label_fontface = "plain", ncol = 2)
+plot_grid(lincoln1, lincoln2, labels = "auto", ncol = 2)
 ```
 
 Both reproducibility and repeatability can be difficult to achieve when we're working with interactive plotting software. Many interactive programs allow you to transform or otherwise manipulate the data but don't keep track of every individual data transformation you perform, only of the final product. If you make a figure using this kind of a program, and then somebody asks you to reproduce the figure or create similar one with a different data set, you might have difficulty to do so. During my years as a postdoc and a young assistant professor, I used an interactive program for all my scientific visualizations, and this exact issue happened to me several times. For example, I had made several figures for a scientific manuscript. When I wanted to revise the manuscript a few months later and needed to reproduce a slightly altered version of one of the figures, I realized that I wasn't quite sure anymore how I had made the original figure in the first place. This experience has taught me to stay away from interactive programs as much as possible. I now make figures programmatically, by writing code (scripts) that generates the figures from the raw data. Programmatically generated figures will generally be repeatable by anybody who has access to the generating scripts and the programming language and specific libraries used.
@@ -99,10 +99,11 @@ unemploy_base <- ggplot(economics, aes(x = date, y = unemploy)) +
   scale_x_date(name = "year",
                expand = c(0.01, 0))
 
-unemploy_p1 <- unemploy_base + theme_minimal_grid(12) +
+unemploy_p1 <- unemploy_base + theme_dviz_grid(12) +
   geom_line(color = "#0072B2") +
   theme(axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks = element_blank())
+        axis.ticks = element_blank(),
+        plot.margin = margin(6, 6, 6, 2))
 unemploy_p2 <- unemploy_base + geom_line() + theme_gray()
 unemploy_p3 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = FALSE, size = .75) +
   theme_economist() + scale_color_economist() +
@@ -117,7 +118,9 @@ unemploy_p4 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = 
 plot_grid(unemploy_p1, NULL, unemploy_p2, 
           NULL, NULL, NULL,
           unemploy_p3, NULL, unemploy_p4,
-          labels = c("a", "", "b", "", "", "", "c", "", "d"), label_fontface = "plain",
+          labels = c("a", "", "b", "", "", "", "c", "", "d"),
+          hjust = -.5,
+          vjust = 1.5,
           rel_widths = c(1, .02, 1),
           rel_heights = c(1, .02, 1))
 ```
