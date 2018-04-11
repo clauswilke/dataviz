@@ -8,7 +8,7 @@ library(ggforce)
 library(ggridges)
 
 main_size = 14 / .pt
-small_rel <- 0.857
+small_rel <- 12/14
 small_size <- small_rel * main_size
 ```
 
@@ -46,16 +46,17 @@ ggplot(bund_pie) +
   geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
                    start = start_angle, end = end_angle, fill = party), color = "white", size = 0.5) +
   geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = party,
+                family = dviz_font_family, size = main_size,
                 hjust = hjust, vjust = vjust)) +
   geom_text(aes(x = 0.6*sin(mid_angle), y = 0.6*cos(mid_angle), label = seats),
+            family = dviz_font_family, size = main_size,
             color = c("black", "white", "white")) +
   coord_fixed() +
   scale_x_continuous(limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL) +
   scale_y_continuous(limits = c(-1.01, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL) +
   scale_fill_manual(values = bund_pie$colors[order(bund_pie$party)]) +
-  guides(fill = "none") +
-  theme_nothing() #+
-  #theme(plot.background = element_rect(fill = "#C0C0C0"))
+  theme_dviz_map() +
+  theme(legend.position = "none")
 
 ```
 
@@ -69,46 +70,58 @@ bundestag <- mutate(bundestag,
 
 bt_bars_stacked_base <- ggplot(bundestag, aes(x = 1, y = seats, fill = factor(party, levels = rev(party)))) + 
   geom_col(position = "stack", color = "white") + 
-  geom_text(aes(x = 1., y = label_y, label = seats), size = main_size, color = c("white", "white", "black")) +
+  geom_text(aes(x = 1., y = label_y, label = seats), 
+            size = main_size, family = dviz_font_family,
+            color = c("white", "white", "black")) +
   scale_y_continuous(expand = c(0, 0)) +
-  scale_x_discrete(expand = c(0, 0), breaks = NULL, name = "") +
-  scale_fill_manual(values = rev(bundestag$colors), guide = "none") 
-  #geom_hline(yintercept = c(100, 200, 300, 400), color = "#ffffff50", size = .5)
+  scale_x_discrete(expand = c(0, 0), breaks = NULL, name = NULL) +
+  scale_fill_manual(values = rev(bundestag$colors), guide = "none")
 
 bt_bars_yax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag, aes(x = 0.06, y = label_y, label = party, hjust = 0, vjust = 0.5, size = small_size)) +
+  geom_text(data = bundestag,
+            aes(x = 0.06, y = label_y, label = party),
+            hjust = 0, vjust = 0.5, size = small_size,
+            family = dviz_font_family) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1))
 
-bt_bars_stacked <- insert_yaxis_grob(bt_bars_stacked_base + theme_minimal_hgrid(),
-                                     bt_bars_yax, grid::unit(.5, "null"))
+bt_bars_stacked <- insert_yaxis_grob(
+  bt_bars_stacked_base + 
+    theme_dviz_hgrid() +
+    theme(plot.margin = margin(7, 0, 7, 0)),
+  bt_bars_yax, grid::unit(.5, "null"))
 
 bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag, aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = small_size)) +
+  geom_text(data = bundestag,
+            aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = small_size),
+            family = dviz_font_family) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +
   coord_flip()
 
-bt_bars_hstacked <- insert_xaxis_grob(bt_bars_stacked_base + coord_flip() +
-                                        scale_y_continuous(expand = c(0, 0), position = "right") +
-                                        theme_minimal_vgrid(),
-                                      bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
+bt_bars_hstacked <- insert_xaxis_grob(
+  bt_bars_stacked_base + coord_flip() +
+    scale_y_continuous(expand = c(0, 0), position = "right") +
+    theme_dviz_vgrid() +
+    theme(plot.margin = margin(3, 0, 3, 3)),
+  bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
 
-plot_grid(bt_bars_stacked, plot_grid(NULL, bt_bars_hstacked, NULL, ncol = 1, rel_heights = c(1, 6, 7.5)),
-          rel_widths = c(4, 7), labels = "auto", label_fontface = "plain")
+plot_grid(bt_bars_stacked, plot_grid(NULL, bt_bars_hstacked, NULL,
+                                     ncol = 1, rel_heights = c(1, 6, 7.5)),
+          rel_widths = c(4, 7), labels = "auto")
 ```
 
 We can also take the bars from Figure \@ref(fig:bundestag-stacked-bars)a and place them side-by-side rather than stacking them on top of each other. This visualization makes it easier to perform a direct comparison of the three groups, though it obscures other aspects of the data (Figure \@ref(fig:bundestag-bars-side-by-side)). Most importantly, in a side-by-side bar plot the relationship of each bar to the total is not visually obvious.
 
 (ref:bundestag-bars-side-by-side) Party composition of the 8th German Bundestag, 1976--1980, visualized as side-by-side bars. As in Figure \@ref(fig:bundestag-stacked-bars), it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
-```{r bundestag-bars-side-by-side, fig.cap='(ref:bundestag-bars-side-by-side)'}
+```{r bundestag-bars-side-by-side, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:bundestag-bars-side-by-side)'}
 bt_bars <- ggplot(bundestag, aes(x = factor(party, levels = bundestag$party), y = seats, fill = party)) + 
   geom_col() + 
   geom_text(aes(label = seats), size = main_size, vjust = 2, color = c("white", "white", "black")) +
-  scale_x_discrete(expand = c(0, 0), name = "") +
+  scale_x_discrete(name = NULL) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = bundestag$colors[order(bundestag$party)], guide = "none") + 
   #geom_hline(yintercept = c(50, 100, 150, 200), color = "#ffffff70", size = .5) +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(axis.ticks.x = element_blank())
 
 bt_bars
@@ -171,6 +184,7 @@ market_pies <- ggplot(market_pies_df) +
   geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
                    start = start_angle, end = end_angle, fill = company), color = NA) +
   geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = company,
+                family = dviz_font_family,
                 hjust = hjust, vjust = vjust)) +
   coord_fixed() +
   facet_wrap(~year) +
@@ -178,7 +192,7 @@ market_pies <- ggplot(market_pies_df) +
   scale_y_continuous(limits = c(-1.2, 1.2), expand = c(0, 0),name = "", breaks = NULL, labels = NULL) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
   guides(fill = "none") +
-  theme_half_open() +
+  theme_dviz_open() +
   theme(axis.line.x = element_blank(),
         axis.title.x = element_blank(),
         axis.ticks.y = element_blank(),
@@ -199,7 +213,8 @@ stacked_bars <- ggplot(marketshare, aes(x = year, y = percent, fill = company)) 
   geom_col(position = "stack") + 
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(14, 7, 3, 0))
 
 stamp_bad(stacked_bars)
 ```
@@ -214,7 +229,7 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
   facet_wrap(~year) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4), guide = "none") + 
-  theme_half_open() +
+  theme_dviz_open() +
   theme(strip.background = element_blank())
 ```
 
@@ -225,7 +240,7 @@ In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend seq
 
 (ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org.
 
-```{r women-parliament, fig.width = 7.5, fig.asp = .55, fig.cap = '(ref:women-parliament)'}
+```{r women-parliament, fig.width = 6, fig.asp = .55, fig.cap = '(ref:women-parliament)'}
 ccode = "RWA" # Rwanda
 #ccode = "BEL" # Belgium
 #ccode = "ARB" # Arab world
@@ -245,12 +260,12 @@ plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_fill_manual(values = c("#D55E00E0", "#0072B2E0"), guide = "none") +
-    theme_half_open() + 
+    theme_dviz_open() + 
     theme(#axis.ticks.y = element_blank(),
           #axis.ticks.x = element_blank(),
-          axis.line.x = element_blank(),
-          axis.line.y = element_blank())
-    #theme_minimal_hgrid() + background_grid(major = "none", minor = "none")
+          #axis.line.x = element_blank(),
+          axis.line.y = element_blank(),
+          plot.margin = margin(14, 0, 3, 0))
 
 # calculate label position
 labels <- filter(women_rwanda, year == max(year)) %>%
@@ -258,9 +273,10 @@ labels <- filter(women_rwanda, year == max(year)) %>%
 
 yax <- axis_canvas(plot_base, axis = "y") +
   geom_text(data = labels, aes(y = pos, label = paste0(" ", gender)),
+            family = dviz_font_family,
             x = 0, hjust = 0, size = 14/.pt)
 
-ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.1, "null")))
+ggdraw(insert_yaxis_grob(plot_base, yax, grid::unit(.15, "null")))
 
 ```
 
@@ -285,12 +301,12 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
                      labels = c(0, 25, 50, 75, 100)) + 
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
-  theme_half_open() + 
+  theme_dviz_open() + 
   theme(#axis.ticks.y = element_blank(),
         #axis.ticks.x = element_blank(),
         axis.line.x = element_blank(),
         axis.line.y = element_blank(),
-        plot.margin = margin(7, 10, 7, 7))
+        plot.margin = margin(7, 7, 3, 0))
 
 df_marital <- select(happy, age, marital) %>%
   na.omit() %>%
@@ -304,11 +320,11 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
                      labels = c(0, 25, 50, 75, 100)) + 
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
-  theme_half_open() + 
+  theme_dviz_open() + 
   theme(#axis.ticks.y = element_blank(),
         axis.line.x = element_blank(),
         axis.line.y = element_blank(),
-        plot.margin = margin(7, 10, 7, 7))
+        plot.margin = margin(7, 7, 3, 0))
 
 p_aligned <- align_plots(p_health, p_marital, align = 'v')
 ggdraw(p_aligned[[1]])
@@ -331,7 +347,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
         legend.position = "bottom",
         legend.justification = "right",
@@ -361,7 +377,7 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
   scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(values = c("#b3b3b3a0", "#2b8cbed0"), name = "") +
-  theme_minimal_hgrid() +
+  theme_dviz_hgrid() +
   theme(strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
         legend.position = "bottom",
         legend.justification = "right",

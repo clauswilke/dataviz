@@ -165,14 +165,15 @@ When we perform this procedure for the student grades distribution from the begi
 
 (ref:student-grades-qq) q-q plot of student grades.
 
-```{r student-grades-qq, fig.width = 5, fig.asp = 0.9, fig.cap='(ref:student-grades-qq)'}
+```{r student-grades-qq, fig.width = 5, fig.asp = .98, fig.cap='(ref:student-grades-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(student_data$points, "normal")$estimate)
 ggplot(student_data, aes(sample = points)) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
-  scale_x_continuous(breaks = 10*(5:10)) +
-  scale_y_continuous(name = "observed", breaks = 10*(5:10)) +
+  scale_x_continuous(limits = c(43, 107), expand = c(0, 0), breaks = 10*(5:10)) +
+  scale_y_continuous(limits = c(43, 102), expand = c(0, 0), breaks = 10*(5:10), name = "observed") +
+  coord_fixed() +
   theme_dviz_open()
 ```
 
@@ -183,14 +184,15 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 
 (ref:county-populations-qq) q-q plot of the logarithm of the number of inhabitants in US counties.
 
-```{r county-populations-qq, fig.width = 5, fig.asp = 0.9, fig.cap='(ref:county-populations-qq)'}
+```{r county-populations-qq, fig.width = 5, fig.asp = 1, fig.cap='(ref:county-populations-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(log(US_census$pop2010), "normal")$estimate)
 ggplot(US_census, aes(sample = log(pop2010))) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
-  scale_x_continuous(breaks = 5+2.5*(0:4)) +
-  scale_y_continuous(name = "observed", breaks = 5+2.5*(0:4)) +
+  scale_x_continuous(limits = c(4, 16.5), expand = c(0, 0), breaks = 5+2.5*(0:4)) +
+  scale_y_continuous(limits = c(4, 16.5), expand = c(0, 0), name = "observed", breaks = 5+2.5*(0:4)) +
+  coord_fixed() + 
   theme_dviz_open()
 ```
 
