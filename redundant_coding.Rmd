@@ -42,11 +42,11 @@ iris_scatter <- iris_scatter_base +
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
                                         height = 0.01 * diff(range(iris$Sepal.Width)),
                                         seed = 3942)) +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = unit(3.5, "pt"),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(7, 7, 3, 0))
 
 stamp_bad(iris_scatter)
 ```
@@ -61,14 +61,14 @@ iris_scatter_small <- iris_scatter_base +
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
                                         height = 0.01 * diff(range(iris$Sepal.Width)),
                                         seed = 3942)) +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = grid::unit(3, "pt"),
-        plot.margin = margin(24, 6, 6, 6))
+        plot.margin = margin(24, 6, 6, 0))
 
 cvd_sim2(iris_scatter_small,
-         scale = 1, label_x = 0.03)
+         scale = 1, label_x = 0.)
 ```
 
 There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-one-shape) to alleviate these issues. First, we can swap the colors used for *Iris setosa* and *Iris versicolor*, so that the blue is no longer directly next to the green (Figure \@ref(fig:iris-scatter-three-shapes)). Second, we can use three different symbol shapes, so that the points all look different. With these two changes, both the original version of the figure (Figure \@ref(fig:iris-scatter-three-shapes)) and the versions under color-vision-deficiency and in grayscale (Figure \@ref(fig:iris-scatter-three-shapes-cvd)) become legible.
@@ -100,13 +100,13 @@ iris_scatter2 <- iris_scatter2_base +
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
                                         height = 0.01 * diff(range(iris$Sepal.Width)),
                                         seed = 3942)) +
-  theme_minimal_grid() +
+  theme_dviz_grid() +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = unit(3.5, "pt"),
-        plot.margin = margin(7, 14, 7, 7))
+        plot.margin = margin(7, 7, 3, 0))
 
-stamp_phantom(iris_scatter2)
+iris_scatter2
 ```
 
 
@@ -118,14 +118,14 @@ iris_scatter2_small <- iris_scatter2_base +
              position = position_jitter(width = 0.01 * diff(range(iris$Sepal.Length)),
                                         height = 0.01 * diff(range(iris$Sepal.Width)),
                                         seed = 3942)) +
-  theme_minimal_grid(12) + 
+  theme_dviz_grid(12) + 
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = grid::unit(3, "pt"),
-        plot.margin = margin(24, 6, 6, 6))
+        plot.margin = margin(24, 6, 6, 0))
 
 cvd_sim2(iris_scatter2_small,
-         scale = 1, label_x = 0.03)
+         scale = 1, label_x = 0.)
 ```
 
 Changing the point shape is a simple strategy for scatter plots but it doesn't necessarily work for other types of plots. In line plots, we could change the line type (solid, dashed, dotted, etc., see also Figure \@ref(fig:common-aesthetics)), but using dashed or dotted lines often yields sub-optimal results. In particular, dashed or dotted lines usually don't look good unless they are perfectly straight or only gently curved, and in either case they create visual noise. Also, it frequently requires significant mental effort to match different types of dash or dot--dash patterns from the plot to the legend. So what do we do with a visualization such as Figure \@ref(fig:tech-stocks-bad-legend), which uses lines to show the change in stock price over time for four different major tech companies?
@@ -146,7 +146,9 @@ price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = 
                      limits = c(0, 560),
                      expand = c(0,0))
 
-stamp_bad(price_plot_base + theme_minimal_hgrid())
+stamp_bad(price_plot_base + 
+            theme_dviz_hgrid() + 
+            theme(plot.margin = margin(3, 7, 3, 0)))
 ```
 
 
@@ -170,7 +172,9 @@ price_plot_base_good <- ggplot(tech_stocks, aes(x = date, y = price_indexed, col
                      limits = c(0, 560),
                      expand = c(0,0))
 
-stamp_phantom(price_plot_base_good + theme_minimal_hgrid())
+price_plot_base_good +
+  theme_dviz_hgrid() + 
+  theme(plot.margin = margin(3, 7, 3, 0))
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -183,8 +187,8 @@ Matching the legend order to the data order is always helpful, but the benefits 
 (ref:tech-stocks-good-legend-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:tech-stocks-good-legend).
 
 ```{r tech-stocks-good-legend-cvd, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:tech-stocks-good-legend-cvd)'}
-cvd_sim2(price_plot_base_good + theme_minimal_hgrid(12) + theme(plot.margin = margin(18, 6, 6, 6)),
-         scale = 1, label_x = 0.03)
+cvd_sim2(price_plot_base_good + theme_dviz_hgrid(12) + theme(plot.margin = margin(18, 6, 6, 0)),
+         scale = 1, label_x = 0.)
 ```
 
 
@@ -197,16 +201,17 @@ The general strategy we can employ is called *direct labeling*, whereby we place
 (ref:tech-stocks-good-no-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
 
 ```{r tech-stocks-good-no-legend, fig.cap = '(ref:tech-stocks-good-no-legend)'}
-price_plot <- price_plot_base_good + theme_minimal_hgrid()
+price_plot <- price_plot_base_good + theme_dviz_hgrid()
 
 yann <- axis_canvas(price_plot, axis = "y") +
   geom_text(data = filter(tech_stocks, date == "2017-06-02"),
             aes(y = price_indexed, label = paste0(" ", company)),
+            family = dviz_font_family,
             x = 0, hjust = 0, size = 12/.pt)
 
 price_plot_ann <- insert_yaxis_grob(price_plot + theme(legend.position = "none"), yann,
                                     width = grid::unit(0.3, "null"))
-stamp_phantom(price_plot_ann)
+ggdraw(price_plot_ann)
 ```
 
 
@@ -237,7 +242,7 @@ iris_scatter3 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Spe
     geom_text(data = label_df,
               aes(x = Sepal.Length, y = Sepal.Width, label = label, color = Species,
                   hjust = hjust, vjust = vjust),
-              size = 12/.pt,
+              family = dviz_font_family, size = 12/.pt,
               fontface = "italic",
               inherit.aes = FALSE) +
     scale_shape_manual(values = c(21, 22, 23),
@@ -255,7 +260,7 @@ iris_scatter3 <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, shape = Spe
                        name = "sepal length") +
     scale_y_continuous(limits = c(1.9, 4.6), expand = c(0, 0),
                        name = "sepal width") +
-    theme_half_open()
+    theme_dviz_open()
 
 iris_scatter3
 ```
@@ -285,7 +290,7 @@ iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species, c
   geom_text(data = iris_max, aes(label = label, hjust = hjust, vjust = vjust, color = Species,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y), 
-            size = 12/.pt,
+            family = dviz_font_family, size = 12/.pt,
             inherit.aes = FALSE,
             fontface = "italic") +
   scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
@@ -296,7 +301,7 @@ iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species, c
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_minimal_hgrid()
+  theme_dviz_hgrid()
   
 iris_p
 ```
@@ -329,7 +334,7 @@ xdens <- axis_canvas(iris_scatter2, axis = "x") +
   geom_text(data = iris_max, aes(label = label, hjust = hjust, vjust = vjust, color = Species,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y),
-            size = 11/.pt, 
+            family = dviz_font_family, size = 11/.pt, 
             #color = "black", inherit.aes = FALSE,
             fontface = "italic") +
   scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
@@ -375,7 +380,7 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
   xlab("mean temperature (°F)") +
   guides(fill = "none") +
-  theme_ridges(center = TRUE, grid = TRUE) +
+  theme_ridges(center = TRUE, grid = TRUE, font_family = dviz_font_family) +
   theme(axis.title.y = element_blank())
 
 # x axis labels
@@ -391,7 +396,7 @@ xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
                           aes(x = temp, y = 1.1, height = .9, fill = temp),
                           color = "transparent") +
   geom_text(data = temps, aes(x = temp, label = temp),
-            color = "black",
+            color = "black", family = dviz_font_family,
             y = 0.9, hjust = 0.5, vjust = 1, size = 14/.pt) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0)
 

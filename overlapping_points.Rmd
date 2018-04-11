@@ -29,8 +29,9 @@ p_mpg_solid <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open() +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(p_mpg_solid)
 ```
@@ -52,10 +53,11 @@ p_mpg_transp <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open() +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(p_mpg_transp)
+p_mpg_transp
 ```
 
 However, making points partially transparent is not always sufficient to solve the issue of overplotting. For example, even though we can see in Figure \@ref(fig:mpg-cty-displ-transp) that some points have a darker shade than others, it is difficult to estimate how many points were plotted on top of each other in each location. In addition, while the differences in shading are clearly visible, they are not self-explanatory. A reader who sees this figure for the first time will likely wonder why some points are darker than others and will not realize that those points are in fact multiple points stacked on top of each other. A simple trick that helps in this situation is to apply a small amount of jitter to the points, i.e., to displace each point randomly by a small amount in either the *x* or the *y* direction or both. With jitter, it is immediately apparent that the darker areas arise from points that are plotted on top of each other (Figure \@ref(fig:mpg-cty-displ-jitter)).
@@ -78,10 +80,11 @@ p_mpg_jitter <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open() +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(p_mpg_jitter)
+p_mpg_jitter
 ```
 
 One downside of jittering is that it does change the data and therefore has to be performed with care. If we jitter too much, we end up placing points in locations that are not representative of the underlying dataset. The result is a misleading visualization of the data. See Figure \@ref(fig:mpg-cty-displ-jitter-extreme) as an example.
@@ -104,8 +107,9 @@ p_mpg_jitter_extreme <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = 
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme_half_open() +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(p_mpg_jitter_extreme)
 ```
@@ -124,7 +128,8 @@ p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (
   geom_abline(slope = 0, intercept = 0, color="grey80") +
   scale_x_time(breaks = hm(breaks_x),
                labels = breaks_x) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
   
 p_flights_scatter <- p_flights_base + geom_point(alpha = 0.2)
 
@@ -142,7 +147,8 @@ p_flights_2d_bins <- p_flights_base +
   geom_bin2d(bins=50) +
   scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
   theme(legend.position = c(0.85, .85))
-stamp_phantom(p_flights_2d_bins)
+
+p_flights_2d_bins
 ```
 
 
@@ -156,7 +162,8 @@ p_flights_hex_bins <- p_flights_base +
   geom_hex(bins=50) +
   scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
   theme(legend.position = c(0.85, .85))
-stamp_phantom(p_flights_hex_bins)
+
+p_flights_hex_bins
 ```
 
 
@@ -181,7 +188,7 @@ p_midwest_base <- ggplot(county_midwest, aes(area, pop2010)) +
                 limits = c(50, 7000), expand = c(0, 0)) +
   ylab("population total") +
   xlab("area (square miles)") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 
 p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7)
 ```

@@ -26,8 +26,9 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
                                                              color = "black")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_half_open() +
-  background_grid(major = "y", minor = "none")
+  theme_dviz_open() +
+  background_grid(major = "y", minor = "none") +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(h3_bad)
 ```
@@ -38,10 +39,11 @@ stamp_bad(h3_bad)
 h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, fill = "#56B4E9")  + 
   scale_y_continuous(limits = c(0, 86), expand = c(0, 0), breaks = 25*(0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
-  theme_half_open() +
-  background_grid(major = "y", minor = "none")
+  theme_dviz_open() +
+  background_grid(major = "y", minor = "none") +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_phantom(h3_good)
+h3_good
 ```
 
 Next, let's take a look at an old-school density plot. I'm showing density estimates for the sepal-length distributions of three species of iris, drawn entirely in black-and-white as a line drawing (Figure \@ref(fig:iris-densities-lines)). The distributions are shown just by their outlines, and because the figure is in black-and-white, we're using different line styles to distinguish them. This figure has two main problems. First, the dashed line styles do not provide a clear separation between the area under the curve and the area above it. While our visual system is quite good at connecting the individual line elements into a continuous line, the dashed lines nevertheless look porous and do not serve as a strong boundary of the enclosed area. Second, because the lines intersect and the areas they enclose are not shaded, we can perceive six different distinct shapes and we need to expend some additional mental energy to merge the correct shapes together. This effect would have been even stronger had I used solid rather than dashed lines for all three distributions.
@@ -68,13 +70,15 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y),
+            family = dviz_font_family,
             inherit.aes = FALSE, size = 12/.pt) +
   scale_linetype_manual(values = c(1, 3, 4),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_bad(iris_lines)
 ```
@@ -89,13 +93,15 @@ iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y),
+            family = dviz_font_family,
             inherit.aes = FALSE, size = 12/.pt) +
   scale_color_manual(values = c("#56B4E9", "#E69F00", "#009E73"),
                     breaks = c("virginica", "versicolor", "setosa"),
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 stamp_ugly(iris_colored_lines)
 ```
@@ -109,6 +115,7 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   geom_text(data = iris_max, aes(label = Species, hjust = hjust, vjust = vjust,
                                  x = Sepal.Length + nudge_x, 
                                  y = density + nudge_y),
+            family = dviz_font_family,
             inherit.aes = FALSE, size = 12/.pt) +
   scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
                     breaks = c("virginica", "versicolor", "setosa"),
@@ -118,9 +125,10 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
                     guide = "none") +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_half_open()
-  
-stamp_phantom(iris_filled)
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
+
+iris_filled
 ```
 
 Line drawings also arise in the context of scatter plots, when different point types are drawn as open circles, triangles, crosses, etc. As an example, consider Figure \@ref(fig:mpg-linespoints). The figure contains a lot of visual noise, and the different point types do not strongly separate from each other. Drawing the same figure with solidly colored shapes addresses this issue (Figure \@ref(fig:mpg-filledpoints)).
@@ -139,7 +147,10 @@ mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
                      name="drive train",
                      breaks=c("f", "r", "4"),
                      labels=c("FWD", "RWD", "4WD")) +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
+
 stamp_bad(mpg_linespoints)
 ```
 
@@ -166,10 +177,11 @@ mpg_filledpoints <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv,
                      name = "drive train",
                      breaks = c("f", "r", "4"),
                      labels = c("FWD", "RWD", "4WD")) +
-  theme_half_open() +
-  theme(legend.position = c(.7, .8))
+  theme_dviz_open() +
+  theme(legend.position = c(.7, .8),
+        plot.margin = margin(3, 7, 3, 0))
         
-stamp_phantom(mpg_filledpoints)
+mpg_filledpoints
 ```
 
 I strongly prefer solid points over open points, because the solid points have much more visual presence. The argument that I sometimes hear in favor of open points is that they help with overplotting, since the empty areas in the middle of each point allow us to see other points that may be lying underneath. In my opinion, the benefit from being able to see overplotted points does not, in general, outweigh the detriment from the added visual noise of open symbols. There are other approaches for dealing with overplotting, see Chapter \@ref(overlapping-points) for some suggestions.
@@ -195,7 +207,9 @@ lincoln_weather %>% mutate(month_short = fct_recode(Month,
   mutate(month_short = fct_rev(month_short)) -> lincoln_df
 
 lincoln_box_empty <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot() + xlab("Month")
+  geom_boxplot() + xlab("Month") +
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 lincoln_box_empty
 ```
@@ -205,7 +219,9 @@ lincoln_box_empty
 
 ```{r lincoln-weather-box-filled, fig.cap='(ref:lincoln-weather-box-filled)'}
 lincoln_box_filled <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot(fill = 'grey90') + xlab("Month")
+  geom_boxplot(fill = 'grey90') + xlab("Month") +
+  theme_dviz_open() +
+  theme(plot.margin = margin(3, 7, 3, 0))
 
 lincoln_box_filled
 ```
