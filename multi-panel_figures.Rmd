@@ -192,11 +192,11 @@ plot_grid(p1, p2, labels = "auto", rel_widths = c(1.2, 1), align = 'h')
 
 When labeling the different panels of a compound figure, pay attention to how the labels fit into the overall figure design. I often see figures where the labels loock like they were slapped onto the figure after the fact by a different person. It's not uncommon to see labels made overly large and prominent, placed in an awkward location, or typeset in a different font than the rest of the figure. (See Figure \@ref(fig:BA-degrees-compound-bad) for an example.) The labels should not be the first thing you see when you look at a compound figure. In fact, they don't need to stand out at all. We generally know which figure panel has which label, since the  convention is to start in the top-left corner with "a" and label consecutively left to right and top to bottom. I think of these labels as equivalent to page numbers. You don't normally read the page numbers, and there is no surprise in which page has which number, but on occasion it can be helpful to use page numbers to refer to a particular place in a book or article.
 
-(ref:BA-degrees-compound-bad) A variant of Figure \@ref(fig:BA-degrees-compound) with poor labeling. The labels are too large and thick, they are in the wrong font, and they are placed in an awkward location. Also, while labeling with capital letters is fine and is in fact quite common, labeling needs to be consistent across all figures in a document. In this book, the convention is that multi-panel figures use lower lower-case labels, and thus this figure is inconsistent with the other figures in this book.
+(ref:BA-degrees-compound-bad) Variation of Figure \@ref(fig:BA-degrees-compound) with poor labeling. The labels are too large and thick, they are in the wrong font, and they are placed in an awkward location. Also, while labeling with capital letters is fine and is in fact quite common, labeling needs to be consistent across all figures in a document. In this book, the convention is that multi-panel figures use lower lower-case labels, and thus this figure is inconsistent with the other figures in this book.
 
 ```{r BA-degrees-compound-bad, fig.asp = 0.4, fig.width = 8.5, fig.cap = '(ref:BA-degrees-compound-bad)'}
 stamp_ugly(plot_grid(p1, p2, labels = "AUTO", rel_widths = c(1.2, 1), align = 'h',
-                     label_fontfamily = "Helvetica", label_fontface = "bold",
+                     label_fontfamily = "Palatino", label_fontface = "bold",
                      label_x = 0.8,
                      label_y = 0.2,
                      label_size = 23))
@@ -225,7 +225,7 @@ p1 <- ggplot(athletes_df, aes(x = sex)) +
   scale_x_discrete(name = NULL, labels = c("female", "male")) +
   theme_dviz_hgrid(12, rel_small = 1) + 
   theme(axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
+        #axis.ticks.length = grid::unit(0, "pt"),
         plot.margin = margin(3, 6, 0, 0))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
@@ -250,7 +250,7 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill =
 p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
   draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
             family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 12, 0))
+  theme(plot.margin = margin(0, 0, 6, 0))
 
 p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
                               fill = fct_relevel(sex, "m"))) + 
@@ -264,7 +264,8 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m
   theme_dviz_hgrid(12, rel_small = 1) +
   theme(axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"))
+        #axis.ticks.length = grid::unit(0, "pt")
+        )
 
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
             theme(plot.margin = margin(6, 12, 0, 0)))
@@ -283,7 +284,7 @@ p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) +
   theme_dviz_hgrid(12, rel_small = 1) + 
   theme(#axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
+        #axis.ticks.length = grid::unit(0, "pt"),
         plot.margin = margin(3, 6, 0, 0))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
@@ -297,7 +298,7 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
 p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
   draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
             family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 12, 0))
+  theme(plot.margin = margin(0, 0, 6, 0))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -315,10 +316,64 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
   theme_dviz_hgrid(12, rel_small = 1) +
   theme(axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
-        axis.ticks.length = grid::unit(0, "pt"),
+        #axis.ticks.length = grid::unit(0, "pt"),
         legend.position = c(1., 0.9),
         legend.justification = "right")
 
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
             theme(plot.margin = margin(6, 12, 0, 0))
+```
+
+Finally, we need to pay attention to the alignment of individual figure panels in a compound figure. The axes and other graphical elements of the individual panels should all be aligned to each other. Getting the alignment right can be quite tricky, in particular if individual panels are prepared separately, possibly by different people and/or in different programs, and then pasted together in an image manipulation program. To draw your attention to such alignment issues, Figure \@ref(fig:athletes-composite-misaligned) shows a variation of Figure \@ref(fig:athletes-composite-good) where now all figure elements are slightly out of alignment. I have added axis lines to all panels of Figure \@ref(fig:athletes-composite-misaligned) to emphasize these alignment problems. Notice how no axis line is aligned with any other axis line for any other panel of the figure.
+
+(ref:athletes-composite-misaligned) Variation of Figure \@ref(fig:athletes-composite-good) where all figure panels are slightly misaligned. Misalignments are ugly and should be avoided.
+
+```{r athletes-composite-misaligned, fig.asp = 0.75, fig.cap = '(ref:athletes-composite-misaligned)'}
+p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) + 
+  geom_bar() +
+  scale_y_continuous(limits = c(0, 95), expand = c(0, 0), name = "number") +
+  scale_x_discrete(name = NULL, labels = c("female", "male")) +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+  theme_dviz_open(12, rel_small = 1) +
+  background_grid(major = "y") +
+  theme(#axis.line.x = element_blank(),
+        #axis.ticks.x = element_blank(),
+        #axis.ticks.length = grid::unit(0, "pt"),
+        plot.margin = margin(3, 6, 6, 0))
+
+p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
+  geom_point(pch = 21, color = "white", size = 2.5) +
+  scale_x_continuous(limits = c(3.8, 6.75), name = "RBC count") +
+  scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
+  scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+  theme_dviz_open(12, rel_small = 1) +
+  background_grid(major = "y") +
+  theme(plot.margin = margin(3, 18, 0, 0))
+
+p_row <- plot_grid(NULL, p1, p2, labels = c("", "a", "b"), nrow = 1,
+                   rel_widths = c(0.03, 0.7, 1))
+
+GeomBP <- GeomBoxplot
+GeomBP$draw_key <- draw_key_polygon
+
+p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) + 
+  stat_boxplot(width = 0.5, geom = GeomBP) +
+  scale_color_manual(values = c("#D55E00", "#0072B2"), name = NULL,
+                     labels = c("female   ", "male")) +
+  scale_fill_manual(values = c("#D55E0040", "#0072B240"), guide = "none") +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = "% body fat") +
+  guides(color = guide_legend(override.aes = list(fill = c("#D55E00D0", "#0072B2D0"),
+                                                  color = "white", size = 2),
+                              direction = "horizontal")) +
+  theme_dviz_open(12, rel_small = 1) +
+  background_grid(major = "y") +
+  theme(#axis.line.x = element_blank(),
+        #axis.ticks.x = element_blank(),
+        #axis.ticks.length = grid::unit(0, "pt"),
+        legend.position = c(1., 0.9),
+        legend.justification = "right")
+
+stamp_ugly(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
+            theme(plot.margin = margin(6, 12, 0, 0)))
 ```
