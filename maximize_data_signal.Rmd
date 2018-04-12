@@ -25,9 +25,15 @@ price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
                expand=c(0,0)) + 
   scale_y_continuous(name="stock price, indexed",
                      limits = c(0, 560),
-                     expand=c(0,0))
+                     expand=c(0,0)) +
+  theme_dviz_grid() +
+  theme(panel.background = element_rect(fill = "grey90"),
+        panel.grid.major = element_line(color = "white"),
+        panel.grid.minor = element_line(color = "white", size = rel(0.5)),
+        axis.ticks = element_line(color = "black"),
+        plot.margin = margin(7, 7, 3, 0))
 
-stamp_ugly(price_plot + theme_gray(12))
+stamp_ugly(price_plot)
 ```
 
 
@@ -36,7 +42,9 @@ We could try to remove the grid altogether, but I think that is a worse option (
 (ref:price-plot-no-grid) Indexed stock price over time for four major tech companies.
 
 ```{r price-plot-no-grid, fig.cap='(ref:price-plot-no-grid)'}
-stamp_bad(price_plot + theme_half_open())
+stamp_bad(price_plot + 
+            theme_dviz_open() +
+            theme(plot.margin = margin(7, 7, 3, 0)))
 ```
 
 (ref:price-plot-refline) Indexed stock price over time for four major tech companies.
@@ -55,9 +63,10 @@ price_plot2 <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   scale_y_continuous(name="stock price, indexed",
                      limits = c(0, 560),
                      expand=c(0,0)) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 
-stamp_phantom(price_plot2)
+price_plot2
 ```
 
 Alternatively, we can use just a minimal grid. In particular, for a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin (Figure \@ref(fig:price-plot-hgrid)).
@@ -65,7 +74,8 @@ Alternatively, we can use just a minimal grid. In particular, for a plot where w
 (ref:price-plot-hgrid) Indexed stock price over time for four major tech companies.
 
 ```{r price-plot-hgrid, fig.cap='(ref:price-plot-hgrid)'}
-stamp_phantom(price_plot + theme_minimal_hgrid())
+price_plot + theme_dviz_hgrid() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
 For such a minimal grid, we generally draw the lines orthogonally to direction along which the numbers of interest vary. Therefore, if instead of plotting the stock price over time we plot the five-year increase, as horizontal bars, then we will want to use vertical lines instead (Figure \@ref(fig:price-increase)).

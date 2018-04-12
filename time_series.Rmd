@@ -16,7 +16,8 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_point(color = "#0072B2") +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
 ```{r}
@@ -24,7 +25,8 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
 ```{r}
@@ -33,7 +35,8 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
 ```{r}
@@ -46,7 +49,8 @@ ggplot(biorxiv_growth, aes(date, count)) +
                            "1000", ""), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL) +
-  theme_half_open()
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
 While individual dots are fine for a single time course, they don't work well when there are multiple ones.
@@ -68,10 +72,11 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
                      name = NULL) +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
-  theme_half_open() +
+  theme_dviz_open() +
   theme(legend.title.align = 0.5,
         legend.position = c(0.1, .9),
-        legend.just = c(0, 1))
+        legend.just = c(0, 1),
+        plot.margin = margin(14, 7, 3, 0))
 
 stamp_bad(p)
 ```
@@ -89,10 +94,11 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
                      name = NULL) +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
-  theme_half_open() +
+  theme_dviz_open() +
   theme(legend.title.align = 0.5,
         legend.position = c(0.1, .9),
-        legend.just = c(0, 1))
+        legend.just = c(0, 1),
+        plot.margin = margin(14, 7, 3, 0))
 
 p
 ```
@@ -114,11 +120,12 @@ p <- ggplot(preprints, aes(date, count, color = archive)) +
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01")),
                expand = expand_scale(mult = c(0.05, 0))) +
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73")) +
-  theme_half_open() +
+  theme_dviz_open() +
   theme(legend.position = "none") +
   theme(axis.line.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
-        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
+        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)),
+        plot.margin = margin(14, 7, 3, 0))
 
 p
 ```
