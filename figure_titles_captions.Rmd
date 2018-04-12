@@ -33,7 +33,7 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
     geom_point(aes(color = region, fill = region),
                size = 2.5, alpha = 0.5) + 
     geom_text_repel(aes(label = label), color = "black", size = 10/.pt,
-                    point.padding = 0.5, box.padding = .4, force = .5,
+                    point.padding = 0.1, box.padding = .6, force = 1.,
                     min.segment.length = 0,
                     family = dviz_font_family) +
     scale_color_OkabeIto(name = NULL, order = c(1:5, 8)) +
