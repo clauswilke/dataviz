@@ -1,6 +1,8 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(tidyr)
 ```
 
 # Don't go 3D {#no-3d}
@@ -30,7 +32,10 @@ stamp_bad(ggdraw() + draw_image("figures/3d/titanic-3d-bars-assembled.png"))
 
 ## 3D position scales
 
-A seemingly more appropriate use of 3D is using three position scales (*x*, *y*, and *z*).
+A seemingly more appropriate use of 3D is using three position scales (*x*, *y*, and *z*). In this case, the use of the third dimension is not gratuitous but actually serves a purpose. However, the resulting plots are frequently difficult to interpret. 
+
+As our first example, we will consider a 3D scatter plot. **some more text here.**
+Even though we can see this 3D visualization from four different perspectives, it is difficult to envision how exactly the points are distributed in space. I find Figure \@ref(fig:mtcars-3d)d particularly confusing. It almost doesn't seem to show the same data as the other plots, even though nothing has changed other than the angle from which we look at the data.
 
 (ref:mtcars-3d) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
 
@@ -74,8 +79,11 @@ plot_grid(pfun(30, 20), pfun(-30, 20),
           label_fontface = "plain", label_fontfamily = dviz_font_family)
 ```
 
-(ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
+The fundamental problem with 3D visualizations is that they require two separate, successive data transformations. The first transformation maps the data from the data space into the 3D visualization space, as discussed in Chapters \@ref(aesthetic-mapping) and \@ref(coordinate-systems-axes) in the context of position scales. The second maps the data from the 3D visualization space into the 2D space of the final figure, since most data visualizations are ultimately displayed in two dimensions. (This objection obviously does not apply to 3D visualizations in a true 3D environment, such as when shown on a VR display or when produced as physical sculptures or 3D printed objects.) The second transformation is non-invertible, because each point on the 2D display corresponds to a line of points in the 3D visualization space. Therefore, we cannot uniquely determine where in 3D space any particular data point lies.
 
+Our visual system nevertheless attempts to invert the 3D to 2D transformation, as it tries to reconstruct a 3D scene from the 2D image it sees. However, this process is unreliable, fraught with error, and highly dependent on appropriate cues in the image that convey some sense of three-dimensionality. When we remove these cues the inversion becomes entirely impossible. This can be seen in Figure \@ref(fig:mtcars-3d-no-axes), which is identical to Figure \@ref(fig:mtcars-3d) except all depth cues have been removed. The result is four random arrangements of points that we cannot interpret at all and that aren't even easily relatable to each other. Could you tell which points in part (a) correspond to which points in part (b)? I certainly can not.
+
+(ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
 
 ```{r mtcars-3d-no-axes, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d-no-axes)'}
 pfun2 <- function(theta = 30, phi = 20) {
@@ -101,6 +109,9 @@ plot_grid(pfun2(30, 20), pfun2(-30, 20),
           label_fontface = "plain", label_fontfamily = dviz_font_family)
 
 ```
+
+Instead of stacking two separate data transformations, one of which is non-invertible, I think it is generally better to just apply one transformation and map the data directly into 2D space, as I have done throughout the preceding chapters. *talk about lack of need for 3D, have more dimensions than just x and y anyways.*
+
 
 (ref:mtcars-2d-multiple) Fuel efficiency versus displacement and power. Data source: *Motor Trend,* 1974.
 
@@ -145,20 +156,95 @@ p <- ggplot(mtcars, aes(x = disp, y = hp, size = mpg, fill = factor(cyl))) +
 ggdraw(align_legend(p))
 ```
 
+One might wonder whether the problem with 3D scatter plots is that the actual data representation, the dots, do not themselves convey any 3D information. What happens, for example, if we use 3D bars instead? Figure \@ref(fig:VA-death-rates-3d) shows a typical dataset that one might visualize with 3D bars, the mortality rates in 1940 Virginia stratified by age group and by gender and housing location. We can see that indeed the 3D bars help with the visual perception, in the sense that it is unlikely that one might mistake a bar in the foreground for one in the background or vise versa. Nevertheless, the problems discussed in the context of Figure \@ref(fig:titanic-3d) exist here as well. It is difficult to judge exactly how tall the individual bars are, and it is also difficult to make direct comparisons. For example, was the mortality rate of urban females in the 65--69 age group higher or lower than that of urban males in the 60--64 age group?
+
+(ref:VA-death-rates-3d) Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons. This figure is labeled as bad because the 3D perspective makes the plot difficult to read. Data source: @Molyneaux-et-al-1947
+
+```{r VA-death-rates-3d, fig.width = 4.64, fig.asp = 0.8, fig.cap = '(ref:VA-death-rates-3d)'}
+pfun3 <- function() {
+
+  par(xpd = NA,
+      bg = "transparent",
+      mai = c(0.1, 0.1, 0, 0),
+      family = dviz_font_family_condensed
+  )
+
+  hist3D(x = 1:5, y = 1:4, z = VADeaths,
+         bty = "b2", phi = 20,  theta = -65,
+         xlab = "", ylab = "", zlab = "deaths / 1000",
+         col = "#56B4E9", border = darken("#56B4E9", .5), 
+         shade = 0.2,
+         ticktype = "detailed", space = .3, d = 2, cex.axis = 1e-9
+  )
+  # Use text3D to label x axis
+  text3D(x = 1:5, y = rep(0.5, 5), z = rep(3, 5),
+         labels = rownames(VADeaths),
+         add = TRUE, adj = -0.2)
+  # Use text3D to label y axis
+  text3D(x = rep(0., 3), y = rep(5, 3), z = 20*(1:3),
+         labels  = 20*(1:3),
+         add = TRUE, adj = -1.2)
+  # Use text3D to label z axis
+  text3D(x = rep(1, 4), y = 1:4, z = rep(0, 4),
+         labels  = colnames(VADeaths),
+         add = TRUE, adj = 1)
+}
+
+# Doesn't currently work, due to bug in gridGraphics. Revisit later.
+# For now, we do a work-around by rendering to png.
+#stamp_bad(pfun3)
+
+png("figures/VA-deaths.png", width = 4.64, height = 0.618*6, units = "in",
+    res = 600)
+pfun3()
+null <- dev.off()
+
+stamp_bad(ggdraw() +  draw_image("figures/VA-deaths.png"))
+```
+
+It is virtually always better to replace figures such as Figure \@ref(fig:VA-death-rates-3d) with Trellis plots, where the dataset is sliced along one of the variables shown along the *x* or *y* dimension in the 3D plot. For the Virginia mortality dataset, this type of visualization results in Figure \@ref(fig:VA-death-rates-Trellis). I consider this figure very clear and easy to interpret. It is immediately obvious that mortality rates were higher among men than among women, and also that urban males seem to have had higher mortality rates than rural males when no such trend is apparent for urban and rural females.
+
+(ref:VA-death-rates-Trellis) Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons.  Data source: @Molyneaux-et-al-1947
+
+```{r VA-death-rates-Trellis, fig.cap = '(ref:VA-death-rates-Trellis)'}
+df <- data.frame(VADeaths)
+df$age <- row.names(df)
+row.names(df) <- NULL
+df_long <- gather(df, type, rate, -age) %>%
+  mutate(type = case_when(type == "Urban.Male" ~ "urban male",
+                          type == "Urban.Female" ~ "urban female",
+                          type == "Rural.Male" ~ "rural male",
+                          type == "Rural.Female" ~ "rural female"))
+ggplot(df_long, aes(age, rate)) + 
+  geom_col(fill = "#56B4E9D0") + 
+  facet_wrap(~type) +
+  scale_y_continuous(name = "deaths / 1000", expand = c(0, 0)) +
+  scale_x_discrete(name = "age group") +
+  theme_dviz_hgrid()
+```
+
 ## Appropriate use of 3D visualizations
 
 Visualizations using 3D position scales can be appropriate, however. First, the issues described in the preceding section are of lesser concern if the visualization is interactive and can be rotated by the viewer, or alternatively, if it is shown in a VR or augmented reality environment where it can be inspected from multiple angles. Second, even if the visualization isn't interactive, showing it slowly rotating, as a movie, rather than as a static image from one perspective will allow the viewer to discern where in 3D space different graphical elements reside. The human brain is very good at reconstructing a 3D scene from a series of images taken from different angles, and the slow rotation of the graphic provides exactly these images.
 
+Finally, it makes sense to use 3D visualizations when we want to show actual 3D objects and/or data mapped onto them. For example, showing the topographic relief of a mountain as a 3D plot is a reasonable choice (Figure \@ref(fig:volcano-relief)). The same is true for a visualization of the evolutionary sequence conservation of a protein mapped onto its 3D structure (Figure \@ref(fig:protein-3d)). In either case, though, these visualizations would also be easier to interpret if they were shown as rotating animations. While this is not possible in traditional print publications, it can be done easily when posting figures on the web or when giving presentations.
 
-Appropriate uses:
+(ref:volcano-relief) Relief of Maungawhau (Mount Eden), a volcano in the city of Auckland, New Zealand. Data source: Ross Ihaka
 
-- Interactive visualizations where the figure can be rotated by the viewer
-- Animations where the figure is slowly rotating
-- VR or augmented reality visualizations
-- Data mapped onto inherently 3D objects (e.g., protein structures)
+```{r volcano-relief, fig.cap = '(ref:volcano-relief)'}
+par(xpd = NA,
+    bg = "transparent",
+    mai = c(0., 0., 0., 0.),
+    family = dviz_font_family_condensed
+)
 
-(ref:protein-3d) Patterns of evolutionary variation in a protein. Dark sites indicate conserved amino acids and light sites indicate variable amino acids.
+persp3D(z=volcano, col = sequential_hcl(10, palette = "Terrain 2"),
+        bty = "b2", shade = 0.15, colkey = FALSE, axes = FALSE,
+        ticktype = "detailed", expand = 0.6, phi = 20, theta = 40)
+```
 
+
+(ref:protein-3d) Patterns of evolutionary variation in a protein. The colored tube represents the backbone of the protein Exonuclease III from the bacterium *Escherichia coli* (Protein Data Bank identifier: 1AKO). The coloring indicates the evolutionary conservation of the individual sites in this protein, with dark coloring indicating conserved amino acids and light coloring indicating variable amino acids. Data source: @Marcos-Echave-2015
 
 ```{r protein-3d, fig.width = 4.5, fig.asp = (16+4)/19, fig.cap = '(ref:protein-3d)'}
 # Make legend via ggplot2
