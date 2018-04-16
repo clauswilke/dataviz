@@ -121,7 +121,7 @@ It is also important to think about the ordering of the individual panels in a T
 Always arrange the panels in a Trellis plot in a meaningful and logical order. 
 ```
 
-## Compound figures
+## Compound figures {#compound-figures}
 
 Not every figure with multiple panels fits the pattern of a Trellis plot. Sometimes we simply want to combine several independent panels into a combined figure that conveys one overarching point. In this case, we can take the indivdiual plots and arrange them in rows, columns, or other, more complex arrangements, and call the entire arrangement one figure. For an example, see Figure \@ref(fig:BA-degrees-compound), which continues the analysis of trends in Bachelor's degrees converred by U.S. institutions of higher learning. Panel (a) of Figure \@ref(fig:BA-degrees-compound) shows the growth in total number of degrees awarded from 1971 to 2015, a time span during which the number of degrees awarded approximately doubled. Panel (b) instead shows the change in the percent of degrees awarded over the same time period in the five most popular degree areas. We can see that social sciences, history, and education have experienced massive declines from 1971 to 2015, whereas business and health professions have seen substantial growth.
 
