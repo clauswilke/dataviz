@@ -60,46 +60,46 @@ Provides a basic intro to making maps.
 Part II: Principles of figure design
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  *Figure titles and captions* +
-Discusses when to use and not to use figure titles. For captioned
-figures, the titles are normally the first thing shown in the caption,
-and thus are not shown on top of the figure.
-2.  *Your axis labels are too small* +
+1.  *Your axis labels are too small* +
 Discusses the widespread problem of excessively small axis labels.
-3.  *Choosing the right axis settings* +
-Covers various aspects related to axis choice, including linear
-vs. logarithmic axes, as well as issues of axis expansion beyond the
-data range. Also takes up the topic of aspect ratio once again.
-4.  *Maximizing the data signal in visualizations* +
-Discusses the general principle of maximizing the ink used to convey
-information. Argues to avoid boxes and frames around figure parts. Also
-discusses when and how to use background grids and other guide lines in
-figures.
-5.  *The principle of proportional ink* +
+2.  *Choosing the right axis settings* +
+Covers various aspects related to axis choice, including linear vs.
+logarithmic axes, as well as issues of axis expansion beyond the data
+range. Also takes up the topic of aspect ratio once again.
+3.  *The principle of proportional ink* +
 Explains that the size of colored areas needs to be proportional to the
 data value they represent.
-6.  *Handling overlapping points* +
+4.  *Handling overlapping points* +
 Describes different strategies to handle the problems of overlapping
 points or large point clouds. These problems frequently arise in large
 datasets, and helpful strategies include using partially transparent
 points, 2d density plots, hex grids, or smoothers.
-7.  *Avoid line drawings* +
-Argues that filled shapes and solid colors are almost always preferable
-to shapes shown as outlines or with hatching or cross-hatching.
-8.  *Common pitfalls of color use* +
+5.  *Common pitfalls of color use* +
 Also contains a section on designing for colorblindness.
-9.  *Redundant coding* +
+6.  *Redundant coding* +
 Explains how to make sure that key information in the figure is provided
 in multiple, reduant ways, for example through color and location or
 color and direct labeling.
-10. *Multi-part figures* +
-Discusses issues that arise in multi-part figures, including proper
+7.  *Multi-panel figures* +
+Discusses issues that arise in multi-panel figures, including proper
 labeling, alignment between subfigures, shared legends, and overly
-complex multi-part figures.
-11. *Don’t go 3d* +
+complex multi-panel figures.
+8.  *Figure titles and captions* +
+Discusses when to use and not to use figure titles. For captioned
+figures, the titles are normally the first thing shown in the caption,
+and thus are not shown on top of the figure.
+9.  *Avoid line drawings* +
+Argues that filled shapes and solid colors are almost always preferable
+to shapes shown as outlines or with hatching or cross-hatching.
+10. *Maximizing the data signal in visualizations* +
+Discusses the general principle of maximizing the ink used to convey
+information. Argues to avoid boxes and frames around figure parts. Also
+discusses when and how to use background grids and other guide lines in
+figures.
+11. *Don't go 3D* +
 Argues why 3d plots are generally problematic (figures are fundamentally
-a 2d medium, and in 3d plots data is subjected to an additional,
-non-obvious transformation from 3d to 2d) and suggests alternatives to
+a 2D medium, and in 3D plots data is subjected to an additional,
+non-obvious transformation from 3D to 2D) and suggests alternatives to
 visualize high-dimensional datasets, including encoding additional
 variables in color, size, or symbol shape, and/or using faceting.
 

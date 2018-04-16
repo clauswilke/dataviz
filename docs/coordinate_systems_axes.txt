@@ -44,11 +44,11 @@ _y_ unit below the origin.
 
 (#fig:cartesian-coord)(ref:cartesian-coord)
 
-Data values usually aren’t just numbers, however. They come with units.
-For example, if we’re measuring temperature, the values may be measured
-in degrees Celsius or Fahrenheit. Similarly, if we’re measuring
+Data values usually aren't just numbers, however. They come with units.
+For example, if we're measuring temperature, the values may be measured
+in degrees Celsius or Fahrenheit. Similarly, if we're measuring
 distance, the values may be measured in kilometers or miles, and if
-we’re measuring duration, the values may be measured in minutes, hours,
+we're measuring duration, the values may be measured in minutes, hours,
 or days. In a Cartesian coordinate system, the spacing between grid
 lines along an axis corresponds to discrete steps in these data units.
 In a temperature scale, for example, we may have a grid line every 10
@@ -56,9 +56,9 @@ degrees Fahrenheit, and in a distance scale, we may have a grid line
 every 5 kilometers.
 
 A Cartesian coordinate system can have two axes representing two
-different units. This situation arises quite commonly whenever we’re
+different units. This situation arises quite commonly whenever we're
 mapping two different types of variables to _x_ and _y_. For example, in
-Figure @ref(fig:temp-normals-vs-time), we plotted temperature vs. days
+Figure @ref(fig:temp-normals-vs-time), we plotted temperature vs. days
 of the year. The _y_ axis of Figure @ref(fig:temp-normals-vs-time) is
 measured in degrees Fahrenheit, with a grid line every at 20 degrees,
 and the _x_ axis is measured in months, with a grid line at the first of
@@ -100,7 +100,7 @@ in degrees Celsius. Data source: NOAA.
 
 You may wonder what happens if you change the units of your data. After
 all, units are arbitrary, and your preferences might be different from
-somebody else’s. A change in units is a linear transformation, where we
+somebody else's. A change in units is a linear transformation, where we
 add or subtract a number to or from all data values and/or multiply all
 data values with another number. Fortunately, Cartesian coordinate
 systems are invariant under such linear transformations. Therefore, you
@@ -205,7 +205,7 @@ very different magnitudes. For the Texas counties shown in Figures
 @ref(fig:texas-counties-pop-ratio-lin), the most populous one (Harris)
 had 4,092,459 inhabitants in the 2010 U.S. Census while the least
 populous one (Loving) had 82. So a log scale would be appropriate even
-if we hadn’t divided population numbers by their median to turn them
+if we hadn't divided population numbers by their median to turn them
 into ratios. But what would we do if there was a county with 0
 inhabitants? This county could not be shown on the logarithmic scale,
 because it would lie at minus infinity. In this situation, the
@@ -229,7 +229,7 @@ scale one unit step corresponds to addition or subtraction of a constant
 value and on a log scale it corresponds to multiplication with or
 division by a constant value, no such rule exists for a square-root
 scale. The meaning of a unit step on a square-root scale depends on the
-scale value at which we’re starting. Second, it is unclear how to best
+scale value at which we're starting. Second, it is unclear how to best
 place axis ticks on a square-root scale. To obtain evenly spaced ticks,
 we would have to place them at squares, but axis ticks at, for example,
 positions 0, 4, 25, 49, 81 (every second square) would be highly
@@ -247,7 +247,7 @@ for ratios, one could argue that the square-root scale is the natural
 scale for data that come in squares. One scenario in which data are
 naturally squares are in the context of geographic regions. If we show
 the areas of geographic regions on a square-root scale, we are
-highlighting the regions’ linear extent from East to West or North to
+highlighting the regions' linear extent from East to West or North to
 South. These extents could be relevant, for example, if we are wondering
 how long it might take to drive across a region. Figure
 @ref(fig:northeast-state-areas) shows the areas of states in the U.S.
@@ -293,26 +293,26 @@ values at the other end. For example, consider the days in a year.
 December 31st is the last day of the year, but it is also one day before
 the first day of the year. If we want to show how some quantity varies
 over the year, it can be appropriate to use polar coordinates with the
-angle coordinate specifying each day. Let’s apply this concept to the
+angle coordinate specifying each day. Let's apply this concept to the
 temperature normals of Figure @ref(fig:temp-normals-vs-time). Because
 temperature normals are average temperatures that are not tied to any
-specific year, Dec. 31st can be thought of as 366 days later than
-Jan. 1st (temperature normals include Feb. 29) and also one day earlier.
-By plotting the temperature normals in a polar coordinate system, we
+specific year, Dec. 31st can be thought of as 366 days later than Jan.
+1st (temperature normals include Feb. 29) and also one day earlier. By
+plotting the temperature normals in a polar coordinate system, we
 emphasize this cyclical property they have (Figure
 @ref(fig:temperature-normals-polar)). In comparison to Figure
 @ref(fig:temp-normals-vs-time), the polar version highlights how similar
 the temperatures are in Death Valley, Houston, and San Diego from late
 fall to early spring. In the Cartesian coordinate system, this fact is
 obscured because the temperature values in late December and in early
-January are shown in opposite parts of the figure and therefore don’t
+January are shown in opposite parts of the figure and therefore don't
 form a single visual unit.
 
 (ref:temperature-normals-polar) Daily temperature normals for four
 selected locations in the U.S., shown in polar coordinates. The radial
 distance from the center point indicates the daily temperature in
 Fahrenheit, and the days of the year are arranged counter-clockwise
-starting with Jan. 1st at the 6:00 position.
+starting with Jan. 1st at the 6:00 position.
 
 (#fig:temperature-normals-polar)(ref:temperature-normals-polar)
 

@@ -10,7 +10,7 @@ Whenever we visualize data, we take data values and convert them in a
 systematic and logical way into the visual elements that make up the
 final graphic. Even though there are myriad different data
 visualizations, and on first glance a scatter plot, a pie chart, and a
-heatmap don’t seem to have much in common, all these visualizations can
+heatmap don't seem to have much in common, all these visualizations can
 be described with a common language that captures how data values are
 turned into blobs of ink on paper or colored pixels on screen. The key
 insight is the following: All data visualizations map data values into
@@ -32,7 +32,7 @@ are preparing a black-and-white drawing, graphical elements need to have
 a color to be visible, for example black if the background is white or
 white if the background is black. Finally, to the extent we are using
 lines to visualize data, these lines may have different widths or
-dash–dot patterns. Beyond the examples shown in Figure
+dash--dot patterns. Beyond the examples shown in Figure
 @ref(fig:common-aesthetics), there are many other aesthetics we may
 encounter in a data visualization. For example, if we want to display
 text, we may have to specify font family, font face, and font size, and
@@ -59,7 +59,7 @@ hold 5 persons or 6, but not 5.5. For the examples in Figure
 represent continuous data, but shape and line type can only represent
 discrete data.
 
-Next we’ll consider the types of data we may want to represent in our
+Next we'll consider the types of data we may want to represent in our
 visualization. You may think of data as numbers, but numerical values
 are only two out of several types of data we may encounter. In addition
 to continuous and discrete numerical values, data can come in the form
@@ -68,10 +68,10 @@ of discrete categories, in the form of dates or times, and as text
 it _quantitative_ and when it is categorical we call it _qualitative_.
 Variables holding qualitative data are _factors_, and the different
 categories are called _levels_. The levels of a factor are most commonly
-without order (as in the example of ``dog'', ``cat'', ``fish'' in Table
+without order (as in the example of "dog", "cat", "fish" in Table
 @ref(tab:basic-data-types)), but factors can also be ordered, when there
 is an intrinsic order among the levels of the factor (as in the example
-of ``good'', ``fair'', ``poor'' in Table @ref(tab:basic-data-types)).
+of "good", "fair", "poor" in Table @ref(tab:basic-data-types)).
 
 .(#tab:basic-data-types) Types of variables encountered in typical data
 visualization scenarios.
@@ -93,11 +93,11 @@ inherent order. These variables are also called _factors_.
 
 |qualitative/categorical ordered |good, fair, poor |discrete |Categories
 with order. These are discrete and unique categories with an order. For
-example, ``fair'' always lies between ``good'' and ``poor''. These
-variables are also called _ordered factors_.
+example, "fair" always lies between "good" and "poor". These variables
+are also called _ordered factors_.
 
-|date or time |Jan. 5 2018, 8:03am |continuous or discrete |Specific
-days and/or times. Also generic dates, such as July 4 or Dec. 25
+|date or time |Jan. 5 2018, 8:03am |continuous or discrete |Specific
+days and/or times. Also generic dates, such as July 4 or Dec. 25
 (without year).
 
 |text |The quick brown fox jumps over the lazy dog. |none, or discrete
@@ -146,7 +146,7 @@ colors. This mapping between data values and aesthetics values is
 created via _scales_. A scale defines a unique mapping between data and
 aesthetics (Figure @ref(fig:basic-scales-example)). Importantly, a scale
 must be one-to-one, such that for each specific data value there is
-exactly one aesthetics value and vice versa. If a scale isn’t
+exactly one aesthetics value and vice versa. If a scale isn't
 one-to-one, then the data visualization becomes ambiguous.
 
 (ref:basic-scales-example) Scales link data values to aesthetics. Here,
@@ -156,7 +156,7 @@ unique position, shape, or color and vice versa.
 
 (#fig:basic-scales-example)(ref:basic-scales-example)
 
-Let’s put things into practice. We can take the dataset shown in Table
+Let's put things into practice. We can take the dataset shown in Table
 @ref(tab:data-example), map temperature onto the _y_ axis, day of the
 year onto the _x_ axis, location onto color, and visualize these
 aesthetics with solid lines. The result is a standard line plot showing
@@ -211,7 +211,7 @@ scales, one color scale, one size scale, and one shape scale, and all
 scales represent a different variable from the dataset.
 
 (ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars
-(1973–74 models). This figure uses five separate scales to represent
+(1973--74 models). This figure uses five separate scales to represent
 data: (i) the _x_ axis (displacement); (ii) the _y_ axis (fuel
 efficiency); (iii) the color of the data points (power); (iv) the size
 of the data points (weight); and (v) the shape of the data points

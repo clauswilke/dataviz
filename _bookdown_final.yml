@@ -28,6 +28,7 @@ rmd_files: [
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
+  "no_3d.Rmd", # completed
 
   # Part III
   "image_file_formats.Rmd", # completed

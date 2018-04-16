@@ -27,31 +27,31 @@ such as Table @ref(tab:titanic-ages).
 [cols="<,>",options="header",]
 |================
 |Age range |Count
-|0–5 |36
-|6–10 |19
-|11–15 |18
-|16–20 |99
-|21–25 |139
-|26–30 |121
+|0--5 |36
+|6--10 |19
+|11--15 |18
+|16--20 |99
+|21--25 |139
+|26--30 |121
 |================
 
 [cols="<,>",options="header",]
 |================
 |Age range |Count
-|31–35 |76
-|36–40 |74
-|41–45 |54
-|46–50 |50
-|51–55 |26
-|56–60 |22
+|31--35 |76
+|36--40 |74
+|41--45 |54
+|46--50 |50
+|51--55 |26
+|56--60 |22
 |================
 
 [cols="<,>",options="header",]
 |================
 |Age range |Count
-|61–65 |16
-|66–70 |3
-|71–75 |3
+|61--65 |16
+|66--70 |3
+|71--75 |3
 |================
 
 We can visualize this table by drawing filled rectangles whose heights
@@ -153,7 +153,7 @@ Kernel density estimates have one pitfall that we need to be aware of:
 They have a tendency to produce the appearance of data where none
 exists, in particular in the tails. As a consequence, careless use of
 density estimates can easily lead to figures that make nonsensical
-statements. For example, if we don’t pay attention, we might generate a
+statements. For example, if we don't pay attention, we might generate a
 visualization of an age distribution that includes negative ages (Figure
 @ref(fig:titanic-ages-dens-negative)).
 
@@ -186,7 +186,7 @@ Visualizing multiple distributions at the same time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In many scenarios we have multiple distributions we would like to
-visualize simultaneously. For example, let’s say we’d like to see how
+visualize simultaneously. For example, let's say we'd like to see how
 the ages of Titanic passengers are distributed between men and women.
 Were men and women passengers generally of the same age, or was there an
 age difference between the genders? One commonly employed visualization
@@ -203,7 +203,7 @@ In my opinion, this type of visualization should be avoided. There are
 two key problems here: First, from just looking at the figure, it is
 never entirely clear where exactly the bars begin. Do they start where
 the color changes or are they meant to start at zero? In other words,
-are there about 25 females of age 18–20 or are there almost 80? (The
+are there about 25 females of age 18--20 or are there almost 80? (The
 former is the case.) Second, the bar heights for the female counts
 cannot be directly compared to each other, because the bars all start at
 a different height. For example, the men were on average older than the
@@ -220,13 +220,13 @@ Titanic passengers, shown as two overlapping histograms.
 (#fig:titanic-age-overlapping-hist)(ref:titanic-age-overlapping-hist)
 
 However, this approach generates new problems. Now it appears that there
-are actually three different groups, not just two, and we’re still not
+are actually three different groups, not just two, and we're still not
 entirely sure where each bar starts and ends. Overlapping histograms
-don’t work well because a semi-transparent bar drawn on top of another
+don't work well because a semi-transparent bar drawn on top of another
 tends to not look like a semi-transparent bar but instead like a bar
 drawn in a different color.
 
-Overlapping density plots don’t typically have the problem that
+Overlapping density plots don't typically have the problem that
 overlapping histograms have, because the continuous density lines help
 the eye keep the distributions separate. However, for this particular
 dataset, the age distributions for male and female passengers are nearly
@@ -247,7 +247,7 @@ distributions of male and female passengers separately, each as a
 proportion of the overall age distribution (Figure
 @ref(fig:titanic-age-fractional-dens)). This visualization shows
 intuitively and clearly that there were many fewer women than men in the
-20–50-year age range on the Titanic.
+20--50-year age range on the Titanic.
 
 (ref:titanic-age-fractional-dens) Age distributions of male and female
 Titanic passengers, shown as proportion of the passenger total. The
@@ -270,15 +270,18 @@ Titanic passengers visualized as an age pyramid.
 (#fig:titanic-age-pyramid)(ref:titanic-age-pyramid)
 
 Importantly, this trick does not work when there are more than two
-distributions we want to visualize at the same time. For example, to
-visualize the length distributions of sepals for three different iris
-species, density plots are by far the best choice (Figure
-@ref(fig:iris-densities)).
+distributions we want to visualize at the same time. For multiple
+distributions, histograms tend to become highly confusing, whereas
+density plots work well as long as the distributions are somewhat
+distinct. For example, to visualize the distribution of butterfat
+percentage among cows from four different cattle breeds, density plots
+are fine (Figure @ref(fig:butterfat-densitites)).
 
-(ref:iris-densities) Density estimates of the sepal lengths of three
-different iris species.
+(ref:butterfat-densitites) Density estimates of the butterfat percentage
+in the milk of four cattle breeds. Data Source: Canadian Record of
+Performance for Purebred Dairy Cattle
 
-(#fig:iris-densities)(ref:iris-densities)
+(#fig:butterfat-densitites)(ref:butterfat-densitites)
 
 To visualize several distributions at once, kernel density plots will
 generally work better than histograms.

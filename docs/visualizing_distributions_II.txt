@@ -19,10 +19,10 @@ approach becomes unwieldy for very large datasets, and in any case there
 is value in aggregate methods that highlight properties of the
 distribution rather than the individual data points. To solve this
 problem, statisticians have invented empirical cumulative density
-functions (ecdfs) and quantile–quantile (q-q) plots. These types of
+functions (ecdfs) and quantile--quantile (q-q) plots. These types of
 visualizations require no arbitrary parameter choices, and they show all
 of the data at once. Unfortunately, they are a little less intuitive
-than a histogram or a density plot is, and I don’t see them used
+than a histogram or a density plot is, and I don't see them used
 frequently outside of highly technical publications. They are quite
 popular among statisticians, though, and I think anybody interested in
 data visualization should be familiar with these techniques.
@@ -94,7 +94,7 @@ students (25%) received less than 75 points. The median point value
 
 I find ecdfs handy for assigning grade boundaries because they help me
 locate the exact cutoffs that minimize student unhappiness. For example,
-in this example, there’s a fairly long horizontal line right below 80
+in this example, there's a fairly long horizontal line right below 80
 points, followed by a steep rise right at 80. This feature is caused by
 three students receiving 80 points on their exam while the next poorer
 performing student received only 76. In this scenario, I might decide
@@ -119,7 +119,7 @@ number of people living in different cities or counties, the number of
 contacts in a social network, the frequency with which individual words
 appear in a book, the number of academic papers written by different
 authors, the net worth of individuals, and the number of interaction
-partners of individual proteins in protein–protein interaction networks
+partners of individual proteins in protein--protein interaction networks
 (@Clauset-et-al-2009). All these distributions have in common that their
 right tail decays slower than an exponential function. In practice, this
 means that very large values are not that rare, even if the mean of the
@@ -194,16 +194,16 @@ that many times in the novel versus the number of times words are used.
 (#fig:word-counts-tail-log-log)(ref:word-counts-tail-log-log)
 
 [[qq-plots]]
-Quantile–quantile plots
-~~~~~~~~~~~~~~~~~~~~~~~
+Quantile--quantile plots
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quantile–quantile (q-q) plots are a useful visualization when we want to
-determine to what extent the observed data points do or do not follow a
-given distribution. Just like ecdfs, q-q plots are also based on ranking
-the data and visualizing the relationship between ranks and actual
-values. However, in q-q plots we don’t plot the ranks directly, we use
-them to predict where a given data point should fall if the data were
-distributed according to a specified reference distribution. Most
+Quantile--quantile (q-q) plots are a useful visualization when we want
+to determine to what extent the observed data points do or do not follow
+a given distribution. Just like ecdfs, q-q plots are also based on
+ranking the data and visualizing the relationship between ranks and
+actual values. However, in q-q plots we don't plot the ranks directly,
+we use them to predict where a given data point should fall if the data
+were distributed according to a specified reference distribution. Most
 commonly, q-q plots are constructed using a normal distribution as the
 reference. To give a concrete example, assume the actual data values
 have a mean of 10 and a standard deviation of 3. Then, assuming a normal
@@ -214,7 +214,7 @@ data point at the 2.3rd percentile to lie at position 4 (two standard
 deviations below the mean). We can carry out this calculation for all
 points in the dataset and then plot the observed values (i.e., values in
 the dataset) against the theoretical values (i.e., values expected given
-each data point’s rank and the assumed reference distribution).
+each data point's rank and the assumed reference distribution).
 
 When we perform this procedure for the student grades distribution from
 the beginning of this chapter, we obtain Figure

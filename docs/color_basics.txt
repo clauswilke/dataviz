@@ -71,7 +71,7 @@ light blue) or on multiple hues (e.g., from dark red to light yellow)
 (Figure @ref(fig:sequential-scales)). Multi-hue scales tend to follow
 color gradients that can be seen in the natural world, such as dark red,
 green, or blue to light yellow, or dark purple to light green. The
-reverse, e.g. dark yellow to light blue, looks unnatural and doesn’t
+reverse, e.g. dark yellow to light blue, looks unnatural and doesn't
 make a useful sequential scale.
 
 (ref:sequential-scales) Example sequential color scales. The ColorBrewer
@@ -156,7 +156,7 @@ several different ways. First, we can take an existing color scale
 (e.g., the Okabe Ito scale, Fig @ref(fig:qualitative-scales)) and
 lighten and/or partially desaturate some colors while darkening others.
 Second, we can take gray values and pair them with colors. Third, we can
-take work with an existing accent color scale, e.g. the one from the
+take work with an existing accent color scale, e.g. the one from the
 ColorBrewer project.
 
 (#fig:accent-scales)(ref:accent-scales)
@@ -180,7 +180,7 @@ do not compete for attention. Notice how drab the baseline colors are in
 (Figure @ref(fig:popgrowth-US-highlight)). Yet they work well to support
 the accent color. It is easy to make the mistake of using baseline
 colors that are too colorful, so that they end up competing for the
-reader’s attention against the accent colors. There is an easy remedy,
+reader's attention against the accent colors. There is an easy remedy,
 however. Just remove all color from all elements in the figure except
 the highlighted data categories or points. An example of this strategy
 is provided in Figure @ref(fig:Aus-athletes-track).

@@ -45,13 +45,13 @@ difficult to distinguish from each other.
 (#fig:iris-scatter-one-shape)(ref:iris-scatter-one-shape)
 
 Surprisingly, the green and blue points look more distinct for people
-with red–green color-vision-deficiency (deuteranomaly or protanomaly)
+with red--green color-vision-deficiency (deuteranomaly or protanomaly)
 than for people with normal color vision (compare Figure
 @ref(fig:iris-scatter-one-shape-cvd), top row, to Figure
 @ref(fig:iris-scatter-one-shape)). On the other hand, for people with
-blue–yellow deficiency (tritanomaly) the blue and green points look very
-similar (Figure @ref(fig:iris-scatter-one-shape-cvd), bottom left). And
-if we print out the figure in gray-scale (i.e., we _desaturate_ the
+blue--yellow deficiency (tritanomaly) the blue and green points look
+very similar (Figure @ref(fig:iris-scatter-one-shape-cvd), bottom left).
+And if we print out the figure in gray-scale (i.e., we _desaturate_ the
 figure), we cannot distinguish any of the iris species (Figure
 @ref(fig:iris-scatter-one-shape-cvd), bottom right).
 
@@ -87,14 +87,14 @@ the figure is legible.
 (#fig:iris-scatter-three-shapes-cvd)(ref:iris-scatter-three-shapes-cvd)
 
 Changing the point shape is a simple strategy for scatter plots but it
-doesn’t necessarily work for other types of plots. In line plots, we
+doesn't necessarily work for other types of plots. In line plots, we
 could change the line type (solid, dashed, dotted, etc., see also Figure
 @ref(fig:common-aesthetics)), but using dashed or dotted lines often
 yields sub-optimal results. In particular, dashed or dotted lines
-usually don’t look good unless they are perfectly straight or only
+usually don't look good unless they are perfectly straight or only
 gently curved, and in either case they create visual noise. Also, it
 frequently requires significant mental effort to match different types
-of dash or dot–dash patterns from the plot to the legend. So what do we
+of dash or dot--dash patterns from the plot to the legend. So what do we
 do with a visualization such as Figure @ref(fig:tech-stocks-bad-legend),
 which uses lines to show the change in stock price over time for four
 different major tech companies?
@@ -165,10 +165,10 @@ Even though legend legibility can be improved by encoding data
 redundantly, in multiple aesthetics, legends always put an extra mental
 burden on the reader. In reading a legend, the reader needs to pick up
 information in one part of the visualization and then transfer it over
-to a different part. We can typically make our readers’ lives easier if
+to a different part. We can typically make our readers' lives easier if
 we eliminate the legend altogether. Eliminating the legend does not
 mean, however, that we simply not provide one and instead write
-sentences such as ``The yellow dots represent _Iris versicolor_'' in the
+sentences such as "The yellow dots represent _Iris versicolor_" in the
 figure caption. Eliminating the legend means that we design the figure
 in such a way that it is immediately obvious what the various graphical
 elements represent, even if no explicit legend is present.
@@ -189,7 +189,7 @@ equal 100 in June 2012.
 
 (#fig:tech-stocks-good-no-legend)(ref:tech-stocks-good-no-legend)
 
-Whenever possible, design your figures so they don’t need a legend.
+Whenever possible, design your figures so they don't need a legend.
 
 We can also apply the direct labeling concept to the iris data from the
 beginning of this chapter, specifically Figure
@@ -245,7 +245,7 @@ for each species.
 (#fig:iris-scatter-dens)(ref:iris-scatter-dens)
 
 And finally, whenever we encode a single variable in multiple
-aesthetics, we don’t normally want multiple separate legends for the
+aesthetics, we don't normally want multiple separate legends for the
 different aesthetics. Instead, there should be only a single legend-like
 visual element that conveys all mappings at once. In the case where we
 map the same variable onto a position along a major axis and onto color,

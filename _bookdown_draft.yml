@@ -37,12 +37,12 @@ rmd_files: [
   "figure_titles_captions.Rmd",
   "avoid_line_drawings.Rmd", # completed
   "maximize_data_signal.Rmd",
-  "no_3d.Rmd",
+  "no_3d.Rmd", # completed
 
   # Part III
   "image_file_formats.Rmd", # completed
   "choosing_visualization_software.Rmd", # completed
-  "telling_a_story_revised.Rmd", # completed
+  "telling_a_story.Rmd", # completed
   "annotated_bibliography.Rmd",
 
   "outline.Rmd",

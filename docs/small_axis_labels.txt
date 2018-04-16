@@ -10,7 +10,7 @@ If you take away only one single lesson from this book, make it this
 one: Pay attention to your axis labels, axis tick labels, and other
 assorted plot annotations. Chances are they are too small. In my
 experience, nearly all plot libraries and graphing softwares have poor
-defaults. If you use the default values, you’re almost certainly making
+defaults. If you use the default values, you're almost certainly making
 a poor choice.
 
 For example, consider Figure @ref(fig:Aus-athletes-small). I see figures
@@ -27,10 +27,10 @@ too small and are barely legible.
 
 A somewhat better version of this figure is shown as Figure
 @ref(fig:Aus-athletes-ugly). I think the fonts are still too small, and
-that’s why I have labeled the figure as ugly. However, we are moving in
+that's why I have labeled the figure as ugly. However, we are moving in
 the right direction. This figure might be passable under some
 circumstances. My main criticism here is not so much that the labels
-aren’t legible as that the figure is not balanced; the text elements are
+aren't legible as that the figure is not balanced; the text elements are
 too small compared to the rest of the figure.
 
 (ref:Aus-athletes-ugly) Percent body fat versus height in male athletes.
@@ -39,7 +39,7 @@ but the text elements remain too small and the figure is not balanced.
 
 (#fig:Aus-athletes-ugly)(ref:Aus-athletes-ugly)
 
-The next figure uses the default settings I’m applying throughout this
+The next figure uses the default settings I'm applying throughout this
 book. I think it is well balanced, the text is clearly visible, and it
 fits with the overall size of the figure.
 

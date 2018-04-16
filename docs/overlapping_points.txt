@@ -3,14 +3,14 @@ Handling overlapping points
 ---------------------------
 
 When we want to visualize large or very large datasets, we often
-experience the challenge that simple _x_–_y_ scatter plots do not work
+experience the challenge that simple _x_--_y_ scatter plots do not work
 very well because many points lie on top of each other and partially or
 fully overlap. And similar problems can arise even in small datasets if
 data values were recorded with low precision or rounded, such that
 multiple observations have exactly the same numeric values. The
 technical term commonly used to describe this situation is
-``overplotting'', i.e., plotting many points on top of each other. Here
-I describe several strategies you can pursue when encountering this
+"overplotting", i.e., plotting many points on top of each other. Here I
+describe several strategies you can pursue when encountering this
 challenge.
 
 [[partial-transparency-and-jittering]]
@@ -35,7 +35,7 @@ appear much less popular than they actually are.
 for popular cars released between 1999 and 2008. Each point represents
 one car. The point color encodes the drive train: front-wheel drive
 (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is
-labeled ``bad'' because many points are plotted on top of others and
+labeled "bad" because many points are plotted on top of others and
 obscure them.
 
 (#fig:mpg-cty-displ-solid)(ref:mpg-cty-displ-solid)
@@ -117,7 +117,7 @@ or more). At the same time, the most delayed flights (with delays of 400
 minutes or more) are barely visible due to the transparency of the dots.
 
 In such cases, instead of plotting individual points, we can make a 2d
-histogram, where we subdivide the entire _x_–_y_ plane into small
+histogram, where we subdivide the entire _x_--_y_ plane into small
 rectangles, count how many observations fall into each rectangles, and
 then color the rectangles by that count. Figure
 @ref(fig:nycflights-2d-bins) shows the result of this approach for the
@@ -176,7 +176,7 @@ comparable point density (Figure @ref(fig:midwest-density-dots)). We can
 also plot just the contour lines, without the individual points (Figure
 @ref(fig:midwest-density-smooth)). In this case, it can be helpful to
 add a trendline that shows the overall trend in the data. Here, there
-isn’t much of a trend, and the shape of the trendline (approximately
+isn't much of a trend, and the shape of the trendline (approximately
 flat) reflects this lack of a trend.
 
 (ref:midwest-scatter) Population versus area for counties in midwestern

@@ -46,7 +46,7 @@ by placing appropriate text labels adjacent to the data points (Figure
 @ref(fig:popgrowth-vs-popsize-bw)). Even though we cannot label every
 individual state without making the figure too crowded, direct labeling
 is the right choice for this figure. In general, for figures such as
-this one, we don’t need to label every single data point. It is
+this one, we don't need to label every single data point. It is
 sufficient to label a representative subset, for example a set of states
 we specifically want to call out in the text that will accompany the
 figure. We always have the option to also provide the underlying data as
@@ -72,7 +72,7 @@ geographic regions, I have given each bar its own color, so that in
 aggregate the bars create a rainbow effect. This may look like an
 interesting visual effect, but it is in no way creating new insight into
 the data or making the figure easier to read. In general, it is best to
-not use color when color isn’t needed.
+not use color when color isn't needed.
 
 (ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to
 2010. The rainbow coloring of states serves no purpose and is
@@ -102,8 +102,8 @@ designing sequential color scales that can represent data values: The
 colors need to clearly indicate which data values are larger or smaller
 than which other ones, and the differences between colors need to
 visualize the corresponding differences between data values.
-Unfortunately, several existing color scales—including very popular
-ones—violate one or both of these conditions. The most popular such
+Unfortunately, several existing color scales---including very popular
+ones---violate one or both of these conditions. The most popular such
 scale is the rainbow scale (Figure @ref(fig:rainbow-desaturated)). It
 runs through all possible colors in the color spectrum. This means the
 scale is effectively circular; the colors at the beginning and the end
@@ -155,11 +155,11 @@ able to distinguish colors that look clearly different to most other
 people. People with impaired color vision are not literally unable to
 see any colors, however. Instead, they will typically have difficulty to
 distinguish certain types of colors, for example red and green
-(red–green color-vision deficiency) or blue and green (blue–yellow
+(red--green color-vision deficiency) or blue and green (blue--yellow
 color-vision deficiency). The technical terms for these deficiencies are
-deuteranomaly or protanomaly for the red–green variant (where people
+deuteranomaly or protanomaly for the red--green variant (where people
 have difficulty perceiving either green or red, respectively) and
-tritanomaly for the blue–yellow variant (where people have difficulty
+tritanomaly for the blue--yellow variant (where people have difficulty
 perceiving blue). Approximately 8% of males and 0.5% of females suffer
 from some sort of color-vision deficiency, and deuteranomaly is the most
 common form whereas tritanomaly is relatively rare.
@@ -195,13 +195,13 @@ with normal color vision but become nearly indistinguishable for deutans
 visible for deutans and protans but become indistinguishable for tritans
 (people with tritanomaly) (Figure @ref(fig:blue-green-cvd-sim)).
 
-(ref:red-green-cvd-sim) A red–green contrast becomes indistinguishable
-under red–green cvd (deuteranomaly or protanomaly).
+(ref:red-green-cvd-sim) A red--green contrast becomes indistinguishable
+under red--green cvd (deuteranomaly or protanomaly).
 
 (#fig:red-green-cvd-sim)(ref:red-green-cvd-sim)
 
-(ref:blue-green-cvd-sim) A blue–green contrast becomes indistinguishable
-under blue–yellow cvd (tritanomaly).
+(ref:blue-green-cvd-sim) A blue--green contrast becomes
+indistinguishable under blue--yellow cvd (tritanomaly).
 
 (#fig:blue-green-cvd-sim)(ref:blue-green-cvd-sim)
 
@@ -211,11 +211,11 @@ the situation is not that dire. It is often possible to make slight
 modifications to the colors such that they have the desired character
 while also being safe for cvd. For example, the ColorBrewer PiYG (pink
 to yellow-green) scale from Figure @ref(fig:diverging-scales) looks
-red–green to people with normal color vision yet remains distinguishable
-for people with cvd (Figure @ref(fig:PiYG-cvd-sim)).
+red--green to people with normal color vision yet remains
+distinguishable for people with cvd (Figure @ref(fig:PiYG-cvd-sim)).
 
 (ref:PiYG-cvd-sim) The ColorBrewer PiYG (pink to yellow-green) scale
-from Figure @ref(fig:diverging-scales) looks like a red–green contrast
+from Figure @ref(fig:diverging-scales) looks like a red--green contrast
 to people with regular color vision but works for all forms of
 color-vision deficiency. It works because the reddish color is actually
 pink (a mix of red and blue) while the greenish color also contains
@@ -274,7 +274,7 @@ apps available that allow users to run arbitrary figures through a cvd
 simulation.
 
 (ref:colors-thin-lines) Colored elements become difficult to distinguish
-at small sizes. The top left panel (labeled ``original'') shows four
+at small sizes. The top left panel (labeled "original") shows four
 rectangles, four thick lines, four thin lines, and four groups of
 points, all colored in the same four colors. We can see that the colors
 become more difficult to distinguish the smaller or thinner the visual
@@ -284,5 +284,5 @@ large graphical elements.
 
 (#fig:colors-thin-lines)(ref:colors-thin-lines)
 
-To make sure your figures work for people with cvd, don’t just rely on
+To make sure your figures work for people with cvd, don't just rely on
 specific color scales. Instead, test your figures in a cvd simulator.

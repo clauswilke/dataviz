@@ -2,8 +2,8 @@
 Welcome
 -------
 
-This is an online preview of the book ``Fundamentals of Data
-Visualization'' to be published with O’Reilly Media, Inc. Completed
+This is an online preview of the book "Fundamentals of Data
+Visualization" to be published with O’Reilly Media, Inc. Completed
 chapters will be posted here as they become available.
 
 The book is meant as a guide to making visualizations that accurately
@@ -15,12 +15,12 @@ accumulated knowledge from these interactions in the form of this book.
 
 The entire book is written in R Markdown, using RStudio as my text
 editor and the *bookdown* package to turn a collection of markdown
-documents into a coherent whole. The book’s source code is hosted on
+documents into a coherent whole. The book's source code is hosted on
 GitHub, at https://github.com/clauswilke/dataviz. If you notice typos or
 other issues, feel free to open an issue on GitHub or send me a pull
 request. If you do the latter, in your commit message, please add the
-sentence ``I assign the copyright of this contribution to Claus O.
-Wilke,'' so that I can maintain the option of publishing this book in
+sentence "I assign the copyright of this contribution to Claus O.
+Wilke," so that I can maintain the option of publishing this book in
 other forms.
 
 This work is licensed under the

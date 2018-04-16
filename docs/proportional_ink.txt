@@ -75,7 +75,7 @@ Bars on a linear scale must always start 0.
 Similar visualization problems frequently arise in the visualization of
 time series, such as those of stock prices. Figure
 @ref(fig:fb-stock-drop-bad) suggests a massive collapse in the stock
-price of Facebook occurred around Nov. 1, 2016. In reality, the price
+price of Facebook occurred around Nov. 1, 2016. In reality, the price
 decline was moderate relative to the total price of the stock (Figure
 @ref(fig:fb-stock-drop-good)). The _y_-axis range in Figure
 @ref(fig:fb-stock-drop-bad) would be questionable even without the
@@ -87,17 +87,17 @@ given day represents the stock price of that day. Instead, it only
 represents the difference in stock price from the baseline, which is
 $110 in Figure @ref(fig:fb-stock-drop-bad).
 
-(ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 22, 2016
-to Jan. 21, 2017. This figure seems to imply that the Facebook stock
-pice collapsed around Nov. 1, 2016. However, this is misleading, because
+(ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 22, 2016
+to Jan. 21, 2017. This figure seems to imply that the Facebook stock
+pice collapsed around Nov. 1, 2016. However, this is misleading, because
 the _y_ axis starts at $110 instead of $0.
 
 (#fig:fb-stock-drop-bad)(ref:fb-stock-drop-bad)
 
-(ref:fb-stock-drop-good) Stock price of Facebook (FB) from Oct. 22, 2016
-to Jan. 21, 2017. By showing the stock price on a _y_ scale from $0 to
+(ref:fb-stock-drop-good) Stock price of Facebook (FB) from Oct. 22, 2016
+to Jan. 21, 2017. By showing the stock price on a _y_ scale from $0 to
 $150, this figure more accurately relays the magnitude of the FB price
-drop around Nov. 1, 2016.
+drop around Nov. 1, 2016.
 
 (#fig:fb-stock-drop-good)(ref:fb-stock-drop-good)
 
@@ -125,7 +125,7 @@ Community Surveys.
 (#fig:hawaii-income-change)(ref:hawaii-income-change)
 
 Similarly, we can draw the change in Facebook stock price over time as
-the difference from its temporary high point on Oct. 22, 2016 (Figure
+the difference from its temporary high point on Oct. 22, 2016 (Figure
 @ref(fig:fb-stock-drop-inverse)). By shading an area that represents the
 distance from the high point, we are accurately representing the
 absolute magnitude of the price drop without making any implicit
@@ -133,9 +133,9 @@ statement about the magnitude of the price drop relative to the total
 stock price.
 
 (ref:fb-stock-drop-inverse) Loss in Facebook (FB) stock price relative
-to the price of Oct. 22, 2016. Between Nov. 1, 2016 and Jan. 1, 2017,
+to the price of Oct. 22, 2016. Between Nov. 1, 2016 and Jan. 1, 2017,
 the price remained approximately $15 lower than it was at its high point
-on Oct. 22, 2016. But then the price started to recover in Jan. 2017.
+on Oct. 22, 2016. But then the price started to recover in Jan. 2017.
 
 (#fig:fb-stock-drop-inverse)(ref:fb-stock-drop-inverse)
 
@@ -183,7 +183,7 @@ representative of the data values. The added difficulty with a log
 scale, though, is that we cannot simply let the bars start at 0. In
 Figure @ref(fig:oceania-gdp-logbars), the value 0 would lie infinitely
 far to the left. Therefore, we could make our bars arbitrary long by
-pushing their origin further and further way, see e.g. Figure
+pushing their origin further and further way, see e.g. Figure
 @ref(fig:oceania-gdp-logbars-long). This problem always arises when we
 try to visualize amounts (which is what the GDP values are) on a log
 scale.
@@ -197,7 +197,7 @@ source: Gapminder.
 
 For the data of Figure @ref(fig:oceania-gdp-logbars), I think bars are
 inappropriate. Instead, we can simply place a dot at the appropriate
-location along the scale for each country’s GDP and avoid the issue of
+location along the scale for each country's GDP and avoid the issue of
 bar lengths altogether (Figure @ref(fig:oceania-gdp-dots)). Importantly,
 by placing the country names right next to the dots rather than along
 the _y_ axis, we avoid generating the visual perception of a magnitude
@@ -210,7 +210,7 @@ Gapminder.
 
 If we want to visualize ratios rather than amounts, however, bars on a
 log scale are a perfectly good option. In fact, they are preferable over
-bars on a linear scale in that case. As an example, let’s visualize the
+bars on a linear scale in that case. As an example, let's visualize the
 GDP values of countries in Oceania relative to the GDP of Papua New
 Guinea. The resulting figure does a good job highlighting the key
 relationships between the GDPs of the various countries (Figure

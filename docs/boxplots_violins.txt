@@ -76,7 +76,7 @@ standardized manner (Figure @ref(fig:boxplot-schematic)). Boxplots are
 simple yet informative, and they work well when plotted next to each
 other to visualize many distributions at once. For the Lincoln
 temperature data, using boxplots leads to Figure
-@ref(fig:boxplot-schematic). In that figure, we can now see that
+@ref(fig:lincoln-temp-boxplots). In that figure, we can now see that
 temperature is highly skewed in December (most days are moderately cold
 and a few are extremely cold) and not very skewed at all in some other
 months, for example in July.
@@ -147,11 +147,11 @@ none exists, or that the data set is very dense when actually it is
 quite sparse. We can try to circumvent these issues by simply plotting
 all the individual data points directly, as dots (Figure
 @ref(fig:lincoln-temp-all-points)). This is a fine idea in principle, as
-long as we make sure that we don’t plot too many points on top of each
+long as we make sure that we don't plot too many points on top of each
 other. A simple solution to overplotting is to spread out the points
 somewhat along the _x_ axis, by adding some random noise in the _x_
 dimension (Figure @ref(fig:lincoln-temp-jittered)). This technique is
-also called ``jittering''.
+also called "jittering".
 
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln,
 Nebraska, visualized as individual temperature values. Each point
@@ -223,7 +223,7 @@ to show specific density values but instead to allow for easy comparison
 of density shapes and relative heights across groups.
 
 In principle, we can use histograms instead of density plots in a
-ridgeline visualization. However, the resulting figures often don’t look
+ridgeline visualization. However, the resulting figures often don't look
 very good (Figure @ref(fig:temp-binline)). The problems are similar to
 those of stacked or overlapping histograms (Chapter
 @ref(histograms-density-plots)). Because the vertical lines in these
@@ -233,7 +233,7 @@ In my opinion, it is better to not draw such overlapping histograms.
 
 (ref:temp-binline) Temperatures in Lincoln, Nebraska, in 2016,
 visualized as a ridgeline plot of histograms. The individual histograms
-don’t separate well visually, and the overall figure is quite busy and
+don't separate well visually, and the overall figure is quite busy and
 confusing.
 
 (#fig:temp-binline)(ref:temp-binline)

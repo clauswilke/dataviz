@@ -26,7 +26,7 @@ This kind of data is commonly visualized with vertical bars. For each movie, we 
 (ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/boxoffice-vertical-1.png" alt="(ref:boxoffice-vertical)" width="768" />
+<img src="visualizing_amounts_files/figure-html/boxoffice-vertical-1.png" alt="(ref:boxoffice-vertical)" width="672" />
 <p class="caption">(\#fig:boxoffice-vertical)(ref:boxoffice-vertical)</p>
 </div>
 
@@ -35,7 +35,7 @@ One problem we commonly encounter with vertical bars is that the labels identify
 (ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot with rotated axis tick labels. Rotated axis tick labels tend to be difficult to read and require awkward space use undearneath the plot. For these reasons, I generally consider plots with rotated tick labels to be ugly. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/boxoffice-rot-axis-tick-labels-1.png" alt="(ref:boxoffice-rot-axis-tick-labels)" width="576" />
+<img src="visualizing_amounts_files/figure-html/boxoffice-rot-axis-tick-labels-1.png" alt="(ref:boxoffice-rot-axis-tick-labels)" width="576" />
 <p class="caption">(\#fig:boxoffice-rot-axis-tick-labels)(ref:boxoffice-rot-axis-tick-labels)</p>
 </div>
 
@@ -44,7 +44,7 @@ The better solution for long labels is usually to swap the *x* and the *y* axis,
 (ref:boxoffice-horizontal) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/boxoffice-horizontal-1.png" alt="(ref:boxoffice-horizontal)" width="576" />
+<img src="visualizing_amounts_files/figure-html/boxoffice-horizontal-1.png" alt="(ref:boxoffice-horizontal)" width="576" />
 <p class="caption">(\#fig:boxoffice-horizontal)(ref:boxoffice-horizontal)</p>
 </div>
 
@@ -54,7 +54,7 @@ Regardless of whether we place bars vertically or horizontally, we need to pay a
 (ref:boxoffice-horizontal-bad-order) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a horizontal bar plot. Here, the bars have been placed in descending order of the lengths of the movie titles. This arrangement of bars is arbitrary, it doesn't serve a meaningful purpose, and it makes the resulting figure much less intuitive than Figure \@ref(fig:boxoffice-horizontal). Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/boxoffice-horizontal-bad-order-1.png" alt="(ref:boxoffice-horizontal-bad-order)" width="576" />
+<img src="visualizing_amounts_files/figure-html/boxoffice-horizontal-bad-order-1.png" alt="(ref:boxoffice-horizontal-bad-order)" width="576" />
 <p class="caption">(\#fig:boxoffice-horizontal-bad-order)(ref:boxoffice-horizontal-bad-order)</p>
 </div>
 
@@ -64,14 +64,14 @@ We should only rearrange bars, however, when there is no natural ordering to the
 (ref:income-by-age) 2016 median U.S. annual household income versus age group. The 45--54 year age group has the highest median income. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/income-by-age-1.png" alt="(ref:income-by-age)" width="576" />
+<img src="visualizing_amounts_files/figure-html/income-by-age-1.png" alt="(ref:income-by-age)" width="576" />
 <p class="caption">(\#fig:income-by-age)(ref:income-by-age)</p>
 </div>
 
 (ref:income-by-age-sorted) 2016 median U.S. annual household income versus age group, sorted by income. While this order of bars looks visually appealing, the order of the age groups is now confusing. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/income-by-age-sorted-1.png" alt="(ref:income-by-age-sorted)" width="576" />
+<img src="visualizing_amounts_files/figure-html/income-by-age-sorted-1.png" alt="(ref:income-by-age-sorted)" width="576" />
 <p class="caption">(\#fig:income-by-age-sorted)(ref:income-by-age-sorted)</p>
 </div>
 
@@ -83,7 +83,7 @@ All examples from the previous subsection showed how a quantitative amount varie
 (ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. Age groups are shown along the *x* axis, and for each age group there are four bars, corresponding to the median income of asian, white, hispanic, and black people, respectively. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/income-by-age-race-dodged-1.png" alt="(ref:income-by-age-race-dodged)" width="768" />
+<img src="visualizing_amounts_files/figure-html/income-by-age-race-dodged-1.png" alt="(ref:income-by-age-race-dodged)" width="768" />
 <p class="caption">(\#fig:income-by-age-race-dodged)(ref:income-by-age-race-dodged)</p>
 </div>
 
@@ -92,7 +92,7 @@ Grouped bar plots show a lot of information at once and they can be confusing. I
 (ref:income-by-race-age-dodged) 2016 median U.S. annual household income versus age group and race. In contrast to Figure \@ref(fig:income-by-age-race-dodged), now race is shown along the *x* axis, and for each race we show seven bars according to the seven age groups. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/income-by-race-age-dodged-1.png" alt="(ref:income-by-race-age-dodged) " width="768" />
+<img src="visualizing_amounts_files/figure-html/income-by-race-age-dodged-1.png" alt="(ref:income-by-race-age-dodged) " width="768" />
 <p class="caption">(\#fig:income-by-race-age-dodged)(ref:income-by-race-age-dodged) </p>
 </div>
 
@@ -101,7 +101,7 @@ Both Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-a
 (ref:income-by-age-race-faceted) 2016 median U.S. annual household income versus age group and race. Instead of displaying this data as a grouped bar plot, as in Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-age-dodged), we now show the data as four separate regular bar plots. This choice has the advantage that we don't need to encode either categorical variable by bar color. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/income-by-age-race-faceted-1.png" alt="(ref:income-by-age-race-faceted)" width="816" />
+<img src="visualizing_amounts_files/figure-html/income-by-age-race-faceted-1.png" alt="(ref:income-by-age-race-faceted)" width="816" />
 <p class="caption">(\#fig:income-by-age-race-faceted)(ref:income-by-age-race-faceted)</p>
 </div>
 
@@ -112,11 +112,11 @@ I will demonstrate this principle using a dataset about the passengers of the tr
 (ref:titanic-passengers-by-class-sex) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/titanic-passengers-by-class-sex-1.png" alt="(ref:titanic-passengers-by-class-sex)" width="528" />
+<img src="visualizing_amounts_files/figure-html/titanic-passengers-by-class-sex-1.png" alt="(ref:titanic-passengers-by-class-sex)" width="528" />
 <p class="caption">(\#fig:titanic-passengers-by-class-sex)(ref:titanic-passengers-by-class-sex)</p>
 </div>
 
-Figure \@ref(fig:titanic-passengers-by-class-sex) differs from the previous bar plots I have shown in that there is no explicit *y* axis. I have instead shown the actual numerical values that each bar represents. Whenever a plot is meant to display only a small number of different values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by the plot without adding much visual noise, and it removes the need for an explicity axis.
+Figure \@ref(fig:titanic-passengers-by-class-sex) differs from the previous bar plots I have shown in that there is no explicit *y* axis. I have instead shown the actual numerical values that each bar represents. Whenever a plot is meant to display only a small number of different values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by the plot without adding much visual noise, and it removes the need for an explicit *y* axis.
 
 
 ## Dot plots and heatmaps
@@ -128,14 +128,14 @@ Figure \@ref(fig:Americas-life-expect) demonstrates this visualization approach 
 (ref:Americas-life-expect) Life expectancies of countries in the Americas, for the year 2007. Data source: Gapminder project
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/Americas-life-expect-1.png" alt="(ref:Americas-life-expect)" width="672" />
+<img src="visualizing_amounts_files/figure-html/Americas-life-expect-1.png" alt="(ref:Americas-life-expect)" width="576" />
 <p class="caption">(\#fig:Americas-life-expect)(ref:Americas-life-expect)</p>
 </div>
 
 (ref:Americas-life-expect-bars) Life expectancies of countries in the Americas, for the year 2007, shown as bars. This dataset is not suitable for being visualized with bars. The bars are too long and they draw attention away from the key feature of the data, the differences in life expectancy among the different countries. Data source: Gapminder project
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/Americas-life-expect-bars-1.png" alt="(ref:Americas-life-expect-bars)" width="672" />
+<img src="visualizing_amounts_files/figure-html/Americas-life-expect-bars-1.png" alt="(ref:Americas-life-expect-bars)" width="576" />
 <p class="caption">(\#fig:Americas-life-expect-bars)(ref:Americas-life-expect-bars)</p>
 </div>
 
@@ -144,7 +144,7 @@ Regardless of whether we use bars or dots, however, we need to pay attention to 
 (ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled as bad. Data source: Gapminder project
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/Americas-life-expect-bad-1.png" alt="(ref:Americas-life-expect-bad)" width="672" />
+<img src="visualizing_amounts_files/figure-html/Americas-life-expect-bad-1.png" alt="(ref:Americas-life-expect-bad)" width="576" />
 <p class="caption">(\#fig:Americas-life-expect-bad)(ref:Americas-life-expect-bad)</p>
 </div>
 
@@ -155,17 +155,17 @@ As an alternative to mapping data values onto positions via bars or dots, we can
 (ref:internet-over-time) Internet adoption over time, for select countries. Color represents the percent of internet users for the respective country and year. Countries were ordered by percent internet users in 2016. Data source: World Bank
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/internet-over-time-1.png" alt="(ref:internet-over-time)" width="816" />
+<img src="visualizing_amounts_files/figure-html/internet-over-time-1.png" alt="(ref:internet-over-time)" width="816" />
 <p class="caption">(\#fig:internet-over-time)(ref:internet-over-time)</p>
 </div>
 
-As is the case with all other visualization approaches discussed in this chapter, we need to pay attention to the ordering of the categorical data values when making heatmaps. In Figure \@ref(fig:internet-over-time), countries are ordered by the percentage of internet users in 2016. This ordering places the United Kingdom, Japan, Canada, and Germany above the United States, because all these countries have higher internet penetration in 2016 than the United States does, even though the United States saw significant internet use at an earlier time. Alternatively, we could order countries by how early they started to see significant internet usage. In Figure \@ref(fig:internet-over-time2), countries are ordered by the year in which internet usage first rose to above 20%. In this figure, the United States fall into the third position from the top, and they stand out for having relatively low internet usage in 2016 compared to how early they started. A similar pattern can be seen for Italy. Israel and France, by contrast, started relatively late but gained ground rapidly.
+As is the case with all other visualization approaches discussed in this chapter, we need to pay attention to the ordering of the categorical data values when making heatmaps. In Figure \@ref(fig:internet-over-time), countries are ordered by the percentage of internet users in 2016. This ordering places the United Kingdom, Japan, Canada, and Germany above the United States, because all these countries have higher internet penetration in 2016 than the United States does, even though the United States saw significant internet use at an earlier time. Alternatively, we could order countries by how early they started to see significant internet usage. In Figure \@ref(fig:internet-over-time2), countries are ordered by the year in which internet usage first rose to above 20%. In this figure, the United States falls into the third position from the top, and it stands out for having relatively low internet usage in 2016 compared to how early internet usage started there. A similar pattern can be seen for Italy. Israel and France, by contrast, started relatively late but gained ground rapidly.
 
 (ref:internet-over-time2) Internet adoption over time, for select countries. Countries were ordered by the year in which their internet usage first exceeded 20%. Data source: World Bank
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_amounts_files/figure-html4/internet-over-time2-1.png" alt="(ref:internet-over-time2)" width="816" />
+<img src="visualizing_amounts_files/figure-html/internet-over-time2-1.png" alt="(ref:internet-over-time2)" width="816" />
 <p class="caption">(\#fig:internet-over-time2)(ref:internet-over-time2)</p>
 </div>
 

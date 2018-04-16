@@ -22,10 +22,10 @@ Bar plots
 To motivate the concept of a bar plot, consider the total ticket sales
 for the most popular movies on a given weekend. Table
 @ref(tab:boxoffice-gross) shows the top-five weekend gross ticket sales
-on the Christmas weekend of 2017. The movie ``Star Wars: The Last Jedi''
+on the Christmas weekend of 2017. The movie "Star Wars: The Last Jedi"
 was by far the most popular movie on that weekend, outselling the
-fourth- and fifth-ranked movies ``The Greatest Showman'' and
-``Ferdinand'' by almost a factor of 10.
+fourth- and fifth-ranked movies "The Greatest Showman" and "Ferdinand"
+by almost a factor of 10.
 
 .(#tab:boxoffice-gross)Highest grossing movies for the weekend of
 December 22-24, 2017. Data source: Box Office Mojo
@@ -42,7 +42,7 @@ December 22-24, 2017. Data source: Box Office Mojo
 
 This kind of data is commonly visualized with vertical bars. For each
 movie, we draw a bar that starts at zero and extends all the way to the
-dollar value for that movie’s weekend gross (Figure
+dollar value for that movie's weekend gross (Figure
 @ref(fig:boxoffice-vertical)). This visualization is called a _bar plot_
 or _bar chart_. Bar plots are most effective if, as is the case here,
 the bars are placed in order such that the values are continuously
@@ -62,7 +62,7 @@ horizontal space, we could place the bars closer together and rotate the
 labels (Figure @ref(fig:boxoffice-rot-axis-tick-labels)). However, I am
 not a big proponent of rotated labels. I find the resulting plots
 awkward and difficult to read. And, in my experience, whenever the
-labels are too long to place horizontally they also don’t look good
+labels are too long to place horizontally they also don't look good
 rotated.
 
 (ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the
@@ -102,7 +102,7 @@ are arranged in order of their size.
 (ref:boxoffice-horizontal-bad-order) Highest grossing movies for the
 weekend of December 22-24, 2017, displayed as a horizontal bar plot.
 Here, the bars have been placed in descending order of the lengths of
-the movie titles. This arrangement of bars is arbitrary, it doesn’t
+the movie titles. This arrangement of bars is arbitrary, it doesn't
 serve a meaningful purpose, and it makes the resulting figure much less
 intuitive than Figure @ref(fig:boxoffice-horizontal). Data source: Box
 Office Mojo (http://www.boxofficemojo.com/). Used with permission
@@ -119,7 +119,7 @@ order of increasing age. Sorting by bar height while shuffling the age
 groups makes no sense (Figure @ref(fig:income-by-age-sorted)).
 
 (ref:income-by-age) 2016 median U.S. annual household income versus age
-group. The 45–54 year age group has the highest median income. Data
+group. The 45--54 year age group has the highest median income. Data
 source: United States Census Bureau
 
 (#fig:income-by-age)(ref:income-by-age)
@@ -190,7 +190,7 @@ for different bar colors.
 income versus age group and race. Instead of displaying this data as a
 grouped bar plot, as in Figures @ref(fig:income-by-age-race-dodged) and
 @ref(fig:income-by-race-age-dodged), we now show the data as four
-separate regular bar plots. This choice has the advantage that we don’t
+separate regular bar plots. This choice has the advantage that we don't
 need to encode either categorical variable by bar color. Data source:
 United States Census Bureau
 
@@ -234,7 +234,7 @@ Whenever a plot is meant to display only a small number of different
 values, it makes sense to add the actual numbers to the plot. This
 substantially increases the amount of information conveyed by the plot
 without adding much visual noise, and it removes the need for an
-explicity axis.
+explicit _y_ axis.
 
 [[dot-plots-and-heatmaps]]
 Dot plots and heatmaps
@@ -256,7 +256,7 @@ the axis range to the interval from 60 to 81 years, the figure
 highlights the key features of this dataset: Canada has the highest life
 expectancy among all listed countries, and Bolivia and Haiti have much
 lower life expectancies than all other countries. If we had used bars
-instead of dots (Figure @ref(fig:Americas-life-expect-bars)), we’d have
+instead of dots (Figure @ref(fig:Americas-life-expect-bars)), we'd have
 made a much less compelling figure. Because the bars are so long in this
 figure, and they all have nearly the same length, the eye is drawn to
 the middle of the bars rather than to their end points, and the figure
@@ -279,7 +279,7 @@ Regardless of whether we use bars or dots, however, we need to pay
 attention to the ordering of the data values. In Figures
 @ref(fig:Americas-life-expect) and @ref(fig:Americas-life-expect-bars),
 the countries are ordered in descending order of life expectancy. If we
-instead ordered them alphabetically, we’d end up with a disordered cloud
+instead ordered them alphabetically, we'd end up with a disordered cloud
 of points that is confusing and fails to convey a clear message (Figure
 @ref(fig:Americas-life-expect-bad)).
 
@@ -305,7 +305,7 @@ dots, we can map data values onto colors. Such a figure is called a
 _heatmap_. Figure @ref(fig:internet-over-time) uses this approach to
 show the percentage of internet users over time in 20 countries and for
 23 years, from 1994 to 2016. While this visualization makes it harder to
-determine the exact data values shown (e.g., what’s the exact percentage
+determine the exact data values shown (e.g., what's the exact percentage
 of internet users in the United States in 2015?), it does an excellent
 job of highlighting broader trends. We can see clearly in which
 countries internet use began early and which it did not, and we can also
@@ -331,10 +331,11 @@ time. Alternatively, we could order countries by how early they started
 to see significant internet usage. In Figure
 @ref(fig:internet-over-time2), countries are ordered by the year in
 which internet usage first rose to above 20%. In this figure, the United
-States fall into the third position from the top, and they stand out for
-having relatively low internet usage in 2016 compared to how early they
-started. A similar pattern can be seen for Italy. Israel and France, by
-contrast, started relatively late but gained ground rapidly.
+States falls into the third position from the top, and it stands out for
+having relatively low internet usage in 2016 compared to how early
+internet usage started there. A similar pattern can be seen for Italy.
+Israel and France, by contrast, started relatively late but gained
+ground rapidly.
 
 (ref:internet-over-time2) Internet adoption over time, for select
 countries. Countries were ordered by the year in which their internet
