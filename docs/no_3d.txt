@@ -81,8 +81,8 @@ they should be avoided.
 
 Consider a 3D scatter plot of fuel efficiency versus displacement and
 power for 32 cars. We have seen this dataset previously in Chapter
-@ref(aesthetic-mapping), Figure @ref(mtcars-five-scale). Here, we plot
-displacement along the _x_ axis, power along the _y_ axis, and fuel
+@ref(aesthetic-mapping), Figure @ref(fig:mtcars-five-scale). Here, we
+plot displacement along the _x_ axis, power along the _y_ axis, and fuel
 efficiency along the _z_ axis, and we represent each car with a dot
 (Figure @ref(fig:mtcars-3d)). Even though this 3D visualization is shown
 from four different perspectives, it is difficult to envision how
@@ -141,7 +141,7 @@ space. It is rarely necessary to add a third dimension as a position
 scale, since variables can also be mapped onto color, size, or shape
 scales. For example, in Chapter @ref(aesthetic-mapping), I plotted five
 variables of the fuel-efficency dataset at once yet used only two
-position scales (Figure @ref(mtcars-five-scale)).
+position scales (Figure @ref(fig:mtcars-five-scale)).
 
 Here, I want to show two alternative ways of plotting exactly the
 variables used in Figure @ref(fig:mtcars-3d). First, if we primarily
