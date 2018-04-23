@@ -1,0 +1,35 @@
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+# run setup script
+source("_common.R")
+```
+
+# Visualizing associations among two or more quantitative variables {#visualizing-associations}
+
+Outline:
+
+- Basic x-y scatter plot
+- Very dense plots: 2d histograms or contour lines (maybe `faithful`?)
+- More than 2 variables: Map to color or size, or make matrix of x-y plots
+- Correlation matrix (pottery or bumpus dataset?)
+- PCA (pottery dataset?)
+- Paired data (diagonal plot, parallel dots plot)
+
+```{r}
+ggplot(diamonds, aes(carat, price)) + 
+  geom_point(size = 0.1) + 
+  geom_density2d() +
+  scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
+  scale_y_log10(limits = c(300, 20000),
+                breaks = c(300, 1000, 3000, 10000)) +
+  theme_dviz_grid()
+```
+
+```{r}
+ggplot(diamonds, aes(carat, price)) + 
+  geom_bin2d(bins = 100) +
+  scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
+  scale_y_log10(limits = c(300, 20000),
+                breaks = c(300, 1000, 3000, 10000)) +
+  scale_fill_viridis_c(option = "B", begin = 0.2) +
+  theme_dviz_grid()
+```

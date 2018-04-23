@@ -14,13 +14,13 @@ rmd_files: [
   "color_basics.Rmd", # completed
   "directory_of_visualizations.Rmd",
   "visualizing_amounts.Rmd", # completed
-  "paired_data.Rmd",
-  "time_series.Rmd",
   "visualizing_distributions_I.Rmd", # completed
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
   "nested_proportions.Rmd",
+  "visualizing_associations.Rmd",
+  "time_series.Rmd",
   "visualizing_trends.Rmd",
   "visualizing_uncertainty.Rmd",
   "geospatial_data.Rmd",

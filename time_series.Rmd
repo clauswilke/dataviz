@@ -6,7 +6,7 @@ library(ggridges)
 library(lubridate)
 ```
 
-# Visualizing time series {#time-series}
+# Visualizing time series and other functions of an independent variable {#time-series}
 
 ```{r}
 preprint_growth %>% filter(archive == "bioRxiv") %>%
@@ -132,5 +132,5 @@ p
 
 Other types of time-series visualizations:
 
-- x-y plane with lines connecting subsequent time points
-- bubbles along x axis, maybe use earthquake data? http://www.ldeo.columbia.edu/~felixw/NCAeqDD/
+- x-y plane with lines connecting subsequent time points, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
+- bubbles along x axis, maybe use earthquake data? http://www.ldeo.columbia.edu/~felixw/NCAeqDD/ Or school shootings https://github.com/washingtonpost/data-school-shootings
