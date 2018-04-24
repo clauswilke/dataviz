@@ -115,7 +115,7 @@ texas_income %>%
   theme(legend.title.align = 0.5,
         legend.text.align = 0.5,
         legend.justification = c(0, 0),
-        legend.position = c(0, 0.1))
+        legend.position = c(0.02, 0.1))
 ```
 
 In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show those with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a *diverging* color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure \@ref(fig:diverging-scales)). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.
@@ -160,7 +160,7 @@ select(texas_income, -NAME, -variable, -estimate, -moe) %>%
   theme(legend.title.align = 0.5,
         legend.text.align = 0.5,
         legend.justification = c(0, 0),
-        legend.position = c(0, 0.1))
+        legend.position = c(0.02, 0.1))
 ```
 
 

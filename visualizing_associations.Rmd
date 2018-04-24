@@ -19,9 +19,9 @@ Outline:
 
 ```{r}
 ggplot(diamonds, aes(carat, price)) + 
-  geom_point(size = 0.1) + 
-  geom_density2d() +
-  scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
+  geom_point(size = 0.1, color = darken("#E9F2D5", .1), alpha = 0.5) + 
+  geom_density2d(color = "#2D3184", size = 0.25) +
+  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
   #facet_grid(color~clarity) +
@@ -30,20 +30,25 @@ ggplot(diamonds, aes(carat, price)) +
 
 ```{r}
 ggplot(diamonds, aes(carat, price)) + 
-  geom_bin2d(bins = 100) +
-  scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
+  geom_bin2d(bins = 50) +
+  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
-  scale_fill_viridis_c(option = "B", begin = 0.1) +
-  theme_dviz_grid()
+  scale_fill_continuous_sequential("Blue-Yellow", rev = TRUE, begin = 0) +
+  theme_dviz_grid() +
+  theme(legend.position = c(0.9, 0.4),
+        legend.justification = c(1, 0.5),
+        legend.box.background = element_rect(fill = "white",
+                                             color = NA),
+        legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
 ```
 
 
 
-```{r fig.width = 4.5, fig.asp = 1}
-df <- MASS::fgl
+```{r fig.width = 4., fig.asp = 1}
+forensic_glass <- MASS::fgl
 
-cm <- cor(select(df, -type, -RI))
+cm <- cor(select(forensic_glass, -type, -RI, -Si))
 df_wide <- as.data.frame(cm)
 df_long <- stack(df_wide)
 names(df_long) <- c("cor", "var1")
@@ -78,7 +83,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
-```{r fig.width = 4.5, fig.asp = 1}
+```{r fig.width = 4., fig.asp = 1}
 ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
        aes(var1, var2, fill=cor, size = abs(cor))) + 
   geom_point(shape = 21, stroke = 0) + 
@@ -104,4 +109,64 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
         legend.justification = c(1, 0),
         legend.title.align = 0.5)
 
+```
+
+
+```{r}
+select(forensic_glass, -type, -RI, -Si) %>%
+  scale() %>%
+  prcomp() -> pca
+
+pca_data <- data.frame(pca$x, type = forensic_glass$type) %>%
+  mutate(type = case_when(
+    type == "WinF" ~ "window",
+    type == "WinNF" ~ "window",
+    type == "Veh" ~ "window",
+    type == "Con" ~ "container",
+    type == "Tabl" ~ "tableware",
+    type == "Head" ~ "headlamp"
+  )) %>%
+  mutate(type = factor(type, levels = c("headlamp", "tableware", "container", "window")))
+
+colors = darken(c("#D55E00", "#0072B2", "#009E73", "#E69F00"), .3)
+fills = c("#D55E0040", "#0072B240", "#009E7340", "#E69F0040")
+
+ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type)) + 
+  geom_point() +
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = fills) +
+  scale_shape_manual(values = c(22:24, 21)) +
+  scale_x_continuous(name = "PC 1") +
+  scale_y_continuous(name = "PC 2") +
+  theme_dviz_grid()
+```
+
+```{r fig.width = 4.5, fig.asp = 1}
+rotation_data <- data.frame(pca$rotation, type = row.names(pca$rotation))
+
+rotation_labels <- data.frame(type = c("Ba", "Al", "Na", "K", "Fe", "Ca", "Mg"),
+                              hjust = c(1, 1, 1, 0.5, 0, 0.5, 0),
+                              vjust = c(0.5, 0.5, 1, 1, 0.5, 0, 0.5),
+                              nudge_x = c(-0.01, -0.01, 0.01, 0, .01, 0, .01),
+                              nudge_y = c(0, 0, -.01, -.01, 0, .01, 0))
+
+rotation_data <- left_join(rotation_data, rotation_labels, by = "type")
+
+arrow_style <- arrow(length = unit(0.05, "inches"),
+                     type = "closed")
+ggplot(rotation_data) + 
+  geom_segment(aes(xend = PC1, yend = PC2),
+               x = 0, y = 0,
+               arrow = arrow_style,
+               color = "#0072B2",
+               fill = "#0072B2") + 
+  geom_text(aes(x = PC1 + nudge_x, y = PC2 + nudge_y, label = type,
+                hjust = hjust, vjust = vjust),
+            size = 12/.pt, color = darken('#D55E00', .3),
+            family = dviz_font_family) + 
+  scale_x_continuous(limits = c(-.8, .8), name = "PC 1") + 
+  scale_y_continuous(limits = c(-.7, .8), breaks = c(-0.5, 0, .5),
+                     name = "PC 2") +
+  coord_fixed() +
+  theme_dviz_grid()
 ```
