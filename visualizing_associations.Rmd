@@ -1,6 +1,9 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(dplyr)
+library(tidyr)
 ```
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
@@ -21,6 +24,7 @@ ggplot(diamonds, aes(carat, price)) +
   scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
+  #facet_grid(color~clarity) +
   theme_dviz_grid()
 ```
 
@@ -30,6 +34,74 @@ ggplot(diamonds, aes(carat, price)) +
   scale_x_continuous(limits = c(0, 5.1), expand = c(0, 0)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
-  scale_fill_viridis_c(option = "B", begin = 0.2) +
+  scale_fill_viridis_c(option = "B", begin = 0.1) +
   theme_dviz_grid()
+```
+
+
+
+```{r fig.width = 4.5, fig.asp = 1}
+df <- MASS::fgl
+
+cm <- cor(select(df, -type, -RI))
+df_wide <- as.data.frame(cm)
+df_long <- stack(df_wide)
+names(df_long) <- c("cor", "var1")
+df_long <- cbind(df_long, var2 = rep(rownames(cm), length(rownames(cm))))
+clust <- hclust(as.dist(1-cm), method="average") 
+levels <- clust$labels[clust$order]
+df_long$var1 <- factor(df_long$var1, levels = levels)
+df_long$var2 <- factor(df_long$var2, levels = levels)
+ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+       aes(var1, var2, fill=cor)) + 
+  geom_tile(color = "white", size = 1) + 
+  scale_x_discrete(position = "top", name = NULL, expand = c(0, 0)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0)) +
+  scale_fill_continuous_carto(
+    palette = "Earth", rev = TRUE,
+    limits = c(-.5, .5), breaks = c(-.5, 0, .5),
+    name = "correlation",
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      barwidth = grid::unit(140, "pt"),
+      barheight = grid::unit(17.5, "pt"))) +
+  coord_fixed() +
+  theme_dviz_open(rel_small = 1) +
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.length = grid::unit(3, "pt"),
+        legend.position = c(.97, .0),
+        legend.justification = c(1, 0),
+        legend.title.align = 0.5)
+
+```
+
+```{r fig.width = 4.5, fig.asp = 1}
+ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+       aes(var1, var2, fill=cor, size = abs(cor))) + 
+  geom_point(shape = 21, stroke = 0) + 
+  scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  scale_size_area(max_size = 19, limits = c(0, 0.5), guide = "none") +
+  scale_fill_continuous_carto(
+    palette = "Earth", rev = TRUE,
+    limits = c(-.5, .5), breaks = c(-.5, 0, .5),
+    name = "correlation",
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      barwidth = grid::unit(140, "pt"),
+      barheight = grid::unit(17.5, "pt"))) +
+  coord_fixed() +
+  theme_dviz_open(rel_small = 1) +
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.length = grid::unit(3, "pt"),
+        legend.position = c(.97, .0),
+        legend.justification = c(1, 0),
+        legend.title.align = 0.5)
+
 ```
