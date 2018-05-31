@@ -17,16 +17,51 @@ Outline:
 - PCA (pottery dataset?)
 - Paired data (diagonal plot, parallel dots plot)
 
+
+(ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data Source: Keith Tarvin, Oberlin College
+
+```{r blue-jays-scatter, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter)'}
+ggplot(blue_jays, aes(Mass, Head)) + 
+  geom_point(pch = 21, fill = "#0072B2", color = "white", size = 2.5) +
+  scale_x_continuous(name = "body mass (g)") +
+  scale_y_continuous(name = "head length (mm)") +
+  theme_dviz_grid()
+```
+
+(ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data Source: Keith Tarvin, Oberlin College
+
+```{r blue-jays-scatter-sex, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-sex)'}
+ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white", size = 2.5) +
+  scale_x_continuous(name = "body mass (g)") +
+  scale_y_continuous(name = "head length (mm)") +
+  scale_fill_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    breaks = c("F", "M"),
+    labels = c("female birds   ", "male birds"),
+    name = NULL,
+    guide = guide_legend(direction = "horizontal")) +
+  theme_dviz_grid() +
+  theme(
+    legend.position = c(1, 0.01),
+    legend.justification = c(1, 0),
+    legend.spacing.x = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt")
+  )
+```
+
+
 ```{r}
-ggplot(diamonds, aes(carat, price)) + 
-  geom_point(size = 0.1, color = darken("#E9F2D5", .1), alpha = 0.5) + 
-  geom_density2d(color = "#2D3184", size = 0.25) +
+p <- ggplot(diamonds, aes(carat, price)) + 
+  geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5) + 
+  geom_density2d(color = "#035F33", size = 0.25) +
   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
-  #facet_grid(color~clarity) +
   theme_dviz_grid()
 ```
+
 
 ```{r}
 ggplot(diamonds, aes(carat, price)) + 
@@ -34,7 +69,7 @@ ggplot(diamonds, aes(carat, price)) +
   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
-  scale_fill_continuous_sequential("Blue-Yellow", rev = TRUE, begin = 0) +
+  scale_fill_continuous_sequential("Green-Yellow", rev = TRUE, begin = 0) +
   theme_dviz_grid() +
   theme(legend.position = c(0.9, 0.4),
         legend.justification = c(1, 0.5),
@@ -46,8 +81,6 @@ ggplot(diamonds, aes(carat, price)) +
 
 
 ```{r fig.width = 4., fig.asp = 1}
-forensic_glass <- MASS::fgl
-
 cm <- cor(select(forensic_glass, -type, -RI, -Si))
 df_wide <- as.data.frame(cm)
 df_long <- stack(df_wide)
@@ -170,3 +203,9 @@ ggplot(rotation_data) +
   coord_fixed() +
   theme_dviz_grid()
 ```
+
+## Paired data
+
+Mention: x vs y plot is good for large numbers of observations and to show overall patterns, parallel plot (name?) is good when we have small number of observations and are primarily interested in the specific identity.
+
+Maybe do 2 x vs y plots, because they are so important; do one with direct labeling highlight a specific case.
