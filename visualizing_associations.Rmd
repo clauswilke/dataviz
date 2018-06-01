@@ -4,6 +4,7 @@ source("_common.R")
 
 library(dplyr)
 library(tidyr)
+library(ggrepel)
 ```
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
@@ -18,7 +19,7 @@ Outline:
 - Paired data (diagonal plot, parallel dots plot)
 
 
-(ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data Source: Keith Tarvin, Oberlin College
+(ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-scatter, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter)'}
 ggplot(blue_jays, aes(Mass, Head)) + 
@@ -28,7 +29,7 @@ ggplot(blue_jays, aes(Mass, Head)) +
   theme_dviz_grid()
 ```
 
-(ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data Source: Keith Tarvin, Oberlin College
+(ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-scatter-sex, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-sex)'}
 ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) + 
@@ -50,6 +51,10 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     legend.key.width = unit(10, "pt")
   )
 ```
+
+After these two figures, do one with varying point sizes and one with small multiples of various quantities plotted against each other.
+
+For overlapping points section, show birds as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
 
 
 ```{r}
@@ -209,3 +214,46 @@ ggplot(rotation_data) +
 Mention: x vs y plot is good for large numbers of observations and to show overall patterns, parallel plot (name?) is good when we have small number of observations and are primarily interested in the specific identity.
 
 Maybe do 2 x vs y plots, because they are so important; do one with direct labeling highlight a specific case.
+
+(ref:gene-expression) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene *9* was deleted, and this resulted in reduced mRNA abundances of gene *9* as well as the neighboring genes *8* and *10A* (highlighted). Data source: **reference needed. Paff et al. 2018.**
+
+```{r gene-expression, fig.width = 5, fig.asp = 0.9, fig.cap = '(ref:gene-expression)'}
+df_segment <- data.frame(
+  x = c(3.2e-4, 2e-4), 
+  xend = c(3.2e-1, 2e-4),
+  y = c(2e-4, 3.2e-4),
+  yend = c(2e-4, 3.2e-1)
+)
+
+gene_expression %>% 
+  filter(strain == "phi9v2" & background == "wt") %>%
+  ggplot(aes(x=tpm_wt, y=tpm_mutant)) +
+  geom_abline(slope = 1, color = "grey") +
+  geom_point(pch = 21, fill = "#0072B2D0", color = "white", size = 2.5) +
+  geom_text_repel(
+    aes(label = label),
+    nudge_y = -0.005,
+    fontface = "italic",
+    family = "Myriad Pro",
+    size = 12/.pt,
+    segment.color = NA) +
+  geom_segment(
+    data = df_segment,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    size = 0.5, inherit.aes = FALSE) +
+  scale_x_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "wild-type mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  scale_y_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "mutant mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  coord_fixed(expand = FALSE, clip = "off") +
+  theme_dviz_open() +
+  theme(axis.line = element_blank())
+```

@@ -12,7 +12,7 @@ Topics to cover:
 - exponential growth
 - averaging/detrending? Use `CO2` dataset?
 
-(ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data Source: Keith Tarvin, Oberlin College
+(ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-scatter-line, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-line)'}
 ggplot(blue_jays, aes(Mass, Head, color = KnownSex, fill = KnownSex)) + 
