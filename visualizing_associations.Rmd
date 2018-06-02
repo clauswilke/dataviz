@@ -106,7 +106,7 @@ labels <- c(
 )
 
 ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) + 
-  geom_point(pch = 21, color = "white", size = 2) +
+  geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
   scale_x_continuous(expand = expand_scale(mult = 0.1),
                      breaks = scales::pretty_breaks(4, min.n = 3)) +
   scale_y_continuous(expand = expand_scale(mult = 0.1),
@@ -149,21 +149,19 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 ```
 After these two figures, do one with varying point sizes and one with small multiples of various quantities plotted against each other.
 
-For overlapping points section, show birds as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
 
 
-```{r}
-p <- ggplot(diamonds, aes(carat, price)) + 
+```{r eval = FALSE}
+# For overlapping points section, show birds as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
+
+ggplot(diamonds, aes(carat, price)) + 
   geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5) + 
   geom_density2d(color = "#035F33", size = 0.25) +
   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
   theme_dviz_grid()
-```
 
-
-```{r}
 ggplot(diamonds, aes(carat, price)) + 
   geom_bin2d(bins = 50) +
   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
@@ -178,7 +176,35 @@ ggplot(diamonds, aes(carat, price)) +
         legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
 ```
 
+```{r correlations, fig.asp = 283/434}
+r <- c(.2, .6, .9, -.2, -.6, -.9)
+labels_df <- tibble(
+  r = factor(r, levels = r),
+  label = paste0("r = ", r),
+  x = c(-2.3, -2.3, -2.3, 2.3, 2.3, 2.3),
+  hjust = c(0, 0, 0, 1, 1, 1),
+  y = 2.3
+)
 
+ggplot(correlation_examples, aes(x, y)) + 
+  geom_point(pch = 21, color = "white", size = 2, fill = "#0072B2") + 
+  geom_text(
+    data = labels_df,
+    aes(label = label, hjust = hjust),
+    vjust = 1,
+    family = "Myriad Pro",
+    size = 12/.pt
+  ) +
+  facet_wrap(~r) +
+  coord_fixed(xlim = c(-2.5, 2.5), ylim = c(-2.5, 2.5), expand = FALSE, clip = "off") +
+  theme_dviz_map() +
+  theme(
+    strip.text = element_blank(),
+    panel.spacing = grid::unit(12, "pt"),
+    plot.margin = margin(3.5, 1, 3.5, 1)
+  ) +
+  panel_border(colour = "grey80", size = 0.5)
+```
 
 ```{r fig.width = 4., fig.asp = 1}
 cm <- cor(select(forensic_glass, -type, -RI, -Si))
@@ -353,3 +379,6 @@ gene_expression %>%
   theme_dviz_open() +
   theme(axis.line = element_blank())
 ```
+
+
+For remainder of the chapter, use CO2 emission data.
