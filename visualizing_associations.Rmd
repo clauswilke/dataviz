@@ -93,6 +93,60 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
   )
 ```
 
+```{r fig.asp = 3/4}
+blue_jays %>% select(BirdID, KnownSex, Head, Mass, Skull) %>%
+  gather(var_x, val_x, Head:Skull) %>%
+  left_join(select(blue_jays, BirdID, Head, Mass, Skull)) %>%
+  gather(var_y, val_y, Head:Skull) -> bj_matrix
+
+labels <- c(
+  Head = "head length (mm)",
+  Mass = "body mass (g)",
+  Skull = "skull size (mm)"
+)
+
+ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white", size = 2) +
+  scale_x_continuous(expand = expand_scale(mult = 0.1),
+                     breaks = scales::pretty_breaks(4, min.n = 3)) +
+  scale_y_continuous(expand = expand_scale(mult = 0.1),
+                     breaks = scales::pretty_breaks(4, min.n = 3)) +
+  scale_fill_manual(
+    values = c(F = "#D55E00D0", M = "#0072B2D0"),
+    breaks = c("F", "M"),
+    labels = c("female birds   ", "male birds"),
+    name = NULL,
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(size = 2.5)
+      )
+    ) +
+  labs(x = NULL, y = NULL) +
+  facet_grid(
+    var_y ~ var_x,
+    scales = "free",
+    switch = "both",
+    labeller = labeller(
+      var_x = labels,
+      var_y = labels
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_grid() +
+  panel_border(colour = "grey90", size = 0.5) +
+  theme(
+    strip.placement = "outside",
+    strip.text.x = element_text(vjust = 1, margin = margin(0, 0, 0, 0)),
+    strip.text.y = element_text(vjust = 0, angle = -90),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.text = element_text(vjust = 0.6),
+    legend.position = "top",
+    legend.justification = "right",
+    legend.spacing.x = unit(2, "pt"),
+    legend.key.width = unit(10, "pt"),
+    plot.margin = margin(3.5, 1, 3.5, 0)
+  )
+```
 After these two figures, do one with varying point sizes and one with small multiples of various quantities plotted against each other.
 
 For overlapping points section, show birds as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
