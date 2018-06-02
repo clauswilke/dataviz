@@ -23,7 +23,7 @@ Outline:
 
 ```{r blue-jays-scatter, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter)'}
 ggplot(blue_jays, aes(Mass, Head)) + 
-  geom_point(pch = 21, fill = "#0072B2", color = "white", size = 2.5) +
+  geom_point(pch = 21, fill = "gray25", color = "white", size = 2.5) +
   scale_x_continuous(name = "body mass (g)") +
   scale_y_continuous(name = "head length (mm)") +
   theme_dviz_grid()
@@ -41,14 +41,55 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     breaks = c("F", "M"),
     labels = c("female birds   ", "male birds"),
     name = NULL,
-    guide = guide_legend(direction = "horizontal")) +
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(size = 3)
+      )
+    ) +
   theme_dviz_grid() +
   theme(
+    legend.text = element_text(vjust = 0.6),
     legend.position = c(1, 0.01),
     legend.justification = c(1, 0),
     legend.spacing.x = unit(2, "pt"),
     legend.background = element_rect(fill = "white", color = NA),
     legend.key.width = unit(10, "pt")
+  )
+```
+
+
+```{r blue-jays-scatter-bubbles, fig.width = 5, fig.asp = 5/4, fig.cap='(ref:blue-jays-scatter-bubbles)'}
+blue_jays$sex <- ifelse(blue_jays$KnownSex == "F", "female birds", "male birds")
+blue_jays$sex <- factor(blue_jays$sex, levels = c("male birds", "female birds"))
+ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white") +
+  facet_wrap(~sex, ncol = 1, scales = "fixed") +
+  scale_x_continuous(name = "body mass (g)") +
+  scale_y_continuous(name = "head length (mm)", breaks = c(52, 54, 56, 58, 60)) +
+  scale_fill_manual(values = c(F = "#D55E00", M = "#0072B2"), guide = "none") +
+  scale_radius(
+    name = "skull size (mm)",
+    range = c(2, 7),
+    limits = c(28, 34),
+    breaks = c(28, 30, 32, 34),
+    labels = c("28   ", "30   ", "32   ", "34"),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "right",
+      override.aes = list(fill = "gray40")
+    )
+  ) +
+  theme_dviz_grid() +
+  theme(
+    legend.position = c(1, 0.53),
+    legend.justification = c(1, 0),
+    legend.spacing.x = unit(2, "pt"),
+    legend.spacing.y = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt"),
+    strip.text = element_text(size = 14, family = "Myriad Pro Semibold")
   )
 ```
 
@@ -229,12 +270,13 @@ gene_expression %>%
   filter(strain == "phi9v2" & background == "wt") %>%
   ggplot(aes(x=tpm_wt, y=tpm_mutant)) +
   geom_abline(slope = 1, color = "grey") +
-  geom_point(pch = 21, fill = "#0072B2D0", color = "white", size = 2.5) +
+  geom_point(pch = 21, fill = "#0072B2D0", color = "white", size = 3) +
   geom_text_repel(
     aes(label = label),
     nudge_y = -0.005,
     fontface = "italic",
     family = "Myriad Pro",
+    box.padding = 0.35,
     size = 12/.pt,
     segment.color = NA) +
   geom_segment(
