@@ -7,7 +7,140 @@ library(lubridate)
 library(ggrepel)
 ```
 
-# Maximizing the data signal in visualizations {#maximize-data-signal}
+# Optimize the data--ink ratio {#maximize-data-signal}
+
+*The "small axis labels" chapter should be right before this one, so there's continuity.*
+
+We can broadly subdivide the graphical components in any visualization into components that represent data and components that do not. The former are things such as the points in a scatter plot, the bars in a histogram or barplot, and the shaded areas in a heatmap. The latter are things such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. As a general rule, most of the ink in a plot should be devoted to displaying data. Remove unnecessary frames, lines, or other adornments. For non-data elements that can't be removed (such as, for example, a legend), make sure they aren't overly prominent and stand back relative to the data.
+
+(ref:Aus-athletes-grid-bad) Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points.
+
+```{r Aus-athletes-grid-bad, fig.cap='(ref:Aus-athletes-grid-bad)'}
+male_Aus <- filter(Aus_athletes, sex=="m") %>%
+    filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
+                        "track (sprint)", "water polo")) %>%
+    mutate(sport = case_when(sport == "track (400m)" ~ "track",
+                             sport == "track (sprint)" ~ "track",
+                             TRUE ~ sport))
+
+male_Aus$sport <- factor(male_Aus$sport,
+                         levels = c("field", "water polo", "basketball", "swimming", "track"))
+
+p_Aus_base <- ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=sport)) +
+  geom_point(size = 2.5) +
+  scale_shape_manual(values = 21:25) +
+  scale_color_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.3) +
+  scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
+  scale_x_continuous(limits = c(169, 210)) +
+  scale_y_continuous(limits = c(5, 20), name = "% body fat")
+
+p <- p_Aus_base +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    panel.grid.major = element_line(color = "black", size = 0.3),
+    panel.grid.minor = element_line(color = "black", size = 0.15),
+    panel.border = element_rect(color = "black", size = 1),
+    legend.background = element_rect(color = "black", size = 0.5),
+    legend.margin = margin(7, 7, 7, 7),
+    plot.background = element_rect(color = "black", size = 1),
+    plot.margin = margin(7, 7, 7, 7)
+  )
+
+# width: 6 in = 433.62pt
+# height: 0.618 * 6 in = 3.71 in = 268.12
+
+stamp_bad(ggdraw() + draw_plot(p, x = 1/434, y = 1/268, width = 426/434, height = 252/268))
+```
+
+(ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and majore grid lines have been drawn in light gray to stand back relative to the data points.
+
+```{r Aus-athletes-grid-good, fig.cap='(ref:Aus-athletes-grid-good)'}
+p_Aus_base + theme_dviz_grid()
+```
+
+
+The idea that one should remove non-data visual elements from graphs was popularized by Edward Tufte in his book "The Visual Display of Quantitative Information" [@TufteQuantDispl]. Tufte introduces the concept of the "data--ink ratio", which he defines as the "proportion of a graphic's ink devoted to the non-redundant display of data-information." He then writes:
+
+> Maximize the data--ink ratio, *within reason.*
+
+(emphasis mine) I have emphasized the phrase "within reason" because it is critical and frequently forgotten. Removing non-data ink is valuable up to a point. Beyond that point, making a graph more minimal will make it less compelling.
+
+For example, Figure \@ref(fig:Aus-athletes-min-bad) is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good), and a clear regression. Most importantly, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown, we only see points floating in space. (This is a slightly different variant of the problem of small axis labels discussed in Chapter \@ref(small-axis-labels).) Second, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets of the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad) through the deletion of the background grid.
+
+(ref:Aus-athletes-min-bad) Percent body fat versus height in professional male Australian athletes. In this example, the concept of maximizing the data--ink ratio has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data.
+
+```{r Aus-athletes-min-bad, fig.cap='(ref:Aus-athletes-min-bad)'}
+axis_col <- "grey70"
+title_col <- "grey70"
+
+p <- p_Aus_base + theme_dviz_open(11) +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_line(color = axis_col),
+    axis.text = element_text(color = axis_col),
+    axis.title = element_text(color = title_col),
+    legend.text = element_text(color = title_col),
+    legend.title = element_text(color = title_col),
+    plot.margin = margin(3.5, 7, 3.5, 0)
+  )
+
+stamp_bad(p)
+```
+
+
+*The problem of things floating in space becomes further exacerbated for small multiple plots.*
+
+```{r fig.width = 5, fig.asp = 3/4}
+titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
+  ggplot(aes(sex, fill = sex)) + geom_bar() +
+    facet_grid(class ~ surv, scales = "free_x") +
+    scale_x_discrete(name = NULL) + 
+    scale_y_continuous(limits = c(0, 195), expand = c(0, 0)) +
+    scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+    theme_dviz_open(rel_small = 1) +
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          #axis.text.x = element_text(margin = margin(7, 0, 0, 0)),
+          strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
+          strip.background  = element_blank(),
+          plot.margin = margin(3.5, 14, 3.5, 0)) -> p
+
+stamp_bad(p)
+```
+
+```{r fig.width = 5, fig.asp = 3/4}
+colors <- desaturate(lighten(c("#56B4E9", "#56B4E9"), c(.8, -.4)), .8)
+
+titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
+  ggplot(aes(sex, fill = sex)) + geom_bar() +
+    facet_grid(class ~ surv, scales = "free_x") +
+    scale_x_discrete(name = NULL) + 
+    scale_y_continuous(limits = c(0, 195), expand = c(0, 0)) +
+    scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
+    theme_dviz_open(rel_small = 1) +
+    theme(axis.line = element_blank(),
+          #axis.line.y = element_line(color = colors[2]),
+          axis.ticks = element_blank(),
+          axis.ticks.length = grid::unit(0, "pt"),
+          #axis.ticks.y = element_line(color = colors[2]),
+          axis.text.x = element_text(margin = margin(7, 0, 3.5, 0)),
+          axis.text.y = element_text(color = colors[2]),
+          strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
+          strip.background  = element_blank(),
+          panel.background = element_rect(fill = colors[1]),
+          panel.grid.major.y = element_line(color = "white"),
+          plot.margin = margin(3.5, 14, 3.5, 0)) -> p
+
+p
+```
+
+## Background grids
+
+*On grids, cite Stephen Few four circumstances* (https://www.perceptualedge.com/articles/dmreview/grid_lines.pdf)
+
+
+*One important purpose of axis lines: They show clearly what is inside the plot and what is outside. We need either a grid or axis lines, otherwise the plot area is not delineated.* 
 
 
 With the rising popularity of the R package ggplot2, which uses a gray background grid as default, graphs with this style have become widespread. With apologies to ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don't find this style particularly attractive. In general, I find that the gray background detracts from the actual data. As an example, consider Figure \@ref(fig:price-plot-ggplot-default), which shows the stock price of four major tech companies, indexed to their value in June 2012. The grid is too busy, and the gray background in the legend is distracting.
@@ -31,6 +164,7 @@ price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   theme(panel.background = element_rect(fill = "grey90"),
         panel.grid.major = element_line(color = "white"),
         panel.grid.minor = element_line(color = "white", size = rel(0.5)),
+        legend.key = element_rect(fill = "grey90", color = "white"),
         axis.ticks = element_line(color = "black"),
         plot.margin = margin(7, 7, 3, 0))
 
@@ -102,9 +236,10 @@ perc_plot <- ggplot(perc_increase, aes(x=ticker, y=perc)) +
   scale_x_discrete(name = NULL,
                      breaks = c("FB", "GOOG", "MSFT", "AAPL"),
                      labels = c("Facebook ", "Alphabet ", "Microsoft ", "Apple ")) +
-  coord_flip() +
+  coord_flip(clip = "off") +
   theme_dviz_vgrid(rel_small = 1) +
-  theme(axis.ticks = element_blank(),
+  theme(axis.line.y = element_blank(),
+        axis.ticks = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"))
 
 perc_plot
@@ -119,6 +254,41 @@ Grid lines that run perpendicular to the key variable of interest tend to be the
 
 ```{r price-increase-bad, fig.cap='(ref:price-increase-bad)'}
 perc_plot2 <- ggplot(perc_increase, aes(x = ticker, y = perc)) +
+  geom_col(fill = "#56B4E9", width = 0.8) +
+  geom_hline(yintercept = c(100, 200, 300, 400), color = "white", size = 1) +
+  geom_text(
+    aes(label = label), color = "black", hjust = -0.1, size = 5,
+    family = dviz_font_family
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    #name = "percent increase",
+    limits = c(0, 496),
+    expand = c(0, 0)
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+    labels = c("Facebook", "Alphabet", "Microsoft", "Apple")
+  ) +
+  coord_flip() +
+  theme_dviz_vgrid(rel_small = 1) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(color = "black"),
+    panel.grid.major = element_blank(),
+    plot.margin = margin(3, 7, 3, 0)
+  )
+
+stamp_ugly(perc_plot2)
+```
+
+```{r price-increase-old, eval = FALSE}
+axis_col <- "grey50"
+
+perc_plot2 <- ggplot(perc_increase, aes(x = ticker, y = perc)) +
   geom_col(fill = "#56B4E9") +
   geom_hline(yintercept = c(100, 200, 300, 400), color = "white", size = 0.75) +
   geom_text(aes(label = label), color = "black", hjust = -0.1, size = 5,
@@ -131,43 +301,27 @@ perc_plot2 <- ggplot(perc_increase, aes(x = ticker, y = perc)) +
                      labels = c("Facebook", "Alphabet", "Microsoft", "Apple")) +
   coord_flip() +
   theme_dviz_vgrid(rel_small = 1) +
-  theme(axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(color = "black"),
-        axis.line.x = element_line(color = "black"),
-        axis.line.y = element_line(color = "black"),
-        panel.grid.major = element_blank(),
-        plot.margin = margin(3, 7, 3, 0)
-        )
+  theme(
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(color = axis_col),
+    axis.line.x = element_line(color = axis_col),
+    axis.line.y = element_line(color = axis_col),
+    axis.text.x = element_text(color = axis_col),
+    axis.text.y = element_text(color = "black"),
+    axis.title = element_text(color = axis_col),
+    panel.grid.major = element_blank(),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 stamp_ugly(perc_plot2)
 ```
 
 Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:Aus-athletes-grid) provides an example.
 
-(ref:Aus-athletes-grid) Percent body fat versus height in professional male Australian athletes. (Each point represents one athlete.) 
-
-```{r Aus-athletes-grid, fig.cap='(ref:Aus-athletes-grid)'}
-male_Aus <- filter(Aus_athletes, sex=="m") %>%
-    filter(sport %in% c("basketball", "field", "swimming", "track (400m)",
-                        "track (sprint)", "water polo")) %>%
-    mutate(sport = case_when(sport == "track (400m)" ~ "track",
-                             sport == "track (sprint)" ~ "track",
-                             TRUE ~ sport))
-
-male_Aus$sport <- factor(male_Aus$sport,
-                         levels = c("field", "water polo", "basketball", "swimming", "track"))
-
-ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=sport)) +
-    geom_point(size = 2.5) +
-    scale_shape_manual(values = 21:25) +
-    scale_color_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.3) +
-    scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
-    ylab("% body fat") + theme_dviz_grid()
-```
 
 For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. **update following text:** For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad. (*In particular, mention that the deviation of 10A from expeced is not visible in the second figure.*)
 
-(ref:gene-expression) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene *9* was deleted, and this resulted in reduced mRNA abundances of gene *9* as well as the neighboring genes *8* and *10A* (highlighted). Data source: **reference needed. Paff et al. 2018.**
+(ref:gene-expression) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene *9* was deleted, and this resulted in reduced mRNA abundances of gene *9* as well as the neighboring genes *8* and *10A* (highlighted). Data source: @Paffetal2018
 
 ```{r gene-expression, fig.width = 5, fig.asp = 1, fig.cap = '(ref:gene-expression)'}
 df_segment <- data.frame(
@@ -258,53 +412,3 @@ stamp_bad(gene_expression_plot_bad)
 
 In summary, there is no simple choice of background grid that always works. I encourage you to think carefully about which specific grid or guidelines are most informative for the plot you are making, and to only show those. In general, less is more. Too many or overly thick and dark grid lines can distract your reader's attention away from the data you want to show.
 
-
-## Boxes and frames
-
-If we overdo removing boxes, frames, grid lines, etc. then we may end up with a figure where elements seem to float in space and are not connected to each other.
-
-**This chapter probably has to come after multi-part figures if we want to discuss figures such as the next one.**
-
-```{r fig.width = 5, fig.asp = 3/4}
-titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
-  ggplot(aes(sex, fill = sex)) + geom_bar() +
-    facet_grid(class ~ surv, scales = "free_x") +
-    scale_x_discrete(name = NULL) + 
-    scale_y_continuous(limits = c(0, 195), expand = c(0, 0)) +
-    scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-    theme_dviz_open(rel_small = 1) +
-    theme(axis.line.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          #axis.text.x = element_text(margin = margin(7, 0, 0, 0)),
-          strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
-          strip.background  = element_blank(),
-          plot.margin = margin(3.5, 14, 3.5, 0)) -> p
-
-stamp_bad(p)
-```
-
-```{r fig.width = 5, fig.asp = 3/4}
-colors <- desaturate(lighten(c("#56B4E9", "#56B4E9"), c(.8, -.4)), .8)
-
-titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
-  ggplot(aes(sex, fill = sex)) + geom_bar() +
-    facet_grid(class ~ surv, scales = "free_x") +
-    scale_x_discrete(name = NULL) + 
-    scale_y_continuous(limits = c(0, 195), expand = c(0, 0)) +
-    scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
-    theme_dviz_open(rel_small = 1) +
-    theme(axis.line = element_blank(),
-          #axis.line.y = element_line(color = colors[2]),
-          axis.ticks = element_blank(),
-          axis.ticks.length = grid::unit(0, "pt"),
-          #axis.ticks.y = element_line(color = colors[2]),
-          axis.text.x = element_text(margin = margin(7, 0, 3.5, 0)),
-          axis.text.y = element_text(color = colors[2]),
-          strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
-          strip.background  = element_blank(),
-          panel.background = element_rect(fill = colors[1]),
-          panel.grid.major.y = element_line(color = "white"),
-          plot.margin = margin(3.5, 14, 3.5, 0)) -> p
-
-p
-```

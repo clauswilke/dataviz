@@ -133,6 +133,12 @@ p
 Other types of time-series visualizations:
 
 - x-y plane with lines connecting subsequent time points, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
-- bubbles along x axis, maybe use earthquake data? http://www.ldeo.columbia.edu/~felixw/NCAeqDD/ Or school shootings https://github.com/washingtonpost/data-school-shootings
-- For dose-response example, maybe oats (MASS)?
+
+```{r}
+ggplot(filter(house_prices, state == "California", year(date) > 2000),
+        aes(unemploy_perc, house_price_perc)) + geom_path()
+```
+
+
+Also discuss that does-response cases are similar to time series. For that setting, maybe use `oats` from MASS?
 
