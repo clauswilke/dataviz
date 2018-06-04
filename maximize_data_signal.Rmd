@@ -4,6 +4,7 @@ source("_common.R")
 
 library(readr)
 library(lubridate)
+library(ggrepel)
 ```
 
 # Maximizing the data signal in visualizations {#maximize-data-signal}
@@ -164,43 +165,94 @@ ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, shape=sport)) 
     ylab("% body fat") + theme_dviz_grid()
 ```
 
-For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad.
+For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. **update following text:** For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad. (*In particular, mention that the deviation of 10A from expeced is not visible in the second figure.*)
 
-(ref:echave-et-al) Correlations between evolutionary conservation and structural features of sites in 209 proteins. Along the *y* axis, we plot the correlation between evolutonary conservation (measured as evolutionary rate) at individual sites in a protein and the relative solvent accessibility (RSA) of those sites in the protein structure. Along the *x* axis, we plot the correlation between rate and weighted contact number (WCN), a measure for the density of contacts of a site in the protein structure. Each point represents one protein. We see that evolutionary conservation and structural features are highly correlated in some proteins and not very much in others. We also see that WCN, on average, yields somewhat stronger correlations than RSA does. Adapted from @Echave-et-al-2016.
+(ref:gene-expression) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene *9* was deleted, and this resulted in reduced mRNA abundances of gene *9* as well as the neighboring genes *8* and *10A* (highlighted). Data source: **reference needed. Paff et al. 2018.**
 
-```{r echave-et-al, fig.cap='(ref:echave-et-al)'}
-cor_table = read_csv("datasets/Echave_et_al_2016_NRG_correlations.csv")
-nrg_plot <- ggplot(cor_table, aes(y=cor.RSA, x=-cor.WCN)) + 
-  geom_abline(color="#999999") +
-  geom_point(shape=21, color="black", fill="#0072B2", size=2, stroke=0.5) + 
-  scale_x_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7), labels = c("-0.3", "-0.5", "-0.7")) +
-  scale_y_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7)) +
-  coord_fixed() +
-  xlab("rate–WCN correlation") +
-  ylab("rate–RSA correlation") +
-  labs(title = "") +
-  theme_half_open() # add an empty title as a simple trick to move the plot downwards
+```{r gene-expression, fig.width = 5, fig.asp = 1, fig.cap = '(ref:gene-expression)'}
+df_segment <- data.frame(
+  x = c(3.2e-4, 2e-4), 
+  xend = c(3.2e-1, 2e-4),
+  y = c(2e-4, 3.2e-4),
+  yend = c(2e-4, 3.2e-1)
+)
 
-stamp_phantom(plot_grid(nrg_plot, NULL, nrow=1, rel_widths=c(1, 0.2)))
+gene_expression %>% 
+  filter(strain == "phi9v2" & background == "wt") %>%
+  ggplot(aes(x=tpm_wt, y=tpm_mutant)) +
+  geom_abline(slope = 1, color = "grey") +
+  geom_point(pch = 21, fill = "#0072B2D0", color = "white", size = 3) +
+  geom_text_repel(
+    aes(label = label),
+    nudge_y = -0.005,
+    fontface = "italic",
+    family = "Myriad Pro",
+    box.padding = 0.35,
+    size = 12/.pt,
+    segment.color = NA) +
+  geom_segment(
+    data = df_segment,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    size = 0.5, inherit.aes = FALSE) +
+  scale_x_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "wild-type mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  scale_y_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "mutant mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  coord_fixed(expand = FALSE, clip = "off") +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    plot.margin = margin(14, 3.5, 3.5, 0)
+  ) -> gene_expression_plot
+
+gene_expression_plot
 ```
 
 
-(ref:echave-et-al-grid) Correlations between evolutionary conservation and structural features of sites in 209 proteins. By plotting this dataset against a background grid, the systematic shift of all points away from the *x* = *y* line is obscured.
+(ref:gene-expression-bad) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. By plotting this dataset against a background grid, **explain what happens**
 
-```{r echave-et-al-grid, fig.cap='(ref:echave-et-al-grid)'}
-nrg_plot2 <- ggplot(cor_table, aes(y=cor.RSA, x=-cor.WCN)) + 
-  #geom_abline(color="#999999") +
-  geom_point(shape=21, color="black", fill="#0072B2", size=2, stroke=0.5) + 
-  scale_x_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7), labels = c("-0.3", "-0.5", "-0.7")) +
-  scale_y_continuous(limits = c(0.25, 0.78), breaks = c(.3, .5, .7)) +
-  coord_fixed() +
-  xlab("rate–WCN correlation") +
-  ylab("rate–RSA correlation") +
-  labs(title = "") + # add an empty title as a simple trick to move the plot downwards
-  theme_half_open() +
-  background_grid(size.major=0.5)
+```{r gene-expression-bad, fig.width = 5, fig.asp = 1, fig.cap = '(ref:gene-expression-bad)'}
+gene_expression %>% 
+  filter(strain == "phi9v2" & background == "wt") %>%
+  ggplot(aes(x=tpm_wt, y=tpm_mutant)) +
+  geom_point(pch = 21, fill = "#0072B2D0", color = "white", size = 3) +
+  geom_text_repel(
+    aes(label = label),
+    nudge_y = -0.005,
+    fontface = "italic",
+    family = "Myriad Pro",
+    box.padding = 0.35,
+    size = 12/.pt,
+    segment.color = NA) +
+  scale_x_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "wild-type mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  scale_y_log10(
+    limits = c(2e-4, 3.3e-1),
+    name = "mutant mRNA abundance (TPM)",
+    breaks = c(3.2e-4, 1e-3, 3.2e-3, 1e-2, 3.2e-2, 1e-1, 3.2e-1),
+    labels = expression("", 10^-3, "", 10^-2, "", 10^-1, "")
+  ) + 
+  coord_fixed(expand = FALSE, clip = "off") +
+  theme_dviz_open() +
+  theme(
+    panel.grid.major = element_line(colour = "grey80", size = 0.5, linetype = 1),
+    plot.margin = margin(14, 3.5, 3.5, 0)
+  ) -> gene_expression_plot_bad
 
-stamp_bad(plot_grid(nrg_plot2, NULL, nrow=1, rel_widths=c(1, 0.2)))
+
+stamp_bad(gene_expression_plot_bad)
 ```
 
 
@@ -230,6 +282,7 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 
 stamp_bad(p)
 ```
+
 ```{r fig.width = 5, fig.asp = 3/4}
 colors <- desaturate(lighten(c("#56B4E9", "#56B4E9"), c(.8, -.4)), .8)
 
