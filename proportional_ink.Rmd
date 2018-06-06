@@ -18,7 +18,7 @@ Similar issues will arise whenever we use graphical elements such as bars, recta
 
 > **The principle of proportional ink:** The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
 
-Violations of this principle are incredibly common, in particular in the popular press and in the world of finance.
+(It is common practice to use the word "ink" to refer to any part of a visualization that deviates from the background color. This includes lines, points, shared areas, and text. In this chapter, however, we are talking primarily about shaded areas.) Violations of this principle are quite common, in particular in the popular press and in the world of finance.
 
 ## Visualizations along linear axes
 
