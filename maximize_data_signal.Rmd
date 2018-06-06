@@ -149,7 +149,7 @@ Optimize the data--ink ratio
 
 We can't talk about data--ink ratios without touching on background grids, axis lines, axis ticks, and labels. By Tufte's definition, these elements are not data and thus decrease the data--ink ratio. However, they do carry critical information about the data, and hence are not superfluous. In fact, one of the first rules of data visualization is to label your axes. And if labels are required, then making them sufficiently dark and prominent that they are actually visible and decipherable is also a requirement.
 
-Whether a background grid is required is less clear, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background (Figure \@ref(fig:price-plot-ggplot-default)). With apologies to the ggplot2 author Hadley Wickham, who developed this style and for whom I have the utmost respect, I don't find this style particularly attractive. In my experience the gray background frequently detracts from the actual data, and a grid with major and minor lines tends to be too dense. I also find the gray squares in the legend confusing.
+Whether a background grid is required is less clear-cut, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background (Figure \@ref(fig:price-plot-ggplot-default)). With apologies to the ggplot2 author Hadley Wickham, who developed this style and for whom I have the utmost respect, I don't find this style particularly attractive. In my experience the gray background frequently detracts from the actual data, and a grid with major and minor lines tends to be too dense. I also find the gray squares in the legend confusing.
 
 (ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimicks the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data.
 
@@ -177,13 +177,9 @@ price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
 stamp_ugly(price_plot)
 ```
 
+Arguments in favor of the gray background include that it (i) helps the plot to be perceived as a single visual entity and that it (ii) prevents the plot to appear as a white box in surrounding dark text [@Wickham2016]. I completely agree with the first point, and it was the reason I used a gray background in Figure \@ref(fig:titanic-survival-by-gender-class). For the second point, I'd like to caution that the perceived darkness of text will depend on the font size, fontface, and line spacing. A scientific paper typeset in dense, 10-point Times New Roman will look very different from a coffee-table book typeset in 14-point Palatino with one-and-a-half line spacing. If you want to use a gray background, consider the expected layout and typography of the text around your figures and adjust the choice of background gray accordingly. Otherwise, it could happen that your figures end up standing out as gray boxes among the surrounding lighter text. Also, keep in mind that the colors you use to plot your data need to work with the gray background. We tend to perceive colors differently against different backgrounds, and a gray background requires darker and more saturated foreground colors than a white background.
 
-*argument about the gray background: it creates a similar shading as text.* keep in mind that the perceived grayness of text will depend on the font size, fontface, and line spacing. A scientific paper typeset in dense, 10-point Times New Roman will look very different from a coffee-table book typeset in 14-point Palatino with one-and-a-half line spacing.
-
-*also talk about color choice; a gray background requires stronger colors than a white background.*
-
-
-We could try to remove the grid altogether, but I think that is a worse option (Figure \@ref(fig:price-plot-no-grid)). Now the curves seem to just float in space, and it's difficult to see where they go. In addition, since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at *y* = 100 (Figure \@ref(fig:price-plot-refline)).
+We can go all the way in the opposite direction and remove both the background and the grid lines (Figure \@ref(fig:price-plot-no-grid)). In this case, we need visible axis lines to frame the plot and keep it as a single visual unit. For this particular figure, I think this choice is a worse option, and I have labeled it as "bad". In the absence of any background grid whatsoever, the curves seem to just float in space, and it's difficult to see where they go.
 
 (ref:price-plot-no-grid) Indexed stock price over time for four major tech companies.
 
@@ -192,6 +188,10 @@ stamp_bad(price_plot +
             theme_dviz_open() +
             theme(plot.margin = margin(7, 7, 3, 0)))
 ```
+
+**edit from here.**
+
+Since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at *y* = 100 (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
 
 (ref:price-plot-refline) Indexed stock price over time for four major tech companies.
 
@@ -215,7 +215,6 @@ price_plot2 <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
 price_plot2
 ```
 
-Alternatively, we can use just a minimal grid. In particular, for a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin (Figure \@ref(fig:price-plot-hgrid)).
 
 (ref:price-plot-hgrid) Indexed stock price over time for four major tech companies.
 
@@ -328,6 +327,8 @@ stamp_ugly(perc_plot2)
 ```
 
 Background grids along both axis directions can make sense, however, for scatter plots where there is no primary axis of interest. This presentation frequently looks best without axis lines. Figure \@ref(fig:Aus-athletes-grid) provides an example.
+
+**Mention additive vs. subtractive mental model.**
 
 
 For figures where the relevant comparison is the *x* = *y* line, I prefer to draw a diagonal line rather than a grid. **update following text:** For example, consider Figure \@ref(fig:echave-et-al), which compares two sets of correlations for 209 protein structures. By drawing the diagonal line, we can see immediately which correlations are systematically stronger. The same observation is much harder to make when the figure has a background grid instead (Figure \@ref(fig:echave-et-al-grid)). Thus, even though Figure \@ref(fig:echave-et-al-grid) looks pleasing, I label it as bad. (*In particular, mention that the deviation of 10A from expeced is not visible in the second figure.*)
