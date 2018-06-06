@@ -11,7 +11,7 @@ library(ggrepel)
 
 *The "small axis labels" chapter should be right before this one, so there's continuity.*
 
-We can broadly subdivide the graphical components in any visualization into components that represent data and components that do not. The former are things such as the points in a scatter plot, the bars in a histogram or barplot, and the shaded areas in a heatmap. The latter are things such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. As a general rule, most of the ink in a plot should be devoted to displaying data. Remove unnecessary frames, lines, or other adornments. For non-data elements that can't be removed (such as, for example, a legend), make sure they aren't overly prominent and stand back relative to the data.
+We can broadly subdivide the graphical components in any visualization into components that represent data and components that do not. The former are things such as the points in a scatter plot, the bars in a histogram or barplot, and the shaded areas in a heatmap. The latter are things such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. As a general rule, most of the ink in a plot should be devoted to displaying data. (By 'ink', I mean anything that is colored differently from the background and hence is visible.) Remove unnecessary frames, lines, or other adornments. For non-data elements that can't be removed (such as, for example, a legend), make sure they aren't overly prominent and stand back relative to the data.
 
 (ref:Aus-athletes-grid-bad) Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points.
 
@@ -66,7 +66,7 @@ The idea that one should remove non-data visual elements from graphs was popular
 
 (emphasis mine) I have emphasized the phrase "within reason" because it is critical and frequently forgotten. Removing non-data ink is valuable up to a point. Beyond that point, making a graph more minimal will make it less compelling.
 
-For example, Figure \@ref(fig:Aus-athletes-min-bad) is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good), and a clear regression. Most importantly, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown, we only see points floating in space. (This is a slightly different variant of the problem of small axis labels discussed in Chapter \@ref(small-axis-labels).) Second, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets of the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad) through the deletion of the background grid.
+For example, Figure \@ref(fig:Aus-athletes-min-bad) is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good), and a clear regression. Most importantly, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown, we only see points floating in space. (This is a variation of the problem of small axis labels discussed in Chapter \@ref(small-axis-labels).) Second, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets off the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad) through the deletion of the background grid.
 
 (ref:Aus-athletes-min-bad) Percent body fat versus height in professional male Australian athletes. In this example, the concept of maximizing the data--ink ratio has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data.
 
@@ -88,10 +88,11 @@ p <- p_Aus_base + theme_dviz_open(11) +
 stamp_bad(p)
 ```
 
+In my experience, the most common problem of plots that are too minimal, where too much non-data ink has been removed, are objects appearing to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiple plots. For example, Figure \@ref(fig:titanic-survival-by-gender-class-bad) is a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art. The bars appear to be floating in space, they are not anchored to a clear baseline, and the individual plot facets are not clearly delineated. We can resolve all these issues by adding a light gray background and thin horizontal grid lines (Figure \@ref(fig:titanic-survival-by-gender-class)).
 
-*The problem of things floating in space becomes further exacerbated for small multiple plots.*
+(ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float in space.
 
-```{r fig.width = 5, fig.asp = 3/4}
+```{r titanic-survival-by-gender-class-bad, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:titanic-survival-by-gender-class-bad)'}
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
   ggplot(aes(sex, fill = sex)) + geom_bar() +
     facet_grid(class ~ surv, scales = "free_x") +
@@ -109,7 +110,10 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 stamp_bad(p)
 ```
 
-```{r fig.width = 5, fig.asp = 3/4}
+
+(ref:titanic-survival-by-gender-class) Survival of passengers on the Titanic, broken down by gender and class. This is an improved version of Figure \@ref(fig:titanic-survival-by-gender-class-bad). The gray background in each facet clearly delineates the six groupings (survived or died in first, second, or third class) that make up this plot. Thin horizontal lines in the background provide a reference for the bar heights and facility comparison of bar heights among facets.
+
+```{r titanic-survival-by-gender-class, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:titanic-survival-by-gender-class)'}
 colors <- desaturate(lighten(c("#56B4E9", "#56B4E9"), c(.8, -.4)), .8)
 
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
@@ -135,17 +139,19 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 p
 ```
 
-## Background grids
+Since removing too much non-data ink can be just as bad as adding too much of it, I want to propose an alternative to Tufte's maxim. We need to optimize, rather than maximize, the data--ink ratio. Make sure you don't overload your plot with non-data ink, such that the data remains in the foreground, but don't take it to the point where the data loses context or floats off in space.
 
-*On grids, cite Stephen Few four circumstances* (https://www.perceptualedge.com/articles/dmreview/grid_lines.pdf)
+```{block type='rmdtip', echo=TRUE}
+Optimize the data--ink ratio
+```
 
+## Background grids and axis lines
 
-*One important purpose of axis lines: They show clearly what is inside the plot and what is outside. We need either a grid or axis lines, otherwise the plot area is not delineated.* 
+We can't talk about data--ink ratios without touching on background grids, axis lines, axis ticks, and labels. By Tufte's definition, these elements are not data and thus decrease the data--ink ratio. However, they do carry critical information about the data, and hence are not superfluous. In fact, one of the first rules of data visualization is to label your axes. And if labels are required, then making them sufficiently dark and prominent that they are actually visible and decipherable is also a requirement.
 
+Whether a background grid is required is less clear, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background (Figure \@ref(fig:price-plot-ggplot-default)). With apologies to the ggplot2 author Hadley Wickham, who developed this style and for whom I have the utmost respect, I don't find this style particularly attractive. In my experience the gray background frequently detracts from the actual data, and a grid with major and minor lines tends to be too dense. I also find the gray squares in the legend confusing.
 
-With the rising popularity of the R package ggplot2, which uses a gray background grid as default, graphs with this style have become widespread. With apologies to ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don't find this style particularly attractive. In general, I find that the gray background detracts from the actual data. As an example, consider Figure \@ref(fig:price-plot-ggplot-default), which shows the stock price of four major tech companies, indexed to their value in June 2012. The grid is too busy, and the gray background in the legend is distracting.
-
-(ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. 
+(ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimicks the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data.
 
 ```{r price-plot-ggplot-default, fig.cap='(ref:price-plot-ggplot-default)'}
 price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
@@ -170,6 +176,11 @@ price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
 
 stamp_ugly(price_plot)
 ```
+
+
+*argument about the gray background: it creates a similar shading as text.* keep in mind that the perceived grayness of text will depend on the font size, fontface, and line spacing. A scientific paper typeset in dense, 10-point Times New Roman will look very different from a coffee-table book typeset in 14-point Palatino with one-and-a-half line spacing.
+
+*also talk about color choice; a gray background requires stronger colors than a white background.*
 
 
 We could try to remove the grid altogether, but I think that is a worse option (Figure \@ref(fig:price-plot-no-grid)). Now the curves seem to just float in space, and it's difficult to see where they go. In addition, since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at *y* = 100 (Figure \@ref(fig:price-plot-refline)).
@@ -412,3 +423,5 @@ stamp_bad(gene_expression_plot_bad)
 
 In summary, there is no simple choice of background grid that always works. I encourage you to think carefully about which specific grid or guidelines are most informative for the plot you are making, and to only show those. In general, less is more. Too many or overly thick and dark grid lines can distract your reader's attention away from the data you want to show.
 
+
+*Need to address somewhere: One important purpose of axis lines: They show clearly what is inside the plot and what is outside. We need either a grid or axis lines, otherwise the plot area is not delineated.* 
