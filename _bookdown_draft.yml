@@ -27,16 +27,15 @@ rmd_files: [
 
   # Part II
 
-  "small_axis_labels.Rmd", # completed
-  "axis_settings.Rmd",
   "proportional_ink.Rmd", # completed
   "overlapping_points.Rmd", # completed
   "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
   "figure_titles_captions.Rmd",
+  "optimize_data_signal.Rmd",
+  "small_axis_labels.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
-  "maximize_data_signal.Rmd",
   "no_3d.Rmd", # completed
 
   # Part III

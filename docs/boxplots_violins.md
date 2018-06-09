@@ -1,6 +1,6 @@
 
 
-# Visualizing many distributions at once: boxplots, violins, and ridgeline plots {#boxplots-violins}
+# Visualizing many distributions at once {#boxplots-violins}
 
 There are many scenarios in which we want to visualize multiple distributions at the same time. For example, consider weather data. We may want to visualize how temperature varies across different months while also showing the distribution of observed temperatures within each month. This scenario requires showing twelve temperature distributions at once, one for each month. None of the visualizations discussed in Chapters \@ref(histograms-density-plots) or \@ref(ecdf-qq) work well in this case. Instead, viable approaches include boxplots, violin plots, and ridgeline plots.
 

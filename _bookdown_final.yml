@@ -18,15 +18,23 @@ rmd_files: [
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
+  #"nested_proportions.Rmd",
+  #"visualizing_associations.Rmd",
+  #"time_series.Rmd",
+  #"visualizing_trends.Rmd",
+  #"visualizing_uncertainty.Rmd",
+  #"geospatial_data.Rmd",
 
   # Part II
 
-  "small_axis_labels.Rmd", # completed
   "proportional_ink.Rmd", # completed
   "overlapping_points.Rmd", # completed
   "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
+  #"figure_titles_captions.Rmd",
+  #"optimize_data_signal.Rmd",
+  "small_axis_labels.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "no_3d.Rmd", # completed
 
@@ -34,6 +42,7 @@ rmd_files: [
   "image_file_formats.Rmd", # completed
   "choosing_visualization_software.Rmd", # completed
   "telling_a_story.Rmd", # completed
+  #"annotated_bibliography.Rmd",
 
   "outline.Rmd",
   "technical_notes.Rmd",

@@ -1,3 +1,7 @@
+[[part-part-ii-principles-of-figure-design]]
+(PART*) Part II: Principles of figure design
+--------------------------------------------
+
 [[proportional-ink]]
 The principle of proportional ink
 ---------------------------------
@@ -26,8 +30,12 @@ ________________________________________________________________________________
 visualization need to be proportional to the data values they represent.
 ____________________________________________________________________________________________________________________________________________
 
-Violations of this principle are incredibly common, in particular in the
-popular press and in the world of finance.
+(It is common practice to use the word "ink" to refer to any part of a
+visualization that deviates from the background color. This includes
+lines, points, shared areas, and text. In this chapter, however, we are
+talking primarily about shaded areas.) Violations of this principle are
+quite common, in particular in the popular press and in the world of
+finance.
 
 [[visualizations-along-linear-axes]]
 Visualizations along linear axes

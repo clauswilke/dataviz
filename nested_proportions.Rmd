@@ -3,4 +3,4 @@
 source("_common.R")
 ```
 
-# Visualizing proportions II: Nested or changing proportions {#nested-proportions}
+# Visualizing nested or changing proportions {#nested-proportions}

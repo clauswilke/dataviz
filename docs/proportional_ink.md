@@ -1,6 +1,8 @@
 
 
 
+# (PART\*) Part II: Principles of figure design {-}
+
 # The principle of proportional ink {#proportional-ink}
 
 In many different visualization scenarios, we represent data values by the extent of a graphical element. For example, in a bar plot, we draw bars that begin at 0 and end at the data value they represent. In this case, the data value is not only encoded in the end point of the bar but also in the height or length of the bar. If we drew a bar that started at a different value than 0, then the length of the bar and the bar endpoint would convey contradicting information, and the visualization would be misleading. Contrast this to a scenario where we visualize the data value with a dot. In this case, the value is only encoded in the location of the dot but not in the size or shape of the dot.
@@ -9,7 +11,7 @@ Similar issues will arise whenever we use graphical elements such as bars, recta
 
 > **The principle of proportional ink:** The sizes of shaded areas in a visualization need to be proportional to the data values they represent.
 
-Violations of this principle are incredibly common, in particular in the popular press and in the world of finance.
+(It is common practice to use the word "ink" to refer to any part of a visualization that deviates from the background color. This includes lines, points, shared areas, and text. In this chapter, however, we are talking primarily about shaded areas.) Violations of this principle are quite common, in particular in the popular press and in the world of finance.
 
 ## Visualizations along linear axes
 

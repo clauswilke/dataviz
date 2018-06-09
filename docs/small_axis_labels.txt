@@ -1,7 +1,3 @@
-[[part-part-ii-principles-of-figure-design]]
-(PART*) Part II: Principles of figure design
---------------------------------------------
-
 [[small-axis-labels]]
 Your axis labels are too small
 ------------------------------

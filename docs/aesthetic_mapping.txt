@@ -3,7 +3,7 @@
 ------------------------------------------
 
 [[aesthetic-mapping]]
-Visualizing data: mapping data onto aesthetics
+Visualizing data: Mapping data onto aesthetics
 ----------------------------------------------
 
 Whenever we visualize data, we take data values and convert them in a

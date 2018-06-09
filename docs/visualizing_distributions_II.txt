@@ -1,7 +1,7 @@
 [[ecdf-qq]]
-Visualizing distributions: Empirical cumulative density functions and
-q-q plots
--------------------------------------------------------------------------------
+Visualizing distributions: Empirical cumulative distribution functions
+and q-q plots
+------------------------------------------------------------------------------------
 
 In Chapter @ref(histograms-density-plots), I described how we can
 visualize distributions with histograms or density plots. Both of these
@@ -18,7 +18,7 @@ show all the data points individually, as a point cloud. However, this
 approach becomes unwieldy for very large datasets, and in any case there
 is value in aggregate methods that highlight properties of the
 distribution rather than the individual data points. To solve this
-problem, statisticians have invented empirical cumulative density
+problem, statisticians have invented empirical cumulative distribution
 functions (ecdfs) and quantile--quantile (q-q) plots. These types of
 visualizations require no arbitrary parameter choices, and they show all
 of the data at once. Unfortunately, they are a little less intuitive
@@ -27,16 +27,16 @@ frequently outside of highly technical publications. They are quite
 popular among statisticians, though, and I think anybody interested in
 data visualization should be familiar with these techniques.
 
-[[empirical-cumulative-density-functions]]
-Empirical cumulative density functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[empirical-cumulative-distribution-functions]]
+Empirical cumulative distribution functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To illustrate cumulative empirical density functions, I will begin with
-a hypothetical example that is closely modeled after something I deal
-with a lot as a professor in the classroom: a dataset of student grades.
-Assume our hypothetical class has 50 students, and the students just
-completed an exam on which they could score between 0 and 100 points.
-How can we best visualize the class performance, for example to
+To illustrate cumulative empirical distribution functions, I will begin
+with a hypothetical example that is closely modeled after something I
+deal with a lot as a professor in the classroom: a dataset of student
+grades. Assume our hypothetical class has 50 students, and the students
+just completed an exam on which they could score between 0 and 100
+points. How can we best visualize the class performance, for example to
 determine appropriate grade boundaries?
 
 We can plot the total number of students that have received at least a

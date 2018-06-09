@@ -191,7 +191,7 @@ for Education Statistics
 
 When labeling the different panels of a compound figure, pay attention
 to how the labels fit into the overall figure design. I often see
-figures where the labels loock like they were slapped onto the figure
+figures where the labels look like they were slapped onto the figure
 after the fact by a different person. It's not uncommon to see labels
 made overly large and prominent, placed in an awkward location, or
 typeset in a different font than the rest of the figure. (See Figure
@@ -219,7 +219,7 @@ inconsistent with the other figures in this book.
 We also need to pay attention to how the individual panels of a compound
 figure fit together. It is possible to make a set of figure panels that
 individually are fine but jointly don't work. In particular, we need to
-employ a consistent visual language. By "visual language" I mean the
+employ a consistent visual language. By "visual language," I mean the
 colors, symbols, fonts, and so on that we use to display the data. And
 keeping the language consistent means, in a nutshell, that the same
 things look the same or at least substantively similar across figures.

@@ -367,11 +367,18 @@ p_cart <- ggplot(df_points, aes(x, y)) +
 
 
 p_polar <- ggplot(df_points, aes(x, y)) +
-  geom_segment(data = df_segments, aes(x = x0, xend = x1, y = y0, yend = y1),
-               size = theme_minimal_grid()$panel.grid.major$size, color = theme_minimal_grid()$panel.grid.major$colour) +
+  geom_segment(
+    data = df_segments,
+    aes(x = x0, xend = x1, y = y0, yend = y1),
+    size = theme_dviz_grid()$panel.grid$size,
+    color = theme_dviz_grid()$panel.grid$colour,
+    inherit.aes = FALSE
+  ) +
   geom_point(size = 2, color = "#0072B2") +
-  geom_text(aes(label = label, vjust = vjust_polar, hjust = hjust_polar),
-            size = 12/.pt, family = dviz_font_family) +
+  geom_text(
+    aes(label = label, vjust = vjust_polar, hjust = hjust_polar),
+    size = 12/.pt, family = dviz_font_family
+  ) +
   scale_x_continuous(limits = c(0, 4)) +
   scale_y_continuous(limits = c(0, 4)) +
   coord_polar() +

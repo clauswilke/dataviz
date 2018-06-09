@@ -4,16 +4,16 @@ source("_common.R")
 ```
 
 
-# Visualizing distributions: Empirical cumulative density functions and q-q plots {#ecdf-qq}
+# Visualizing distributions: Empirical cumulative distribution functions and q-q plots {#ecdf-qq}
 
 In Chapter \@ref(histograms-density-plots), I described how we can visualize distributions with histograms or density plots. Both of these approaches are highly intuitive and visually appealing. However, as discussed in that chapter, they both share the limitation that the resulting figure depends to a substantial degree on parameters the user has to choose, such as the bin width for histograms and the bandwidth for density plots. As a result, both have to be considered as an interpretation of the data rather than a direct visualization of the data itself.
 
-As an alternative to using histograms or density plots, we could simply show all the data points individually, as a point cloud. However, this approach becomes unwieldy for very large datasets, and in any case there is value in aggregate methods that highlight properties of the distribution rather than the individual data points. To solve this problem, statisticians have invented empirical cumulative density functions (ecdfs) and quantile--quantile (q-q) plots. These types of visualizations require no arbitrary parameter choices, and they show all of the data at once. Unfortunately, they are a little less intuitive than a histogram or a density plot is, and I don't see them used frequently outside of highly technical publications. They are quite popular among statisticians, though, and I think anybody interested in data visualization should be familiar with these techniques.
+As an alternative to using histograms or density plots, we could simply show all the data points individually, as a point cloud. However, this approach becomes unwieldy for very large datasets, and in any case there is value in aggregate methods that highlight properties of the distribution rather than the individual data points. To solve this problem, statisticians have invented empirical cumulative distribution functions (ecdfs) and quantile--quantile (q-q) plots. These types of visualizations require no arbitrary parameter choices, and they show all of the data at once. Unfortunately, they are a little less intuitive than a histogram or a density plot is, and I don't see them used frequently outside of highly technical publications. They are quite popular among statisticians, though, and I think anybody interested in data visualization should be familiar with these techniques.
 
 
-## Empirical cumulative density functions
+## Empirical cumulative distribution functions
 
-To illustrate cumulative empirical density functions, I will begin with a hypothetical example that is closely modeled after something I deal with a lot as a professor in the classroom: a dataset of student grades. Assume our hypothetical class has 50 students, and the students just completed an exam on which they could score between 0 and 100 points. How can we best visualize the class performance, for example to determine appropriate grade boundaries?
+To illustrate cumulative empirical distribution functions, I will begin with a hypothetical example that is closely modeled after something I deal with a lot as a professor in the classroom: a dataset of student grades. Assume our hypothetical class has 50 students, and the students just completed an exam on which they could score between 0 and 100 points. How can we best visualize the class performance, for example to determine appropriate grade boundaries?
 
 We can plot the total number of students that have received at least a certain number of points versus all possible point scores. This plot will be an ascending function, starting at 0 for 0 points and ending at 50 for 100 points. A different way of thinking about this visualization is the following: We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained. The result is an *empirical cumulative distribution function* (ecdf) or simply *cumulative distribution.* Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value (Figure \@ref(fig:student-grades)).
 
@@ -137,7 +137,8 @@ ggplot(US_census, aes(x=pop2010, y = 1-..y..)) +
                            expression(10^5), expression(10^6), expression(10^7)),
                 name = "number of county inhabitants") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
-  theme_dviz_grid()
+  theme_dviz_grid() +
+  theme(plot.margin = margin(3.5, 7, 3.5, 0))
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).
@@ -145,8 +146,7 @@ As a second example, I will use the distribution of word frequencies for all wor
 (ref:word-counts-tail-log-log) Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used.
 
 ```{r word-counts-tail-log-log, fig.cap='(ref:word-counts-tail-log-log)' }
-wc <- read.csv("datasets/Moby_Dick_word_counts.csv")
-ggplot(wc, aes(x=count, y = 1-..y..)) + 
+ggplot(Moby_Dick, aes(x=count, y = 1-..y..)) + 
   stat_ecdf(geom = "step", color = "#0072B2", size = 0.75, pad = FALSE) +
   scale_x_log10(expand = c(0.01, 0), breaks = c(1, 10, 100, 1000, 10000),
                 name = "number of times word is used") +
@@ -168,13 +168,27 @@ When we perform this procedure for the student grades distribution from the begi
 ```{r student-grades-qq, fig.width = 5, fig.asp = .98, fig.cap='(ref:student-grades-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(student_data$points, "normal")$estimate)
+
+# axis line segments
+df_segment <- data.frame(
+  x = c(50, -Inf), 
+  xend = c(100, -Inf),
+  y = c(-Inf, 50),
+  yend = c(-Inf, 100)
+)
+
 ggplot(student_data, aes(sample = points)) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
+  geom_segment(
+    data = df_segment,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    size = 0.5, inherit.aes = FALSE) +
   scale_x_continuous(limits = c(43, 107), expand = c(0, 0), breaks = 10*(5:10)) +
   scale_y_continuous(limits = c(43, 102), expand = c(0, 0), breaks = 10*(5:10), name = "observed") +
-  coord_fixed() +
-  theme_dviz_open()
+  coord_fixed(clip = "off") +
+  theme_dviz_open() +
+  theme(axis.line = element_blank())
 ```
 
 The solid line here is not a regression line but indicates the points where *x* equals *y*, i.e., where the observed values equal the theoretical ones. To the extent that points fall onto that line, the data follow the assumed distribution (here, normal). We see that the student grades follow mostly a normal distribution, with a few deviations at the bottom and at the top (a few students performed worse than expected on either end). The deviations from the distribution at the top end are caused by the maximum point value of 100 in the hypothetical exam; regardless of how good the best student is, he or she could at most obtain 100 points.
@@ -187,13 +201,27 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 ```{r county-populations-qq, fig.width = 5, fig.asp = 1, fig.cap='(ref:county-populations-qq)'}
 # estimate distribution parameters (mean and sd)
 params <- as.list(MASS::fitdistr(log(US_census$pop2010), "normal")$estimate)
+
+# axis line segments
+df_segment <- data.frame(
+  x = c(5, -Inf), 
+  xend = c(15, -Inf),
+  y = c(-Inf, 5),
+  yend = c(-Inf, 15)
+)
+
 ggplot(US_census, aes(sample = log(pop2010))) + 
   geom_abline(slope = 1, intercept = 0, color = "grey70") +
   stat_qq(dparams = params, color = "#0072B2") +
-  scale_x_continuous(limits = c(4, 16.5), expand = c(0, 0), breaks = 5+2.5*(0:4)) +
-  scale_y_continuous(limits = c(4, 16.5), expand = c(0, 0), name = "observed", breaks = 5+2.5*(0:4)) +
-  coord_fixed() + 
-  theme_dviz_open()
+  geom_segment(
+    data = df_segment,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    size = 0.5, inherit.aes = FALSE) +
+  scale_x_continuous(limits = c(4, 16), expand = c(0, 0), breaks = 5+2.5*(0:4)) +
+  scale_y_continuous(limits = c(4, 16), expand = c(0, 0), name = "observed", breaks = 5+2.5*(0:4)) +
+  coord_fixed(clip = "off") + 
+  theme_dviz_open() +
+  theme(axis.line = element_blank())
 ```
 
 

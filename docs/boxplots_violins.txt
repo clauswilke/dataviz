@@ -1,7 +1,6 @@
 [[boxplots-violins]]
-Visualizing many distributions at once: boxplots, violins, and ridgeline
-plots
-------------------------------------------------------------------------------
+Visualizing many distributions at once
+--------------------------------------
 
 There are many scenarios in which we want to visualize multiple
 distributions at the same time. For example, consider weather data. We

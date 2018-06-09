@@ -8,44 +8,43 @@ Outline
 Part I: From data to visualization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  *Mapping data onto aesthetics* +
+1.  *Visualizing data: Mapping data onto aesthetics* +
 Explains the basic concept of aesthetic mapping, which lies at the heart
 of any data visualization.
 2.  *Coordinate systems and axes* +
 Explains coordinate systems and positional scales (including nonlinear
 scales).
-3.  *Effective use of color* +
+3.  *Color scales* +
 Covers basic concepts of color use, as a tool to distinguish, as a tool
-to represent a value, and as a tool to highlight. Introduces the three
-basic types of color scales: qualitative, directional, diverging.
+to represent a value, and as a tool to highlight.
 4.  *Directory of visualizations* +
 Provides a graphical guide to the most commonly used types of data
 visualizations, with pointers to the relevant chapters covering them.
 5.  *Visualizing amounts* +
 Visualizing amounts using bars, areas, and colors.
-6.  *Visualizing paired data* +
-Discusses common strategies for paired data, including scatter plots and
-paired dot plots.
-7.  *Visualizing time series* +
-Discusses common strategies for time series, including line plots and
-sparklines
-8.  *Visualizing distributions I: Histograms and density plots* +
+6.  *Visualizing distributions: Histograms and density plots* +
 Discusses strategies for visualizing individual distributions, including
 pros and cons of histograms and density plots.
-9.  *Visualizing distributions II: Cumulative density functions and q-q
-plots* +
+7.  *Visualizing distributions: Empirical cumulative distribution
+functions and q-q plots* +
 Discusses strategies for visualizing distributions that are exact and
 non-arbitrary (unlike histograms and density plots) but are more
 difficult to interpret.
-10. *Visualizing many distributions at once: boxplots, violins, and
-ridgeline plots* +
+8.  *Visualizing many distributions at once* +
 Discusses strategies for visualizing many distributions, including
 boxplots, violin plots, jittered points, and others.
-11. *Visualizing proportions I: Pie charts, stacked bar plots, and
-stacked densities* +
+9.  *Visualizing proportions* +
 Discusses stacked bar plots, stacked density plots, and pie charts.
-12. *Visualizing proportions II: Nested or changing proportions* +
+10. *Visualizing nested or changing proportions* +
 Discusses treemaps and parallel sets (sankeys).
+11. *Visualizing associations among two or more quantitative
+variables* +
+Discusses scatter plots, correlation plots, PCA, as well as strategies
+for paired data, including scatter plots and paired dot plots.
+12. *Visualizing time series and other functions of an independent
+variable* +
+Discusses common strategies for time series, such as line plots and path
+plots.
 13. *Visualizing trends* +
 Discusses various approaches to smoothing data (linear regression line,
 GAMs, splines), and common pitfalls (many smoothers are unreliable or
@@ -60,43 +59,39 @@ Provides a basic intro to making maps.
 Part II: Principles of figure design
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  *Your axis labels are too small* +
-Discusses the widespread problem of excessively small axis labels.
-2.  *Choosing the right axis settings* +
-Covers various aspects related to axis choice, including linear vs.
-logarithmic axes, as well as issues of axis expansion beyond the data
-range. Also takes up the topic of aspect ratio once again.
-3.  *The principle of proportional ink* +
+1.  *The principle of proportional ink* +
 Explains that the size of colored areas needs to be proportional to the
 data value they represent.
-4.  *Handling overlapping points* +
+2.  *Handling overlapping points* +
 Describes different strategies to handle the problems of overlapping
 points or large point clouds. These problems frequently arise in large
 datasets, and helpful strategies include using partially transparent
 points, 2d density plots, hex grids, or smoothers.
-5.  *Common pitfalls of color use* +
+3.  *Common pitfalls of color use* +
 Also contains a section on designing for colorblindness.
-6.  *Redundant coding* +
+4.  *Redundant coding* +
 Explains how to make sure that key information in the figure is provided
 in multiple, reduant ways, for example through color and location or
 color and direct labeling.
-7.  *Multi-panel figures* +
+5.  *Multi-panel figures* +
 Discusses issues that arise in multi-panel figures, including proper
 labeling, alignment between subfigures, shared legends, and overly
 complex multi-panel figures.
-8.  *Figure titles and captions* +
+6.  *Figure titles and captions* +
 Discusses when to use and not to use figure titles. For captioned
 figures, the titles are normally the first thing shown in the caption,
 and thus are not shown on top of the figure.
-9.  *Avoid line drawings* +
-Argues that filled shapes and solid colors are almost always preferable
-to shapes shown as outlines or with hatching or cross-hatching.
-10. *Maximizing the data signal in visualizations* +
+7.  *Maximizing the data signal in visualizations* +
 Discusses the general principle of maximizing the ink used to convey
 information. Argues to avoid boxes and frames around figure parts. Also
 discusses when and how to use background grids and other guide lines in
 figures.
-11. *Don't go 3D* +
+8.  *Your axis labels are too small* +
+Discusses the widespread problem of excessively small axis labels.
+9.  *Avoid line drawings* +
+Argues that filled shapes and solid colors are almost always preferable
+to shapes shown as outlines or with hatching or cross-hatching.
+10. *Don't go 3D* +
 Argues why 3d plots are generally problematic (figures are fundamentally
 a 2D medium, and in 3D plots data is subjected to an additional,
 non-obvious transformation from 3D to 2D) and suggests alternatives to

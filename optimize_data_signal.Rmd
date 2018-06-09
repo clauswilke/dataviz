@@ -7,9 +7,7 @@ library(lubridate)
 library(ggrepel)
 ```
 
-# Optimize the data--ink ratio {#maximize-data-signal}
-
-*The order of chapters should be: (i) optimize data--ink ratio; (ii) small axis labels; (iii) avoid line drawings.*
+# Optimize the data--ink ratio {#optimize-data-signal}
 
 We can broadly subdivide the graphical components in any visualization into components that represent data and components that do not. The former are things such as the points in a scatter plot, the bars in a histogram or barplot, and the shaded areas in a heatmap. The latter are things such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. As a general rule, most of the ink (Chapter \@ref(proportional-ink)) in a plot should be devoted to displaying data. Remove unnecessary frames, lines, or other adornments. For non-data elements that can't be removed (such as, for example, a legend), make sure they aren't overly prominent and stand back relative to the data.
 
@@ -91,7 +89,7 @@ p <- p_Aus_base + theme_dviz_open(11) +
 stamp_bad(p)
 ```
 
-In my experience, the most common problem of plots with too little non-data ink are figure elements that appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars appear to be floating, they are not anchored to a clear baseline, and the individual plot facets are not clearly delineated. We can resolve all these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
+In my experience, the most common problem of plots with too little non-data ink are figure elements that appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
 
 (ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
 
@@ -142,7 +140,7 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 p
 ```
 
-Since removing too much non-data ink can be just as bad as adding too much of it, I want to propose an alternative to Tufte's maxim. We need to optimize, rather than maximize, the data--ink ratio. Make sure you don't overload your plot with non-data ink, such that the data remains in the foreground, but don't take it to the point where the data loses context or floats off into space.
+Since removing too much non-data ink can be just as bad as adding too much of it, I want to propose an alternative to Tufte's maxim. We need to optimize, rather than maximize, the data--ink ratio. Make sure you don't overload your plot with non-data ink, such that the data remains in the foreground, but don't take it to the point where the data loses context.
 
 ```{block type='rmdtip', echo=TRUE}
 Optimize the data--ink ratio.
@@ -150,11 +148,11 @@ Optimize the data--ink ratio.
 
 ## Background grids and axis lines
 
-We can't talk about data--ink ratios without touching on background grids, axis lines, axis ticks, and labels. By Tufte's definition, these elements are not data and thus decrease the data--ink ratio. However, they do carry critical information about the data, and hence are not superfluous. In fact, one of the first rules of data visualization is to label your axes. And if labels are required, then making them sufficiently dark and prominent that they are actually visible and decipherable is also a requirement.
+Not all forms of non-data ink are equally superfluous. In particular, by Tufte's definition, background grids, axis lines, axis ticks, and labels do not count towards the ink used to represent data, and thus they decrease the data--ink ratio. However, they do carry critical information. We can't just eliminate them all and hope to still have a meaningful visualization. In fact, one of the first rules of data visualization is to label your axes. And if labels are required, then making them sufficiently dark and prominent that they are actually visible and decipherable is also a requirement.
 
-Whether a background grid is required is less clear-cut, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background (Figure \@ref(fig:price-plot-ggplot-default)). With apologies to the ggplot2 author Hadley Wickham, who developed this style and for whom I have the utmost respect, I don't find this style particularly attractive. In my experience the gray background frequently detracts from the actual data, and a grid with major and minor lines can be too dense. I also find the gray squares in the legend confusing.
+Whether a background grid is required is less clear-cut, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background (see Figure \@ref(fig:price-plot-ggplot-default), which shows the change in stock price of four major tech companies for a five-year window, from 2012 to 2017). With apologies to the ggplot2 author Hadley Wickham, who popularized this style and for whom I have the utmost respect, I don't find the white-on-gray background grid particularly attractive. In my experience, the gray background can detract from the actual data, and a grid with major and minor lines can be too dense. I also find the gray squares in the legend confusing.
 
-(ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimicks the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data.
+(ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimics the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data.
 
 ```{r price-plot-ggplot-default, fig.cap='(ref:price-plot-ggplot-default)'}
 price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
@@ -182,9 +180,9 @@ stamp_ugly(price_plot)
 
 Arguments in favor of the gray background include that it (i) helps the plot to be perceived as a single visual entity and (ii) prevents the plot to appear as a white box in surrounding dark text [@Wickham2016]. I completely agree with the first point, and it was the reason I used gray backgrounds in Figure \@ref(fig:titanic-survival-by-gender-class). For the second point, I'd like to caution that the perceived darkness of text will depend on the font size, fontface, and line spacing, and the perceived darkness of a figure will depend on the absolute amount and color of ink used, including all data ink. A scientific paper typeset in dense, 10-point Times New Roman will look much darker than a coffee-table book typeset in 14-point Palatino with one-and-a-half line spacing. Likewise, a scatter plot of five points in yellow will look much lighter than a scatter plot of 10,000 points in black. If you want to use a gray figure background, consider the color intensity of your figure foreground, as well as the expected layout and typography of the text around your figures, and adjust the choice of your background gray accordingly. Otherwise, it could happen that your figures end up standing out as dark boxes among the surrounding lighter text. Also, keep in mind that the colors you use to plot your data need to work with the gray background. We tend to perceive colors differently against different backgrounds, and a gray background requires darker and more saturated foreground colors than a white background.
 
-We can go all the way in the opposite direction and remove both the background and the grid lines (Figure \@ref(fig:price-plot-no-grid)). In this case, we need visible axis lines to frame the plot and keep it as a single visual unit. For this particular figure, I think this choice is a worse option, and I have labeled it as "bad". In the absence of any background grid whatsoever, the curves seem to float in space, and it's difficult to see where they go.
+We can go all the way in the opposite direction and remove both the background and the grid lines (Figure \@ref(fig:price-plot-no-grid)). In this case, we need visible axis lines to frame the plot and keep it as a single visual unit. For this particular figure, I think this choice is a worse option, and I have labeled it as "bad". In the absence of any background grid whatsoever, the curves seem to float in space, and it's difficult to reference the final values on the right to the axis ticks on the left.
 
-(ref:price-plot-no-grid) Indexed stock price over time for four major tech companies.
+(ref:price-plot-no-grid) Indexed stock price over time for four major tech companies. In this variant of Figure \@ref(fig:price-plot-ggplot-default), the data lines are not sufficiently anchored. This makes it difficult to ascertain to what extent they have deviated from the index value of 100 at the end of the covered time interval.
 
 ```{r price-plot-no-grid, fig.cap='(ref:price-plot-no-grid)'}
 stamp_bad(price_plot + 
@@ -192,11 +190,9 @@ stamp_bad(price_plot +
             theme(plot.margin = margin(7, 7, 3, 0)))
 ```
 
-**edit from here.**
+At the absolute minimum, we need to add one horizontal reference line. Since the stock prices in Figure \@ref(fig:price-plot-no-grid) indexed to 100 in June 2012, marking this value with a thin horizontal line at *y* = 100 helps a lot (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
 
-Since all prices are indexed to 100 in June 2012, at a minimum this value should be marked in the plot. Thus, one option would be to add a thin horizontal line at *y* = 100 (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
-
-(ref:price-plot-refline) Indexed stock price over time for four major tech companies.
+(ref:price-plot-refline) Indexed stock price over time for four major tech companies. Adding a thin horizontal line at the index value of 100 to Figure \@ref(fig:price-plot-no-grid) helps provide an important reference throughout the entire time period the plot spans.
 
 ```{r price-plot-refline, fig.cap='(ref:price-plot-refline)'}
 price_plot2 <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
@@ -219,7 +215,7 @@ price_plot2
 ```
 
 
-(ref:price-plot-hgrid) Indexed stock price over time for four major tech companies.
+(ref:price-plot-hgrid) Indexed stock price over time for four major tech companies. Adding thin  horizontal lines at all major *y* axis ticks provides a better set of reference points than just the one horizontal line of Figure \@ref(fig:price-plot-refline). This design also removes the need for prominent *x* and *y* axis lines, since the evenly spaced horizontal lines create a visual frame for the plot panel.
 
 ```{r price-plot-hgrid, fig.cap='(ref:price-plot-hgrid)'}
 price_plot + theme_dviz_hgrid() +

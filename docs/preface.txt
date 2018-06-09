@@ -8,7 +8,7 @@ skills you need to have is the ability to make compelling data
 visualizations, generally in the form of figures. Figures will typically
 carry the weight of your arguments. They need to be clear, attractive,
 and convincing. The difference between good and bad figures can be the
-difference between a highly influential or a obscure paper, a grant or
+difference between a highly influential or an obscure paper, a grant or
 contract won or lost, a job interview gone well or poorly. And yet,
 there are surprisingly few resources to teach you how to make compelling
 data visualizations. Few colleges offer courses on this topic, and there

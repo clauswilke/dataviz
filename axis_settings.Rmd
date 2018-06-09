@@ -1,6 +1,0 @@
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-# run setup script
-source("_common.R")
-```
-
-# Choosing the right axis settings {#axis-settings}
