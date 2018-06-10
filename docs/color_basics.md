@@ -96,7 +96,7 @@ As an example of how the same data can support differing stories with different 
 When working with accent colors, it is critical that the baseline colors do not compete for attention. Notice how drab the baseline colors are in (Figure \@ref(fig:popgrowth-US-highlight)). Yet they work well to support the accent color. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader's attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points. An example of this strategy is provided in Figure \@ref(fig:Aus-athletes-track).
 
 
-(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports.
+(ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="color_basics_files/figure-html/Aus-athletes-track-1.png" alt="(ref:Aus-athletes-track)" width="576" />

@@ -17,7 +17,7 @@ to zoom into the page to read the annotations in the legend.
 (ref:Aus-athletes-small) Percent body fat versus height in professional
 male Australian athletes. (Each point represents one athlete.) This
 figure suffers from the common affliction that the text elements are way
-too small and are barely legible.
+too small and are barely legible. Data source: @Telford-Cunningham-1991
 
 (#fig:Aus-athletes-small)(ref:Aus-athletes-small)
 
@@ -32,6 +32,7 @@ too small compared to the rest of the figure.
 (ref:Aus-athletes-ugly) Percent body fat versus height in male athletes.
 This figure is an improvement over Figure @ref(fig:Aus-athletes-small),
 but the text elements remain too small and the figure is not balanced.
+Data source: @Telford-Cunningham-1991
 
 (#fig:Aus-athletes-ugly)(ref:Aus-athletes-ugly)
 
@@ -40,7 +41,8 @@ book. I think it is well balanced, the text is clearly visible, and it
 fits with the overall size of the figure.
 
 (ref:Aus-athletes-good) Percent body fat versus height in male athletes.
-All figure elements are appropriately scaled.
+All figure elements are appropriately scaled. Data source:
+@Telford-Cunningham-1991
 
 (#fig:Aus-athletes-good)(ref:Aus-athletes-good)
 
@@ -57,13 +59,15 @@ fix this issue, the figure becomes acceptable again (Figure
 athletes. The text elements are fairly large, and their size may be
 appropriate if the figure is meant to be reproduced at a very small
 scale. However, the figure overall is not balanced; the points are too
-small relative to the text elements.
+small relative to the text elements. Data source:
+@Telford-Cunningham-1991
 
 (#fig:Aus-athletes-big-ugly)(ref:Aus-athletes-big-ugly)
 
 (ref:Aus-athletes-big-good) Percent body fat versus height in male
 athletes. All figure elements are sized such that the figure is balanced
-and can be reproduced at a small scale.
+and can be reproduced at a small scale. Data source:
+@Telford-Cunningham-1991
 
 (#fig:Aus-athletes-big-good)(ref:Aus-athletes-big-good)
 

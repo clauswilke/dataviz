@@ -6,7 +6,7 @@ If you take away only one single lesson from this book, make it this one: Pay at
 
 For example, consider Figure \@ref(fig:Aus-athletes-small). I see figures like this all the time. The axis labels, axis tick labels, and legend labels are all incredibly small. We can barely see them, and we may have to zoom into the page to read the annotations in the legend.
 
-(ref:Aus-athletes-small) Percent body fat versus height in professional male Australian athletes. (Each point represents one athlete.) This figure suffers from the common affliction that the text elements are way too small and are barely legible.
+(ref:Aus-athletes-small) Percent body fat versus height in professional male Australian athletes. (Each point represents one athlete.) This figure suffers from the common affliction that the text elements are way too small and are barely legible. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="small_axis_labels_files/figure-html/Aus-athletes-small-1.png" alt="(ref:Aus-athletes-small)" width="576" />
@@ -15,7 +15,7 @@ For example, consider Figure \@ref(fig:Aus-athletes-small). I see figures like t
 
 A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athletes-ugly). I think the fonts are still too small, and that's why I have labeled the figure as ugly. However, we are moving in the right direction. This figure might be passable under some circumstances. My main criticism here is not so much that the labels aren't legible as that the figure is not balanced; the text elements are too small compared to the rest of the figure.
 
-(ref:Aus-athletes-ugly) Percent body fat versus height in male athletes. This figure is an improvement over Figure \@ref(fig:Aus-athletes-small), but the text elements remain too small and the figure is not balanced.
+(ref:Aus-athletes-ugly) Percent body fat versus height in male athletes. This figure is an improvement over Figure \@ref(fig:Aus-athletes-small), but the text elements remain too small and the figure is not balanced. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="small_axis_labels_files/figure-html/Aus-athletes-ugly-1.png" alt="(ref:Aus-athletes-ugly)" width="576" />
@@ -25,7 +25,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athlet
 
 The next figure uses the default settings I'm applying throughout this book. I think it is well balanced, the text is clearly visible, and it fits with the overall size of the figure. 
 
-(ref:Aus-athletes-good) Percent body fat versus height in male athletes. All figure elements are appropriately scaled.
+(ref:Aus-athletes-good) Percent body fat versus height in male athletes. All figure elements are appropriately scaled. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="small_axis_labels_files/figure-html/Aus-athletes-good-1.png" alt="(ref:Aus-athletes-good)" width="576" />
@@ -34,7 +34,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 
 Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-athletes-big-ugly)). Sometimes we need big labels, for example if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In Figure \@ref(fig:Aus-athletes-big-ugly), the points used to visualize the data are too small relative to the text.  Once we fix this issue, the figure becomes acceptable again (Figure \@ref(fig:Aus-athletes-big-good)).
 
-(ref:Aus-athletes-big-ugly) Percent body fat versus height in male athletes. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements.
+(ref:Aus-athletes-big-ugly) Percent body fat versus height in male athletes. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="small_axis_labels_files/figure-html/Aus-athletes-big-ugly-1.png" alt="(ref:Aus-athletes-big-ugly)" width="576" />
@@ -42,7 +42,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-
 </div>
 
 
-(ref:Aus-athletes-big-good) Percent body fat versus height in male athletes. All figure elements are sized such that the figure is balanced and can be reproduced at a small scale.
+(ref:Aus-athletes-big-good) Percent body fat versus height in male athletes. All figure elements are sized such that the figure is balanced and can be reproduced at a small scale. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="small_axis_labels_files/figure-html/Aus-athletes-big-good-1.png" alt="(ref:Aus-athletes-big-good)" width="576" />

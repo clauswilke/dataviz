@@ -33,7 +33,7 @@ rmd_files: [
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
   #"figure_titles_captions.Rmd",
-  #"optimize_data_signal.Rmd",
+  "optimize_data_signal.Rmd",
   "small_axis_labels.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "no_3d.Rmd", # completed

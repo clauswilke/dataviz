@@ -7,13 +7,12 @@ information than can reasonably be shown in a single figure panel. To
 visualize such datasets, it can be helpful to create multi-panel
 figures. These are figures that consist of multiple figure panels where
 each one shows some subset of the data. There are two distinct
-categories of such figures: 1. Trellis plots or faceted plots are plots
-consisting of multiple panels arranged in a regular grid. Each panel
-shows a different subset of the data but all panels use the same type of
-visualization. 2. Compound figures consist of separate figure panels
-assembled in an arbitrary arrangement (which may or may not be grid
-based) and showing entirely different visualizations, or possibly even
-different datasets.
+categories of such figures: 1. Small multiples are plots consisting of
+multiple panels arranged in a regular grid. Each panel shows a different
+subset of the data but all panels use the same type of visualization. 2.
+Compound figures consist of separate figure panels assembled in an
+arbitrary arrangement (which may or may not be grid based) and showing
+entirely different visualizations, or possibly even different datasets.
 
 We have encountered both types of multi-panel figures in many places
 throughout this book. In general, these figures are intuitive and
@@ -21,19 +20,22 @@ straightforward to interpret. However, when preparing such figures,
 there are a few issues we need to pay attention to, and the purpose of
 this chapter is to make you aware of these issues.
 
-[[trellis-plots]]
-Trellis plots
-~~~~~~~~~~~~~
+[[small-multiples]]
+Small multiples
+~~~~~~~~~~~~~~~
 
-The Trellis plot was invented in the 1990 by Cleveland, Becker, and
-colleagues at Bell Labs [@Cleveland1993; @Becker-Cleveland-Shyu-1996].
-The key idea is to slice the data into parts according to one or more
-data dimensions, visualize each data slice separately, and then arrange
-the individual visualizations into a grid. Columns, rows, or individual
-panels in the grid are labeled by the values of the data dimensions that
-define the data slices. This technique is also commonly referred to as
-"faceting", named after the methods that create such plots in the widely
-used ggplot2 plot library (`facet_grid()` and `facet_wrap()`).
+The term "small multiple" was popularized by @TufteEnvisioning. An
+alternative term, "trellis plot", was popularized around the same time
+by Cleveland, Becker, and colleagues at Bell Labs [@Cleveland1993;
+@Becker-Cleveland-Shyu-1996]. Regardless of terminology, the key idea is
+to slice the data into parts according to one or more data dimensions,
+visualize each data slice separately, and then arrange the individual
+visualizations into a grid. Columns, rows, or individual panels in the
+grid are labeled by the values of the data dimensions that define the
+data slices. More recently, this technique is also sometimes referred to
+as "faceting", named after the methods that create such plots in the
+widely used ggplot2 plot library (e.g., `facet_grid()`, see
+@Wickham2016).
 
 As a first example, we will apply this technique to the dataset of
 Titanic passengers. We can subdivide this dataset by the class in which
@@ -57,7 +59,7 @@ visualization of the fate of the Titanic passengers. We see clearly that
 most men died and most women survived. Further, and among the women who
 died nearly all were traveling in 3rd class.
 
-Trellis plots are a powerful tool to visualize very large amounts of
+Small multiples are a powerful tool to visualize very large amounts of
 data at once. Figure @ref(fig:titanic-passenger-breakdown) uses six
 separate panels, but we can use many more. Figure
 @ref(fig:movie-rankings) shows the relationship between the average
@@ -123,16 +125,16 @@ National Center for Education Statistics
 (#fig:BA-degrees-fixed-y-lims)(ref:BA-degrees-fixed-y-lims)
 
 I generally recommend against using different axis scalings in separate
-panels of a Trellis plot. However, on occasion, this problem truly
-cannot be avoided. If you encounter such a scenario, then I think at a
-minimum you need to draw the reader's attention to this issue in the
-figure caption. For example, you could add a sentence such as: "Notice
-that the _y_-axis scalings differ among the different panels of this
-figure."
+panels of a small multiples plot. However, on occasion, this problem
+truly cannot be avoided. If you encounter such a scenario, then I think
+at a minimum you need to draw the reader's attention to this issue in
+the figure caption. For example, you could add a sentence such as:
+"Notice that the _y_-axis scalings differ among the different panels of
+this figure."
 
 It is also important to think about the ordering of the individual
-panels in a Trellis plot. The plot will be easier to interpret if the
-ordering follows some logical principle. In Figure
+panels in a small multiples plot. The plot will be easier to interpret
+if the ordering follows some logical principle. In Figure
 @ref(fig:titanic-passenger-breakdown), I arranged the rows from the
 highest class (1st class) to the lowest class (3rd class). In Figure
 @ref(fig:movie-rankings), I arranged the panels by increasing years from
@@ -142,33 +144,33 @@ average degree popularity, such that the most popular degrees are in the
 top row and/or to the left and the least popular degrees are in the
 bottom row and/or to the right.
 
-Always arrange the panels in a Trellis plot in a meaningful and logical
-order.
+Always arrange the panels in a small multiples plot in a meaningful and
+logical order.
 
 [[compound-figures]]
 Compound figures
 ~~~~~~~~~~~~~~~~
 
-Not every figure with multiple panels fits the pattern of a Trellis
-plot. Sometimes we simply want to combine several independent panels
-into a combined figure that conveys one overarching point. In this case,
-we can take the indivdiual plots and arrange them in rows, columns, or
-other, more complex arrangements, and call the entire arrangement one
-figure. For an example, see Figure @ref(fig:BA-degrees-compound), which
-continues the analysis of trends in Bachelor's degrees converred by U.S.
-institutions of higher learning. Panel (a) of Figure
-@ref(fig:BA-degrees-compound) shows the growth in total number of
-degrees awarded from 1971 to 2015, a time span during which the number
-of degrees awarded approximately doubled. Panel (b) instead shows the
-change in the percent of degrees awarded over the same time period in
-the five most popular degree areas. We can see that social sciences,
-history, and education have experienced massive declines from 1971 to
-2015, whereas business and health professions have seen substantial
-growth.
+Not every figure with multiple panels fits the pattern of small
+multiples. Sometimes we simply want to combine several independent
+panels into a combined figure that conveys one overarching point. In
+this case, we can take the indivdiual plots and arrange them in rows,
+columns, or other, more complex arrangements, and call the entire
+arrangement one figure. For an example, see Figure
+@ref(fig:BA-degrees-compound), which continues the analysis of trends in
+Bachelor's degrees converred by U.S. institutions of higher learning.
+Panel (a) of Figure @ref(fig:BA-degrees-compound) shows the growth in
+total number of degrees awarded from 1971 to 2015, a time span during
+which the number of degrees awarded approximately doubled. Panel (b)
+instead shows the change in the percent of degrees awarded over the same
+time period in the five most popular degree areas. We can see that
+social sciences, history, and education have experienced massive
+declines from 1971 to 2015, whereas business and health professions have
+seen substantial growth.
 
-Notice how unlike in a Trellis plot, the individual panels of the
-compound figure are labeled alphabetically. It is conventional to use
-lower or upper case letters from the Latin alphabet. The labeling is
+Notice how unlike in my small multiples examples, the individual panels
+of the compound figure are labeled alphabetically. It is conventional to
+use lower or upper case letters from the Latin alphabet. The labeling is
 needed to uniquely specify a particular panel. For example, when I want
 to talk about the part of Figure @ref(fig:BA-degrees-compound) showing
 the changes in percent of degrees awarded, I can refer to panel (b) of
@@ -176,8 +178,8 @@ that figure or simply to Figure @ref(fig:BA-degrees-compound)b. Without
 labeling, I would have to awkwardly talk about the "right panel" or the
 "left panel" of Figure @ref(fig:BA-degrees-compound), and referring to
 specific panels would be even more awkward for more complex panel
-arrangements. Labeling is not needed and not normally done for Trellis
-plots because there each panel is uniquely specified by the faceting
+arrangements. Labeling is not needed and not normally done for small
+multiples because there each panel is uniquely specified by the faceting
 variable(s) that are provided as figure labels.
 
 (ref:BA-degrees-compound) Trends in Bachelor's Degrees conferred by U.S.

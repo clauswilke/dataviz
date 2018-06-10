@@ -70,7 +70,7 @@
 #. **Figure titles and captions**  
   Discusses when to use and not to use figure titles. For captioned figures, the titles are normally the first thing shown in the caption, and thus are not shown on top of the figure. 
 
-#. **Maximizing the data signal in visualizations**  
+#. **Optimize the data--ink ratio**  
   Discusses the general principle of maximizing the ink used to convey information. Argues to avoid boxes and frames around figure parts. Also discusses when and how to use background grids and other guide lines in figures.
 
 #. **Your axis labels are too small**  

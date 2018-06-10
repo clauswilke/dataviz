@@ -187,5 +187,6 @@ is provided in Figure @ref(fig:Aus-athletes-track).
 
 (ref:Aus-athletes-track) Track athletes are among the shortest and
 leanest of male professional athletes participating in popular sports.
+Data source: @Telford-Cunningham-1991
 
 (#fig:Aus-athletes-track)(ref:Aus-athletes-track)

@@ -293,14 +293,15 @@ straight to a highly complex figure; first show an easily digestable
 subset.
 
 This recommendation is particularly relevant if the final figure is a
-Trellis plot (Chapter @ref(multi-panel-figures)) showing a grid of
-subplots with similar structure. The full grid is much easier to digest
-if the audience has first seen a single subplot by itself. For example,
-Figure @ref(fig:united-departures-weekdays) shows the aggregate numbers
-of United Airlines departures out of Newark Airport (EWR) in 2013,
-broken down by weekday. Once we have seen and digested this figure,
-seeing the same information for ten airlines and three airports at once
-is much easier to process (Figure @ref(fig:all-departures-weekdays)).
+small multiples plot (Chapter @ref(multi-panel-figures)) showing a grid
+of subplots with similar structure. The full grid is much easier to
+digest if the audience has first seen a single subplot by itself. For
+example, Figure @ref(fig:united-departures-weekdays) shows the aggregate
+numbers of United Airlines departures out of Newark Airport (EWR) in
+2013, broken down by weekday. Once we have seen and digested this
+figure, seeing the same information for ten airlines and three airports
+at once is much easier to process (Figure
+@ref(fig:all-departures-weekdays)).
 
 (ref:united-departures-weekdays) United Airlines departures out of
 Newark Airport (EWR) in 2013, by weekday. Most weekedays show
