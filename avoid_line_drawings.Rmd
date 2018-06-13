@@ -85,7 +85,7 @@ stamp_bad(iris_lines)
 
 We can attempt to address the problem of porous boundaries by using colored lines rather than dashed lines (Figure \@ref(fig:iris-densities-colored-lines)). However, the density areas in the resulting plot still have little visual presence. Overall, I find the version with filled areas (Figure \@ref(fig:iris-densities-filled)) the most clear and intuitive. It is important, however, to make the filled areas partially transparent, so that the complete distribution for each species is visible.
 
-(ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve.
+(ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the problem of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve.
 
 ```{r iris-densities-colored-lines, fig.cap='(ref:iris-densities-colored-lines)'}
 iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color = Species)) + 
