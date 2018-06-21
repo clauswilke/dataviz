@@ -22,7 +22,7 @@ ggplot(blue_jays, aes(Mass, Head)) +
 
 (ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
-```{r blue-jays-scatter-sex, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-sex)'}
+```{r blue-jays-scatter-sex, fig.width = 5, fig.asp = 3.2/4, fig.cap='(ref:blue-jays-scatter-sex)'}
 ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) + 
   geom_point(pch = 21, color = "white", size = 2.5) +
   scale_x_continuous(name = "body mass (g)") +
@@ -39,9 +39,12 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     ) +
   theme_dviz_grid() +
   theme(
+    #legend.position = c(1, 0.01),
+    #legend.justification = c(1, 0),
+    legend.position = "top",
+    legend.justification = "right",
+    legend.box.spacing = unit(3.5, "pt"), # distance between legend and plot
     legend.text = element_text(vjust = 0.6),
-    legend.position = c(1, 0.01),
-    legend.justification = c(1, 0),
     legend.spacing.x = unit(2, "pt"),
     legend.background = element_rect(fill = "white", color = NA),
     legend.key.width = unit(10, "pt")

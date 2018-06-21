@@ -64,7 +64,8 @@ stamp_bad(ggdraw() + draw_plot(p, x = 1/434, y = 1/268, width = 426/434, height 
 (ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and majore grid lines have been drawn in light gray to stand back relative to the data points. Data source: @Telford-Cunningham-1991
 
 ```{r Aus-athletes-grid-good, fig.cap='(ref:Aus-athletes-grid-good)'}
-p_Aus_base + theme_dviz_grid()
+p_Aus_base + 
+  theme_dviz_grid()# + panel_border(colour = "grey70") + theme(axis.ticks = element_line(colour = "grey70"))
 ```
 
 However, we can take the removal of non-data ink too far. Figure \@ref(fig:Aus-athletes-min-bad) is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good), and a clear regression. Most importantly, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown. We only see points floating in space. Second, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets off the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad).

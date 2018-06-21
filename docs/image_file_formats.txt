@@ -170,6 +170,18 @@ compression artifacts. _Image credit: Claus O. Wilke_
 
 (#fig:jpeg-example)(ref:jpeg-example)
 
+Even if jpeg artifacts are sufficiently subtle that they are not
+immediately visible to the naked eye they can cause trouble, for example
+in print production. Therefore, it is a good idea to avoid the jpeg
+format whenever possible. In particular, you should avoid it for images
+containing line drawings or text, as is the case for data visualizations
+or screen shots. The appropriate format for those images is png or tiff.
+I use the jpeg format exclusively for photographic images. And if an
+image contains both photographic elements and line drawings or text, you
+should still use png or tiff. The worst case scenario with those file
+formats is that your image files grow large, whereas the worst case
+scenario with jpeg is that your final product looks ugly.
+
 [[converting-between-image-formats]]
 Converting between image formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

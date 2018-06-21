@@ -34,7 +34,7 @@ Next, let's take a look at an old-school density plot. I'm showing density estim
 
 We can attempt to address the problem of porous boundaries by using colored lines rather than dashed lines (Figure \@ref(fig:iris-densities-colored-lines)). However, the density areas in the resulting plot still have little visual presence. Overall, I find the version with filled areas (Figure \@ref(fig:iris-densities-filled)) the most clear and intuitive. It is important, however, to make the filled areas partially transparent, so that the complete distribution for each species is visible.
 
-(ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the probme of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve.
+(ref:iris-densities-colored-lines) Density estimates of the sepal lengths of three different iris species. By using solid, colored lines we have solved the problem of Figure \@ref(fig:iris-densities-lines) that the areas below and above the lines seem to be connected. However, we still don't have a strong sense of the size of the area under each curve.
 
 <div class="figure" style="text-align: center">
 <img src="avoid_line_drawings_files/figure-html/iris-densities-colored-lines-1.png" alt="(ref:iris-densities-colored-lines)" width="576" />

@@ -83,7 +83,7 @@ I will now demonstrate a case where pie charts fail. This example is modeled aft
 <p class="caption">(\#fig:marketshare-pies)(ref:marketshare-pies)</p>
 </div>
 
-The picture becomes a little clearer when we switch to stacked bars (Figure \@ref(fig:marketshare-stacked)). Now the trends of a growing market share for company A and a shrinking market share for company E are clearly visible. However, the relative market shares of the five companies within each year are still hard to compare. And it is difficult to compare the market shares of companies B, C, and D across years, because the bars are shifted relative to each other across years. This is a general problem of stacked-bar plots, and the main reason why I normally not recommend this type of visualization.
+The picture becomes a little clearer when we switch to stacked bars (Figure \@ref(fig:marketshare-stacked)). Now the trends of a growing market share for company A and a shrinking market share for company E are clearly visible. However, the relative market shares of the five companies within each year are still hard to compare. And it is difficult to compare the market shares of companies B, C, and D across years, because the bars are shifted relative to each other across years. This is a general problem of stacked-bar plots, and the main reason why I normally do not recommend this type of visualization.
 
 (ref:marketshare-stacked) Market share of five hypothetical companies for the years 2015--2017, visualized as stacked bars. This visualization has two major problems: 1. A comparison of relative market shares within years is difficult. 2. Changes in market share across years are difficult to see for the middle companies B, C, and D, because the location of the bars changes across years.
 

@@ -50,9 +50,15 @@ and gender using 3D bars. Because of the way the bars are arranged
 relative to the axes, the bars all look shorter than they actually are.
 For example, there were 322 passengers total traveling in 1st class, yet
 Figure @ref(fig:titanic-3d) suggests that the number was less than 300.
-(See Figure @ref(fig:titanic-passengers-by-class-sex) in Chapter
-@ref(visualizing-amounts) for a more reasonable 2D version of this
-figure.)
+This illusion arises because the columns representing the data are
+located at a distance from the two back surfaces on which the gray
+horizontal lines are drawn. To see this effect, consider extending any
+of the bottom edges of one of the columns until it hits the lowest gray
+line, which represents 0. Then, imagine doing the same to any of the top
+edges, and you'll see that all columns are taller than they appear at
+first glance. (See Figure @ref(fig:titanic-passengers-by-class-sex) in
+Chapter @ref(visualizing-amounts) for a more reasonable 2D version of
+this figure.)
 
 (ref:titanic-3d) Numbers of female and male passengers on the Titanic
 traveling in 1st, 2nd, and 3rd class, shown as a 3D stacked bar plot.

@@ -147,7 +147,7 @@ companies within each year are still hard to compare. And it is
 difficult to compare the market shares of companies B, C, and D across
 years, because the bars are shifted relative to each other across years.
 This is a general problem of stacked-bar plots, and the main reason why
-I normally not recommend this type of visualization.
+I normally do not recommend this type of visualization.
 
 (ref:marketshare-stacked) Market share of five hypothetical companies
 for the years 2015--2017, visualized as stacked bars. This visualization

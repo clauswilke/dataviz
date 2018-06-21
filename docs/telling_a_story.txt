@@ -260,7 +260,12 @@ doesn't challenge your data visualization skills. And if you're then
 wondering whether these airlines have small delays because they don't
 fly that much out of New York City, you could present a second bar graph
 highlighting that both American and Delta are major carriers in the New
-York City area (Figure @ref(fig:number-of-flights-nyc)).
+York City area (Figure @ref(fig:number-of-flights-nyc)). Both of these
+two bar graphs discard the distance variable shown in Figure
+@ref(fig:arrival-delay-vs-distance). This is Ok. We don't need to
+visualize data dimensions that are tangential to our story, even if we
+have them and even if we could make a figure that showed them. Simple
+and clear is better than complex and confusing.
 
 (ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the
 New York City area in 2013, by airline. American and Delta have the

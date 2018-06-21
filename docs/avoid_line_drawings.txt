@@ -86,7 +86,7 @@ for each species is visible.
 
 (ref:iris-densities-colored-lines) Density estimates of the sepal
 lengths of three different iris species. By using solid, colored lines
-we have solved the probme of Figure @ref(fig:iris-densities-lines) that
+we have solved the problem of Figure @ref(fig:iris-densities-lines) that
 the areas below and above the lines seem to be connected. However, we
 still don't have a strong sense of the size of the area under each
 curve.
