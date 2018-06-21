@@ -218,7 +218,7 @@ Remember: You always need to pick the visualization that best fits your specific
 <p>From 1961 to 1983, the German parliament (called the <em>Bundestag</em>) was composed of members of three different parties, CDU/CSU, SPD, and FDP. During most of this time, CDU/CSU and SPD had approximately comparable numbers of seats, while the FDP typically held only a small fraction of seats. For example, in the 8th Bundestag, from 1976–1980, the CDU/CSU held 243 seats, SPD 214, and FDP 39, for a total of 496. Such parliamentary data is most commonly visualized as a pie chart (Figure <a href="visualizing-proportions.html#fig:bundestag-pie">9.1</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-pie"></span>
-<img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU." width="1260" />
+<img src="visualizing_proportions_files/figure-html/bundestag-pie-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU." width="630" />
 <p class="caption">
 Figure 9.1: Party composition of the 8th German Bundestag, 1976–1980, visualized as a pie chart. This visualization shows clearly that the ruling coalition of SPD and FDP had a small majority over the opposition CDU/CSU.
 </p>
@@ -226,7 +226,7 @@ Figure 9.1: Party composition of the 8th German Bundestag, 1976–1980, visualiz
 <p>A pie chart breaks a circle into slices such that the area of each slice is proportional to the fraction of the total it represents. The same procedure can be performed on a rectangle, and the result is a stacked bar chart (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">9.2</a>). Depending on whether we slice the bar vertically or horizontally, we obtain vertically stacked bars (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">9.2</a>a) or horizontally stacked bars (Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">9.2</a>b).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-stacked-bars"></span>
-<img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="1785" />
+<img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="892.5" />
 <p class="caption">
 Figure 9.2: Party composition of the 8th German Bundestag, 1976–1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 </p>
@@ -234,7 +234,7 @@ Figure 9.2: Party composition of the 8th German Bundestag, 1976–1980, visualiz
 <p>We can also take the bars from Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">9.2</a>a and place them side-by-side rather than stacking them on top of each other. This visualization makes it easier to perform a direct comparison of the three groups, though it obscures other aspects of the data (Figure <a href="visualizing-proportions.html#fig:bundestag-bars-side-by-side">9.3</a>). Most importantly, in a side-by-side bar plot the relationship of each bar to the total is not visually obvious.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:bundestag-bars-side-by-side"></span>
-<img src="visualizing_proportions_files/figure-html/bundestag-bars-side-by-side-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as side-by-side bars. As in Figure 9.2, it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="1050" />
+<img src="visualizing_proportions_files/figure-html/bundestag-bars-side-by-side-1.png" alt="Party composition of the 8th German Bundestag, 1976–1980, visualized as side-by-side bars. As in Figure 9.2, it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU." width="525" />
 <p class="caption">
 Figure 9.3: Party composition of the 8th German Bundestag, 1976–1980, visualized as side-by-side bars. As in Figure <a href="visualizing-proportions.html#fig:bundestag-stacked-bars">9.2</a>, it is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 </p>
@@ -302,7 +302,7 @@ Figure 9.3: Party composition of the 8th German Bundestag, 1976–1980, visualiz
 <p>I will now demonstrate a case where pie charts fail. This example is modeled after a critique of pie charts originally posted on Wikipedia <span class="citation">(Wikipedia <a href="#ref-Schutz-piecharts">2007</a>)</span>. Consider the hypothetical scenario of five companies, A, B, C, D, and E, who all have roughly comparable market share of approximately 20%. Our hypothetical dataset lists the marketshare of each company for three consecutive years. When we visualize this dataset with pie charts, it is difficult to see what exactly is going on (Figure <a href="visualizing-proportions.html#fig:marketshare-pies">9.4</a>). It appears that the market share of company A is growing and the one of company E is shrinking, but beyond this one observation we can’t tell what’s going on. In particular, it is unclear how exactly the market shares of the different companies compare within each year.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:marketshare-pies"></span>
-<img src="visualizing_proportions_files/figure-html/marketshare-pies-1.png" alt="Market share of five hypothetical companies, A–E, for the years 2015–2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see." width="1785" />
+<img src="visualizing_proportions_files/figure-html/marketshare-pies-1.png" alt="Market share of five hypothetical companies, A–E, for the years 2015–2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see." width="892.5" />
 <p class="caption">
 Figure 9.4: Market share of five hypothetical companies, A–E, for the years 2015–2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
 </p>
@@ -310,7 +310,7 @@ Figure 9.4: Market share of five hypothetical companies, A–E, for the years 20
 <p>The picture becomes a little clearer when we switch to stacked bars (Figure <a href="visualizing-proportions.html#fig:marketshare-stacked">9.5</a>). Now the trends of a growing market share for company A and a shrinking market share for company E are clearly visible. However, the relative market shares of the five companies within each year are still hard to compare. And it is difficult to compare the market shares of companies B, C, and D across years, because the bars are shifted relative to each other across years. This is a general problem of stacked-bar plots, and the main reason why I normally do not recommend this type of visualization.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:marketshare-stacked"></span>
-<img src="visualizing_proportions_files/figure-html/marketshare-stacked-1.png" alt="Market share of five hypothetical companies for the years 2015–2017, visualized as stacked bars. This visualization has two major problems: 1. A comparison of relative market shares within years is difficult. 2. Changes in market share across years are difficult to see for the middle companies B, C, and D, because the location of the bars changes across years." width="1260" />
+<img src="visualizing_proportions_files/figure-html/marketshare-stacked-1.png" alt="Market share of five hypothetical companies for the years 2015–2017, visualized as stacked bars. This visualization has two major problems: 1. A comparison of relative market shares within years is difficult. 2. Changes in market share across years are difficult to see for the middle companies B, C, and D, because the location of the bars changes across years." width="630" />
 <p class="caption">
 Figure 9.5: Market share of five hypothetical companies for the years 2015–2017, visualized as stacked bars. This visualization has two major problems: 1. A comparison of relative market shares within years is difficult. 2. Changes in market share across years are difficult to see for the middle companies B, C, and D, because the location of the bars changes across years.
 </p>
@@ -318,7 +318,7 @@ Figure 9.5: Market share of five hypothetical companies for the years 2015–201
 <p>For this hypothetical data set, side-by-side bars are the best choice (Figure <a href="visualizing-proportions.html#fig:marketshare-side-by-side">9.6</a>). This visualization highlights that both companies A and B have increased their market share from 2015 to 2017 while both companies D and E have reduced theirs. It also shows that market shares increase sequentially from company A to E in 2015 and similarly decrease in 2017.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:marketshare-side-by-side"></span>
-<img src="visualizing_proportions_files/figure-html/marketshare-side-by-side-1.png" alt="Market share of five hypothetical companies for the years 2015–2017, visualized as side-by-side bars." width="1260" />
+<img src="visualizing_proportions_files/figure-html/marketshare-side-by-side-1.png" alt="Market share of five hypothetical companies for the years 2015–2017, visualized as side-by-side bars." width="630" />
 <p class="caption">
 Figure 9.6: Market share of five hypothetical companies for the years 2015–2017, visualized as side-by-side bars.
 </p>
@@ -329,7 +329,7 @@ Figure 9.6: Market share of five hypothetical companies for the years 2015–201
 <p>In Section <a href="visualizing-proportions.html#side-by-side-bars">9.2</a>, I wrote that I don’t normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be quite clear. As an example, consider the proportion of women in a country’s national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament members. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure <a href="visualizing-proportions.html#fig:women-parliament">9.7</a>). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:women-parliament"></span>
-<img src="visualizing_proportions_files/figure-html/women-parliament-1.png" alt="Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org." width="1260" />
+<img src="visualizing_proportions_files/figure-html/women-parliament-1.png" alt="Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org." width="630" />
 <p class="caption">
 Figure 9.7: Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org.
 </p>
@@ -338,7 +338,7 @@ Figure 9.7: Change in the gender composition of the Rwandan parliament over time
 <p>To give an example where stacked densities may be appropriate, consider the health status of people as a function of age. Age can be considered a continuous variable, and visualizing the data in this way works reasonably well (Figure <a href="visualizing-proportions.html#fig:health-vs-age">9.8</a>). Even though we have four health categories here, and I’m generally not a fan of stacking multiple conditions, as discussed above, I think in this case the figure is acceptable. We can see clearly that overall health declines as people age, and we can also see that despite this trend, over half of the population remain in good or excellent health until very old age.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:health-vs-age"></span>
-<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" alt="Health status by age, as reported by the general social survey (GSS)." width="1260" />
+<img src="visualizing_proportions_files/figure-html/health-vs-age-1.png" alt="Health status by age, as reported by the general social survey (GSS)." width="630" />
 <p class="caption">
 Figure 9.8: Health status by age, as reported by the general social survey (GSS).
 </p>
@@ -350,7 +350,7 @@ Figure 9.8: Health status by age, as reported by the general social survey (GSS)
 <p>Side-by-side bars have the problem that they don’t clearly visualize the size of the individual parts relative to the whole and stacked bars have the problem that the different bars cannot be compared easily because they have different baselines. We can resolve these two issues by making a separate plot for each part and in each plot showing the respective part relative to the whole. For the health dataset of Figure <a href="visualizing-proportions.html#fig:health-vs-age">9.8</a>, this procedure results in Figure <a href="visualizing-proportions.html#fig:health-vs-age-facets">9.9</a>. The overall age distribution in the dataset is shown as the shaded gray areas, and the age distributions for each health status are shown in blue. This figure highlights that in absolute terms, the number people with excellent or good health declines past ages 30–40, while the number of people with fair health remains approximately constant across all ages.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:health-vs-age-facets"></span>
-<img src="visualizing_proportions_files/figure-html/health-vs-age-facets-1.png" alt="Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution." width="1785" />
+<img src="visualizing_proportions_files/figure-html/health-vs-age-facets-1.png" alt="Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution." width="892.5" />
 <p class="caption">
 Figure 9.9: Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution.
 </p>
@@ -358,7 +358,7 @@ Figure 9.9: Health status by age, shown as proportion of the total number of peo
 <p>To provide a second example, let’s consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure <a href="visualizing-proportions.html#fig:marital-vs-age">9.10</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:marital-vs-age"></span>
-<img src="visualizing_proportions_files/figure-html/marital-vs-age-1.png" alt="Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret." width="1260" />
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-1.png" alt="Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret." width="630" />
 <p class="caption">
 Figure 9.10: Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret.
 </p>
@@ -366,7 +366,7 @@ Figure 9.10: Marital status by age, as reported by the general social survey (GS
 <p>The same dataset visualized as partial densities is much clearer (Figure <a href="visualizing-proportions.html#fig:marital-vs-age-facets">9.11</a>). In particular, we see that the proportion of married people peaks around the late 30s, the proportion of divorced people peaks around the early 40s, and the proportion of widowed people peaks around the mid 70s.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:marital-vs-age-facets"></span>
-<img src="visualizing_proportions_files/figure-html/marital-vs-age-facets-1.png" alt="Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution." width="1785" />
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-facets-1.png" alt="Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution." width="892.5" />
 <p class="caption">
 Figure 9.11: Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 </p>

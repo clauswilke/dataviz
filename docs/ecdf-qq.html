@@ -215,7 +215,7 @@
 <p>We can plot the total number of students that have received at least a certain number of points versus all possible point scores. This plot will be an ascending function, starting at 0 for 0 points and ending at 50 for 100 points. A different way of thinking about this visualization is the following: We can rank all students by the number of points they obtained, in ascending order (so the student with the fewest points receives the lowest rank and the student with the most points the highest), and then plot the rank versus the actual points obtained. The result is an <em>empirical cumulative distribution function</em> (ecdf) or simply <em>cumulative distribution.</em> Each dot represents one student, and the lines visualize the highest student rank observed for any possible point value (Figure <a href="ecdf-qq.html#fig:student-grades">7.1</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:student-grades"></span>
-<img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" alt="Empirical cumulative distribution function of student grades for a hypothetical class of 50 students." width="1260" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" alt="Empirical cumulative distribution function of student grades for a hypothetical class of 50 students." width="630" />
 <p class="caption">
 Figure 7.1: Empirical cumulative distribution function of student grades for a hypothetical class of 50 students.
 </p>
@@ -223,7 +223,7 @@ Figure 7.1: Empirical cumulative distribution function of student grades for a h
 <p>You may wonder what happens if we rank the students the other way round, in descending order. This ranking simply flips the function on its head. The result is still an empirical cumulative distribution function, but the lines now represent the lowest student rank observed for any possible point value (Figure <a href="ecdf-qq.html#fig:student-grades-desc">7.2</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:student-grades-desc"></span>
-<img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" alt="Distribution of student grades plotted as a descending ecdf." width="1260" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" alt="Distribution of student grades plotted as a descending ecdf." width="630" />
 <p class="caption">
 Figure 7.2: Distribution of student grades plotted as a descending ecdf.
 </p>
@@ -232,7 +232,7 @@ Figure 7.2: Distribution of student grades plotted as a descending ecdf.
 <p>In practical applications, it is quite common to draw the ecdf without highlighting the individual points and to normalize the ranks by the maximum rank, so that the <em>y</em> axis represents the cumulative frequency (Figure <a href="ecdf-qq.html#fig:student-grades-normalized">7.3</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:student-grades-normalized"></span>
-<img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" alt="Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the y values plotted correspond to the fraction of students in the class with at most that many points." width="1260" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" alt="Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the y values plotted correspond to the fraction of students in the class with at most that many points." width="630" />
 <p class="caption">
 Figure 7.3: Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the <em>y</em> values plotted correspond to the fraction of students in the class with at most that many points.
 </p>
@@ -246,7 +246,7 @@ Figure 7.3: Ecdf of student grades. The student ranks have been normalized to th
 <p>Here, I will first discuss the number of people living in different US counties according to the 2010 US Census. This distribution has a very long tail to the right. Even though most counties have relatively small numbers of inhabitants (the median is 25,857), a few counties have extremely large numbers of inhabitants (e.g., Los Angeles County, with 9,818,605 inhabitants). If we try to visualize the distribution of population counts as either a density plot or an ecdf, we obtain figures that are essentially useless (Figure <a href="ecdf-qq.html#fig:county-populations">7.4</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:county-populations"></span>
-<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" alt="Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function." width="1050" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" alt="Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function." width="525" />
 <p class="caption">
 Figure 7.4: Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 </p>
@@ -254,7 +254,7 @@ Figure 7.4: Distribution of the number of inhabitants in US counties, according 
 <p>The density plot (Figure <a href="ecdf-qq.html#fig:county-populations">7.4</a>a) shows a sharp peak right at 0 and virtually no details of the distribution are visible. Similarly, the ecdf (Figure <a href="ecdf-qq.html#fig:county-populations">7.4</a>b) shows a rapid rise near 0 and again no details of the distribution are visible. For this particular dataset, we can log-transform the data and visualize the distribution of the log-transformed values. This transformation works here because the population numbers in counties is not actually a power law, but instead follow a nearly perfect log-normal distribution (see Section <a href="ecdf-qq.html#qq-plots">7.3</a>). Indeed, the density plot of the log-transformed values shows a nice bell curve and the corresponding ecdf shows a nice sigmoidal shape (Figure <a href="ecdf-qq.html#fig:county-populations-log">7.5</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:county-populations-log"></span>
-<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" alt="Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function." width="1050" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" alt="Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function." width="525" />
 <p class="caption">
 Figure 7.5: Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 </p>
@@ -262,7 +262,7 @@ Figure 7.5: Distribution of the logarithm of the number of inhabitants in US cou
 <p>To see that this distribution is not a power law, we plot it as a descending ecdf with logarithmic <em>x</em> and <em>y</em> axes. In this visualization, a power law appears as a perfect straight line. For the population counts in counties, the right tail forms almost but not quite a straight line on the descending log-log ecdf plot (Figure <a href="ecdf-qq.html#fig:county-populations-tail-log-log">7.6</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:county-populations-tail-log-log"></span>
-<img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" alt="Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants." width="1260" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" alt="Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants." width="630" />
 <p class="caption">
 Figure 7.6: Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants.
 </p>
@@ -270,7 +270,7 @@ Figure 7.6: Relative frequency of counties with at least that many inhabitants v
 <p>As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure <a href="ecdf-qq.html#fig:word-counts-tail-log-log">7.7</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:word-counts-tail-log-log"></span>
-<img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" alt="Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used." width="1260" />
+<img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" alt="Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used." width="630" />
 <p class="caption">
 Figure 7.7: Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used.
 </p>
@@ -282,7 +282,7 @@ Figure 7.7: Distribution of word counts in the novel Moby Dick. Shown is the rel
 <p>When we perform this procedure for the student grades distribution from the beginning of this chapter, we obtain Figure <a href="ecdf-qq.html#fig:student-grades-qq">7.8</a>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:student-grades-qq"></span>
-<img src="visualizing_distributions_II_files/figure-html/student-grades-qq-1.png" alt="q-q plot of student grades." width="1050" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-qq-1.png" alt="q-q plot of student grades." width="525" />
 <p class="caption">
 Figure 7.8: q-q plot of student grades.
 </p>
@@ -291,7 +291,7 @@ Figure 7.8: q-q plot of student grades.
 <p>We can also use a q-q plot to test my assertion from earlier in this chapter that the population counts in US counties follow a log-normal distribution. If these counts are log-normally distributed, then their log-transformed values are normally distributed and hence should fall right onto the <em>x</em> = <em>y</em> line. When making this plot, we see that the agreement between the observed and the theoretical values is exceptional (Figure <a href="ecdf-qq.html#fig:county-populations-qq">7.9</a>). This demonstrates that the distribution of population counts among counties is indeed log-normal.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:county-populations-qq"></span>
-<img src="visualizing_distributions_II_files/figure-html/county-populations-qq-1.png" alt="q-q plot of the logarithm of the number of inhabitants in US counties." width="1050" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-qq-1.png" alt="q-q plot of the logarithm of the number of inhabitants in US counties." width="525" />
 <p class="caption">
 Figure 7.9: q-q plot of the logarithm of the number of inhabitants in US counties.
 </p>

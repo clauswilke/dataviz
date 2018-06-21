@@ -12,7 +12,7 @@ We first consider a scenario with only a moderate number of data points but with
 (ref:mpg-cty-displ-solid) City fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled "bad" because many points are plotted on top of others and obscure them. 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" alt="(ref:mpg-cty-displ-solid)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" alt="(ref:mpg-cty-displ-solid)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-solid)(ref:mpg-cty-displ-solid)</p>
 </div>
 
@@ -21,7 +21,7 @@ One way to ameliorate this problem is to use partial transparency. If we make in
 (ref:mpg-cty-displ-transp) City fuel economy versus engine displacement. Because points have been made partially transparent, points that lie on top of other points can now be identified by their darker shade. 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" alt="(ref:mpg-cty-displ-transp)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" alt="(ref:mpg-cty-displ-transp)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-transp)(ref:mpg-cty-displ-transp)</p>
 </div>
 
@@ -30,7 +30,7 @@ However, making points partially transparent is not always sufficient to solve t
 (ref:mpg-cty-displ-jitter) City fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overplotted points more clearly visible without substantially distorting the message of the plot.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-1.png" alt="(ref:mpg-cty-displ-jitter)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-1.png" alt="(ref:mpg-cty-displ-jitter)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-jitter)(ref:mpg-cty-displ-jitter)</p>
 </div>
 
@@ -39,7 +39,7 @@ One downside of jittering is that it does change the data and therefore has to b
 (ref:mpg-cty-displ-jitter-extreme) City fuel economy versus engine displacement. By adding too much jitter to the points, we have created a visualization that does not accurately reflect the underlying dataset.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-extreme-1.png" alt="(ref:mpg-cty-displ-jitter-extreme)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-extreme-1.png" alt="(ref:mpg-cty-displ-jitter-extreme)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-jitter-extreme)(ref:mpg-cty-displ-jitter-extreme)</p>
 </div>
 
@@ -50,7 +50,7 @@ When the number of individual points gets very large, partial transparency (with
 (ref:nycflights-points) Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-points-1.png" alt="(ref:nycflights-points)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-points-1.png" alt="(ref:nycflights-points)" width="630" />
 <p class="caption">(\#fig:nycflights-points)(ref:nycflights-points)</p>
 </div>
 
@@ -61,7 +61,7 @@ In such cases, instead of plotting individual points, we can make a 2d histogram
 (ref:nycflights-2d-bins) Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-2d-bins-1.png" alt="(ref:nycflights-2d-bins)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-2d-bins-1.png" alt="(ref:nycflights-2d-bins)" width="630" />
 <p class="caption">(\#fig:nycflights-2d-bins)(ref:nycflights-2d-bins)</p>
 </div>
 
@@ -72,7 +72,7 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 (ref:nycflights-hex-bins) Departure delay in minutes versus the flight departure time. Each colored hexagon represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that hexagon.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-hex-bins-1.png" alt="(ref:nycflights-hex-bins)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-hex-bins-1.png" alt="(ref:nycflights-hex-bins)" width="630" />
 <p class="caption">(\#fig:nycflights-hex-bins)(ref:nycflights-hex-bins)</p>
 </div>
 
@@ -86,7 +86,7 @@ As an example for this approach, we consider the relationship between population
 (ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-scatter-1.png" alt="(ref:midwest-scatter)" width="1260" />
+<img src="overlapping_points_files/figure-html/midwest-scatter-1.png" alt="(ref:midwest-scatter)" width="630" />
 <p class="caption">(\#fig:midwest-scatter)(ref:midwest-scatter)</p>
 </div>
 
@@ -94,14 +94,14 @@ As an example for this approach, we consider the relationship between population
 (ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-density-dots-1.png" alt="(ref:midwest-density-dots)" width="1260" />
+<img src="overlapping_points_files/figure-html/midwest-density-dots-1.png" alt="(ref:midwest-density-dots)" width="630" />
 <p class="caption">(\#fig:midwest-density-dots)(ref:midwest-density-dots)</p>
 </div>
 
 (ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-density-smooth-1.png" alt="(ref:midwest-density-smooth)" width="1260" />
+<img src="overlapping_points_files/figure-html/midwest-density-smooth-1.png" alt="(ref:midwest-density-smooth)" width="630" />
 <p class="caption">(\#fig:midwest-density-smooth)(ref:midwest-density-smooth)</p>
 </div>
 
