@@ -17,14 +17,14 @@ First, let's consider a figure that clearly has too much non-data ink (Figure \@
 (ref:Aus-athletes-grid-bad) Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/Aus-athletes-grid-bad-1.png" alt="(ref:Aus-athletes-grid-bad)" width="576" />
+<img src="optimize_data_signal_files/figure-html/Aus-athletes-grid-bad-1.png" alt="(ref:Aus-athletes-grid-bad)" width="1260" />
 <p class="caption">(\#fig:Aus-athletes-grid-bad)(ref:Aus-athletes-grid-bad)</p>
 </div>
 
 (ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and majore grid lines have been drawn in light gray to stand back relative to the data points. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/Aus-athletes-grid-good-1.png" alt="(ref:Aus-athletes-grid-good)" width="576" />
+<img src="optimize_data_signal_files/figure-html/Aus-athletes-grid-good-1.png" alt="(ref:Aus-athletes-grid-good)" width="1260" />
 <p class="caption">(\#fig:Aus-athletes-grid-good)(ref:Aus-athletes-grid-good)</p>
 </div>
 
@@ -33,7 +33,7 @@ However, we can take the removal of non-data ink too far. Figure \@ref(fig:Aus-a
 (ref:Aus-athletes-min-bad) Percent body fat versus height in professional male Australian athletes. In this example, the concept of maximizing the data--ink ratio has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/Aus-athletes-min-bad-1.png" alt="(ref:Aus-athletes-min-bad)" width="576" />
+<img src="optimize_data_signal_files/figure-html/Aus-athletes-min-bad-1.png" alt="(ref:Aus-athletes-min-bad)" width="1260" />
 <p class="caption">(\#fig:Aus-athletes-min-bad)(ref:Aus-athletes-min-bad)</p>
 </div>
 
@@ -42,7 +42,7 @@ Figures with too little non-data ink commonly suffer from figure elements that a
 (ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/titanic-survival-by-gender-class-bad-1.png" alt="(ref:titanic-survival-by-gender-class-bad)" width="480" />
+<img src="optimize_data_signal_files/figure-html/titanic-survival-by-gender-class-bad-1.png" alt="(ref:titanic-survival-by-gender-class-bad)" width="1050" />
 <p class="caption">(\#fig:titanic-survival-by-gender-class-bad)(ref:titanic-survival-by-gender-class-bad)</p>
 </div>
 
@@ -50,7 +50,7 @@ Figures with too little non-data ink commonly suffer from figure elements that a
 (ref:titanic-survival-by-gender-class) Survival of passengers on the Titanic, broken down by gender and class. This is an improved version of Figure \@ref(fig:titanic-survival-by-gender-class-bad). The gray background in each facet clearly delineates the six groupings (survived or died in first, second, or third class) that make up this plot. Thin horizontal lines in the background provide a reference for the bar heights and facility comparison of bar heights among facets.
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/titanic-survival-by-gender-class-1.png" alt="(ref:titanic-survival-by-gender-class)" width="480" />
+<img src="optimize_data_signal_files/figure-html/titanic-survival-by-gender-class-1.png" alt="(ref:titanic-survival-by-gender-class)" width="1050" />
 <p class="caption">(\#fig:titanic-survival-by-gender-class)(ref:titanic-survival-by-gender-class)</p>
 </div>
 
@@ -69,7 +69,7 @@ Whether a background grid is required is less clear-cut, and reasonable people c
 (ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimics the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-plot-ggplot-default-1.png" alt="(ref:price-plot-ggplot-default)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-plot-ggplot-default-1.png" alt="(ref:price-plot-ggplot-default)" width="1260" />
 <p class="caption">(\#fig:price-plot-ggplot-default)(ref:price-plot-ggplot-default)</p>
 </div>
 
@@ -80,7 +80,7 @@ We can go all the way in the opposite direction and remove both the background a
 (ref:price-plot-no-grid) Indexed stock price over time for four major tech companies. In this variant of Figure \@ref(fig:price-plot-ggplot-default), the data lines are not sufficiently anchored. This makes it difficult to ascertain to what extent they have deviated from the index value of 100 at the end of the covered time interval. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-plot-no-grid-1.png" alt="(ref:price-plot-no-grid)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-plot-no-grid-1.png" alt="(ref:price-plot-no-grid)" width="1260" />
 <p class="caption">(\#fig:price-plot-no-grid)(ref:price-plot-no-grid)</p>
 </div>
 
@@ -89,7 +89,7 @@ At the absolute minimum, we need to add one horizontal reference line. Since the
 (ref:price-plot-refline) Indexed stock price over time for four major tech companies. Adding a thin horizontal line at the index value of 100 to Figure \@ref(fig:price-plot-no-grid) helps provide an important reference throughout the entire time period the plot spans. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-plot-refline-1.png" alt="(ref:price-plot-refline)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-plot-refline-1.png" alt="(ref:price-plot-refline)" width="1260" />
 <p class="caption">(\#fig:price-plot-refline)(ref:price-plot-refline)</p>
 </div>
 
@@ -97,7 +97,7 @@ At the absolute minimum, we need to add one horizontal reference line. Since the
 (ref:price-plot-hgrid) Indexed stock price over time for four major tech companies. Adding thin  horizontal lines at all major *y* axis ticks provides a better set of reference points than just the one horizontal line of Figure \@ref(fig:price-plot-refline). This design also removes the need for prominent *x* and *y* axis lines, since the evenly spaced horizontal lines create a visual frame for the plot panel. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-plot-hgrid-1.png" alt="(ref:price-plot-hgrid)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-plot-hgrid-1.png" alt="(ref:price-plot-hgrid)" width="1260" />
 <p class="caption">(\#fig:price-plot-hgrid)(ref:price-plot-hgrid)</p>
 </div>
 
@@ -106,7 +106,7 @@ For such a minimal grid, we generally draw the lines orthogonally to direction a
 (ref:price-increase) Percent increase in stock price from June 2012 to June 2017, for four major tech companies. Because the bars run horizontally, vertical grid lines are appropriate here. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-increase-1.png" alt="(ref:price-increase)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-increase-1.png" alt="(ref:price-increase)" width="1260" />
 <p class="caption">(\#fig:price-increase)(ref:price-increase)</p>
 </div>
 
@@ -120,7 +120,7 @@ For bar graphs such as Figure \@ref(fig:price-increase), @TufteQuantDispl recomm
 (ref:price-increase-ugly) Percent increase in stock price from June 2012 to June 2017, for four major tech companies. White grid lines on top of bars are a suboptimal choice. They make it look like the bars are falling apart, and, because they are not visible against the white background, they also obscure how close any one bar is to the next higher grid line. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/price-increase-ugly-1.png" alt="(ref:price-increase-ugly)" width="576" />
+<img src="optimize_data_signal_files/figure-html/price-increase-ugly-1.png" alt="(ref:price-increase-ugly)" width="1260" />
 <p class="caption">(\#fig:price-increase-ugly)(ref:price-increase-ugly)</p>
 </div>
 
@@ -135,7 +135,7 @@ For figures where the relevant comparison is the *x* = *y* line, such as in scat
 (ref:gene-expression) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene *9* was deleted, and this resulted in reduced mRNA abundances of gene *9* as well as the neighboring genes *8* and *10A* (highlighted). Data source: @Paffetal2018
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/gene-expression-1.png" alt="(ref:gene-expression)" width="432" />
+<img src="optimize_data_signal_files/figure-html/gene-expression-1.png" alt="(ref:gene-expression)" width="945" />
 <p class="caption">(\#fig:gene-expression)(ref:gene-expression)</p>
 </div>
 
@@ -143,7 +143,7 @@ For figures where the relevant comparison is the *x* = *y* line, such as in scat
 (ref:gene-expression-bad) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. By plotting this dataset against a background grid, instead of a diagonal line, we are obscuring which genes are higher or lower in the mutant than in the wild-type bacteriophage.  Data source: @Paffetal2018
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/gene-expression-bad-1.png" alt="(ref:gene-expression-bad)" width="432" />
+<img src="optimize_data_signal_files/figure-html/gene-expression-bad-1.png" alt="(ref:gene-expression-bad)" width="945" />
 <p class="caption">(\#fig:gene-expression-bad)(ref:gene-expression-bad)</p>
 </div>
 
@@ -153,7 +153,7 @@ Of course we could take the diagonal line from Figure \@ref(fig:gene-expression)
 (ref:gene-expression-ugly) Gene expression levels in a mutant bacteriophage T7 relative to wild-type. This figure combines the background grid from Figure \@ref(fig:gene-expression-bad) with the diagonal line from Figure \@ref(fig:gene-expression). In my opinion, this figure is visually too busy compared to Figure \@ref(fig:gene-expression), and I would prefer Figure \@ref(fig:gene-expression). Data source: @Paffetal2018
 
 <div class="figure" style="text-align: center">
-<img src="optimize_data_signal_files/figure-html/gene-expression-ugly-1.png" alt="(ref:gene-expression-ugly)" width="432" />
+<img src="optimize_data_signal_files/figure-html/gene-expression-ugly-1.png" alt="(ref:gene-expression-ugly)" width="945" />
 <p class="caption">(\#fig:gene-expression-ugly)(ref:gene-expression-ugly)</p>
 </div>
 

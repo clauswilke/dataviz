@@ -55,7 +55,7 @@ We can visualize this table by drawing filled rectangles whose heights correspon
 (ref:titanic-ages-hist1) Histogram of the ages of Titanic passengers.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist1-1.png" alt="(ref:titanic-ages-hist1)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist1-1.png" alt="(ref:titanic-ages-hist1)" width="1260" />
 <p class="caption">(\#fig:titanic-ages-hist1)(ref:titanic-ages-hist1)</p>
 </div>
 
@@ -66,7 +66,7 @@ For the age distribution of Titanic passengers, we can see that a bin width of o
 (ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" alt="(ref:titanic-ages-hist-grid)" width="816" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" alt="(ref:titanic-ages-hist-grid)" width="1785" />
 <p class="caption">(\#fig:titanic-ages-hist-grid)(ref:titanic-ages-hist-grid)</p>
 </div>
 
@@ -79,7 +79,7 @@ Histograms have been a popular visualization option since at least the 18th cent
 (ref:titanic-ages-dens1) Kernel density estimate of the age distribution of passengers on the Titanic. The height of the curve is scaled such that the area under the curve equals one. The density estimate was performed with a Gaussian kernel and a bandwidth of 2.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens1-1.png" alt="(ref:titanic-ages-dens1)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens1-1.png" alt="(ref:titanic-ages-dens1)" width="1260" />
 <p class="caption">(\#fig:titanic-ages-dens1)(ref:titanic-ages-dens1)</p>
 </div>
 
@@ -88,7 +88,7 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 (ref:titanic-ages-dens-grid) Kernel density estimates depend on the chosen kernel and bandwidth. Here, the same age distribution of Titanic passengers is shown for four different combinations of these parameters: (a) Gaussian kernel, bandwidth = 0.5; (b) Gaussian kernel, bandwidth = 2; (c) Gaussian kernel, bandwidth = 5; (d) Rectangular kernel, bandwidth = 2.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-grid-1.png" alt="(ref:titanic-ages-dens-grid)" width="816" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-grid-1.png" alt="(ref:titanic-ages-dens-grid)" width="1785" />
 <p class="caption">(\#fig:titanic-ages-dens-grid)(ref:titanic-ages-dens-grid)</p>
 </div>
 
@@ -100,7 +100,7 @@ Kernel density estimates have one pitfall that we need to be aware of: They have
 (ref:titanic-ages-dens-negative) Kernel density estimates can extend the tails of the distribution into areas where no data exist and no data are even possible. Here, the density estimate has been allowed to extend into the negative age range. This is clearly nonsensical and should be avoided.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-negative-1.png" alt="(ref:titanic-ages-dens-negative)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-negative-1.png" alt="(ref:titanic-ages-dens-negative)" width="1260" />
 <p class="caption">(\#fig:titanic-ages-dens-negative)(ref:titanic-ages-dens-negative)</p>
 </div>
 
@@ -117,7 +117,7 @@ In many scenarios we have multiple distributions we would like to visualize simu
 (ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="(ref:titanic-age-stacked-hist)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="(ref:titanic-age-stacked-hist)" width="1260" />
 <p class="caption">(\#fig:titanic-age-stacked-hist)(ref:titanic-age-stacked-hist)</p>
 </div>
 
@@ -128,7 +128,7 @@ We could try to address these problems by having all bars start at zero and maki
 (ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="(ref:titanic-age-overlapping-hist)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="(ref:titanic-age-overlapping-hist)" width="1260" />
 <p class="caption">(\#fig:titanic-age-overlapping-hist)(ref:titanic-age-overlapping-hist)</p>
 </div>
 
@@ -139,7 +139,7 @@ Overlapping density plots don't typically have the problem that overlapping hist
 (ref:titanic-age-overlapping-dens) Density estimates of the ages of male and female Titanic passengers. To highlight that there were more male than female passengers, the density curves were scaled such that the area under each curve corresponds to the total number of male and female passengers with known age (468 and 288, respectively).
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-dens-1.png" alt="(ref:titanic-age-overlapping-dens)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-dens-1.png" alt="(ref:titanic-age-overlapping-dens)" width="1260" />
 <p class="caption">(\#fig:titanic-age-overlapping-dens)(ref:titanic-age-overlapping-dens)</p>
 </div>
 
@@ -148,7 +148,7 @@ A solution that works well for this dataset is to show the age distributions of 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-fractional-dens-1.png" alt="(ref:titanic-age-fractional-dens)" width="816" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-fractional-dens-1.png" alt="(ref:titanic-age-fractional-dens)" width="1785" />
 <p class="caption">(\#fig:titanic-age-fractional-dens)(ref:titanic-age-fractional-dens)</p>
 </div>
 
@@ -158,7 +158,7 @@ Finally, when we want to visualize exactly two distributions, we can also make t
 (ref:titanic-age-pyramid) The age distributions of male and female Titanic passengers visualized as an age pyramid.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-pyramid-1.png" alt="(ref:titanic-age-pyramid)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-pyramid-1.png" alt="(ref:titanic-age-pyramid)" width="1260" />
 <p class="caption">(\#fig:titanic-age-pyramid)(ref:titanic-age-pyramid)</p>
 </div>
 
@@ -167,7 +167,7 @@ Importantly, this trick does not work when there are more than two distributions
 (ref:butterfat-densitites) Density estimates of the butterfat percentage in the milk of four cattle breeds. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/butterfat-densitites-1.png" alt="(ref:butterfat-densitites)" width="576" />
+<img src="visualizing_distributions_I_files/figure-html/butterfat-densitites-1.png" alt="(ref:butterfat-densitites)" width="1260" />
 <p class="caption">(\#fig:butterfat-densitites)(ref:butterfat-densitites)</p>
 </div>
 
