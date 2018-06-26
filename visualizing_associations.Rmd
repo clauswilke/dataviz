@@ -373,7 +373,7 @@ ggplot(emissions_1970_2010, aes(`1970`, `2010`)) +
   theme(axis.line = element_blank())
 ```
 
-parallel dots plot:
+parallel dots plot: (also called slopegraph by Tufte, and see also https://github.com/leeper/slopegraph, https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk)
 
 ```{r fig.width = 4.5, fig.asp = 1}
 CO2_emissions %>% filter(year %in% c(2000, 2005, 2010)) %>%
