@@ -211,3 +211,28 @@ p_midwest_base +
 ```
 
 
+```{r eval = FALSE}
+# As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
+
+ggplot(diamonds, aes(carat, price)) + 
+  geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5) + 
+  geom_density2d(color = "#035F33", size = 0.25) +
+  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
+  scale_y_log10(limits = c(300, 20000),
+                breaks = c(300, 1000, 3000, 10000)) +
+  theme_dviz_grid()
+
+ggplot(diamonds, aes(carat, price)) + 
+  geom_bin2d(bins = 50) +
+  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
+  scale_y_log10(limits = c(300, 20000),
+                breaks = c(300, 1000, 3000, 10000)) +
+  scale_fill_continuous_sequential("Green-Yellow", rev = TRUE, begin = 0) +
+  theme_dviz_grid() +
+  theme(legend.position = c(0.9, 0.4),
+        legend.justification = c(1, 0.5),
+        legend.box.background = element_rect(fill = "white",
+                                             color = NA),
+        legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
+```
+

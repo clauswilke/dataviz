@@ -4,7 +4,6 @@ source("_common.R")
 
 library(dplyr)
 library(tidyr)
-library(ggrepel)
 ```
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
@@ -19,6 +18,8 @@ ggplot(blue_jays, aes(Mass, Head)) +
   scale_y_continuous(name = "head length (mm)") +
   theme_dviz_grid()
 ```
+
+We frequently want to show more than two data dimensions, and there are many variants of scatter plots for this purpose. First, if the data set can be separated into two or more groups, we can show those with color (Figure \@ref(fig:blue-jays-scatter-sex)). Second, we can also map an additional quantitative variable to symbol size (Figure \@ref(fig:blue-jays-scatter-bubbles)). **Refer also to Figure \@ref(fig:blue-jays-scatter-all).**
 
 (ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
@@ -50,6 +51,9 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     legend.key.width = unit(10, "pt")
   )
 ```
+
+
+(ref:blue-jays-scatter-bubbles) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color, and the birds' skull size by symbol size. Head-length measurements include the length of the bill while skull-size measurements do not. Head length and skull size tend to be correlated, but there are some birds with unusually long or short bills given their skull size. Data source: Keith Tarvin, Oberlin College
 
 
 ```{r blue-jays-scatter-bubbles, fig.width = 5, fig.asp = 5/4, fig.cap='(ref:blue-jays-scatter-bubbles)'}
@@ -87,7 +91,11 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
   )
 ```
 
-```{r fig.asp = 3/4}
+
+(ref:blue-jays-scatter-all) All pairwise scatter plots of head length, body mass, and skull size for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
+
+
+```{r blue-jays-scatter-all, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-all)'}
 blue_jays %>% select(BirdID, KnownSex, Head, Mass, Skull) %>%
   gather(var_x, val_x, Head:Skull) %>%
   left_join(select(blue_jays, BirdID, Head, Mass, Skull)) %>%
@@ -141,38 +149,23 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
     plot.margin = margin(3.5, 1, 3.5, 0)
   )
 ```
-After these two figures, do one with varying point sizes and one with small multiples of various quantities plotted against each other.
 
-
-
-```{r eval = FALSE}
-# For overlapping points section, show birds as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
-
-ggplot(diamonds, aes(carat, price)) + 
-  geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5) + 
-  geom_density2d(color = "#035F33", size = 0.25) +
-  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
-  scale_y_log10(limits = c(300, 20000),
-                breaks = c(300, 1000, 3000, 10000)) +
-  theme_dviz_grid()
-
-ggplot(diamonds, aes(carat, price)) + 
-  geom_bin2d(bins = 50) +
-  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
-  scale_y_log10(limits = c(300, 20000),
-                breaks = c(300, 1000, 3000, 10000)) +
-  scale_fill_continuous_sequential("Green-Yellow", rev = TRUE, begin = 0) +
-  theme_dviz_grid() +
-  theme(legend.position = c(0.9, 0.4),
-        legend.justification = c(1, 0.5),
-        legend.box.background = element_rect(fill = "white",
-                                             color = NA),
-        legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
-```
 
 ## Correlations and dimension reduction
 
-```{r correlations, fig.asp = 283/434}
+When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and quantify that rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of $r = 0$ means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other).
+
+The correlation coefficient is defined as
+
+$$
+r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
+$$
+where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. 
+
+
+(ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other).
+
+```{r correlations, fig.asp = 283/434, fig.cap = 'ref:correlations'}
 r <- c(.2, .6, .9, -.2, -.6, -.9)
 labels_df <- tibble(
   r = factor(r, levels = r),
