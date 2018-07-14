@@ -153,19 +153,16 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 
 ## Correlations and dimension reduction
 
-When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and quantify that rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of $r = 0$ means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other).
-
-The correlation coefficient is defined as
+When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and quantify that rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
 
 $$
 r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
 $$
 where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. 
 
-
 (ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other).
 
-```{r correlations, fig.asp = 283/434, fig.cap = 'ref:correlations'}
+```{r correlations, fig.asp = 283/434, fig.cap = '(ref:correlations)'}
 r <- c(.2, .6, .9, -.2, -.6, -.9)
 labels_df <- tibble(
   r = factor(r, levels = r),
@@ -195,7 +192,12 @@ ggplot(correlation_examples, aes(x, y)) +
   panel_border(colour = "grey80", size = 0.5)
 ```
 
-```{r fig.width = 4., fig.asp = 1}
+
+Mineral content in about 200 samples of glass obtained during forensic work.
+
+(ref:forensic-correlations1) Correlations in mineral content for 214 samples of glass fragments obtained during forensic work. The dataset contains seven variables measuring the amounts of manganese (Mg), calcium (Ca), iron (Fe), potassium (K), sodium (Na), aluminum (Al), and barium (Ba) found in each glass fragment. The colored tiles represents the correlations between pairs of these variables. Data source: B. German
+
+```{r forensic-correlations1, fig.width = 4., fig.asp = 1, fig.cap = '(ref:forensic-correlations1)'}
 cm <- cor(select(forensic_glass, -type, -RI, -Si))
 df_wide <- as.data.frame(cm)
 df_long <- stack(df_wide)
@@ -211,7 +213,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_x_discrete(position = "top", name = NULL, expand = c(0, 0)) +
   scale_y_discrete(name = NULL, expand = c(0, 0)) +
   scale_fill_continuous_carto(
-    palette = "Earth", rev = TRUE,
+    palette = "Earth", rev = FALSE,
     limits = c(-.5, .5), breaks = c(-.5, 0, .5),
     name = "correlation",
     guide = guide_colorbar(
@@ -219,7 +221,10 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
       label.position = "bottom",
       title.position = "top",
       barwidth = grid::unit(140, "pt"),
-      barheight = grid::unit(17.5, "pt"))) +
+      barheight = grid::unit(17.5, "pt"),
+      ticks.linewidth = 1
+    )
+  ) +
   coord_fixed() +
   theme_dviz_open(rel_small = 1) +
   theme(axis.line = element_blank(),
@@ -231,7 +236,9 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
-```{r fig.width = 4., fig.asp = 1}
+(ref:forensic-correlations2) Correlations in mineral content for forensic glass samples. The color scale is identical to Figure \@ref(fig:forensic-correlations1). However, now the magnitude of each correlation is also encoded in the size of the colored circles. This choice visually deemphasizes cases with correlations near zero. Data source: B. German
+
+```{r forensic-correlations2, fig.width = 4., fig.asp = 1, fig.cap = '(ref:forensic-correlations2)'}
 ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
        aes(var1, var2, fill=cor, size = abs(cor))) + 
   geom_point(shape = 21, stroke = 0) + 
@@ -239,7 +246,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
   scale_size_area(max_size = 19, limits = c(0, 0.5), guide = "none") +
   scale_fill_continuous_carto(
-    palette = "Earth", rev = TRUE,
+    palette = "Earth", rev = FALSE,
     limits = c(-.5, .5), breaks = c(-.5, 0, .5),
     name = "correlation",
     guide = guide_colorbar(
@@ -247,7 +254,10 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
       label.position = "bottom",
       title.position = "top",
       barwidth = grid::unit(140, "pt"),
-      barheight = grid::unit(17.5, "pt"))) +
+      barheight = grid::unit(17.5, "pt"),
+      ticks.linewidth = 1
+    )
+  ) +
   coord_fixed() +
   theme_dviz_open(rel_small = 1) +
   theme(axis.line = element_blank(),
@@ -259,8 +269,9 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
+(ref:forensic-PCA-rotation) **PCA rotation matrix**
 
-```{r}
+```{r forensic-PCA-rotation, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:forensic-PCA-rotation)'}
 select(forensic_glass, -type, -RI, -Si) %>%
   scale() %>%
   prcomp() -> pca
@@ -279,17 +290,6 @@ pca_data <- data.frame(pca$x, type = forensic_glass$type) %>%
 colors = darken(c("#D55E00", "#0072B2", "#009E73", "#E69F00"), .3)
 fills = c("#D55E0040", "#0072B240", "#009E7340", "#E69F0040")
 
-ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type)) + 
-  geom_point() +
-  scale_color_manual(values = colors) +
-  scale_fill_manual(values = fills) +
-  scale_shape_manual(values = c(22:24, 21)) +
-  scale_x_continuous(name = "PC 1") +
-  scale_y_continuous(name = "PC 2") +
-  theme_dviz_grid()
-```
-
-```{r fig.width = 4.5, fig.asp = 1}
 rotation_data <- data.frame(pca$rotation, type = row.names(pca$rotation))
 
 rotation_labels <- data.frame(type = c("Ba", "Al", "Na", "K", "Fe", "Ca", "Mg"),
@@ -319,6 +319,20 @@ ggplot(rotation_data) +
   theme_dviz_grid()
 ```
 
+(ref:forensic-PCA) **PCA analysis**
+
+
+```{r forensic-PCA, fig.cap = '(ref:forensic-PCA)'}
+ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type)) + 
+  geom_point() +
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = fills) +
+  scale_shape_manual(values = c(22:24, 21)) +
+  scale_x_continuous(name = "PC 1") +
+  scale_y_continuous(name = "PC 2") +
+  theme_dviz_grid()
+```
+
 ## Paired data
 
 Mention: x vs y plot is good for large numbers of observations and to show overall patterns, parallel plot (name?) is good when we have small number of observations and are primarily interested in the specific identity.
@@ -328,7 +342,10 @@ Maybe do 2 x vs y plots, because they are so important; do one with direct label
 
 
 For remainder of the chapter, use CO2 emission data.
-```{r fig.width = 5, fig.asp = 0.9}
+
+(ref:CO2-paired-scatter) Carbon dioxide (CO<sub>2</sub>) emissions per person in 1970 and 2010, for 166 countries. Each dot represents one country. The diagonal line represents identical CO<sub>2</sub> emissions in 1970 and 2010. Data source: Carbon Dioxide Information Analysis Center
+
+```{r CO2-paired-scatter, fig.width = 5, fig.asp = 0.9, fig.cap = '(ref:CO2-paired-scatter)'}
 CO2_emissions %>% filter(year %in% c(1970, 2010)) %>%
   spread(year, emissions) %>% na.omit() -> emissions_1970_2010
 
@@ -366,9 +383,11 @@ ggplot(emissions_1970_2010, aes(`1970`, `2010`)) +
   theme(axis.line = element_blank())
 ```
 
-parallel dots plot: (also called slopegraph by Tufte, and see also https://github.com/leeper/slopegraph, https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk)
+called slopegraph by Tufte, first in VDQI, and see also https://github.com/leeper/slopegraph, https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk)
 
-```{r fig.width = 4.5, fig.asp = 1}
+(ref:CO2-slopegraph) Carbon dioxide (CO<sub>2</sub>) emissions per person in 2000 and 2010, for the ten countries with the largest difference between these two years. Data source: Carbon Dioxide Information Analysis Center
+
+```{r CO2-slopegraph, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:CO2-slopegraph)'}
 CO2_emissions %>% filter(year %in% c(2000, 2005, 2010)) %>%
   spread(year, emissions) %>% 
   na.omit() %>%
@@ -432,7 +451,9 @@ ggplot(filter(emissions_top_ten, year != 2005), aes(x = year, y = emissions)) +
 ```
 
 
-```{r fig.width = 4.5, fig.asp = 1}
+(ref:CO2-slopegraph-three-year) CO<sub>2</sub> emissions per person in 2000, 2005, and 2010, for the ten countries with the largest difference between the years 2000 and 2010. Data source: Carbon Dioxide Information Analysis Center
+
+```{r CO2-slopegraph-three-year, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:CO2-slopegraph-three-year)'}
 ggplot(emissions_top_ten, aes(x = year, y = emissions)) +
   geom_line(aes(group = country), color = "gray60") +
   geom_point(color = "white", size = 4) +
