@@ -335,15 +335,11 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type))
 
 ## Paired data
 
-Mention: x vs y plot is good for large numbers of observations and to show overall patterns, parallel plot (name?) is good when we have small number of observations and are primarily interested in the specific identity.
+A special case of multivariate quantitative data is paired data: Data where there are two or more measurements of the same quantity under slightly different conditions. Examples include two comparable measurements on each subject (e.g., the length of the right and the left arm of a person), repeat measurements on the same subject at different time points (e.g., a person's weight at two different times during the year), or measurements on two closely related subjects (e.g., the heights of two identical twins). For paired data, our null hypothesis is that each pair of measurements is identical or nearly so, whereas there is substantial variation between pairs. Two twins will be approximately of the same height but will differ in height from other twins. Therefore, we need to choose visualizations that highlight deviations from this null hypothesis.
 
-Maybe do 2 x vs y plots, because they are so important; do one with direct labeling highlight a specific case.
+An excellent choice for paired data is a simple scatter plot on top of a diagonal line marking *x* = *y*. If our null hypothesis is true, all points in the sample will be scattered symmetrically around this line. A systematic deviation from the null hypothesis, by contrast, will be visible in a systematic shift of the data points up or down relative to the diagonal. As an example, consider the carbon dioxide (CO<sub>2</sub>) emissions per person, measured for 166 countries both in 1970 and in 2010 (Figure \@ref(fig:CO2-paired-scatter)). This example highlights two common features of paired data. First, most points are relatively close to the diagonal line. Even though CO<sub>2</sub> emissions vary over nearly four orders of magnitude among countries, they are fairly consistent within each country over a 40-year time span. Second, the points are systematically shifted upwards relative to the diagonal line. The majority of countries has seen an increase in CO<sub>2</sub> emissions over the 40 years considered.
 
-
-
-For remainder of the chapter, use CO2 emission data.
-
-(ref:CO2-paired-scatter) Carbon dioxide (CO<sub>2</sub>) emissions per person in 1970 and 2010, for 166 countries. Each dot represents one country. The diagonal line represents identical CO<sub>2</sub> emissions in 1970 and 2010. Data source: Carbon Dioxide Information Analysis Center
+(ref:CO2-paired-scatter) Carbon dioxide (CO<sub>2</sub>) emissions per person in 1970 and 2010, for 166 countries. Each dot represents one country. The diagonal line represents identical CO<sub>2</sub> emissions in 1970 and 2010. The points are systematically shifted upwards relative to the diagonal line: In the majority of countries, emissions were higher in 2010 than in 1970. Data source: Carbon Dioxide Information Analysis Center
 
 ```{r CO2-paired-scatter, fig.width = 5, fig.asp = 0.9, fig.cap = '(ref:CO2-paired-scatter)'}
 CO2_emissions %>% filter(year %in% c(1970, 2010)) %>%
@@ -383,7 +379,7 @@ ggplot(emissions_1970_2010, aes(`1970`, `2010`)) +
   theme(axis.line = element_blank())
 ```
 
-called slopegraph by Tufte, first in VDQI, and see also https://github.com/leeper/slopegraph, https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk)
+Sactter plots such as Figure \@ref(fig:CO2-paired-scatter) work well when we have a large number of data points and/or are interested in a systematic deviation of the entire data set from the null expectation. By contrast, if we have only a small number of observations and are primarily interested in the identity of each individual case, a slopegraph [@TufteQuantDispl] may be a better choice. In a slopegraph, we draw individual measurements as dots arranged into two columns and indicate pairings by connecting the paired dots with a line. The slope of each line highlights the magnitude and direction of change. Figure \@ref(fig:CO2-slopegraph) uses this approach to show the ten countries with the largest difference in CO<sub>2</sub> emissions per person from 2000 to 2010.
 
 (ref:CO2-slopegraph) Carbon dioxide (CO<sub>2</sub>) emissions per person in 2000 and 2010, for the ten countries with the largest difference between these two years. Data source: Carbon Dioxide Information Analysis Center
 
@@ -450,6 +446,8 @@ ggplot(filter(emissions_top_ten, year != 2005), aes(x = year, y = emissions)) +
 
 ```
 
+Slopegraphs have one important advantage over scatter plots: They can be used to compare more than two measurements at a time. For example, we can modify Figure \@ref(fig:CO2-slopegraph) to show CO<sub>2</sub> emissions at three time points, here the years 2000, 2005, and 2010 (Figure \@ref(fig:CO2-slopegraph-three-year)). This choice highlights both countries with a large change in emissions over the entire decade as well as countries such as Qatar or Trinidad and Tobego for which there is a large difference in the trend seen for the first five-year interval and the second one. 
+
 
 (ref:CO2-slopegraph-three-year) CO<sub>2</sub> emissions per person in 2000, 2005, and 2010, for the ten countries with the largest difference between the years 2000 and 2010. Data source: Carbon Dioxide Information Analysis Center
 
@@ -495,4 +493,14 @@ ggplot(emissions_top_ten, aes(x = year, y = emissions)) +
     plot.margin = margin(3.5, 0, 7, 0)
   )
 
+```
+
+
+
+```{r eval = FALSE}
+## Notes:
+# The term "slopegraph" was introduced by Tufte, first in VDQI
+# See also:
+#   https://github.com/leeper/slopegraph,
+#   https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk)
 ```
