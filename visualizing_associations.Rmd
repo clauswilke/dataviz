@@ -153,7 +153,7 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 
 ## Correlations and dimension reduction
 
-When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and quantify that rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
+When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
 
 $$
 r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
@@ -192,10 +192,9 @@ ggplot(correlation_examples, aes(x, y)) +
   panel_border(colour = "grey80", size = 0.5)
 ```
 
+To illustrate the use of the correlation coefficient, we will consider a data set of over 200 glass fragments obtained during forensic work. For each glass fragment, we have measurements about its composition, expressed as the percent in weight of various mineral oxides. There are seven different oxides for which we have measurements, yielding a total of 6 + 5 + 4 + 3 + 2 + 1 = 21 pairwise correlations. We can display these 21 correlations at once as a matrix of colored tiles, where each tile represents one correlation coefficient (Figure \@ref(fig:forensic-correlations1)). This visualization allows us to quickly grasp trends in the data, such as that magnesium is negatively correlated with nearly all other oxides, and that aluminum and barium have a strong positive correlation.
 
-Mineral content in about 200 samples of glass obtained during forensic work.
-
-(ref:forensic-correlations1) Correlations in mineral content for 214 samples of glass fragments obtained during forensic work. The dataset contains seven variables measuring the amounts of manganese (Mg), calcium (Ca), iron (Fe), potassium (K), sodium (Na), aluminum (Al), and barium (Ba) found in each glass fragment. The colored tiles represents the correlations between pairs of these variables. Data source: B. German
+(ref:forensic-correlations1) Correlations in mineral content for 214 samples of glass fragments obtained during forensic work. The dataset contains seven variables measuring the amounts of magnesium (Mg), calcium (Ca), iron (Fe), potassium (K), sodium (Na), aluminum (Al), and barium (Ba) found in each glass fragment. The colored tiles represents the correlations between pairs of these variables. Data source: B. German
 
 ```{r forensic-correlations1, fig.width = 4., fig.asp = 1, fig.cap = '(ref:forensic-correlations1)'}
 cm <- cor(select(forensic_glass, -type, -RI, -Si))
@@ -236,6 +235,8 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
+One weakness of the visualization in Figure \@ref(fig:forensic-correlations1) is that low correlations are not as visually suppressed as they should be. For example, magnesium (Mg) and potassium (K) are not at all correlated but Figure \@ref(fig:forensic-correlations1) doesn't immediately show this. To overcome this limitation, we can display the correlations as colored circles and scale the circle size with the absolute value of the correlation coefficient (Figure \@ref(fig:forensic-correlations1)). In this way, low correlations are suppressed and high correlations stand out better.
+
 (ref:forensic-correlations2) Correlations in mineral content for forensic glass samples. The color scale is identical to Figure \@ref(fig:forensic-correlations1). However, now the magnitude of each correlation is also encoded in the size of the colored circles. This choice visually deemphasizes cases with correlations near zero. Data source: B. German
 
 ```{r forensic-correlations2, fig.width = 4., fig.asp = 1, fig.cap = '(ref:forensic-correlations2)'}
@@ -269,7 +270,10 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
-(ref:forensic-PCA-rotation) **PCA rotation matrix**
+A disadvantage of correlation matrices is that they are fairly abstract. While they show us important patterns in the data, they also hide the underlying data points and may cause us to draw incorrect conclusions. It is always better to visualize the raw data rather than abstract, derived quantities that have been calculated from it. *continue from here*
+
+
+(ref:forensic-PCA-rotation) Composition of the first two components in a principal components analysis (PCA) of the forensic glass dataset. Component one (PC 1) measures primarily the amount of aluminun, barium, sodium, and magnesium contents in a glass fragment, whereas component two (PC 2) measures primarily the amount of calcium and potassium content, and to some extent the amount of aluminum and magnesium.
 
 ```{r forensic-PCA-rotation, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:forensic-PCA-rotation)'}
 select(forensic_glass, -type, -RI, -Si) %>%
@@ -319,7 +323,7 @@ ggplot(rotation_data) +
   theme_dviz_grid()
 ```
 
-(ref:forensic-PCA) **PCA analysis**
+(ref:forensic-PCA) Composition of individual glass fragments visualized in the principal components space defined in Figure \@ref(fig:forensic-PCA-rotation). We see that the different types of glass samples cluster at characteristic values of PC 1 and 2. In particular, headlamps are characterized by a negative PC 1 value whereas windows tend to have a positive PC 1 value. Tableware and containers have PC 1 values close to zero and tend to have positive PC 2 values. However, there are a few exceptions where container fragments have both a negative PC 1 value and a negative PC 2 value. These are fragments whose composition drastically differs from all other fragments analyzed.
 
 
 ```{r forensic-PCA, fig.cap = '(ref:forensic-PCA)'}
