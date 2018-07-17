@@ -19,7 +19,7 @@ ggplot(blue_jays, aes(Mass, Head)) +
   theme_dviz_grid()
 ```
 
-We frequently want to show more than two data dimensions, and there are many variants of scatter plots for this purpose. First, if the data set can be separated into two or more groups, we can show those with color (Figure \@ref(fig:blue-jays-scatter-sex)). Second, we can also map an additional quantitative variable to symbol size (Figure \@ref(fig:blue-jays-scatter-bubbles)). **Refer also to Figure \@ref(fig:blue-jays-scatter-all).**
+We frequently want to show more than two data dimensions, and there are many variants of scatter plots for this purpose. First, if the data set can be separated into two or more groups, we can show those with color (Figure \@ref(fig:blue-jays-scatter-sex)). Second, we can also map an additional quantitative variable to symbol size (Figure \@ref(fig:blue-jays-scatter-bubbles)). This type of visualization is called a *bubble chart*.
 
 (ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
@@ -51,7 +51,6 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     legend.key.width = unit(10, "pt")
   )
 ```
-
 
 (ref:blue-jays-scatter-bubbles) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color, and the birds' skull size by symbol size. Head-length measurements include the length of the bill while skull-size measurements do not. Head length and skull size tend to be correlated, but there are some birds with unusually long or short bills given their skull size. Data source: Keith Tarvin, Oberlin College
 
@@ -90,6 +89,8 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
     strip.text = element_text(size = 14, family = "Myriad Pro Semibold")
   )
 ```
+
+Bubble charts have the disadvantage that they show the same types of variables, quantitative variables, with two different types of scales, position and size. This makes it difficult to visually ascertain the strengths of associations between the various variables. The extent to which there is an association between the *x* and *y* values in the data is visually much clearer than the extent to which there is an association between the bubble size and either *x* or *y*. As an alternative to a bubble chart, it may therefore be preferable to show an all-against-all matrix of scatter plots, where each individual scatter plot shows two data dimensions (Figure \@ref(fig:blue-jays-scatter-all)).
 
 
 (ref:blue-jays-scatter-all) All pairwise scatter plots of head length, body mass, and skull size for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
@@ -151,14 +152,14 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 ```
 
 
-## Correlations and dimension reduction
+## Correlograms
 
-When we have more than two to three quantiative variables whose mutual associations we want to visualize, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
+When we have more than three or four quantiative variables, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
 
 $$
 r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
 $$
-where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. 
+where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. Visualizations of correlation coefficients, rather than of the underlying data, are called *correlograms*.
 
 (ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other).
 
@@ -192,7 +193,7 @@ ggplot(correlation_examples, aes(x, y)) +
   panel_border(colour = "grey80", size = 0.5)
 ```
 
-To illustrate the use of the correlation coefficient, we will consider a data set of over 200 glass fragments obtained during forensic work. For each glass fragment, we have measurements about its composition, expressed as the percent in weight of various mineral oxides. There are seven different oxides for which we have measurements, yielding a total of 6 + 5 + 4 + 3 + 2 + 1 = 21 pairwise correlations. We can display these 21 correlations at once as a matrix of colored tiles, where each tile represents one correlation coefficient (Figure \@ref(fig:forensic-correlations1)). This visualization allows us to quickly grasp trends in the data, such as that magnesium is negatively correlated with nearly all other oxides, and that aluminum and barium have a strong positive correlation.
+To illustrate the use of a correlogram, we will consider a data set of over 200 glass fragments obtained during forensic work. For each glass fragment, we have measurements about its composition, expressed as the percent in weight of various mineral oxides. There are seven different oxides for which we have measurements, yielding a total of 6 + 5 + 4 + 3 + 2 + 1 = 21 pairwise correlations. We can display these 21 correlations at once as a matrix of colored tiles, where each tile represents one correlation coefficient (Figure \@ref(fig:forensic-correlations1)). This correlogram allows us to quickly grasp trends in the data, such as that magnesium is negatively correlated with nearly all other oxides, and that aluminum and barium have a strong positive correlation.
 
 (ref:forensic-correlations1) Correlations in mineral content for 214 samples of glass fragments obtained during forensic work. The dataset contains seven variables measuring the amounts of magnesium (Mg), calcium (Ca), iron (Fe), potassium (K), sodium (Na), aluminum (Al), and barium (Ba) found in each glass fragment. The colored tiles represents the correlations between pairs of these variables. Data source: B. German
 
@@ -235,7 +236,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
-One weakness of the visualization in Figure \@ref(fig:forensic-correlations1) is that low correlations are not as visually suppressed as they should be. For example, magnesium (Mg) and potassium (K) are not at all correlated but Figure \@ref(fig:forensic-correlations1) doesn't immediately show this. To overcome this limitation, we can display the correlations as colored circles and scale the circle size with the absolute value of the correlation coefficient (Figure \@ref(fig:forensic-correlations1)). In this way, low correlations are suppressed and high correlations stand out better.
+One weakness of the correlogram of Figure \@ref(fig:forensic-correlations1) is that low correlations are not as visually suppressed as they should be. For example, magnesium (Mg) and potassium (K) are not at all correlated but Figure \@ref(fig:forensic-correlations1) doesn't immediately show this. To overcome this limitation, we can display the correlations as colored circles and scale the circle size with the absolute value of the correlation coefficient (Figure \@ref(fig:forensic-correlations1)). In this way, low correlations are suppressed and high correlations stand out better.
 
 (ref:forensic-correlations2) Correlations in mineral content for forensic glass samples. The color scale is identical to Figure \@ref(fig:forensic-correlations1). However, now the magnitude of each correlation is also encoded in the size of the colored circles. This choice visually deemphasizes cases with correlations near zero. Data source: B. German
 
@@ -270,8 +271,17 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
 
 ```
 
-A disadvantage of correlation matrices is that they are fairly abstract. While they show us important patterns in the data, they also hide the underlying data points and may cause us to draw incorrect conclusions. It is always better to visualize the raw data rather than abstract, derived quantities that have been calculated from it. *continue from here*
+All correlograms have one important drawback: They are fairly abstract. While they show us important patterns in the data, they also hide the underlying data points and may cause us to draw incorrect conclusions. It is always better to visualize the raw data rather than abstract, derived quantities that have been calculated from it. Fortunately, we can frequently find a middle ground between showing important patterns and showing the raw data by applying techniques of dimension reduction.
 
+## Dimension reduction
+
+Dimension reduction relies on the key insight that most high-dimensional datasets consist of multiple correlated variables that convey overlapping information. Such datasets can be reduced to a smaller number of key dimensions without loss of much critical information. As a simple, intuitive example, consider a dataset of multiple physical traits of people, including quantities such as each person's height and weight, the lengths of the arms and legs, the circumferences of waist, hip, and chest, etc. We can understand immediately that all these quantities will relate first and foremost to the overall size of each person. All else being equal, a larger person will be taller, weigh more, have longer arms and legs, and larger waist, hip, and chest circumferences. The next important dimension is going to be the person's sex. Male and female measurements are substantially different for persons of comparable size. For example, a woman will tend to have higher hip circumference than a man, all else being equal.
+
+There are many techniques for dimension reduction. I will discuss only one technique here, the most widely used one, called *principal components analysis* (PCA). PCA introduces a new set of variables (called principal components, PCs) by linear combination of the original variables in the data, standardized to zero mean and unit variance. The PCs are chosen such that they are uncorrelated, and they are ordered such that the first component captures the largest possible amount of variation in the data, and subsequent components capture increasingly less. Usually, key features in the data can be seen from only the first two or three PCs.
+
+When we perform PCA, we are generally interested in two pieces of information: (i) the composition of the PCs and (ii) the location of the individual data points in the principal components space. Let's look at these two pieces in a PC analysis of the forensic glass dataset.
+
+First, we look at the component composition (Figure \@ref(fig:forensic-PCA-rotation)). Here, we only consider the first two components, PC 1 and PC 2. Because the PCs are linear combinations of the original variables (after standardization), we can represent the original variables as arrows indicating to what extent they contribute to the PCs. Here, we see that barium and sodium contribute primarily to PC 1 and not to PC 2, calcium and potassium contribute primarily to PC 2 and not to PC 1, and the other variables contribute in varying amounts to both components (Figure \@ref(fig:forensic-PCA-rotation)). The arrows are of varying lengths because there are more than two PCs. For example the arrow for iron is particularly short because it contributes primarily to higher-order PCs (not shown).
 
 (ref:forensic-PCA-rotation) Composition of the first two components in a principal components analysis (PCA) of the forensic glass dataset. Component one (PC 1) measures primarily the amount of aluminun, barium, sodium, and magnesium contents in a glass fragment, whereas component two (PC 2) measures primarily the amount of calcium and potassium content, and to some extent the amount of aluminum and magnesium.
 
@@ -322,6 +332,8 @@ ggplot(rotation_data) +
   coord_fixed() +
   theme_dviz_grid()
 ```
+
+Next, we project the original data into the principal components space (Figure \@ref(fig:forensic-PCA)). We see a clear clustering of distinct types of glass fragments in this plot. Fragments from both headlamps and windows fall into clearly delineated regions in the PC plot, with few outliers. Fragments from tableware and from containers are a little more spread out, but nevertheless clearly distinct from both headlamp and window fragments. By comparing Figure \@ref(fig:forensic-PCA) with Figure \@ref(fig:forensic-PCA-rotation), we can conclude that window samples tend to have higher than average magnesium content and lower than average barium, aluminum, and sodium content, whereas the opposite is true for headlamp samples.
 
 (ref:forensic-PCA) Composition of individual glass fragments visualized in the principal components space defined in Figure \@ref(fig:forensic-PCA-rotation). We see that the different types of glass samples cluster at characteristic values of PC 1 and 2. In particular, headlamps are characterized by a negative PC 1 value whereas windows tend to have a positive PC 1 value. Tableware and containers have PC 1 values close to zero and tend to have positive PC 2 values. However, there are a few exceptions where container fragments have both a negative PC 1 value and a negative PC 2 value. These are fragments whose composition drastically differs from all other fragments analyzed.
 
