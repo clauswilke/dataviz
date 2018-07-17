@@ -8,7 +8,9 @@ library(lubridate)
 
 # Visualizing time series and other functions of an independent variable {#time-series}
 
-```{r}
+(ref:biorxiv-dots) Monthly submissions to the preprint server bioRxiv, from its inception in November 2014 until April 2018. Each dot represents the number of submissions in one month. There has been a steady increase in submission volume throughout the entire 4.5-year period. Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-dots, fig.cap = '(ref:biorxiv-dots)'}
 preprint_growth %>% filter(archive == "bioRxiv") %>%
   filter(count > 0) -> biorxiv_growth
 
@@ -20,7 +22,9 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_point(color = "#0072B2") +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-```{r}
+(ref:biorxiv-line) Monthly submissions to the preprint server bioRxiv, shown as a line graph. **comment on effect of line.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-line, fig.cap = '(ref:biorxiv-line)'}
 ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
@@ -29,7 +33,9 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-```{r}
+(ref:biorxiv-line-area) Monthly submissions to the preprint server bioRxiv, shown as a line graph with filled area underneath. **comment on effect of filled area.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-line-area, fig.cap = '(ref:biorxiv-line-area)'}
 ggplot(biorxiv_growth, aes(date, height = count, y = 0)) + 
   geom_ridgeline(color = "#0072B2", fill = "#0072B240", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
@@ -39,7 +45,9 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-```{r}
+(ref:biorxiv-logscale) Monthly submissions to the preprint server bioRxiv. **comment on the log scale.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-logscale, fig.cap = '(ref:biorxiv-logscale)'}
 ggplot(biorxiv_growth, aes(date, count)) + 
   geom_line(color = "#0072B2", size = .75) +
   scale_y_log10(limits = c(30, 1600),
@@ -55,7 +63,9 @@ ggplot(biorxiv_growth, aes(date, count)) +
 
 While individual dots are fine for a single time course, they don't work well when there are multiple ones.
 
-```{r}
+(ref:bio-preprints-points) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r bio-preprints-points, fig.cap = '(ref:bio-preprints-points)'}
 preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")) %>%
   filter(count > 0) %>%
   mutate(archive = factor(archive, levels = c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")))-> preprints
@@ -81,7 +91,9 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
 stamp_bad(p)
 ```
 
-```{r}
+(ref:bio-preprints-lines) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r bio-preprints-lines, fig.cap = '(ref:bio-preprints-lines)'}
 p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
   geom_line() + geom_point(color = "white", size = 2) +
   scale_shape_manual(values = c(21, 22, 23),
@@ -103,8 +115,9 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
 p
 ```
 
+(ref:bio-preprints-direct-label) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
 
-```{r}
+```{r bio-preprints-direct-label, fig.cap = '(ref:bio-preprints-direct-label)'}
 preprints_final <- filter(preprints, date == ymd("2017-01-01"))
 
 p <- ggplot(preprints, aes(date, count, color = archive)) + 
@@ -134,9 +147,13 @@ Other types of time-series visualizations:
 
 - x-y plane with lines connecting subsequent time points, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
 
-```{r}
+(ref:house-price-path) **figure caption.** Original figure concept: Len Kiefer
+
+```{r house-price-path, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
 ggplot(filter(house_prices, state == "California", year(date) > 2000),
-        aes(unemploy_perc, house_price_perc)) + geom_path()
+        aes(unemploy_perc, house_price_perc)) + 
+  geom_path() +
+  theme_dviz_grid()
 ```
 
 
