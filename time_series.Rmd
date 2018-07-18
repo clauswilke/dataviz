@@ -151,11 +151,41 @@ Other types of time-series visualizations:
 
 ```{r house-price-path, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
 ggplot(filter(house_prices, state == "California", year(date) > 2000),
-        aes(unemploy_perc, house_price_perc)) + 
+        aes(unemploy_perc, house_price_perc, alpha = date)) + 
   geom_path() +
+  scale_x_continuous(name = "Unemployment rate (percent)") +
+  scale_y_continuous(name = "12-month percent change in house prices") + 
+  guides(alpha = FALSE) +
   theme_dviz_grid()
 ```
 
 
 Also discuss that does-response cases are similar to time series. For that setting, maybe use `oats` from MASS?
 
+
+```{r}
+MASS::oats %>% 
+  mutate(N = 100*as.numeric(sub("cwt", "", N, fixed = TRUE))) %>%
+  group_by(N, V) %>%
+  summarize(mean = 20 * mean(Y)) %>% # factor 20 converts units to lbs/acre
+  mutate(variety = ifelse(V == "Golden.rain", "Golden Rain", as.character(V))) ->
+  oats_df
+
+oats_df$variety <- factor(oats_df$variety, levels = c("Marvellous", "Golden Rain", "Victory"))
+ 
+ggplot(oats_df,
+       aes(N, mean, color = variety, shape = variety, fill = variety)) +
+  geom_line() + geom_point(color = "white", size = 2) +
+  scale_y_continuous(name = "mean yield (lbs/acre)") + 
+  scale_x_continuous(name = "manure treatment (lbs/acre)") +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = "variety") + 
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = "variety") +
+  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = "variety") +
+  coord_cartesian(clip = "off") +
+  theme_dviz_open() +
+  theme(legend.title.align = 0.5)
+
+```
