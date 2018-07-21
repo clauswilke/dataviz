@@ -4,3 +4,6 @@ source("_common.R")
 ```
 
 # Visualizing nested or changing proportions {#nested-proportions}
+
+
+*As a bad example, show a pie chart with overlapping proportions?*
