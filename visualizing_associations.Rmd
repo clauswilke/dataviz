@@ -8,6 +8,7 @@ library(tidyr)
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
 
+## Scatter plots
 
 (ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data source: Keith Tarvin, Oberlin College
 

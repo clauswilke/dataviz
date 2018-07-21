@@ -9,7 +9,11 @@ library(ggrepel)
 
 # Visualizing time series and other functions of an independent variable {#time-series}
 
-Preprints are scientific articles that researchers post online before formal peer review and publication in a scientific journal. The preprint server bioRxiv, which was founded in November 2013 specifically for researchers working in the biological sciences, has seen substantial growth in monthly submissions since. We can visualize this growth by drawing a form of scatter plot (**refer to previous chapter**), drawing one dot representing the number of submissions per month for each month. for each observation at the time point at which it was obtained, similar to a scatter plot (Figure \@ref(fig:biorxiv-dots)).
+*Introductory sentences*
+
+## Individual time series
+
+Preprints are scientific articles that researchers post online before formal peer review and publication in a scientific journal. The preprint server bioRxiv, which was founded in November 2013 specifically for researchers working in the biological sciences, has seen substantial growth in monthly submissions since. We can visualize this growth by making a form of scatter plot (Chapter \@ref(visualizing-associations)) where we draw dots representing the number of submissions in each month (Figure \@ref(fig:biorxiv-dots)).
 
 (ref:biorxiv-dots) Monthly submissions to the preprint server bioRxiv, from its inception in November 2014 until April 2018. Each dot represents the number of submissions in one month. There has been a steady increase in submission volume throughout the entire 4.5-year period. Data source: Jordan Anaya, http://www.prepubmed.org/
 
@@ -22,15 +26,12 @@ ggplot(biorxiv_growth, aes(date, count)) +
   geom_point(color = "white", fill = "#0072B2", shape = 21, size = 1.75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL) +
+  scale_x_date(name = "year") +
   theme_dviz_open() +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-
-*discuss that we can draw lines between points to help the eye*
-
-Some people object to drawing lines between points because the lines do not correspond to observed data. In particular if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they help with perception. We can somewhat resolve this dilemma by pointing it out in the figure caption, for example by writing "lines are meant as a guide to the eye" (see caption of Figure \@ref(fig:biorxiv-dots-line)).
+There is an important difference however between Figure \@ref(fig:biorxiv-dots) and the scatter plots discussed in Chapter \@ref(visualizing-associations). In Figure \@ref(fig:biorxiv-dots), the dots are spaced evenly along the *x* axis, and there is a defined order among the dots. Each dot has one left and one right neighbor, except the leftmost and rightmost point which each has only one neighbor. We can visually emphasize this order by connecting neighboring points with lines (Figure \@ref(fig:biorxiv-dots-line)).
 
 (ref:biorxiv-dots-line) Monthly submissions to the preprint server bioRxiv, shown as dots connected by lines. The lines do not represent data but are only meant as a guide to the eye. By connecting the individual dots with lines, we emphasize that there is an order between the dots, each dot has exactly one that comes before and one that comes after. Data source: Jordan Anaya, http://www.prepubmed.org/
 
@@ -40,13 +41,14 @@ ggplot(biorxiv_growth, aes(date, count)) +
   geom_point(color = "white", fill = "#0072B2", shape = 21, size = 1.75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL) +
+  scale_x_date(name = "year") +
   theme_dviz_open() +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
+Some people object to drawing lines between points because the lines do not correspond to observed data. In particular, if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they help with perception. We can somewhat resolve this dilemma by pointing it out in the figure caption, for example by writing "lines are meant as a guide to the eye" (see caption of Figure \@ref(fig:biorxiv-dots-line)).
 
-
+Using lines to represent time series is generally accepted practice, however, and frequently the dots are omitted altogether (Figure \@ref(fig:biorxiv-line)). Without dots, the figure places more emphasis on the overall trend in the data and less on individual observations. A figure without dots is also visually less busy. In general, the denser the time series, the less important it is to show individual obserations with dots. For the preprint dataset shown here, I think omitting the dots is just fine.
 
 (ref:biorxiv-line) Monthly submissions to the preprint server bioRxiv, shown as a line graph. The line graph emphasizes the overall temporal trend while de-emphasizing individual observations at specific time points. It is particularly useful when the time points are spaced very densely. Data source: Jordan Anaya, http://www.prepubmed.org/
 
@@ -54,10 +56,12 @@ ggplot(biorxiv_growth, aes(date, count)) +
 ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL) +
+  scale_x_date(name = "year") +
   theme_dviz_open() +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
+
+We can also fill the area under the curve with a solid color (Figure \@ref(fig:biorxiv-line-area)). **some more text.** However, this visualization is only valid if the *y* axis starts at zero.
 
 (ref:biorxiv-line-area) Monthly submissions to the preprint server bioRxiv, shown as a line graph with filled area underneath. By filling the area under the curve, we put even more emphasis on the overarching temporal trend than if we just draw a line (Figure \@ref(fig:biorxiv-line)). Data source: Jordan Anaya, http://www.prepubmed.org/
 
@@ -66,11 +70,13 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
   geom_ridgeline(color = "#0072B2", fill = "#0072B240", size = .75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL) +
+  scale_x_date(name = "year") +
   theme_dviz_open() +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
+
+## Multiple time series and related plots
 
 While individual dots are fine for a single time course, they don't work well when there are multiple ones.
 
@@ -87,7 +93,7 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
                      name = NULL) + 
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL,
+  scale_x_date(name = "year",
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01"))) +
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
@@ -109,7 +115,7 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
   geom_line() + geom_point(color = "white", size = 2) +
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month") + 
-  scale_x_date(name = NULL,
+  scale_x_date(name = "year",
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01"))) +
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
@@ -131,7 +137,8 @@ p
 ```{r bio-preprints-direct-label, fig.cap = '(ref:bio-preprints-direct-label)'}
 preprints_final <- filter(preprints, date == ymd("2017-01-01"))
 
-p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
+ggplot(preprints) +
+  aes(date, count, color = archive, fill = archive, shape = archive) + 
   geom_line(size = 0.75) + 
   #geom_point(color = "white", size = 2) +
   scale_y_continuous(
@@ -142,9 +149,9 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
       labels = c("arXiv\nq-bio", "PeerJ\nPreprints", "bioRxiv"),
       name = NULL)
   ) + 
-  scale_x_date(name = NULL,
+  scale_x_date(name = "year",
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01")),
-               expand = expand_scale(mult = c(0.05, 0))) +
+               expand = expand_scale(mult = c(0.02, 0))) +
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
@@ -158,13 +165,45 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
         axis.ticks.y.right = element_blank(),
         axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)),
         plot.margin = margin(14, 7, 3, 0))
-
-p
 ```
 
-Other types of time-series visualizations:
 
-- x-y plane with lines connecting subsequent time points, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
+Also discuss that does-response cases are similar to time series.
+
+
+(ref:oats-yield) Mean yield of oats varieties after fertilization with manure, which serves as a source of nitrogen. Oats yield generally increases as more nitrogen is available, regardless of variety. Here, manure application is measured in cwt (hundredweight) per acre. The hundredweight is an old imperial unit equal to 112 lbs or 50.8 kg. Data soure: @Yates1935 **check reference**
+
+```{r oats-yield, fig.cap = '(ref:oats-yield)'}
+MASS::oats %>% 
+  # 1 long (UK) cwt == 112 lbs == 50.802345 kg
+  mutate(N = 1*as.numeric(sub("cwt", "", N, fixed = TRUE))) %>%
+  group_by(N, V) %>%
+  summarize(mean = 20 * mean(Y)) %>% # factor 20 converts units to lbs/acre
+  mutate(variety = ifelse(V == "Golden.rain", "Golden Rain", as.character(V))) ->
+  oats_df
+
+oats_df$variety <- factor(oats_df$variety, levels = c("Marvellous", "Golden Rain", "Victory"))
+ 
+ggplot(oats_df,
+       aes(N, mean, color = variety, shape = variety, fill = variety)) +
+  geom_line() + geom_point(color = "white", size = 2.5) +
+  scale_y_continuous(name = "mean yield (lbs/acre)") + 
+  scale_x_continuous(name = "manure treatment (cwt/acre)") +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = "oats variety") + 
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = "oats variety") +
+  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = "oats variety") +
+  coord_cartesian(clip = "off") +
+  theme_dviz_open() +
+  theme(legend.title.align = 0.5)
+
+```
+
+## Time series of two or more variables
+
+- connected scatter plot, also called phase portrait, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
 
 (ref:house-price-path) **figure caption.** Original figure concept: Len Kiefer
 
@@ -211,7 +250,7 @@ p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
   geom_line(size = 0.75, color = "#0072b2") +
   scale_y_continuous(
     limits = c(0.037, 0.143),
-    name = "unemployment\nrate", labels = scales::percent,
+    name = "unemploy-\nment rate", labels = scales::percent,
     expand = c(0, 0)
   ) +
   scale_x_date(name = "year", expand = c(0, 0)) +
@@ -282,36 +321,6 @@ ggplot(CA_house_prices) +
     plot.margin = margin(21, 7, 3.5, 0))
 ```
 
+Cite [@Haroz_et_al_2016] (look up volume and page numbers)
 
-Also discuss that does-response cases are similar to time series.
-
-
-(ref:oats-yield) Mean yield of oats varieties after fertilization with manure, which serves as a source of nitrogen. Oats yield generally increases as more nitrogen is available, regardless of variety. Here, manure application is measured in cwt (hundredweight) per acre. The hundredweight is an old imperial unit equal to 112 lbs or 50.8 kg. Data soure: @Yates1935 **check reference**
-
-```{r oats-yield, fig.cap = '(ref:oats-yield)'}
-MASS::oats %>% 
-  # 1 long (UK) cwt == 112 lbs == 50.802345 kg
-  mutate(N = 1*as.numeric(sub("cwt", "", N, fixed = TRUE))) %>%
-  group_by(N, V) %>%
-  summarize(mean = 20 * mean(Y)) %>% # factor 20 converts units to lbs/acre
-  mutate(variety = ifelse(V == "Golden.rain", "Golden Rain", as.character(V))) ->
-  oats_df
-
-oats_df$variety <- factor(oats_df$variety, levels = c("Marvellous", "Golden Rain", "Victory"))
- 
-ggplot(oats_df,
-       aes(N, mean, color = variety, shape = variety, fill = variety)) +
-  geom_line() + geom_point(color = "white", size = 2.5) +
-  scale_y_continuous(name = "mean yield (lbs/acre)") + 
-  scale_x_continuous(name = "manure treatment (cwt/acre)") +
-  scale_shape_manual(values = c(21, 22, 23),
-                     name = "oats variety") + 
-  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "oats variety") +
-  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "oats variety") +
-  coord_cartesian(clip = "off") +
-  theme_dviz_open() +
-  theme(legend.title.align = 0.5)
-
-```
+*What do we do if we have more than two variables? We can do dimension reduction as discussed in Chapter \@ref(visualizing-associations) and then draw a connected scatterplot in PC1 and 2.*
