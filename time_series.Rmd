@@ -4,6 +4,7 @@ source("_common.R")
 
 library(ggridges)
 library(lubridate)
+library(ggrepel)
 ```
 
 # Visualizing time series and other functions of an independent variable {#time-series}
@@ -96,8 +97,6 @@ stamp_bad(p)
 ```{r bio-preprints-lines, fig.cap = '(ref:bio-preprints-lines)'}
 p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
   geom_line() + geom_point(color = "white", size = 2) +
-  scale_shape_manual(values = c(21, 22, 23),
-                     name = NULL) + 
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = NULL,
@@ -106,6 +105,8 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
                      name = NULL) +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
                      name = NULL) +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = NULL) + 
   theme_dviz_open() +
   theme(legend.title.align = 0.5,
         legend.position = c(0.1, .9),
@@ -115,24 +116,32 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
 p
 ```
 
-(ref:bio-preprints-direct-label) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
+(ref:bio-preprints-direct-label) **figure caption. We've chosen lines instead of dots here because that makes the figure less busy.** Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r bio-preprints-direct-label, fig.cap = '(ref:bio-preprints-direct-label)'}
 preprints_final <- filter(preprints, date == ymd("2017-01-01"))
 
-p <- ggplot(preprints, aes(date, count, color = archive)) + 
-  geom_line(size = .75) +
-  scale_shape_manual(values = c(21, 22, 23),
-                     name = NULL) + 
-  scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
-                name = "preprints / month",
-                sec.axis = dup_axis(breaks = preprints_final$count,
-                                    labels = c("arXiv\nq-bio", "PeerJ\nPreprints", "bioRxiv"),
-                                    name = NULL)) + 
+p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
+  geom_line(size = 0.75) + 
+  #geom_point(color = "white", size = 2) +
+  scale_y_continuous(
+    limits = c(0, 600), expand = c(0, 0),
+    name = "preprints / month",
+    sec.axis = dup_axis(
+      breaks = preprints_final$count,
+      labels = c("arXiv\nq-bio", "PeerJ\nPreprints", "bioRxiv"),
+      name = NULL)
+  ) + 
   scale_x_date(name = NULL,
                limits = c(min(biorxiv_growth$date), ymd("2017-01-01")),
                expand = expand_scale(mult = c(0.05, 0))) +
-  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73")) +
+  scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+                     name = NULL) +
+  scale_shape_manual(values = c(21, 22, 23),
+                     name = NULL) + 
+  coord_cartesian(clip = "off") +
   theme_dviz_open() +
   theme(legend.position = "none") +
   theme(axis.line.y.right = element_blank(),
@@ -149,23 +158,67 @@ Other types of time-series visualizations:
 
 (ref:house-price-path) **figure caption.** Original figure concept: Len Kiefer
 
-```{r house-price-path, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
-ggplot(filter(house_prices, state == "California", year(date) > 2000),
-        aes(unemploy_perc, house_price_perc, alpha = date)) + 
-  geom_path() +
-  scale_x_continuous(name = "Unemployment rate (percent)") +
-  scale_y_continuous(name = "12-month percent change in house prices") + 
-  guides(alpha = FALSE) +
-  theme_dviz_grid()
+```{r house-price-path, fig.width = 6, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
+
+CA_house_prices <- 
+  filter(house_prices, state == "California", year(date) > 2000) %>%
+  mutate(
+    label = ifelse(
+      date %in% c(ymd("2005-01-01"), ymd("2007-07-01"), 
+                  ymd("2010-01-01"), ymd("2012-07-01"), ymd("2015-01-01")),
+      format(date, "%b %Y"), ""),
+    nudge_x = case_when(
+      label == "Jan 2005" ~ -0.003,
+      TRUE ~ 0.003
+    ),
+    nudge_y = case_when(
+      label == "Jan 2005" ~ 0.01,
+      label %in% c("Jul 2007", "Jul 2012") ~ 0.01,
+      TRUE ~ -0.01
+    ),
+    hjust = case_when(
+      label == "Jan 2005" ~ 1,
+      TRUE ~ 0
+    )
+  )
+
+ggplot(CA_house_prices) +
+  aes(unemploy_perc/100, house_price_perc, colour = as.numeric(date)) + 
+  geom_path(size = 0.75, lineend = "round") +
+  geom_text_repel(
+    aes(label = label), point.padding = .2, color = "black",
+    min.segment.length = 0, size = 12/.pt,
+    hjust = CA_house_prices$hjust,
+    nudge_x = CA_house_prices$nudge_x,
+    nudge_y = CA_house_prices$nudge_y,
+    direction = "y",
+    family = dviz_font_family
+  ) +
+  scale_x_continuous(
+    limits = c(0.037, 0.143),
+    name = "Unemployment rate", labels = scales::percent,
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    limits = c(-0.25, .26),
+    name = "12-month change in house prices", labels = scales::percent
+  ) + 
+  scale_colour_gradient(low = "#E7F0FF", high = "#035B8F") + #"#0072b2") +
+  guides(colour = FALSE) +
+  theme_dviz_grid() +
+  theme(axis.ticks.length = unit(0, "pt"))
 ```
 
 
-Also discuss that does-response cases are similar to time series. For that setting, maybe use `oats` from MASS?
+Also discuss that does-response cases are similar to time series.
 
 
-```{r}
+(ref:oats-yield) Yield of oats varieties. **complete** One cwt (hundredweight) is an old imperial unit equal to 112 lbs or 50.8 kg. Data soure: *Yates, F. (1935) Complex experiments, Journal of the Royal Statistical Society Suppl. 2, 181–247.*
+
+```{r oats-yield, fig.cap = '(ref:oats-yield)'}
 MASS::oats %>% 
-  mutate(N = 100*as.numeric(sub("cwt", "", N, fixed = TRUE))) %>%
+  # 1 long (UK) cwt == 112 lbs == 50.802345 kg
+  mutate(N = 1*as.numeric(sub("cwt", "", N, fixed = TRUE))) %>%
   group_by(N, V) %>%
   summarize(mean = 20 * mean(Y)) %>% # factor 20 converts units to lbs/acre
   mutate(variety = ifelse(V == "Golden.rain", "Golden Rain", as.character(V))) ->
@@ -177,13 +230,13 @@ ggplot(oats_df,
        aes(N, mean, color = variety, shape = variety, fill = variety)) +
   geom_line() + geom_point(color = "white", size = 2) +
   scale_y_continuous(name = "mean yield (lbs/acre)") + 
-  scale_x_continuous(name = "manure treatment (lbs/acre)") +
+  scale_x_continuous(name = "manure treatment (cwt/acre)") +
   scale_shape_manual(values = c(21, 22, 23),
-                     name = "variety") + 
+                     name = "oats variety") + 
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "variety") +
+                     name = "oats variety") +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "variety") +
+                     name = "oats variety") +
   coord_cartesian(clip = "off") +
   theme_dviz_open() +
   theme(legend.title.align = 0.5)

@@ -111,7 +111,7 @@ If on the other hand the *x* and the *y* axes are measured in the same units, th
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
-                  min.segment.length = 0,
+                  min.segment.length = 0, size = 12/.pt,
                   family = dviz_font_family) +
   coord_fixed(xlim = c(45, 85), ylim = c(48, 88),
               expand = FALSE) +
@@ -129,13 +129,14 @@ F2C <- function(t) {(t-32)*5/9}
 tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houston`))) +
   geom_path(size = 1, color = "#0072B2") +
   geom_text_repel(aes(label = label), point.padding = .4, color = "black",
-                  min.segment.length = 0) +
+                  min.segment.length = 0, size = 12/.pt,
+                  family = dviz_font_family) +
   coord_fixed(xlim = F2C(c(45, 85)), ylim = F2C(c(48, 88)),
               expand = FALSE) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(5*(2:6))) +
-  xlab("Temperature in San Diego (°C)") +
-  ylab("Temperature in Houston (°C)") +
+  xlab("temperature in San Diego (°C)") +
+  ylab("temperature in Houston (°C)") +
   theme_dviz_grid() +
   theme(plot.margin = margin(3, 14, 3, 0))
 
