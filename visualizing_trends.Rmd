@@ -42,6 +42,24 @@ ggplot(blue_jays, aes(Mass, Head, color = KnownSex, fill = KnownSex)) +
   )
 ```
 
+(ref:biorxiv-logscale) Monthly submissions to the preprint server bioRxiv. **comment on the log scale.** Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-logscale, fig.cap = '(ref:biorxiv-logscale)'}
+preprint_growth %>% filter(archive == "bioRxiv") %>%
+  filter(count > 0) -> biorxiv_growth
+
+ggplot(biorxiv_growth, aes(date, count)) + 
+  geom_line(color = "#0072B2", size = .75) +
+  scale_y_log10(limits = c(30, 1600),
+                breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
+                labels = c("", "", "50", "", "", "", "",
+                           "100", "", "", "", "500", "", "", "", "",
+                           "1000", ""), expand = c(0, 0),
+                name = "preprints / month") + 
+  scale_x_date(name = NULL) +
+  theme_dviz_open() +
+  theme(plot.margin = margin(7, 7, 3, 0))
+```
 
 
 (ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
