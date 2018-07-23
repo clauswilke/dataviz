@@ -437,7 +437,7 @@ plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
 
-```{r fig.width = 8, fig.asp = 1/4, include = FALSE}
+```{r fig.width = 8, fig.asp = 1/4}
 ## Other
 
 palette <- pal_steel_blue
