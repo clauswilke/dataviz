@@ -468,3 +468,39 @@ plot_grid(p1, ncol = 4, scale = .9)
 # - pie chart
 ```
 
+```{r}
+set.seed(9682)
+n1 <- 1500
+n2 <- 800
+x1 <- rnorm(n1, 0, .7)
+y1 <- 2 * x1 + rnorm(n1, 0, .8)
+
+x2 <- rnorm(n2, 0, 0.4)
+y2 <- 1.5 * x2 + rnorm(n2, .5, .8)
+
+df_dense_scatter <- na.omit(
+  data.frame(
+    x = scales::censor(c(x1, x2 + 2.2), c(-2, 4)),
+    y = scales::censor(c(y1, y2 + 1.5), c(-3.5, 4.5))
+  )
+)
+
+ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_density2d(binwidth = 0.02) +
+  scale_x_continuous(limits = c(-2, 4)) +
+  scale_y_continuous(limits = c(-3.5, 5))
+
+```
+
+```{r}
+ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_bin2d(bins = 10) +
+  scale_x_continuous(limits = c(-2, 4)) +
+  scale_y_continuous(limits = c(-3.5, 4))
+
+ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_hex(bins = 10) +
+  scale_x_continuous(limits = c(-2, 4)) +
+  scale_y_continuous(limits = c(-3.5, 4))
+
+```

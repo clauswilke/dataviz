@@ -45,8 +45,8 @@ p2 <- ggplot(df, aes(type, value)) +
   theme(
     axis.line = element_blank(),
     axis.title = element_text(family = "Comic Sans MS", size = 15),
-    axis.text.x = element_text(family = "Times", size = 13),
-    axis.text.y = element_text(family = "Arial", size = 10),
+    axis.text.x = element_text(family = "Times", size = 10),
+    axis.text.y = element_text(family = "Arial", size = 13),
     panel.grid = element_line(color = "black"),
     axis.ticks = element_line(color = "black"),
     plot.margin = margin(18, 12, 0, 0)
