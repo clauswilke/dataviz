@@ -111,6 +111,28 @@ df_one_line <- data.frame(
   y = c(3.1, 3.3, 4.0, 3.8, 4.4)
 )
 
+set.seed(9681)
+n1 <- 1500/5
+n2 <- 800/5
+x1 <- rnorm(n1, 0, .7)
+y1 <- 2 * x1 + rnorm(n1, 0, .8)
+
+x2 <- rnorm(n2, 0, 0.4)
+y2 <- 1.5 * x2 + rnorm(n2, .5, .8)
+
+df_dense_scatter <- na.omit(
+  data.frame(
+    x = scales::censor(c(x1, x2 + 2.2), c(-2, 4)),
+    y = scales::censor(c(y1, y2 + 1.5), c(-3.5, 4.5))
+  )
+)
+
+df_connected_scatter <- data.frame(
+  x = c(1.9, 1.5, 2, 3, 3.3, 2.7, 2, 1),
+  y = c(0.6, -1, -2.1, -0.9, .6, 1.8, 2, 0.7),
+  t = 1:8
+)
+
 
 # palettes
 
@@ -444,7 +466,7 @@ When visualizing multiple sets of proportions or changes in proportions across c
 
 ## *x*--*y* relationships
 
-```{r fig.width = 8, fig.asp = 1/4}
+```{r fig.width = 8, fig.asp = 2/4}
 palette <- pal_steel_blue
 
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
@@ -454,7 +476,23 @@ p1 <- ggplot(df_scatter_xy, aes(x, y)) +
   labs(title = "Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
-p2 <- ggplot(df_one_line, aes(x, y)) +
+p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
+  geom_path() +
+  geom_point(
+    shape = 21, size = 2, stroke = 1,
+    color = palette[npal]
+  ) +
+  scale_color_gradientn(
+    aesthetics = c("colour", "fill"),
+    colors = palette[(npal-2):1]
+  ) +
+  scale_x_continuous(limits = c(0.3, 3.7)) +
+  scale_y_continuous(limits = c(-2.5, 2.5)) +
+  labs(title = "Connected scatter plot") +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+p3 <- ggplot(df_one_line, aes(x, y)) +
   geom_line(color = palette[1]) + 
   geom_point(
     shape = 21, size = 2, stroke = 1,
@@ -463,6 +501,19 @@ p2 <- ggplot(df_one_line, aes(x, y)) +
   scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
   scale_y_continuous(limits = c(2.8, 4.8)) +
   labs(title = "Line graph") +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+p4 <- ggplot(df_dense_scatter[sample(1:nrow(df_dense_scatter), 100),]) +
+  aes(x, y) +
+  geom_smooth(
+    color = palette[1],
+    fill = palette[npal-2],
+    size = 0.5,
+    level = 0.999
+  ) +
+  scale_y_continuous(limits = c(-5, 5)) +
+  labs(title = "Smooth line graph") +
   theme_plot_icon(palette[npal], palette[1])
 
 
@@ -475,36 +526,20 @@ clust <- hclust(as.dist(1-cm), method="average")
 levels <- clust$labels[clust$order]
 df_long$var1 <- factor(df_long$var1, levels = levels)
 df_long$var2 <- factor(df_long$var2, levels = levels)
-p3 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+p5 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
        aes(var1, var2, fill=cor, size = abs(cor))) + 
   geom_point(shape = 21, stroke = 0) + 
   scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
   scale_size_area(max_size = 9, limits = c(0, 0.9), guide = "none") +
-  scale_fill_gradient2(high = palette[1], mid = palette[npal], low = pal_steel_blue_inv[1], guide = "none") +
+  scale_fill_gradient2(high = palette[2], mid = palette[npal], low = pal_steel_blue_inv[2], guide = "none") +
   labs(title = "Correlogram") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, p3, ncol = 4, scale = .9)
+plot_grid(p1, p2, p3, p4, p5, ncol = 4, scale = .9)
 ```
 
 ```{r fig.width = 8, fig.asp = 1/4}
-set.seed(9681)
-n1 <- 1500/5
-n2 <- 800/5
-x1 <- rnorm(n1, 0, .7)
-y1 <- 2 * x1 + rnorm(n1, 0, .8)
-
-x2 <- rnorm(n2, 0, 0.4)
-y2 <- 1.5 * x2 + rnorm(n2, .5, .8)
-
-df_dense_scatter <- na.omit(
-  data.frame(
-    x = scales::censor(c(x1, x2 + 2.2), c(-2, 4)),
-    y = scales::censor(c(y1, y2 + 1.5), c(-3.5, 4.5))
-  )
-)
-
 p1 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_density2d(binwidth = 0.02, color = palette[1]) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
@@ -535,9 +570,13 @@ plot_grid(p1, p2, p3, ncol = 4, scale = .9)
 ## plots to add:
 
 # x-y relationships:
-# - smooth line with error region
 # - multiple lines
 
 # proportions
 # - mosaic plot/stacked bars flipped to horizontal
+
+# geospatial
+# - cloropleth
+# - cartogram
+# - 
 ```
