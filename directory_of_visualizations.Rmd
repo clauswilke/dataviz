@@ -128,8 +128,8 @@ df_dense_scatter <- na.omit(
 )
 
 df_connected_scatter <- data.frame(
-  x = c(1.9, 1.5, 2, 3, 3.3, 2.7, 2, 1),
-  y = c(0.6, -1, -2.1, -0.9, .6, 1.8, 2, 0.7),
+  x = c(1.9, 1.5, 2.2, 3, 3.3, 2.7, 1.7, 1),
+  y = c(0.3, -1, -2.0, -0.9, .6, 1.8, 2, 0.7),
   t = 1:8
 )
 
@@ -466,7 +466,7 @@ When visualizing multiple sets of proportions or changes in proportions across c
 
 ## *x*--*y* relationships
 
-```{r fig.width = 8, fig.asp = 2/4}
+```{r fig.width = 8, fig.asp = 1/4}
 palette <- pal_steel_blue
 
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
@@ -479,7 +479,7 @@ p1 <- ggplot(df_scatter_xy, aes(x, y)) +
 p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
   geom_path() +
   geom_point(
-    shape = 21, size = 2, stroke = 1,
+    shape = 21, size = 2.4, stroke = 1,
     color = palette[npal]
   ) +
   scale_color_gradientn(
@@ -495,7 +495,7 @@ p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
 p3 <- ggplot(df_one_line, aes(x, y)) +
   geom_line(color = palette[1]) + 
   geom_point(
-    shape = 21, size = 2, stroke = 1,
+    shape = 21, size = 2.4, stroke = 1,
     fill = palette[2], color = palette[npal]
   ) +
   scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
@@ -516,27 +516,7 @@ p4 <- ggplot(df_dense_scatter[sample(1:nrow(df_dense_scatter), 100),]) +
   labs(title = "Smooth line graph") +
   theme_plot_icon(palette[npal], palette[1])
 
-
-cm <- cor(select(mtcars, mpg, hp, drat, wt, qsec))
-df_wide <- as.data.frame(cm)
-df_long <- stack(df_wide)
-names(df_long) <- c("cor", "var1")
-df_long <- cbind(df_long, var2 = rep(rownames(cm), length(rownames(cm))))
-clust <- hclust(as.dist(1-cm), method="average") 
-levels <- clust$labels[clust$order]
-df_long$var1 <- factor(df_long$var1, levels = levels)
-df_long$var2 <- factor(df_long$var2, levels = levels)
-p5 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
-       aes(var1, var2, fill=cor, size = abs(cor))) + 
-  geom_point(shape = 21, stroke = 0) + 
-  scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
-  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
-  scale_size_area(max_size = 9, limits = c(0, 0.9), guide = "none") +
-  scale_fill_gradient2(high = palette[2], mid = palette[npal], low = pal_steel_blue_inv[2], guide = "none") +
-  labs(title = "Correlogram") +
-  theme_plot_icon(palette[npal], palette[1])
-
-plot_grid(p1, p2, p3, p4, p5, ncol = 4, scale = .9)
+plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 ```
 
 ```{r fig.width = 8, fig.asp = 1/4}
@@ -563,7 +543,27 @@ p3 <- ggplot(df_dense_scatter, aes(x, y)) +
   labs(title = "Hex bins") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, p2, p3, ncol = 4, scale = .9)
+cm <- cor(select(mtcars, mpg, hp, drat, wt, qsec))
+df_wide <- as.data.frame(cm)
+df_long <- stack(df_wide)
+names(df_long) <- c("cor", "var1")
+df_long <- cbind(df_long, var2 = rep(rownames(cm), length(rownames(cm))))
+clust <- hclust(as.dist(1-cm), method="average") 
+levels <- clust$labels[clust$order]
+df_long$var1 <- factor(df_long$var1, levels = levels)
+df_long$var2 <- factor(df_long$var2, levels = levels)
+p4 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+       aes(var1, var2, fill=cor, size = abs(cor))) + 
+  geom_point(shape = 21, stroke = 0) + 
+  scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  scale_size_area(max_size = 9, limits = c(0, 0.9), guide = "none") +
+  scale_fill_gradient2(high = palette[2], mid = palette[npal], low = pal_steel_blue_inv[2], guide = "none") +
+  labs(title = "Correlogram") +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 ```
 
 ```{r include = FALSE}
