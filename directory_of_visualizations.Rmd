@@ -106,6 +106,10 @@ df_multi_dist <- data.frame(y = c(rnorm(n, 1, .8), rnorm(n, 2, .7), rnorm(n, 0, 
 df_props = data.frame(value = c(55, 30, 15),
                       group = c("A", "B", "C"))
 
+df_one_line <- data.frame(
+  x = 1:5,
+  y = c(3.1, 3.3, 4.0, 3.8, 4.4)
+)
 
 
 # palettes
@@ -131,6 +135,7 @@ pal_ocean_blue <- sequential_hcl(n = npal, h1 = 241, c1 = 80, c2 = 10, l1 = 18, 
 
 # steel-blue
 pal_steel_blue <- sequential_hcl(n = npal, h1 = 257, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
+pal_steel_blue_inv <- sequential_hcl(n = npal, h1 = 257-180, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5)
 ```
 
 ## Amounts
@@ -437,41 +442,56 @@ plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
 
-```{r fig.width = 8, fig.asp = 1/4}
-## Other
+## *x*--*y* relationships
 
+```{r fig.width = 8, fig.asp = 1/4}
 palette <- pal_steel_blue
 
-
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
-  geom_point(color = palette[3], size = 2.4) + 
+  geom_point(fill = palette[1], color = palette[npal], pch = 21, size = 2.4) + 
   scale_x_continuous(expand = c(.2, 0)) +
   scale_y_continuous(expand = c(.2, 0)) +
   labs(title = "Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
-plot_grid(p1, ncol = 4, scale = .9)
+p2 <- ggplot(df_one_line, aes(x, y)) +
+  geom_line(color = palette[1]) + 
+  geom_point(
+    shape = 21, size = 2, stroke = 1,
+    fill = palette[2], color = palette[npal]
+  ) +
+  scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
+  scale_y_continuous(limits = c(2.8, 4.8)) +
+  labs(title = "Line graph") +
+  theme_plot_icon(palette[npal], palette[1])
 
-## plots to add:
 
-# x-y relationships:
-# - 2d bins
-# - hexbins
-# - smooth line with error region
-# - multiple lines
+cm <- cor(select(mtcars, mpg, hp, drat, wt, qsec))
+df_wide <- as.data.frame(cm)
+df_long <- stack(df_wide)
+names(df_long) <- c("cor", "var1")
+df_long <- cbind(df_long, var2 = rep(rownames(cm), length(rownames(cm))))
+clust <- hclust(as.dist(1-cm), method="average") 
+levels <- clust$labels[clust$order]
+df_long$var1 <- factor(df_long$var1, levels = levels)
+df_long$var2 <- factor(df_long$var2, levels = levels)
+p3 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+       aes(var1, var2, fill=cor, size = abs(cor))) + 
+  geom_point(shape = 21, stroke = 0) + 
+  scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
+  scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
+  scale_size_area(max_size = 9, limits = c(0, 0.9), guide = "none") +
+  scale_fill_gradient2(high = palette[1], mid = palette[npal], low = pal_steel_blue_inv[1], guide = "none") +
+  labs(title = "Correlogram") +
+  theme_plot_icon(palette[npal], palette[1])
 
-# quantities
-# - horizontal bars, ordered
-
-# proportions
-# - mosaic plot/stacked bars flipped to horizontal
-# - pie chart
+plot_grid(p1, p2, p3, ncol = 4, scale = .9)
 ```
 
-```{r}
-set.seed(9682)
-n1 <- 1500
-n2 <- 800
+```{r fig.width = 8, fig.asp = 1/4}
+set.seed(9681)
+n1 <- 1500/5
+n2 <- 800/5
 x1 <- rnorm(n1, 0, .7)
 y1 <- 2 * x1 + rnorm(n1, 0, .8)
 
@@ -485,22 +505,39 @@ df_dense_scatter <- na.omit(
   )
 )
 
-ggplot(df_dense_scatter, aes(x, y)) + 
-  geom_density2d(binwidth = 0.02) +
-  scale_x_continuous(limits = c(-2, 4)) +
-  scale_y_continuous(limits = c(-3.5, 5))
+p1 <- ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_density2d(binwidth = 0.02, color = palette[1]) +
+  scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
+  labs(title = "Density contours") +
+  theme_plot_icon(palette[npal], palette[1])
 
+p2 <- ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_bin2d(bins = 12, color = palette[npal], size = 0.75) +
+  scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
+  scale_fill_gradientn(colors = palette[1:(npal-1)]) +
+  labs(title = "2D bins") +
+  theme_plot_icon(palette[npal], palette[1])
+
+p3 <- ggplot(df_dense_scatter, aes(x, y)) + 
+  geom_hex(bins = 12, color = palette[npal], size = 0.75) +
+  scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
+  scale_fill_gradientn(colors = palette[1:(npal-1)]) +
+  labs(title = "Hex bins") +
+  theme_plot_icon(palette[npal], palette[1])
+
+plot_grid(p1, p2, p3, ncol = 4, scale = .9)
 ```
 
-```{r}
-ggplot(df_dense_scatter, aes(x, y)) + 
-  geom_bin2d(bins = 10) +
-  scale_x_continuous(limits = c(-2, 4)) +
-  scale_y_continuous(limits = c(-3.5, 4))
+```{r include = FALSE}
+## plots to add:
 
-ggplot(df_dense_scatter, aes(x, y)) + 
-  geom_hex(bins = 10) +
-  scale_x_continuous(limits = c(-2, 4)) +
-  scale_y_continuous(limits = c(-3.5, 4))
+# x-y relationships:
+# - smooth line with error region
+# - multiple lines
 
+# proportions
+# - mosaic plot/stacked bars flipped to horizontal
 ```
