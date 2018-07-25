@@ -205,7 +205,7 @@ ggplot(oats_df,
 
 - connected scatter plot, also called phase portrait, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
 
-(ref:house-price-path) **figure caption.** Original figure concept: Len Kiefer
+(ref:house-price-unemploy) 12-month change in house prices (a) and  unemployment rate (b) over time, from Jan. 2001 through Dec. 2017. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
 ```{r house-price-unemploy, fig.cap = '(ref:house-price-unemploy)'}
 # prepare dataset already for next figure
@@ -263,30 +263,8 @@ p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
 plot_grid(p1, p2, align = 'v', ncol = 1, labels = "auto") 
 ```
 
-```{r house-price-path-bad, fig.asp = 3/4, fig.cap = '(ref:house-price-path-bad)'}
 
-p <- ggplot(CA_house_prices) +
-  aes(unemploy_perc/100, house_price_perc) + 
-  geom_path(size = 0.75, lineend = "round", color = "#0072b2") +
-  scale_x_continuous(
-    limits = c(0.037, 0.143),
-    name = "unemployment rate", labels = scales::percent,
-    expand = c(0, 0)
-  ) +
-  scale_y_continuous(
-    limits = c(-0.315, .315), expand = c(0, 0),
-    breaks = c(-.3, -.15, 0, .15, .3),
-    name = "12-month change in house prices", labels = scales::percent
-  ) + 
-  coord_cartesian(clip = "off") +
-  theme_dviz_grid() +
-  theme(
-    axis.ticks.length = unit(0, "pt"),
-    plot.margin = margin(21, 7, 3.5, 0))
-
-stamp_bad(p)
-```
-
+(ref:house-price-path) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. **comment on anti-correlation** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics. Original figure concept: Len Kiefer
 
 ```{r house-price-path, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
 
@@ -320,6 +298,34 @@ ggplot(CA_house_prices) +
     axis.ticks.length = unit(0, "pt"),
     plot.margin = margin(21, 7, 3.5, 0))
 ```
+
+(ref:house-price-path-bad) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. Without date markers and **continue** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
+
+
+```{r house-price-path-bad, fig.asp = 3/4, fig.cap = '(ref:house-price-path-bad)'}
+
+p <- ggplot(CA_house_prices) +
+  aes(unemploy_perc/100, house_price_perc) + 
+  geom_path(size = 0.75, lineend = "round", color = "#0072b2") +
+  scale_x_continuous(
+    limits = c(0.037, 0.143),
+    name = "unemployment rate", labels = scales::percent,
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    limits = c(-0.315, .315), expand = c(0, 0),
+    breaks = c(-.3, -.15, 0, .15, .3),
+    name = "12-month change in house prices", labels = scales::percent
+  ) + 
+  coord_cartesian(clip = "off") +
+  theme_dviz_grid() +
+  theme(
+    axis.ticks.length = unit(0, "pt"),
+    plot.margin = margin(21, 7, 3.5, 0))
+
+stamp_bad(p)
+```
+
 
 Cite [@Haroz_et_al_2016] (look up volume and page numbers)
 

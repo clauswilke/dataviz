@@ -92,7 +92,7 @@ p4 <- ggplot(df, aes(type, value)) +
 plot_grid(
   p1, NULL, stamp_ugly(p2),
   NULL, NULL, NULL,
-  stamp_bad(p3), NULL, stamp_wrong(p4),
+  stamp_sketchy(p3), NULL, stamp_bad(p4),
   rel_widths = c(1, .04, 1),
   rel_heights = c(1, .04, 1),
   labels = c("a", "", "b", "", "", "", "c", "", "d")
