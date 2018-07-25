@@ -3,6 +3,7 @@
 source("_common.R")
 
 library(dplyr)
+library(tidyr)
 library(ggforce)
 library(ggridges)
 library(forcats)
@@ -131,6 +132,13 @@ df_connected_scatter <- data.frame(
   x = c(1.9, 1.5, 2.2, 3, 3.3, 2.7, 1.7, 1),
   y = c(0.3, -1, -2.0, -0.9, .6, 1.8, 2, 0.7),
   t = 1:8
+)
+
+df_paired <- data.frame(
+  y = c(6, 5.3, 3.8, 2.8, 2,
+        4.3, 6.1, 5.1, 3.3, 2.4),
+  x = rep(c("A", "B"), each = 5),
+  group = rep(1:5, 2)
 )
 
 
@@ -466,11 +474,11 @@ When visualizing multiple sets of proportions or changes in proportions across c
 
 ## *x*--*y* relationships
 
-```{r fig.width = 8, fig.asp = 1/4}
+```{r fig.width = 8, fig.asp = 2/4}
 palette <- pal_steel_blue
 
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
-  geom_point(fill = palette[1], color = palette[npal], pch = 21, size = 2.4) + 
+  geom_point(fill = palette[2], color = palette[npal], pch = 21, size = 2.4) + 
   scale_x_continuous(expand = c(.2, 0)) +
   scale_y_continuous(expand = c(.2, 0)) +
   labs(title = "Scatterplot") +
@@ -491,43 +499,40 @@ p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
   labs(title = "Connected scatter plot") +
   theme_plot_icon(palette[npal], palette[1])
 
+p3 <- ggplot(spread(df_paired, x, y), aes(A, B)) + 
+  geom_abline(slope = 1, intercept = 0, color = palette[3], size = 0.3) + 
+  geom_point(
+    shape = 21, size = 2.4, stroke = 1,
+    fill = palette[2], color = palette[npal]
+  ) +
+  scale_x_continuous(limits = c(1.5, 6.5)) +
+  scale_y_continuous(limits = c(1.5, 6.5)) +
+  labs(title = "Paired scatterplot") +
+  theme_plot_icon(palette[npal], palette[1])
 
-p3 <- ggplot(df_one_line, aes(x, y)) +
+p4 <- ggplot(df_paired, aes(x, y, group = group)) + 
   geom_line(color = palette[1]) + 
   geom_point(
     shape = 21, size = 2.4, stroke = 1,
     fill = palette[2], color = palette[npal]
   ) +
-  scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
-  scale_y_continuous(limits = c(2.8, 4.8)) +
-  labs(title = "Line graph") +
-  theme_plot_icon(palette[npal], palette[1])
+  scale_x_discrete(expand = c(0, 0.4)) +
+  scale_y_continuous(limits = c(1.5, 6.5)) +
+  labs(title = "Slopegraph") +
+  theme_plot_icon(palette[npal], palette[1]) +
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
-
-p4 <- ggplot(df_dense_scatter[sample(1:nrow(df_dense_scatter), 100),]) +
-  aes(x, y) +
-  geom_smooth(
-    color = palette[1],
-    fill = palette[npal-2],
-    size = 0.5,
-    level = 0.999
-  ) +
-  scale_y_continuous(limits = c(-5, 5)) +
-  labs(title = "Smooth line graph") +
-  theme_plot_icon(palette[npal], palette[1])
-
-plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
-```
-
-```{r fig.width = 8, fig.asp = 1/4}
-p1 <- ggplot(df_dense_scatter, aes(x, y)) + 
+p5 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_density2d(binwidth = 0.02, color = palette[1]) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
   labs(title = "Density contours") +
   theme_plot_icon(palette[npal], palette[1])
 
-p2 <- ggplot(df_dense_scatter, aes(x, y)) + 
+p6 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_bin2d(bins = 12, color = palette[npal], size = 0.75) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
@@ -535,7 +540,7 @@ p2 <- ggplot(df_dense_scatter, aes(x, y)) +
   labs(title = "2D bins") +
   theme_plot_icon(palette[npal], palette[1])
 
-p3 <- ggplot(df_dense_scatter, aes(x, y)) + 
+p7 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_hex(bins = 12, color = palette[npal], size = 0.75) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
@@ -552,7 +557,7 @@ clust <- hclust(as.dist(1-cm), method="average")
 levels <- clust$labels[clust$order]
 df_long$var1 <- factor(df_long$var1, levels = levels)
 df_long$var2 <- factor(df_long$var2, levels = levels)
-p4 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
+p8 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
        aes(var1, var2, fill=cor, size = abs(cor))) + 
   geom_point(shape = 21, stroke = 0) + 
   scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
@@ -563,8 +568,37 @@ p4 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   theme_plot_icon(palette[npal], palette[1])
 
 
-plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
+plot_grid(p1, p2, p3, p4, p5, p6, p7, p8, ncol = 4, scale = .9)
 ```
+
+```{r fig.width = 8, fig.asp = 1/4}
+p1 <- ggplot(df_one_line, aes(x, y)) +
+  geom_line(color = palette[1]) + 
+  geom_point(
+    shape = 21, size = 2.4, stroke = 1,
+    fill = palette[2], color = palette[npal]
+  ) +
+  scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
+  scale_y_continuous(limits = c(2.8, 4.8)) +
+  labs(title = "Line graph") +
+  theme_plot_icon(palette[npal], palette[1])
+
+
+p2 <- ggplot(df_dense_scatter[sample(1:nrow(df_dense_scatter), 100),]) +
+  aes(x, y) +
+  geom_smooth(
+    color = palette[1],
+    fill = palette[npal-2],
+    size = 0.5,
+    level = 0.999
+  ) +
+  scale_y_continuous(limits = c(-5, 5)) +
+  labs(title = "Smooth line graph") +
+  theme_plot_icon(palette[npal], palette[1])
+
+plot_grid(p1, p2, ncol = 4, scale = .9)
+```
+
 
 ```{r include = FALSE}
 ## plots to add:
