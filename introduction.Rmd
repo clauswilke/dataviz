@@ -23,7 +23,8 @@ The third part, "Miscellaneous topics," covers a few remaining issues that didn'
 ```{r fig.asp = 3/4}
 df <- tibble(
   type = c("A", "B", "C"),
-  value = c(3, 5, 4)
+  value = c(3, 5, 4),
+  expand = c(4, 5, 4.5)
 )
 
 
@@ -52,7 +53,21 @@ p2 <- ggplot(df, aes(type, value)) +
     plot.margin = margin(18, 12, 0, 0)
   )
 
+
 p3 <- ggplot(df, aes(type, value)) + 
+  geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
+  geom_point(aes(y = expand), shape = NA) +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~type, scales = "free") +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12) +
+  theme(
+    axis.line = element_blank(),
+    strip.text = element_blank(),
+    plot.margin = margin(18, 12, 0, 0)
+  )
+
+p3a <- ggplot(df, aes(type, value)) + 
   geom_col(color = "black", fill = NA, width = .5) +
   scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
   coord_cartesian(clip = "off") +
