@@ -31,9 +31,9 @@ ggplot(biorxiv_growth, aes(date, count)) +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-There is an important difference however between Figure \@ref(fig:biorxiv-dots) and the scatter plots discussed in Chapter \@ref(visualizing-associations). In Figure \@ref(fig:biorxiv-dots), the dots are spaced evenly along the *x* axis, and there is a defined order among the dots. Each dot has one left and one right neighbor, except the leftmost and rightmost point which each has only one neighbor. We can visually emphasize this order by connecting neighboring points with lines (Figure \@ref(fig:biorxiv-dots-line)).
+There is an important difference however between Figure \@ref(fig:biorxiv-dots) and the scatter plots discussed in Chapter \@ref(visualizing-associations). In Figure \@ref(fig:biorxiv-dots), the dots are spaced evenly along the *x* axis, and there is a defined order among them. Each dot has exactly one left and one right neighbor (except the leftmost and rightmost points which have only one neighbor each). We can visually emphasize this order by connecting neighboring points with lines (Figure \@ref(fig:biorxiv-dots-line)). Such a plot is called a *line graph*.
 
-(ref:biorxiv-dots-line) Monthly submissions to the preprint server bioRxiv, shown as dots connected by lines. The lines do not represent data but are only meant as a guide to the eye. By connecting the individual dots with lines, we emphasize that there is an order between the dots, each dot has exactly one that comes before and one that comes after. Data source: Jordan Anaya, http://www.prepubmed.org/
+(ref:biorxiv-dots-line) Monthly submissions to the preprint server bioRxiv, shown as dots connected by lines. The lines do not represent data but are only meant as a guide to the eye. By connecting the individual dots with lines, we emphasize that there is an order between the dots, each dot has exactly one neighbor that comes before and one that comes after. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r biorxiv-dots-line, fig.cap = '(ref:biorxiv-dots-line)'}
 ggplot(biorxiv_growth, aes(date, count)) +
@@ -46,11 +46,11 @@ ggplot(biorxiv_growth, aes(date, count)) +
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-Some people object to drawing lines between points because the lines do not correspond to observed data. In particular, if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they help with perception. We can somewhat resolve this dilemma by pointing it out in the figure caption, for example by writing "lines are meant as a guide to the eye" (see caption of Figure \@ref(fig:biorxiv-dots-line)).
+Some people object to drawing lines between points because the lines do not represent observed data. In particular, if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they help with perception. We can somewhat resolve this dilemma by pointing it out in the figure caption, for example by writing "lines are meant as a guide to the eye" (see caption of Figure \@ref(fig:biorxiv-dots-line)).
 
-Using lines to represent time series is generally accepted practice, however, and frequently the dots are omitted altogether (Figure \@ref(fig:biorxiv-line)). Without dots, the figure places more emphasis on the overall trend in the data and less on individual observations. A figure without dots is also visually less busy. In general, the denser the time series, the less important it is to show individual obserations with dots. For the preprint dataset shown here, I think omitting the dots is just fine.
+Using lines to represent time series is generally accepted practice, however, and frequently the dots are omitted altogether (Figure \@ref(fig:biorxiv-line)). Without dots, the figure places more emphasis on the overall trend in the data and less on individual observations. A figure without dots is also visually less busy. In general, the denser the time series, the less important it is to show individual obserations with dots. For the preprint dataset shown here, I think omitting the dots is fine.
 
-(ref:biorxiv-line) Monthly submissions to the preprint server bioRxiv, shown as a line graph. The line graph emphasizes the overall temporal trend while de-emphasizing individual observations at specific time points. It is particularly useful when the time points are spaced very densely. Data source: Jordan Anaya, http://www.prepubmed.org/
+(ref:biorxiv-line) Monthly submissions to the preprint server bioRxiv, shown as a line graph without dots. Omitting the dots emphasizes the overall temporal trend while de-emphasizing individual observations at specific time points. It is particularly useful when the time points are spaced very densely. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r biorxiv-line, fig.cap = '(ref:biorxiv-line)'}
 ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .75) +
@@ -61,7 +61,7 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .
   theme(plot.margin = margin(7, 7, 3, 0))
 ```
 
-We can also fill the area under the curve with a solid color (Figure \@ref(fig:biorxiv-line-area)). **some more text.** However, this visualization is only valid if the *y* axis starts at zero.
+We can also fill the area under the curve with a solid color (Figure \@ref(fig:biorxiv-line-area)). This choice further emphasizes the overarching trend in the data, because it visually separates the area above the curve from the area below. However, this visualization is only valid if the *y* axis starts at zero, so that the height of the shaded area at each time point represents the data value at that time point.
 
 (ref:biorxiv-line-area) Monthly submissions to the preprint server bioRxiv, shown as a line graph with filled area underneath. By filling the area under the curve, we put even more emphasis on the overarching temporal trend than if we just draw a line (Figure \@ref(fig:biorxiv-line)). Data source: Jordan Anaya, http://www.prepubmed.org/
 
@@ -76,13 +76,13 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
 ```
 
 
-## Multiple time series and related plots
+## Multiple time series and dose--response curves
 
-While individual dots are fine for a single time course, they don't work well when there are multiple ones.
+We often have multiple time courses that we want to show at once. In this case, we have to be more careful in how we plot the data, because the figure can become confusing or difficult to read. For example, if we want to show the monthly submissions to multiple preprint servers, a scatter plot is not a good idea, because the individual time courses run into each other (Figure \@ref(fig:bio-preprints-dots)). Connecting the dots with lines alleviates this issue (Figure \@ref(fig:bio-preprints-lines)).
 
-(ref:bio-preprints-points) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
+(ref:bio-preprints-dots) Monthly submissions to three preprint servers covering biomedical research: bioRxiv, the q-bio section of arXiv, and PeerJ Preprints. Each dot represents the number of submissions in one month to the respective preprint server. This figure is labeled "bad" because the three time courses visually interfere with each other and are difficult to read. Data source: Jordan Anaya, http://www.prepubmed.org/
 
-```{r bio-preprints-points, fig.cap = '(ref:bio-preprints-points)'}
+```{r bio-preprints-dots, fig.cap = '(ref:bio-preprints-dots)'}
 preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")) %>%
   filter(count > 0) %>%
   mutate(archive = factor(archive, levels = c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")))-> preprints
@@ -108,10 +108,10 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
 stamp_bad(p)
 ```
 
-(ref:bio-preprints-lines) **figure caption.** Data source: Jordan Anaya, http://www.prepubmed.org/
+(ref:bio-preprints-lines) Monthly submissions to three preprint servers covering biomedical research. By connecting the dots in Figure \@ref(fig:bio-preprints-dots) with lines, we help the viewer follow each individual time course. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r bio-preprints-lines, fig.cap = '(ref:bio-preprints-lines)'}
-p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
+ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
   geom_line() + geom_point(color = "white", size = 2) +
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month") + 
@@ -128,11 +128,11 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
         legend.position = c(0.1, .9),
         legend.just = c(0, 1),
         plot.margin = margin(14, 7, 3, 0))
-
-p
 ```
 
-(ref:bio-preprints-direct-label) **figure caption. We've chosen lines instead of dots here because that makes the figure less busy.** Data source: Jordan Anaya, http://www.prepubmed.org/
+Figure \@ref(fig:bio-preprints-lines) represents an acceptable visualization of the preprints dataset. However, the separate legend creates unnecessary cognitive load. We can reduce this cognitive load by labeling the lines directly (Figure \@ref(fig:bio-preprints-direct-label)). We have also eliminated the individual dots in this figure, for a result that is much more streamlined and easy to read than the original starting point, Figure \@ref(fig:bio-preprints-dots).
+
+(ref:bio-preprints-direct-label) Monthly submissions to three preprint servers covering biomedical research. By direct labeling the lines instead of providing a legend, we have reduced the cognitive load required to read the figure. And the elimination of the legend removes the need for points of different shapes. Thus, we could streamline the figure further by eliminating the dots. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r bio-preprints-direct-label, fig.cap = '(ref:bio-preprints-direct-label)'}
 preprints_final <- filter(preprints, date == ymd("2017-01-01"))
@@ -167,11 +167,10 @@ ggplot(preprints) +
         plot.margin = margin(14, 7, 3, 0))
 ```
 
+Line graphs are not limited to time series. They are appropriate whenever the data points have a natural order that is reflected in the variable shown along the *x* axis, so that neighboring points can be connected with a line. This situation arises, for example, in dose--response curves, where we measure how changing some numerical parameter in an experiment (the dose) affects an outcome of interest (the response). Figure \@ref(fig:oats-yield) shows a classic experiment of this type, measuring oat yield in response to increasing amounts of fertilization. The line-graph visualization highlights how the dose--response curve has a similar shape for the three oat varieties considered but differs in the starting point in the absence of fertilization (i.e., some varieties have naturally higher yield than others).
 
-Also discuss that does-response cases are similar to time series.
 
-
-(ref:oats-yield) Mean yield of oats varieties after fertilization with manure, which serves as a source of nitrogen. Oats yield generally increases as more nitrogen is available, regardless of variety. Here, manure application is measured in cwt (hundredweight) per acre. The hundredweight is an old imperial unit equal to 112 lbs or 50.8 kg. Data soure: @Yates1935 **check reference**
+(ref:oats-yield) Dose--response curve showing the mean yield of oats varieties after fertilization with manure. The manure serves as a source of nitrogen, and oat yields generally increase as more nitrogen is available, regardless of variety. Here, manure application is measured in cwt (hundredweight) per acre. The hundredweight is an old imperial unit equal to 112 lbs or 50.8 kg. Data soure: @Yates1935
 
 ```{r oats-yield, fig.cap = '(ref:oats-yield)'}
 MASS::oats %>% 
@@ -190,11 +189,11 @@ ggplot(oats_df,
   scale_y_continuous(name = "mean yield (lbs/acre)") + 
   scale_x_continuous(name = "manure treatment (cwt/acre)") +
   scale_shape_manual(values = c(21, 22, 23),
-                     name = "oats variety") + 
+                     name = "oat variety") + 
   scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "oats variety") +
+                     name = "oat variety") +
   scale_fill_manual(values = c("#0072b2", "#D55E00", "#009e73"),
-                     name = "oats variety") +
+                     name = "oat variety") +
   coord_cartesian(clip = "off") +
   theme_dviz_open() +
   theme(legend.title.align = 0.5)
@@ -202,6 +201,8 @@ ggplot(oats_df,
 ```
 
 ## Time series of two or more variables
+
+
 
 - connected scatter plot, also called phase portrait, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
 
@@ -264,6 +265,8 @@ plot_grid(p1, p2, align = 'v', ncol = 1, labels = "auto")
 ```
 
 
+*Somewhere state that we have already seen connected scatter plot in Chapter \@ref(coordinate-systems-axes).*
+
 (ref:house-price-path) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. **comment on anti-correlation** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics. Original figure concept: Len Kiefer
 
 ```{r house-price-path, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
@@ -299,6 +302,9 @@ ggplot(CA_house_prices) +
     plot.margin = margin(21, 7, 3.5, 0))
 ```
 
+In a connected scatter plot, it is important that we indicate the direction (done via gradually darkening color in Figure \@ref(fig:house-price-path)) and temporal scale (done via labeling of specific time points in Figure \@ref(fig:house-price-path)). Without these hints, we can make out neither the direction nor the speed of change of the time series shown (Figure \@ref(fig:house-price-path-bad)).
+
+
 (ref:house-price-path-bad) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. Without date markers and **continue** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
 
@@ -326,7 +332,117 @@ p <- ggplot(CA_house_prices) +
 stamp_bad(p)
 ```
 
+**Need a connecting sentence here.**
+Viewers are more likely to confuse order and direction in a connected scatter plot than in line graphs and less likely to report correlation. However, connected scatter plots seem to result in higher viewer engagement, and thus such plots may be a effective tools to draw readers into a story [@Haroz_et_al_2016].
 
-Cite [@Haroz_et_al_2016] (look up volume and page numbers)
+Even though connected scatter plots can show only two variables at a time, we can use them to visualize higher-dimensional datasets. The trick is to apply dimension reduction first, as discussed in Chapter \@ref(visualizing-associations). We can then draw a connected scatterplot in the dimension-reduced space. As an example of this approach, we will visualize a database of monthly observations of over 100 macroeconomic indicators, provided by the Federal Reserve Bank of St. Louis. We perform a principal components analysis (PCA) of all indicators and then draw a connected scatter plot of principal component (PC) 2 versus PC 1 (Figure \@ref(fig:fred-md-PCA)a) and versus PC 3 (Figure \@ref(fig:fred-md-PCA)b) for data from January 1990 to December 2017.
 
-*What do we do if we have more than two variables? We can do dimension reduction as discussed in Chapter \@ref(visualizing-associations) and then draw a connected scatterplot in PC1 and 2.*
+(ref:fred-md-PCA) Visualizing a high-dimensional time series as a connected scatter plot in principal components space. **more figure caption** Data source: M. W. McCracken, St. Louis Fed
+
+```{r fred-md-PCA, fig.asp = 2*0.618, fig.cap = '(ref:fred-md-PCA)'}
+fred_md %>%
+  select(-date, -sasdate) %>%
+  scale() %>%
+  prcomp() -> pca
+
+pca_data <- data.frame(date = fred_md$date, pca$x) %>%
+  mutate(
+    type = ifelse(
+      (ymd("1990-07-01") <= date & date < ymd("1991-03-01")) |
+      (ymd("2001-03-01") <= date & date < ymd("2001-11-01")) |
+      (ymd("2007-12-01") <= date & date < ymd("2009-06-01")),
+      "recession",
+      "recovery"
+    )
+  )
+
+pca_labels <-
+  mutate(pca_data,
+    label = ifelse(
+      date %in% c(ymd("1990-01-01"), ymd("1991-03-01"), ymd("2001-11-01"),
+                  ymd("2009-06-01"), ymd("2017-12-01")),
+      format(date, "%b %Y"), ""
+    )
+  ) %>%
+  filter(label != "") %>%
+  mutate(
+    nudge_x = c(.2, -.2, -.2, -.2, .2),
+    nudge_y = c(.2, -.2, -.2, -.2, .2),
+    hjust = c(0, 1, 1, 1, 0),
+    vjust = c(0, 1, 1, 1, 0),
+    nudge_x2 = c(.2, .2, .2, -.2, .2),
+    nudge_y2 = c(.2, -.2, -1, .2, .2),
+    hjust2 = c(0, 0, .2, 1, 0),
+    vjust2 = c(0, 1, 1, 1, 0)
+  )
+
+colors = darken(c("#D55E00", "#009E73"), c(0.1, 0.1))
+
+p1 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
+  aes(x=PC1, y=PC2, color=type, alpha = date, group = 1) +
+  geom_path(size = 1, lineend = "butt") +
+  geom_text_repel(
+    data = pca_labels,
+    aes(label = label),
+    alpha = 1,
+    point.padding = .2, color = "black",
+    min.segment.length = 0, size = 10/.pt,
+    family = dviz_font_family,
+    nudge_x = pca_labels$nudge_x,
+    nudge_y = pca_labels$nudge_y,
+    hjust = pca_labels$hjust,
+    vjust = pca_labels$vjust
+  ) +
+  scale_color_manual(
+    values = colors,
+    name = NULL
+  ) +
+  scale_alpha_date(range = c(0.45, 1), guide = "none") +
+  scale_x_continuous(limits = c(-2, 15.5), name = "PC 1") +
+  scale_y_continuous(limits = c(-5, 5), name = "PC 2") +
+  theme_dviz_grid(12, rel_small = 1) +
+  theme(
+    legend.position = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.direction = "horizontal",
+    legend.box.background = element_rect(color = NA, fill = "white"),
+    legend.box.margin = margin(6, 0, 6, 0),
+    plot.margin = margin(3, 0, 6, 1)
+  )
+
+p2 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
+  aes(x=PC3, y=PC2, color=type, alpha = date, group = 1) +
+  geom_path(size = 1, lineend = "butt") +
+  geom_text_repel(
+    data = pca_labels,
+    aes(label = label),
+    alpha = 1,
+    point.padding = .2, color = "black",
+    min.segment.length = 0, size = 10/.pt,
+    family = dviz_font_family,
+    nudge_x = pca_labels$nudge_x2,
+    nudge_y = pca_labels$nudge_y2,
+    hjust = pca_labels$hjust2,
+    vjust = pca_labels$vjust2
+  ) +
+  scale_color_manual(
+    values = colors,
+    name = NULL
+  ) +
+  scale_alpha_date(range = c(0.45, 1), guide = "none") +
+  scale_x_continuous(limits = c(-6, 8.5), name = "PC 3") +
+  scale_y_continuous(limits = c(-5, 5), name = "PC 2") +
+  theme_dviz_grid(12, rel_small = 1) +
+  theme(
+    legend.position = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.direction = "horizontal",
+    legend.box.background = element_rect(color = NA, fill = "white"),
+    legend.box.margin = margin(6, 0, 6, 0),
+    plot.margin = margin(6, 0, 3, 1)
+  )
+
+plot_grid(p1, p2, labels = "auto", ncol = 1)
+```
+
+Notably, Figure \@ref(fig:fred-md-PCA)a looks almost like a regular line plot, with time running from left to right. This feature is caused by a common result of PCA: The first component often measures the overall size of the system. Here, PC 1 approximately measures the overall size of the economy, which rarely decreases over time. By coloring the connected scatter plot by times of recession and recovery, we can see that recessions are associated with a drop in PC 2 whereas recoveries do not correspond to a clear feature in either PC 1 or PC 2 (Figure \@ref(fig:fred-md-PCA)a). The recoveries do, however, seem to correspond to a drop in PC 3 (Figure \@ref(fig:fred-md-PCA)b). Moreover, in the PC 2 versus PC 3 plot, we see that the line follows the shape of a clockwise spiral. This pattern emphasizes the cyclical nature of the economy, with recessions following recoveries and vice versa.
