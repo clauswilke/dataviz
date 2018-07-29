@@ -200,11 +200,11 @@ ggplot(oats_df,
 
 ```
 
-## Time series of two or more variables
+## Time series of two or more response variables
 
+In the preceding examples we dealt with time courses of only a single response variable (e.g., preprint submissions per month or oat yield). It is not unusual, however, to have more than one response variable. Such situations arise commonly in macroeconomics. For example, we may be interested in the change in house prices from the previous 12 months as it relates to the unemployment rate. We may expect that house prices rise when the unemployment rate is low and vice versa.
 
-
-- connected scatter plot, also called phase portrait, see e.g. http://lenkiefer.com/2017/08/07/house-price-trends/
+Given the tools from the preceding subsections, we can visualize such data as two separate line graphs stacked on top of each other (Figure \@ref(fig:house-price-unemploy)). This plot directly shows the two variables of interest, and it is straightforward to interpret. However, because the two variables are shown as separate line graphs, drawing comparisons between them can be cumbersome. If we want to identify temporal regions when both variables move in the same or in opposite directions, we need to switch back and forth between the two graphs and compare the relative slopes of the two curves.
 
 (ref:house-price-unemploy) 12-month change in house prices (a) and  unemployment rate (b) over time, from Jan. 2001 through Dec. 2017. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
@@ -264,10 +264,9 @@ p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
 plot_grid(p1, p2, align = 'v', ncol = 1, labels = "auto") 
 ```
 
+As an alternative to showing two separate line graphs, we can plot the two variables against each other, drawing a path that leads from the earliest time point to the latest (Figure \@ref(fig:house-price-path)). Such a visualization is called a *connected scatter plot*, because we are technically making a scatter plot of the two variables against each other and then are connecting neighboring points. Physicists and engineers often call this a *phase portrait*, because in their disciplines it is commonly used to represent movement in phase space. We have previously encountered connected scatter plots in Chapter \@ref(coordinate-systems-axes), where we plotted the daily temperature normals in Houston, TX, versus those in San Diego, CA (Figure \@ref(fig:temperature-normals-Houston-San-Diego)).
 
-*Somewhere state that we have already seen connected scatter plot in Chapter \@ref(coordinate-systems-axes).*
-
-(ref:house-price-path) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. **comment on anti-correlation** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics. Original figure concept: Len Kiefer
+(ref:house-price-path) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017, shown as a connected scatter plot. Darker shades represent more recent months. The anti-correlation seen in Figure \@ref(fig:house-price-unemploy) between the change in house prices and the unemployment rate causes the connected scatter plot to form two counter-clockwise circles. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics. Original figure concept: Len Kiefer
 
 ```{r house-price-path, fig.asp = 3/4, fig.cap = '(ref:house-price-path)'}
 
@@ -302,11 +301,12 @@ ggplot(CA_house_prices) +
     plot.margin = margin(21, 7, 3.5, 0))
 ```
 
-In a connected scatter plot, it is important that we indicate the direction (done via gradually darkening color in Figure \@ref(fig:house-price-path)) and temporal scale (done via labeling of specific time points in Figure \@ref(fig:house-price-path)). Without these hints, we can make out neither the direction nor the speed of change of the time series shown (Figure \@ref(fig:house-price-path-bad)).
+In a connected scatter plot, lines going in the direction from the lower left to the upper right represent correlated movement between the two variables (as one variable grows, so does the other), and lines going in the opposite direction, from the upper left to the lower right, represent anti-correlated movement (as one variable grows, the other shrinks). If the two variables have a somewhat cyclic relationship, we will see circles or spirals in the connected scatter plot. In Figure \@ref(fig:house-price-path), we see one small circle from 2001 through 2005 and one large circle for the remainder of the time course.
 
 
-(ref:house-price-path-bad) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. Without date markers and **continue** Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
+When drawing a connected scatter plot, it is important that we indicate both the direction  and the temporal scale of the data. Without such hints, the plot can turn into meaningless scribble (Figure \@ref(fig:house-price-path-bad)). I am using here (in Figure \@ref(fig:house-price-path)) a gradual darkening of the color to indicate direction. Alternatively, one could draw arrows along the path.
 
+(ref:house-price-path-bad) 12-month change in house prices versus unemployment rate, from Jan. 2001 through Dec. 2017. This figure is labeled "bad" because without the date markers and color shading of Figure \@ref(fig:house-price-path), we can see neither the direction nor the speed of change in the data. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
 ```{r house-price-path-bad, fig.asp = 3/4, fig.cap = '(ref:house-price-path-bad)'}
 
@@ -332,12 +332,11 @@ p <- ggplot(CA_house_prices) +
 stamp_bad(p)
 ```
 
-**Need a connecting sentence here.**
-Viewers are more likely to confuse order and direction in a connected scatter plot than in line graphs and less likely to report correlation. However, connected scatter plots seem to result in higher viewer engagement, and thus such plots may be a effective tools to draw readers into a story [@Haroz_et_al_2016].
+Is it better to use a connected scatter plot or two separate line graphs? Separate line graphs tend to be easier to read, but once people are used to connected scatter plots they may be able to extract certain patterns (such as cyclical behavior with some irregularity) that can be difficult to splot in line graphs. In fact, to me the cyclical relationship between change in house prices and unemployment rate is hard to spot in Figure \@ref(fig:house-price-unemploy), but the counter-clockwise spiral in Figure \@ref(fig:house-price-path) clearly shows it. Research reports that readers are more likely to confuse order and direction in a connected scatter plot than in line graphs and less likely to report correlation [@Haroz_et_al_2016]. On the flip side, connected scatter plots seem to result in higher engagement, and thus such plots may be a effective tools to draw readers into a story [@Haroz_et_al_2016].
 
-Even though connected scatter plots can show only two variables at a time, we can use them to visualize higher-dimensional datasets. The trick is to apply dimension reduction first, as discussed in Chapter \@ref(visualizing-associations). We can then draw a connected scatterplot in the dimension-reduced space. As an example of this approach, we will visualize a database of monthly observations of over 100 macroeconomic indicators, provided by the Federal Reserve Bank of St. Louis. We perform a principal components analysis (PCA) of all indicators and then draw a connected scatter plot of principal component (PC) 2 versus PC 1 (Figure \@ref(fig:fred-md-PCA)a) and versus PC 3 (Figure \@ref(fig:fred-md-PCA)b) for data from January 1990 to December 2017.
+Even though connected scatter plots can show only two variables at a time, we can also use them to visualize higher-dimensional datasets. The trick is to apply dimension reduction first (see Chapter \@ref(visualizing-associations)). We can then draw a connected scatterplot in the dimension-reduced space. As an example of this approach, we will visualize a database of monthly observations of over 100 macroeconomic indicators, provided by the Federal Reserve Bank of St. Louis. We perform a principal components analysis (PCA) of all indicators and then draw a connected scatter plot of PC 2 versus PC 1 (Figure \@ref(fig:fred-md-PCA)a) and versus PC 3 (Figure \@ref(fig:fred-md-PCA)b).
 
-(ref:fred-md-PCA) Visualizing a high-dimensional time series as a connected scatter plot in principal components space. **more figure caption** Data source: M. W. McCracken, St. Louis Fed
+(ref:fred-md-PCA) Visualizing a high-dimensional time series as a connected scatter plot in principal components space. The path indicates the joint movement of over 100 macroeconomic indicators from January 1990 to December 2017. Times of recession and recovery are indicated via color, and the end points of the three recessions (March 1991, November 2001, and June 2009) are also labeled. (a) PC 2 versus PC 1. (b) PC 2 versus PC 3. Data source: M. W. McCracken, St. Louis Fed
 
 ```{r fred-md-PCA, fig.asp = 2*0.618, fig.cap = '(ref:fred-md-PCA)'}
 fred_md %>%
@@ -445,4 +444,6 @@ p2 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
 plot_grid(p1, p2, labels = "auto", ncol = 1)
 ```
 
-Notably, Figure \@ref(fig:fred-md-PCA)a looks almost like a regular line plot, with time running from left to right. This feature is caused by a common result of PCA: The first component often measures the overall size of the system. Here, PC 1 approximately measures the overall size of the economy, which rarely decreases over time. By coloring the connected scatter plot by times of recession and recovery, we can see that recessions are associated with a drop in PC 2 whereas recoveries do not correspond to a clear feature in either PC 1 or PC 2 (Figure \@ref(fig:fred-md-PCA)a). The recoveries do, however, seem to correspond to a drop in PC 3 (Figure \@ref(fig:fred-md-PCA)b). Moreover, in the PC 2 versus PC 3 plot, we see that the line follows the shape of a clockwise spiral. This pattern emphasizes the cyclical nature of the economy, with recessions following recoveries and vice versa.
+Notably, Figure \@ref(fig:fred-md-PCA)a looks almost like a regular line plot, with time running from left to right. This pattern is caused by a common feature of PCA: The first component often measures the overall size of the system. Here, PC 1 approximately measures the overall size of the economy, which rarely decreases over time.
+
+By coloring the connected scatter plot by times of recession and recovery, we can see that recessions are associated with a drop in PC 2 whereas recoveries do not correspond to a clear feature in either PC 1 or PC 2 (Figure \@ref(fig:fred-md-PCA)a). The recoveries do, however, seem to correspond to a drop in PC 3 (Figure \@ref(fig:fred-md-PCA)b). Moreover, in the PC 2 versus PC 3 plot, we see that the line follows the shape of a clockwise spiral. This pattern emphasizes the cyclical nature of the economy, with recessions following recoveries and vice versa.

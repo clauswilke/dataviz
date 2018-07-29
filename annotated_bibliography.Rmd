@@ -4,3 +4,15 @@ source("_common.R")
 ```
 
 # Annotated bibliography {#bibliography}
+
+
+## Programming books
+
+* Hadley Wickham, Garrett Grolemund. *"R for Data Science."* O'Reilly Media, 2017.  
+*Outstanding all-around introduction to using the programming language R for data science. Contains several chapters on using ggplot2 for data visualization.*
+
+* Kieran Healy. *"Data Visualization: A Practical Introduction."* Princeton University Press, 2018.  
+*Excellent introduction to using ggplot2 for data visualization. Recommended as follow-up after Wickham and Grolemund's "R for Data Science".*
+
+* Jake VanderPlas. *"Python Data Science Handbook: Essential Tools for Working with Data."* O'Reilly Media, 2016.  
+*Excellent introduction to using the programming language Python for data science. Has extensive material on data visualization using Python's Matplotlib and Seaborn.*
