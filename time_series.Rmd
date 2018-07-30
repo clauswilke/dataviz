@@ -200,7 +200,7 @@ ggplot(oats_df,
 
 ```
 
-## Time series of two or more response variables
+## Time series of two or more response variables {#time-series-connected-scatter}
 
 In the preceding examples we dealt with time courses of only a single response variable (e.g., preprint submissions per month or oat yield). It is not unusual, however, to have more than one response variable. Such situations arise commonly in macroeconomics. For example, we may be interested in the change in house prices from the previous 12 months as it relates to the unemployment rate. We may expect that house prices rise when the unemployment rate is low and vice versa.
 

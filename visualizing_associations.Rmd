@@ -8,7 +8,7 @@ library(tidyr)
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
 
-## Scatter plots
+## Scatter plots {#associations-scatterplots}
 
 (ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data source: Keith Tarvin, Oberlin College
 
@@ -153,7 +153,7 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 ```
 
 
-## Correlograms
+## Correlograms {#associations-correlograms}
 
 When we have more than three or four quantiative variables, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
 
@@ -350,7 +350,7 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type))
   theme_dviz_grid()
 ```
 
-## Paired data
+## Paired data {#associations-paired-data}
 
 A special case of multivariate quantitative data is paired data: Data where there are two or more measurements of the same quantity under slightly different conditions. Examples include two comparable measurements on each subject (e.g., the length of the right and the left arm of a person), repeat measurements on the same subject at different time points (e.g., a person's weight at two different times during the year), or measurements on two closely related subjects (e.g., the heights of two identical twins). For paired data, our null hypothesis is that each pair of measurements is identical or nearly so, whereas there is substantial variation between pairs. Two twins will be approximately of the same height but will differ in height from other twins. Therefore, we need to choose visualizations that highlight deviations from this null hypothesis.
 
