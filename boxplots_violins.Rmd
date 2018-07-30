@@ -142,7 +142,7 @@ lincoln_violin
 
 Because violin plots are derived from density estimates, they have similar shortcomings (Chapter \@ref(histograms-density-plots)). In particular, they can generate the appearance that there is data where none exists, or that the data set is very dense when actually it is quite sparse. We can try to circumvent these issues by simply plotting all the individual data points directly, as dots (Figure \@ref(fig:lincoln-temp-all-points)). This is a fine idea in principle, as long as we make sure that we don't plot too many points on top of each other. A simple solution to overplotting is to spread out the points somewhat along the *x* axis, by adding some random noise in the *x* dimension (Figure \@ref(fig:lincoln-temp-jittered)). This technique is also called "jittering".
 
-(ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as individual temperature values. Each point represents the mean temperature for one day. This figure is labeled as bad because so many points are plotted on top of each other that it is not possible to ascertain which temperatures were the most common in each month. 
+(ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as individual temperature values. Each point represents the mean temperature for one day. This figure is labeled as "bad" because so many points are plotted on top of each other that it is not possible to ascertain which temperatures were the most common in each month. 
 
 ```{r lincoln-temp-all-points, fig.cap = '(ref:lincoln-temp-all-points)'}
 lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +

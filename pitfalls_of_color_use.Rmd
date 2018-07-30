@@ -113,7 +113,7 @@ popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth,
         legend.position = "none",
         plot.margin = margin(18, 0, 3, 0))
 
-stamp_bad(popgrowth_bars_rainbow)
+stamp_ugly(popgrowth_bars_rainbow)
 ```
 
 Besides the gratuitous use of different colors, Figure \@ref(fig:popgrowth-US-rainbow) has a second color-related problem: The chosen colors are too saturated and intense. This color intensity makes the figure difficult to look at. For example, it is difficult to read the names of the states without having our eyes drawn to the large, strongly colored areas right next to the state names. Similarly, it is difficult to compare the endpoints of the bars to the underlying grid lines. In addition, if we stare at the figure for too long, we will see afterimages of the figure once we move our attention elsewhere. 

@@ -19,7 +19,16 @@ The second part, "Principles of figure design," discusses various design issues 
 
 The third part, "Miscellaneous topics," covers a few remaining issues that didn't fit into the first two parts.  **complete**.
 
-(ref:ugly-bad-wrong-examples) Examples of ugly, bad, and wrong figures. (a) A bar plot showing three values (3, 5, and 4). This is a reasonable visualization with no major flaws. (b) An ugly version of part (a). While the plot is technically correct, it is not aesthetically pleasing. The colors are too bright and not useful. The background grid is too prominent. The text is displayed using three different fonts in three different sizes. (c) A bad version of part (a). Each bar is shown with its own *y*-axis scale. Because the scales don't align, this makes the figure misleading. One can easily get the impression that the three values are closer together than they actually are. (d) A wrong version of part (a). Because the *y* axis does not start at 0, the bars do not have the correct length. The bar lengths are 1, 3, and 2, even though the values displayed are 3, 5, and 4.
+## Ugly, bad, and wrong figures {-}
+
+Throughout this book, I frequently show different versions of the same figures, some as examples of how to make a good visualization and some as examples of how not to. To provide a simple visual guideline of which examples should be emulated and which should be avoided, I am clearly labeling problematic figures as "ugly", "bad", or "wrong" (Figure \@ref(fig:ugly-bad-wrong-examples)):
+
+- **ugly**---A figure that has aesthetic problems but otherwise is clear and informative.
+- **bad**---A figure that has problems related to perception; it may be unclear, confusing, overly complicated, or deceiving.
+- **wrong**---A figure that has problems related to mathematics; it is objectively incorrect.
+
+
+(ref:ugly-bad-wrong-examples) Examples of ugly, bad, and wrong figures. (a) A bar plot showing three values (A = 3, B = 5, and C = 4). This is a reasonable visualization with no major flaws. (b) An ugly version of part (a). While the plot is technically correct, it is not aesthetically pleasing. The colors are too bright and not useful. The background grid is too prominent. The text is displayed using three different fonts in three different sizes. (c) A bad version of part (a). Each bar is shown with its own *y*-axis scale. Because the scales don't align, this makes the figure misleading. One can easily get the impression that the three values are closer together than they actually are. (d) A wrong version of part (a). Because the *y* axis does not start at 0, the bars do not have the correct length. The bar lengths are 1, 3, and 2, even though the values displayed are 3, 5, and 4.
 
 
 ```{r ugly-bad-wrong-examples, fig.asp = 3/4, fig.cap = '(ref:ugly-bad-wrong-examples)'}
@@ -33,6 +42,7 @@ df <- tibble(
 p1 <- ggplot(df, aes(type, value)) + 
   geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
   scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
   coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
   theme(
@@ -43,6 +53,7 @@ p1 <- ggplot(df, aes(type, value)) +
 p2 <- ggplot(df, aes(type, value)) + 
   geom_col(fill = c("#CCFF00FF", "#00FFFFFF", "#CC00FFFF"), width = 0.75) +
   scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
   coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
   theme(
@@ -60,6 +71,7 @@ p3 <- ggplot(df, aes(type, value)) +
   geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
   geom_point(aes(y = expand), shape = NA) +
   scale_y_continuous(expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
   facet_wrap(~type, scales = "free") +
   coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
@@ -72,6 +84,7 @@ p3 <- ggplot(df, aes(type, value)) +
 p3a <- ggplot(df, aes(type, value)) + 
   geom_col(color = "black", fill = NA, width = .5) +
   scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
   coord_cartesian(clip = "off") +
   theme_dviz_grid(12) +
   background_grid(
@@ -88,6 +101,7 @@ p3a <- ggplot(df, aes(type, value)) +
 p4 <- ggplot(df, aes(type, value)) + 
   geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
   coord_cartesian(xlim = c(0.4, 3.6), ylim = c(2, 6.2), expand = FALSE, clip = "on") +
+  scale_x_discrete(name = NULL) +
   theme_dviz_hgrid(12) +
   theme(plot.margin = margin(18, 12, 0, 0))
 
@@ -95,8 +109,13 @@ plot_grid(
   p1, NULL, stamp_ugly(p2),
   NULL, NULL, NULL,
   stamp_bad(p3), NULL, stamp_wrong(p4),
-  rel_widths = c(1, .04, 1),
-  rel_heights = c(1, .04, 1),
+  rel_widths = c(1, .1, 1),
+  rel_heights = c(1, .15, 1),
   labels = c("a", "", "b", "", "", "", "c", "", "d")
 )
 ```
+
+I am not explicitly labeling good figures. Any figure that isn't clearly labeled as flawed  should be assumed to be at least acceptable. It is a figure that is informative, looks appealing, and could be printed as is. Note that among the good figures, there will still be differences in quality, and some good figures will be better than others.
+
+I generally provide my rationale for specific ratings, but some are a matter of taste. In general, the "ugly" rating is more subjective than the "bad" or "wrong" rating. Moreover, the boundary between "ugly" and "bad" is somewhat fluid. Sometimes poor design choices can interfere with human perception to the point where a "bad" rating is more appropriate than an "ugly" rating. In any case, I encourage you to develop your own eye and to critically evaluate my choices.
+

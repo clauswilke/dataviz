@@ -195,7 +195,7 @@ plotlist <-
                 ggtitle("logarithmic scale with incorrect axis title"),
               align = 'vh')
 
-plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_bad(plotlist[[4]]), ncol = 1)
+plot_grid(plotlist[[1]], plotlist[[2]], plotlist[[3]], stamp_wrong(plotlist[[4]]), ncol = 1)
 
 ```
 

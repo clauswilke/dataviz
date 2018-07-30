@@ -10,14 +10,18 @@ source("_common.R")
 
 The books in this section teach programmatic approaches to data visualization.
 
-* Hadley Wickham, Garrett Grolemund. *"R for Data Science."* O'Reilly Media, 2017.  
-*Outstanding all-around introduction to using the programming language R for data science. Contains several chapters on using ggplot2 for data visualization.*
-
 * Kieran Healy. *"Data Visualization: A Practical Introduction."* Princeton University Press, 2018.  
-*Excellent introduction to using ggplot2 for data visualization. Recommended as follow-up after Wickham and Grolemund's "R for Data Science".*
+*Introduction to using ggplot2 for data visualization. Recommended as follow-up after Wickham and Grolemund's "R for Data Science".*
+
+* Scott Murray. *"Interactive Data Visualization for the Web: An Introduction to Designing with D3, 2nd Edition."* O'Reilly Media, 2017.  
+*Introduction to making interactive visualizations with D3, using HTML, CSS, JavaScript, and SVG.*
 
 * Jake VanderPlas. *"Python Data Science Handbook: Essential Tools for Working with Data."* O'Reilly Media, 2016.  
-*Excellent introduction to using the programming language Python for data science. Has extensive material on data visualization using Python's Matplotlib and Seaborn.*
+*Introduction to using the programming language Python for data science. Has extensive material on data visualization using Python's Matplotlib and Seaborn.*
+
+* Hadley Wickham, Garrett Grolemund. *"R for Data Science."* O'Reilly Media, 2017.  
+*All-around introduction to using the programming language R for data science. Contains several chapters on using ggplot2 for data visualization.*
+
 
 ## Statistics texts
 
@@ -35,14 +39,14 @@ Introductory texts in statistics will generally contain material on data visuali
 The books in this section are of interest primarily for historical reasons. They were influential at the time of their publication, but similar material can now be found elsewhere or in more modern form.
 
 
-* Edward R. Tufte. *"The Visual Display of Quantitative Information, 2nd Edition."* Graphics Press, 2001.  
-*First published in 1983, this book has been highly influential in the field of data visualization. It introduced concepts such as chart junk, data-to-ink ratio, and sparklines. The book also showed the first slopegraph, even though it didn't name it. However, the book also contains numerous recommendations that have not stood the test of time. In particular, it recommends an excessively minimalistic plot design.*
-
-* Edward R. Tufte. *"Envisioning Information."* Graphics Press, 1990.  
-*This book popularized the concept of the small multiple.*
+* William S. Cleveland. *"Visualizing Data."* Hobart Press, 1993.  
+*Companion book to "The Elements of Graphing Data" by the same author. More mathematical, doesn't talk about perception.*
 
 * William S. Cleveland. *"The Elements of Graphing Data, 2nd Edition."* Hobart Press, 1994.  
 *One of the first books about information design written for statisticians. The book contains many examples of scatter plots, line graphs, histograms, and boxplots, and it discusses them in the context of data analysis and statistical modeling. It also popularized the Cleveland dot plot.*
 
-* William S. Cleveland. *"Visualizing Data."* Hobart Press, 1993.  
-*Companion book to "The Elements of Graphing Data" by the same author. More mathematical, doesn't talk about perception.*
+* Edward R. Tufte. *"Envisioning Information."* Graphics Press, 1990.  
+*This book popularized the concept of the small multiple.*
+
+* Edward R. Tufte. *"The Visual Display of Quantitative Information, 2nd Edition."* Graphics Press, 2001.  
+*First published in 1983, this book has been highly influential in the field of data visualization. It introduced concepts such as chart junk, data-to-ink ratio, and sparklines. The book also showed the first slopegraph, even though it didn't name it. However, the book also contains numerous recommendations that have not stood the test of time. In particular, it recommends an excessively minimalistic plot design.*

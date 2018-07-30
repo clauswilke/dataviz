@@ -159,7 +159,7 @@ pdens_neg <- ggplot(titanic, aes(x = age)) +
   theme_dviz_hgrid() +
   theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_bad(pdens_neg)
+stamp_wrong(pdens_neg)
 ```
 
 ```{block type='rmdtip', echo=TRUE}

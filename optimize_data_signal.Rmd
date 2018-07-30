@@ -58,7 +58,7 @@ p <- p_Aus_base +
 # width: 6 in = 433.62pt
 # height: 0.618 * 6 in = 3.71 in = 268.12
 
-stamp_bad(ggdraw() + draw_plot(p, x = 1/434, y = 1/268, width = 426/434, height = 252/268))
+stamp_ugly(ggdraw() + draw_plot(p, x = 1/434, y = 1/268, width = 426/434, height = 252/268))
 ```
 
 (ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and majore grid lines have been drawn in light gray to stand back relative to the data points. Data source: @Telford-Cunningham-1991
@@ -87,7 +87,7 @@ p <- p_Aus_base + theme_dviz_open(11) +
     plot.margin = margin(3.5, 7, 3.5, 0)
   )
 
-stamp_bad(p)
+stamp_ugly(p)
 ```
 
 Figures with too little non-data ink commonly suffer from figure elements that appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
@@ -109,7 +109,7 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
           strip.background  = element_blank(),
           plot.margin = margin(3.5, 14, 3.5, 0)) -> p
 
-stamp_bad(p)
+stamp_ugly(p)
 ```
 
 

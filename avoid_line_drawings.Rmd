@@ -80,7 +80,7 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   theme_dviz_open() +
   theme(plot.margin = margin(3, 7, 3, 0))
 
-stamp_bad(iris_lines)
+stamp_ugly(iris_lines)
 ```
 
 We can attempt to address the problem of porous boundaries by using colored lines rather than dashed lines (Figure \@ref(fig:iris-densities-colored-lines)). However, the density areas in the resulting plot still have little visual presence. Overall, I find the version with filled areas (Figure \@ref(fig:iris-densities-filled)) the most clear and intuitive. It is important, however, to make the filled areas partially transparent, so that the complete distribution for each species is visible.
@@ -151,7 +151,7 @@ mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
   theme(legend.position = c(.7, .8),
         plot.margin = margin(3, 7, 3, 0))
 
-stamp_bad(mpg_linespoints)
+stamp_ugly(mpg_linespoints)
 ```
 
 
