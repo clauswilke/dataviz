@@ -59,9 +59,13 @@ boxoffice %>%
                        name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL,
                      expand = c(0, 0.4)) +
+    coord_cartesian(clip = "off") +
     theme_dviz_hgrid(12, rel_small = 1) +
-    theme(#axis.ticks.length = grid::unit(0, "pt"),
-          axis.ticks.x = element_blank())
+    theme(
+      #axis.ticks.length = grid::unit(0, "pt"),
+      axis.line.x = element_blank(),
+      axis.ticks.x = element_blank()
+    )
 ```
 
 One problem we commonly encounter with vertical bars is that the labels identifying each bar take up a lot of horizontal space. In fact, I had to make Figure \@ref(fig:boxoffice-vertical) fairly wide and space out the bars so that I could place the movie titles underneath. To save horizontal space, we could place the bars closer together and rotate the labels (Figure \@ref(fig:boxoffice-rot-axis-tick-labels)). However, I am not a big proponent of rotated labels. I find the resulting plots awkward and difficult to read. And, in my experience, whenever the labels are too long to place horizontally they also don't look good rotated.
@@ -77,11 +81,15 @@ boxoffice %>%
                        labels = c("0", "20", "40", "60"),
                        name = "weekend gross (million USD)") +
     scale_x_discrete(name = NULL) +
+    coord_cartesian(clip = "off") +
     theme_dviz_hgrid(rel_small = 1) +
-    theme(#axis.ticks.length = grid::unit(0, "pt"),
-          axis.ticks.x = element_blank(),
-          axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-          plot.margin = margin(3, 7, 3, 0)) -> p_box_axrot
+    theme(
+      #axis.ticks.length = grid::unit(0, "pt"),
+      axis.line.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      plot.margin = margin(3, 7, 3, 0)
+    ) -> p_box_axrot
 
 stamp_ugly(p_box_axrot)
 ```
@@ -100,10 +108,13 @@ ggplot(boxoffice, aes(x = fct_reorder(title_short, desc(rank)), y = amount)) +
                      name = "weekend gross (million USD)") +
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
-  coord_flip() +
+  coord_flip(clip = "off") +
   theme_dviz_vgrid(rel_small = 1) +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank())
+  theme(
+    #axis.ticks.length = grid::unit(0, "pt"),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 ```
 
 Regardless of whether we place bars vertically or horizontally, we need to pay attention to the order in which the bars are arranged. I often see bar plots where the bars are arranged arbitrarily or by some criterion that is not meaningful in the context of the figure. Some plotting programs arrange bars by default in alphabetic order of the labels, and other, similarly arbitrary arrangements are possible (Figure \@ref(fig:boxoffice-horizontal-bad-order)). In general, the resulting figures are more confusing and less intuitive than figures where bars are arranged in order of their size.  
@@ -122,10 +133,13 @@ p <- ggplot(boxoffice, aes(x = factor(title_short, levels = title_short[c(2, 1, 
                      name = "weekend gross (million USD)") +
   scale_x_discrete(name = NULL,
                    expand = c(0, 0.5)) +
-  coord_flip() +
+  coord_flip(clip = "off") +
   theme_dviz_vgrid(rel_small = 1) +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank())
+  theme(
+    #axis.ticks.length = grid::unit(0, "pt"),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 
 stamp_bad(p)
 ```
@@ -144,11 +158,14 @@ income_by_age %>% filter(race == "all") %>%
                        breaks = c(0, 20000, 40000, 60000),
                        labels = c("$0", "$20,000", "$40,000", "$60,000")) +
     xlab("age (years)") +
+    coord_cartesian(clip = "off") +
     theme_dviz_hgrid() +
-    theme(#axis.ticks.length = grid::unit(0, "pt"),
-          axis.ticks.x = element_blank(),
-          #axis.line = element_blank(),
-          plot.margin = margin(3, 7, 3, 0))
+    theme(
+      #axis.ticks.length = grid::unit(0, "pt"),
+      axis.ticks.x = element_blank(),
+      axis.line = element_blank(),
+      plot.margin = margin(3, 7, 3, 0)
+    )
 ```
 
 (ref:income-by-age-sorted) 2016 median U.S. annual household income versus age group, sorted by income. While this order of bars looks visually appealing, the order of the age groups is now confusing. Data source: United States Census Bureau
@@ -157,16 +174,21 @@ income_by_age %>% filter(race == "all") %>%
 income_by_age %>% filter(race == "all") %>%
   ggplot(aes(x = fct_reorder(age, desc(median_income)), y = median_income)) +
     geom_col(fill = "#56B4E9", alpha = 0.9) +
-    scale_y_continuous(expand = c(0, 0),
-                       name = "median income (USD)",
-                       breaks = c(0, 20000, 40000, 60000),
-                       labels = c("$0", "$20,000", "$40,000", "$60,000")) +
+    scale_y_continuous(
+      expand = c(0, 0),
+      name = "median income (USD)",
+      breaks = c(0, 20000, 40000, 60000),
+      labels = c("$0", "$20,000", "$40,000", "$60,000")
+    ) +
+    coord_cartesian(clip = "off") +
     xlab("age (years)") +
     theme_dviz_hgrid() +
-    theme(#axis.ticks.length = grid::unit(0, "pt"),
-          axis.ticks.x = element_blank(),
-          #axis.line = element_blank(),
-          plot.margin = margin(3, 7, 3, 0)) -> p_income_sorted
+    theme(
+      #axis.ticks.length = grid::unit(0, "pt"),
+      axis.ticks.x = element_blank(),
+      axis.line = element_blank(),
+      plot.margin = margin(3, 7, 3, 0)
+    ) -> p_income_sorted
 
 stamp_bad(p_income_sorted)
 ```
@@ -188,14 +210,20 @@ colors_four = RColorBrewer::brewer.pal(5, "PuBu")[5:2]
 
 ggplot(income_df, aes(x = age, y = median_income, fill = race)) +
   geom_col(position = "dodge", alpha = 0.9) +
-  scale_y_continuous(expand = c(0, 0),
-                     name = "median income (USD)",
-                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
-                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    name = "median income (USD)",
+    breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+    labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")
+  ) +
   scale_fill_manual(values = colors_four, name = NULL) +
+  coord_cartesian(clip = "off") +
   xlab("age (years)") +
   theme_dviz_hgrid() +
-  theme(axis.ticks.x = element_blank()) -> p_income_race_dodged
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank()
+  ) -> p_income_race_dodged
 
 #stamp_ugly(p_income_race_dodged)
 p_income_race_dodged
@@ -211,15 +239,21 @@ colors_seven = RColorBrewer::brewer.pal(8, "PuBu")[2:8]
 
 ggplot(income_df, aes(x = race, y = median_income, fill = age)) +
   geom_col(position = "dodge", alpha = 0.9) +
-  scale_y_continuous(expand = c(0, 0),
-                     name = "median income (USD)",
-                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
-                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    name = "median income (USD)",
+    breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+    labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")
+  ) +
   scale_fill_manual(values = colors_seven, name = "age (yrs)") +
+  coord_cartesian(clip = "off") +
   xlab(label = NULL) +
   theme_dviz_hgrid() +
-  theme(axis.ticks.x = element_blank(),
-        legend.title.align = 0.5) -> p_income_age_dodged
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.title.align = 0.5
+  ) -> p_income_age_dodged
 
 p_income_age_dodged
 ```
@@ -235,20 +269,25 @@ income_df %>%
 
 ggplot(income_age_abbrev_df, aes(x = age, y = median_income)) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
-  scale_y_continuous(expand = c(0, 0),
-                     name = "median income (USD)",
-                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
-                     labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    name = "median income (USD)",
+    breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+    labels = c("$0", "$20,000", "$40,000", "$60,000", "$80,000", "$100,000")
+  ) +
+  coord_cartesian(clip = "off") +
   xlab(label = "age (years)") +
   facet_wrap(~race, scales = "free_x") +
   theme_dviz_hgrid(14) +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.x = element_blank(),
-        #axis.line = element_blank(),
-        strip.text = element_text(size = 14),
-        panel.spacing.y = grid::unit(14, "pt")) -> p_income_age_dodged
+  theme(
+    #axis.ticks.length = grid::unit(0, "pt"),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    strip.text = element_text(size = 14),
+    panel.spacing.y = grid::unit(14, "pt")
+  ) -> p_income_age_faceted
 
-p_income_age_dodged
+p_income_age_faceted
 ```
 
 Instead of drawing groups of bars side-by-side, it is sometimes preferable to stack bars on top of each other. Stacking is useful when the sum of the amounts represented by the individual stacked bars is in itself a meaningful amount. So, while it would not make sense to stack the median income values of Figure \@ref(fig:income-by-age-race-dodged) (the sum of two median income values is not a meaningful value), it might make sense to stack the weekend gross values of Figure \@ref(fig:boxoffice-vertical) (the sum of the weekend gross values of two movies is the total gross for the two movies combined). Stacking is also appropriate when the individual bars represent counts. For example, in a dataset of people, we can either count men and women separately or we can count them together. If we stack a bar representing a count of women on top of a bar representing a count of men, then the combined bar height represents the total count of people regardless of gender.
@@ -274,17 +313,22 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
             family = dviz_font_family) +
   scale_x_discrete(expand = c(0, 0), name = NULL) +
   scale_y_continuous(expand = c(0, 0), breaks = NULL, name = NULL) +
-  scale_fill_manual(values = c("#D55E00", "#0072B2"),
-                    breaks = c("female", "male"),
-                    labels = c("female passengers   ", "male passengers"),
-                    name = NULL) +
+  scale_fill_manual(
+    values = c("#D55E00", "#0072B2"),
+    breaks = c("female", "male"),
+    labels = c("female passengers   ", "male passengers"),
+    name = NULL
+  ) +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid() +
-  theme(panel.grid.major = element_blank(),
-        axis.ticks = element_blank(),
-        axis.text = element_text(size = 14),
-        legend.position = "bottom",
-        legend.justification = "center",
-        legend.background = element_rect(fill = "white"))
+  theme(
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_text(size = 14),
+    legend.position = "bottom",
+    legend.justification = "center",
+    legend.background = element_rect(fill = "white")
+  )
 ```
 
 Figure \@ref(fig:titanic-passengers-by-class-sex) differs from the previous bar plots I have shown in that there is no explicit *y* axis. I have instead shown the actual numerical values that each bar represents. Whenever a plot is meant to display only a small number of different values, it makes sense to add the actual numbers to the plot. This substantially increases the amount of information conveyed by the plot without adding much visual noise, and it removes the need for an explicit *y* axis.
@@ -318,16 +362,21 @@ ggplot(df_Americas, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
 ```{r Americas-life-expect-bars, fig.width = 6., fig.asp = .9, fig.cap = '(ref:Americas-life-expect-bars)'}
 life_bars <- ggplot(df_Americas, aes(y = lifeExp, x = fct_reorder(country, lifeExp))) +
   geom_col(fill = "#56B4E9", alpha = 0.9) +
-  scale_y_continuous(name = "life expectancy (years)",
-                     limits = c(0, 85),
-                     expand = c(0, 0)) +
+  scale_y_continuous(
+    name = "life expectancy (years)",
+    limits = c(0, 85),
+    expand = c(0, 0)
+  ) +
   scale_x_discrete(name = NULL, expand = c(0, 0.5)) +
-  coord_flip() +
+  coord_flip(clip = "off") +
   theme_dviz_vgrid(12, rel_small = 1) +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank(),
-        #axis.title = element_text(size = 12),
-        plot.margin = margin(18, 6, 3, 0))
+  theme(
+    #axis.ticks.length = grid::unit(0, "pt"),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    #axis.title = element_text(size = 12),
+    plot.margin = margin(18, 6, 3, 0)
+  )
 
 stamp_bad(life_bars)
 ```
