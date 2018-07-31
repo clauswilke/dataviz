@@ -5,9 +5,9 @@ source("_common.R")
 
 # Annotated bibliography {#bibliography}
 
+No single book can cover everything there is to know about a topic. I encourage you to read other texts on data visualization to deepen your understanding and to develop your technical skills in making figures. Here, I provide a limited selection of books that I have personally found interesting, thought provoking, or helpful. Books listed in Section \@ref(bibliography-thinking) are the most similar in scope to the present book, and may provide complementary or alternative perspectives on the topics I have covered. Books listed in Section \@ref(bibliography-programming) address the important topic of how to make visualizations using programming approaches and available software libraries. The remaining sections list other books that will expand your knowledge of data visualization and help you communicate with visuals and data.
 
-
-## Thinking about data and visualization
+## Thinking about data and visualization {#bibliography-thinking}
 
 The following books discuss the thought processes and decision making required for turning data into visualizations. They serve as introductory texts into how to choose what visualizations to make and what pitfalls to look out for. 
 
@@ -21,7 +21,7 @@ The following books discuss the thought processes and decision making required f
 *A well written and carefully produced book on how to turn data into visuals. The book’s primary audience are people making business graphics, and the book is excellent for the topics it covers. However, the book is missing many topics of importance to scientists, such as the visualization of distributions, trends, or uncertainty.*
 
 
-## Programming books
+## Programming books {#bibliography-programming}
 
 The following books are all how-to books that teach programming approaches to data visualization.
 
@@ -40,7 +40,7 @@ The following books are all how-to books that teach programming approaches to da
 
 ## Statistics texts
 
-Introductory texts in statistics will generally contain material on data visualization, covering topics such as scatter plots, histograms, box plots, and line graphs. There are far too many such texts to provide an exhaustive list. Instead, I list a few recent additions that are worth a closer look.
+Introductory texts in statistics will generally contain material on data visualization, covering topics such as scatter plots, histograms, box plots, and line graphs. There are many such texts that could be listed. Here, I mention just a few recent additions that are worth a closer look.
 
 * David M. Diez, Christopher D. Barr, Mine Çetinkaya-Rundel. *"OpenIntro Statistics, 3rd Edition."* OpenIntro, Inc., 2015.  
 *Open source introductory statistics text book. The entire book is freely available, as are the LaTeX files and R code used to compile the book and make the figures.*
@@ -69,7 +69,10 @@ The books in this section are of interest primarily for historical reasons. They
 
 ## Books on broadly related topics
 
-The following books are all broadly related to the topic of data visualization.
+The following books are all broadly related to the topics of data visualization and effective communication. 
+
+* Joshua Schimel. *"Writing Science."* Oxford University Press, 2011.  
+*Teaches how to write scientific and other technical topics in an engaging way, by telling a story. While not primarily a book about data visualization, this is an indispensable text for anybody who needs to write technical articles and/or proposals.*
 
 * Jonathan Schwabish. *"Better Presentations."* Columbia University Press, 2016.  
 *Short and informative guide for making presentations. A must-read for anybody who routinely uses slides to give talks or presentations.*

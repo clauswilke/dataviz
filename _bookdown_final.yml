@@ -6,7 +6,7 @@ rmd_files: [
   "index.Rmd",
 
   "preface.Rmd",
-  #"introduction.Rmd",
+  "introduction.Rmd",
 
   # Part I
   "aesthetic_mapping.Rmd", # completed
@@ -19,8 +19,8 @@ rmd_files: [
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
   #"nested_proportions.Rmd",
-  #"visualizing_associations.Rmd",
-  #"time_series.Rmd",
+  "visualizing_associations.Rmd",
+  "time_series.Rmd",
   #"visualizing_trends.Rmd",
   #"visualizing_uncertainty.Rmd",
   #"geospatial_data.Rmd",
@@ -42,7 +42,7 @@ rmd_files: [
   "image_file_formats.Rmd", # completed
   "choosing_visualization_software.Rmd", # completed
   "telling_a_story.Rmd", # completed
-  #"annotated_bibliography.Rmd",
+  "annotated_bibliography.Rmd",
 
   "outline.Rmd",
   "technical_notes.Rmd",
