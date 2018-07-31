@@ -12,9 +12,9 @@ Many datasets contain two or more quantitative variables, and we may be interest
 
 ## Scatter plots {#associations-scatterplots}
 
-I will demonstrate the basic scatter plot and several variations thereof using a dataset of measurements performed on 123 blue jay birds. The data set contains information such as the head length (measured from the tip of the bill to the back of the head), the skull size (head length minus bill length), and the body mass of each bird. We expect that there are relationships between these variables. For example, bird with longer bills would be expected to have larger skull sizes, and birds with higher body mass should have larger bills and skulls than birds with lower body mass.
+I will demonstrate the basic scatter plot and several variations thereof using a dataset of measurements performed on 123 blue jay birds. The dataset contains information such as the head length (measured from the tip of the bill to the back of the head), the skull size (head length minus bill length), and the body mass of each bird. We expect that there are relationships between these variables. For example, bird with longer bills would be expected to have larger skull sizes, and birds with higher body mass should have larger bills and skulls than birds with lower body mass.
 
-To explore these relationships, I begin with a plot of head length versus body mass (Figure \@ref(fig:blue-jays-scatter)). In this plot, head length is shown along the *y* axis, body mass along the *x* axis, and each bird is represented by one dot. (Note the terminology: We say that we plot the variable shown along the *y* axis versus the variable shown along the *x* axis.) The dots form a dispersed cloud (hence the term *scatter plot*), yet undoubtedly there is a trend for birds with higher body mass to have longer heads. The bird with the longest head falls close to the maximum body mass observed, and the bird with the shortest head falls close to the minimum body mass observed.
+To explore these relationships, I begin with a plot of head length against body mass (Figure \@ref(fig:blue-jays-scatter)). In this plot, head length is shown along the *y* axis, body mass along the *x* axis, and each bird is represented by one dot. (Note the terminology: We say that we plot the variable shown along the *y* axis against the variable shown along the *x* axis.) The dots form a dispersed cloud (hence the term *scatter plot*), yet undoubtedly there is a trend for birds with higher body mass to have longer heads. The bird with the longest head falls close to the maximum body mass observed, and the bird with the shortest head falls close to the minimum body mass observed.
 
 (ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data source: Keith Tarvin, Oberlin College
 
@@ -26,9 +26,7 @@ ggplot(blue_jays, aes(Mass, Head)) +
   theme_dviz_grid()
 ```
 
-**Needs updating, refer explicitly to the birds data set, elaborate on findings.**
-
-We frequently want to show more than two data dimensions, and there are many variants of scatter plots for this purpose. First, if the data set can be separated into two or more groups, we can show those with color (Figure \@ref(fig:blue-jays-scatter-sex)). Second, we can also map an additional quantitative variable to symbol size (Figure \@ref(fig:blue-jays-scatter-bubbles)). This type of visualization is called a *bubble chart*.
+The blue jay dataset contains both male and female birds, and we may want to know whether the overall relationship between head length and body mass holds up separately for each sex. To address this question, we can color the points in the scatter plot by the sex of the bird (Figure \@ref(fig:blue-jays-scatter-sex)). This figure reveals that the overall trend in head length and body mass is at least in part driven by the sex of the birds. At the same body mass, females tend to have shorter heads than males. At the same time, females tend to be lighter than males on average.
 
 (ref:blue-jays-scatter-sex) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
@@ -60,6 +58,9 @@ ggplot(blue_jays, aes(Mass, Head, fill = KnownSex)) +
     legend.key.width = unit(10, "pt")
   )
 ```
+
+Because the head length is defined as the distance from the tip of the bill to the back of the head, a larger head length could imply a longer bill, a larger skull, or both. We can disentangle bill length and skull size by looking at another variable in the dataset, the skull size, which is similar to the head length but excludes the bill. As we are already using the *x* position for body mass, the *y* position for head length, and the dot color for bird sex, we need another aesthetic to which we can map skull size. One option is to use the size of the dots, resulting in a visualization called a *bubble chart* (Figure \@ref(fig:blue-jays-scatter-bubbles)).
+
 
 (ref:blue-jays-scatter-bubbles) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color, and the birds' skull size by symbol size. Head-length measurements include the length of the bill while skull-size measurements do not. Head length and skull size tend to be correlated, but there are some birds with unusually long or short bills given their skull size. Data source: Keith Tarvin, Oberlin College
 
@@ -99,10 +100,13 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
   )
 ```
 
-Bubble charts have the disadvantage that they show the same types of variables, quantitative variables, with two different types of scales, position and size. This makes it difficult to visually ascertain the strengths of associations between the various variables. The extent to which there is an association between the *x* and *y* values in the data is visually much clearer than the extent to which there is an association between the bubble size and either *x* or *y*. As an alternative to a bubble chart, it may therefore be preferable to show an all-against-all matrix of scatter plots, where each individual scatter plot shows two data dimensions (Figure \@ref(fig:blue-jays-scatter-all)).
+Bubble charts have the disadvantage that they show the same types of variables, quantitative variables, with two different types of scales, position and size. This makes it difficult to visually ascertain the strengths of associations between the various variables. Humans are much better at judging the position of objects than their size. And in particular, small size differences are virtually impossible to see. In 
+Figure \@ref(fig:blue-jays-scatter-bubbles), I used a size mapping that visually amplified the difference between the smallest skulls (around 28mm) and the largest skulls (around 34mm), and yet it is difficult to determine what the relationship is between skull size and either body mass or head length.
+
+As an alternative to a bubble chart, it may be preferable to show an all-against-all matrix of scatter plots, where each individual plot shows two data dimensions (Figure \@ref(fig:blue-jays-scatter-all)). This figure shows clearly that the relationship between skull size and body mass is comparable for female and male birds except that the female birds tend to be somewhat smaller. However, the same is not true for the relationship between head length and body mass. There is a clear separation by sex. Male birds tend to have longer bills than female birds, all else equal.
 
 
-(ref:blue-jays-scatter-all) All pairwise scatter plots of head length, body mass, and skull size for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
+(ref:blue-jays-scatter-all) All-against-all scatter plot matrix of head length, body mass, and skull size, for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
 
 
 ```{r blue-jays-scatter-all, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-all)'}
@@ -163,12 +167,12 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
 
 ## Correlograms {#associations-correlograms}
 
-When we have more than three or four quantiative variables, all-against-all scatter plots quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
+When we have more than three to four quantiative variables, all-against-all scatter plot matrices quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data. One common way to do this is to calculate *correlation coefficients*. The correlation coefficient *r* is a number between -1 and 1 that measures to what extent two variables covary. A value of *r* = 0 means there is no association whatsoever, and a value of either 1 or -1 indicates a perfect association. The sign of the correlation coefficient indicates whether the variables are *correlated* (larger values in one variable coincide with larger values in the other) or *anticorrelated* (larger values in one variable coincide with smaller values in the other) (Figure \@ref(fig:correlations)). The correlation coefficient is defined as
 
 $$
 r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
 $$
-where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. Visualizations of correlation coefficients, rather than of the underlying data, are called *correlograms*.
+where $x_i$ and $y_i$ are two sets of observations and $\bar x$ and $\bar y$ are the corresponding sample means. The formula is symmetric in $x_i$ and $y_i$, so the correlation of *x* with *y* is the same as the correlation of *y* with *x*. Visualizations of correlation coefficients, rather than of the underlying data, are called *correlograms*.
 
 (ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other).
 
