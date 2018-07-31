@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="telling-a-story.html">
+<link rel="next" href="outline.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#uncertainty"><i class="fa fa-check"></i><b>5.5</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>11</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="11.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>11.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="11.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>11.2</b> Correlograms</a></li>
+<li class="chapter" data-level="11.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>11.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="11.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>11.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>12</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="12.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>12.1</b> Individual time series</a></li>
+<li class="chapter" data-level="12.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>12.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="12.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>12.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="13" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>13</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="13.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>13.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="13.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>13.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="13.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>13.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>14</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="14.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>14.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="14.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>14.2</b> 2d histograms</a></li>
+<li class="chapter" data-level="14.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>14.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>15</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="15.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>15.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="15.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>15.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="15.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>15.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>16</b> Redundant coding</a><ul>
+<li class="chapter" data-level="16.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>16.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="16.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>16.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>17</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="17.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>17.1</b> Small multiples</a></li>
+<li class="chapter" data-level="17.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>17.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="optimize-data-signal.html"><a href="optimize-data-signal.html"><i class="fa fa-check"></i><b>18</b> Optimize the data–ink ratio</a><ul>
+<li class="chapter" data-level="18.1" data-path="optimize-data-signal.html"><a href="optimize-data-signal.html#finding-the-appropriate-dataink-ratio"><i class="fa fa-check"></i><b>18.1</b> Finding the appropriate data–ink ratio</a></li>
+<li class="chapter" data-level="18.2" data-path="optimize-data-signal.html"><a href="optimize-data-signal.html#background-grids"><i class="fa fa-check"></i><b>18.2</b> Background grids</a></li>
+<li class="chapter" data-level="18.3" data-path="optimize-data-signal.html"><a href="optimize-data-signal.html#paired-data"><i class="fa fa-check"></i><b>18.3</b> Paired data</a></li>
+<li class="chapter" data-level="18.4" data-path="optimize-data-signal.html"><a href="optimize-data-signal.html#summary"><i class="fa fa-check"></i><b>18.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>19</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="20" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>20</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="21" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>21</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="21.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>21.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="21.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>21.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="21.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>21.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="22" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>22</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="22.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>22.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="22.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>22.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="22.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>22.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>23</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="23.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>23.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="23.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>23.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="23.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>23.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>24</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="24.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>24.1</b> What is a story?</a></li>
+<li class="chapter" data-level="24.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>24.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="24.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>24.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="24.4" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>24.4</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>25</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="25.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>25.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="25.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>25.2</b> Programming books</a></li>
+<li class="chapter" data-level="25.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>25.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="25.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>25.4</b> Historical texts</a></li>
+<li class="chapter" data-level="25.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>25.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html"><i class="fa fa-check"></i>Outline</a><ul>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-i-from-data-to-visualization"><i class="fa fa-check"></i>Part I: From data to visualization</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-ii-principles-of-figure-design"><i class="fa fa-check"></i>Part II: Principles of figure design</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-iii-miscellaneous-topics"><i class="fa fa-check"></i>Part III: Miscellaneous topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bibliography" class="section level1">
+<h1><span class="header-section-number">25</span> Annotated bibliography</h1>
+<p>No single book can cover everything there is to know about a topic. I encourage you to read other texts on data visualization to deepen your understanding and to develop your technical skills in making figures. Here, I provide a limited selection of books that I have personally found interesting, thought provoking, or helpful. Books listed in Section <a href="bibliography.html#bibliography-thinking">25.1</a> are the most similar in scope to the present book, and may provide complementary or alternative perspectives on the topics I have covered. Books listed in Section <a href="bibliography.html#bibliography-programming">25.2</a> address the important topic of how to make visualizations using programming approaches and available software libraries. The remaining sections list other books that will expand your knowledge of data visualization and help you communicate with visuals and data.</p>
+<div id="bibliography-thinking" class="section level2">
+<h2><span class="header-section-number">25.1</span> Thinking about data and visualization</h2>
+<p>The following books discuss the thought processes and decision making required for turning data into visualizations. They serve as introductory texts into how to choose what visualizations to make and what pitfalls to look out for.</p>
+<ul>
+<li><p>Alberto Cairo. <em>“The Truthful Art.”</em> New Riders, 2016.<br />
+<em>Excellent all-around introduction to data visualization, in particular for journalists. The book covers many important concepts of data visualization, such as how to visualize distributions, trends, uncertainty, and maps. In many chapters, the book also serves as an introduction to basic statistical principles, explaining concepts such as population, sample, and confidence level.</em></p></li>
+<li><p>Stephen Few. <em>“Show Me the Numbers.”</em> Analytics Press, 2012.<br />
+<em>A book about data visualization for the business professional. It is similar in scope and target audience to the book by Nussbaumer-Knaflic (see below). However, Few’s book contains more material and covers many topics in more depth. At the same time, the book is not as well written and as carefully produced as the Nussbaumer-Knaflic book.</em></p></li>
+<li><p>Cole Nussbaumer Knaflic. <em>“Storytelling with Data.”</em> John Wiley &amp; Sons, 2015.<br />
+<em>A well written and carefully produced book on how to turn data into visuals. The book’s primary audience are people making business graphics, and the book is excellent for the topics it covers. However, the book is missing many topics of importance to scientists, such as the visualization of distributions, trends, or uncertainty.</em></p></li>
+</ul>
+</div>
+<div id="bibliography-programming" class="section level2">
+<h2><span class="header-section-number">25.2</span> Programming books</h2>
+<p>The following books are all how-to books that teach programming approaches to data visualization.</p>
+<ul>
+<li><p>Kieran Healy. <em>“Data Visualization: A Practical Introduction.”</em> Princeton University Press, 2018.<br />
+<em>Introduction to using ggplot2 for data visualization. Recommended as follow-up after Wickham and Grolemund’s “R for Data Science” (see below).</em></p></li>
+<li><p>Scott Murray. <em>“Interactive Data Visualization for the Web: An Introduction to Designing with D3, 2nd Edition.”</em> O’Reilly Media, 2017.<br />
+<em>Introduction to making interactive online visualizations with D3, using HTML, CSS, JavaScript, and SVG.</em></p></li>
+<li><p>Jake VanderPlas. <em>“Python Data Science Handbook: Essential Tools for Working with Data.”</em> O’Reilly Media, 2016.<br />
+<em>Introduction to using the programming language Python for data science. Has extensive material on data visualization using Python’s Matplotlib and Seaborn.</em></p></li>
+<li><p>Hadley Wickham, Garrett Grolemund. <em>“R for Data Science.”</em> O’Reilly Media, 2017.<br />
+<em>All-around introduction to using the programming language R for data science. Contains several chapters on using ggplot2 for data visualization.</em></p></li>
+</ul>
+</div>
+<div id="statistics-texts" class="section level2">
+<h2><span class="header-section-number">25.3</span> Statistics texts</h2>
+<p>Introductory texts in statistics will generally contain material on data visualization, covering topics such as scatter plots, histograms, box plots, and line graphs. There are many such texts that could be listed. Here, I mention just a few recent additions that are worth a closer look.</p>
+<ul>
+<li><p>David M. Diez, Christopher D. Barr, Mine Çetinkaya-Rundel. <em>“OpenIntro Statistics, 3rd Edition.”</em> OpenIntro, Inc., 2015.<br />
+<em>Open source introductory statistics text book. The entire book is freely available, as are the LaTeX files and R code used to compile the book and make the figures.</em></p></li>
+<li><p>Susan Holmes, Wolfgang Huber. <em>“Modern Statistics for Modern Biology.”</em> 2018.<br />
+<em>A statistics text that emphasizes computational tools needed for modern biology. The entire book is freely available, and R code for all examples is provided.</em></p></li>
+</ul>
+</div>
+<div id="historical-texts" class="section level2">
+<h2><span class="header-section-number">25.4</span> Historical texts</h2>
+<p>The books in this section are of interest primarily for historical reasons. They were influential at the time of their publication, but similar material can now be found elsewhere or in more modern form.</p>
+<ul>
+<li><p>William S. Cleveland. <em>“Visualizing Data.”</em> Hobart Press, 1993.<br />
+<em>Companion book to “The Elements of Graphing Data” by the same author (see below). This one is more mathematical and doesn’t talk about human perception.</em></p></li>
+<li><p>William S. Cleveland. <em>“The Elements of Graphing Data, 2nd Edition.”</em> Hobart Press, 1994.<br />
+<em>One of the first books about information design written for statisticians. The book contains many examples of scatter plots, line graphs, histograms, and boxplots, and it discusses them in the context of data analysis and statistical modeling. It also popularized the Cleveland dot plot.</em></p></li>
+<li><p>Edward R. Tufte. <em>“Envisioning Information.”</em> Graphics Press, 1990.<br />
+<em>This book popularized the concept of the small multiple.</em></p></li>
+<li><p>Edward R. Tufte. <em>“The Visual Display of Quantitative Information, 2nd Edition.”</em> Graphics Press, 2001.<br />
+<em>First published in 1983, this book has been highly influential in the field of data visualization. It introduced concepts such as chart junk, data-to-ink ratio, and sparklines. The book also showed the first slopegraph (but didn’t name it). However, the book also contains numerous recommendations that have not stood the test of time. In particular, it recommends an excessively minimalistic plot design.</em></p></li>
+</ul>
+</div>
+<div id="books-on-broadly-related-topics" class="section level2">
+<h2><span class="header-section-number">25.5</span> Books on broadly related topics</h2>
+<p>The following books are all broadly related to the topics of data visualization and effective communication.</p>
+<ul>
+<li><p>Joshua Schimel. <em>“Writing Science.”</em> Oxford University Press, 2011.<br />
+<em>Teaches how to write scientific and other technical topics in an engaging way, by telling a story. While not primarily a book about data visualization, this is an indispensable text for anybody who needs to write technical articles and/or proposals.</em></p></li>
+<li><p>Jonathan Schwabish. <em>“Better Presentations.”</em> Columbia University Press, 2016.<br />
+<em>Short and informative guide for making presentations. A must-read for anybody who routinely uses slides to give talks or presentations.</em></p></li>
+<li><p>Maureen C. Stone. <em>“A Field Guide to Digital Color.”</em> A K Peters, 2003.<br />
+<em>Comprehensive guide to how colors are captured, processed, and reproduced by computers.</em></p></li>
+<li><p>Colin Ware. <em>“Information Visualization, 3rd Edition.”</em> Morgan Kaufmann, 2012.<br />
+<em>A book about principles of visualization, specifically addressing topics such as how the human visual system works and how different graphical patterns are perceived. The book covers many different visualization scenarios, including user interfaces and virtual worlds, but it puts comparatively less emphasis on visualizing data in the form of 2D figures.</em></p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="telling-a-story.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="outline.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

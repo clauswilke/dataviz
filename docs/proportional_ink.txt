@@ -12,10 +12,12 @@ bars that begin at 0 and end at the data value they represent. In this
 case, the data value is not only encoded in the end point of the bar but
 also in the height or length of the bar. If we drew a bar that started
 at a different value than 0, then the length of the bar and the bar
-endpoint would convey contradicting information, and the visualization
-would be misleading. Contrast this to a scenario where we visualize the
-data value with a dot. In this case, the value is only encoded in the
-location of the dot but not in the size or shape of the dot.
+endpoint would convey contradicting information. I consider such
+visualizations not just "bad" but "wrong," because they are internally
+inconsistent. They show two different values with the same graphical
+element. Contrast this to a scenario where we visualize the data value
+with a dot. In this case, the value is only encoded in the location of
+the dot but not in the size or shape of the dot.
 
 Similar issues will arise whenever we use graphical elements such as
 bars, rectangles, shaded areas of arbitrary shape, or any other elements
@@ -57,11 +59,12 @@ this figure, not the location of the bar endpoint relative to the _y_
 axis.
 
 (ref:hawaii-income-bars-bad) Median income in the five counties of the
-state of Hawaii. This figure is misleading, because the _y_ axis scale
-starts at $50,000 instead of $0. As a result, the income differential
-between the county of Hawaii and the other four counties appears much
-bigger than it actually is. Data source: 2015 Five-Year American
-Community Survey.
+state of Hawaii. This figure is incorrect, because the _y_ axis scale
+starts at $50,000 instead of $0. As a result, the bar heights are not
+proportional to the values shown, and the income differential between
+the county of Hawaii and the other four counties appears much bigger
+than it actually is. Data source: 2015 Five-Year American Community
+Survey.
 
 (#fig:hawaii-income-bars-bad)(ref:hawaii-income-bars-bad)
 

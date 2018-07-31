@@ -96,15 +96,15 @@ it is comparable to a story arc that starts with a lead.
 To provide a concrete example of incorporating figures into stories, I
 will now tell a story on the basis of two figures. The first creates the
 challenge and the second serves as the resolution. The context of my
-story is the growth of preprints in the biological sciences. Preprints
-are manuscripts in draft form that scientists share with their
-colleagues before formal peer review and official publication.
-Scientists have been sharing manuscript drafts for as long as scientific
-manuscripts have existed. However, in the early 1990s, with the advent
-of the internet, physicists realized that it was much more efficient to
-store and distribute manuscript drafts in a central repository. They
-invented the preprint server, a web server where scientists can upload,
-download, and search for manuscript drafts.
+story is the growth of preprints in the biological sciences (see also
+Chapter @ref(time-series)). Preprints are manuscripts in draft form that
+scientists share with their colleagues before formal peer review and
+official publication. Scientists have been sharing manuscript drafts for
+as long as scientific manuscripts have existed. However, in the early
+1990s, with the advent of the internet, physicists realized that it was
+much more efficient to store and distribute manuscript drafts in a
+central repository. They invented the preprint server, a web server
+where scientists can upload, download, and search for manuscript drafts.
 
 The preprint server physicists developed and still use today is called
 arXiv.org. Shortly after it was established, arXiv.org started to branch
@@ -196,7 +196,7 @@ For several years, I was in charge of a large research project funded by
 the U.S. Army. For our annual progress reports, I was instructed by the
 program managers to not include a lot of figures. And any figure I did
 include should show very clearly how our project was succeeding. A
-general, the program mangers told me, should be able to look at each
+general, the program managers told me, should be able to look at each
 figure and immediately see how what we were doing was improving upon or
 exceeding prior capabilities. Yet when my colleagues who were part of
 this project sent me figures for the annual progress report, many of the
@@ -243,7 +243,7 @@ lines represent the mean trends between arrival delay and distance.
 Delta has consistenly lower arrival delays than other airlines,
 regardless of distance traveled. American has among the lowest delays,
 on average, for short distances, but has among the highest delays for
-longer distances traveled. This figure is labeled as bad because it is
+longer distances traveled. This figure is labeled as "bad" because it is
 overly complex. Most readers will find it confusing and will not
 intuitively grasp what it is the figure is showing. Data source: U.S.
 Dept. of Transportation, Bureau of Transportation Statistics.
@@ -309,7 +309,7 @@ at once is much easier to process (Figure
 @ref(fig:all-departures-weekdays)).
 
 (ref:united-departures-weekdays) United Airlines departures out of
-Newark Airport (EWR) in 2013, by weekday. Most weekedays show
+Newark Airport (EWR) in 2013, by weekday. Most weekdays show
 approximately the same number of departures, but there are fewer
 departures on weekends. Data source: U.S. Dept. of Transportation,
 Bureau of Transportation Statistics.
@@ -389,7 +389,7 @@ Facebook stock price rose from around $25/share in mid-2012 to
 $150/share in mid-2017. (b) The prices of other large tech companies did
 not rise comparably over the same time period. Prices have been indexed
 to 100 on June 1, 2012 to allow for easy comparison. This figure is
-labeled as bad because parts (a) and (b) are repetitive. Data source:
+labeled as "ugly" because parts (a) and (b) are repetitive. Data source:
 Yahoo Finance
 
 (#fig:tech-stocks-repetitive)(ref:tech-stocks-repetitive)

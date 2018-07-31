@@ -287,7 +287,7 @@ of points that is confusing and fails to convey a clear message (Figure
 Americas, for the year 2007. Here, the countries are ordered
 alphabetically, which causes a dots to form a disordered cloud of
 points. This makes the figure difficult to read, and therefore it
-deserves to be labeled as bad. Data source: Gapminder project
+deserves to be labeled as "bad." Data source: Gapminder project
 
 (#fig:Americas-life-expect-bad)(ref:Americas-life-expect-bad)
 

@@ -141,7 +141,7 @@ Figure \@ref(fig:Americas-life-expect) demonstrates this visualization approach 
 
 Regardless of whether we use bars or dots, however, we need to pay attention to the ordering of the data values. In Figures \@ref(fig:Americas-life-expect) and \@ref(fig:Americas-life-expect-bars), the countries are ordered in descending order of life expectancy. If we instead ordered them alphabetically, we'd end up with a disordered cloud of points that is confusing and fails to convey a clear message (Figure \@ref(fig:Americas-life-expect-bad)). 
 
-(ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled as bad. Data source: Gapminder project
+(ref:Americas-life-expect-bad) Life expectancies of countries in the Americas, for the year 2007. Here, the countries are ordered alphabetically, which causes a dots to form a disordered cloud of points. This makes the figure difficult to read, and therefore it deserves to be labeled as "bad." Data source: Gapminder project
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_amounts_files/figure-html/Americas-life-expect-bad-1.png" alt="(ref:Americas-life-expect-bad)" width="630" />

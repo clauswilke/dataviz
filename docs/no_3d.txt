@@ -189,7 +189,7 @@ in the 60--64 age group?
 as a 3D bar plot. Mortality rates are shown for four groups of people
 (urban and rural females and males) and five age categories (50--54,
 55--59, 60--64, 65--69, 70--74), and they are reported in units of
-deaths per 1000 persons. This figure is labeled as bad because the 3D
+deaths per 1000 persons. This figure is labeled as "bad" because the 3D
 perspective makes the plot difficult to read. Data source:
 @Molyneaux-et-al-1947
 

@@ -27,7 +27,7 @@ variable along the horizontal axis. In all cases discussed, we could
 flip the axes and arrive at an alternative and viable visualization. I
 am showing here the canonical forms of the various visualizations.
 
-[[visualizing-distributions-along-the-vertical-axis]]
+[[boxplots-violins-vertical]]
 Visualizing distributions along the vertical axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -155,7 +155,7 @@ also called "jittering".
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln,
 Nebraska, visualized as individual temperature values. Each point
 represents the mean temperature for one day. This figure is labeled as
-bad because so many points are plotted on top of each other that it is
+"bad" because so many points are plotted on top of each other that it is
 not possible to ascertain which temperatures were the most common in
 each month.
 
@@ -186,7 +186,7 @@ to the point density at the respective temperature.
 
 (#fig:lincoln-temp-sina)(ref:lincoln-temp-sina)
 
-[[visualizing-distributions-along-the-horizontal-axis]]
+[[boxplots-violins-horizontal]]
 Visualizing distributions along the horizontal axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

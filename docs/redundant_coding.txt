@@ -38,7 +38,7 @@ blue, are not particularly distinct from each other.
 different iris species (_Iris setosa_, _Iris virginica_, and _Iris
 versicolor_). Each point represents the measurements for one plant
 sample. A small amount of jitter has been applied to all point positions
-to prevent overplotting. The figure is labeled bad because the
+to prevent overplotting. The figure is labeled "bad" because the
 _virginica_ points in green and the _versicolor_ points in blue are
 difficult to distinguish from each other.
 
@@ -101,7 +101,7 @@ different major tech companies?
 
 (ref:tech-stocks-bad-legend) Stock price over time for four major tech
 companies. The stock price for each company has been normalized to equal
-100 in June 2012. This figure is labeled as bad because it takes
+100 in June 2012. This figure is labeled as "bad" because it takes
 considerable mental energy to match the company names in the legend to
 the data curves.
 

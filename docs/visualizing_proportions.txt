@@ -267,7 +267,7 @@ plot of marital status vs age is not very illuminating (Figure
 (ref:marital-vs-age) Marital status by age, as reported by the general
 social survey (GSS). To simplify the figure, I have removed a small
 number of cases that report as separated. I have labeled this figure as
-bad because the frequency of people who have never been married or are
+"bad" because the frequency of people who have never been married or are
 widowed changes so drastically with age that the age distributions of
 married and divorced people are highly distorted and difficult to
 interpret.

@@ -102,7 +102,7 @@ in popularity of a similar magnitude.
 (ref:BA-degrees-variable-y-lims) Trends in Bachelor's degrees conferred
 by U.S. institutions of higher learning. Shown are all degree areas that
 represent, on average, more than 4% of all degrees. This figure is
-labeled as bad because all panels use different _y_-axis ranges. This
+labeled as "bad" because all panels use different _y_-axis ranges. This
 choice obscures the relative sizes of the different degree areas and it
 over-exagerates the changes that have happened in some of the degree
 areas. Data Source: National Center for Education Statistics

@@ -2,8 +2,12 @@
 Directory of visualizations
 ---------------------------
 
-_This chapter is a work in progress and will be updated as additional
-chapters on different visualization scenarios are written._
+This chapter provides a quick visual overview of the various plots and
+charts that are commonly used to visualize data. It is meant both to
+serve as a table of contents, in case you are looking for a particular
+visualization whose name you may not know, and as a source of
+inspiration, if you need to find alternatives to the figures you
+routinely make.
 
 [[amounts]]
 Amounts
@@ -34,13 +38,14 @@ data faithfully but can be more difficult to interpret.
 Boxplots, violin plots, jittered points, and sina plots are useful when
 we want to visualize many distributions at once and/or if we are
 primarily interested in overall shifts among the distributions (Chapter
-@ref(boxplots-violins)). Stacked histograms and overlapping densities
-allow a more in-depth comparison of a smaller number of distributions,
-though stacked histograms can be difficult to interpret and are best
-avoided (Chapter @ref(histograms-density-plots)). Ridgeline plots can be
-a useful alternative to violin plots and are often useful when
-visualizing very large numbers of distributions or changes in
-distributions over time (Chapter @ref(boxplots-violins)).
+@ref(boxplots-violins-vertical)). Stacked histograms and overlapping
+densities allow a more in-depth comparison of a smaller number of
+distributions, though stacked histograms can be difficult to interpret
+and are best avoided (Chapter @ref(multiple-histograms-densities)).
+Ridgeline plots can be a useful alternative to violin plots and are
+often useful when visualizing very large numbers of distributions or
+changes in distributions over time (Chapter
+@ref(boxplots-violins-horizontal)).
 
 [[proportions]]
 Proportions
@@ -62,3 +67,39 @@ conditions compared is moderate, and stacked bars can work for large
 numbers of conditions. Stacked densities (Chapter
 @ref(visualizing-proportions)) are appropriate when the proportions
 change along a continuous variable.
+
+[[x--y-relationships]]
+_x_--_y_ relationships
+~~~~~~~~~~~~~~~~~~~~~~
+
+Scatter plots represent the archetypical visualization when we want to
+show one quantitative variable relative to another (Chapter
+@ref(associations-scatterplots)). If we have three quantitative
+variables, we can map one onto the dot size, creating a variant of the
+scatter plot called bubble chart. For paired data, where the variables
+along the _x_ and the _y_ axes are measured in the same units, it is
+generally helpful to add a line indicating _x_ = _y_ (Chapter
+@ref(associations-paired-data)). Paired data can also be shown as a
+slope graph of paired points connected by straight lines (Chapter
+@ref(associations-paired-data)).
+
+For large numbers of points, regular scatterplots can become
+uninformative due to overplotting. In this case, contour lines, 2D bins,
+or hex bins may provide an alternative (Chapter
+@ref(overlapping-points)). When we want to visualize more than two
+quantities, on the other hand, we may choose to plot correlation
+coefficients in the form of a correlogram instead of the underlying raw
+data (Chapter @ref(associations-correlograms)).
+
+When the _x_ axis represents time or a strictly increasing quantity such
+as a treatment dose, we commonly draw line graphs (Chapter
+@ref(time-series)). If we have a temporal sequence of two response
+variables, we draw a connected scatter plot where we first plot the two
+response variables in a scatter plot and then connect dots corresponding
+to adjacent time points (Chapter @ref(time-series-connected-scatter)).
+We use smooth lines to represent trends in a larger dataset (_chapter to
+be written_).
+
+[[uncertainty]]
+Uncertainty
+~~~~~~~~~~~

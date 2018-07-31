@@ -142,7 +142,7 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 
 To provide a second example, let's consider a different variable from the same survey: marital status. Marital status changes much more drastically with age than does health status, and a stacked densities plot of marital status vs age is not very illuminating (Figure \@ref(fig:marital-vs-age)).
 
-(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as bad because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret. 
+(ref:marital-vs-age) Marital status by age, as reported by the general social survey (GSS). To simplify the figure, I have removed a small number of cases that report as separated. I have labeled this figure as "bad" because the frequency of people who have never been married or are widowed changes so drastically with age that the age distributions of married and divorced people are highly distorted and difficult to interpret. 
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_proportions_files/figure-html/marital-vs-age-1.png" alt="(ref:marital-vs-age)" width="630" />
