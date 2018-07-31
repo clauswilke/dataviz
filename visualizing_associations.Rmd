@@ -8,7 +8,13 @@ library(tidyr)
 
 # Visualizing associations among two or more quantitative variables {#visualizing-associations}
 
+Many datasets contain two or more quantitative variables, and we may be interested in how these variables relate to each other. For example, we may have a dataset of quantiative measurements of different animals, such as the animals' height, weight, length, and daily energy demands. To plot the relationship of just two such variables, e.g. the height and weight, we will normally use a scatter plot. If we want to show more than two variables at once, we may opt for a bubble chart, a scatter plot matrix, or a correlogram. Finally, for very high-dimensional datasets, it may be useful to perform dimension reduction, for example in the form of principal components analysis.
+
 ## Scatter plots {#associations-scatterplots}
+
+I will demonstrate the basic scatter plot and several variations thereof using a dataset of measurements performed on 123 blue jay birds. The data set contains information such as the head length (measured from the tip of the bill to the back of the head), the skull size (head length minus bill length), and the body mass of each bird. We expect that there are relationships between these variables. For example, bird with longer bills would be expected to have larger skull sizes, and birds with higher body mass should have larger bills and skulls than birds with lower body mass.
+
+To explore these relationships, I begin with a plot of head length versus body mass (Figure \@ref(fig:blue-jays-scatter)). In this plot, head length is shown along the *y* axis, body mass along the *x* axis, and each bird is represented by one dot. (Note the terminology: We say that we plot the variable shown along the *y* axis versus the variable shown along the *x* axis.) The dots form a dispersed cloud (hence the term *scatter plot*), yet undoubtedly there is a trend for birds with higher body mass to have longer heads. The bird with the longest head falls close to the maximum body mass observed, and the bird with the shortest head falls close to the minimum body mass observed.
 
 (ref:blue-jays-scatter) Head length (measured from the tip of the bill to the back of the head, in mm) versus body mass (in gram), for 123 blue jays. Each dot corresponds to one bird. There is a moderate tendency for heavier birds to have longer heads. Data source: Keith Tarvin, Oberlin College
 
@@ -19,6 +25,8 @@ ggplot(blue_jays, aes(Mass, Head)) +
   scale_y_continuous(name = "head length (mm)") +
   theme_dviz_grid()
 ```
+
+**Needs updating, refer explicitly to the birds data set, elaborate on findings.**
 
 We frequently want to show more than two data dimensions, and there are many variants of scatter plots for this purpose. First, if the data set can be separated into two or more groups, we can show those with color (Figure \@ref(fig:blue-jays-scatter-sex)). Second, we can also map an additional quantitative variable to symbol size (Figure \@ref(fig:blue-jays-scatter-bubbles)). This type of visualization is called a *bubble chart*.
 
