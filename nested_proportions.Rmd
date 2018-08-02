@@ -1,9 +1,263 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(ggforce)
+library(treemapify)
 ```
 
 # Visualizing nested or changing proportions {#nested-proportions}
 
 
-*As a bad example, show a pie chart with overlapping proportions?*
+```{r fig.width = 4.5, fig.asp = 0.8}
+titanic_clean <- filter(
+  titanic_all,
+  class %in% c("1st", "2nd", "3rd") & sex %in% c("male", "female")
+)
+
+titanic_sex <- filter(titanic_clean, age >= 16) %>%
+  group_by(sex) %>%
+  summarize(
+    count = n(),
+    percent = round(100*count/nrow(titanic_clean), 1)
+  ) %>%
+  rename(type = sex) %>%
+  mutate(
+    type = case_when(
+      type == "female" ~ "women",
+      type == "male" ~ "men"
+    )
+  )
+
+titanic_class <- group_by(titanic_clean, class) %>%
+  summarize(
+    count = n(),
+    percent = round(100*count/nrow(titanic_clean), 1)
+  ) %>%
+  rename(type = class) %>%
+  mutate(
+    type = paste0(type, " class")
+  )
+
+titanic_sex_class <- rbind(titanic_sex, titanic_class)
+
+titanic_pie <- titanic_sex_class %>%
+  mutate(
+    count_total = sum(count),
+    end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1)
+  )
+
+rpie = 1
+rlabel = 1.05 * rpie
+
+p_titanic_pie <- ggplot(titanic_pie) + 
+  geom_arc_bar(
+    aes(
+      x0 = 0, y0 = 0, r0 = 0, r = rpie,
+      start = start_angle, end = end_angle, fill = type
+    ),
+    color = "white", size = 0.5
+  ) +
+  geom_text(
+    aes(
+      x = rlabel*sin(mid_angle),
+      y = rlabel*cos(mid_angle),
+      label = type,
+      hjust = hjust, vjust = vjust
+    ),
+    family = dviz_font_family,
+    size = 14/.pt
+  ) +
+  geom_text(
+    aes(
+      x = 0.6*sin(mid_angle),
+      y = 0.6*cos(mid_angle),
+      label = paste0(percent, "%")
+    ),
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+  coord_fixed(clip = "off") +
+  scale_x_continuous(
+    limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_y_continuous(
+    limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  theme_dviz_map() +
+  theme(legend.position = "none")
+
+stamp_wrong(p_titanic_pie)
+```
+
+
+
+```{r}
+p_titanic_bars <- ggplot(titanic_sex_class) +
+  aes(type, percent, fill = type) +
+  geom_col() +
+  scale_y_continuous(
+    limits = c(0, 59),
+    expand = c(0, 0),
+    labels = function(x) paste0(x, "%"),
+    name = "proportion of passengers"
+  ) +
+  scale_x_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid() +
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(3.5, 7, 3.5, 0)
+  )
+
+stamp_bad(p_titanic_bars)
+```
+
+```{r fig.width = 5, fig.asp = 0.8}
+titanic_nested <- titanic_clean %>%
+  mutate(
+    gender = factor(case_when(
+      sex == "male" & age >= 16 ~ "men",
+      sex == "female" & age >= 16 ~ "women",
+      TRUE ~ "children"
+    ), levels = c("men", "women", "children"))
+  ) %>%
+  group_by(class, gender) %>%
+  summarize(
+    gender_count = n(),
+    gender_percent = round(100*gender_count/nrow(titanic_clean), 1)
+  ) %>%
+  ungroup() %>%
+  left_join(
+    group_by(titanic_clean, class) %>%
+      summarize(
+        count = n(),
+        percent = round(100*count/nrow(titanic_clean), 1)
+      )
+  )
+
+titanic_pie_outer <- titanic_nested %>%
+  mutate(
+    count_total = sum(gender_count),
+    end_angle = 2*pi*cumsum(gender_count)/count_total,   # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
+    type = gender
+  ) %>%
+  filter(gender != "children")
+
+titanic_pie_inner <- titanic_nested %>%
+  filter(gender == "men") %>%
+  mutate(
+    count_total = sum(count),
+    end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
+    type = class
+  ) %>%
+  select(-gender, -gender_count, -gender_percent)
+
+rpie1 = 0.6
+rpie2 = 1
+rlabel = 1.05 * rpie
+
+p_titanic_pie <- ggplot() + 
+  geom_arc_bar(data = titanic_pie_outer,
+    aes(
+      x0 = 0, y0 = 0, r0 = rpie1, r = rpie2,
+      start = start_angle, end = end_angle, fill = type
+    ),
+    color = "white", size = 0.5
+  ) +
+  geom_arc_bar(data = titanic_pie_inner,
+    aes(
+      x0 = 0, y0 = 0, r0 = 0, r = rpie1,
+      start = start_angle, end = end_angle, fill = type
+    ),
+    color = "white", size = 0.5
+  ) +
+  geom_text(data = titanic_pie_outer,
+    aes(
+      x = rlabel*sin(mid_angle),
+      y = rlabel*cos(mid_angle),
+      label = gender,
+      hjust = hjust, vjust = vjust
+    ),
+    family = dviz_font_family,
+    size = 14/.pt
+  ) +
+  geom_text(data = titanic_pie_outer,
+    aes(
+      x = 0.8*sin(mid_angle),
+      y = 0.8*cos(mid_angle),
+      label = gender_count
+    ),
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+  geom_text(data = titanic_pie_inner,
+    aes(
+      x = 0.3*sin(mid_angle),
+      y = 0.3*cos(mid_angle),
+      label = count
+    ),
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+
+  coord_fixed(clip = "off") +
+  scale_x_continuous(
+    limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_y_continuous(
+    limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  theme_dviz_map() +
+  theme(legend.position = "none")
+
+p_titanic_pie
+```
+
+
+```{r fig.asp = 3/4}
+ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interaction(class, gender))) +
+  geom_treemap(color = "white", size = 0.5*.pt) + 
+  geom_treemap_subgroup_text(
+    family = dviz_font_family,
+    colour = "grey30", place = "centre", alpha = 0.7,
+    grow = TRUE
+  ) +
+  geom_treemap_subgroup_border(color = "white") +
+  geom_treemap_text(
+    aes(label = gender),
+    family = dviz_font_family,
+    colour = "black", place = "centre",
+    grow = FALSE
+  ) +
+  coord_cartesian(clip = "off") +
+  guides(colour = "none", fill = "none")
+
+
+```
+
+
+```{r}
+data <- reshape2::melt(Titanic)
+data <- gather_set_data(data, 1:4)
+
+ggplot(data, aes(x, id = id, split = y, value = value)) +
+  geom_parallel_sets(aes(fill = Sex), alpha = 0.3, axis.width = 0.1) +
+  geom_parallel_sets_axes(axis.width = 0.1) +
+  geom_parallel_sets_labels(colour = 'white') +
+  theme_dviz_open()
+```
