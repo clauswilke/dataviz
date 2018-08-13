@@ -94,28 +94,40 @@ library(sf)
 
 # B19013_001: Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)
 
-texas_income %>%
+# EPSG:3083
+# NAD83 / Texas Centric Albers Equal Area
+# http://spatialreference.org/ref/epsg/3083/
+texas_crs <- "+proj=aea +lat_1=27.5 +lat_2=35 +lat_0=18 +lon_0=-100 +x_0=1500000 +y_0=6000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+
+# -110, -93.5 transformed using texas_crs
+texas_xlim <- c(558298.7, 2112587)
+
+texas_income %>% st_transform(crs = texas_crs) %>%
   ggplot(aes(fill = estimate)) + 
   geom_sf(color = "white") + 
-  coord_sf(xlim = c(-110, -93.5), datum = NA) +
+  coord_sf(xlim = texas_xlim, datum = NA) +
   theme_dviz_map() + 
-  scale_fill_distiller(palette = "Blues", type = 'seq', na.value = "grey60", direction = 1,
-#  scale_fill_continuous_sequential(palette = "Teal", rev = TRUE, 
-#                                   na.value = "grey50", l2 = 98, #end = 0.9, 
-                                   name = "annual median income",
-                                   limits = c(18000, 90000),
-                                   breaks = 20000*c(1:4),
-                                   labels = c("$20,000", "$40,000", "$60,000", "$80,000"),
-                                   guide = guide_colorbar(direction = "horizontal",
-                                                          label.position = "bottom",
-                                                          title.position = "top",
-                                                          ticks = FALSE,
-                                                          barwidth = grid::unit(3.0, "in"),
-                                                          barheight = grid::unit(0.2, "in"))) +
-  theme(legend.title.align = 0.5,
-        legend.text.align = 0.5,
-        legend.justification = c(0, 0),
-        legend.position = c(0.02, 0.1))
+  scale_fill_distiller(
+    palette = "Blues", type = 'seq', na.value = "grey60", direction = 1,
+    name = "annual median income",
+    limits = c(18000, 90000),
+    breaks = 20000*c(1:4),
+    labels = c("$20,000", "$40,000", "$60,000", "$80,000"),
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      ticks = FALSE,
+      barwidth = grid::unit(3.0, "in"),
+      barheight = grid::unit(0.2, "in")
+    )
+  ) +
+  theme(
+    legend.title.align = 0.5,
+    legend.text.align = 0.5,
+    legend.justification = c(0, 0),
+    legend.position = c(0.02, 0.1)
+  )
 ```
 
 In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show those with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a *diverging* color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure \@ref(fig:diverging-scales)). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.
@@ -137,30 +149,33 @@ As an example application of a diverging color scale, consider Figure \@ref(fig:
 (ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census.
 
 ```{r map-Texas-race, fig.width = 6, fig.asp = 0.75, fig.cap = '(ref:map-Texas-race)'}
-# we reuse the geometries from texas_income
-select(texas_income, -NAME, -variable, -estimate, -moe) %>%
-  left_join(select(texas_race, GEOID, variable, pct) %>% filter(variable == "White")) %>%
+texas_race %>% st_sf() %>%
+  st_transform(crs = texas_crs) %>%
+  filter(variable == "White") %>%
   ggplot(aes(fill = pct)) +
   geom_sf(color = "white") +
-  coord_sf(xlim = c(-110, -93.5), datum = NA) + 
+  coord_sf(xlim = texas_xlim, datum = NA) + 
   theme_dviz_map() +
-  #scale_fill_continuous_diverging(palette = "Blue-Red 3", # uncomment for alternative color scale
-  scale_fill_continuous_carto(palette = "Earth",
-                              mid = 50,
-                              limits = c(0, 100),
-                              breaks = 25*(0:4),
-                              labels = c("0% ", "25%", "50%", "75%", " 100%"),
-                              name = "percent identifying as white",
-                              guide = guide_colorbar(direction = "horizontal",
-                                                     label.position = "bottom",
-                                                     title.position = "top",
-                                                     ticks = FALSE,
-                                                     barwidth = grid::unit(3.0, "in"),
-                                                     barheight = grid::unit(0.2, "in"))) +
-  theme(legend.title.align = 0.5,
-        legend.text.align = 0.5,
-        legend.justification = c(0, 0),
-        legend.position = c(0.02, 0.1))
+  scale_fill_continuous_carto(
+    palette = "Earth",
+    mid = 50,
+    limits = c(0, 100),
+    breaks = 25*(0:4),
+    labels = c("0% ", "25%", "50%", "75%", " 100%"),
+    name = "percent identifying as white",
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      ticks = FALSE,
+      barwidth = grid::unit(3.0, "in"),
+      barheight = grid::unit(0.2, "in"))) +
+  theme(
+    legend.title.align = 0.5,
+    legend.text.align = 0.5,
+    legend.justification = c(0, 0),
+    legend.position = c(0.02, 0.1)
+  )
 ```
 
 

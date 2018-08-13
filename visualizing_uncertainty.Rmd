@@ -66,4 +66,108 @@ ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) 
   theme_dviz_hgrid()
 ```
 
-Include a coefficient plot from a regression model, as in Cleveland's book?
+*Include a coefficient plot from a regression model, as in Cleveland's book?*
+
+```{r}
+# relevant materials: 
+# Bowman "Graphs for Uncertainty": http://www.rss.org.uk/Images/PDF/events/2018/Bowman-5-Sept-2018.pdf
+# R package denstrip: https://cran.r-project.org/package=denstrip
+
+library(ggplot2)
+library(rlang)
+library(dplyr)
+library(tidyr)
+
+stat_conf_band <- function(mapping = NULL, data = NULL,
+                           geom = "tile", position = "identity",
+                           ...,
+                           confidence = 0.95,
+                           xlim = NULL,
+                           n = 501,
+                           na.rm = FALSE,
+                           show.legend = FALSE,
+                           inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = StatConfBand,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      confidence = confidence,
+      n = n,
+      na.rm = na.rm,
+      xlim = xlim,
+      ...
+    )
+  )
+}
+
+fit_normal <- function(mean, moe, confidence = 0.95) {
+  # convert to two-tailed value
+  confidence <- 1-(1-confidence)/2
+  function(x) dnorm(x, mean = mean, sd = moe/qnorm(confidence))
+}
+
+StatConfBand <- ggproto("StatConfBand", Stat,
+  required_aes = c("mean", "moe"),                        
+  default_aes = aes(fill = stat(ndensity)),
+                        
+  compute_group = function(data, scales, confidence = 0.95, xlim = NULL, n = 501) {
+    # Check that confidence band parameters are constant within group
+    params <- unique(data[c("mean", "moe")])
+    if (nrow(params) > 1) {
+      stop("Confidence band parameters can not vary within data groups", call. = FALSE)
+    }
+    params <- c(as.list(params), list(confidence = confidence))
+    
+    range <- xlim %||% scales$x$dimension()
+    xseq <- seq(range[1], range[2], length.out = n)
+    
+    if (scales$x$is_discrete()) {
+      x_trans <- xseq
+    } else {
+      # For continuous scales, need to back transform from transformed range
+      # to original values
+      x_trans <- scales$x$trans$inverse(xseq)
+    }
+    
+    fun <- do.call(fit_normal, params)
+    density <- fun(x_trans)
+    
+    data.frame(
+      x = xseq,
+      density = density,
+      ndensity = density/max(density)
+    )
+  }
+)
+
+df_in <- data.frame(
+  group = letters[1:3],
+  mean = c(1, 3, 2),
+  sd = c(.8, .4, .7)
+)
+
+df_data <- mutate(df_in, 
+    value = purrr::map2(mean, sd, ~rnorm(250, .x, .y))
+  ) %>%
+  unnest()
+
+df_out <- group_by(df_data, group) %>%
+  summarize(
+    mean = mean(value),
+    sd = sd(value),
+    moe = sd*1.96
+  )
+
+ggplot(df_out, aes(x = mean, y = group)) +
+  stat_conf_band(aes(mean = mean, moe = sd), height = 0.8, confidence = 0.67) +
+  geom_point(data = df_data, aes(x = value), position = position_jitter(width = 0), size = 1) +
+  geom_errorbarh(aes(xmin = mean - sd, xmax = mean + sd), height = 0.2, color = "darkred", size = 1) +
+  geom_point(size = 3, color = "darkred") +
+  scale_fill_gradient(low = "#132B4300", high = "#56B1F7FF") +
+  theme_minimal()
+```
