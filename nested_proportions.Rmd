@@ -261,3 +261,6 @@ ggplot(data, aes(x, id = id, split = y, value = value)) +
   geom_parallel_sets_labels(colour = 'white') +
   theme_dviz_open()
 ```
+
+
+Add mosaic plot? https://stackoverflow.com/a/45688044/4975218

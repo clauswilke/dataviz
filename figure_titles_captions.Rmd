@@ -2,6 +2,10 @@
 # run setup script
 source("_common.R")
 library(ggrepel)
+library(grid)
+library(gridExtra)
+library(gtable)
+library(tibble)
 ```
 
 # Figure titles and captions {#figure-titles-captions}
@@ -53,12 +57,16 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
           legend.justification = "right",
           legend.text = element_text(size = 10)) -> plot_corrupt_base
 
+## for some reason grid::forceGrob creates an empty plot, not sure why
 #cur_dev <- grDevices::dev.cur()
 #cowplot::png_null_device(width = 7, height = 4.9)
 #null_dev <- dev.cur()
 #grob_corrupt_base <- grid::forceGrob(ggplotGrob(plot_corrupt_base))
 #null <- grDevices::dev.off(null_dev)
-#null <- grDevices::dev.set(cur_dev)
+#if (cur_dev > 1 ) null <- grDevices::dev.set(cur_dev)
+#ggdraw(grob_corrupt_base)
+
+
 ggsave("figures/corruption_plot_base.png", plot_corrupt_base, width = 7, height = 4.9,
        dpi = 600)
 
@@ -86,3 +94,180 @@ plot_grid(plot_corrupt_title,
           plot_corrupt_caption,
           ncol = 1, rel_heights = c(.12, 1, .07))
 ```
+
+
+(ref:table-examples) Examples of poorly and appropriately formatted tables, using the data from Table \@ref(tab:boxoffice-gross) in Chapter \@ref(visualizing-amounts). (a) Tables should not have any vertical lines and have no horizontal lines between data rows. In addition, text columns should be left aligned and number columns right aligned. (b) In addition to all issues present in Part (a), this version of the table creates additional visual noise by alternating between very dark and very light rows. Moreover, the table header is not strongly visually separated from the table body. (c) This is an appropriately formatted table with a minimal design. (d) Colors can be used effectively to group data into rows, but the color differences should be subtle. The table header can be set off by using a stronger color.
+
+```{r table-examples, fig.asp = 0.65, fig.cap = '(ref:table-examples)'}
+boxoffice <- tibble(
+  Rank = 1:5,
+  Title = c("Star Wars", "Jumanji", "Pitch Perfect 3", "Greatest Showman", "Ferdinand"),
+  Amount = c("$71,565,498", "$36,169,328", "$19,928,525", "$8,805,843", "$7,316,746")
+)
+
+table_base_size = 11
+zgrob <- function(...) ggplot2::zeroGrob()
+
+tt1 <- ttheme_minimal(
+  base_size = table_base_size,
+  base_family = dviz_font_family,
+  core = list(
+    bg_params = list(
+      col = "black",
+      lwd = 1
+    )
+  ),
+  colhead = list(
+    fg_params = list(
+      fontface = 1L,
+      fontfamily = dviz_font_family_bold
+    ),
+    bg_params = list(
+      col = "black",
+      lwd = 1
+    )
+  ),
+  rowhead = list(fg_fun = zgrob, bg_fun = zgrob)
+)
+
+tt2 <- ttheme_default(
+  base_size = table_base_size,
+  base_family = dviz_font_family,
+  core = list(
+    fg_params = list(
+      col = c("white", "black")
+    ),
+    bg_params = list(
+      col = "black",
+      lwd = 0.5,
+      fill = c("grey45", "grey85")
+    )
+  ),
+  colhead = list(
+    fg_params = list(
+      fontface = 1L,
+      fontfamily = dviz_font_family_bold
+    ),
+    bg_params = list(
+      col = "black",
+      lwd = 0.5,
+      fill = "grey85"
+    )
+  ),
+  rowhead = list(fg_fun = zgrob, bg_fun = zgrob)
+)
+
+tt3 <- ttheme_minimal(
+  base_size = table_base_size,
+  base_family = dviz_font_family,
+  padding = unit(c(4, 3.2), "mm"),
+  core = list(
+    fg_params = list(
+      hjust = rep(c(0.5, 0, 1), each = 5),
+      x = rep(c(0.5, 0.1, 0.9), each = 5)
+    ),
+    bg_params = list(
+      col = NA
+    )
+  ),
+  colhead = list(
+    fg_params = list(
+      hjust = c(0.5, 0, 1),
+      x = c(0.5, 0.1, 0.9),
+      fontface = 1L,
+      fontfamily = dviz_font_family_bold
+    ),
+    bg_params = list(
+      col = NA
+    )
+  ),
+  rowhead = list(fg_fun = zgrob, bg_fun = zgrob)
+)
+
+tt4 <- ttheme_default(
+  base_size = table_base_size,
+  base_family = dviz_font_family,
+  core = list(
+    fg_params = list(
+      col = "black",
+      hjust = rep(c(0.5, 0, 1), each = 5),
+      x = rep(c(0.5, 0.1, 0.9), each = 5)
+    ),
+    bg_params = list(
+      col = NA,
+      fill = c('#D9E0EF', '#C2CCE3') #c("grey95", "grey85")
+    )
+  ),
+  colhead = list(
+    fg_params = list(
+      col = "white",
+      hjust = c(0.5, 0, 1),
+      x = c(0.5, 0.1, 0.9),
+      fontface = 1L,
+      fontfamily = dviz_font_family_bold
+    ),
+    bg_params = list(
+      col = NA,
+      fill = "#4069A6"#"grey65"
+    )
+  ),
+  rowhead = list(fg_fun = zgrob, bg_fun = zgrob)
+)
+
+# horizontal line to be used as separator
+hline_top <- segmentsGrob(
+  x0 = unit(0,"npc"),
+  y0 = unit(1,"npc"),
+  x1 = unit(1,"npc"),
+  y1 = unit(1,"npc"),
+  gp = gpar(lwd = 0.75, col = "black")
+)
+hline_bottom <- segmentsGrob(
+  x0 = unit(0,"npc"),
+  y0 = unit(0,"npc"),
+  x1 = unit(1,"npc"),
+  y1 = unit(0,"npc"),
+  gp = gpar(lwd = 0.75, col = "black")
+)
+
+t1 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt1)
+t1$layout$clip <- "off"
+t1 <- gtable_add_padding(t1, margin(14, 16, 0, -2))
+
+t2 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt2)
+t2$layout$clip <- "off"
+t2 <- gtable_add_padding(t2, margin(14, 16, 0, -2))
+
+t3 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt3)
+t3 <- gtable_add_grob(t3,
+  grobs = grobTree(hline_top, hline_bottom),
+  t = 1, b = 1, l = 2, r = 4)
+t3 <- gtable_add_grob(t3,
+  grobs = hline_bottom,
+  t = 6, b = 6, l = 2, r = 4)
+t3$layout$clip <- "off"
+t3 <- gtable_add_padding(t3, margin(14, 14, 0, -7))
+
+t4 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt4)
+t4$layout$clip <- "off"
+t4 <- gtable_add_padding(t4, margin(14, 16, 0, -2))
+
+plot_grid(
+  stamp_ugly(t1), NULL, stamp_ugly(t2),
+  NULL, NULL, NULL,
+  t3, NULL, t4,
+  rel_widths = c(1, 0.06, 1),
+  rel_heights = c(1, 0.08, 1),
+  labels = c("a", "", "b", "", "", "", "c", "", "d")
+)
+
+```
+
+Rules for table layout:
+
+- no vertical lines
+- no horizontal lines between data columns
+- text is left aligned
+- numbers are right aligned and use the same number of decimal digits
+- single characters are centered
+- headers are aligned with their data
