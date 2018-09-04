@@ -8,7 +8,7 @@ library(gtable)
 library(tibble)
 ```
 
-# Figure titles and captions {#figure-titles-captions}
+# Putting data into context: Titles, captions, labels, and tables {#figure-titles-captions}
 
 Topics to cover in this chapter:
 

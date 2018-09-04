@@ -8,8 +8,12 @@ library(treemapify)
 
 # Visualizing nested or changing proportions {#nested-proportions}
 
+*The titanic figures in this chapter so far don't make sense, because they treat all people with unknown age as children. It would be better to rework the examples using the `Titanic` table which is used in the parallel sets example at the end.*
 
-```{r fig.width = 4.5, fig.asp = 0.8}
+
+(ref:titanic-wrong-pie) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
+
+```{r titanic-wrong-pie, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:titanic-wrong-pie)'}
 titanic_clean <- filter(
   titanic_all,
   class %in% c("1st", "2nd", "3rd") & sex %in% c("male", "female")
@@ -95,8 +99,9 @@ stamp_wrong(p_titanic_pie)
 ```
 
 
+(ref:titanic-bad-bars) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a bar plot. Unlike Figure \@ref(fig:titanic-wrong-pie), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
 
-```{r}
+```{r titanic-bad-bars, fig.cap = '(ref:titanic-bad-bars)'}
 p_titanic_bars <- ggplot(titanic_sex_class) +
   aes(type, percent, fill = type) +
   geom_col() +
@@ -250,17 +255,69 @@ ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interac
 
 ```
 
+(ref:titanic-parallel-sets1) *Figure caption.*
 
-```{r}
+```{r titanic-parallel-sets1, fig.cap = '(ref:titanic-parallel-sets1)'}
 data <- reshape2::melt(Titanic)
 data <- gather_set_data(data, 1:4)
+data$x <- factor(data$x, levels = c("Sex", "Age", "Class", "Survived"))
 
 ggplot(data, aes(x, id = id, split = y, value = value)) +
-  geom_parallel_sets(aes(fill = Sex), alpha = 0.3, axis.width = 0.1) +
-  geom_parallel_sets_axes(axis.width = 0.1) +
-  geom_parallel_sets_labels(colour = 'white') +
-  theme_dviz_open()
+  geom_parallel_sets(aes(fill = Survived), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+  geom_parallel_sets_labels(
+    color = 'black',
+    family = dviz_font_family,
+    size = 10/.pt,
+    angle = 90
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    expand = c(0, 0.3)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
+  scale_fill_manual(
+    values = c("#56B4E9", "#E69F00"),
+    guide = "none"
+  ) +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank()
+  )
 ```
 
+By changing the order of the groups and the variable used for coloring, we can highlight different aspects of the data. While Figure \@ref(fig:titanic-parallel-sets1) tells a story about who survived and who did not, Figure \@ref(fig:titanic-parallel-sets2) tells a story about crew and passengers traveling in different classes.
+
+
+(ref:titanic-parallel-sets2) *Figure caption.*
+
+```{r titanic-parallel-sets2, fig.cap = '(ref:titanic-parallel-sets2)'}
+data$x <- factor(data$x, levels = c("Class", "Age", "Sex", "Survived"))
+
+ggplot(data, aes(x, id = id, split = y, value = value)) +
+  geom_parallel_sets(aes(fill = Class), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+  geom_parallel_sets_labels(
+    color = 'black',
+    family = dviz_font_family,
+    size = 10/.pt,
+    angle = 90
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    expand = c(0, 0.3)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
+  scale_fill_manual(
+    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#56B4E9", Crew = "#F0E442"),
+    guide = "none"
+  ) +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank()
+  )
+```
 
 Add mosaic plot? https://stackoverflow.com/a/45688044/4975218

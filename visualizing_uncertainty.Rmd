@@ -171,3 +171,5 @@ ggplot(df_out, aes(x = mean, y = group)) +
   scale_fill_gradient(low = "#132B4300", high = "#56B1F7FF") +
   theme_minimal()
 ```
+
+Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-outcomes-plots-experiencing-the-uncertain-b9ea60d7c740
