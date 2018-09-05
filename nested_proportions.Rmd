@@ -2,6 +2,7 @@
 # run setup script
 source("_common.R")
 
+library(tibble)
 library(ggforce)
 library(treemapify)
 ```
@@ -14,31 +15,34 @@ library(treemapify)
 (ref:titanic-wrong-pie) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
 
 ```{r titanic-wrong-pie, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:titanic-wrong-pie)'}
-titanic_clean <- filter(
-  titanic_all,
-  class %in% c("1st", "2nd", "3rd") & sex %in% c("male", "female")
-)
+titanic_tidy <- reshape2::melt(Titanic)
+titanic_tidy_no_crew <- filter(titanic_tidy, Class != "Crew")
 
-titanic_sex <- filter(titanic_clean, age >= 16) %>%
-  group_by(sex) %>%
+n_passengers <- summarize(
+  titanic_tidy_no_crew,
+  count = sum(value)
+)$count
+
+titanic_sex <- filter(titanic_tidy_no_crew, Age != "Child") %>%
+  group_by(Sex) %>%
   summarize(
-    count = n(),
-    percent = round(100*count/nrow(titanic_clean), 1)
+    count = sum(value),
+    percent = round(100*count/n_passengers, 1)
   ) %>%
-  rename(type = sex) %>%
+  rename(type = Sex) %>%
   mutate(
     type = case_when(
-      type == "female" ~ "women",
-      type == "male" ~ "men"
+      type == "Female" ~ "women",
+      type == "Male" ~ "men"
     )
   )
 
-titanic_class <- group_by(titanic_clean, class) %>%
+titanic_class <- group_by(titanic_tidy_no_crew, Class) %>%
   summarize(
-    count = n(),
-    percent = round(100*count/nrow(titanic_clean), 1)
+    count = sum(value),
+    percent = round(100*count/n_passengers, 1)
   ) %>%
-  rename(type = class) %>%
+  rename(type = Class) %>%
   mutate(
     type = paste0(type, " class")
   )
@@ -101,12 +105,13 @@ stamp_wrong(p_titanic_pie)
 
 (ref:titanic-bad-bars) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a bar plot. Unlike Figure \@ref(fig:titanic-wrong-pie), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
 
-```{r titanic-bad-bars, fig.cap = '(ref:titanic-bad-bars)'}
+
+```{r titanic-bad-bars, fig.cap = '(ref:titanic-bad-bars2)'}
 p_titanic_bars <- ggplot(titanic_sex_class) +
   aes(type, percent, fill = type) +
   geom_col() +
   scale_y_continuous(
-    limits = c(0, 59),
+    limits = c(0, 65),
     expand = c(0, 0),
     labels = function(x) paste0(x, "%"),
     name = "proportion of passengers"
@@ -123,29 +128,30 @@ p_titanic_bars <- ggplot(titanic_sex_class) +
 
 stamp_bad(p_titanic_bars)
 ```
-
-```{r fig.width = 5, fig.asp = 0.8}
-titanic_nested <- titanic_clean %>%
+```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8}
+titanic_nested <- rename(titanic_tidy_no_crew, class = Class) %>%
   mutate(
     gender = factor(case_when(
-      sex == "male" & age >= 16 ~ "men",
-      sex == "female" & age >= 16 ~ "women",
+      Sex == "Male" & Age == "Adult" ~ "men",
+      Sex == "Female" & Age == "Adult" ~ "women",
       TRUE ~ "children"
     ), levels = c("men", "women", "children"))
   ) %>%
   group_by(class, gender) %>%
   summarize(
-    gender_count = n(),
-    gender_percent = round(100*gender_count/nrow(titanic_clean), 1)
+    gender_count = sum(value),
+    gender_percent = round(100*gender_count/n_passengers, 1)
   ) %>%
   ungroup() %>%
   left_join(
-    group_by(titanic_clean, class) %>%
+    rename(titanic_tidy_no_crew, class = Class) %>%
+      group_by(class) %>%
       summarize(
-        count = n(),
-        percent = round(100*count/nrow(titanic_clean), 1)
+        count = sum(value),
+        percent = round(100*count/n_passengers, 1)
       )
   )
+
 
 titanic_pie_outer <- titanic_nested %>%
   mutate(
@@ -233,8 +239,7 @@ p_titanic_pie <- ggplot() +
 p_titanic_pie
 ```
 
-
-```{r fig.asp = 3/4}
+```{r tianic_treemap, fig.asp = 3/4}
 ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interaction(class, gender))) +
   geom_treemap(color = "white", size = 0.5*.pt) + 
   geom_treemap_subgroup_text(
