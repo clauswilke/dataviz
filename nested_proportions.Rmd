@@ -2,7 +2,6 @@
 # run setup script
 source("_common.R")
 
-library(tibble)
 library(ggforce)
 library(treemapify)
 ```
@@ -87,7 +86,8 @@ p_titanic_pie <- ggplot(titanic_pie) +
       label = paste0(percent, "%")
     ),
     family = dviz_font_family,
-    size = 12/.pt
+    size = 12/.pt,
+    color = c("white", "black", "black", "black", "black")
   ) +
   coord_fixed(clip = "off") +
   scale_x_continuous(
@@ -95,6 +95,10 @@ p_titanic_pie <- ggplot(titanic_pie) +
   ) +
   scale_y_continuous(
     limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_fill_manual(
+    values = c(`1st class` = "#009E73", `2nd class` = "#E69F00", `3rd class` = "#F0E442",
+               men = "#0072B2", women = "#D55E00")
   ) +
   theme_dviz_map() +
   theme(legend.position = "none")
@@ -117,6 +121,10 @@ p_titanic_bars <- ggplot(titanic_sex_class) +
     name = "proportion of passengers"
   ) +
   scale_x_discrete(name = NULL) +
+  scale_fill_manual(
+    values = c(`1st class` = "#009E73", `2nd class` = "#E69F00", `3rd class` = "#F0E442",
+               men = "#0072B2", women = "#D55E00")
+  ) +
   coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
   theme(
@@ -128,7 +136,10 @@ p_titanic_bars <- ggplot(titanic_sex_class) +
 
 stamp_bad(p_titanic_bars)
 ```
-```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8}
+
+(ref:titanic-nested-pie) *Figure caption...*
+
+```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:titanic-nested-pie)'}
 titanic_nested <- rename(titanic_tidy_no_crew, class = Class) %>%
   mutate(
     gender = factor(case_when(
@@ -225,13 +236,16 @@ p_titanic_pie <- ggplot() +
     family = dviz_font_family,
     size = 12/.pt
   ) +
-
   coord_fixed(clip = "off") +
   scale_x_continuous(
     limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
   ) +
   scale_y_continuous(
     limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_fill_manual(
+    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#F0E442",
+               men = "#0072B2", women = "#D55E00")
   ) +
   theme_dviz_map() +
   theme(legend.position = "none")
