@@ -274,6 +274,18 @@ ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interac
 
 ```
 
+```{r}
+ggplot(titanic_nested) +
+  aes(x = class, y = gender_count, width = count, fill = gender) +
+  geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
+  geom_text(aes(label = gender_count), position = position_fill(vjust = 0.5)) + # if labels are desired
+  facet_grid(~class, scales = "free_x", space = "free_x") +
+  scale_fill_manual(
+    values = c("#fdae61", "#abdda4", "#66c2a5"), 
+    name = NULL) +
+  theme_dviz_map() 
+```
+
 (ref:titanic-parallel-sets1) *Figure caption.*
 
 ```{r titanic-parallel-sets1, fig.cap = '(ref:titanic-parallel-sets1)'}
