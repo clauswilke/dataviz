@@ -254,6 +254,9 @@ p_titanic_pie
 ```
 
 ```{r tianic_treemap, fig.asp = 3/4}
+filcols <- c("#66c2a5", "#fdae61", "#abdda4")
+filcols <- c(vapply(filcols, function(x) c(lighten(x, .2), x, lighten(x, -.1)), character(3)))
+
 ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interaction(class, gender))) +
   geom_treemap(color = "white", size = 0.5*.pt) + 
   geom_treemap_subgroup_text(
@@ -268,6 +271,7 @@ ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interac
     colour = "black", place = "centre",
     grow = FALSE
   ) +
+  scale_fill_manual(values = filcols) +
   coord_cartesian(clip = "off") +
   guides(colour = "none", fill = "none")
 
@@ -275,15 +279,51 @@ ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interac
 ```
 
 ```{r}
+titanic_nested$gender <- factor(titanic_nested$gender, levels = c("children", "women", "men"))
+
+labels_df <- group_by(titanic_nested, class) %>%
+  mutate(
+    y = (cumsum(gender_count) - 0.5*gender_count)/count,
+    y = ifelse(
+      class == "1st" & gender == "children",
+      (cumsum(gender_count) - 0*gender_count)/count,
+      y
+    )
+  )
+
 ggplot(titanic_nested) +
-  aes(x = class, y = gender_count, width = count, fill = gender) +
+  aes(x = class, y = gender_count, width = sqrt(count), fill = gender) +
   geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
-  geom_text(aes(label = gender_count), position = position_fill(vjust = 0.5)) + # if labels are desired
+  geom_text(
+    data = labels_df,
+    aes(y = y, label = gender_count)
+  ) +
   facet_grid(~class, scales = "free_x", space = "free_x") +
+  scale_y_continuous(
+    name = NULL,
+    breaks = NULL,
+    expand = expand_scale(mult = c(0, 0.02)),
+    sec.axis = dup_axis(
+      breaks = filter(labels_df, class == "3rd")$y,
+      labels = filter(labels_df, class == "3rd")$gender
+    )
+  ) +
+  scale_x_discrete(
+    breaks = c("1st", "2nd", "3rd"),
+    labels = c("1st class", "2nd class", "3rd class"),
+    name = NULL
+  ) +
   scale_fill_manual(
-    values = c("#fdae61", "#abdda4", "#66c2a5"), 
-    name = NULL) +
-  theme_dviz_map() 
+    values = c("#abdda4", "#fdae61", "#66c2a5"), 
+    guide = "none"
+  ) +
+  theme_dviz_grid(rel_small = 1) +
+  theme(
+    line = element_blank(),
+    strip.text = element_blank(),
+    panel.spacing.x = unit(0, "pt"),
+    axis.ticks.length = unit(0, "pt")
+  )
 ```
 
 (ref:titanic-parallel-sets1) *Figure caption.*
