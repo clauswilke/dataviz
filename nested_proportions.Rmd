@@ -6,10 +6,9 @@ library(ggforce)
 library(treemapify)
 ```
 
-# Visualizing nested or changing proportions {#nested-proportions}
+# Visualizing nested proportions {#nested-proportions}
 
-*The titanic figures in this chapter so far don't make sense, because they treat all people with unknown age as children. It would be better to rework the examples using the `Titanic` table which is used in the parallel sets example at the end.*
-
+*We need to note somewhere that the dataset used in this chapter is different from the other Titanic dataset.*
 
 (ref:titanic-wrong-pie) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
 
