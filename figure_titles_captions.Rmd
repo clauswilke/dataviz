@@ -18,7 +18,7 @@ Topics to cover in this chapter:
 
 ## Figure titles and captions
 
-Consider Figure \@ref(fig:corruption-development). This figure is inspired by a posting by @Economist-corruption, to which I have applied several subtle but important modifications. Besides updating the data to a more recent dataset (2015) and adapting the color and symbol styling so they follow the styling used throughout this book, I have incorporated another important deviation from the types of figures commonly displayed in venues such as The Economist: The figure does not have a title, nor does it provide information about the data sources. Instead, the figure is shown with a separate caption that describes the figure and the origin of the data shown. In fact, this is the style I am using throughout this book. None of the figures have integrated titles, and all have separate captions.
+Consider Figure \@ref(fig:corruption-development). This figure is inspired by a posting by @Economist-corruption, to which I have applied several subtle but important modifications. First, I have updated the data to a more recent dataset (2015) and adapted the color and symbol styling so they follow the styling used throughout this book. Second, and more importantly, I have incorporated another important deviation from the original: The figure does not have a title, nor does it provide information about the data sources. Instead, the figure is shown with a separate caption that describes the figure contents and the origin of the data shown. In fact, this is the style I am using throughout this book. None of the figures have integrated titles, and all have separate captions.
 
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
 
@@ -76,7 +76,7 @@ ggsave("figures/corruption_plot_base.png", plot_corrupt_base, width = 7, height 
 ggdraw() + draw_image("figures/corruption_plot_base.png")
 ```
 
-
+For comparison, I also provide a version of the figure that has these elements incorporated into the main display (Figure \@ref(fig:corruption-development-infographic)). In a direct comparison, you may find Figure \@ref(fig:corruption-development-infographic) more attractive than Figure \@ref(fig:corruption-development), and you may wonder why I am choosing the latter style throughout this book. 
 
 
 (ref:corruption-development-infographic) Figure \@ref(fig:corruption-development) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
