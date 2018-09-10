@@ -6,7 +6,7 @@ library(ggforce)
 library(treemapify)
 ```
 
-# Visualizing nested proportions {#nested-proportions}
+# Visualizing nested or changing proportions {#nested-proportions}
 
 *We need to note somewhere that the dataset used in this chapter is different from the other Titanic dataset.*
 
@@ -252,78 +252,114 @@ p_titanic_pie <- ggplot() +
 p_titanic_pie
 ```
 
-```{r tianic_treemap, fig.asp = 3/4}
-filcols <- c("#66c2a5", "#fdae61", "#abdda4")
-filcols <- c(vapply(filcols, function(x) c(lighten(x, .2), x, lighten(x, -.1)), character(3)))
-
-ggplot(titanic_nested, aes(area = gender_count, subgroup = class, fill = interaction(class, gender))) +
-  geom_treemap(color = "white", size = 0.5*.pt) + 
-  geom_treemap_subgroup_text(
-    family = dviz_font_family,
-    colour = "grey30", place = "centre", alpha = 0.7,
-    grow = TRUE
-  ) +
-  geom_treemap_subgroup_border(color = "white") +
-  geom_treemap_text(
-    aes(label = gender),
-    family = dviz_font_family,
-    colour = "black", place = "centre",
-    grow = FALSE
-  ) +
-  scale_fill_manual(values = filcols) +
-  coord_cartesian(clip = "off") +
-  guides(colour = "none", fill = "none")
-
-
-```
 
 ```{r}
-titanic_nested$gender <- factor(titanic_nested$gender, levels = c("children", "women", "men"))
-
-labels_df <- group_by(titanic_nested, class) %>%
+select(bridges, MATERIAL, ERECTED) %>%
+  table() %>% 
+  reshape2::melt() %>%
+  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
   mutate(
-    y = (cumsum(gender_count) - 0.5*gender_count)/count,
+    material = case_when(
+      material == "IRON" ~ "iron",
+      material == "STEEL" ~ "steel",
+      material == "WOOD" ~ "wood"
+    ),
+    erected = case_when(
+      erected == "CRAFTS" ~ "crafts",
+      erected == "EMERGING" ~ "emerging",
+      erected == "MATURE" ~ "mature",
+      erected == "MODERN" ~ "modern"
+   )
+  ) %>%
+  group_by(erected) %>%
+  mutate(group_count = sum(count)) -> bridges_tidy
+
+labels_df <- group_by(bridges_tidy, erected) %>%
+  filter(count != 0) %>%
+  arrange(desc(material)) %>%
+  mutate(
+    y = (cumsum(count) - 0.5*count)/group_count,
     y = ifelse(
-      class == "1st" & gender == "children",
-      (cumsum(gender_count) - 0*gender_count)/count,
-      y
+      erected == "mature" & material == "wood", NA, y
     )
   )
 
-ggplot(titanic_nested) +
-  aes(x = class, y = gender_count, width = sqrt(count), fill = gender) +
+ggplot(bridges_tidy) +
+  aes(x = erected, y = count, width = sqrt(group_count), fill = material) +
   geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
   geom_text(
     data = labels_df,
-    aes(y = y, label = gender_count)
+    aes(y = y, label = count, color = material),
+    na.rm = TRUE,
+    size = 12/.pt,
+    family = dviz_font_family
   ) +
-  facet_grid(~class, scales = "free_x", space = "free_x") +
+  facet_grid(~erected, scales = "free_x", space = "free_x") +
   scale_y_continuous(
     name = NULL,
-    breaks = NULL,
-    expand = expand_scale(mult = c(0, 0.02)),
+    #breaks = NULL,
+    expand = c(0, 0),
+    breaks = filter(labels_df, erected == "crafts")$y,
+    labels = filter(labels_df, erected == "crafts")$material,
     sec.axis = dup_axis(
-      breaks = filter(labels_df, class == "3rd")$y,
-      labels = filter(labels_df, class == "3rd")$gender
+      breaks = filter(labels_df, erected == "modern")$y,
+      labels = filter(labels_df, erected == "modern")$material
     )
   ) +
   scale_x_discrete(
-    breaks = c("1st", "2nd", "3rd"),
-    labels = c("1st class", "2nd class", "3rd class"),
     name = NULL
   ) +
   scale_fill_manual(
-    values = c("#abdda4", "#fdae61", "#66c2a5"), 
+    values = c("#D55E00", "#0072B2", "#009E73"), 
     guide = "none"
   ) +
+  scale_color_manual(
+    values = c(iron = "white", wood = "white", steel = "white"),
+    guide = "none"
+  ) +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid(rel_small = 1) +
   theme(
     line = element_blank(),
     strip.text = element_blank(),
-    panel.spacing.x = unit(0, "pt"),
-    axis.ticks.length = unit(0, "pt")
+    axis.ticks.length = unit(0, "pt"),
+    panel.spacing.x = unit(0, "pt")
   )
 ```
+
+
+```{r bridges_treemap, fig.asp = 3/4}
+filcols <- c("#D55E00", "#0072B2", "#009E73")
+filcols <- c(vapply(filcols, function(x) c(lighten(x, .9), lighten(x, .6), lighten(x, .3), x), character(4)))
+
+ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(erected, material))) +
+  geom_treemap(color = "white", size = 0.5*.pt) + 
+  geom_treemap_subgroup_text(
+    family = dviz_font_family,
+    colour = rep(c("grey50", "grey70", "grey50"), 4),
+    place = "centre", alpha = 0.7,
+    grow = TRUE
+  ) +
+  geom_treemap_subgroup_border(color = "white") +
+  geom_treemap_text(
+    aes(label = erected, color = interaction(erected, material)),
+    family = dviz_font_family,
+    place = "centre",
+    grow = FALSE
+  ) +
+  scale_fill_manual(values = filcols) +
+  scale_color_manual(values = c(
+    crafts.iron = "black", crafts.steel = "black", crafts.wood = "black",
+    emerging.iron = "black", emerging.steel = "black", emerging.wood = "black",
+    mature.iron = "black", mature.steel = "white", mature.wood = "black",
+    modern.iron = "white", modern.steel = "white", modern.wood = "white")
+  ) +
+  coord_cartesian(clip = "off") +
+  guides(colour = "none", fill = "none")
+
+```
+
+
 
 (ref:titanic-parallel-sets1) *Figure caption.*
 
