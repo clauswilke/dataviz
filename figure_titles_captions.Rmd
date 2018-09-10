@@ -10,15 +10,12 @@ library(tibble)
 
 # Putting data into context: Titles, captions, labels, and tables {#figure-titles-captions}
 
-Topics to cover in this chapter:
+*Need a brief intro paragraph here.*
 
-- Figure and table captions.
-- Locations of figure and table captions. (Figure captions below, table captions above.)
-- Axis and legend titles (when do we need them, when can we leave them out?)
 
 ## Figure titles and captions
 
-Consider Figure \@ref(fig:corruption-development). This figure is inspired by a posting by @Economist-corruption, to which I have applied several subtle but important modifications. First, I have updated the data to a more recent dataset (2015) and adapted the color and symbol styling so they follow the styling used throughout this book. Second, and more importantly, I have incorporated another important deviation from the original: The figure does not have a title, nor does it provide information about the data sources. Instead, the figure is shown with a separate caption that describes the figure contents and the origin of the data shown. In fact, this is the style I am using throughout this book. None of the figures have integrated titles, and all have separate captions.
+Consider Figure \@ref(fig:corruption-development). This figure is inspired by a posting in @Economist-corruption. I have recreated their figure with several subtle but important modifications. First, I have updated the data to a more recent dataset (2015) and adapted the color and symbol styling so they follow the styling used throughout this book. Second, and more importantly, I have drawn the actual figure without title or statement about the data sources used. These pieces of information are instead provided in the caption block underneath the figure display. This is the style I am using throughout this book. I consistently show figures without integrated titles and with separate captions. (One exception are the stylized plot examples in Chapter \@ref(directory-of-visualizations), which instead have titles and no captions.)
 
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
 
@@ -76,8 +73,7 @@ ggsave("figures/corruption_plot_base.png", plot_corrupt_base, width = 7, height 
 ggdraw() + draw_image("figures/corruption_plot_base.png")
 ```
 
-For comparison, I also provide a version of the figure that has these elements incorporated into the main display (Figure \@ref(fig:corruption-development-infographic)). In a direct comparison, you may find Figure \@ref(fig:corruption-development-infographic) more attractive than Figure \@ref(fig:corruption-development), and you may wonder why I am choosing the latter style throughout this book. 
-
+For comparison, here I also provide a version of the figure that has these elements incorporated into the main display (Figure \@ref(fig:corruption-development-infographic)). In a direct comparison, you may find Figure \@ref(fig:corruption-development-infographic) more attractive than Figure \@ref(fig:corruption-development), and you may wonder why I am choosing the latter style throughout this book. I do so because the two styles have different application areas, and figures with integrated titles are not appropriate for conventional book layouts. The underlying principle is that a figure can have only one title. Either the title is integrated into the actual figure display or it is provided as the first element of the caption underneath the figure. And, if a publication is laid out such that each figure has a regular caption block underneath the display item, then the title *must* be provided in that block of text. For this reason, in the context of conventional book or article publishing, we do not normally integrate titles into figures. Figures with integrated titles, subtitles, and data source statements are appropriate, however, if they are meant to be used as stand-alone infographics or to be posted on social media or on a web page without accompanying caption text.
 
 (ref:corruption-development-infographic) Figure \@ref(fig:corruption-development) reformatted to be posted on the web or to be used as an infographic. The title, subtitle, and data source statements have been incorporated into the figure.
 
@@ -100,6 +96,14 @@ plot_grid(plot_corrupt_title,
           ncol = 1, rel_heights = c(.12, 1, .07))
 ```
 
+```{block type='rmdtip', echo=TRUE}
+If your document layout uses caption blocks underneath each figure, then place the figure titles as the first element of each caption block, not on top of the figures.
+```
+
+
+## Axis and legend titles
+
+*Discuss when we need axis and legend titles and when we can leave them out. Maybe a plot showing a timeline, with an absurd x axis title listing date with units.*
 
 ## Tables
 
