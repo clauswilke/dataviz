@@ -8,10 +8,16 @@ library(treemapify)
 
 # Visualizing nested proportions {#nested-proportions}
 
-(ref:bridges-pie-wrong)  **Fix caption.** Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
+(ref:bridges-pie-wrong)  Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between construction material and date of construction. For example, all modern bridges are made of steel, and the majority of crafts bridges are made of wood.
 
 
 ```{r bridges-pie-wrong, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:bridges-pie-wrong)'}
+
+# crafts: before 1870
+# emerging: 1870 -- 1889
+# mature: 1890 -- 1939
+# modern: after 1940
+
 select(bridges, MATERIAL, ERECTED) %>%
   table() %>% 
   reshape2::melt() %>%
@@ -115,8 +121,7 @@ stamp_wrong(p_bridges_pie)
 ```
 
 
-(ref:bridges-bars-bad) **Fix caption.** Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a bar plot. Unlike Figure \@ref(fig:titanic-wrong-pie), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
-
+(ref:bridges-bars-bad) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a bar plot. Unlike Figure \@ref(fig:bridges-pie-wrong), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
 
 
 ```{r bridges-bars-bad, fig.cap = '(ref:bridges-bars-bad)'}
@@ -146,7 +151,7 @@ p_bridges_bars <- ggplot(bridges_material_erected) +
 stamp_bad(p_bridges_bars)
 ```
 
-(ref:bridges-mosaic) **Mosaic plot**
+(ref:bridges-mosaic) **Mosaic plot** Note that unlike in a stacked bar plot, in a mosaic plot both the height and the width of individual shaded areas vary. The 
 
 ```{r bridges-mosaic, fig.cap = '(ref:bridges-mosaic)'}
 select(bridges, MATERIAL, ERECTED) %>%
@@ -180,7 +185,7 @@ labels_df <- group_by(bridges_tidy, erected) %>%
   )
 
 ggplot(bridges_tidy) +
-  aes(x = erected, y = count, width = sqrt(group_count), fill = material) +
+  aes(x = erected, y = count, width = group_count, fill = material) +
   geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
   geom_text(
     data = labels_df,
