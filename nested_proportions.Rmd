@@ -262,6 +262,39 @@ ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(e
 ```
 
 
+```{r}
+population_df <- left_join(US_census, US_regions) %>%
+    group_by(region, division, state) %>%
+    summarize(
+      pop2000 = sum(pop2000, na.rm = TRUE),
+      pop2010 = sum(pop2010, na.rm = TRUE),
+      area = sum(area)
+    ) %>%
+    ungroup() %>%
+    mutate(
+      state = factor(state, levels = state),
+      region = factor(region, levels = c("West", "South", "Midwest", "Northeast"))
+    )
+
+ggplot(population_df, aes(area = area, subgroup = region, fill = log(pop2010/area))) +
+  geom_treemap(color = "white", size = 0.5*.pt, alpha = NA) + 
+  geom_treemap_subgroup_text(
+    family = dviz_font_family,
+    colour = "grey50",
+    place = "centre", alpha = 0.7,
+    grow = TRUE
+  ) +
+  geom_treemap_subgroup_border(color = "white") +
+  geom_treemap_text(
+    aes(label = state),
+    color = "black",
+    family = dviz_font_family,
+    place = "centre",
+    grow = FALSE
+  ) +
+  scale_fill_viridis_c(option = "C", guide = "none")
+```
+
 (ref:titanic-nested-pie) *Figure caption...*
 
 ```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:titanic-nested-pie)'}
@@ -424,6 +457,85 @@ p_titanic_pie <- ggplot() +
 p_titanic_pie
 ```
 
+*Rules:*
+
+- Color by a variable that lies on the end 
+
+
+
+```{r}
+select(bridges, MATERIAL, ERECTED, RIVER, LENGTH) %>%
+  table() %>% 
+  reshape2::melt() %>%
+  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
+  mutate(
+    material = case_when(
+      material == "IRON" ~ "iron",
+      material == "STEEL" ~ "steel",
+      material == "WOOD" ~ "wood"
+    ),
+    erected = case_when(
+      erected == "CRAFTS" ~ "crafts",
+      erected == "EMERGING" ~ "emerging",
+      erected == "MATURE" ~ "mature",
+      erected == "MODERN" ~ "modern"
+   )
+  ) -> data
+
+data <- gather_set_data(data, 1:4)
+data$x <- factor(data$x, levels = c("material", "erected", "LENGTH", "RIVER"))
+
+ggplot(data, aes(x, id = id, split = y, value = count)) +
+  geom_parallel_sets(aes(fill = material), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+  geom_parallel_sets_labels(
+    color = 'black',
+    family = dviz_font_family,
+    size = 10/.pt,
+    angle = 90
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    expand = c(0, 0.3)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
+  scale_fill_manual(
+    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0"),
+    guide = "none"
+  ) +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+```
+
+```{r}
+ggplot(data, aes(x, id = id, split = y, value = count)) +
+  geom_parallel_sets(aes(fill = RIVER), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+  geom_parallel_sets_labels(
+    color = 'black',
+    family = dviz_font_family,
+    size = 10/.pt,
+    angle = 90
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    expand = c(0, 0.3)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
+#  scale_fill_manual(
+#    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0"),
+#    guide = "none"
+#  ) +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank()
+  )
+```
 
 (ref:titanic-parallel-sets1) *Figure caption.*
 
