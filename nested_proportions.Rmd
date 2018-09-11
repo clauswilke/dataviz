@@ -6,13 +6,260 @@ library(ggforce)
 library(treemapify)
 ```
 
-# Visualizing nested or changing proportions {#nested-proportions}
+# Visualizing nested proportions {#nested-proportions}
 
-*We need to note somewhere that the dataset used in this chapter is different from the other Titanic dataset.*
+(ref:bridges-pie-wrong)  **Fix caption.** Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
 
-(ref:titanic-wrong-pie) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between passenger classes and passenger gender, as every female and male passenger travelled in either 1st, 2nd, or 3rd class.
 
-```{r titanic-wrong-pie, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:titanic-wrong-pie)'}
+```{r bridges-pie-wrong, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:bridges-pie-wrong)'}
+select(bridges, MATERIAL, ERECTED) %>%
+  table() %>% 
+  reshape2::melt() %>%
+  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
+  mutate(
+    material = case_when(
+      material == "IRON" ~ "iron",
+      material == "STEEL" ~ "steel",
+      material == "WOOD" ~ "wood"
+    ),
+    erected = case_when(
+      erected == "CRAFTS" ~ "crafts",
+      erected == "EMERGING" ~ "emerging",
+      erected == "MATURE" ~ "mature",
+      erected == "MODERN" ~ "modern"
+   )
+  ) %>%
+  group_by(erected) %>%
+  mutate(group_count = sum(count)) -> bridges_tidy
+
+
+n_total <- sum(bridges_tidy$count)
+
+bridges_erected <- filter(bridges_tidy, erected %in% c("crafts", "modern")) %>%
+  group_by(erected) %>%
+  summarize(
+    count = sum(count),
+    percent = round(100*count/n_total, 1)
+  ) %>%
+  rename(type = erected)
+
+bridges_material <- group_by(bridges_tidy, material) %>%
+  summarize(
+    count = sum(count),
+    percent = round(100*count/n_total, 1)
+  ) %>%
+  rename(type = material)
+
+bridges_material_erected <- rbind(bridges_material, bridges_erected) %>%
+  mutate(
+    type = factor(type, levels = c("steel", "wood", "iron", "modern", "crafts"))
+  ) %>%
+  arrange(type)
+
+bridges_pie <- bridges_material_erected %>%
+  mutate(
+    count_total = sum(count),
+    end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1)
+  )
+
+rpie = 1
+rlabel = 1.05 * rpie
+
+p_bridges_pie <- ggplot(bridges_pie) + 
+  geom_arc_bar(
+    aes(
+      x0 = 0, y0 = 0, r0 = 0, r = rpie,
+      start = start_angle, end = end_angle, fill = type
+    ),
+    color = "white", size = 0.5
+  ) +
+  geom_text(
+    aes(
+      x = rlabel*sin(mid_angle),
+      y = rlabel*cos(mid_angle),
+      label = type,
+      hjust = hjust, vjust = vjust
+    ),
+    family = dviz_font_family,
+    size = 14/.pt
+  ) +
+  geom_text(
+    aes(
+      x = 0.6*sin(mid_angle),
+      y = 0.6*cos(mid_angle),
+      label = paste0(percent, "%")
+    ),
+    family = dviz_font_family,
+    size = 12/.pt,
+    color = c("white", "white", "white", "black", "black")
+  ) +
+  coord_fixed(clip = "off") +
+  scale_x_continuous(
+    limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_y_continuous(
+    limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_fill_manual(
+    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0",
+               crafts = "#F0E442D0", modern = "#56B4E9D0")
+  ) +
+  theme_dviz_map() +
+  theme(legend.position = "none")
+
+stamp_wrong(p_bridges_pie)
+```
+
+
+(ref:bridges-bars-bad) **Fix caption.** Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a bar plot. Unlike Figure \@ref(fig:titanic-wrong-pie), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
+
+
+
+```{r bridges-bars-bad, fig.cap = '(ref:bridges-bars-bad)'}
+p_bridges_bars <- ggplot(bridges_material_erected) +
+  aes(type, percent, fill = type) +
+  geom_col() +
+  scale_y_continuous(
+    limits = c(0, 75),
+    expand = c(0, 0),
+    labels = function(x) paste0(x, "%"),
+    name = "proportion of bridges"
+  ) +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(
+    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0",
+               crafts = "#F0E442D0", modern = "#56B4E9D0")
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid() +
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(3.5, 7, 3.5, 0)
+  )
+
+stamp_bad(p_bridges_bars)
+```
+
+(ref:bridges-mosaic) **Mosaic plot**
+
+```{r bridges-mosaic, fig.cap = '(ref:bridges-mosaic)'}
+select(bridges, MATERIAL, ERECTED) %>%
+  table() %>% 
+  reshape2::melt() %>%
+  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
+  mutate(
+    material = case_when(
+      material == "IRON" ~ "iron",
+      material == "STEEL" ~ "steel",
+      material == "WOOD" ~ "wood"
+    ),
+    erected = case_when(
+      erected == "CRAFTS" ~ "crafts",
+      erected == "EMERGING" ~ "emerging",
+      erected == "MATURE" ~ "mature",
+      erected == "MODERN" ~ "modern"
+   )
+  ) %>%
+  group_by(erected) %>%
+  mutate(group_count = sum(count)) -> bridges_tidy
+
+labels_df <- group_by(bridges_tidy, erected) %>%
+  filter(count != 0) %>%
+  arrange(desc(material)) %>%
+  mutate(
+    y = (cumsum(count) - 0.5*count)/group_count,
+    y = ifelse(
+      erected == "mature" & material == "wood", NA, y
+    )
+  )
+
+ggplot(bridges_tidy) +
+  aes(x = erected, y = count, width = sqrt(group_count), fill = material) +
+  geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
+  geom_text(
+    data = labels_df,
+    aes(y = y, label = count, color = material),
+    na.rm = TRUE,
+    size = 12/.pt,
+    family = dviz_font_family
+  ) +
+  facet_grid(~erected, scales = "free_x", space = "free_x") +
+  scale_y_continuous(
+    name = NULL,
+    #breaks = NULL,
+    expand = c(0, 0),
+    breaks = filter(labels_df, erected == "crafts")$y,
+    labels = filter(labels_df, erected == "crafts")$material,
+    sec.axis = dup_axis(
+      breaks = filter(labels_df, erected == "modern")$y,
+      labels = filter(labels_df, erected == "modern")$material
+    )
+  ) +
+  scale_x_discrete(
+    name = NULL
+  ) +
+  scale_fill_manual(
+    values = c("#D55E00D0", "#0072B2D0", "#009E73D0"), 
+    guide = "none"
+  ) +
+  scale_color_manual(
+    values = c(iron = "white", wood = "white", steel = "white"),
+    guide = "none"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_grid(rel_small = 1) +
+  theme(
+    line = element_blank(),
+    strip.text = element_blank(),
+    axis.ticks.length = unit(0, "pt"),
+    panel.spacing.x = unit(0, "pt")
+  )
+```
+
+(ref:bridges-treemap) **Treemap**
+
+
+```{r bridges-treemap, fig.asp = 3/4, fig.cap = '(ref:bridges-treemap)'}
+filcols <- c("#D55E00D0", "#0072B2D0", "#009E73D0")
+filcols <- c(vapply(filcols, function(x) c(lighten(x, .9), lighten(x, .6), lighten(x, .3), x), character(4)))
+
+ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(erected, material))) +
+  geom_treemap(color = "white", size = 0.5*.pt, alpha = NA) + 
+  geom_treemap_subgroup_text(
+    family = dviz_font_family,
+    colour = "grey50",
+    place = "centre", alpha = 0.7,
+    grow = TRUE
+  ) +
+  geom_treemap_subgroup_border(color = "white") +
+  geom_treemap_text(
+    aes(label = erected, color = interaction(erected, material)),
+    family = dviz_font_family,
+    place = "centre",
+    grow = FALSE
+  ) +
+  scale_fill_manual(values = filcols) +
+  scale_color_manual(values = c(
+    crafts.iron = "black", crafts.steel = "black", crafts.wood = "black",
+    emerging.iron = "black", emerging.steel = "black", emerging.wood = "black",
+    mature.iron = "black", mature.steel = "black", mature.wood = "black",
+    modern.iron = "white", modern.steel = "white", modern.wood = "white")
+  ) +
+  coord_cartesian(clip = "off") +
+  guides(colour = "none", fill = "none")
+
+```
+
+
+(ref:titanic-nested-pie) *Figure caption...*
+
+```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:titanic-nested-pie)'}
 titanic_tidy <- reshape2::melt(Titanic)
 titanic_tidy_no_crew <- filter(titanic_tidy, Class != "Crew")
 
@@ -20,6 +267,7 @@ n_passengers <- summarize(
   titanic_tidy_no_crew,
   count = sum(value)
 )$count
+
 
 titanic_sex <- filter(titanic_tidy_no_crew, Age != "Child") %>%
   group_by(Sex) %>%
@@ -57,88 +305,6 @@ titanic_pie <- titanic_sex_class %>%
     vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1)
   )
 
-rpie = 1
-rlabel = 1.05 * rpie
-
-p_titanic_pie <- ggplot(titanic_pie) + 
-  geom_arc_bar(
-    aes(
-      x0 = 0, y0 = 0, r0 = 0, r = rpie,
-      start = start_angle, end = end_angle, fill = type
-    ),
-    color = "white", size = 0.5
-  ) +
-  geom_text(
-    aes(
-      x = rlabel*sin(mid_angle),
-      y = rlabel*cos(mid_angle),
-      label = type,
-      hjust = hjust, vjust = vjust
-    ),
-    family = dviz_font_family,
-    size = 14/.pt
-  ) +
-  geom_text(
-    aes(
-      x = 0.6*sin(mid_angle),
-      y = 0.6*cos(mid_angle),
-      label = paste0(percent, "%")
-    ),
-    family = dviz_font_family,
-    size = 12/.pt,
-    color = c("white", "black", "black", "black", "black")
-  ) +
-  coord_fixed(clip = "off") +
-  scale_x_continuous(
-    limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
-  ) +
-  scale_y_continuous(
-    limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
-  ) +
-  scale_fill_manual(
-    values = c(`1st class` = "#009E73", `2nd class` = "#E69F00", `3rd class` = "#F0E442",
-               men = "#0072B2", women = "#D55E00")
-  ) +
-  theme_dviz_map() +
-  theme(legend.position = "none")
-
-stamp_wrong(p_titanic_pie)
-```
-
-
-(ref:titanic-bad-bars) Breakdown of passenger on the Titanic by class (1st, 2nd, or 3rd) and by gender (women or men, excluding children under the age of 16), shown as a bar plot. Unlike Figure \@ref(fig:titanic-wrong-pie), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
-
-
-```{r titanic-bad-bars, fig.cap = '(ref:titanic-bad-bars2)'}
-p_titanic_bars <- ggplot(titanic_sex_class) +
-  aes(type, percent, fill = type) +
-  geom_col() +
-  scale_y_continuous(
-    limits = c(0, 65),
-    expand = c(0, 0),
-    labels = function(x) paste0(x, "%"),
-    name = "proportion of passengers"
-  ) +
-  scale_x_discrete(name = NULL) +
-  scale_fill_manual(
-    values = c(`1st class` = "#009E73", `2nd class` = "#E69F00", `3rd class` = "#F0E442",
-               men = "#0072B2", women = "#D55E00")
-  ) +
-  coord_cartesian(clip = "off") +
-  theme_dviz_hgrid() +
-  theme(
-    axis.line.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "none",
-    plot.margin = margin(3.5, 7, 3.5, 0)
-  )
-
-stamp_bad(p_titanic_bars)
-```
-
-(ref:titanic-nested-pie) *Figure caption...*
-
-```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:titanic-nested-pie)'}
 titanic_nested <- rename(titanic_tidy_no_crew, class = Class) %>%
   mutate(
     gender = factor(case_when(
@@ -188,9 +354,10 @@ titanic_pie_inner <- titanic_nested %>%
   ) %>%
   select(-gender, -gender_count, -gender_percent)
 
-rpie1 = 0.6
-rpie2 = 1
-rlabel = 1.05 * rpie
+rpie <- 1
+rpie1 <- 0.6
+rpie2 <- 1
+rlabel <- 1.05 * rpie
 
 p_titanic_pie <- ggplot() + 
   geom_arc_bar(data = titanic_pie_outer,
@@ -251,114 +418,6 @@ p_titanic_pie <- ggplot() +
 
 p_titanic_pie
 ```
-
-
-```{r}
-select(bridges, MATERIAL, ERECTED) %>%
-  table() %>% 
-  reshape2::melt() %>%
-  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
-  mutate(
-    material = case_when(
-      material == "IRON" ~ "iron",
-      material == "STEEL" ~ "steel",
-      material == "WOOD" ~ "wood"
-    ),
-    erected = case_when(
-      erected == "CRAFTS" ~ "crafts",
-      erected == "EMERGING" ~ "emerging",
-      erected == "MATURE" ~ "mature",
-      erected == "MODERN" ~ "modern"
-   )
-  ) %>%
-  group_by(erected) %>%
-  mutate(group_count = sum(count)) -> bridges_tidy
-
-labels_df <- group_by(bridges_tidy, erected) %>%
-  filter(count != 0) %>%
-  arrange(desc(material)) %>%
-  mutate(
-    y = (cumsum(count) - 0.5*count)/group_count,
-    y = ifelse(
-      erected == "mature" & material == "wood", NA, y
-    )
-  )
-
-ggplot(bridges_tidy) +
-  aes(x = erected, y = count, width = sqrt(group_count), fill = material) +
-  geom_bar(stat = "identity", position = "fill", colour = "white", size = 1) +
-  geom_text(
-    data = labels_df,
-    aes(y = y, label = count, color = material),
-    na.rm = TRUE,
-    size = 12/.pt,
-    family = dviz_font_family
-  ) +
-  facet_grid(~erected, scales = "free_x", space = "free_x") +
-  scale_y_continuous(
-    name = NULL,
-    #breaks = NULL,
-    expand = c(0, 0),
-    breaks = filter(labels_df, erected == "crafts")$y,
-    labels = filter(labels_df, erected == "crafts")$material,
-    sec.axis = dup_axis(
-      breaks = filter(labels_df, erected == "modern")$y,
-      labels = filter(labels_df, erected == "modern")$material
-    )
-  ) +
-  scale_x_discrete(
-    name = NULL
-  ) +
-  scale_fill_manual(
-    values = c("#D55E00", "#0072B2", "#009E73"), 
-    guide = "none"
-  ) +
-  scale_color_manual(
-    values = c(iron = "white", wood = "white", steel = "white"),
-    guide = "none"
-  ) +
-  coord_cartesian(clip = "off") +
-  theme_dviz_grid(rel_small = 1) +
-  theme(
-    line = element_blank(),
-    strip.text = element_blank(),
-    axis.ticks.length = unit(0, "pt"),
-    panel.spacing.x = unit(0, "pt")
-  )
-```
-
-
-```{r bridges_treemap, fig.asp = 3/4}
-filcols <- c("#D55E00", "#0072B2", "#009E73")
-filcols <- c(vapply(filcols, function(x) c(lighten(x, .9), lighten(x, .6), lighten(x, .3), x), character(4)))
-
-ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(erected, material))) +
-  geom_treemap(color = "white", size = 0.5*.pt) + 
-  geom_treemap_subgroup_text(
-    family = dviz_font_family,
-    colour = rep(c("grey50", "grey70", "grey50"), 4),
-    place = "centre", alpha = 0.7,
-    grow = TRUE
-  ) +
-  geom_treemap_subgroup_border(color = "white") +
-  geom_treemap_text(
-    aes(label = erected, color = interaction(erected, material)),
-    family = dviz_font_family,
-    place = "centre",
-    grow = FALSE
-  ) +
-  scale_fill_manual(values = filcols) +
-  scale_color_manual(values = c(
-    crafts.iron = "black", crafts.steel = "black", crafts.wood = "black",
-    emerging.iron = "black", emerging.steel = "black", emerging.wood = "black",
-    mature.iron = "black", mature.steel = "white", mature.wood = "black",
-    modern.iron = "white", modern.steel = "white", modern.wood = "white")
-  ) +
-  coord_cartesian(clip = "off") +
-  guides(colour = "none", fill = "none")
-
-```
-
 
 
 (ref:titanic-parallel-sets1) *Figure caption.*
