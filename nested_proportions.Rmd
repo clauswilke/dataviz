@@ -262,7 +262,7 @@ ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(e
 ```
 
 
-```{r}
+```{r fig.width = 8.5}
 population_df <- left_join(US_census, US_regions) %>%
     group_by(region, division, state) %>%
     summarize(
@@ -276,11 +276,37 @@ population_df <- left_join(US_census, US_regions) %>%
       region = factor(region, levels = c("West", "South", "Midwest", "Northeast"))
     )
 
-ggplot(population_df, aes(area = area, subgroup = region, fill = log(pop2010/area))) +
+## manually add colors
+# hues
+hues <- c(300, 50, 250, 100) # purple, brown, blue, green
+hues <- c(50, 100, 250, 300) # brown, green, blue, purple
+
+# minimum and maximum population density
+minpop <- min(population_df$pop2010)
+maxpop <- max(population_df$pop2010)
+
+# turn pop density into color
+population_df_color <- population_df %>%
+  mutate(index = as.numeric(factor(region))) %>%
+  group_by(index) %>%
+  mutate(
+    value = (pop2010-minpop)/(maxpop-minpop),
+    fill = scales::gradient_n_pal(
+      colorspace::sequential_hcl(
+        6,
+        h = hues[index[1]],
+        c = c(45, 20),
+        l = c(30, 80),
+        power = .5
+      )
+    )(1-value)
+  )
+
+ggplot(population_df_color, aes(area = area, subgroup = region, fill = fill)) +
   geom_treemap(color = "white", size = 0.5*.pt, alpha = NA) + 
   geom_treemap_subgroup_text(
     family = dviz_font_family,
-    colour = "grey50",
+    colour = "white",
     place = "centre", alpha = 0.7,
     grow = TRUE
   ) +
@@ -292,7 +318,9 @@ ggplot(population_df, aes(area = area, subgroup = region, fill = log(pop2010/are
     place = "centre",
     grow = FALSE
   ) +
-  scale_fill_viridis_c(option = "C", guide = "none")
+  scale_fill_identity() +
+  coord_cartesian(clip = "off") +
+  guides(colour = "none", fill = "none")
 ```
 
 (ref:titanic-nested-pie) *Figure caption...*
