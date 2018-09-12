@@ -323,92 +323,15 @@ ggplot(population_df_color, aes(area = area, subgroup = region, fill = fill)) +
   guides(colour = "none", fill = "none")
 ```
 
-(ref:titanic-nested-pie) *Figure caption...*
+(ref:bridges-nested-pie) *Figure caption...*
 
-```{r titanic-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:titanic-nested-pie)'}
-titanic_tidy <- reshape2::melt(Titanic)
-titanic_tidy_no_crew <- filter(titanic_tidy, Class != "Crew")
+```{r bridges-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:bridges-nested-pie)'}
+bridges_arranged <-
+  ungroup(bridges_tidy) %>%
+  mutate(material = factor(material, levels = c("wood", "iron", "steel"))) %>%
+  arrange(material)
 
-n_passengers <- summarize(
-  titanic_tidy_no_crew,
-  count = sum(value)
-)$count
-
-
-titanic_sex <- filter(titanic_tidy_no_crew, Age != "Child") %>%
-  group_by(Sex) %>%
-  summarize(
-    count = sum(value),
-    percent = round(100*count/n_passengers, 1)
-  ) %>%
-  rename(type = Sex) %>%
-  mutate(
-    type = case_when(
-      type == "Female" ~ "women",
-      type == "Male" ~ "men"
-    )
-  )
-
-titanic_class <- group_by(titanic_tidy_no_crew, Class) %>%
-  summarize(
-    count = sum(value),
-    percent = round(100*count/n_passengers, 1)
-  ) %>%
-  rename(type = Class) %>%
-  mutate(
-    type = paste0(type, " class")
-  )
-
-titanic_sex_class <- rbind(titanic_sex, titanic_class)
-
-titanic_pie <- titanic_sex_class %>%
-  mutate(
-    count_total = sum(count),
-    end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
-    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
-    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
-    hjust = ifelse(mid_angle>pi, 1, 0),
-    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1)
-  )
-
-titanic_nested <- rename(titanic_tidy_no_crew, class = Class) %>%
-  mutate(
-    gender = factor(case_when(
-      Sex == "Male" & Age == "Adult" ~ "men",
-      Sex == "Female" & Age == "Adult" ~ "women",
-      TRUE ~ "children"
-    ), levels = c("men", "women", "children"))
-  ) %>%
-  group_by(class, gender) %>%
-  summarize(
-    gender_count = sum(value),
-    gender_percent = round(100*gender_count/n_passengers, 1)
-  ) %>%
-  ungroup() %>%
-  left_join(
-    rename(titanic_tidy_no_crew, class = Class) %>%
-      group_by(class) %>%
-      summarize(
-        count = sum(value),
-        percent = round(100*count/n_passengers, 1)
-      )
-  )
-
-
-titanic_pie_outer <- titanic_nested %>%
-  mutate(
-    count_total = sum(gender_count),
-    end_angle = 2*pi*cumsum(gender_count)/count_total,   # ending angle for each pie slice
-    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
-    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
-    hjust = ifelse(mid_angle>pi, 1, 0),
-    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
-    type = gender
-  ) %>%
-  filter(gender != "children")
-
-titanic_pie_inner <- titanic_nested %>%
-  filter(gender == "men") %>%
+bridges_pie_outer <- bridges_arranged %>%
   mutate(
     count_total = sum(count),
     end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
@@ -416,50 +339,63 @@ titanic_pie_inner <- titanic_nested %>%
     mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
     hjust = ifelse(mid_angle>pi, 1, 0),
     vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
-    type = class
+    type = erected
   ) %>%
-  select(-gender, -gender_count, -gender_percent)
+  filter(erected %in% c("crafts", "modern"), count != 0)
+
+bridges_pie_inner <- bridges_arranged %>%
+  group_by(material) %>%
+  summarize(count = sum(count)) %>%
+  mutate(
+    count_total = sum(count),
+    end_angle = 2*pi*cumsum(count)/count_total,   # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
+    type = material
+  ) 
 
 rpie <- 1
 rpie1 <- 0.6
 rpie2 <- 1
 rlabel <- 1.05 * rpie
 
-p_titanic_pie <- ggplot() + 
-  geom_arc_bar(data = titanic_pie_outer,
+bridges_nested_pie <- ggplot() + 
+  geom_arc_bar(data = bridges_pie_outer,
     aes(
       x0 = 0, y0 = 0, r0 = rpie1, r = rpie2,
       start = start_angle, end = end_angle, fill = type
     ),
     color = "white", size = 0.5
   ) +
-  geom_arc_bar(data = titanic_pie_inner,
+  geom_arc_bar(data = bridges_pie_inner,
     aes(
       x0 = 0, y0 = 0, r0 = 0, r = rpie1,
       start = start_angle, end = end_angle, fill = type
     ),
     color = "white", size = 0.5
   ) +
-  geom_text(data = titanic_pie_outer,
+  geom_text(data = bridges_pie_outer,
     aes(
       x = rlabel*sin(mid_angle),
       y = rlabel*cos(mid_angle),
-      label = gender,
+      label = type,
       hjust = hjust, vjust = vjust
     ),
     family = dviz_font_family,
     size = 14/.pt
   ) +
-  geom_text(data = titanic_pie_outer,
+  geom_text(data = bridges_pie_outer,
     aes(
       x = 0.8*sin(mid_angle),
       y = 0.8*cos(mid_angle),
-      label = gender_count
+      label = count
     ),
     family = dviz_font_family,
     size = 12/.pt
   ) +
-  geom_text(data = titanic_pie_inner,
+  geom_text(data = bridges_pie_inner,
     aes(
       x = 0.3*sin(mid_angle),
       y = 0.3*cos(mid_angle),
@@ -475,14 +411,14 @@ p_titanic_pie <- ggplot() +
   scale_y_continuous(
     limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
   ) +
-  scale_fill_manual(
-    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#F0E442",
-               men = "#0072B2", women = "#D55E00")
-  ) +
+#  scale_fill_manual(
+#    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#F0E442",
+#               men = "#0072B2", women = "#D55E00")
+#  ) +
   theme_dviz_map() +
   theme(legend.position = "none")
 
-p_titanic_pie
+bridges_nested_pie
 ```
 
 *Rules:*
@@ -565,69 +501,5 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   )
 ```
 
-(ref:titanic-parallel-sets1) *Figure caption.*
-
-```{r titanic-parallel-sets1, fig.cap = '(ref:titanic-parallel-sets1)'}
-data <- reshape2::melt(Titanic)
-data <- gather_set_data(data, 1:4)
-data$x <- factor(data$x, levels = c("Sex", "Age", "Class", "Survived"))
-
-ggplot(data, aes(x, id = id, split = y, value = value)) +
-  geom_parallel_sets(aes(fill = Survived), alpha = 0.5, axis.width = 0.13) +
-  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
-  geom_parallel_sets_labels(
-    color = 'black',
-    family = dviz_font_family,
-    size = 10/.pt,
-    angle = 90
-  ) +
-  scale_x_discrete(
-    name = NULL,
-    expand = c(0, 0.3)
-  ) +
-  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
-  scale_fill_manual(
-    values = c("#56B4E9", "#E69F00"),
-    guide = "none"
-  ) +
-  theme_dviz_open() +
-  theme(
-    axis.line = element_blank(),
-    axis.ticks = element_blank()
-  )
-```
-
 By changing the order of the groups and the variable used for coloring, we can highlight different aspects of the data. While Figure \@ref(fig:titanic-parallel-sets1) tells a story about who survived and who did not, Figure \@ref(fig:titanic-parallel-sets2) tells a story about crew and passengers traveling in different classes.
 
-
-(ref:titanic-parallel-sets2) *Figure caption.*
-
-```{r titanic-parallel-sets2, fig.cap = '(ref:titanic-parallel-sets2)'}
-data$x <- factor(data$x, levels = c("Class", "Age", "Sex", "Survived"))
-
-ggplot(data, aes(x, id = id, split = y, value = value)) +
-  geom_parallel_sets(aes(fill = Class), alpha = 0.5, axis.width = 0.13) +
-  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
-  geom_parallel_sets_labels(
-    color = 'black',
-    family = dviz_font_family,
-    size = 10/.pt,
-    angle = 90
-  ) +
-  scale_x_discrete(
-    name = NULL,
-    expand = c(0, 0.3)
-  ) +
-  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
-  scale_fill_manual(
-    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#56B4E9", Crew = "#F0E442"),
-    guide = "none"
-  ) +
-  theme_dviz_open() +
-  theme(
-    axis.line = element_blank(),
-    axis.ticks = element_blank()
-  )
-```
-
-Add mosaic plot? https://stackoverflow.com/a/45688044/4975218
