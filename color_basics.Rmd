@@ -136,7 +136,7 @@ In some cases, we need to visualize the deviation of data values in one of two d
 
 ```{r diverging-scales, fig.width=6, fig.asp=3*.14, fig.cap = '(ref:diverging-scales)'}
 p1 <- gg_color_swatches(7, title_family = dviz_font_family) + 
-  scale_fill_discrete_carto(palette = "Earth") + ggtitle("CARTO Earth")
+  scale_fill_discrete_divergingx(palette = "Earth") + ggtitle("CARTO Earth")
 p2 <- gg_color_swatches(7, title_family = dviz_font_family) + 
   scale_fill_brewer(type = "div", palette = "PiYG") + ggtitle("ColorBrewer PiYG")
 p3 <- gg_color_swatches(7, title_family = dviz_font_family) + 
@@ -156,7 +156,7 @@ texas_race %>% st_sf() %>%
   geom_sf(color = "white") +
   coord_sf(xlim = texas_xlim, datum = NA) + 
   theme_dviz_map() +
-  scale_fill_continuous_carto(
+  scale_fill_continuous_divergingx(
     palette = "Earth",
     mid = 50,
     limits = c(0, 100),

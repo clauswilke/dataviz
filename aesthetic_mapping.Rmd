@@ -267,7 +267,7 @@ Both Figures \@ref(fig:temp-normals-vs-time) and \@ref(fig:four-locations-temps-
 p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size = wt)) + 
   geom_point(color = "white") +
   scale_shape_manual(values = c(23, 24, 21), name = "cylinders") +
-  scale_fill_continuous_carto(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
+  scale_fill_continuous_sequential(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
   xlab("displacement (cu. in.)") +
   ylab("fuel efficiency (mpg)") +
   guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),

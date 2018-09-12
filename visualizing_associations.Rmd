@@ -225,7 +225,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   geom_tile(color = "white", size = 1) + 
   scale_x_discrete(position = "top", name = NULL, expand = c(0, 0)) +
   scale_y_discrete(name = NULL, expand = c(0, 0)) +
-  scale_fill_continuous_carto(
+  scale_fill_continuous_divergingx(
     palette = "Earth", rev = FALSE,
     limits = c(-.5, .5), breaks = c(-.5, 0, .5),
     name = "correlation",
@@ -260,7 +260,7 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_x_discrete(position = "top", name = NULL, expand = c(0, 0.5)) +
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
   scale_size_area(max_size = 19, limits = c(0, 0.5), guide = "none") +
-  scale_fill_continuous_carto(
+  scale_fill_continuous_divergingx(
     palette = "Earth", rev = FALSE,
     limits = c(-.5, .5), breaks = c(-.5, 0, .5),
     name = "correlation",
