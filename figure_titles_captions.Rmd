@@ -6,6 +6,7 @@ library(grid)
 library(gridExtra)
 library(gtable)
 library(tibble)
+library(lubridate)
 ```
 
 # Putting data into context: Titles, captions, labels, and tables {#figure-titles-captions}
@@ -104,6 +105,54 @@ If your document layout uses caption blocks underneath each figure, then place t
 ## Axis and legend titles
 
 *Discuss when we need axis and legend titles and when we can leave them out. Maybe a plot showing a timeline, with an absurd x axis title listing date with units.*
+
+Refer to Figure \@ref(ref:tech-stocks-good-legend).
+
+(ref:tech-stocks-minimal-labeling) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. *Refer to Figure \@ref(ref:tech-stocks-good-legend).*
+
+```{r tech-stocks-minimal-labeling, fig.cap = '(ref:tech-stocks-minimal-labeling)'}
+price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
+  geom_line(na.rm = TRUE) +
+  scale_color_manual(
+    values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+    name = "",
+    breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+    labels = c("Facebook", "Alphabet", "Microsoft", "Apple")
+  ) +
+  scale_x_date(
+    limits = c(ymd("2012-06-01"), ymd("2017-05-31")),
+    expand = c(0,0)
+  ) + 
+  scale_y_continuous(
+    limits = c(0, 560),
+    expand = c(0,0)
+  ) +
+  theme_dviz_hgrid() + 
+  theme(plot.margin = margin(3, 7, 3, 0))
+
+price_plot_base + xlab(NULL) + ylab("stock price, indexed")
+```
+
+
+```{r tech-stocks-minimal-labeling-bad, fig.cap = '(ref:tech-stocks-minimal-labeling-bad)'}
+stamp_bad(
+  price_plot_base + xlab(NULL) + ylab(NULL)
+)
+```
+
+```{r tech-stocks-labeling-ugly, fig.cap = '(ref:tech-stocks-labeling-ugly)'}
+stamp_ugly(
+  price_plot_base + xlab("time (years AD)") + ylab("stock price, indexed\n(100/share price on Jun 1, 2012)") +
+    scale_color_manual(
+      values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+      name = "company",
+      breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+      labels = c("Facebook", "Alphabet", "Microsoft", "Apple")
+    ) +
+    theme(legend.title.align = 0.5)
+
+)
+```
 
 ## Tables
 

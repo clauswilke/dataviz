@@ -134,7 +134,7 @@ Changing the point shape is a simple strategy for scatter plots but it doesn't n
 
 ```{r tech-stocks-bad-legend, fig.cap = '(ref:tech-stocks-bad-legend)'}
 price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
-  geom_line() +
+  geom_line(na.rm = TRUE) +
   scale_color_manual(values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
                      name = "",
                      breaks = c("GOOG", "AAPL", "FB", "MSFT"),
@@ -160,7 +160,7 @@ This problem arises commonly with plotting software that autogenerates legends. 
 
 ```{r tech-stocks-good-legend, fig.cap = '(ref:tech-stocks-good-legend)'}
 price_plot_base_good <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
-  geom_line() +
+  geom_line(na.rm = TRUE) +
   scale_color_manual(values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
                      name = "",
                      breaks = c("FB", "GOOG", "MSFT", "AAPL"),

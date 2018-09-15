@@ -339,9 +339,16 @@ bridges_pie_outer <- bridges_arranged %>%
     mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
     hjust = ifelse(mid_angle>pi, 1, 0),
     vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1),
-    type = erected
+    type = erected,
+    label = paste0(erected, " (", material, ")"),
+    angle_off = ifelse(
+      label == "emerging (wood)", -0.0175/2,
+      ifelse(label == "mature (wood)", 2*0.0175, 0)
+    )
   ) %>%
-  filter(erected %in% c("crafts", "modern"), count != 0)
+  #filter(erected %in% c("crafts", "modern"), count != 0)
+  filter(count != 0)
+
 
 bridges_pie_inner <- bridges_arranged %>%
   group_by(material) %>%
@@ -359,7 +366,7 @@ bridges_pie_inner <- bridges_arranged %>%
 rpie <- 1
 rpie1 <- 0.6
 rpie2 <- 1
-rlabel <- 1.05 * rpie
+rlabel <- 1.02 * rpie
 
 bridges_nested_pie <- ggplot() + 
   geom_arc_bar(data = bridges_pie_outer,
@@ -378,43 +385,46 @@ bridges_nested_pie <- ggplot() +
   ) +
   geom_text(data = bridges_pie_outer,
     aes(
-      x = rlabel*sin(mid_angle),
-      y = rlabel*cos(mid_angle),
-      label = type,
+      x = rlabel*sin(mid_angle + angle_off),
+      y = rlabel*cos(mid_angle + angle_off),
+      label = label,
       hjust = hjust, vjust = vjust
     ),
     family = dviz_font_family,
-    size = 14/.pt
+    size = 12/.pt
   ) +
   geom_text(data = bridges_pie_outer,
     aes(
-      x = 0.8*sin(mid_angle),
-      y = 0.8*cos(mid_angle),
+      x = 0.78*sin(mid_angle),
+      y = 0.78*cos(mid_angle),
       label = count
     ),
     family = dviz_font_family,
-    size = 12/.pt
+    size = 10/.pt,
+    hjust = 0.5, vjust = 0.5
   ) +
   geom_text(data = bridges_pie_inner,
     aes(
-      x = 0.3*sin(mid_angle),
-      y = 0.3*cos(mid_angle),
+      x = 0.32*sin(mid_angle),
+      y = 0.32*cos(mid_angle),
       label = count
     ),
     family = dviz_font_family,
-    size = 12/.pt
+    size = 10/.pt,
+    hjust = 0.5, vjust = 0.5
   ) +
   coord_fixed(clip = "off") +
   scale_x_continuous(
-    limits = c(-1.5, 1.5), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+    limits = c(-1.5, 1.8), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
   ) +
   scale_y_continuous(
     limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
   ) +
-#  scale_fill_manual(
-#    values = c(`1st` = "#009E73", `2nd` = "#E69F00", `3rd` = "#F0E442",
-#               men = "#0072B2", women = "#D55E00")
-#  ) +
+  scale_fill_manual(
+    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0",
+               crafts = "#F0E442D0", modern = "#56B4E9D0", emerging = "#E69F00D0",
+               mature = "#CC79A7D0")
+  ) +
   theme_dviz_map() +
   theme(legend.position = "none")
 
