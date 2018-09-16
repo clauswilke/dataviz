@@ -8,10 +8,16 @@ library(treemapify)
 
 # Visualizing nested proportions {#nested-proportions}
 
-(ref:bridges-pie-wrong)  Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a pie chart. This figure is invalid, because the percentages add up to more than 100%. There is overlap between construction material and date of construction. For example, all modern bridges are made of steel, and the majority of crafts bridges are made of wood.
 
 
-```{r bridges-pie-wrong, fig.width = 4.5, fig.asp = 0.8, fig.cap = '(ref:bridges-pie-wrong)'}
+*A dataset of 106 bridges in Pittsburgh.* The dataset contains various pieces of information about the bridges, such as the material from which they are constructed (steel, iron, or wood) and the year when they were erected. Based on the year of erection, bridges are grouped into distinct categories, such as crafts bridges that were erected before 1870 and modern bridges that were erected after 1940.
+
+Let's assume we want to visualize both the fraction of bridges made from steel, iron, or wood and the fraction that are crafts or modern. We might be tempted to do so by drawing a combined pie chart (Figure \@ref(fig:bridges-pie-wrong)). However, this visualization is not valid. All the slices in a pie chart must add up to 100%, and here the slices add up to 135%. We reach a total percentage in excess of 100% because we are double-counting bridges in this pie chart. Every bridge in the dataset is made of steel, iron, or wood, so these three slices of the pie already represent 100% of the bridges. Every crafts or modern bridge is also a steel, iron, or wood bridge, and hence is counted twice.
+
+(ref:bridges-pie-wrong)  Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a pie chart. Numbers represent the percentages of bridges of a given type among all bridges. This figure is invalid, because the percentages add up to more than 100%. There is overlap between construction material and date of construction. For example, all modern bridges are made of steel, and the majority of crafts bridges are made of wood. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
+
+
+```{r bridges-pie-wrong, fig.width = 5, fig.asp = 0.7, fig.cap = '(ref:bridges-pie-wrong)'}
 
 # crafts: before 1870
 # emerging: 1870 -- 1889
@@ -120,8 +126,9 @@ p_bridges_pie <- ggplot(bridges_pie) +
 stamp_wrong(p_bridges_pie)
 ```
 
+Double-counting is not necessarily a problem if we choose a visualization that does not require the proportions to add to 100%. As discussed in the preceding chapter, side-by-side bars meet this criterion. We can show the various proportions of bridges as bars in a single plot, and this plot is not technically wrong (Figure \@ref(fig:bridges-bars-bad)). Nevertheless, I have labeled it as "bad", because it does not immediately show that there is overlap among some of the categories shown. A casual observer might conclude from Figure \@ref(fig:bridges-bars-bad) that there are five separate categories of bridges, and that, for example, modern bridges are neither made of steel nor of wood or iron.
 
-(ref:bridges-bars-bad) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a bar plot. Unlike Figure \@ref(fig:bridges-pie-wrong), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad".
+(ref:bridges-bars-bad) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a bar plot. Unlike Figure \@ref(fig:bridges-pie-wrong), this visualization is not technically wrong, since it doesn't imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it "bad". Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
 
 ```{r bridges-bars-bad, fig.cap = '(ref:bridges-bars-bad)'}
@@ -151,7 +158,10 @@ p_bridges_bars <- ggplot(bridges_material_erected) +
 stamp_bad(p_bridges_bars)
 ```
 
-(ref:bridges-mosaic) **Mosaic plot** Note that unlike in a stacked bar plot, in a mosaic plot both the height and the width of individual shaded areas vary. The 
+Whenever we have categories that overlap, it is best to show clearly how they relate to each other. This can be done with a mosaic plot (Figure \@ref(fig:bridges-mosaic)). On first glance, a mosaic plot looks similar to a stacked bar plot (e.g., Figure \@ref(fig:marketshare-stacked)). However, unlike in a stacked bar plot, in a mosaic plot both the heights and the widths of individual shaded areas vary. Note that in Figure \@ref(fig:bridges-mosaic), we see two additional construction eras, *emerging* (from 1870 to 1889) and *mature* (1890 to 1939). In combination with crafts and modern, these construction eras cover all bridges in the dataset, as do the three building materials. This is a critical condition for a mosaic plot: Every categorical variable shown must cover all the observations in the dataset.
+
+
+(ref:bridges-mosaic) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a mosaic plot. The widths of each rectangle are proportional to the number of bridges constructed in that era, and the heights are proportional to the number of bridges constructed from that material. Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
 ```{r bridges-mosaic, fig.cap = '(ref:bridges-mosaic)'}
 select(bridges, MATERIAL, ERECTED) %>%
@@ -227,8 +237,12 @@ ggplot(bridges_tidy) +
   )
 ```
 
-(ref:bridges-treemap) **Treemap**
 
+To draw a mosaic plot, we begin by placing one categorical variable along the *x* axis (here, era of bridge construction) and subdivide the *x* axis by the relative proportions that make up the categories. We then place the other categorical variable along the *y* axis (here, building material) and, within each category along the *x* axis, subdivide the *y* axis by the relative proportions that make up the categories of the *y* variable. The result is a set of rectangles whose areas are proportional to the number of cases representing each possible combination of the two categorical variables.
+
+The bridges dataset can also be visualized in a related but distinct format called a *treemap*. In a treemap, just as is the case in a mosaic plot, we take an enclosing rectangle and subdivide it into smaller rectangles whose areas represent the proportions. However, the method of placing the smaller rectangles into the larger one is different compared to a mosaic plot. In a treemap, we recursively nest rectangles inside each other. For example, in the case of the Pittsburgh bridges, we can first subdivide the total area into three parts representing the three building materials wood, iron, and steel. Then, we subdivide each of those areas further into to represent the construction eras represented for each building material (Figure \@ref(fig:bridges-treemap)). In principle, we could keep going with nesting ever more smaller subdivisions inside each other, though relatively quickly the result will become unwieldy or confusing.
+
+(ref:bridges-treemap) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a treemap. The area of each rectangle is proportional to the number of bridges of that type. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
 ```{r bridges-treemap, fig.asp = 3/4, fig.cap = '(ref:bridges-treemap)'}
 filcols <- c("#D55E00D0", "#0072B2D0", "#009E73D0")
@@ -261,8 +275,13 @@ ggplot(bridges_tidy, aes(area = count, subgroup = material, fill = interaction(e
 
 ```
 
+While mosaic plots and treemaps are closely related, they have different points of emphasis and different application areas. Here, the mosaic plot (Figure \@ref(fig:bridges-mosaic))  emphasizes the temporal evolution in building-material use from the crafts era to the modern era, whereas the treemap (Figure \@ref(fig:bridges-treemap)) emphasizes the total number of steel, iron, and wood bridges.
 
-```{r fig.width = 8.5}
+More generally, mosaic plots assume that all of the proportions shown can be identified via combinations of two or more orthogonal categorical  variables. For example, in Figure \@ref(fig:bridges-mosaic), every bridge can be described by a choice of building material (wood, iron, steel) and a choice of time period (crafts, emerging, mature, modern). Moreover, in principle every combination of these two variable is possible, even though in practice this need not be the case. (Here, there are no steel crafts bridges and no wood or iron modern bridges.) By contrast, such a requirement does not exist for treemaps. In fact, treemaps tend to work well when the proportions cannot meaningfully be described by combining multiple categorical variables. For example, we can separate the U.S. into four regions (West, Northeast, Midwest, and South) and each region into distinct states, but the states in one region have no relationship to the states in another region (Figure \@ref(fig:US-states-treemap)).
+
+(ref:US-states-treemap) States in the U.S. visualized as a treemap. Each rectangle represents one stated, and the area of each rectangle is proportional to the state's land surface area. The states are grouped into four regions, West, Northeast, Midwest, and South. The coloring is proportional to the number of inhabitants for each state, with darker colors representing larger numbers of inhabitants. Data source: 2010 U.S. Census
+
+```{r US-states-treemap, fig.width = 8.5, fig.cap = '(ref:US-states-treemap)'}
 population_df <- left_join(US_census, US_regions) %>%
     group_by(region, division, state) %>%
     summarize(
@@ -323,9 +342,12 @@ ggplot(population_df_color, aes(area = area, subgroup = region, fill = fill)) +
   guides(colour = "none", fill = "none")
 ```
 
-(ref:bridges-nested-pie) *Figure caption...*
+Both mosaic plots and treemaps are commonly used and can be illuminating, but they have similar limitations as do stacked bars (Chapter \@ref(visualizing-proportions)): A direct comparison among conditions can be difficult, because different rectangles do not necessarily share baselines that enable visual comparison. In mosaic plots or treemaps, this problem is exacerbated by the fact that the shapes of the different rectangles can vary. For example, there are the same number of iron bridges (three) among the emerging and the mature bridges (Figure \@ref(fig:marketshare-stacked)), but this would be difficult to discern if the absolute counts weren't provided in the plot. There isn't necessarily a solution to this problem---visualizing nested proportions can be tricky. Whenever possible, I recommend showing the actual counts or percentages on the plot, so readers can verify that their intuitive interpretation of the shaded areas is correct.
 
-```{r bridges-nested-pie, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:bridges-nested-pie)'}
+
+(ref:bridges-nested-pie) *Figure caption...* Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
+
+```{r bridges-nested-pie, fig.width = 5, fig.asp = 0.7, fig.cap = '(ref:bridges-nested-pie)'}
 bridges_arranged <-
   ungroup(bridges_tidy) %>%
   mutate(material = factor(material, levels = c("wood", "iron", "steel"))) %>%
@@ -428,7 +450,71 @@ bridges_nested_pie <- ggplot() +
   theme_dviz_map() +
   theme(legend.position = "none")
 
-bridges_nested_pie
+stamp_ugly(bridges_nested_pie)
+```
+
+
+(ref:bridges-nested-pie2) **nested pie 2** Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
+
+```{r bridges-nested-pie2, fig.width = 5, fig.asp = 0.7, fig.cap = '(ref:bridges-nested-pie2)'}
+rpie <- 1
+rpie1 <- 0
+rpie2 <- 1
+rlabel <- 1.02 * rpie
+
+bridges_nested_pie2 <- ggplot() + 
+  geom_arc_bar(data = bridges_pie_outer,
+    aes(
+      x0 = 0, y0 = 0, r0 = rpie1, r = rpie2,
+      start = start_angle, end = end_angle, fill = label
+    ),
+    color = "white", size = 0.5
+  ) +
+  geom_text(data = bridges_pie_outer,
+    aes(
+      x = rlabel*sin(mid_angle + angle_off),
+      y = rlabel*cos(mid_angle + angle_off),
+      label = label,
+      hjust = hjust, vjust = vjust
+    ),
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+  geom_text(data = bridges_pie_outer,
+    aes(
+      x = 0.6*sin(mid_angle),
+      y = 0.6*cos(mid_angle),
+      label = count
+    ),
+    color = c(rep("black", 8), "white"),
+    family = dviz_font_family,
+    size = 10/.pt,
+    hjust = 0.5, vjust = 0.5
+  ) +
+  coord_fixed(clip = "off") +
+  scale_x_continuous(
+    limits = c(-1.5, 1.8), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_y_continuous(
+    limits = c(-1.15, 1.15), expand = c(0, 0), name = "", breaks = NULL, labels = NULL
+  ) +
+  scale_fill_manual(
+    values = c(
+      `crafts (wood)` = lighten("#009E73D0", .9),
+      `emerging (wood)` = lighten("#009E73D0", .6),
+      `mature (wood)` = lighten("#009E73D0", .3),
+      `crafts (iron)` = lighten("#D55E00D0", .9),
+      `emerging (iron)` = lighten("#D55E00D0", .6),
+      `mature (iron)` = lighten("#D55E00D0", .3),
+      `emerging (steel)` = lighten("#0072B2D0", .6),
+      `mature (steel)` = lighten("#0072B2D0", .3),
+      `modern (steel)` = "#0072B2D0"
+    )
+  ) +
+  theme_dviz_map() +
+  theme(legend.position = "none")
+
+bridges_nested_pie2
 ```
 
 *Rules:*
@@ -511,5 +597,5 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   )
 ```
 
-By changing the order of the groups and the variable used for coloring, we can highlight different aspects of the data. While Figure \@ref(fig:titanic-parallel-sets1) tells a story about who survived and who did not, Figure \@ref(fig:titanic-parallel-sets2) tells a story about crew and passengers traveling in different classes.
+**update** By changing the order of the groups and the variable used for coloring, we can highlight different aspects of the data. While Figure \@ref(fig:titanic-parallel-sets1) tells a story about who survived and who did not, Figure \@ref(fig:titanic-parallel-sets2) tells a story about crew and passengers traveling in different classes.
 
