@@ -354,9 +354,9 @@ Next, we project the original data into the principal components space (Figure \
 ```{r forensic-PCA, fig.cap = '(ref:forensic-PCA)'}
 ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type)) + 
   geom_point() +
-  scale_color_manual(values = colors) +
-  scale_fill_manual(values = fills) +
-  scale_shape_manual(values = c(22:24, 21)) +
+  scale_color_manual(values = colors, name = "fragment type") +
+  scale_fill_manual(values = fills, name = "fragment type") +
+  scale_shape_manual(values = c(22:24, 21), name = "fragment type") +
   scale_x_continuous(name = "PC 1") +
   scale_y_continuous(name = "PC 2") +
   theme_dviz_grid()
