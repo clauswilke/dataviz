@@ -16,6 +16,8 @@ library(lubridate)
 
 ## Figure titles and captions
 
+*mention somewhere: every plot needs a title.*
+
 Consider Figure \@ref(fig:corruption-development). This figure is inspired by a posting in @Economist-corruption. I have recreated their figure with several subtle but important modifications. First, I have updated the data to a more recent dataset (2015) and adapted the color and symbol styling so they follow the styling used throughout this book. Second, and more importantly, I have drawn the actual figure without title or statement about the data sources used. These pieces of information are instead provided in the caption block underneath the figure display. This is the style I am using throughout this book. I consistently show figures without integrated titles and with separate captions. (One exception are the stylized plot examples in Chapter \@ref(directory-of-visualizations), which instead have titles and no captions.)
 
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. Data sources: Transparency International & UN Human Development Report
@@ -104,9 +106,63 @@ If your document layout uses caption blocks underneath each figure, then place t
 
 ## Axis and legend titles
 
+As discussed in the preceding section, every plot needs a title, regardless of whether that tile is shown above the plot or underneath as part of a caption block. Similarly, axes and legends need titles as well. (Axis titles are often colloquially referred to as *axis labels*.) Axis and legend titles and labels explain the 
+
+
+```{r blue-jays-scatter-bubbles2, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-bubbles2)'}
+blue_jays$sex <- ifelse(blue_jays$KnownSex == "F", "female birds", "male birds")
+blue_jays$sex <- factor(blue_jays$sex, levels = c("male birds", "female birds"))
+ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white") +
+  scale_x_continuous(name = "body mass (g)") +
+  scale_y_continuous(name = "head length (mm)", breaks = c(52, 54, 56, 58, 60)) +
+  scale_fill_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    labels = c("female", "male"),
+    name = "sex",
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "right",
+      keyheight = grid::unit(19, "pt"),
+      order = 1,
+      override.aes = list(size = 4)
+    )
+  ) +
+  scale_radius(
+    name = "skull size (mm)",
+    range = c(2, 7),
+    limits = c(28, 34),
+    breaks = c(28, 30, 32, 34),
+    labels = c("28   ", "30   ", "32   ", "34"),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      title.hjust = 0.5,
+      label.position = "right",
+      order = 2,
+      override.aes = list(fill = "gray40")
+    )
+  ) +
+  theme_dviz_grid() +
+  theme(
+    legend.margin = margin(0, 0, 0, 20),
+    legend.position = "top",
+    legend.box = "horizontal",
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.justification = c(1, 0),
+    legend.spacing.x = unit(2, "pt"),
+    legend.spacing.y = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt")
+  )
+```
+
+
 *Discuss when we need axis and legend titles and when we can leave them out. Maybe a plot showing a timeline, with an absurd x axis title listing date with units.*
 
-Refer to Figure \@ref(ref:tech-stocks-good-legend).
+Refer to Figure \@ref(ref:tech-stocks-good-legend) in Chapter \@ref(redundant-coding).
 
 (ref:tech-stocks-minimal-labeling) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. *Refer to Figure \@ref(ref:tech-stocks-good-legend).*
 
