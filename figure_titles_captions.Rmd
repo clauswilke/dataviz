@@ -162,11 +162,9 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
   )
 ```
 
-There are cases, however, when axis or legend titles can be omitted, namely when the labels themselves are fully explanatory. For example, a legend showing two differently colored dots labeled "female" and "male" clearly indicates that color encodes sex. The title "sex" is not required to clarify this fact, and indeed throughout this book I have often omitted the legend title for legends indicating sex (see e.g. Figures \@ref(fig:titanic-passengers-by-class-sex), \@ref(fig:blue-jays-scatter-sex), or \@ref(fig:titanic-passenger-breakdown).) Similarly, country names will generally not require a title stating what they are (Figure \@ref(fig:Americas-life-expect)), nor will movie titles (Figure \@ref(fig:boxoffice-vertical)).
+There are cases, however, when axis or legend titles can be omitted, namely when the labels themselves are fully explanatory. For example, a legend showing two differently colored dots labeled "female" and "male" clearly indicates that color encodes sex. The title "sex" is not required to clarify this fact, and indeed throughout this book I have often omitted the legend title for legends indicating sex or gender (see e.g. Figures \@ref(fig:titanic-passengers-by-class-sex), \@ref(fig:blue-jays-scatter-sex), or \@ref(fig:titanic-passenger-breakdown).) Similarly, country names will generally not require a title stating what they are (Figure \@ref(fig:Americas-life-expect)), nor will movie titles (Figure \@ref(fig:boxoffice-vertical)) or years (Figure \@ref(fig:tech-stocks-minimal-labeling)).
 
-*Refer to Figure \@ref(ref:tech-stocks-good-legend) in Chapter \@ref(redundant-coding).*
-
-(ref:tech-stocks-minimal-labeling) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. *Refer to Figure \@ref(ref:tech-stocks-good-legend).*
+(ref:tech-stocks-minimal-labeling) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is a slightly modified version of Figure \@ref(ref:tech-stocks-good-legend) in Chapter \@ref(redundant-coding). Here, the *x* axis representing time does not have a title. It is clear from the context that the numbers 2013, 2014, etc. refer to years.
 
 ```{r tech-stocks-minimal-labeling, fig.cap = '(ref:tech-stocks-minimal-labeling)'}
 price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = ticker)) +
@@ -191,12 +189,19 @@ price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = 
 price_plot_base + xlab(NULL) + ylab("stock price, indexed")
 ```
 
+However, we have to be careful when omitting axis or legend titles, because it is easy to misjudge what is and isn't obvious from the context. I frequently see graphs in the popular press that push omitting axis titles to a point that I wouldn't be comfortable with. For example, some publications might produce a figure such as Figure \@ref(fig:tech-stocks-minimal-labeling-bad), assuming that the meaning of the axes is clear from the plot title and subtitle (here: "stock price over time for four major tech companies" and "the stock price for each company has been normalized to equal 100 in June 2012"). I disagree with the perspective that context clearly defines the axes. Most importantly, I think that it is generally a bad design principle to make your readers guess what you mean. And, because the caption typically doesn't include words such as "the *x*/*y* axis shows", some amount of guesswork is always required to interpret the figure. In my own experience, figures without properly labeled axes tend to leave me with a nagging feeling of uncertainty---even if I'm 95% certain I understand what is shown, I don't feel 100% certain. As the designer of a figure, why would you want to create a feeling of uncertainty in your readers?
+
+(ref:tech-stocks-minimal-labeling-bad) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This variant of Figure \@ref(fig:tech-stocks-minimal-labeling) has been labeled as "bad" because the *y* axis now does not have a title either, and what the values shown along the *y* axis represent is not immediately obvious from the context.
 
 ```{r tech-stocks-minimal-labeling-bad, fig.cap = '(ref:tech-stocks-minimal-labeling-bad)'}
 stamp_bad(
   price_plot_base + xlab(NULL) + ylab(NULL)
 )
 ```
+
+On the flip side, we can overdo the labeling. If the legend lists the names of four well-known companies, the legend title "company" is redundant and doesn't add anything useful (Figure \@ref(fig:tech-stocks-labeling-ugly)). Similarly, even though we generally should report units for all quantitative variables, if the *x* axis shows a few recent years titling it as "time (years AD)" is awkward (Figure \@ref(fig:tech-stocks-labeling-ugly)).
+
+(ref:tech-stocks-labeling-ugly) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This variant of Figure \@ref(fig:tech-stocks-minimal-labeling) has been labeled as "ugly" because it is labeled excessively. In particular, providing a unit ("years AD") for the values along the *x* axis is awkward.
 
 ```{r tech-stocks-labeling-ugly, fig.cap = '(ref:tech-stocks-labeling-ugly)'}
 stamp_ugly(
