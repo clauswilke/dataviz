@@ -8,11 +8,11 @@ library(treemapify)
 
 # Visualizing nested proportions {#nested-proportions}
 
-*Introductory paragraph*
+In the preceding chapter, I discussed scenarios where a dataset is broken into pieces defined by one cateogical variable, such as political party, company, or health status. It is not uncommon, however, that we want to drill down further and break down a dataset by multiple categorical variables at once. For example, in the case of parliamentary seats, we could be interested in the proportions of seats by party and by the gender of the representatives. Similarly, in the case of people's health status, we could ask how health status further breaks down by marital status. I refer to these scenarios as nested proportions, because each additional categorical variable that we add creates a finer subdivision of the data nested within the previous proportions. There are several suitable approaches to visualize such nested proportions, including  mosaic plots, treemaps, and parallel sets.
 
 ## Nested proportions gone wrong
 
-I will begin by demonstrating two flawed approaches to visualizing nested proportions. While these approaches may seem nonsensical to any experienced data scientist, I have seen them in the wild and therefore want to discuss them. Throughout this chapter, I will work with a dataset of 106 bridges in Pittsburgh. This dataset contains various pieces of information about the bridges, such as the material from which they are constructed (steel, iron, or wood) and the year when they were erected. Based on the year of erection, bridges are grouped into distinct categories, such as crafts bridges that were erected before 1870 and modern bridges that were erected after 1940.
+I will begin by demonstrating two flawed approaches to visualizing nested proportions. While these approaches may seem nonsensical to any experienced data scientist, I have seen them in the wild and therefore think they warrant discussion. Throughout this chapter, I will work with a dataset of 106 bridges in Pittsburgh. This dataset contains various pieces of information about the bridges, such as the material from which they are constructed (steel, iron, or wood) and the year when they were erected. Based on the year of erection, bridges are grouped into distinct categories, such as crafts bridges that were erected before 1870 and modern bridges that were erected after 1940.
 
 Let's assume we want to visualize both the fraction of bridges made from steel, iron, or wood and the fraction that are crafts or modern. We might be tempted to do so by drawing a combined pie chart (Figure \@ref(fig:bridges-pie-wrong)). However, this visualization is not valid. All the slices in a pie chart must add up to 100%, and here the slices add up to 135%. We reach a total percentage in excess of 100% because we are double-counting bridges. Every bridge in the dataset is made of steel, iron, or wood, so these three slices of the pie already represent 100% of the bridges. Every crafts or modern bridge is also a steel, iron, or wood bridge, and hence is counted twice in the pie chart.
 
@@ -464,7 +464,7 @@ bridges_nested_pie <- ggplot() +
 stamp_ugly(bridges_nested_pie)
 ```
 
-Alternatively, we can first slice the pie into pieces representing the proportions according to one variable (e.g. material) and then subdivide these slices further according to the other variable (construction era) (Figure \@ref(fig:bridges-nested-pie2)). In this way, in effect we are making a normal pie chart with a large number of small pie slices. However, we can then use coloring to indicate the nested nature of the pie. In Figure \@ref(fig:bridges-nested-pie2), green colors represent wood bridges, orange colors represent iron bridges, and blue colors represent steel bridges. The darkness of each color represents the construction era, with darker colors corresponding to more recently constructed bridges. *one sentence commenting that we can see large and small scale structure.*
+Alternatively, we can first slice the pie into pieces representing the proportions according to one variable (e.g. material) and then subdivide these slices further according to the other variable (construction era) (Figure \@ref(fig:bridges-nested-pie2)). In this way, in effect we are making a normal pie chart with a large number of small pie slices. However, we can then use coloring to indicate the nested nature of the pie. In Figure \@ref(fig:bridges-nested-pie2), green colors represent wood bridges, orange colors represent iron bridges, and blue colors represent steel bridges. The darkness of each color represents the construction era, with darker colors corresponding to more recently constructed bridges. By using a nested color scale in this way, we can visualize the breakdown of the data both by the primary variable (construction material) and by the secondary variable (construction era).
 
 (ref:bridges-nested-pie2) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern). Numbers represent the counts of bridges within each category.  Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
@@ -529,22 +529,20 @@ bridges_nested_pie2 <- ggplot() +
 bridges_nested_pie2
 ```
 
-
-*Conclude with brief discussion of pie charts vs. treemaps. In general, latter will be preferable. Nesting is more clear, and labeling inside the areas is more immediate than labeling outside the areas.*
+The pie chart of Figure \@ref(fig:bridges-nested-pie2) represents a reasonable visualization of the bridges dataset, but in a direct comparison to the equivalent treemap (Figure \@ref(fig:bridges-treemap)) I think the treemap is preferable. First, the rectangular shape of the treemap allows it to make better us of the available space. Figures \@ref(fig:bridges-treemap) and \@ref(fig:bridges-nested-pie2) are of exactly equal size, but in Figure \@ref(fig:bridges-nested-pie2) much of the figure is wasted as white space. Figure \@ref(fig:bridges-treemap), the treemap, has virtually no superfluous white space. This matters because it enables me to place the labels inside the shaded areas in the treemap. Inside labels always create a stronger visual unit with the data than outside labels and hence are preferred. Second, some of the pie slices in Figure \@ref(fig:bridges-nested-pie2) are very thin and thus hard to see. By contrast, every rectangle in Figure \@ref(fig:bridges-treemap) is of a reasonable size.
 
 ## Parallel sets
 
-*Rules:*
+When we want to visualize proportions described by more than two categorical variables, mosaic plots, treemaps, and pie charts all can quickly become unwieldy. A viable alternative in this case can be a *parallel sets plot*. In a parallel sets plot, we show how the total dataset breaks down by each individual categorical variable, and then we drawn shaded bands that show how the subgroups relate to each other. See Figure \@ref(fig:bridges-parallel-sets1) for an example. In this figure, I have broken down the bridges dataset by construction material (iron, steel, wood), length of each bridge (long, medium, short), the era during which each bridge was constructed (crafts, emerging, mature, modern), and the river each bridge spans (Allegheny, Monongahela, Ohio). The bands that connect the parallel sets are colored by construction material. This shows, for example, that wood bridges are mostly of medium length (with a few short bridges), were primarily erected during the crafts period (with a few bridges of medium length erected during the emerging and mature periods), and span primarily the Allegheny river (with a few crafts bridges spanning the Monongahela river). By contrast, iron bridges are all of medium length, were primarily erected during the crafts period, and span the Allegheny and Monongahela rivers in approximately equal proportions.
 
-- Color by a variable that lies on the end 
+(ref:bridges-parallel-sets1) Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span, shown as a parallel sets plot. The coloring of the bands highlights the construction material of the different bridges. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-
-
-```{r}
+```{r bridges-parallel-sets1, fig.cap = '(ref:bridges-parallel-sets1)'}
 select(bridges, MATERIAL, ERECTED, RIVER, LENGTH) %>%
+  filter(RIVER != "Y") %>%
   table() %>% 
   reshape2::melt() %>%
-  rename(material = MATERIAL, erected = ERECTED, count = value) %>%
+  rename(material = MATERIAL, erected = ERECTED, length = LENGTH, river = RIVER, count = value) %>%
   mutate(
     material = case_when(
       material == "IRON" ~ "iron",
@@ -556,15 +554,25 @@ select(bridges, MATERIAL, ERECTED, RIVER, LENGTH) %>%
       erected == "EMERGING" ~ "emerging",
       erected == "MATURE" ~ "mature",
       erected == "MODERN" ~ "modern"
-   )
+    ),
+    length = case_when(
+      length == "LONG" ~ "long",
+      length == "MEDIUM" ~ "medium",
+      length == "SHORT" ~ "short"
+    ),
+    river = case_when(
+      river == "A" ~ "Allegheny",
+      river == "M" ~ "Monongahela",
+      river == "O" ~ "Ohio"
+    )
   ) -> data
 
 data <- gather_set_data(data, 1:4)
-data$x <- factor(data$x, levels = c("material", "erected", "LENGTH", "RIVER"))
+data$x <- factor(data$x, levels = c("material", "length", "erected", "river"))
 
 ggplot(data, aes(x, id = id, split = y, value = count)) +
   geom_parallel_sets(aes(fill = material), alpha = 0.5, axis.width = 0.13) +
-  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+  geom_parallel_sets_axes(axis.width = 0.1, fill = "grey80", color = "grey80") +
   geom_parallel_sets_labels(
     color = 'black',
     family = dviz_font_family,
@@ -573,7 +581,7 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   ) +
   scale_x_discrete(
     name = NULL,
-    expand = c(0, 0.3)
+    expand = c(0, 0.2)
   ) +
   scale_y_continuous(breaks = NULL, expand = c(0, 0))+
   scale_fill_manual(
@@ -583,15 +591,23 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   theme_dviz_open() +
   theme(
     axis.line = element_blank(),
-    axis.ticks = element_blank()
+    axis.ticks = element_blank(),
+    plot.margin = margin(14, 0, 2, 0)
   )
 
 ```
 
-```{r}
-ggplot(data, aes(x, id = id, split = y, value = count)) +
-  geom_parallel_sets(aes(fill = RIVER), alpha = 0.5, axis.width = 0.13) +
-  geom_parallel_sets_axes(axis.width = 0.13, fill = "grey70", color = "grey70") +
+The same visualization looks quite different if we color by a different criterion, for example by river (Figure \@ref(fig:bridges-parallel-sets2)). This figure is quite busy, with many criss-crossing bands, but we do see that nearly any bridge of any type can be found to span each river.
+
+
+(ref:bridges-parallel-sets2) Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span. This figure is similar to Figure \@ref(fig:bridges-parallel-sets1) but now the coloring of the bands highlights the river spanned by the different bridges. This figure is labeled "ugly" because the arrangement of the colored bands in the middle of the figure is very busy, and also because the bands need to be read from right to left. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
+
+```{r bridges-parallel-sets2, fig.cap = '(ref:bridges-parallel-sets2)'}
+data$x <- factor(data$x, levels = c("material", "length", "erected", "river"))
+
+p_ugly <- ggplot(data, aes(x, id = id, split = y, value = count)) +
+  geom_parallel_sets(aes(fill = river), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.1, fill = "grey80", color = "grey80") +
   geom_parallel_sets_labels(
     color = 'black',
     family = dviz_font_family,
@@ -600,19 +616,54 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   ) +
   scale_x_discrete(
     name = NULL,
-    expand = c(0, 0.3)
+    expand = c(0, 0.2)
   ) +
   scale_y_continuous(breaks = NULL, expand = c(0, 0))+
-#  scale_fill_manual(
-#    values = c(iron = "#D55E00D0", wood = "#009E73D0", steel = "#0072B2D0"),
-#    guide = "none"
-#  ) +
+  scale_fill_manual(
+    values = c("#F0E442D0", "#56B4E9D0", "#CC79A7D0"),
+    guide = "none"
+  ) +
   theme_dviz_open() +
   theme(
     axis.line = element_blank(),
-    axis.ticks = element_blank()
+    axis.ticks = element_blank(),
+    plot.margin = margin(14, 0, 2, 0)
   )
+
+stamp_ugly(p_ugly)
 ```
 
-**update** By changing the order of the groups and the variable used for coloring, we can highlight different aspects of the data. While Figure \@ref(fig:titanic-parallel-sets1) tells a story about who survived and who did not, Figure \@ref(fig:titanic-parallel-sets2) tells a story about crew and passengers traveling in different classes.
+I have labeled Figure \@ref(fig:bridges-parallel-sets2) as "ugly" because I think it is overly confusing. First, since we are used to read from left to right I think the sets that define the coloring should appear all the way to the left, not on the right. This will make it easier to see where the coloring originates and how it flows through the dataset. Second, it is a good idea to change the order of the sets such that the amount of criss-crossing bands is minimized. Following these principles, I arrive at Figure \@ref(fig:bridges-parallel-sets3), which I consider preferable to Figure \@ref(fig:bridges-parallel-sets2).
 
+(ref:bridges-parallel-sets3) Breakdown of bridges in Pittsburgh by river, era of construction, length, and construction material. This figure differs from Figure \@ref(fig:bridges-parallel-sets2) only in the order of the parallel sets. However, the modified order results in a figure that is easier to read and less busy. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
+
+```{r bridges-parallel-sets3, fig.cap = '(ref:bridges-parallel-sets3)'}
+#data$x <- factor(data$x, levels = c("river", "length", "material", "erected"))
+data$x <- factor(data$x, levels = rev(c("material", "length", "erected", "river")))
+data$x <- factor(data$x, levels = c("river", "length", "material", "erected"))
+
+ggplot(data, aes(x, id = id, split = y, value = count)) +
+  geom_parallel_sets(aes(fill = river), alpha = 0.5, axis.width = 0.13) +
+  geom_parallel_sets_axes(axis.width = 0.1, fill = "grey80", color = "grey80") +
+  geom_parallel_sets_labels(
+    color = 'black',
+    family = dviz_font_family,
+    size = 10/.pt,
+    angle = 90
+  ) +
+  scale_x_discrete(
+    name = NULL,
+    expand = c(0, 0.2)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0))+
+  scale_fill_manual(
+    values = c("#F0E442D0", "#56B4E9D0", "#CC79A7D0"),
+    guide = "none"
+  ) +
+  theme_dviz_open() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(14, 0, 2, 0)
+  )
+```
