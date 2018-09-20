@@ -6,6 +6,7 @@ library(dplyr)
 library(tidyr)
 library(ggforce)
 library(ggridges)
+library(treemapify)
 library(forcats)
 ```
 
@@ -114,8 +115,24 @@ df_multi_dist <- data.frame(y = c(rnorm(n, 1, .8), rnorm(n, 2, .7), rnorm(n, 0, 
                  type = rep(c("A", "B", "C"), each = n),
                  number = rep(c(2, 1, 3), each = n))
 
+
 df_props = data.frame(value = c(55, 30, 15),
                       group = c("A", "B", "C"))
+
+df_multi_props <- data.frame(
+  var1 = rep(c("C", "B", "A"), 3),
+  var2 = rep(c("A", "B", "C"), each = 3),
+  count = c(4, 1, 2, 12, 9, 5, 4, 5, 4)
+) %>% group_by(var2) %>%
+  mutate(group_count = sum(count))
+
+df_multi_props2 <- data.frame(
+  var1 = rep(c("A", "B"), 9),
+  var2 = rep(c("A", "A", "B", "B", "C", "C"), 3),
+  var3 = rep(c("A", "B", "C"), each = 6),
+  count = c(5, 8, 0, 0, 0, 0, 0, 3, 2, 7, 0, 0, 4, 0, 4, 2, 7, 4)
+)
+
 
 df_one_line <- data.frame(
   x = 1:5,
@@ -492,6 +509,50 @@ plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 ```
 
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
+
+```{r proportions-multi, fig.width = 8, fig.asp = 1/4}
+p1 <- ggplot(df_multi_props, aes(x = var2, y = count, fill = var1, width = group_count)) +
+  geom_bar(stat = "identity", position = "fill", colour = palette[npal], size = 0.5) +
+  facet_grid(~var2, scales = "free_x", space = "free_x") +
+  scale_x_discrete(name = NULL, breaks = NULL) +
+  scale_y_continuous(name = NULL, breaks = NULL, expand = c(0, 0)) +
+  scale_fill_manual(values = palette[4:2], guide = "none") +
+  coord_cartesian(clip = "off") +
+  labs(title = "Mosaic plot") +
+  theme_plot_icon_blank(palette[npal], palette[1]) +
+  theme(
+    strip.text = element_blank(),
+    panel.spacing.x = unit(0, "pt")
+  )
+  
+p2 <- ggplot(df_multi_props, aes(area = count, subgroup = var2, fill = var2)) +
+  geom_treemap(color = palette[npal], size = 0.6*.pt, alpha = NA) + 
+  geom_treemap_subgroup_border(color = palette[npal], size = 1.5*.pt) +
+  scale_fill_manual(values = palette[4:2], guide = "none") +
+  coord_cartesian(clip = "off") +
+  labs(title = "Treemap") +
+  theme_plot_icon_blank(palette[npal], palette[1]) 
+
+df_sets <- gather_set_data(df_multi_props2, 1:3)
+
+p3 <- ggplot(df_sets, aes(x, id = id, split = y, value = count)) +
+  geom_parallel_sets(aes(fill = var1), alpha = 0.7, axis.width = 0.15) +
+  geom_parallel_sets_axes(axis.width = 0.09, fill = palette[2], color = palette[2]) +
+  scale_x_discrete(
+    name = NULL,
+    breaks = NULL,
+    expand = c(0, 0.15/2)
+  ) +
+  scale_y_continuous(breaks = NULL, expand = c(0, 0)) +
+  scale_fill_manual(values = c(palette[2], palette[3]), guide = "none") +
+  labs(title = "Parallel sets") +
+  theme_plot_icon_blank(palette[npal], palette[1])
+
+plot_grid(p1, p2, p3, ncol = 4, scale = .9)
+```
+
+When proportions are specified according to multiple grouping variables, then mosaic plots, treemaps, or parallel sets are useful visualization approaches
+(Chapter \@ref(nested-proportions)). Mosaic plots assume that every level of one grouping variable can be combined with every level of another grouping variable, whereas treemaps do not make such an assumption. Treemaps work well even if the subdivisions of one group are entirely distinct from the subdivisions of another. Parallel sets work better than either mosaic plots or treemaps when there are more than two grouping variables.
 
 
 ## *x*--*y* relationships
