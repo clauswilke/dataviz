@@ -290,7 +290,178 @@ All correlograms have one important drawback: They are fairly abstract. While th
 
 Dimension reduction relies on the key insight that most high-dimensional datasets consist of multiple correlated variables that convey overlapping information. Such datasets can be reduced to a smaller number of key dimensions without loss of much critical information. As a simple, intuitive example, consider a dataset of multiple physical traits of people, including quantities such as each person's height and weight, the lengths of the arms and legs, the circumferences of waist, hip, and chest, etc. We can understand immediately that all these quantities will relate first and foremost to the overall size of each person. All else being equal, a larger person will be taller, weigh more, have longer arms and legs, and larger waist, hip, and chest circumferences. The next important dimension is going to be the person's sex. Male and female measurements are substantially different for persons of comparable size. For example, a woman will tend to have higher hip circumference than a man, all else being equal.
 
-There are many techniques for dimension reduction. I will discuss only one technique here, the most widely used one, called *principal components analysis* (PCA). PCA introduces a new set of variables (called principal components, PCs) by linear combination of the original variables in the data, standardized to zero mean and unit variance. The PCs are chosen such that they are uncorrelated, and they are ordered such that the first component captures the largest possible amount of variation in the data, and subsequent components capture increasingly less. Usually, key features in the data can be seen from only the first two or three PCs.
+There are many techniques for dimension reduction. I will discuss only one technique here, the most widely used one, called *principal components analysis* (PCA). PCA introduces a new set of variables (called principal components, PCs) by linear combination of the original variables in the data, standardized to zero mean and unit variance (see Figure \@ref(fig:blue-jays-PCA) for a toy example in two dimensions). The PCs are chosen such that they are uncorrelated, and they are ordered such that the first component captures the largest possible amount of variation in the data, and subsequent components capture increasingly less. Usually, key features in the data can be seen from only the first two or three PCs.
+
+(ref:blue-jays-PCA) Example principal components (PC) analysis in two dimensions. (a) The original data. As example data, I am using here the head-length and skull-size measurements from the blue jays dataset. Female and male birds are distinguished by color, but this distinction has no effect on the PC analysis. (b) As the first step in PCA, we scale the original data values to zero mean and unit variance. We then we define new variables (the principal components, PCs) along the directions of maximum variation in the data. (c) Finally, we project the data into the new coordinates. Mathematically, this projection is equivalent to a rotation of the data points around the origin. In the 2D example shown here, the data points are rotated clockwise by 45 degrees. 
+
+```{r blue-jays-PCA, fig.width = 8.5, fig.asp = 0.35, fig.cap = '(ref:blue-jays-PCA)'}
+p1 <- ggplot(blue_jays, aes(Skull, Head, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
+  scale_x_continuous(
+    name = "skull size (mm)", limits = c(26, 36),
+    breaks = c(26, 28, 30, 32, 34, 36)
+  ) +
+  scale_y_continuous(
+    name = "head length (mm)", limits = c(51, 61),
+    breaks = c(52, 54, 56, 58, 60)
+  ) +
+  scale_fill_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    breaks = c("F", "M"),
+    labels = c("female birds   ", "male birds"),
+    name = NULL,
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(size = 3)
+      )
+    ) +
+  coord_fixed() +
+  theme_dviz_grid(12) +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.box.spacing = unit(3.5, "pt"), # distance between legend and plot
+    legend.text = element_text(vjust = 0.6),
+    legend.spacing.x = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt")
+  )
+
+bj_standard <- data.frame(
+  Skull = scale(blue_jays$Skull),
+  Head = scale(blue_jays$Head),
+  KnownSex = blue_jays$KnownSex
+)
+
+df_arrows <- data.frame(
+  x = c(-3, 2),
+  y = c(-3, -2),
+  xend = c(3, -2),
+  yend = c(3, 2)
+)
+
+df_labels <- data.frame(
+  x = c(3.1, -2.1),
+  y = c(3.1, 2.1),
+  hjust = c(0, 1),
+  vjust = c(0, 0),
+  label = c("PC 1", "PC 2")
+)
+
+p2 <- ggplot(bj_standard, aes(Skull, Head, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
+  geom_segment(
+    data = df_arrows,
+    aes(x = x, y = y, xend = xend, yend = yend),
+    color = "black",
+    arrow = arrow(angle = 15, length = grid::unit(9, "pt"), type = "closed"),
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = df_labels,
+    aes(x = x, y = y, hjust = hjust, vjust = vjust, label = label),
+    size = 12/.pt,
+    family = dviz_font_family,
+    color = "black", inherit.aes = FALSE
+  ) +
+  scale_x_continuous(
+    name = "skull size (scaled)", limits = c(-4, 4),
+    breaks = c(-4, -2, 0, 2, 4), labels = c("-4.0", "-2.0", "0.0", "2.0", "4.0")
+  ) +
+  scale_y_continuous(
+    name = "head length (scaled)", limits = c(-4, 4),
+    breaks = c(-4, -2, 0, 2, 4), labels = c("-4.0", "-2.0", "0.0", "2.0", "4.0")
+  ) +
+  scale_fill_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    breaks = c("F", "M"),
+    labels = c("", ""),
+    name = NULL,
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(shape = NA)
+      )
+    ) +
+  coord_fixed(ratio = 1) +
+  theme_dviz_grid(12) +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.box.spacing = unit(3.5, "pt"), # distance between legend and plot
+    legend.text = element_text(vjust = 0.6),
+    legend.spacing.x = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt")
+  )
+
+df_arrows <- data.frame(
+  x = c(-5.2, 0),
+  y = c(0, -3.5),
+  xend = c(5.2, 0),
+  yend = c(0, 3.5)
+)
+
+df_labels <- data.frame(
+  x = c(5.2, 0),
+  y = c(0.4, 3.8),
+  hjust = c(0.9, 0.5),
+  vjust = c(0, 0),
+  label = c("PC 1", "PC 2")
+)
+
+
+p3 <- ggplot(bj_standard, aes(Skull + Head, -Skull + Head, fill = KnownSex)) + 
+  geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
+  geom_segment(
+    data = df_arrows,
+    aes(x = x, y = y, xend = xend, yend = yend),
+    color = "black",
+    arrow = arrow(angle = 15, length = grid::unit(9, "pt"), type = "closed"),
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = df_labels,
+    aes(x = x, y = y, hjust = hjust, vjust = vjust, label = label),
+    size = 12/.pt,
+    family = dviz_font_family,
+    color = "black", inherit.aes = FALSE
+  ) +
+  scale_x_continuous(
+    name = "PC 1", limits = c(-5.2, 5.2),
+    breaks = c(-5, -2.5, 0, 2.5, 5), labels = c("-5.0", "-2.5", "0.0", "2.5", "5.0")
+) +
+  scale_y_continuous(
+    name = "PC 2", limits = c(-5.2, 5.2),
+    breaks = c(-5, -2.5, 0, 2.5, 5), labels = c("-5.0", "-2.5", "0.0", "2.5", "5.0")
+  ) +
+  scale_fill_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    breaks = c("F", "M"),
+    labels = c("", ""),
+    name = NULL,
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(shape = NA)
+      )
+    ) +
+  coord_fixed(ratio = 1) +
+  theme_dviz_grid(12) +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.box.spacing = unit(3.5, "pt"), # distance between legend and plot
+    legend.text = element_text(vjust = 0.6),
+    legend.spacing.x = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key.width = unit(10, "pt")
+  )
+
+plot_grid(
+  p1, NULL, p2, NULL, p3,
+  nrow = 1, align = 'hv', rel_widths = c(1, .04, 1, .04, 1),
+  labels = c("a", "", "b", "", "c"), label_y = 0.985
+)
+```
 
 When we perform PCA, we are generally interested in two pieces of information: (i) the composition of the PCs and (ii) the location of the individual data points in the principal components space. Let's look at these two pieces in a PC analysis of the forensic glass dataset.
 
@@ -327,8 +498,10 @@ rotation_labels <- data.frame(type = c("Ba", "Al", "Na", "K", "Fe", "Ca", "Mg"),
 
 rotation_data <- left_join(rotation_data, rotation_labels, by = "type")
 
-arrow_style <- arrow(length = unit(0.05, "inches"),
-                     type = "closed")
+arrow_style <- arrow(
+  angle = 15, length = grid::unit(9, "pt"),
+  type = "closed"
+)
 ggplot(rotation_data) + 
   geom_segment(aes(xend = PC1, yend = PC2),
                x = 0, y = 0,
