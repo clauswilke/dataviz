@@ -10,6 +10,38 @@ table {
   font-size: .833em !important;
 }
 
+.book .book-body .page-wrapper .page-inner section.normal table tr.header {
+    border-top-width: 0px;
+    /*background-color: #e8e8e8;*/
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table th {
+	padding-top: 3px;
+    padding-bottom: 3px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-color: #808080;
+    border-bottom-color: #808080;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table td {
+	padding-top: 3px;
+    padding-bottom: 3px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-color: #f0f0f0;
+    border-bottom-color: #f0f0f0;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
+    background-color: #f0f0f0;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table:not(.kable_wrapper) tr:last-child td {
+    border-bottom-width: 1px;
+    border-bottom-color: #808080;
+}
+
 caption {
   display: table-caption;
   font-size: .833em !important;
