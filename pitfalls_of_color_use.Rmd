@@ -46,8 +46,11 @@ p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.ch
   ylab("population growth (%)\n2000 to 2010    ") +
   theme_dviz_grid() +
   theme(legend.text = element_text(size = 10),
+        legend.title = element_text(size = 12),
         legend.justification = "center",
-        plot.margin = margin(14, 14, 3, 0))
+        legend.box.margin = margin(14, 0, 28, 0),
+        legend.spacing.y = unit(2, "pt"),
+        plot.margin = margin(14, 14, 14, 0))
 
 p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
 stamp_bad(p_comb)
