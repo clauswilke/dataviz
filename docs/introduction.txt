@@ -19,7 +19,7 @@ visualize data without being grossly misleading. However, they may not
 have a well developed sense of visual aesthetics, and they may
 inadvertantly make visual choices that detract from their desired
 message. Designers, on the other hand, may prepare visualizations that
-look beautiful but play fast and lose with the data. It is my goal to
+look beautiful but play fast and loose with the data. It is my goal to
 provide useful information to both groups.
 
 The book attempts to cover the key principles, methods, and concepts

@@ -256,7 +256,7 @@ values in Table @ref(tab:color-codes).
 |blue |#0072B2 |202° |100, 50, 0, 0 |0, 114, 178 |0, 45, 70
 |vermilion |#D55E00 |27° |0, 80, 100, 0 |213, 94, 0 |80, 40, 0
 |reddish purple |#CC79A7 |326° |10, 70, 0, 0 |204, 121, 167 |80, 60, 70
-|gray |#999999 |- |0, 0, 0, 60 |153, 153, 153 |60, 60, 60
+|black |#000000 |- |0, 0, 0, 100 |0, 0, 0 |0, 0, 0
 |======================================================================
 
 While there are several good, cvd-safe color scales readily available,

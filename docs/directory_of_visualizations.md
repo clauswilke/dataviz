@@ -39,6 +39,11 @@ Proportions can be visualized as pie charts, side-by-side bars, or stacked bars 
 
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
+<img src="directory_of_visualizations_files/figure-html/proportions-multi-1.png" width="840" style="display: block; margin: auto;" />
+
+When proportions are specified according to multiple grouping variables, then mosaic plots, treemaps, or parallel sets are useful visualization approaches
+(Chapter \@ref(nested-proportions)). Mosaic plots assume that every level of one grouping variable can be combined with every level of another grouping variable, whereas treemaps do not make such an assumption. Treemaps work well even if the subdivisions of one group are entirely distinct from the subdivisions of another. Parallel sets work better than either mosaic plots or treemaps when there are more than two grouping variables.
+
 
 ## *x*--*y* relationships
 

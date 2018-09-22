@@ -119,14 +119,14 @@ Table: (\#tab:color-codes) Colorblind-friendly color scale, developed by @Okabe-
 
 Name            Hex code     Hue     C, M, Y, K (%)   R, G, B (0-255)   R, G, B (%)
 --------------  ------------ ------- ---------------- ----------------- ------------
-        orange       #E69F00     41°  0, 50, 100, 0   230, 159, 0       90, 60, 0
+        orange       #E69F00     41° 0, 50, 100, 0    230, 159, 0       90, 60, 0
       sky blue       #56B4E9    202° 80, 0, 0, 0      86, 180, 233      35, 70, 90
   bluish green       #009E73    164° 97, 0, 75, 0     0, 158, 115       0, 60, 50
         yellow       #F0E442     56° 10, 5, 90, 0     240, 228, 66      95, 90, 25
           blue       #0072B2    202° 100, 50, 0, 0    0, 114, 178       0, 45, 70
      vermilion       #D55E00     27° 0, 80, 100, 0    213, 94, 0        80, 40, 0
 reddish purple       #CC79A7    326° 10, 70, 0, 0     204, 121, 167     80, 60, 70
-          gray       #999999       -  0, 0, 0, 60     153, 153, 153     60, 60, 60
+         black       #000000      -  0, 0, 0, 100     0, 0, 0           0, 0, 0
  
 While there are several good, cvd-safe color scales readily available, we need to recognize that they are no magic bullets. It is very possible to use a cvd-safe scale and yet produce a figure a person with cvd cannot decipher. One critical parameter is the size of the colored graphical elements. Colors are much easier to distinguish when they are applied to large areas than to small ones or thin lines. And this effect is exacerbated under cvd (Figure \@ref(fig:colors-thin-lines)). In addition to the various color-design considerations discussed in this chapter and in Chapter \@ref(color-basics), I recommend to view color figures under cvd simulations to get a sense of what they may look like for a person with cvd. There are several online services and desktop apps available that allow users to run arbitrary figures through a cvd simulation.
 

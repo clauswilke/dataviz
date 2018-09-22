@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="visualizing-proportions.html">
+<link rel="next" href="visualizing-associations.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#uncertainty"><i class="fa fa-check"></i><b>5.5</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="14" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>14</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="14.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>14.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="14.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>14.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="14.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>14.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>15</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="15.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>15.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="15.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>15.2</b> 2d histograms</a></li>
+<li class="chapter" data-level="15.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>15.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>16</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="16.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>16.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="16.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>16.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="16.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>16.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>17</b> Redundant coding</a><ul>
+<li class="chapter" data-level="17.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>17.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="17.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>17.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>18</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="18.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>18.1</b> Small multiples</a></li>
+<li class="chapter" data-level="18.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>18.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>19</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="19.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>19.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="19.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>19.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="19.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>19.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="balance-data-ink.html"><a href="balance-data-ink.html"><i class="fa fa-check"></i><b>20</b> Balance the data-to-ink ratio</a><ul>
+<li class="chapter" data-level="20.1" data-path="balance-data-ink.html"><a href="balance-data-ink.html#finding-the-appropriate-data-to-ink-ratio"><i class="fa fa-check"></i><b>20.1</b> Finding the appropriate data-to-ink ratio</a></li>
+<li class="chapter" data-level="20.2" data-path="balance-data-ink.html"><a href="balance-data-ink.html#background-grids"><i class="fa fa-check"></i><b>20.2</b> Background grids</a></li>
+<li class="chapter" data-level="20.3" data-path="balance-data-ink.html"><a href="balance-data-ink.html#paired-data"><i class="fa fa-check"></i><b>20.3</b> Paired data</a></li>
+<li class="chapter" data-level="20.4" data-path="balance-data-ink.html"><a href="balance-data-ink.html#summary"><i class="fa fa-check"></i><b>20.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>21</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="22" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>22</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="23" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>23</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="23.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>23.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="23.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>23.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="23.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>23.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="24" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>24</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="24.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>24.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="24.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>24.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="24.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>24.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>25</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="25.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>25.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="25.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>25.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="25.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>25.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>26</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="26.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>26.1</b> What is a story?</a></li>
+<li class="chapter" data-level="26.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>26.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="26.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>26.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="26.4" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>26.4</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>27</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="27.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>27.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="27.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>27.2</b> Programming books</a></li>
+<li class="chapter" data-level="27.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>27.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="27.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>27.4</b> Historical texts</a></li>
+<li class="chapter" data-level="27.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>27.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html"><i class="fa fa-check"></i>Outline</a><ul>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-i-from-data-to-visualization"><i class="fa fa-check"></i>Part I: From data to visualization</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-ii-principles-of-figure-design"><i class="fa fa-check"></i>Part II: Principles of figure design</a></li>
+<li class="chapter" data-level="" data-path="outline.html"><a href="outline.html#part-iii-miscellaneous-topics"><i class="fa fa-check"></i>Part III: Miscellaneous topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="nested-proportions" class="section level1">
+<h1><span class="header-section-number">11</span> Visualizing nested proportions</h1>
+<p>In the preceding chapter, I discussed scenarios where a dataset is broken into pieces defined by one cateogical variable, such as political party, company, or health status. It is not uncommon, however, that we want to drill down further and break down a dataset by multiple categorical variables at once. For example, in the case of parliamentary seats, we could be interested in the proportions of seats by party and by the gender of the representatives. Similarly, in the case of people’s health status, we could ask how health status further breaks down by marital status. I refer to these scenarios as nested proportions, because each additional categorical variable that we add creates a finer subdivision of the data nested within the previous proportions. There are several suitable approaches to visualize such nested proportions, including mosaic plots, treemaps, and parallel sets.</p>
+<div id="nested-proportions-gone-wrong" class="section level2">
+<h2><span class="header-section-number">11.1</span> Nested proportions gone wrong</h2>
+<p>I will begin by demonstrating two flawed approaches to visualizing nested proportions. While these approaches may seem nonsensical to any experienced data scientist, I have seen them in the wild and therefore think they warrant discussion. Throughout this chapter, I will work with a dataset of 106 bridges in Pittsburgh. This dataset contains various pieces of information about the bridges, such as the material from which they are constructed (steel, iron, or wood) and the year when they were erected. Based on the year of erection, bridges are grouped into distinct categories, such as crafts bridges that were erected before 1870 and modern bridges that were erected after 1940.</p>
+<p>Let’s assume we want to visualize both the fraction of bridges made from steel, iron, or wood and the fraction that are crafts or modern. We might be tempted to do so by drawing a combined pie chart (Figure <a href="nested-proportions.html#fig:bridges-pie-wrong">11.1</a>). However, this visualization is not valid. All the slices in a pie chart must add up to 100%, and here the slices add up to 135%. We reach a total percentage in excess of 100% because we are double-counting bridges. Every bridge in the dataset is made of steel, iron, or wood, so these three slices of the pie already represent 100% of the bridges. Every crafts or modern bridge is also a steel, iron, or wood bridge, and hence is counted twice in the pie chart.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-pie-wrong"></span>
+<img src="nested_proportions_files/figure-html/bridges-pie-wrong-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a pie chart. Numbers represent the percentages of bridges of a given type among all bridges. This figure is invalid, because the percentages add up to more than 100%. There is overlap between construction material and date of construction. For example, all modern bridges are made of steel, and the majority of crafts bridges are made of wood. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="525" />
+<p class="caption">
+Figure 11.1: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a pie chart. Numbers represent the percentages of bridges of a given type among all bridges. This figure is invalid, because the percentages add up to more than 100%. There is overlap between construction material and date of construction. For example, all modern bridges are made of steel, and the majority of crafts bridges are made of wood. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>Double-counting is not necessarily a problem if we choose a visualization that does not require the proportions to add to 100%. As discussed in the preceding chapter, side-by-side bars meet this criterion. We can show the various proportions of bridges as bars in a single plot, and this plot is not technically wrong (Figure <a href="nested-proportions.html#fig:bridges-bars-bad">11.2</a>). Nevertheless, I have labeled it as “bad”, because it does not immediately show that there is overlap among some of the categories shown. A casual observer might conclude from Figure <a href="nested-proportions.html#fig:bridges-bars-bad">11.2</a> that there are five separate categories of bridges, and that, for example, modern bridges are neither made of steel nor of wood or iron.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-bars-bad"></span>
+<img src="nested_proportions_files/figure-html/bridges-bars-bad-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a bar plot. Unlike Figure 11.1, this visualization is not technically wrong, since it doesn’t imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it “bad”. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.2: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by date of construction (crafts, before 1870, and modern, after 1940), shown as a bar plot. Unlike Figure <a href="nested-proportions.html#fig:bridges-pie-wrong">11.1</a>, this visualization is not technically wrong, since it doesn’t imply that the bar heights need to add up to 100%. However, it also does not clearly indicate the overlap among different groups, and therefore I have labeled it “bad”. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+</div>
+<div id="mosaic-plots-and-treemaps" class="section level2">
+<h2><span class="header-section-number">11.2</span> Mosaic plots and treemaps</h2>
+<p>Whenever we have categories that overlap, it is best to show clearly how they relate to each other. This can be done with a mosaic plot (Figure <a href="nested-proportions.html#fig:bridges-mosaic">11.3</a>). On first glance, a mosaic plot looks similar to a stacked bar plot (e.g., Figure <a href="visualizing-proportions.html#fig:marketshare-stacked">10.5</a>). However, unlike in a stacked bar plot, in a mosaic plot both the heights and the widths of individual shaded areas vary. Note that in Figure <a href="nested-proportions.html#fig:bridges-mosaic">11.3</a>, we see two additional construction eras, <em>emerging</em> (from 1870 to 1889) and <em>mature</em> (1890 to 1939). In combination with crafts and modern, these construction eras cover all bridges in the dataset, as do the three building materials. This is a critical condition for a mosaic plot: Every categorical variable shown must cover all the observations in the dataset.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-mosaic"></span>
+<img src="nested_proportions_files/figure-html/bridges-mosaic-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a mosaic plot. The widths of each rectangle are proportional to the number of bridges constructed in that era, and the heights are proportional to the number of bridges constructed from that material. Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.3: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a mosaic plot. The widths of each rectangle are proportional to the number of bridges constructed in that era, and the heights are proportional to the number of bridges constructed from that material. Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>To draw a mosaic plot, we begin by placing one categorical variable along the <em>x</em> axis (here, era of bridge construction) and subdivide the <em>x</em> axis by the relative proportions that make up the categories. We then place the other categorical variable along the <em>y</em> axis (here, building material) and, within each category along the <em>x</em> axis, subdivide the <em>y</em> axis by the relative proportions that make up the categories of the <em>y</em> variable. The result is a set of rectangles whose areas are proportional to the number of cases representing each possible combination of the two categorical variables.</p>
+<p>The bridges dataset can also be visualized in a related but distinct format called a <em>treemap</em>. In a treemap, just as is the case in a mosaic plot, we take an enclosing rectangle and subdivide it into smaller rectangles whose areas represent the proportions. However, the method of placing the smaller rectangles into the larger one is different compared to the mosaic plot. In a treemap, we recursively nest rectangles inside each other. For example, in the case of the Pittsburgh bridges, we can first subdivide the total area into three parts representing the three building materials wood, iron, and steel. Then, we subdivide each of those areas further to represent the construction eras represented for each building material (Figure <a href="nested-proportions.html#fig:bridges-treemap">11.4</a>). In principle, we could keep going with nesting ever more smaller subdivisions inside each other, though relatively quickly the result would become unwieldy or confusing.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-treemap"></span>
+<img src="nested_proportions_files/figure-html/bridges-treemap-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a treemap. The area of each rectangle is proportional to the number of bridges of that type. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.4: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern), shown as a treemap. The area of each rectangle is proportional to the number of bridges of that type. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>While mosaic plots and treemaps are closely related, they have different points of emphasis and different application areas. Here, the mosaic plot (Figure <a href="nested-proportions.html#fig:bridges-mosaic">11.3</a>) emphasizes the temporal evolution in building-material use from the crafts era to the modern era, whereas the treemap (Figure <a href="nested-proportions.html#fig:bridges-treemap">11.4</a>) emphasizes the total number of steel, iron, and wood bridges.</p>
+<p>More generally, mosaic plots assume that all of the proportions shown can be identified via combinations of two or more orthogonal categorical variables. For example, in Figure <a href="nested-proportions.html#fig:bridges-mosaic">11.3</a>, every bridge can be described by a choice of building material (wood, iron, steel) and a choice of time period (crafts, emerging, mature, modern). Moreover, in principle every combination of these two variable is possible, even though in practice this need not be the case. (Here, there are no steel crafts bridges and no wood or iron modern bridges.) By contrast, such a requirement does not exist for treemaps. In fact, treemaps tend to work well when the proportions cannot meaningfully be described by combining multiple categorical variables. For example, we can separate the U.S. into four regions (West, Northeast, Midwest, and South) and each region into distinct states, but the states in one region have no relationship to the states in another region (Figure <a href="nested-proportions.html#fig:US-states-treemap">11.5</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:US-states-treemap"></span>
+<img src="nested_proportions_files/figure-html/US-states-treemap-1.png" alt="States in the U.S. visualized as a treemap. Each rectangle represents one state, and the area of each rectangle is proportional to the state’s land surface area. The states are grouped into four regions, West, Northeast, Midwest, and South. The coloring is proportional to the number of inhabitants for each state, with darker colors representing larger numbers of inhabitants. Data source: 2010 U.S. Census" width="892.5" />
+<p class="caption">
+Figure 11.5: States in the U.S. visualized as a treemap. Each rectangle represents one state, and the area of each rectangle is proportional to the state’s land surface area. The states are grouped into four regions, West, Northeast, Midwest, and South. The coloring is proportional to the number of inhabitants for each state, with darker colors representing larger numbers of inhabitants. Data source: 2010 U.S. Census
+</p>
+</div>
+<p>Both mosaic plots and treemaps are commonly used and can be illuminating, but they have similar limitations as do stacked bars (Chapter <a href="visualizing-proportions.html#tab:pros-cons-pie-bar">10.1</a>): A direct comparison among conditions can be difficult, because different rectangles do not necessarily share baselines that enable visual comparison. In mosaic plots or treemaps, this problem is exacerbated by the fact that the shapes of the different rectangles can vary. For example, there are the same number of iron bridges (three) among the emerging and the mature bridges, but this is difficult to discern in the mosaic plot (Figure <a href="nested-proportions.html#fig:bridges-mosaic">11.3</a>), because the two rectangles representing these two groups of three bridges have entirely different shapes. There isn’t necessarily a solution to this problem—visualizing nested proportions can be tricky. Whenever possible, I recommend showing the actual counts or percentages on the plot, so readers can verify that their intuitive interpretation of the shaded areas is correct.</p>
+</div>
+<div id="nested-pies" class="section level2">
+<h2><span class="header-section-number">11.3</span> Nested pies</h2>
+<p>At the beginnig of this chapter, I visualized the bridges dataset with a flawed pie chart (Figure <a href="nested-proportions.html#fig:bridges-pie-wrong">11.1</a>), and I then argued that a mosaic plot or a treemap are more appropriate. However, both of these latter plot types are closely related to pie charts, since they all use area to represent data values. The primary difference is the type of coordinate system, polar in the case of a pie chart versus cartesian in the case of a mosaic plot or treemap. This close relationship between these different plots begs the question whether some variant of a pie chart can be used to visualize this dataset.</p>
+<p>There are two possibilities. First, we can draw a pie chart composed of an inner and an outer circle (Figure <a href="nested-proportions.html#fig:bridges-nested-pie">11.6</a>). The inner circle shows the breakdown of the data by one variable (here, building material) and the outer circle shows the breakdown of each slice of the inner circle by the second variable (here, era of bridge construction). This visualization is reasonable but I have my reservations, and therefore I have labeled it “ugly”. Most importantly, the two separate circles obscure the fact that each bridge in the dataset has both a building material and an era of bridge construction. In effect, in Figure <a href="nested-proportions.html#fig:bridges-nested-pie">11.6</a>, we are still double-counting each bridge. If we add up all the numbers shown in the two circles we obtain 212, which is twice the number of bridges in the dataset.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-nested-pie"></span>
+<img src="nested_proportions_files/figure-html/bridges-nested-pie-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron, inner circle) and by era of construction (crafts, emerging, mature, modern, outer circle). Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="525" />
+<p class="caption">
+Figure 11.6: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron, inner circle) and by era of construction (crafts, emerging, mature, modern, outer circle). Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>Alternatively, we can first slice the pie into pieces representing the proportions according to one variable (e.g. material) and then subdivide these slices further according to the other variable (construction era) (Figure <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a>). In this way, in effect we are making a normal pie chart with a large number of small pie slices. However, we can then use coloring to indicate the nested nature of the pie. In Figure <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a>, green colors represent wood bridges, orange colors represent iron bridges, and blue colors represent steel bridges. The darkness of each color represents the construction era, with darker colors corresponding to more recently constructed bridges. By using a nested color scale in this way, we can visualize the breakdown of the data both by the primary variable (construction material) and by the secondary variable (construction era).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-nested-pie2"></span>
+<img src="nested_proportions_files/figure-html/bridges-nested-pie2-1.png" alt="Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern). Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="525" />
+<p class="caption">
+Figure 11.7: Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern). Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>The pie chart of Figure <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a> represents a reasonable visualization of the bridges dataset, but in a direct comparison to the equivalent treemap (Figure <a href="nested-proportions.html#fig:bridges-treemap">11.4</a>) I think the treemap is preferable. First, the rectangular shape of the treemap allows it to make better us of the available space. Figures <a href="nested-proportions.html#fig:bridges-treemap">11.4</a> and <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a> are of exactly equal size, but in Figure <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a> much of the figure is wasted as white space. Figure <a href="nested-proportions.html#fig:bridges-treemap">11.4</a>, the treemap, has virtually no superfluous white space. This matters because it enables me to place the labels inside the shaded areas in the treemap. Inside labels always create a stronger visual unit with the data than outside labels and hence are preferred. Second, some of the pie slices in Figure <a href="nested-proportions.html#fig:bridges-nested-pie2">11.7</a> are very thin and thus hard to see. By contrast, every rectangle in Figure <a href="nested-proportions.html#fig:bridges-treemap">11.4</a> is of a reasonable size.</p>
+</div>
+<div id="parallel-sets" class="section level2">
+<h2><span class="header-section-number">11.4</span> Parallel sets</h2>
+<p>When we want to visualize proportions described by more than two categorical variables, mosaic plots, treemaps, and pie charts all can quickly become unwieldy. A viable alternative in this case can be a <em>parallel sets plot</em>. In a parallel sets plot, we show how the total dataset breaks down by each individual categorical variable, and then we draw shaded bands that show how the subgroups relate to each other. See Figure <a href="nested-proportions.html#fig:bridges-parallel-sets1">11.8</a> for an example. In this figure, I have broken down the bridges dataset by construction material (iron, steel, wood), length of each bridge (long, medium, short), the era during which each bridge was constructed (crafts, emerging, mature, modern), and the river each bridge spans (Allegheny, Monongahela, Ohio). The bands that connect the parallel sets are colored by construction material. This shows, for example, that wood bridges are mostly of medium length (with a few short bridges), were primarily erected during the crafts period (with a few bridges of medium length erected during the emerging and mature periods), and span primarily the Allegheny river (with a few crafts bridges spanning the Monongahela river). By contrast, iron bridges are all of medium length, were primarily erected during the crafts period, and span the Allegheny and Monongahela rivers in approximately equal proportions.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-parallel-sets1"></span>
+<img src="nested_proportions_files/figure-html/bridges-parallel-sets1-1.png" alt="Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span, shown as a parallel sets plot. The coloring of the bands highlights the construction material of the different bridges. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.8: Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span, shown as a parallel sets plot. The coloring of the bands highlights the construction material of the different bridges. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>The same visualization looks quite different if we color by a different criterion, for example by river (Figure <a href="nested-proportions.html#fig:bridges-parallel-sets2">11.9</a>). This figure is visually busy, with many criss-crossing bands, but we do see that nearly any bridge of any type can be found to span each river.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-parallel-sets2"></span>
+<img src="nested_proportions_files/figure-html/bridges-parallel-sets2-1.png" alt="Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span. This figure is similar to Figure 11.8 but now the coloring of the bands highlights the river spanned by the different bridges. This figure is labeled “ugly” because the arrangement of the colored bands in the middle of the figure is very busy, and also because the bands need to be read from right to left. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.9: Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span. This figure is similar to Figure <a href="nested-proportions.html#fig:bridges-parallel-sets1">11.8</a> but now the coloring of the bands highlights the river spanned by the different bridges. This figure is labeled “ugly” because the arrangement of the colored bands in the middle of the figure is very busy, and also because the bands need to be read from right to left. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+<p>I have labeled Figure <a href="nested-proportions.html#fig:bridges-parallel-sets2">11.9</a> as “ugly” because I think it is overly complex and confusing. First, since we are used to reading from left to right I think the sets that define the coloring should appear all the way to the left, not on the right. This will make it easier to see where the coloring originates and how it flows through the dataset. Second, it is a good idea to change the order of the sets such that the amount of criss-crossing bands is minimized. Following these principles, I arrive at Figure <a href="nested-proportions.html#fig:bridges-parallel-sets3">11.10</a>, which I consider preferable to Figure <a href="nested-proportions.html#fig:bridges-parallel-sets2">11.9</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:bridges-parallel-sets3"></span>
+<img src="nested_proportions_files/figure-html/bridges-parallel-sets3-1.png" alt="Breakdown of bridges in Pittsburgh by river, era of construction, length, and construction material. This figure differs from Figure 11.9 only in the order of the parallel sets. However, the modified order results in a figure that is easier to read and less busy. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository (Dua and Karra Taniskidou 2017)" width="630" />
+<p class="caption">
+Figure 11.10: Breakdown of bridges in Pittsburgh by river, era of construction, length, and construction material. This figure differs from Figure <a href="nested-proportions.html#fig:bridges-parallel-sets2">11.9</a> only in the order of the parallel sets. However, the modified order results in a figure that is easier to read and less busy. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository <span class="citation">(Dua and Karra Taniskidou <a href="#ref-UCI_repo_2017">2017</a>)</span>
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-UCI_repo_2017">
+<p>Dua, D., and E. Karra Taniskidou. 2017. “UCI Machine Learning Repository.” University of California, Irvine, School of Information; Computer Sciences. <a href="https://archive.ics.uci.edu/ml" class="uri">https://archive.ics.uci.edu/ml</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualizing-proportions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizing-associations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

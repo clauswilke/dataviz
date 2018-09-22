@@ -28,35 +28,33 @@ The book was last compiled using the following environment:
 ##  [4] maps_3.2.0          sf_0.6-3            maptools_0.9-2     
 ##  [7] sp_1.3-1            rgeos_0.3-28        plot3D_1.1.1       
 ## [10] magick_1.9          hexbin_1.27.2       treemapify_2.4.0   
-## [13] ggthemes_3.4.0      ggridges_0.5.0.9000 ggrepel_0.8.0      
-## [16] ggforce_0.1.1       patchwork_0.0.1     lubridate_1.7.3    
-## [19] forcats_0.3.0       stringr_1.3.0       purrr_0.2.4        
-## [22] readr_1.1.1         tidyr_0.8.0         tibble_1.4.2       
-## [25] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.7.4        
-## [28] colorblindr_0.1.0   ggplot2_3.0.0.9000  colorspace_1.4-0   
-## [31] cowplot_0.9.99     
+## [13] gridExtra_2.3       ggthemes_3.4.0      ggridges_0.5.0.9000
+## [16] ggrepel_0.8.0       ggforce_0.1.1       patchwork_0.0.1    
+## [19] lubridate_1.7.3     forcats_0.3.0       stringr_1.3.1      
+## [22] purrr_0.2.5         readr_1.1.1         tidyr_0.8.0        
+## [25] tibble_1.4.2        tidyverse_1.2.1     dviz.supp_0.1.0    
+## [28] dplyr_0.7.99.9000   colorblindr_0.1.0   ggplot2_3.0.0.9000 
+## [31] colorspace_1.4-0    cowplot_0.9.99     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-137      httr_1.3.1        rprojroot_1.3-2  
-##  [4] tools_3.5.0       backports_1.1.2   R6_2.2.2         
-##  [7] spData_0.2.8.3    DBI_1.0.0         lazyeval_0.2.1   
-## [10] withr_2.1.2       mnormt_1.5-5      compiler_3.5.0   
-## [13] cli_1.0.0         rvest_0.3.2       xml2_1.2.0       
-## [16] bookdown_0.7      scales_0.5.0.9000 classInt_0.2-3   
-## [19] psych_1.7.8       digest_0.6.15     foreign_0.8-70   
-## [22] rmarkdown_1.9     pkgconfig_2.0.1   htmltools_0.3.6  
-## [25] rlang_0.2.1       readxl_1.1.0      rstudioapi_0.7   
-## [28] bindr_0.1.1       farver_1.0        jsonlite_1.5     
-## [31] magrittr_1.5      Rcpp_0.12.18      munsell_0.4.3    
-## [34] ggfittext_0.5.0   stringi_1.2.4     yaml_2.1.18      
-## [37] MASS_7.3-49       plyr_1.8.4        grid_3.5.0       
-## [40] misc3d_0.8-4      parallel_3.5.0    crayon_1.3.4     
-## [43] deldir_0.1-14     lattice_0.20-35   haven_1.1.1      
-## [46] hms_0.4.2         knitr_1.20        pillar_1.2.1     
-## [49] reshape2_1.4.3    glue_1.3.0        evaluate_0.10.1  
-## [52] modelr_0.1.1      tweenr_0.1.5.9999 cellranger_1.1.0 
-## [55] gtable_0.2.0      polyclip_1.6-1    assertthat_0.2.0 
-## [58] xfun_0.1          broom_0.4.3       e1071_1.6-8      
-## [61] class_7.3-14      units_0.6-0       bindrcpp_0.2     
-## [64] concaveman_1.0.0
+##  [1] httr_1.3.1        jsonlite_1.5      modelr_0.1.1     
+##  [4] assertthat_0.2.0  cellranger_1.1.0  yaml_2.1.18      
+##  [7] pillar_1.2.1      backports_1.1.2   lattice_0.20-35  
+## [10] glue_1.3.0        digest_0.6.16     polyclip_1.6-1   
+## [13] rvest_0.3.2       htmltools_0.3.6   plyr_1.8.4       
+## [16] pkgconfig_2.0.2   broom_0.5.0       misc3d_0.8-4     
+## [19] haven_1.1.1       bookdown_0.7      scales_1.0.0     
+## [22] tweenr_0.1.5.9999 farver_1.0        withr_2.1.2      
+## [25] lazyeval_0.2.1    cli_1.0.0         magrittr_1.5     
+## [28] crayon_1.3.4      readxl_1.1.0      deldir_0.1-14    
+## [31] evaluate_0.10.1   nlme_3.1-137      MASS_7.3-49      
+## [34] class_7.3-14      xml2_1.2.0        foreign_0.8-70   
+## [37] tools_3.5.0       hms_0.4.2         munsell_0.5.0    
+## [40] e1071_1.6-8       compiler_3.5.0    concaveman_1.0.0 
+## [43] rlang_0.2.2.9001  classInt_0.2-3    units_0.6-0      
+## [46] grid_3.5.0        rstudioapi_0.7    rmarkdown_1.9    
+## [49] gtable_0.2.0      DBI_1.0.0         R6_2.2.2         
+## [52] knitr_1.20        rprojroot_1.3-2   stringi_1.2.4    
+## [55] Rcpp_0.12.18      ggfittext_0.5.0   spData_0.2.8.3   
+## [58] tidyselect_0.2.4  xfun_0.1
 ```

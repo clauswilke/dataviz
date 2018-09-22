@@ -133,18 +133,10 @@ indicates a perfect association. The sign of the correlation coefficient
 indicates whether the variables are _correlated_ (larger values in one
 variable coincide with larger values in the other) or _anticorrelated_
 (larger values in one variable coincide with smaller values in the
-other) (Figure @ref(fig:correlations)). The correlation coefficient is
-defined as
-
-latexmath:[\[
-r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
-\]] where latexmath:[$x_i$] and latexmath:[$y_i$] are two sets of
-observations and latexmath:[$\bar x$] and latexmath:[$\bar y$] are the
-corresponding sample means. The formula is symmetric in
-latexmath:[$x_i$] and latexmath:[$y_i$], so the correlation of _x_ with
-_y_ is the same as the correlation of _y_ with _x_. Visualizations of
-correlation coefficients, rather than of the underlying data, are called
-_correlograms_.
+other). To provide visual examples of what different correlation
+strengths look like, in Figure @ref(fig:correlations) I show randomly
+generated sets of points that differ widely in the degree to which the
+_x_ and _y_ values are correlated.
 
 (ref:correlations) Examples of correlations of different magnitude and
 direction, with associated correlation coefficient _r_. In both rows,
@@ -152,12 +144,35 @@ from left to right correlations go from weak to strong. In the top row
 the correlations are positive (larger values for one quantity are
 associated with larger values for the other) and in the bottom row they
 are negative (larger values for one quantity are associated with smaller
-values for the other).
+values for the other). In all six panels, the sets of _x_ and _y_ values
+are identical, but the pairings between individual _x_ and _y_ values
+have been reshuffled to generate the specified correlation coefficients.
 
 (#fig:correlations)(ref:correlations)
 
-To illustrate the use of a correlogram, we will consider a data set of
-over 200 glass fragments obtained during forensic work. For each glass
+The correlation coefficient is defined as
+
+latexmath:[\[
+r = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}},
+\]] where latexmath:[$x_i$] and latexmath:[$y_i$] are two sets of
+observations and latexmath:[$\bar x$] and latexmath:[$\bar y$] are the
+corresponding sample means. We can make a number of observations from
+this formula. First, the formula is symmetric in latexmath:[$x_i$] and
+latexmath:[$y_i$], so the correlation of _x_ with _y_ is the same as the
+correlation of _y_ with _x_. Second, the individual values
+latexmath:[$x_i$] and latexmath:[$y_i$] only enter the formula in the
+context of differences to the respective sample mean, so if we shift an
+entire dataset by a constant amount, e.g. we replace latexmath:[$x_i$]
+with latexmath:[$x_i' = x_i + C$] for some constant latexmath:[$C$], the
+correlation coefficient remains unchanged. Third, the correlation
+coefficient also remains unchanged if we rescale the data,
+latexmath:[$x_i' = C x_i$], since the constant latexmath:[$C$] will
+appear both in the numerator and the denominator of the formula and
+hence can be cancelled.
+
+Visualizations of correlation coefficients are called _correlograms_. To
+illustrate the use of a correlogram, we will consider a data set of over
+200 glass fragments obtained during forensic work. For each glass
 fragment, we have measurements about its composition, expressed as the
 percent in weight of various mineral oxides. There are seven different
 oxides for which we have measurements, yielding a total of 6 + 5 + 4 + 3
@@ -230,12 +245,27 @@ There are many techniques for dimension reduction. I will discuss only
 one technique here, the most widely used one, called _principal
 components analysis_ (PCA). PCA introduces a new set of variables
 (called principal components, PCs) by linear combination of the original
-variables in the data, standardized to zero mean and unit variance. The
+variables in the data, standardized to zero mean and unit variance (see
+Figure @ref(fig:blue-jays-PCA) for a toy example in two dimensions). The
 PCs are chosen such that they are uncorrelated, and they are ordered
 such that the first component captures the largest possible amount of
 variation in the data, and subsequent components capture increasingly
 less. Usually, key features in the data can be seen from only the first
 two or three PCs.
+
+(ref:blue-jays-PCA) Example principal components (PC) analysis in two
+dimensions. (a) The original data. As example data, I am using the
+head-length and skull-size measurements from the blue jays dataset.
+Female and male birds are distinguished by color, but this distinction
+has no effect on the PC analysis. (b) As the first step in PCA, we scale
+the original data values to zero mean and unit variance. We then we
+define new variables (the principal components, PCs) along the
+directions of maximum variation in the data. (c) Finally, we project the
+data into the new coordinates. Mathematically, this projection is
+equivalent to a rotation of the data points around the origin. In the 2D
+example shown here, the data points are rotated clockwise by 45 degrees.
+
+(#fig:blue-jays-PCA)(ref:blue-jays-PCA)
 
 When we perform PCA, we are generally interested in two pieces of
 information: (i) the composition of the PCs and (ii) the location of the
