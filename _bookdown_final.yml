@@ -18,9 +18,9 @@ rmd_files: [
   "visualizing_distributions_II.Rmd", # completed
   "boxplots_violins.Rmd", # completed
   "visualizing_proportions.Rmd", # completed
-  #"nested_proportions.Rmd",
-  "visualizing_associations.Rmd",
-  "time_series.Rmd",
+  "nested_proportions.Rmd", # completed
+  "visualizing_associations.Rmd", # completed
+  "time_series.Rmd", # completed
   #"visualizing_trends.Rmd",
   #"visualizing_uncertainty.Rmd",
   #"geospatial_data.Rmd",
@@ -32,8 +32,8 @@ rmd_files: [
   "pitfalls_of_color_use.Rmd", # completed
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
-  #"figure_titles_captions.Rmd",
-  "optimize_data_signal.Rmd",
+  "figure_titles_captions.Rmd", # completed
+  "balance_data_ink_ratio.Rmd", # completed
   "small_axis_labels.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "no_3d.Rmd", # completed

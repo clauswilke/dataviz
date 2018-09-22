@@ -293,7 +293,9 @@ Importantly, this trick does not work when there are more than two distributions
 (ref:butterfat-densitites) Density estimates of the butterfat percentage in the milk of four cattle breeds. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
 ```{r butterfat-densitites, fig.cap='(ref:butterfat-densitites)'}
-cows %>% filter(breed != "Canadian") -> cows_filtered
+cows %>% 
+  mutate(breed = as.character(breed)) %>%
+  filter(breed != "Canadian") -> cows_filtered
 
 # compute densities for sepal lengths
 cows_dens <- group_by(cows_filtered, breed) %>%
