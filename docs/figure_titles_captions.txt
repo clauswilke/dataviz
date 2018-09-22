@@ -120,7 +120,7 @@ required to clarify this fact, and indeed throughout this book I have
 often omitted the legend title for legends indicating sex or gender (see
 e.g. Figures @ref(fig:titanic-passengers-by-class-sex),
 @ref(fig:blue-jays-scatter-sex), or
-@ref(fig:titanic-passenger-breakdown).) Similarly, country names will
+@ref(fig:titanic-passenger-breakdown)). Similarly, country names will
 generally not require a title stating what they are (Figure
 @ref(fig:Americas-life-expect)), nor will movie titles (Figure
 @ref(fig:boxoffice-vertical)) or years (Figure
@@ -212,7 +212,7 @@ Microsoft Word provides 105 pre-defined table styles, and of these at
 least 70--80 violate some of the table rules I'm going to discuss here.
 So if you pick a Microsoft Word table layout at random, you have an 80%
 chance of picking one that has issues. And if you pick the default, you
-will end up with poorly formatted tables every time.
+will end up with a poorly formatted table every time.
 
 Some key rules for table layout are the following:
 
