@@ -7,19 +7,19 @@ library(lubridate)
 library(ggrepel)
 ```
 
-# Optimize the data--ink ratio {#optimize-data-signal}
+# Balance the data-to-ink ratio {#balance-data-ink}
 
-We can broadly subdivide the graphical components in any visualization into components that represent data and components that do not. The former are elements such as the points in a scatter plot, the bars in a histogram or barplot, and the shaded areas in a heatmap. The latter are elements such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. As a general rule, most of the ink (Chapter \@ref(proportional-ink)) in a plot should be devoted to displaying data. Remove unnecessary frames, lines, or other adornments. For non-data elements that can't be removed (such as, for example, a legend), make sure they aren't overly prominent and stand back relative to the data.
+We can broadly subdivide the graphical elements in any visualization into elements that represent data and elements that do not. The former are elements such as the points in a scatter plot, the bars in a histogram or barplot, or the shaded areas in a heatmap. The latter are elements such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. When designing a plot, it can be helpful to think about the amount of ink (Chapter \@ref(proportional-ink)) used to represent data and non-data elements. A common recommendadtion is to reduce the amount of non-data ink, and following this advice can often yield less cluttered and more elegant visualizations. At the same time, non-data ink provides context and visual structure, and overly minimizing such plot elements can result in figures that are difficult to read, confusing, or simply not that compelling.
 
-## Finding the appropriate data--ink ratio
+## Finding the appropriate data-to-ink ratio
 
-The idea that one should remove non-data visual elements from graphs was popularized by Edward Tufte in his book "The Visual Display of Quantitative Information" [@TufteQuantDispl]. Tufte introduces the concept of the "data--ink ratio", which he defines as the "proportion of a graphic's ink devoted to the non-redundant display of data-information." He then writes:
+The idea that distinguishing between data and non-data ink may be useful was popularized by Edward Tufte in his book "The Visual Display of Quantitative Information" [@TufteQuantDispl]. Tufte introduces the concept of the "data--ink ratio", which he defines as the "proportion of a graphic's ink devoted to the non-redundant display of data-information." He then writes:
 
 > Maximize the data--ink ratio, *within reason.*
 
-(emphasis mine) I have emphasized the phrase "within reason" because it is critical and frequently forgotten. Removing non-data ink is valuable up to a point. Beyond that point, making a graph more minimal will make it less compelling.
+(emphasis mine) I have emphasized the phrase "within reason" because it is critical and frequently forgotten. In fact, I think that Tufte himself forgets it in the remainder of his book, where he advocates overly minimalistic designs that, in my opinion, are neither elegant nor easy to decipher. If we interpret the phrase "maximize the data--ink ratio" to mean "remove clutter and strive for clean and elegant designs," then I think it is reasonable advice. But if we interpret it as "do everything you can to remove non-data ink" then it will result in poor design choices. If we go too far in either direction along the scale of possible data-to-ink ratios we will end up with ugly figures. However, away from the extremes there is wide range of designs with different data-to-ink ratios that are all acceptable and may be appropriate in different contexts.
 
-First, let's consider a figure that clearly has too much non-data ink (Figure \@ref(fig:Aus-athletes-grid-bad)). In this figure, the colored points in the plot panel (the framed center area containing data points) are data ink. Everything else is non-data ink. The non-data ink includes a frame around the entire figure, a frame around the plot panel, and a frame around the legend. None of these frames are needed. We also see a prominent and dense background grid that draws attention away from the actual data points. By removing the frames and minor grid lines and by drawing the major grid lines in a light gray, we arrive at Figure \@ref(fig:Aus-athletes-grid-good). In this version of the figure, the actual data points stand out much more clearly, and they are perceived as the most important component of the figure.
+To explore the extremes, let's consider a figure that clearly has too much non-data ink (Figure \@ref(fig:Aus-athletes-grid-bad)). In this figure, the colored points in the plot panel (the framed center area containing data points) are data ink. Everything else is non-data ink. The non-data ink includes a frame around the entire figure, a frame around the plot panel, and a frame around the legend. None of these frames are needed. We also see a prominent and dense background grid that draws attention away from the actual data points. By removing the frames and minor grid lines and by drawing the major grid lines in a light gray, we arrive at Figure \@ref(fig:Aus-athletes-grid-good). In this version of the figure, the actual data points stand out much more clearly, and they are perceived as the most important component of the figure.
 
 (ref:Aus-athletes-grid-bad) Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points. Data source: @Telford-Cunningham-1991
 
@@ -39,7 +39,7 @@ p_Aus_base <- ggplot(male_Aus, aes(x=height, y=pcBfat, color=sport, fill=sport, 
   scale_shape_manual(values = 21:25) +
   scale_color_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.3) +
   scale_fill_OkabeIto(order=c(2, 1, 3, 4, 5), darken = 0.1, alpha = 0.7) +
-  scale_x_continuous(limits = c(169, 210)) +
+  scale_x_continuous(limits = c(169, 210), name = "height (cm)") +
   scale_y_continuous(limits = c(5, 20), name = "% body fat")
 
 p <- p_Aus_base +
@@ -68,7 +68,7 @@ p_Aus_base +
   theme_dviz_grid()# + panel_border(colour = "grey70") + theme(axis.ticks = element_line(colour = "grey70"))
 ```
 
-However, we can take the removal of non-data ink too far. Figure \@ref(fig:Aus-athletes-min-bad) is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good), and a clear regression. Most importantly, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown. We only see points floating in space. Second, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets off the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad).
+At the other extreme of the data-to-ink-ratio scale, we might end up with a figure such as Figure \@ref(fig:Aus-athletes-min-bad), which is a minimalist version of Figure \@ref(fig:Aus-athletes-grid-good). In this figure, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown. We only see points floating in space. Moreover, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure \@ref(fig:Aus-athletes-grid-good) both anchors the points in space and sets off the data area from the legend area. Both of these effects have been lost in Figure \@ref(fig:Aus-athletes-min-bad).
 
 (ref:Aus-athletes-min-bad) Percent body fat versus height in professional male Australian athletes. In this example, the concept of maximizing the data--ink ratio has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data. Data source: @Telford-Cunningham-1991
 
@@ -90,7 +90,17 @@ p <- p_Aus_base + theme_dviz_open(11) +
 stamp_ugly(p)
 ```
 
-Figures with too little non-data ink commonly suffer from figure elements that appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
+In Figure \@ref(fig:Aus-athletes-grid-good), I am using an open background grid and no aixs lines or frame around the plot panel. I like this design because it conveys to the reader that range of possible data values extends beyond the axis limits. For example, even though Figure \@ref(fig:Aus-athletes-grid-good) shows no athlete taller than 210 cm, such an athlete could conceivably exist. However, some authors prefer to delineate the extent of the plot panel, by drawing a frame around it (Figure \@ref(fig:Aus-athletes-grid-good-frame)). Both options are reasonable, and which is preferable is primarily a matter of personal opinion. One advantage of the framed version is that it clearly separates the legend from the plot panel.
+
+(ref:Aus-athletes-grid-good-frame) Percent body fat versus height in professional male Australian athletes. This figure adds a frame around the plot panel of Figure \@ref(fig:Aus-athletes-grid-good), and this frame helps separate the legend from the data. Data source: @Telford-Cunningham-1991
+
+```{r Aus-athletes-grid-good-frame, fig.cap='(ref:Aus-athletes-grid-good-frame)'}
+p_Aus_base + 
+  theme_dviz_grid() + panel_border(colour = "grey70") + theme(axis.ticks = element_line(colour = "grey70"))
+```
+
+
+Figures with too little non-data ink commonly suffer from the effect that figure elements appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
 
 (ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
 
@@ -141,17 +151,13 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
 p
 ```
 
-Since removing too much non-data ink can be just as bad as adding too much of it, I want to propose an alternative to Tufte's maxim. We need to optimize, rather than maximize, the data--ink ratio. Make sure you don't overload your plot with non-data ink, such that the data remains in the foreground, but don't take it to the point where the data loses context.
 
-```{block type='rmdtip', echo=TRUE}
-Optimize the data--ink ratio.
-```
 
 ## Background grids
 
-Not all forms of non-data ink are equally superfluous. In particular, by Tufte's definition, background grids, axis lines, axis ticks, and labels do not count towards the ink used to represent data, and thus they decrease the data--ink ratio. However, they do carry critical information. We can't just eliminate them all and hope to still have a meaningful visualization. In fact, one of the first rules of data visualization is to label your axes. And if labels are required, then making them sufficiently dark and prominent that they are actually visible and decipherable is also a requirement.
+Gridlines in the background of a plot can help the reader discern specific data values and compare values in one part of a plot to values in another part. At the same time, gridlines can add visual noise, in particular when they are prominent or densely spaced. Reasonable people can disagree about whether to use a grid or not, and if so how to format it and how densely to space it. Throughout this book I am using a variety of different grid styles, to highlight that there isn't necessarily one best choice.
 
-Whether a background grid is required is less clear-cut, and reasonable people can disagree about what the best options are for a given visualization. The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background. Figure \@ref(fig:price-plot-ggplot-default) shows an example in this style. The figure displays the change in stock price of four major tech companies over a five-year window, from 2012 to 2017. With apologies to the ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don't find the white-on-gray background grid particularly attractive. To my eye, the gray background can detract from the actual data, and a grid with major and minor lines can be too dense. I also find the gray squares in the legend confusing.
+The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background. Figure \@ref(fig:price-plot-ggplot-default) shows an example in this style. The figure displays the change in stock price of four major tech companies over a five-year window, from 2012 to 2017. With apologies to the ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don't find the white-on-gray background grid particularly attractive. To my eye, the gray background can detract from the actual data, and a grid with major and minor lines can be too dense. I also find the gray squares in the legend confusing.
 
 (ref:price-plot-ggplot-default) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimics the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn't place sufficient emphasis on the data. Data source: Yahoo Finance
 
@@ -466,7 +472,7 @@ stamp_ugly(gene_expression_plot_ugly)
 
 ## Summary
 
-Overloading a figure with non-data ink is bad, but excessively erasing non-data ink is not necessarily better. We need to find a healthy medium, where the data points are the main emphasis of the figure while sufficient context is provided about what data is shown, where the points lie relative to each other, and what they mean.
+Both overloading a figure with non-data ink and excessively erasing non-data ink can result in poor figure design. We need to find a healthy medium, where the data points are the main emphasis of the figure while sufficient context is provided about what data is shown, where the points lie relative to each other, and what they mean.
 
 With respect to backgrounds and background grids, there is no one choice that is preferable in all contexts. I recommend to be judicious about grid lines. Think carefully about which specific grid or guide lines are most informative for the plot you are making, and then only show those. I prefer minimal, light grids on a white background, since white is the default neutral color on paper and supports nearly any foreground color. However, a shaded background can help the plot appear as a single visual entity, and this may be particularly useful in small multiples plots. Finally, we have to consider how all these choices relate to visual branding and identity. Many magazines and websites like to have an immediately recognizable in-house style, and a shaded background and specific choice of background grid can help create a unique visual identity.
 
