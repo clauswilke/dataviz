@@ -13,7 +13,7 @@ We can broadly subdivide the graphical elements in any visualization into elemen
 
 ## Finding the appropriate data-to-ink ratio
 
-The idea that distinguishing between data and non-data ink may be useful was popularized by Edward Tufte in his book "The Visual Display of Quantitative Information" [@TufteQuantDispl]. Tufte introduces the concept of the "data--ink ratio", which he defines as the "proportion of a graphic's ink devoted to the non-redundant display of data-information." He then writes (emphasis mine) :
+The idea that distinguishing between data and non-data ink may be useful was popularized by Edward Tufte in his book "The Visual Display of Quantitative Information" [@TufteQuantDispl]. Tufte introduces the concept of the "data--ink ratio", which he defines as the "proportion of a graphic's ink devoted to the non-redundant display of data-information." He then writes (emphasis mine):
 
 > Maximize the data--ink ratio, *within reason.*
 
