@@ -5,6 +5,7 @@ source("_common.R")
 library(lubridate)
 library(forcats)
 library(tidyr)
+library(ggtextures)
 ```
 
 # Telling a story and making a point {#telling-a-story}
@@ -232,6 +233,130 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
         plot.margin = margin(5.5, 1, 5.5, 1))
 ```
 
+## Make your figures memorable
+
+
+```{r petownership-bar, fig.asp = .5, fig.cap = '(ref:petownership-bar)'}
+
+# source: 2012 U.S. Pet Ownership & Demographics Sourcebook
+# American Veterinary Medical Association
+# https://www.avma.org/KB/Resources/Statistics/Pages/Market-research-statistics-US-pet-ownership.aspx
+
+df <- read.table(text = "pet  households
+dogs 43346000
+cats 36117000
+fish	7738000
+birds 3671000
+horses 1780000
+rabbits	1408000
+turtles	1320000
+poultry	1020000
+", header = TRUE)
+
+
+df$pet <- factor(df$pet, levels = rev(df$pet))
+df <- dplyr::filter(df, households > 3500000)
+
+ggplot(df, aes(x = pet, y = households)) +
+  geom_col(alpha = 0.8, fill = "#0072B2", color = NA) +
+  geom_label(
+    aes(label = paste0(signif(households*1e-6, 2), "M")),
+    hjust = 0,
+    nudge_y = 0.1e6,
+    size = 12/.pt,
+    family = dviz_font_family,
+    label.size = 0, # no label outline
+    label.padding = unit(2, "pt"),
+    fill = "#FFFFFF"
+  ) +
+  coord_flip(clip = "off") +
+  scale_x_discrete(
+    name = NULL,
+    #breaks = c("dogs", "cats", "fish", "birds"),
+    #labels = c("dogs\n43 millon", "cats\n36 million", "fish\n7.7 million", "birds\n3.7 million")
+    expand = expand_scale(add = c(0, 0.6))
+  ) +
+  scale_y_continuous(
+    limits = 1e6*c(0, 47),
+    breaks = 1e7*(0:4),
+    labels = c("0", paste0(10*(1:4), "M")),
+    name = "households",
+    #position = "right",
+    expand = c(0, 0)
+  ) +
+  theme_dviz_vgrid(font_size = 12, rel_small = 1) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt")
+  )
+
+```
+
+
+```{r petownership-isotype, fig.asp = .5, fig.cap = '(ref:petownership-isotype)'}
+
+# source: 2012 U.S. Pet Ownership & Demographics Sourcebook
+# American Veterinary Medical Association
+# https://www.avma.org/KB/Resources/Statistics/Pages/Market-research-statistics-US-pet-ownership.aspx
+
+df <- read.table(text = "pet  households
+dogs 43346000
+cats 36117000
+fish	7738000
+birds 3671000
+horses 1780000
+rabbits	1408000
+turtles	1320000
+poultry	1020000
+", header = TRUE)
+
+
+df$pet <- factor(df$pet, levels = rev(df$pet))
+df <- dplyr::filter(df, households > 3500000)
+
+images <- list(
+  dogs = "images/dog.png",
+  cats = "images/cat.png",
+  fish = "images/fish.png",
+  birds = "images/bird.png"
+)
+
+ggplot(df, aes(x = pet, y = households, image = pet)) +
+  geom_isotype_col(img_width = grid::unit(5000000, "native"), img_height = NULL, nrow = 1, ncol = NA,
+                   hjust = 0, vjust = 0.5) +
+  geom_label(
+    aes(label = paste0(signif(households*1e-6, 2), "M")),
+    hjust = 0,
+    nudge_y = 0.1e6,
+    size = 12/.pt,
+    family = dviz_font_family,
+    label.size = 0, # no label outline
+    label.padding = unit(2, "pt"),
+    fill = "#FFFFFF"
+  ) +
+  coord_flip(clip = "off") +
+  scale_image_manual(values = images, guide = "none") +
+  scale_x_discrete(
+    name = NULL,
+    #breaks = c("dogs", "cats", "fish", "birds"),
+    #labels = c("dogs\n43 millon", "cats\n36 million", "fish\n7.7 million", "birds\n3.7 million")
+    expand = expand_scale(add = c(0, 0.6))
+  ) +
+  scale_y_continuous(
+    limits = 1e6*c(0, 47),
+    breaks = 1e7*(0:4),
+    labels = c("0", paste0(10*(1:4), "M")),
+    name = "households",
+    #position = "right",
+    expand = c(0, 0)
+  ) +
+  theme_dviz_vgrid(font_size = 12, rel_small = 1) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt")
+  )
+
+```
 
 ## Be consistent but don't be repetitive
 
