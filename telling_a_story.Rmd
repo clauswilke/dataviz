@@ -271,10 +271,7 @@ ggplot(df, aes(x = pet, y = households)) +
   ) +
   coord_flip(clip = "off") +
   scale_x_discrete(
-    name = NULL,
-    #breaks = c("dogs", "cats", "fish", "birds"),
-    #labels = c("dogs\n43 millon", "cats\n36 million", "fish\n7.7 million", "birds\n3.7 million")
-    expand = expand_scale(add = c(0, 0.6))
+    name = NULL
   ) +
   scale_y_continuous(
     limits = 1e6*c(0, 47),
@@ -286,33 +283,16 @@ ggplot(df, aes(x = pet, y = households)) +
   ) +
   theme_dviz_vgrid(font_size = 12, rel_small = 1) +
   theme(
+    axis.line = element_blank(),
     axis.ticks = element_blank(),
     axis.ticks.length = grid::unit(0, "pt")
   )
 
 ```
 
+If I showed you ten bargraphs in quick succession you'd have a hard time keeping them apart, and afterwards remembering what they showed.
 
 ```{r petownership-isotype, fig.asp = .5, fig.cap = '(ref:petownership-isotype)'}
-
-# source: 2012 U.S. Pet Ownership & Demographics Sourcebook
-# American Veterinary Medical Association
-# https://www.avma.org/KB/Resources/Statistics/Pages/Market-research-statistics-US-pet-ownership.aspx
-
-df <- read.table(text = "pet  households
-dogs 43346000
-cats 36117000
-fish	7738000
-birds 3671000
-horses 1780000
-rabbits	1408000
-turtles	1320000
-poultry	1020000
-", header = TRUE)
-
-
-df$pet <- factor(df$pet, levels = rev(df$pet))
-df <- dplyr::filter(df, households > 3500000)
 
 images <- list(
   dogs = "images/dog.png",
@@ -338,8 +318,6 @@ ggplot(df, aes(x = pet, y = households, image = pet)) +
   scale_image_manual(values = images, guide = "none") +
   scale_x_discrete(
     name = NULL,
-    #breaks = c("dogs", "cats", "fish", "birds"),
-    #labels = c("dogs\n43 millon", "cats\n36 million", "fish\n7.7 million", "birds\n3.7 million")
     expand = expand_scale(add = c(0, 0.6))
   ) +
   scale_y_continuous(
@@ -352,6 +330,7 @@ ggplot(df, aes(x = pet, y = households, image = pet)) +
   ) +
   theme_dviz_vgrid(font_size = 12, rel_small = 1) +
   theme(
+    axis.line = element_blank(),
     axis.ticks = element_blank(),
     axis.ticks.length = grid::unit(0, "pt")
   )

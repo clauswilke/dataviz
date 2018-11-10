@@ -434,6 +434,7 @@ p1 <- ggplot(usa) +
   geom_sf() +
   theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
+        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
         axis.text = element_text(color = "gray30"),
         plot.margin = margin(11, 21, 7, 0))
 
@@ -442,6 +443,7 @@ p2 <- ggplot(usa_robin) +
   geom_sf() +
   theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
+        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
         axis.text = element_text(color = "gray30"),
         plot.margin = margin(12, 18, 6, 0))
 
@@ -451,6 +453,7 @@ p3 <- ggplot(usa_laea) +
   geom_sf() +
   theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
+        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
         axis.text = element_text(color = "gray30"),
         plot.margin = margin(18, 18, 6, 0))
 
@@ -459,6 +462,7 @@ p4 <- ggplot(usa_tmerc) +
   geom_sf() +
   theme_dviz_grid(12) + 
   theme(panel.grid.major = element_line(color = "gray30"),
+        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
         axis.text = element_text(color = "gray30"),
         plot.margin = margin(18, 18, 6, 0))
 
