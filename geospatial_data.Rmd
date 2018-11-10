@@ -4,3 +4,141 @@ source("_common.R")
 ```
 
 # Visualizing geospatial data {#geospatial-data}
+
+Topics to cover:
+
+- Explain basic concepts, latitude, longitude, meridians, parallels, etc.
+- Projections (give Alaska example)
+- Layers: outline, streets, topography, etc.
+- Chloropleth maps, cartograms, etc.
+
+```{r world-orthographic, fig.width = 4.5, fig.asp = 1}
+# There is not good solution in R to draw a map in orthographic projection, because some polygons aren't closed
+# properly.
+#
+# The solution here is to draw all elements manually, inspired by this stackoverflow post:
+# https://stackoverflow.com/questions/35911452/clipping-polygons-when-drawing-world-map-in-orthographic-projection
+
+bg_col <- "#56B4E970"
+fg_col <- "#E69F00B0"
+line_col <- "grey30"
+
+cenlat <- 35
+cenlong <- 15
+
+par(mar = c(0, 0, 0, 0))
+par(oma = c(0, 0, 0, 0))
+plot.new()
+plot.window(xlim = c(-1.2, 1.2), ylim = c(-1.2, 1.2), asp = 1, xaxs = "i", yaxs = "i")
+
+# draw a circle for coloring the ocean 
+polypath(
+  sin(seq(0, 2*pi, length.out=100)),
+  cos(seq(0, 2*pi, length.out=100)), 
+  col = bg_col, border = line_col, lwd = 0.5/.pt
+)
+
+# draw graticule
+df <- expand.grid(lat = c(seq(-90, 90, length.out = 100), NA), long = seq(-180, 150, by = 30))
+grat <- mapproj::mapproject(df$long, df$lat, proj="orthographic", orientation = c(cenlat, cenlong, 0))
+lines(grat$x, grat$y, col = line_col, lwd = 0.5)
+df <- expand.grid(long = c(seq(-180, 180, length.out = 100), NA), lat = seq(-75, 75, by = 15))
+grat <- mapproj::mapproject(df$long, df$lat, proj="orthographic", orientation = c(cenlat, cenlong, 0))
+lines(grat$x, grat$y, col = line_col, lwd = 0.5)
+
+# project lat/long to x-y (0, 1 range) in orthographic projection. cenlat, cenlong is the center point of map
+mapproj <- function(lat, long, cenlat, cenlong){
+  # convert degrees to radians
+  d2r <- pi/180
+  lat <- lat*d2r
+  long <- long*d2r
+  cenlat <- cenlat*d2r
+  cenlong <- cenlong*d2r
+  
+  # project to x and y
+  x <- cos(lat)*sin(long-cenlong)
+  y <- cos(cenlat)*sin(lat)-sin(cenlat)*cos(lat)*cos(long-cenlong)
+  
+  # deterime whether point is on the front of the globe
+  front <- sin(cenlat)*sin(lat)+cos(cenlat)*cos(lat)*cos(long-cenlong) > 0
+  list(x = x, y = y, front = front)
+}
+
+# get contiguous country coordinates
+xy <- maps:::map.poly(
+  database = "world", regions = ".", exact = FALSE, xlim = NULL, 
+  ylim = NULL, boundary = TRUE, interior = TRUE, fill = TRUE, 
+  as.polygon = TRUE
+) 
+
+# draw polygons representing land masses
+coord <- cbind(xy$x, xy$y)
+coordtr <- mapproj(coord[, 2], coord[, 1], cenlat, cenlong)
+coord <- cbind(coord, coordtr$x, coordtr$y, coordtr$front)
+
+naloc <- (1:nrow(coord))[!complete.cases(coord)]
+naloc <- c(0, naloc)
+for(i in 2:length(naloc)){
+  thispoly <- coord[(naloc[i-1]+1):(naloc[i]-1), 3:5, drop=F]
+  thispoly <- rbind(thispoly, thispoly[1, ])
+  unq <- unique(thispoly[, 3])
+  if(length(unq) == 1){ 
+    if(unq == 1){ # polygon is fully on front side
+      polygon(thispoly[, 1], thispoly[, 2], col = fg_col, border = "black", lwd = 0.5)
+    }
+  } else { #front and back present
+    ind <- thispoly[, 3] == 0
+    #project points "outside" the globe
+    temdist <- pmax(sqrt(rowSums(as.matrix(thispoly[ind, 1:2]^2))), 1e-5)
+    thispoly[ind, 1:2] <- thispoly[ind, 1:2]*(2-temdist)/temdist
+    polygon(thispoly[, 1], thispoly[, 2], col = fg_col, border = "black", lwd = 0.5)
+  }
+}
+
+# draw white square with hole to cover up points outside the globe
+polypath(
+  c(-1.2, 1.2, 1.2, -1.2, NA, sin(seq(0, 2*pi, length.out=100))),
+  c(1.2, 1.2, -1.2, -1.2, NA, cos(seq(0, 2*pi, length.out=100))), 
+  col = "white", border = "white", lwd = 0.5/.pt, rule = "evenodd"
+)
+```
+
+```{r world-longlat, fig.asp = 0.6}
+world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))
+
+crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+
+# Robinson
+crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
+
+# ETRS89 European-centric Lambert Azimuthal Equal-Area projection
+crs_ETRS89 <- "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs "
+
+# Goode Homolosine
+crs_goode <- "+proj=goode"
+
+# Equal Area Cylindrical
+crs_cea <- "+proj=cea"
+
+ggplot(world_sf) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
+  coord_sf(expand = FALSE, crs = crs_longlat) + 
+  scale_x_continuous(
+    name = "longitude",
+    breaks = seq(-150, 150, by = 30),
+    labels = parse(text = c("NA", "120 * degree * W", "NA", "60 * degree * W", "NA", "0 * degree",
+                            "NA", "60 * degree * E", "NA", "120 * degree * E", "NA"))
+  ) +
+  scale_y_continuous(
+    name = "latitude",
+    breaks = seq(-75, 75, by = 15),
+    labels = parse(text = c("NA", "60 * degree * S", "NA", "30 * degree * S", "NA", "0 * degree",
+                            "NA", "30 * degree * N", "NA", "60 * degree * N", "NA"))
+  ) +
+  theme_dviz_grid(font_size = 12, rel_small = 1) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E970"),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    axis.ticks = element_line(color = "gray30", size = 0.25/.pt)
+  )
+```
