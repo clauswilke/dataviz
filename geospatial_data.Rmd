@@ -1,8 +1,6 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
-
-library(tibble)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -14,118 +12,26 @@ Topics to cover:
 - Layers: outline, streets, topography, etc.
 - Chloropleth maps, cartograms, etc.
 
+## Projections
+
 ```{r world-orthographic, fig.width = 4.5, fig.asp = 1}
-# There is not good solution in R to draw a map in orthographic projection, because some polygons aren't closed
-# properly.
-#
-# The solution here is to draw all elements manually, inspired by this stackoverflow post:
-# https://stackoverflow.com/questions/35911452/clipping-polygons-when-drawing-world-map-in-orthographic-projection
-
-# colors
-bg_col <- "#56B4E950"
-fg_col <- "#E69F00B0"
-line_col <- "grey30"
-
-# centerpoint latitude and longitude
 cenlat <- 40
 cenlong <- 15
 
-# setup plotting area
-par(mar = c(0, 0, 0, 0))
-par(oma = c(0, 0, 0, 0))
-plot.new()
-plot.window(xlim = c(-1.2, 1.2), ylim = c(-1.2, 1.2), asp = 1, xaxs = "i", yaxs = "i")
+ocean_col <- "#56B4E950"
+land_col <- "#E69F00B0"
+graticule_col <- "grey30"
+line_col <- "black"
 
-# draw a circle for coloring the ocean 
-polypath(
-  sin(seq(0, 2*pi, length.out=100)),
-  cos(seq(0, 2*pi, length.out=100)), 
-  col = bg_col, border = line_col, lwd = 0.5/.pt
-)
-
-# draw graticule
-df <- expand.grid(lat = c(seq(-90, 90, length.out = 100), NA), long = seq(-180, 150, by = 30))
-grat <- mapproj::mapproject(df$long, df$lat, proj="orthographic", orientation = c(cenlat, cenlong, 0))
-lines(grat$x, grat$y, col = line_col, lwd = 0.5)
-df <- expand.grid(long = c(seq(-180, 180, length.out = 100), NA), lat = seq(-75, 75, by = 15))
-grat <- mapproj::mapproject(df$long, df$lat, proj="orthographic", orientation = c(cenlat, cenlong, 0))
-lines(grat$x, grat$y, col = line_col, lwd = 0.5)
-
-# project lat/long to x-y (0, 1 range) in orthographic projection. cenlat, cenlong is the center point of map
-mapproj <- function(lat, long, cenlat, cenlong){
-  # convert degrees to radians
-  d2r <- pi/180
-  lat <- lat*d2r
-  long <- long*d2r
-  cenlat <- cenlat*d2r
-  cenlong <- cenlong*d2r
-  
-  # project to x and y
-  x <- cos(lat)*sin(long-cenlong)
-  y <- cos(cenlat)*sin(lat)-sin(cenlat)*cos(lat)*cos(long-cenlong)
-  
-  # deterime whether point is on the front of the globe
-  front <- sin(cenlat)*sin(lat)+cos(cenlat)*cos(lat)*cos(long-cenlong) > 0
-  tibble(x = x, y = y, front = front)
-}
-
-# get contiguous country coordinates
-coord <- maps:::map.poly(
-    database = "world", regions = ".", exact = FALSE, xlim = NULL, 
-    ylim = NULL, boundary = TRUE, interior = TRUE, fill = TRUE, 
-    as.polygon = TRUE
-  ) 
-
-# project coordinates
-coordtr <- mapproj(coord$y, coord$x, cenlat, cenlong)
-
-# draw polygons representing land masses
-naloc <- (1:nrow(coordtr))[!complete.cases(coordtr)]
-naloc <- c(0, naloc)
-for(i in 2:length(naloc)){
-  # extract polygon
-  thispoly <- coordtr[(naloc[i-1]+1):(naloc[i]-1), ]
-  
-  unq <- unique(thispoly$front)
-  if (length(unq) == 1){ 
-    if (unq == TRUE){ # polygon is fully on front side
-      polygon(thispoly$x, thispoly$y, col = fg_col, border = "black", lwd = 0.5)
-    }
-  } else { #front and back present
-    ind <- !thispoly$front
-    
-    # reproject project points to outside the globe
-    d <- sqrt(thispoly[ind, ]$x^2 + thispoly[ind, ]$y^2)
-    thispoly$x[ind] <- thispoly$x[ind]*1.05/d
-    thispoly$y[ind] <- thispoly$y[ind]*1.05/d
-    polygon(thispoly$x, thispoly$y, col = fg_col, border = "black", lwd = 0.5)
-  }
-}
-
-# draw white square with hole to cover up points outside the globe
-polypath(
-  c(-1.2, 1.2, 1.2, -1.2, NA, sin(seq(0, 2*pi, length.out=100))),
-  c(1.2, 1.2, -1.2, -1.2, NA, cos(seq(0, 2*pi, length.out=100))), 
-  col = "white", border = "white", lwd = 0.5/.pt, rule = "evenodd"
-)
+draw_ocean(cenlat, cenlong, col = ocean_col, line_col = graticule_col, lwd = 0.25)
+draw_land(map_polys$world, cenlat, cenlong, col = land_col, line_col = line_col, lwd = 0.5)
 ```
+
 
 ```{r world-longlat, fig.asp = 0.6}
 world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))
 
 crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
-
-# Robinson
-crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
-
-# ETRS89 European-centric Lambert Azimuthal Equal-Area projection
-crs_ETRS89 <- "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs "
-
-# Goode Homolosine
-crs_goode <- "+proj=goode"
-
-# Equal Area Cylindrical
-crs_cea <- "+proj=cea"
 
 ggplot(world_sf) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
@@ -146,6 +52,44 @@ ggplot(world_sf) +
   theme(
     panel.background = element_rect(fill = "#56B4E950"),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
-    axis.ticks = element_line(color = "gray30", size = 0.25/.pt)
+    axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
 ```
+
+```{r usa-orthographic, fig.width = 4.5, fig.asp = 1}
+cenlat <- 35
+cenlong <- -130
+
+draw_ocean(cenlat, cenlong, lwd = 0.25)
+draw_land(map_polys$usa, cenlat, cenlong, col = "#FF0000B0") 
+draw_land(map_polys$world_no_usa, cenlat, cenlong, col = "#C0C0C0B0") 
+```
+
+```{r usa-true-albers}
+ggplot(us_states_geoms$true_albers) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
+  coord_sf(label_axes = "-NEN") +
+  scale_x_continuous(breaks = -20*c(3:10)) +
+  scale_y_continuous(breaks = (1:9)*10) +
+  theme_dviz_grid(font_size = 12, rel_small = 1) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E950"),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
+  )
+```
+
+```{r usa-albers}
+ggplot(us_states_geoms$true_albers) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
+# standard US Albers map, with AK artificially small
+ggplot(us_states_geoms$us_albers) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
+# revised US Albers map, with AK at its original size
+ggplot(us_states_geoms$albers_revised) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
+```
+
+## Layers
+
+
+## Choropleth mapping
+
+## Cartograms and other map-like visualizations
