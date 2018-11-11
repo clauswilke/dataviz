@@ -36,21 +36,70 @@ crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 ggplot(world_sf) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
   coord_sf(expand = FALSE, crs = crs_longlat) + 
-  scale_x_continuous(
-    name = "longitude",
-    breaks = seq(-150, 150, by = 30),
-    labels = parse(text = c("NA", "120 * degree * W", "NA", "60 * degree * W", "NA", "0 * degree",
-                            "NA", "60 * degree * E", "NA", "120 * degree * E", "NA"))
-  ) +
-  scale_y_continuous(
-    name = "latitude",
-    breaks = seq(-75, 75, by = 15),
-    labels = parse(text = c("NA", "60 * degree * S", "NA", "30 * degree * S", "NA", "0 * degree",
-                            "NA", "30 * degree * N", "NA", "60 * degree * N", "NA"))
-  ) +
+  scale_x_continuous(name = "longitude", breaks = seq(-120, 120, by = 60)) +
+  scale_y_continuous(name = "latitude", breaks = seq(-60, 60, by = 30)) +
+#  scale_x_continuous(
+#    name = "longitude",
+#    breaks = seq(-150, 150, by = 30),
+#    labels = parse(text = c("NA", "120 * degree * W", "NA", "60 * degree * W", "NA", "0 * degree",
+#                            "NA", "60 * degree * E", "NA", "120 * degree * E", "NA"))
+#  ) +
+#  scale_y_continuous(
+#    name = "latitude",
+#    breaks = seq(-75, 75, by = 15),
+#    labels = parse(text = c("NA", "60 * degree * S", "NA", "30 * degree * S", "NA", "0 * degree",
+#                            "NA", "30 * degree * N", "NA", "60 * degree * N", "NA"))
+#  ) +
   theme_dviz_grid(font_size = 12, rel_small = 1) +
   theme(
     panel.background = element_rect(fill = "#56B4E950"),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
+  )
+```
+
+```{r world-robin, fig.asp = 0.6}
+crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
+
+xlim <- c(-18494733, 18613795)
+ylim <- c(-9473396, 9188587)
+
+lats <- c(90:-90, -90:90, 90)
+longs <- c(rep(c(180, -180), each = 181), 180)
+
+earth_boundary <- sf::st_sfc(
+    sf::st_linestring(
+      cbind(longs, lats)
+    ),
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  )
+earth_boundary <- sf::st_transform(earth_boundary, crs = crs_robin)
+whiteout <- data.frame(
+  x = c(xlim[1], xlim[2], xlim[2], xlim[1], xlim[1], earth_boundary[[1]][, 1]),
+  y = c(ylim[1], ylim[1], ylim[2], ylim[2], ylim[1], earth_boundary[[1]][, 2])
+)
+earth_outline <- data.frame(
+  x = earth_boundary[[1]][, 1],
+  y = earth_boundary[[1]][, 2]
+)
+
+ggplot(world_sf) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
+  geom_polygon(
+    data = whiteout, aes(x, y),
+    fill = "white", color = NA
+  ) +
+  geom_polygon(
+    data = earth_outline, aes(x, y),
+    fill = NA, color = "gray30",
+    size = 0.5/.pt
+  ) +
+  scale_x_continuous(name = NULL, breaks = seq(-120, 120, by = 60)) +
+  scale_y_continuous(name = NULL, breaks = seq(-60, 60, by = 30)) +
+  coord_sf(xlim = 0.95*xlim, ylim = 0.95*ylim, expand = FALSE, crs = crs_robin, ndiscr = 1000) + 
+  theme_dviz_grid(font_size = 12, rel_small = 1) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
@@ -66,9 +115,28 @@ draw_land(map_polys$world_no_usa, cenlat, cenlong, col = "#C0C0C0B0")
 ```
 
 ```{r usa-true-albers}
+longs <- -180:-20
+lats <- rep(89.9, length(longs))
+earth_boundary <- sf::st_sfc(
+    sf::st_linestring(
+      cbind(longs, lats)
+    ),
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  )
+earth_boundary <- sf::st_transform(earth_boundary, crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs")
+whiteout <- data.frame(
+  x = earth_boundary[[1]][, 1],
+  y = earth_boundary[[1]][, 2]
+)
+
 ggplot(us_states_geoms$true_albers) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
-  coord_sf(label_axes = "-NEN") +
+  geom_polygon(
+    data = whiteout, aes(x, y),
+    fill = "white", color = "gray30",
+    size = 0.5/.pt
+  ) +
+  coord_sf(xlim = c(-6721002, 2685733), ylim = c(-1634610, 4888053), expand = FALSE, ndiscr = 1000) +
   scale_x_continuous(breaks = -20*c(3:10)) +
   scale_y_continuous(breaks = (1:9)*10) +
   theme_dviz_grid(font_size = 12, rel_small = 1) +
@@ -80,11 +148,26 @@ ggplot(us_states_geoms$true_albers) +
 ```
 
 ```{r usa-albers}
-ggplot(us_states_geoms$true_albers) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
 # standard US Albers map, with AK artificially small
-ggplot(us_states_geoms$us_albers) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
+
+# mimick color of transparent orange on top of transparent blue,
+# as in previous maps drawn
+# color was obtained by extraction from rendered png
+brown <- "#deb664"
+
+ggplot(us_states_geoms$us_albers) + 
+  geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
+  coord_sf(datum = NA) +
+  theme_dviz_map()
+```
+
+
+```{r usa-albers-revised}
 # revised US Albers map, with AK at its original size
-ggplot(us_states_geoms$albers_revised) + geom_sf(fill = "#56B4E9", color = "grey30", size = 0.3, alpha = 0.5)
+ggplot(us_states_geoms$albers_revised) + 
+  geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
+  coord_sf(datum = NA) +
+  theme_dviz_map()
 ```
 
 ## Layers
