@@ -105,16 +105,32 @@ ggplot(world_sf) +
   )
 ```
 
-```{r usa-orthographic, fig.width = 4.5, fig.asp = 1}
+48 of the 50 states (also referred to as the "lower 48") are contiguous and easy to visualize at once. But two states (Alaska and Hawaii) are located a substantial distance away from the lower 48 states (Figure \@ref(fig:usa-orthographic)).
+
+
+(ref:usa-orthographic) Locations of Alaska, Hawaii, and the lower 48 states shown on a globe.
+
+```{r usa-orthographic, fig.width = 5.5, fig.asp = 1, fig.cap = '(ref:usa-orthographic)'}
 cenlat <- 35
 cenlong <- -130
 
 draw_ocean(cenlat, cenlong, lwd = 0.25)
-draw_land(map_polys$usa, cenlat, cenlong, col = "#FF0000B0") 
-draw_land(map_polys$world_no_usa, cenlat, cenlong, col = "#C0C0C0B0") 
+draw_land(map_polys$usa, cenlat, cenlong, col = "#D00000D0") 
+draw_land(map_polys$world_no_usa, cenlat, cenlong, col = "#C0C0C0B0")
+par(family = dviz_font_family_condensed, ps = 12)
+text(
+#  x = c(0.38, 0.05, -0.4),
+#  y = c(0.15, 0.49, -0.1),
+  x = c(0.36, -0.17, -0.4),
+  y = c(0.13, 0.49, -0.1),
+  labels = c("lower 48", "Alaska", "Hawaii"),
+  col = c("white", "white", "black")
+)
 ```
 
-```{r usa-true-albers}
+(ref:usa-true-albers) Locations of Alaska, Hawaii, and the lower 48 states shown with an area-preserving Albers projection  (ESRI:102003, commonly used to project the lower 48 states).
+
+```{r usa-true-albers, fig.cap = '(ref:usa-true-albers)'}
 longs <- -180:-20
 lats <- rep(89.9, length(longs))
 earth_boundary <- sf::st_sfc(
@@ -137,8 +153,8 @@ ggplot(us_states_geoms$true_albers) +
     size = 0.5/.pt
   ) +
   coord_sf(xlim = c(-6721002, 2685733), ylim = c(-1634610, 4888053), expand = FALSE, ndiscr = 1000) +
-  scale_x_continuous(breaks = -20*c(3:10)) +
-  scale_y_continuous(breaks = (1:9)*10) +
+  scale_x_continuous(name = NULL, breaks = -20*c(3:10)) +
+  scale_y_continuous(name = NULL, breaks = (1:9)*10) +
   theme_dviz_grid(font_size = 12, rel_small = 1) +
   theme(
     panel.background = element_rect(fill = "#56B4E950"),
