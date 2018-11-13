@@ -1,6 +1,8 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
+
+library(lubridate)
 ```
 
 # Visualizing trends {#visualizing-trends}
@@ -11,6 +13,82 @@ Topics to cover:
 - non-linear fits
 - exponential growth
 - averaging/detrending? Use `CO2` dataset?
+
+```{r}
+dow_jones_industrial %>% filter(date >= ymd("2009/01/01") & date <= ymd("2010/01/01")) %>%
+  mutate(
+    close_20d_ave_c = moving_ave(date, close, 20),
+    close_50d_ave_c = moving_ave(date, close, 50),
+    close_100d_ave_c = moving_ave(date, close, 100)
+  ) %>%
+  ggplot(aes(date, close)) + 
+  geom_line(aes(color = "closing"), size = .25) +
+  geom_line(aes(date, close_20d_ave_c, color = "20d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_50d_ave_c, color = "50d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_100d_ave_c, color = "100d"), size = .75, na.rm = TRUE) +
+  scale_color_manual(
+    values = c(
+      closing = "black", 
+      `20d` = "#009e73",
+      `50d` = "#d55e00",
+      `100d` = "#0072b2"
+    ),
+    breaks = c("closing", "20d", "50d", "100d"),
+    labels = c("closing price", "20 day average", "50 day average", "100 day average"),
+    name = NULL,
+    guide = guide_legend(override.aes = list(size = c(0.25, 0.75, 0.75, 0.75)))
+  ) + 
+  theme_dviz_grid()
+
+dow_jones_industrial %>% filter(date >= ymd("2009/01/01") & date <= ymd("2010/01/01")) %>%
+  mutate(
+    close_20d_ave = moving_ave(date, close, 20, center = FALSE),
+    close_50d_ave = moving_ave(date, close, 50, center = FALSE),
+    close_100d_ave = moving_ave(date, close, 100, center = FALSE)
+  ) %>%
+  ggplot(aes(date, close)) + 
+  geom_line(aes(color = "closing"), size = .25) +
+  geom_line(aes(date, close_20d_ave, color = "20d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_50d_ave, color = "50d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
+  scale_color_manual(
+    values = c(
+      closing = "black", 
+      `20d` = "#009e73",
+      `50d` = "#d55e00",
+      `100d` = "#0072b2"
+    ),
+    breaks = c("closing", "20d", "50d", "100d"),
+    labels = c("closing price", "20 day average", "50 day average", "100 day average"),
+    name = NULL,
+    guide = guide_legend(override.aes = list(size = c(0.25, 0.75, 0.75, 0.75)))
+  ) + 
+  theme_dviz_grid()
+
+# LOESS (locally estimated scatterplot smoothing) 
+
+dow_jones_industrial %>% filter(date >= ymd("2009/01/01") & date <= ymd("2010/01/01")) %>%
+  mutate(
+    close_100d_ave = moving_ave(date, close, 100)
+  ) %>%
+  ggplot(aes(date, close)) + 
+  geom_line(aes(color = "closing"), size = .25) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
+  geom_smooth(aes(color = "smooth"), size = .75, na.rm = TRUE, se = FALSE) +
+  scale_color_manual(
+    values = c(
+      closing = "black", 
+      `100d` = "#d55e00",
+      smooth = "#0072b2"
+    ),
+    breaks = c("closing", "smooth", "100d"),
+    labels = c("closing price", "LOESS smoother", "100 day average"),
+    name = NULL,
+    guide = guide_legend(override.aes = list(size = c(0.25, 0.75, 0.75)))
+  ) + 
+  theme_dviz_grid()
+```
+
 
 (ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
