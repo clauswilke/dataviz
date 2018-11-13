@@ -21,19 +21,24 @@ The simplest approach to showing many distributions at once is to show their mea
 (ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average daily mean temperatures for each month, averaged over all days of the month, and error bars represent twice the standard deviation of the daily mean temperatures within each month.
 
 ```{r lincoln-temp-points-errorbars, fig.cap = '(ref:lincoln-temp-points-errorbars)'}
-lincoln_weather %>% mutate(month_short = fct_recode(Month,
-                                                    Jan = "January",
-                                                    Feb = "February",
-                                                    Mar = "March",
-                                                    Apr = "April",
-                                                    May = "May",
-                                                    Jun = "June",
-                                                    Jul = "July",
-                                                    Aug = "August",
-                                                    Sep = "September",
-                                                    Oct = "October",
-                                                    Nov = "November",
-                                                    Dec = "December")) %>%
+lincoln_weather %>%
+  mutate(
+    month_short = fct_recode(
+      Month,
+      Jan = "January",
+      Feb = "February",
+      Mar = "March",
+      Apr = "April",
+      May = "May",
+      Jun = "June",
+      Jul = "July",
+      Aug = "August",
+      Sep = "September",
+      Oct = "October",
+      Nov = "November",
+      Dec = "December"
+    )
+  ) %>%
   mutate(month_short = fct_rev(month_short)) -> lincoln_df
 
 
