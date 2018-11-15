@@ -4,7 +4,6 @@ source("_common.R")
 
 library(forcats)
 library(ggridges)
-library(ggforce)
 ```
 
 # Visualizing many distributions at once {#boxplots-violins}
@@ -186,7 +185,7 @@ Finally, we can combine the best of both worlds by spreading out the dots in pro
 ```{r lincoln-temp-sina, fig.cap = '(ref:lincoln-temp-sina)'}
 lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_violin(color = "transparent", fill = "gray90") + 
-  stat_sina(maxwidth = 0.8) + 
+  stat_sina() + 
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +

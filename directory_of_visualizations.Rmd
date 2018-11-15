@@ -348,7 +348,7 @@ p3 <- ggplot(df_multi_dist, aes(x = type, y = y)) +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
-  geom_sina(color = palette[1], size = 0.8) +
+  dviz.supp::stat_sina(color = palette[1], size = 0.8) +
   labs(title = "Sina plot") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
