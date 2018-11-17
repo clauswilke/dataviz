@@ -1,6 +1,9 @@
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(forcats)
+library(ggmap)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -187,6 +190,274 @@ ggplot(us_states_geoms$albers_revised) +
 ```
 
 ## Layers
+
+
+(ref:sfbay-overview) Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as magenta-colored dots. A large wind farm, the Shiloh Wind Farm near Rio Vista, is highlighted with a black rectangle. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+
+```{r sfbay-overview, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:sfbay-overview)'}
+# From http://www.csgnetwork.com/degreelenllavcalc.html
+# Length Of A Degree Of Longitude In Meters at 38deg lat
+m_per_deg <- 87832.42967867786
+
+sfbay_scale = data.frame(
+  x = -122.83,
+  xend = -122.83 + 10000/m_per_deg,
+  y = 37.24,
+  yend = 37.24,
+  label = "10km"
+)
+
+sfbay_bbox <- c(left = -122.88, bottom = 37.20, right = -120.88, top = 38.31)
+
+wind_sfbay <- wind_turbines %>%
+  filter(
+    xlong < sfbay_bbox["right"],
+    xlong > sfbay_bbox["left"],
+    ylat > sfbay_bbox["bottom"],
+    ylat < sfbay_bbox["top"]
+  )
+
+shiloh_bbox <- c(left = -121.9, bottom = 38.06, right = -121.71, top = 38.20)
+
+p1 <- ggmap(sfbay_maps$sfbay_bg)  + 
+  inset_ggmap(sfbay_maps$sfbay_lines) +
+  geom_point(
+    data = wind_sfbay,
+    aes(x = xlong, y = ylat),
+    size = 0.1,
+    color = "magenta",
+    alpha = 1/3
+  ) +
+  geom_rect(
+    data = data.frame(t(shiloh_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    size = 0.5,
+    color = "black",
+    fill = NA,
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = data.frame(x = 0.5*(shiloh_bbox['left'] + shiloh_bbox['right']), y = shiloh_bbox['top'], label = "Shiloh Wind Farm"),
+    aes(x, y, label = label),
+    hjust = 0.512,
+    vjust = -0.51,
+    family = dviz_font_family,
+    color = "white",
+    size = 11/.pt
+  ) +
+  geom_text(
+    data = data.frame(x = 0.5*(shiloh_bbox['left'] + shiloh_bbox['right']),
+                      y = shiloh_bbox['top'], label = "Shiloh Wind Farm"),
+    aes(x, y, label = label),
+    hjust = 0.5,
+    vjust = -0.5,
+    family = dviz_font_family,
+    size = 11/.pt
+  ) +
+  inset_ggmap(sfbay_maps$sfbay_labels) +
+  geom_segment(
+    data = sfbay_scale,
+    aes(x, y, xend = xend, yend = yend),
+    size = 1
+  ) +
+  geom_text(
+    data = sfbay_scale,
+    aes(0.5*(x+xend), y, label = label),
+    hjust = 0.5,
+    vjust = -0.5,
+    family = dviz_font_family,
+    size = 10/.pt
+  ) +
+  theme_dviz_map()
+
+p1
+```
+
+(ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+
+```{r sfbay-layers, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:sfbay-layers) '}
+l1 <- ggmap(sfbay_maps$sfbay_bg) + labs(subtitle = "terrain") + 
+  geom_rect(
+    data = data.frame(t(sfbay_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    fill = NA, color = "black",
+    size = 0.5,
+    inherit.aes  = FALSE
+  ) +
+  theme_dviz_map() +
+  theme(plot.subtitle = element_text(margin = margin(0, 0, 3, 0)))
+
+l2 <- ggmap(sfbay_maps$sfbay_lines) + labs(subtitle = "roads") + 
+  geom_rect(
+    data = data.frame(t(sfbay_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    fill = NA, color = "black",
+    size = 0.5,
+    inherit.aes  = FALSE
+  ) +
+  theme_dviz_map() +
+  theme(plot.subtitle = element_text(margin = margin(0, 0, 3, 0)))
+
+
+l3 <- ggmap(sfbay_maps$sfbay_labels) + 
+  geom_segment(
+    data = sfbay_scale,
+    aes(x, y, xend = xend, yend = yend),
+    size = .5*1
+  ) +
+  geom_text(
+    data = sfbay_scale,
+    aes(0.5*(x+xend), y, label = label),
+    hjust = 0.5,
+    vjust = -0.5,
+    family = dviz_font_family,
+    size = .5*10/.pt
+  ) +
+  geom_rect(
+    data = data.frame(t(sfbay_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    fill = NA, color = "black",
+    size = 0.5,
+    inherit.aes  = FALSE
+  ) +
+ labs(subtitle = "city labels, scale bar") + 
+ theme_dviz_map() +
+ theme(plot.subtitle = element_text(margin = margin(0, 0, 3, 0)))
+
+
+l4 <- ggmap(sfbay_maps$sfbay_bg) +
+  geom_rect(
+    data = data.frame(t(sfbay_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    fill = "white", color = "black",
+    size = 0.5,
+    inherit.aes  = FALSE
+  ) + 
+  geom_point(
+    data = wind_sfbay,
+    aes(x = xlong, y = ylat),
+    size = .5*0.1,
+    color = "magenta",
+    alpha = 1/3
+  ) +
+  geom_rect(
+    data = data.frame(t(shiloh_bbox)),
+    aes(xmin = left, xmax = right, ymin = bottom, ymax = top),
+    size = .5*0.5,
+    color = "black",
+    fill = NA,
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = data.frame(x = 0.5*(shiloh_bbox['left'] + shiloh_bbox['right']), y = shiloh_bbox['top'], label = "Shiloh Wind Farm"),
+    aes(x, y, label = label),
+    hjust = 0.5,
+    vjust = -0.5,
+    family = dviz_font_family,
+    size = .5*11/.pt
+  ) +
+  labs(subtitle = "wind turbines") +
+  theme_dviz_map() +
+  theme(plot.subtitle = element_text(margin = margin(0, 0, 3, 0)))
+
+plot_grid(
+  l1, NULL, l2,
+  l4, NULL, l3,
+  rel_widths = c(1, .05, 1)
+)
+
+# fig asp: 418/519 ~= 0.805
+```
+
+
+(ref:shiloh-map) Location of individual wind turbines in the Shiloh Wind Farm. Each dot highlights the location of one wind turbine. The map area corresponds to the rectangle in Figure \@ref(fig:sfbay-overview). Dots are colored by when the wind turbine was built, and the shape of the dots represents the various projects to which the individual wind turbines belong. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+
+```{r shiloh-map, fig.asp = 0.75, fig.cap = '(ref:shiloh-map)'}
+# From http://www.csgnetwork.com/degreelenllavcalc.html
+# Length Of A Degree Of Longitude In Meters at 38deg lat
+m_per_deg <- 87832.42967867786
+
+shiloh_scale = data.frame(
+  x = -121.735,
+  xend = -121.735 + 2000/m_per_deg,
+  y = 38.064,
+  yend = 38.064,
+  label = "2000m"
+)
+
+#bbox <- c(left = -121.9, bottom = 38.06, right = -121.71, top = 38.20)
+wind_shiloh <- wind_turbines %>%
+  filter(
+    xlong < shiloh_bbox["right"],
+    xlong > shiloh_bbox["left"],
+    ylat > shiloh_bbox["bottom"],
+    ylat < shiloh_bbox["top"]
+  ) %>%
+  mutate(
+    name = fct_relevel(fct_collapse(p_name,
+      `EDF Renewables` = "EDF Renewable V",
+      `High Winds` = "High Winds",
+      `Shiloh` = c("Shiloh Wind Project", "Shiloh II", "Shiloh III", "Shiloh IV"),
+      `Solano` = c("Solano Phase 3", "Solano Phase IIA", "Solano Wind Project", "Solano Wind Project, Phase I", "Solano Wind Project, Phase IA"),
+      `other` = c("Montezuma", "Montezuma Winds II", "unknown Solano County")
+    ), "EDF Renewables", "High Winds", "Shiloh", "Solano", "other"),
+    year_range = cut(
+      p_year,
+      breaks = c(1980, 2000, 2005, 2010, 2015),
+      labels = c("before 2000", "2000 to 2004", "2005 to 2009", "2010 to 2014"),
+      right = FALSE
+    )
+  )
+
+p2 <- ggmap(sfbay_maps$shiloh_terrain)  + 
+  geom_point(
+    data = wind_shiloh,
+    aes(x = xlong, y = ylat, fill = year_range, shape = name),
+    size = 1.5,
+    color = "black", stroke = 0.2
+  ) +
+  geom_segment(
+    data = shiloh_scale,
+    aes(x, y, xend = xend, yend = yend),
+    size = 1
+  ) +
+  geom_text(
+    data = shiloh_scale,
+    aes(0.5*(x+xend), y, label = label),
+    hjust = 0.5,
+    vjust = -0.5,
+    family = dviz_font_family,
+    size = 10/.pt
+  ) +
+  xlab(label = NULL) +
+  ylab(label = NULL) +
+  scale_fill_viridis_d(
+    name = "year built",
+    option = "A", end = .95, begin = 0.3, direction = -1,
+    guide = guide_legend(
+      order = 2,
+      reverse = FALSE,
+      override.aes = list(shape = 22, size = 4, stroke = 0))
+  ) +
+  scale_shape_manual(
+    name = "project name",
+    values = 21:25,
+    guide = guide_legend(
+      order = 1,
+      override.aes = list(
+        fill = "grey70",
+        size = 2
+      )
+    )
+  ) +
+  theme_dviz_map(12) +
+  theme(
+    legend.key.width = grid::unit(12, "pt")
+  )
+
+p2
+```
+
 
 
 ## Choropleth mapping
