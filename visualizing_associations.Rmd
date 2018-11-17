@@ -469,7 +469,7 @@ When we perform PCA, we are generally interested in two pieces of information: (
 
 First, we look at the component composition (Figure \@ref(fig:forensic-PCA-rotation)). Here, we only consider the first two components, PC 1 and PC 2. Because the PCs are linear combinations of the original variables (after standardization), we can represent the original variables as arrows indicating to what extent they contribute to the PCs. Here, we see that barium and sodium contribute primarily to PC 1 and not to PC 2, calcium and potassium contribute primarily to PC 2 and not to PC 1, and the other variables contribute in varying amounts to both components (Figure \@ref(fig:forensic-PCA-rotation)). The arrows are of varying lengths because there are more than two PCs. For example the arrow for iron is particularly short because it contributes primarily to higher-order PCs (not shown).
 
-(ref:forensic-PCA-rotation) Composition of the first two components in a principal components analysis (PCA) of the forensic glass dataset. Component one (PC 1) measures primarily the amount of aluminun, barium, sodium, and magnesium contents in a glass fragment, whereas component two (PC 2) measures primarily the amount of calcium and potassium content, and to some extent the amount of aluminum and magnesium.
+(ref:forensic-PCA-rotation) Composition of the first two components in a principal components analysis (PCA) of the forensic glass dataset. Component one (PC 1) measures primarily the amount of aluminum, barium, sodium, and magnesium contents in a glass fragment, whereas component two (PC 2) measures primarily the amount of calcium and potassium content, and to some extent the amount of aluminum and magnesium.
 
 ```{r forensic-PCA-rotation, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:forensic-PCA-rotation)'}
 select(forensic_glass, -type, -RI, -Si) %>%
@@ -650,7 +650,7 @@ ggplot(filter(emissions_top_ten, year != 2005), aes(x = year, y = emissions)) +
 
 ```
 
-Slopegraphs have one important advantage over scatter plots: They can be used to compare more than two measurements at a time. For example, we can modify Figure \@ref(fig:CO2-slopegraph) to show CO<sub>2</sub> emissions at three time points, here the years 2000, 2005, and 2010 (Figure \@ref(fig:CO2-slopegraph-three-year)). This choice highlights both countries with a large change in emissions over the entire decade as well as countries such as Qatar or Trinidad and Tobego for which there is a large difference in the trend seen for the first five-year interval and the second one. 
+Slopegraphs have one important advantage over scatter plots: They can be used to compare more than two measurements at a time. For example, we can modify Figure \@ref(fig:CO2-slopegraph) to show CO<sub>2</sub> emissions at three time points, here the years 2000, 2005, and 2010 (Figure \@ref(fig:CO2-slopegraph-three-year)). This choice highlights both countries with a large change in emissions over the entire decade as well as countries such as Qatar or Trinidad and Tobago for which there is a large difference in the trend seen for the first five-year interval and the second one. 
 
 
 (ref:CO2-slopegraph-three-year) CO<sub>2</sub> emissions per person in 2000, 2005, and 2010, for the ten countries with the largest difference between the years 2000 and 2010. Data source: Carbon Dioxide Information Analysis Center
