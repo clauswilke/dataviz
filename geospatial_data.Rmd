@@ -148,7 +148,7 @@ whiteout <- data.frame(
   y = earth_boundary[[1]][, 2]
 )
 
-ggplot(us_states_geoms$true_albers) + 
+ggplot(US_states_geoms$true_albers) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
   geom_polygon(
     data = whiteout, aes(x, y),
@@ -174,7 +174,7 @@ ggplot(us_states_geoms$true_albers) +
 # color was obtained by extraction from rendered png
 brown <- "#deb664"
 
-ggplot(us_states_geoms$us_albers) + 
+ggplot(US_states_geoms$us_albers) + 
   geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
   coord_sf(datum = NA) +
   theme_dviz_map()
@@ -183,7 +183,7 @@ ggplot(us_states_geoms$us_albers) +
 
 ```{r usa-albers-revised}
 # revised US Albers map, with AK at its original size
-ggplot(us_states_geoms$albers_revised) + 
+ggplot(US_states_geoms$albers_revised) + 
   geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
   coord_sf(datum = NA) +
   theme_dviz_map()
@@ -461,5 +461,38 @@ p2
 
 
 ## Choropleth mapping
+
+```{r}
+ggplot(US_income, aes(fill = population)) + 
+  geom_sf(color = "grey30", size = 0.3, alpha = 0.5) + 
+  scale_fill_viridis_c()
+
+US_income %>% 
+  filter(GEOID != "11") %>% # remove DC, since it has atypical population density
+  mutate(popdens = as.numeric(popdens)) %>%
+  ggplot(aes(fill = log(popdens))) + 
+  geom_sf(color = "grey30", size = 0.3, alpha = 0.5) + 
+  scale_fill_viridis_c()
+
+p1 <- ggplot(US_income, aes(fill = median_income)) + 
+  geom_sf(color = "grey30", size = 0.3, alpha = 0.7) + 
+  scale_fill_viridis_c()
+
+p2 <- ggplot(US_income_cartogram, aes(fill = median_income)) + 
+  geom_sf(color = "grey30", size = 0.3, alpha = 0.7) + 
+  scale_fill_viridis_c()
+
+plot_grid(p1, p2, ncol = 1)
+
+library(statebins)
+filter(US_income, name != "Puerto Rico", GEOID != "11") %>%
+  ggplot(aes(state = name, fill = median_income)) +
+  geom_statebins(family = dviz.supp::dviz_font_family,
+                 lbl_size = 14/.pt) +
+  coord_equal() +
+  scale_fill_viridis_c() +
+  theme_statebins(base_family = dviz.supp::dviz_font_family)
+
+```
 
 ## Cartograms and other map-like visualizations
