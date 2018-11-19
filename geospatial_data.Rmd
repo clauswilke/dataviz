@@ -4,6 +4,7 @@ source("_common.R")
 
 library(forcats)
 library(ggmap)
+library(statebins)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -458,41 +459,183 @@ p2 <- ggmap(sfbay_maps$shiloh_terrain)  +
 p2
 ```
 
-
+*Also show wind turbines in all of the lower 48, using some sort of bubble-grid approach?*
 
 ## Choropleth mapping
 
-```{r}
-ggplot(US_income, aes(fill = population)) + 
-  geom_sf(color = "grey30", size = 0.3, alpha = 0.5) + 
-  scale_fill_viridis_c()
+```{r population-density-counties, fig.asp = 0.73, fig.cap = '(ref:population-density-counties)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
 
-US_income %>% 
-  filter(GEOID != "11") %>% # remove DC, since it has atypical population density
-  mutate(popdens = as.numeric(popdens)) %>%
-  ggplot(aes(fill = log(popdens))) + 
-  geom_sf(color = "grey30", size = 0.3, alpha = 0.5) + 
-  scale_fill_viridis_c()
+p <- ggplot(US_counties_income, aes(fill = log(as.numeric(popdens)*1e6))) + 
+  geom_sf(color = NA) + 
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_continuous_sequential(
+    palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
+    name = "population density\n(person / square km)",
+    limits = log(c(0.01, 30000)),
+    breaks = log(c(0.01, 1, 100, 10000)),
+    labels = c("0.01", "1", "100", "10,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  )
 
-p1 <- ggplot(US_income, aes(fill = median_income)) + 
-  geom_sf(color = "grey30", size = 0.3, alpha = 0.7) + 
-  scale_fill_viridis_c()
+ggdraw(align_legend(p))
+```
 
-p2 <- ggplot(US_income_cartogram, aes(fill = median_income)) + 
-  geom_sf(color = "grey30", size = 0.3, alpha = 0.7) + 
-  scale_fill_viridis_c()
+```{r median-income-counties, fig.asp = 0.73, fig.cap = '(ref:median-income-counties)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
 
-plot_grid(p1, p2, ncol = 1)
+p <- ggplot(US_counties_income, aes(fill = median_income)) + 
+  geom_sf(color = NA) + 
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_continuous_sequential(
+    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
+    palette = "BlueYellow", rev = TRUE, l1 = 15, p2 = 1.7,
+    name = "median income",
+    limits = c(0, 130000),
+    breaks = c(0, 50000, 100000),
+    labels = c("$0", "$50,000", "$100,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  )
 
-library(statebins)
-filter(US_income, name != "Puerto Rico", GEOID != "11") %>%
+ggdraw(align_legend(p))
+```
+
+```{r median-income-states, fig.asp = 0.73, fig.cap = '(ref:median-income-states)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
+
+p <- ggplot(US_income, aes(fill = median_income)) + 
+  geom_sf(color = "grey30", size = 0.3) + 
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_continuous_sequential(
+    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
+    palette = "BlueYellow", rev = TRUE,
+    name = "median income",
+    limits = c(25000, 75000),
+    breaks = c(0, 25000, 50000, 75000),
+    labels = c("$0", "$25,000", "$50,000", "$75,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  )
+
+stamp_bad(ggdraw(align_legend(p)))
+```
+
+
+## Cartograms and other map-like visualizations
+
+```{r median-income-cartogram, fig.asp = 0.73, fig.cap = '(ref:median-income-cartogram)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
+
+p <- ggplot(US_income_cartogram, aes(fill = median_income)) + 
+  geom_sf(color = "grey30", size = 0.3) + 
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_continuous_sequential(
+    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
+    palette = "BlueYellow", rev = TRUE,
+    name = "median income",
+    limits = c(25000, 75000),
+    breaks = c(0, 25000, 50000, 75000),
+    labels = c("$0", "$25,000", "$50,000", "$75,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  )
+
+ggdraw(align_legend(p))
+```
+
+
+```{r median-income-statebins, fig.asp = 0.62, fig.cap = '(ref:median-income-statebins)'}
+filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico and DC
   ggplot(aes(state = name, fill = median_income)) +
   geom_statebins(family = dviz.supp::dviz_font_family,
                  lbl_size = 14/.pt) +
-  coord_equal() +
-  scale_fill_viridis_c() +
-  theme_statebins(base_family = dviz.supp::dviz_font_family)
+  expand_limits(x = -1) + # make space for legend
+  coord_equal(expand = FALSE) +
+  scale_fill_continuous_sequential(
+    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
+    palette = "BlueYellow", rev = TRUE,
+    name = "median income",
+    limits = c(25000, 75000),
+    breaks = c(0, 25000, 50000, 75000),
+    labels = c("$0", "$25,000", "$50,000", "$75,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  #theme_statebins(base_family = dviz.supp::dviz_font_family) +
+  theme_dviz_map() +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.background = element_blank(),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  ) -> p
+
+ggdraw(align_legend(p))
 
 ```
 
-## Cartograms and other map-like visualizations
+*Add a geofacet example?*
