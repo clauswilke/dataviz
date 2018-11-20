@@ -5,6 +5,7 @@ source("_common.R")
 library(forcats)
 library(ggmap)
 library(statebins)
+library(sf)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -495,11 +496,53 @@ p2
 # x range: -3683715  2258154
 # y range: -2839538  1558935
 
-p <- ggplot(US_counties_income, aes(fill = log(as.numeric(popdens)*1e6))) + 
-  geom_sf(color = NA) + 
+US_counties_income <- mutate(US_counties_income, logdens = log(as.numeric(popdens)*1e6))
+
+p <- ggplot(US_counties_income) + 
+  geom_sf(aes(color = logdens, fill = logdens), size = 0.1) + 
+  geom_sf(data = US_states_geoms$albers_revised, fill = NA, color = "grey30", size = 0.2) +
   coord_sf(datum = NA, expand = FALSE) +
   scale_x_continuous(limits = c(-4000000, 2300000)) +
   scale_fill_continuous_sequential(
+    aesthetics = c("color", "fill"),
+    palette = "YlGnBu", rev = TRUE, cmax = 20, c2 = 20, p2 = 1.75,
+    name = "population density\n(persons / square km)",
+    limits = log(c(0.01, 30000)),
+    breaks = log(c(0.01, 1, 100, 10000)),
+    labels = c("0.01", "1", "100", "10,000"),
+    guide = guide_colorbar(
+      frame.colour = "black",
+      ticks.colour = "white",
+      barwidth = grid::unit(15, "pt"),
+      barheight = grid::unit(90, "pt")
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5)
+  )
+
+ggdraw(align_legend(p))
+```
+
+(ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
+
+```{r population-density-counties2, fig.asp = 0.73, fig.cap = '(ref:population-density-counties2)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
+
+p <- ggplot(US_counties_income) + 
+  geom_sf(aes(color = logdens, fill = logdens), size = 0.1) +
+  # state boundaries don't look good with this color scale
+  geom_sf(data = US_states_geoms$albers_revised, fill = NA, color = "black", size = 0.2) +
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_continuous_sequential(
+    aesthetics = c("color", "fill"),
     palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
     name = "population density\n(persons / square km)",
     limits = log(c(0.01, 30000)),
@@ -524,6 +567,7 @@ p <- ggplot(US_counties_income, aes(fill = log(as.numeric(popdens)*1e6))) +
 ggdraw(align_legend(p))
 ```
 
+
 (ref:median-income-counties) Median income in every U.S. county, shown as a choropleth map. Data source: 2015 Five-Year American Community Survey
 
 
@@ -531,13 +575,16 @@ ggdraw(align_legend(p))
 # x range: -3683715  2258154
 # y range: -2839538  1558935
 
-p <- ggplot(US_counties_income, aes(fill = median_income)) + 
-  geom_sf(color = NA) + 
+p <- ggplot(US_counties_income) + 
+  geom_sf(aes(color = median_income, fill = median_income), size = 0.1) + 
+  geom_sf(data = US_states_geoms$albers_revised, fill = NA, color = "grey30", size = 0.2) +
   coord_sf(datum = NA, expand = FALSE) +
   scale_x_continuous(limits = c(-4000000, 2300000)) +
   scale_fill_continuous_sequential(
+    aesthetics = c("color", "fill"),
     #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
-    palette = "BlueYellow", rev = TRUE, l1 = 15, p2 = 1.7,
+    #palette = "BlueYellow", rev = TRUE, l1 = 15, p2 = 1.7,
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, rev = TRUE, 
     name = "median income",
     limits = c(0, 130000),
     breaks = c(0, 50000, 100000),
@@ -561,29 +608,33 @@ p <- ggplot(US_counties_income, aes(fill = median_income)) +
 ggdraw(align_legend(p))
 ```
 
-(ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. **Say why this is bad.** Data source: 2015 Five-Year American Community Survey
-
-
-```{r median-income-states, fig.asp = 0.73, fig.cap = '(ref:median-income-states)'}
+```{r median-income-counties-binned, fig.asp = 0.73, fig.cap = '(ref:median-income-counties-binned)'}
 # x range: -3683715  2258154
 # y range: -2839538  1558935
 
-p <- ggplot(US_income, aes(fill = median_income)) + 
-  geom_sf(color = "grey30", size = 0.3) + 
+US_counties_income <- mutate(
+  US_counties_income,
+  income_bins = cut(
+      ifelse(is.na(median_income), 25000, median_income), # hide missing value
+      breaks = c(0, 30000, 55000, 80000, 105000, 150000),
+      labels = c("< $30k", "$30k to $60k", "$60k to $85k", "$85k to $105k", "> $105k"),
+      right = FALSE
+    )
+  )
+
+p <- ggplot(US_counties_income) + 
+  geom_sf(aes(color = income_bins, fill = income_bins), size = 0.1) + 
+  geom_sf(data = US_states_geoms$albers_revised, fill = NA, color = "grey30", size = 0.2) +
   coord_sf(datum = NA, expand = FALSE) +
   scale_x_continuous(limits = c(-4000000, 2300000)) +
-  scale_fill_continuous_sequential(
-    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
-    palette = "BlueYellow", rev = TRUE,
+  scale_fill_discrete_sequential(
+    aesthetics = c("color", "fill"),
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, rev = TRUE, 
     name = "median income",
-    limits = c(25000, 75000),
-    breaks = c(0, 25000, 50000, 75000),
-    labels = c("$0", "$25,000", "$50,000", "$75,000"),
-    guide = guide_colorbar(
-      frame.colour = "black",
-      ticks.colour = "white",
-      barwidth = grid::unit(15, "pt"),
-      barheight = grid::unit(90, "pt")
+    nmax = 6,
+    order = 2:6,
+    guide = guide_legend(
+      override.aes = list(colour = "white", size = 1)
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -592,10 +643,58 @@ p <- ggplot(US_income, aes(fill = median_income)) +
     legend.position = c(0, 1),
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
-    legend.title = element_text(hjust = 0.5)
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5),
+    legend.key.width = grid::unit(18, "pt"),
+    legend.key.height = grid::unit(15, "pt")
   )
 
-stamp_bad(ggdraw(align_legend(p)))
+p
+```
+
+(ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. **Say why this is bad.** Data source: 2015 Five-Year American Community Survey
+
+
+```{r median-income-states, fig.asp = 0.73, fig.cap = '(ref:median-income-states)'}
+# x range: -3683715  2258154
+# y range: -2839538  1558935
+
+US_income <- mutate(
+  US_income,
+  income_bins = cut(
+      ifelse(is.na(median_income), 25000, median_income), # hide missing value
+      breaks = c(0, 40000, 50000, 60000, 70000, 80000),
+      labels = c("< $40k", "$40k to $50k", "$50k to $60k", "$60k to $70k", "> $70k"),
+      right = FALSE
+    )
+  )
+
+p <- ggplot(US_income, aes(fill = income_bins)) + 
+  geom_sf(color = "grey30", size = 0.2) + 
+  coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-4000000, 2300000)) +
+  scale_fill_discrete_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, rev = TRUE, 
+    name = "median income",
+    nmax = 7,
+    order = 2:6,
+    guide = guide_legend(
+      override.aes = list(colour = "white", size = 1)
+    )
+  ) +
+  theme_dviz_map(12, rel_small = 1) +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    legend.position = c(0, 1),
+    legend.justification = c(0, 1),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5),
+    legend.key.width = grid::unit(18, "pt"),
+    legend.key.height = grid::unit(15, "pt")
+  )
+
+stamp_bad(p)
 ```
 
 
@@ -604,25 +703,19 @@ stamp_bad(ggdraw(align_legend(p)))
 (ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-cartogram, fig.asp = 0.73, fig.cap = '(ref:median-income-cartogram)'}
-# x range: -3683715  2258154
-# y range: -2839538  1558935
+# copy binnned data over, order of both data frames is the same
+US_income_cartogram$income_bins <- US_income$income_bins
 
-p <- ggplot(US_income_cartogram, aes(fill = median_income)) + 
-  geom_sf(color = "grey30", size = 0.3) + 
-  coord_sf(datum = NA, expand = FALSE) +
-  scale_x_continuous(limits = c(-4000000, 2300000)) +
-  scale_fill_continuous_sequential(
-    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
-    palette = "BlueYellow", rev = TRUE,
+p <- ggplot(US_income_cartogram, aes(fill = income_bins)) + 
+  geom_sf(color = "grey30", size = 0.2) + coord_sf(datum = NA, expand = FALSE) +
+  scale_x_continuous(limits = c(-3900000, 2500000)) +
+  scale_fill_discrete_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, rev = TRUE, 
     name = "median income",
-    limits = c(25000, 75000),
-    breaks = c(0, 25000, 50000, 75000),
-    labels = c("$0", "$25,000", "$50,000", "$75,000"),
-    guide = guide_colorbar(
-      frame.colour = "black",
-      ticks.colour = "white",
-      barwidth = grid::unit(15, "pt"),
-      barheight = grid::unit(90, "pt")
+    nmax = 7,
+    order = 2:6,
+    guide = guide_legend(
+      override.aes = list(colour = "white", size = 1)
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -631,48 +724,45 @@ p <- ggplot(US_income_cartogram, aes(fill = median_income)) +
     legend.position = c(0, 1),
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
-    legend.title = element_text(hjust = 0.5)
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5),
+    legend.key.width = grid::unit(18, "pt"),
+    legend.key.height = grid::unit(15, "pt")
   )
 
-ggdraw(align_legend(p))
+p
 ```
 
 (ref:median-income-statebins) Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-statebins, fig.asp = 0.62, fig.cap = '(ref:median-income-statebins)'}
 filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico and DC
-  ggplot(aes(state = name, fill = median_income)) +
+  ggplot(aes(state = name, fill = income_bins)) +
   geom_statebins(family = dviz.supp::dviz_font_family,
                  lbl_size = 14/.pt) +
-  expand_limits(x = -1) + # make space for legend
+  expand_limits(x = -1.3) + # make space for legend
   coord_equal(expand = FALSE) +
-  scale_fill_continuous_sequential(
-    #palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
-    palette = "BlueYellow", rev = TRUE,
+   scale_fill_discrete_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, rev = TRUE, 
     name = "median income",
-    limits = c(25000, 75000),
-    breaks = c(0, 25000, 50000, 75000),
-    labels = c("$0", "$25,000", "$50,000", "$75,000"),
-    guide = guide_colorbar(
-      frame.colour = "black",
-      ticks.colour = "white",
-      barwidth = grid::unit(15, "pt"),
-      barheight = grid::unit(90, "pt")
+    nmax = 7,
+    order = 2:6,
+    guide = guide_legend(
+      override.aes = list(colour = "white", size = 1)
     )
   ) +
-  #theme_statebins(base_family = dviz.supp::dviz_font_family) +
-  theme_dviz_map() +
+  theme_dviz_map(12, rel_small = 1) +
   theme(
     #plot.background = element_rect(fill = "cornsilk"),
     legend.background = element_blank(),
     legend.position = c(0, 1),
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
-    legend.title = element_text(hjust = 0.5)
-  ) -> p
-
-ggdraw(align_legend(p))
-
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5),
+    legend.key.width = grid::unit(18, "pt"),
+    legend.key.height = grid::unit(15, "pt")
+  )
 ```
 
 *Add a geofacet example?*
