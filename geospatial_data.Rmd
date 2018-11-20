@@ -18,7 +18,9 @@ Topics to cover:
 
 ## Projections
 
-```{r world-orthographic, fig.width = 4.5, fig.asp = 1}
+(ref:world-orthographic) *caption goes here.*
+
+```{r world-orthographic, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:world-orthographic)'}
 cenlat <- 40
 cenlong <- 15
 
@@ -32,7 +34,9 @@ draw_land(map_polys$world, cenlat, cenlong, col = land_col, line_col = line_col,
 ```
 
 
-```{r world-longlat, fig.asp = 0.6}
+(ref:world-longlat) Map of the world, shown in a simple latidue--longitude projection. This projection introduces severe distortions at the poles. For example, Greenland appears to be much bigger than Europe and comparable in size to Africa. In reality, Greenland is less than a quarter the size of Europe and less than a tenth the size of Africa (Figure \@ref(fig:world-orthographic)).
+
+```{r world-longlat, fig.asp = 0.6, fig.cap = '(ref:world-longlat)'}
 world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))
 
 crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
@@ -62,7 +66,9 @@ ggplot(world_sf) +
   )
 ```
 
-```{r world-robin, fig.asp = 0.6}
+(ref:world-robin) Map of the world, shown in the Robinson projection. This projection **a few sentences here.**
+
+```{r world-robin, fig.asp = 0.6, fig.cap = '(ref:world-robin)'}
 crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
 
 xlim <- c(-18494733, 18613795)
@@ -112,7 +118,7 @@ ggplot(world_sf) +
 48 of the 50 states (also referred to as the "lower 48") are contiguous and easy to visualize at once. But two states (Alaska and Hawaii) are located a substantial distance away from the lower 48 states (Figure \@ref(fig:usa-orthographic)).
 
 
-(ref:usa-orthographic) Locations of Alaska, Hawaii, and the lower 48 states shown on a globe.
+(ref:usa-orthographic) Relative locations of Alaska, Hawaii, and the lower 48 states shown on a globe.
 
 ```{r usa-orthographic, fig.width = 5.5, fig.asp = 1, fig.cap = '(ref:usa-orthographic)'}
 cenlat <- 35
@@ -132,9 +138,9 @@ text(
 )
 ```
 
-(ref:usa-true-albers) Locations of Alaska, Hawaii, and the lower 48 states shown with an area-preserving Albers projection  (ESRI:102003, commonly used to project the lower 48 states).
+(ref:usa-true-albers) Visualization of the United States, using an area-preserving Albers projection (ESRI:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations.
 
-```{r usa-true-albers, fig.cap = '(ref:usa-true-albers)'}
+```{r usa-true-albers, fig.asp = 0.72, fig.cap = '(ref:usa-true-albers)'}
 longs <- -180:-20
 lats <- rep(89.9, length(longs))
 earth_boundary <- sf::st_sfc(
@@ -149,7 +155,7 @@ whiteout <- data.frame(
   y = earth_boundary[[1]][, 2]
 )
 
-ggplot(US_states_geoms$true_albers) + 
+p <- ggplot(US_states_geoms$true_albers) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
   geom_polygon(
     data = whiteout, aes(x, y),
@@ -157,17 +163,26 @@ ggplot(US_states_geoms$true_albers) +
     size = 0.5/.pt
   ) +
   coord_sf(xlim = c(-6721002, 2685733), ylim = c(-1634610, 4888053), expand = FALSE, ndiscr = 1000) +
-  scale_x_continuous(name = NULL, breaks = -20*c(3:10)) +
-  scale_y_continuous(name = NULL, breaks = (1:9)*10) +
+  scale_x_continuous(name = "longitude", breaks = -20*c(3:10)) +
+  scale_y_continuous(name = "latitude", breaks = (1:9)*10) +
   theme_dviz_grid(font_size = 12, rel_small = 1) +
   theme(
+    #plot.background = element_rect(fill = "cornsilk"),
     panel.background = element_rect(fill = "#56B4E950"),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
-```
 
-```{r usa-albers}
+# work around bug in sf graticule code
+b <- ggplot_build(p)
+b$layout$panel_params[[1]]$graticule$x_start[11] <- 0
+b$layout$panel_params[[1]]$graticule$y_start[11] <- 0.849
+ggdraw(ggplot_gtable(b))
+
+```
+(ref:usa-albers) Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states. Alaska also has been scaled so its linear extent is only 35% of the state's true size. (In other words, the state's area has reduced to approximately 12% of its true size.) Such a scaling is frequently applied to Alaska, to make it visually appear to be of similar size as typical midwestern or western states. However, the scaling is highly misleading, and therefore the figure has been labeled as "bad".
+
+```{r usa-albers, fig.asp = 0.65, fig.cap = '(ref:usa-albers)'}
 # standard US Albers map, with AK artificially small
 
 # mimick color of transparent orange on top of transparent blue,
@@ -175,19 +190,30 @@ ggplot(US_states_geoms$true_albers) +
 # color was obtained by extraction from rendered png
 brown <- "#deb664"
 
-ggplot(US_states_geoms$us_albers) + 
+p <- ggplot(US_states_geoms$us_albers) + 
   geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
-  coord_sf(datum = NA) +
-  theme_dviz_map()
+  coord_sf(datum = NA, expand = FALSE) +
+  theme_dviz_map() +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk"),
+    plot.margin = margin(6, 6, 1, 0) 
+  )
+
+stamp_bad(p)
 ```
 
 
-```{r usa-albers-revised}
+(ref:usa-albers-revised) Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states.
+
+```{r usa-albers-revised, fig.asp = 0.75, fig.cap = '(ref:usa-albers-revised)'}
 # revised US Albers map, with AK at its original size
 ggplot(US_states_geoms$albers_revised) + 
   geom_sf(fill = brown, color = "black", size = 0.5/.pt) +
-  coord_sf(datum = NA) +
-  theme_dviz_map()
+  coord_sf(datum = NA, expand = FALSE) +
+  theme_dviz_map() +
+  theme(
+    #plot.background = element_rect(fill = "cornsilk")
+  )
 ```
 
 ## Layers
@@ -463,6 +489,8 @@ p2
 
 ## Choropleth mapping
 
+(ref:population-density-counties) Population density in every U.S. county, shown as a choropleth map. Population density is reported as persons per square kilometer. Data source: 2015 Five-Year American Community Survey
+
 ```{r population-density-counties, fig.asp = 0.73, fig.cap = '(ref:population-density-counties)'}
 # x range: -3683715  2258154
 # y range: -2839538  1558935
@@ -473,7 +501,7 @@ p <- ggplot(US_counties_income, aes(fill = log(as.numeric(popdens)*1e6))) +
   scale_x_continuous(limits = c(-4000000, 2300000)) +
   scale_fill_continuous_sequential(
     palette = "Lajolla", rev = TRUE, p1 = 2, p2 = 1.3,
-    name = "population density\n(person / square km)",
+    name = "population density\n(persons / square km)",
     limits = log(c(0.01, 30000)),
     breaks = log(c(0.01, 1, 100, 10000)),
     labels = c("0.01", "1", "100", "10,000"),
@@ -495,6 +523,9 @@ p <- ggplot(US_counties_income, aes(fill = log(as.numeric(popdens)*1e6))) +
 
 ggdraw(align_legend(p))
 ```
+
+(ref:median-income-counties) Median income in every U.S. county, shown as a choropleth map. Data source: 2015 Five-Year American Community Survey
+
 
 ```{r median-income-counties, fig.asp = 0.73, fig.cap = '(ref:median-income-counties)'}
 # x range: -3683715  2258154
@@ -529,6 +560,9 @@ p <- ggplot(US_counties_income, aes(fill = median_income)) +
 
 ggdraw(align_legend(p))
 ```
+
+(ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. **Say why this is bad.** Data source: 2015 Five-Year American Community Survey
+
 
 ```{r median-income-states, fig.asp = 0.73, fig.cap = '(ref:median-income-states)'}
 # x range: -3683715  2258154
@@ -565,7 +599,9 @@ stamp_bad(ggdraw(align_legend(p)))
 ```
 
 
-## Cartograms and other map-like visualizations
+## Cartograms
+
+(ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-cartogram, fig.asp = 0.73, fig.cap = '(ref:median-income-cartogram)'}
 # x range: -3683715  2258154
@@ -601,6 +637,7 @@ p <- ggplot(US_income_cartogram, aes(fill = median_income)) +
 ggdraw(align_legend(p))
 ```
 
+(ref:median-income-statebins) Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-statebins, fig.asp = 0.62, fig.cap = '(ref:median-income-statebins)'}
 filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico and DC
