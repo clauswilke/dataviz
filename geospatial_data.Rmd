@@ -7,6 +7,7 @@ library(ggmap)
 library(statebins)
 library(sf)
 library(lubridate)
+library(geofacet)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -796,26 +797,56 @@ filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico
   )
 ```
 
-*Add a geofacet example?*
 
-```{r fig.width = 8.5}
+
+(ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
+
+```{r unemployment-geofacet, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:unemployment-geofacet)'}
+adjust_labels <- as_labeller(
+  function(x) {
+    case_when(
+      x == "New Hampshire" ~ "N. Hampshire",
+      x == "District of Columbia" ~ "DC",
+      TRUE ~ x
+    )
+  }
+)
+
 house_prices %>% 
   filter(
-    year(date) >= 2007,
-    year(date) <= 2013
+    date >= ymd("2007-01-01"),
+    date <= ymd("2013-05-31")
   ) %>%
   ggplot(aes(date, unemploy_perc)) + 
   geom_area(fill = "#56B4E9", alpha = 0.7) +
   geom_line() + 
-  scale_y_continuous(limits = c(0, 15), expand = c(0, 0)) +
+  scale_y_continuous(
+    name = "unemployment rate",
+    limits = c(0, 16), expand = c(0, 0),
+    breaks = c(0, 5, 10, 15),
+    labels = c("0%", "5%", "10%", "15%")
+  ) +
   scale_x_date(
     name = NULL,
     breaks = ymd(c("2008-01-01", "2010-01-01", "2012-01-01")),
     labels = c("'08", "'10", "'12"),
     expand = c(0, 0)
   ) +
-  facet_geo(~state, grid = "us_state_grid1") +
-  theme_dviz_hgrid() -> p
+  coord_cartesian(clip = "off") +
+  facet_geo(~state, grid = "us_state_grid1", labeller = adjust_labels) +
+  theme_dviz_grid(11, dviz_font_family_condensed, rel_small = 1) +
+  theme(
+    strip.text = element_text(
+      family = dviz_font_family_condensed,
+      margin = margin(3, 3, 3, 3)
+    ),
+    axis.line.x = element_blank(),
+    panel.spacing.x = grid::unit(5, "pt"),
+    panel.spacing.y = grid::unit(5, "pt"),
+    panel.grid.major = element_line(color = "gray80"),
+    panel.background = element_rect(fill = "gray90")
+  ) -> p
 
 p
 ```
+

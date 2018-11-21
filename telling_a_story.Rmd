@@ -224,19 +224,24 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
   geom_bar(fill = "#0072B2D0", color = "white") + 
   facet_grid(origin ~ name) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 7500)) +
-  scale_x_discrete(labels = c("M", "", "W", "", "F", "", "S"),
-                   expand = c(0, 0.05),
-                   name = "weekday") +
+  scale_x_discrete(
+    labels = c("M", "", "W", "", "F", "", "S"),
+    expand = c(0, 0.05),
+    name = "weekday"
+  ) +
   theme_dviz_hgrid(12, dviz_font_family_condensed) +
-  #panel_border() +
-  theme(strip.text = element_text(family = dviz_font_family_bold_condensed,
-                                  margin = margin(3, 3, 3, 3)),
-        axis.line.x = element_blank(),
-        panel.spacing.x = grid::unit(5, "pt"),
-        panel.spacing.y = grid::unit(5, "pt"),
-        panel.grid.major = element_line(color = "gray80"),
-        panel.background = element_rect(fill = "gray90"),
-        plot.margin = margin(5.5, 1, 5.5, 1))
+  theme(
+    strip.text = element_text(
+      family = dviz_font_family_bold_condensed,
+      margin = margin(3, 3, 3, 3)
+    ),
+    axis.line.x = element_blank(),
+    panel.spacing.x = grid::unit(5, "pt"),
+    panel.spacing.y = grid::unit(5, "pt"),
+    panel.grid.major = element_line(color = "gray80"),
+    panel.background = element_rect(fill = "gray90"),
+    plot.margin = margin(5.5, 1, 5.5, 1)
+  )
 ```
 
 ## Make your figures memorable
