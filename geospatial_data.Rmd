@@ -6,6 +6,7 @@ library(forcats)
 library(ggmap)
 library(statebins)
 library(sf)
+library(lubridate)
 ```
 
 # Visualizing geospatial data {#geospatial-data}
@@ -18,6 +19,8 @@ Topics to cover:
 - Chloropleth maps, cartograms, etc.
 
 ## Projections
+
+Locations on the globe are specified via two angles, degrees latitude and degrees longitude. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0&deg; latitude, the north pole corresponds to 90&deg; latitude (also referred to as 90&deg;N), and the south pole corresponds to -90&deg; latitude (also referred to as 90&deg;S). Lines of equal latitude are referred to as *parallels*, since they run parallel to the equator. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as *meridians*, and all meridians terminate at the two poles. The Prime Meridian, corresponding to 0&deg; longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the Prime Meridian lies at 180&deg; longitude (also referred to as 180&deg;E), which is equivalent to -180&deg; longitude (also referred to as 180&deg;W), near the international date line. All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude. The longest parallel is the equator, at 0&deg; latitude, and the shortest parallels lie at the north and south poles, 90&deg;N and 90&deg;S, and have length zero.
 
 (ref:world-orthographic) *caption goes here.*
 
@@ -33,6 +36,8 @@ line_col <- "black"
 draw_ocean(cenlat, cenlong, col = ocean_col, line_col = graticule_col, lwd = 0.25)
 draw_land(map_polys$world, cenlat, cenlong, col = land_col, line_col = line_col, lwd = 0.5)
 ```
+
+*longlat projection stretches out the parallels so they are all shown to have the same length.*
 
 
 (ref:world-longlat) Map of the world, shown in a simple latidue--longitude projection. This projection introduces severe distortions at the poles. For example, Greenland appears to be much bigger than Europe and comparable in size to Africa. In reality, Greenland is less than a quarter the size of Europe and less than a tenth the size of Africa (Figure \@ref(fig:world-orthographic)).
@@ -66,6 +71,8 @@ ggplot(world_sf) +
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
 ```
+
+*The Robinson projection shortens parallels further away from the equator, however, even at the poles the parallels are still shown to be of substantial length.*
 
 (ref:world-robin) Map of the world, shown in the Robinson projection. This projection **a few sentences here.**
 
@@ -220,6 +227,8 @@ ggplot(US_states_geoms$albers_revised) +
 ## Layers
 
 
+It is generally recommended to add a scale bar, so the reader can have a sense of the size of the spatial features shown in the map.
+
 (ref:sfbay-overview) Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as magenta-colored dots. A large wind farm, the Shiloh Wind Farm near Rio Vista, is highlighted with a black rectangle. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
 ```{r sfbay-overview, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:sfbay-overview)'}
@@ -253,7 +262,7 @@ p1 <- ggmap(sfbay_maps$sfbay_bg)  +
     data = wind_sfbay,
     aes(x = xlong, y = ylat),
     size = 0.1,
-    color = "magenta",
+    color = "#A825A8",
     alpha = 1/3
   ) +
   geom_rect(
@@ -300,6 +309,8 @@ p1 <- ggmap(sfbay_maps$sfbay_bg)  +
 
 p1
 ```
+
+The map of Figure \@ref(fig:sfbay-overview) consists of four layers. At the bottom, we have the terrain layer, which shows hills, valleys, and water. The next layer shows the road network. On top of the road layer, I have placed a layer highlighting the location of individual wind turbines, as well as the location of the Shiloh Wind Farm. Finally, the top layer adds the locations and names of cities. These four layers are shown separately in Figure \@ref(fig:sfbay-layers).
 
 (ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
@@ -365,7 +376,7 @@ l4 <- ggmap(sfbay_maps$sfbay_bg) +
     data = wind_sfbay,
     aes(x = xlong, y = ylat),
     size = .5*0.1,
-    color = "magenta",
+    color = "#A825A8",
     alpha = 1/3
   ) +
   geom_rect(
@@ -397,6 +408,7 @@ plot_grid(
 # fig asp: 418/519 ~= 0.805
 ```
 
+All the concepts discussed in Chapter \@ref(aesthetic-mapping) of how we map data onto aesthetics carry over to maps. We can place data points into their geographic context and show other data dimensions via aesthetics such as color or shape. For example, Figure \@ref(fig:shiloh-map) provides a zoomed-in view of the rectangle labeled "Shiloh Wind Farm" in Figure \@ref(fig:sfbay-overview). Individual wind turbines are shown as dots, with the color of the dots representing when a specific turbine was built and the shape representing the project to which the wind turbine belongs.
 
 (ref:shiloh-map) Location of individual wind turbines in the Shiloh Wind Farm. Each dot highlights the location of one wind turbine. The map area corresponds to the rectangle in Figure \@ref(fig:sfbay-overview). Dots are colored by when the wind turbine was built, and the shape of the dots represents the various projects to which the individual wind turbines belong. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
@@ -486,9 +498,12 @@ p2 <- ggmap(sfbay_maps$shiloh_terrain)  +
 p2
 ```
 
-*Also show wind turbines in all of the lower 48, using some sort of bubble-grid approach?*
 
 ## Choropleth mapping
+
+...
+In such cases, we can color individual regions in a map according to some data dimension we want to display.
+choropleth
 
 (ref:population-density-counties) Population density in every U.S. county, shown as a choropleth map. Population density is reported as persons per square kilometer. Data source: 2015 Five-Year American Community Survey
 
@@ -528,6 +543,10 @@ p <- ggplot(US_counties_income) +
 
 ggdraw(align_legend(p))
 ```
+
+
+Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. We can also use the inverse choice, however, such that high-density metropolitan areas appear to light up on a dark background (Figure \@ref(fig:population-density-counties2)). Either choice is equally valid. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
+
 
 (ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
 
@@ -571,7 +590,7 @@ ggdraw(align_legend(p))
 (ref:median-income-counties) Median income in every U.S. county, shown as a choropleth map. Data source: 2015 Five-Year American Community Survey
 
 
-```{r median-income-counties, fig.asp = 0.73, fig.cap = '(ref:median-income-counties)'}
+```{r median-income-counties, eval = FALSE, fig.asp = 0.73, fig.cap = '(ref:median-income-counties)'}
 # x range: -3683715  2258154
 # y range: -2839538  1558935
 
@@ -608,6 +627,10 @@ p <- ggplot(US_counties_income) +
 ggdraw(align_legend(p))
 ```
 
+While continuous color scales tend to yield visualizations that look very appealing, these color scales can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
+
+(ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:median-income-counties) except median income values have been binned into five distinct groups. Binned color scales are often easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
+
 ```{r median-income-counties-binned, fig.asp = 0.73, fig.cap = '(ref:median-income-counties-binned)'}
 # x range: -3683715  2258154
 # y range: -2839538  1558935
@@ -615,7 +638,7 @@ ggdraw(align_legend(p))
 US_counties_income <- mutate(
   US_counties_income,
   income_bins = cut(
-      ifelse(is.na(median_income), 25000, median_income), # hide missing value
+      ifelse(is.na(median_income), 35000, median_income), # hide missing value
       breaks = c(0, 30000, 55000, 80000, 105000, 150000),
       labels = c("< $30k", "$30k to $60k", "$60k to $85k", "$85k to $105k", "> $105k"),
       right = FALSE
@@ -634,7 +657,8 @@ p <- ggplot(US_counties_income) +
     nmax = 6,
     order = 2:6,
     guide = guide_legend(
-      override.aes = list(colour = "white", size = 1)
+      override.aes = list(colour = "white", size = 1),
+      reverse = TRUE
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -679,7 +703,8 @@ p <- ggplot(US_income, aes(fill = income_bins)) +
     nmax = 7,
     order = 2:6,
     guide = guide_legend(
-      override.aes = list(colour = "white", size = 1)
+      override.aes = list(colour = "white", size = 1),
+      reverse = TRUE
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -697,8 +722,12 @@ p <- ggplot(US_income, aes(fill = income_bins)) +
 stamp_bad(p)
 ```
 
+As we see from Figure \@ref(fig:median-income-counties-binned), the vast majority of U.S. counties have a median income of below \$60,000. Yet Figure \@ref(median-income-states) suggests median incomes above \$70,000 are common, because the figure is visually dominated by the state of Alaska, whose median income is above \$70,000. Since Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), this impression is highly misleading.
+
 
 ## Cartograms
+
+*Not every map-like visualization has to be spatially accurate.*
 
 (ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
@@ -715,7 +744,8 @@ p <- ggplot(US_income_cartogram, aes(fill = income_bins)) +
     nmax = 7,
     order = 2:6,
     guide = guide_legend(
-      override.aes = list(colour = "white", size = 1)
+      override.aes = list(colour = "white", size = 1),
+      reverse = TRUE
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -748,7 +778,8 @@ filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico
     nmax = 7,
     order = 2:6,
     guide = guide_legend(
-      override.aes = list(colour = "white", size = 1)
+      override.aes = list(colour = "white", size = 1),
+      reverse = TRUE
     )
   ) +
   theme_dviz_map(12, rel_small = 1) +
@@ -766,3 +797,25 @@ filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico
 ```
 
 *Add a geofacet example?*
+
+```{r fig.width = 8.5}
+house_prices %>% 
+  filter(
+    year(date) >= 2007,
+    year(date) <= 2013
+  ) %>%
+  ggplot(aes(date, unemploy_perc)) + 
+  geom_area(fill = "#56B4E9", alpha = 0.7) +
+  geom_line() + 
+  scale_y_continuous(limits = c(0, 15), expand = c(0, 0)) +
+  scale_x_date(
+    name = NULL,
+    breaks = ymd(c("2008-01-01", "2010-01-01", "2012-01-01")),
+    labels = c("'08", "'10", "'12"),
+    expand = c(0, 0)
+  ) +
+  facet_geo(~state, grid = "us_state_grid1") +
+  theme_dviz_hgrid() -> p
+
+p
+```
