@@ -628,7 +628,7 @@ p <- ggplot(US_counties_income) +
 ggdraw(align_legend(p))
 ```
 
-While continuous color scales tend to yield visualizations that look very appealing, these color scales can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
+While continuous color scales tend to yield visualizations that look very appealing, they can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
 
 (ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:median-income-counties) except median income values have been binned into five distinct groups. Binned color scales are often easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
 
