@@ -7,12 +7,9 @@ library(lubridate)
 
 # Visualizing trends {#visualizing-trends}
 
-Topics to cover:
 
-- linear fits
-- non-linear fits
-- exponential growth
-- averaging/detrending? Use `CO2` dataset?
+
+## Smoothing
 
 (ref:dow-jones) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
@@ -134,6 +131,49 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
 ```
 
 
+
+(ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
+
+```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
+cars93 <- MASS::Cars93
+
+cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
+  scale_x_continuous(name = "price (USD)",
+                     breaks = c(20, 40, 60),
+                     labels = c("$20,000", "$40,000", "$60,000")) +
+  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  theme_minimal_grid(12)  
+  
+p1 <- cars_base + geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2")
+p2 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 5, bs = 'cr'), color = "#0072B2")
+p3 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "#0072B2")
+p4 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 6, bs = 'gp'), color = "#0072B2")
+
+plot_grid(p1, p2, p3, p4, align = 'hv',
+          labels = 'auto', label_fontface = "plain")
+
+# See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
+```
+
+## Explicit models
+
+(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$.
+
+```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
+fit.out <- nls(Fuel.tank.capacity ~ a*Price/(Price + b) + c, data = cars93, start = c(a = -45, b = -1, c = 70))
+fit.df <- data.frame(Price = 7:62,
+                     Fuel.tank.capacity = predict(fit.out, data.frame(Price = 7:62)))
+
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
+  geom_line(data = fit.df, size = 1, color = "#0072B2") +
+  scale_x_continuous(name = "price (USD)",
+                     breaks = c(20, 40, 60),
+                     labels = c("$20,000", "$40,000", "$60,000")) +
+  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  theme_minimal_grid()
+```
+
+
 (ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-scatter-line, fig.width = 5, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-line)'}
@@ -184,44 +224,41 @@ ggplot(biorxiv_growth, aes(date, count)) +
 ```
 
 
-(ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
-
-```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
-cars93 <- MASS::Cars93
-
-cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
-  scale_x_continuous(name = "price (USD)",
-                     breaks = c(20, 40, 60),
-                     labels = c("$20,000", "$40,000", "$60,000")) +
-  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
-  theme_minimal_grid(12)  
-  
-p1 <- cars_base + geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2")
-p2 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 5, bs = 'cr'), color = "#0072B2")
-p3 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "#0072B2")
-p4 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 6, bs = 'gp'), color = "#0072B2")
-
-plot_grid(p1, p2, p3, p4, align = 'hv',
-          labels = 'auto', label_fontface = "plain")
-
-# See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
-```
+## Detrending and time-series decomposition
 
 
-(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$.
+```{r}
+hpi_trends <- house_prices %>%
+  filter(year(date) >= 1980) %>%
+  filter(state %in% c("California", "Nevada", "West Virginia", "Texas")) %>%
+  mutate(
+    date_numeric = as.numeric(date),
+    hpi = house_price_index,
+    log_hpi = log(hpi)
+  ) %>%
+  group_by(state) %>%
+  mutate(
+    hpi_trend = {
+      coefs <- coef(lm(log_hpi ~ date_numeric))
+      exp(coefs[1] + coefs[2]*date_numeric)
+    },
+    hpi_detrended = hpi/hpi_trend
+  )
 
-```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
-fit.out <- nls(Fuel.tank.capacity ~ a*Price/(Price + b) + c, data = cars93, start = c(a = -45, b = -1, c = 70))
-fit.df <- data.frame(Price = 7:62,
-                     Fuel.tank.capacity = predict(fit.out, data.frame(Price = 7:62)))
+ggplot(hpi_trends, aes(date, hpi)) +
+  geom_line(aes(y = hpi_trend)) +
+  geom_line() +
+  scale_y_log10() +
+  facet_wrap(~state)
 
-ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
-  geom_line(data = fit.df, size = 1, color = "#0072B2") +
-  scale_x_continuous(name = "price (USD)",
-                     breaks = c(20, 40, 60),
-                     labels = c("$20,000", "$40,000", "$60,000")) +
-  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
-  theme_minimal_grid()
+ggplot(hpi_trends, aes(date, hpi_detrended)) +
+  geom_hline(yintercept = 1) +
+  geom_line() +
+  facet_wrap(~state) +
+  scale_y_log10(
+    breaks = c(0.752, 1, 1.33, 1.77)
+  )
+
 ```
 
 ```{r}
