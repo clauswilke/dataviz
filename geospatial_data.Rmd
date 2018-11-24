@@ -12,18 +12,16 @@ library(geofacet)
 
 # Visualizing geospatial data {#geospatial-data}
 
-Topics to cover:
+Many datasets contain information linked to locations in the physical world. For example, in an ecological study, a dataset may list where specific plants or animals have been found. Similarly, in a socioeconomic or political context, a dataset may contain information about where people with specific attributes (such as income, age, or educational attainment) live, or where man-made objects (e.g., bridges, roads, buildings) have been constructed. In all these cases, it can be helpful to visualize the data in their proper geospatial context, i.e., to show the data on a realistic map or alternatively as a map-like diagram. 
 
-- Explain basic concepts, latitude, longitude, meridians, parallels, etc.
-- Projections (give Alaska example)
-- Layers: outline, streets, topography, etc.
-- Chloropleth maps, cartograms, etc.
 
 ## Projections
 
-Locations on the globe are specified via two angles, degrees latitude and degrees longitude. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0&deg; latitude, the north pole corresponds to 90&deg; latitude (also referred to as 90&deg;N), and the south pole corresponds to -90&deg; latitude (also referred to as 90&deg;S). Lines of equal latitude are referred to as *parallels*, since they run parallel to the equator. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as *meridians*, and all meridians terminate at the two poles. The Prime Meridian, corresponding to 0&deg; longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the Prime Meridian lies at 180&deg; longitude (also referred to as 180&deg;E), which is equivalent to -180&deg; longitude (also referred to as 180&deg;W), near the international date line. All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude. The longest parallel is the equator, at 0&deg; latitude, and the shortest parallels lie at the north and south poles, 90&deg;N and 90&deg;S, and have length zero.
+The Earth is approximately a sphere, and more precisely an oblate spheroid that is slightly flattened along its axis of rotation. The two locations where the axis of rotation intersects with the spheroid are called the *poles* (North Pole and South Pole). We separate the spheroid into two hemispheres, the northern and the southern hemisphere, by drawing a line around the spheroid that is equidistant to both poles. This line is called the *equator.* To uniquely specify a location on the Earth, we need three pieces of information: where we are located along the direction of the equator (the longitude), how close we are to either pole when moving perpendicular to the equator (the latitude), and how far we are from the Earth's center (the altitude). Longitude, latitude, and altidue are specified relative to a defined coordinate system called the *datum.* One widely used datum is the World Geodetic System (WGS) 84, which is used by the Global Positioning System (GPS).
 
-(ref:world-orthographic) *caption goes here.*
+While altitude is an important quantity in many applications, when visualizing geospatial data in the form of maps we are primarily concerned with the other two dimensions, longitude and latitude. Both longitude and latitude are angles, and are expressed in degrees. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as *meridians*, and all meridians terminate at the two poles. The Prime Meridian, corresponding to 0&deg; longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the Prime Meridian lies at 180&deg; longitude (also referred to as 180&deg;E), which is equivalent to -180&deg; longitude (also referred to as 180&deg;W), near the international date line. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0&deg; latitude, the north pole corresponds to 90&deg; latitude (also referred to as 90&deg;N), and the south pole corresponds to -90&deg; latitude (also referred to as 90&deg;S). Lines of equal latitude are referred to as *parallels*, since they run parallel to the equator.  All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude (Figure \@ref(fig:world-orthographic)). The longest parallel is the equator, at 0&deg; latitude, and the shortest parallels lie at the north and south poles, 90&deg;N and 90&deg;S, and have length zero.
+
+(ref:world-orthographic) Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the North Pole and runing south are meridians, and the lines running orthogonal to the meridians are parallels. All meridians have the same length but parallels become shorter the closer we are to either pole.
 
 ```{r world-orthographic, fig.width = 4.5, fig.asp = 1, fig.cap = '(ref:world-orthographic)'}
 cenlat <- 40
@@ -38,84 +36,106 @@ draw_ocean(cenlat, cenlong, col = ocean_col, line_col = graticule_col, lwd = 0.2
 draw_land(map_polys$world, cenlat, cenlong, col = land_col, line_col = line_col, lwd = 0.5)
 ```
 
-*longlat projection stretches out the parallels so they are all shown to have the same length.*
+The challenge in map-making is that we need to take the spherical surface of the Earth and flatten it out so we can print it on a 2D map. This process, called *projection,* necessarily introduces distortions, because a curved surface, such as the surface of a spheroid, cannot be projected exactly onto a flat surface. Specifically, the projection can preserve either angles or areas but not both. A projection that does the former is called *conformal* and a projection that does the latter is called *equal-area*. Other projection types may preserve other quantities, such as distances to some reference point or line, or may provide a compromise between angle and area preservation. Compromise projections are frequently used to display the entire world in an aesthetically pleasing manner, and they accept some amount of both angular and area distortion (Figure \@ref(fig:worldmap-four-projections)).
 
+One of the earliest map projections in use, the Mercator projection, which was developed in the 16th century, is a conformal projection that accurately represents shapes but introduces severe area distortions near the poles (Figure \@ref(fig:world-mercator)). The Mercator projection maps the globe onto a cylinder and then unrolls the cylinder to arrive at a rectangular map. Meridians in this projection are evenly spaced vertical lines, whereas parallels are horizontal lines whose spacing increases the further we move away from the equator (Figure \@ref(fig:world-mercator)).
 
-(ref:world-longlat) Map of the world, shown in a simple latidue--longitude projection. This projection introduces severe distortions at the poles. For example, Greenland appears to be much bigger than Europe and comparable in size to Africa. In reality, Greenland is less than a quarter the size of Europe and less than a tenth the size of Africa (Figure \@ref(fig:world-orthographic)).
+(ref:world-mercator) Mercator projection of the world. In this projection, parallels are straight horizontal lines and meridians are straight vertical lines. It is a conformal projection preserving local angles, but it introduces severe distortions in areas near the poles. For example, Greenland appears to be bigger than Africa in this projection, when in reality Africa is fourteen times bigger than Greenland (see Figures \@ref(fig:world-orthographic) and \@ref(fig:world-goode)).
 
-```{r world-longlat, fig.asp = 0.6, fig.cap = '(ref:world-longlat)'}
+```{r world-mercator, fig.width = 5, fig.asp = 0.85, fig.cap = '(ref:world-mercator)'}
 world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))
 
 crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 
+crs_mercator <- "+proj=merc"
+
+# calculate bounding box in transformed coordinates
+mercator_bbox <- 
+  rbind(c(-180, -85), c(180, 85)) %>%
+  st_multipoint() %>%
+  st_sfc(
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  ) %>% 
+  st_transform(crs = crs_mercator)
+
 ggplot(world_sf) + 
   geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
-  coord_sf(expand = FALSE, crs = crs_longlat) + 
   scale_x_continuous(name = "longitude", breaks = seq(-120, 120, by = 60)) +
-  scale_y_continuous(name = "latitude", breaks = seq(-60, 60, by = 30)) +
-#  scale_x_continuous(
-#    name = "longitude",
-#    breaks = seq(-150, 150, by = 30),
-#    labels = parse(text = c("NA", "120 * degree * W", "NA", "60 * degree * W", "NA", "0 * degree",
-#                            "NA", "60 * degree * E", "NA", "120 * degree * E", "NA"))
-#  ) +
-#  scale_y_continuous(
-#    name = "latitude",
-#    breaks = seq(-75, 75, by = 15),
-#    labels = parse(text = c("NA", "60 * degree * S", "NA", "30 * degree * S", "NA", "0 * degree",
-#                            "NA", "30 * degree * N", "NA", "60 * degree * N", "NA"))
-#  ) +
+  scale_y_continuous(name = "latitude", breaks = seq(-80, 80, by = 20)) +
+  coord_sf(
+    xlim = mercator_bbox[[1]][, 1],
+    ylim = mercator_bbox[[1]][, 2],
+    expand = FALSE,
+    crs = crs_mercator
+  ) + 
   theme_dviz_grid(font_size = 12, rel_small = 1) +
   theme(
-    panel.background = element_rect(fill = "#56B4E950"),
+    panel.background = element_rect(fill = "#56B4E950", color = "#56B4E950"),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
 ```
 
-*The Robinson projection shortens parallels further away from the equator, however, even at the poles the parallels are still shown to be of substantial length.*
+Because of its severe area distortions, the Mercator projection has fallen out of favor for whole-world maps. However, variants of it continue to live on. For example, the transverse Mercator projection is routinely used for large-scale maps that show moderately small areas (spanning less than a few degrees in longitude) at large magnification. Another variant, the Web Mercator projection, was introduced by Google for Google maps and is used by several online mapping applications. 
 
-(ref:world-robin) Map of the world, shown in the Robinson projection. This projection **a few sentences here.**
+A whole-world projection that is perfectly area-preserving is the Goode homolosine (Figure \@ref(fig:world-goode)). It is usually shown in its interrupted form, which has one cut in the northern hemisphere and three in the southern hemisphere, carefully chosen so they don't interrupt major land masses (Figure \@ref(fig:world-goode)). The cuts allow the projection to both preserve areas and approximately preserve angles, at the cost of non-contiguous oceans, a cut through the middle of Greenland, and several cuts through Antarctica. While the interrupted Goode homolosine has an unusual aesthetic (as well as a complex name), it is a good choice for mapping applications that require accurate reproduction of areas on a global scale.
 
-```{r world-robin, fig.asp = 0.6, fig.cap = '(ref:world-robin)'}
-crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
+(ref:world-goode) Interrupted Goode homolosine projection of the world. This projection accurately preserves areas while minimizing angular distortions, at the cost of showing oceans and some land masses (Greenland, Antarctica) in a non-contiguous way.
 
-xlim <- c(-18494733, 18613795)
-ylim <- c(-9473396, 9188587)
+```{r world-goode, fig.width = 8.5, fig.asp = 0.45, fig.cap = '(ref:world-goode)'}
+crs_goode <- "+proj=igh"
 
-lats <- c(90:-90, -90:90, 90)
-longs <- c(rep(c(180, -180), each = 181), 180)
+# projection outline in long-lat coordinates
+lats <- c(
+  90:-90, # right side down
+  -90:0, 0:-90, # third cut bottom
+  -90:0, 0:-90, # second cut bottom
+  -90:0, 0:-90, # first cut bottom
+  -90:90, # left side up
+  90:0, 0:90, # cut top
+  90 # close
+)
+longs <- c(
+  rep(180, 181), # right side down
+  rep(c(80.01, 79.99), each = 91), # third cut bottom
+  rep(c(-19.99, -20.01), each = 91), # second cut bottom
+  rep(c(-99.99, -100.01), each = 91), # first cut bottom
+  rep(-180, 181), # left side up
+  rep(c(-40.01, -39.99), each = 91), # cut top
+  180 # close
+)
 
-earth_boundary <- sf::st_sfc(
-    sf::st_linestring(
-      cbind(longs, lats)
-    ),
+goode_outline <- 
+  list(cbind(longs, lats)) %>%
+  st_polygon() %>%
+  st_sfc(
     crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
-  )
-earth_boundary <- sf::st_transform(earth_boundary, crs = crs_robin)
-whiteout <- data.frame(
-  x = c(xlim[1], xlim[2], xlim[2], xlim[1], xlim[1], earth_boundary[[1]][, 1]),
-  y = c(ylim[1], ylim[1], ylim[2], ylim[2], ylim[1], earth_boundary[[1]][, 2])
-)
-earth_outline <- data.frame(
-  x = earth_boundary[[1]][, 1],
-  y = earth_boundary[[1]][, 2]
-)
+  ) %>% 
+  st_transform(crs = crs_goode)
+
+# bounding box in transformed coordinates
+xlim <- c(-21945470, 21963330)
+ylim <- c(-9538022, 9266738)
+goode_bbox <- 
+  list(
+    cbind(
+      c(xlim[1], xlim[2], xlim[2], xlim[1], xlim[1]), 
+      c(ylim[1], ylim[1], ylim[2], ylim[2], ylim[1])
+    )
+  ) %>%
+  st_polygon() %>%
+  st_sfc(crs = crs_goode)
+
+# area outside the earth outline
+goode_without <- st_difference(goode_bbox, goode_outline)
 
 ggplot(world_sf) + 
-  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
-  geom_polygon(
-    data = whiteout, aes(x, y),
-    fill = "white", color = NA
-  ) +
-  geom_polygon(
-    data = earth_outline, aes(x, y),
-    fill = NA, color = "gray30",
-    size = 0.5/.pt
-  ) +
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
+  geom_sf(data = goode_without, fill = "white", color = NA) +
+  geom_sf(data = goode_outline, fill = NA, color = "grey30", size = 0.5/.pt) +
   scale_x_continuous(name = NULL, breaks = seq(-120, 120, by = 60)) +
   scale_y_continuous(name = NULL, breaks = seq(-60, 60, by = 30)) +
-  coord_sf(xlim = 0.95*xlim, ylim = 0.95*ylim, expand = FALSE, crs = crs_robin, ndiscr = 1000) + 
+  coord_sf(xlim = 0.95*xlim, ylim = 0.95*ylim, expand = FALSE, crs = crs_goode, ndiscr = 1000) + 
   theme_dviz_grid(font_size = 12, rel_small = 1) +
   theme(
     panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
@@ -123,6 +143,10 @@ ggplot(world_sf) +
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
 ```
+
+
+
+*Projection issues are less of a problem at smaller scales.*
 
 48 of the 50 states (also referred to as the "lower 48") are contiguous and easy to visualize at once. But two states (Alaska and Hawaii) are located a substantial distance away from the lower 48 states (Figure \@ref(fig:usa-orthographic)).
 
@@ -797,9 +821,9 @@ filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico
   )
 ```
 
+Instead of representing each state as an individual, colored square, we can also place more complex plots in the location of each state. For example, if we want to visualize the evolution of the unemployment rate over time for each state, it can help to draw an individual graph for each state and then arrange them based on the approximate relative position of the states to each other (Figure \@ref(fig:unemployment-geofacet)). For anybody who is familiar with the geography of the United States, this arrangement makes it easier to find the graphs for specific states than arranging them, for example, in alphabetical order. Furthermore, one would expect neighboring states to display similar patterns, and Figure \@ref(fig:unemployment-geofacet) shows that this is indeed the case. 
 
-
-(ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
+(ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
 
 ```{r unemployment-geofacet, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:unemployment-geofacet)'}
 adjust_labels <- as_labeller(

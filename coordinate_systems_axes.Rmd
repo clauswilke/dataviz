@@ -421,55 +421,200 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
 ```
 
 
-A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their latitude and longitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:continental-usa-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:continental-usa-four-projections)).
+A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their longitude and latitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:worldmap-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:worldmap-four-projections)).
 
-(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3d globe. The Robinson projection is commonly used to project the entire world. It preserves neither areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercator projection preserves angles but distorts areas.
+(ref:worldmap-four-projections) Map of the world, shown in four different projections. The Cartesian longitude and latitude system maps the longitude and latitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3D globe. The interrupted Goode homolosine projection perfectly represents true surface areas, at the cost of dividing some land masses into separate pieces, most notably Greenland and Antarctica. The Robinson projection and the Winkel tripel projection both strike a balance between angular and area distortions, and they are commonly used for maps of the entire globe.
 
-```{r continental-usa-four-projections, fig.width = 8.5, fig.cap = '(ref:continental-usa-four-projections)'}
+```{r worldmap-four-projections, fig.width = 8.5, fig.cap = '(ref:worldmap-four-projections)'}
 library(sf)
-library(maps)
-usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))
 
-p1 <- ggplot(usa) + 
-  geom_sf() +
-  theme_dviz_grid(12) + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
-        axis.text = element_text(color = "gray30"),
-        plot.margin = margin(11, 21, 7, 0))
+world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))
 
-usa_robin <- st_transform(usa, st_crs("+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0")) # 
-p2 <- ggplot(usa_robin) +
-  geom_sf() +
-  theme_dviz_grid(12) + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
-        axis.text = element_text(color = "gray30"),
-        plot.margin = margin(12, 18, 6, 0))
+## world in long-lat
+crs_longlat <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 
-
-usa_laea <- st_transform(usa, st_crs("+proj=laea +lat_0=30 +lon_0=-100")) # Lambert equal area
-p3 <- ggplot(usa_laea) +
-  geom_sf() +
-  theme_dviz_grid(12) + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
-        axis.text = element_text(color = "gray30"),
-        plot.margin = margin(18, 18, 6, 0))
-
-usa_tmerc <- st_transform(usa, st_crs("+proj=tmerc +lat_0=35 +lon_0=-100 +x0=0 +y0=0")) # Transverse Mercator
-p4 <- ggplot(usa_tmerc) +
-  geom_sf() +
-  theme_dviz_grid(12) + 
-  theme(panel.grid.major = element_line(color = "gray30"),
-        axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
-        axis.text = element_text(color = "gray30"),
-        plot.margin = margin(18, 18, 6, 0))
+p_longlat <- ggplot(world_sf) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
+  coord_sf(expand = FALSE, crs = crs_longlat) + 
+  scale_x_continuous(
+    name = "longitude",
+    breaks = seq(-160, 160, by = 20),
+    labels = parse(text = c("NA", "NA", "120*degree*W", "NA", "NA", "60*degree*W", "NA", "NA", "0*degree", "NA", "NA", "60*degree*E", "NA", "NA", "120*degree*E", "NA", "NA"))
+  ) +
+  scale_y_continuous(
+    name = "latitude",
+    breaks = seq(-80, 80, by = 20),
+    labels = parse(text = c("80*degree*S", "NA", "40*degree*S", "NA", "0*degree", "NA", "40*degree*N", "NA", "80*degree*N"))
+  ) +
+  theme_dviz_grid(12) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E950", color = "grey30", size = 0.5),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
+    plot.margin = margin(5, 10, 0, 1)
+  )
 
 
-plot_grid(p1, p2, p3, p4,
-          labels = c("Cartesian latitude and longitude", "Robinson", "Lambert equal area", "Transverse Mercator"),
-          label_x = 0, label_y = 0.98,
-          hjust = 0, vjust = 1,
-          label_fontface = "plain")
+## Interrupted Goode homolosine
+crs_goode <- "+proj=igh"
+
+# projection outline in long-lat coordinates
+lats <- c(
+  90:-90, # right side down
+  -90:0, 0:-90, # third cut bottom
+  -90:0, 0:-90, # second cut bottom
+  -90:0, 0:-90, # first cut bottom
+  -90:90, # left side up
+  90:0, 0:90, # cut top
+  90 # close
+)
+longs <- c(
+  rep(180, 181), # right side down
+  rep(c(80.01, 79.99), each = 91), # third cut bottom
+  rep(c(-19.99, -20.01), each = 91), # second cut bottom
+  rep(c(-99.99, -100.01), each = 91), # first cut bottom
+  rep(-180, 181), # left side up
+  rep(c(-40.01, -39.99), each = 91), # cut top
+  180 # close
+)
+
+goode_outline <- 
+  list(cbind(longs, lats)) %>%
+  st_polygon() %>%
+  st_sfc(
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  ) %>% 
+  st_transform(crs = crs_goode)
+
+# bounding box in transformed coordinates
+xlim_goode <- c(-21945470, 21963330)
+ylim_goode <- c(-9538022, 9266738)
+goode_bbox <- 
+  list(
+    cbind(
+      c(xlim_goode[1], xlim_goode[2], xlim_goode[2], xlim_goode[1], xlim_goode[1]), 
+      c(ylim_goode[1], ylim_goode[1], ylim_goode[2], ylim_goode[2], ylim_goode[1])
+    )
+  ) %>%
+  st_polygon() %>%
+  st_sfc(crs = crs_goode)
+
+# area outside the earth outline
+goode_without <- st_difference(goode_bbox, goode_outline)
+
+p_goode <- ggplot(world_sf) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) +
+  geom_sf(data = goode_without, fill = "white", color = NA) +
+  geom_sf(data = goode_outline, fill = NA, color = "grey30", size = 0.5/.pt) +
+  scale_x_continuous(
+    name = NULL,
+    breaks = seq(-160, 160, by = 20)
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    breaks = seq(-80, 80, by = 20)
+  ) + 
+  coord_sf(xlim = 0.95*xlim_goode, ylim = 0.95*ylim_goode, expand = FALSE, crs = crs_goode, ndiscr = 1000) + 
+  theme_dviz_grid(12, rel_small = 1) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    plot.margin = margin(0, 0, 24, 0)
+  )
+
+
+## Robinson projection
+crs_robin <- "+proj=robin +lat_0=0 +lon_0=0 +x0=0 +y0=0"
+
+# projection outline in long-lat coordinates
+lats <- c(90:-90, -90:90, 90)
+longs <- c(rep(c(180, -180), each = 181), 180)
+
+robin_outline <- 
+  list(cbind(longs, lats)) %>%
+  st_polygon() %>%
+  st_sfc(
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  ) %>% 
+  st_transform(crs = crs_robin)
+
+# bounding box in transformed coordinates
+xlim_robin <- c(-18494733, 18613795)
+ylim_robin <- c(-9473396, 9188587)
+robin_bbox <- 
+  list(
+    cbind(
+      c(xlim_robin[1], xlim_robin[2], xlim_robin[2], xlim_robin[1], xlim_robin[1]), 
+      c(ylim_robin[1], ylim_robin[1], ylim_robin[2], ylim_robin[2], ylim_robin[1])
+    )
+  ) %>%
+  st_polygon() %>%
+  st_sfc(crs = crs_robin)
+
+# area outside the earth outline
+robin_without <- st_difference(robin_bbox, robin_outline)
+
+p_robin <- ggplot(world_sf) + 
+  geom_sf(fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
+  geom_sf(data = robin_without, fill = "white", color = NA) +
+  geom_sf(data = robin_outline, fill = NA, color = "grey30", size = 0.5/.pt) +
+  scale_x_continuous(
+    name = NULL,
+    breaks = seq(-160, 160, by = 20)
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    breaks = seq(-80, 80, by = 20)
+  ) +
+  coord_sf(xlim = 0.95*xlim_robin, ylim = 0.95*ylim_robin, expand = FALSE, crs = crs_robin, ndiscr = 1000) + 
+  theme_dviz_grid(12, rel_small = 1) +
+  theme(
+    panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
+    panel.grid.major = element_line(color = "gray30", size = 0.25),
+    plot.margin = margin(6, 0, 0, 0)
+  )
+
+
+## Winkel tripel
+# The Winkel tripel projection needs to be done manually, it is not supported by sf.
+crs_wintri <- "+proj=wintri +datum=WGS84 +no_defs +over"
+
+# world
+world_wintri <- lwgeom::st_transform_proj(world_sf, crs = crs_wintri)
+
+# graticule
+grat_wintri <- sf::st_graticule(lat = c(-89.9, seq(-80, 80, 20), 89.9))
+grat_wintri <- lwgeom::st_transform_proj(grat_wintri, crs = crs_wintri)
+
+# earth outline
+lats <- c(90:-90, -90:90, 90)
+longs <- c(rep(c(180, -180), each = 181), 180)
+wintri_outline <- 
+  list(cbind(longs, lats)) %>%
+  st_polygon() %>%
+  st_sfc(
+    crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  ) %>% 
+  lwgeom::st_transform_proj(crs = crs_wintri)
+
+p_wintri <- ggplot() + 
+  geom_sf(data = wintri_outline, fill = "#56B4E950", color = NA) +
+  geom_sf(data = grat_wintri, color = "gray30", size = 0.25/.pt) + 
+  geom_sf(data = world_wintri, fill = "#E69F00B0", color = "black", size = 0.5/.pt) + 
+  geom_sf(data = wintri_outline, fill = NA, color = "grey30", size = 0.5/.pt) +
+  coord_sf(datum = NA, expand = FALSE) +
+  theme_dviz_grid(12, rel_small = 1) +
+  theme(
+    plot.margin = margin(6, 0, 3, 0)
+  )
+
+p <- plot_grid(
+  p_longlat, p_goode, p_robin, p_wintri,
+  labels = c(
+    "Cartesian longitude and latitude", "Interrupted Goode homolosine", 
+    "Robinson", "Winkel tripel"
+  )
+)
+
+p
 ```
