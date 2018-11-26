@@ -570,13 +570,15 @@ ggplot(emissions_1970_2010, aes(`1970`, `2010`)) +
     limits = c(0.008, 125),
     breaks = c(0.01, 0.1, 1, 10, 100),
     labels = c("0.01", "0.1", "1.0", "10", "100"),
-    name = "1970 CO2 emissions (tons / person)"
+    #name = "1970 CO2 emissions (tons / person)"
+    name = parse(text = "`1970 CO`[2]*` emissions (tons / person)`")
   ) + 
   scale_y_log10(
     limits = c(0.008, 125),
     breaks = c(0.01, 0.1, 1, 10, 100),
     labels = c("0.01", "0.1", "1.0", "10", "100"),
-    name = "2010 CO2 emissions (tons / person)"
+    #name = "2010 CO2 emissions (tons / person)"
+    name = parse(text = "`2010 CO`[2]*` emissions (tons / person)`")
   ) +
   coord_fixed(expand = FALSE, clip = "off") +
   theme_dviz_open() +
@@ -628,7 +630,8 @@ ggplot(filter(emissions_top_ten, year != 2005), aes(x = year, y = emissions)) +
   scale_y_continuous(
     limits = c(0, 63.2),
     expand = c(0, 0),
-    name = "CO2 emissions (tons / person)"
+    #name = "CO2 emissions (tons / person)"
+    name = parse(text = "`CO`[2]*` emissions (tons / person)`")
   ) +
   theme_dviz_open() +
   theme(
@@ -676,7 +679,8 @@ ggplot(emissions_top_ten, aes(x = year, y = emissions)) +
   scale_y_continuous(
     limits = c(0, 63.2),
     expand = c(0, 0),
-    name = "CO2 emissions (tons / person)"
+    #name = "CO2 emissions (tons / person)"
+    name = parse(text = "`CO`[2]*` emissions (tons / person)`")
   ) +
   coord_cartesian(clip = "off") +
   theme_dviz_open() +

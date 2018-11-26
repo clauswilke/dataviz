@@ -22,8 +22,8 @@ rmd_files: [
   "visualizing_associations.Rmd", # completed
   "time_series.Rmd", # completed
   #"visualizing_trends.Rmd",
-  #"visualizing_uncertainty.Rmd",
   #"geospatial_data.Rmd",
+  #"visualizing_uncertainty.Rmd",
 
   # Part II
 
@@ -44,7 +44,6 @@ rmd_files: [
   "telling_a_story.Rmd", # completed
   "annotated_bibliography.Rmd",
 
-  "outline.Rmd",
   "technical_notes.Rmd",
 
   #"notes.Rmd",

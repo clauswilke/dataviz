@@ -35,7 +35,7 @@ draw_land(map_polys$world, cenlat, cenlong, col = land_col, line_col = line_col,
 ```
 While altitude is an important quantity in many geospatial applications, when visualizing geospatial data in the form of maps we are primarily concerned with the other two dimensions, longitude and latitude. Both longitude and latitude are angles, expressed in degrees. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as *meridians*, and all meridians terminate at the two poles. The Prime Meridian, corresponding to 0&deg; longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the Prime Meridian lies at 180&deg; longitude (also referred to as 180&deg;E), which is equivalent to -180&deg; longitude (also referred to as 180&deg;W), near the international date line. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0&deg; latitude, the north pole corresponds to 90&deg; latitude (also referred to as 90&deg;N), and the south pole corresponds to -90&deg; latitude (also referred to as 90&deg;S). Lines of equal latitude are referred to as *parallels*, since they run parallel to the equator.  All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude (Figure \@ref(fig:world-orthographic)). The longest parallel is the equator, at 0&deg; latitude, and the shortest parallels lie at the north and south poles, 90&deg;N and 90&deg;S, and have length zero.
 
-The challenge in map-making is that we need to take the spherical surface of the Earth and flatten it out so we can display it on a map. This process, called *projection,* necessarily introduces distortions, because a curved surface cannot be projected exactly onto a flat surface. Specifically, the projection can preserve either angles or areas but not both. A projection that does the former is called *conformal* and a projection that does the latter is called *equal-area*. Other projections may preserve neither angles nor areas but instead preserve other quantities of interest, such as distances to some reference point or line. Finally, some projections attempt to strike a compromise between preserving angles and areas. These compromise projections are frequently used to display the entire world in an aesthetically pleasing manner, and they accept some amount of both angular and area distortion (Figure \@ref(fig:worldmap-four-projections)). To systematize and keep track of different ways of projecting parts or all of the Earth for specific maps, the European Petroleum Survey Group (EPSG) assigns numeric identifiers to registered projections and maintains a database of these standardized projections (@epsg-database). For example, EPSG:4326 represents unprojected longitude and latitude values in the WGS 84 coordinate system used by GPS.
+The challenge in map-making is that we need to take the spherical surface of the Earth and flatten it out so we can display it on a map. This process, called *projection,* necessarily introduces distortions, because a curved surface cannot be projected exactly onto a flat surface. Specifically, the projection can preserve either angles or areas but not both. A projection that does the former is called *conformal* and a projection that does the latter is called *equal-area*. Other projections may preserve neither angles nor areas but instead preserve other quantities of interest, such as distances to some reference point or line. Finally, some projections attempt to strike a compromise between preserving angles and areas. These compromise projections are frequently used to display the entire world in an aesthetically pleasing manner, and they accept some amount of both angular and area distortion (Figure \@ref(fig:worldmap-four-projections)). To systematize and keep track of different ways of projecting parts or all of the Earth for specific maps, various standards bodies and organizations, such as the EPSG (European Petroleum Survey Group) or the ESRI (Environmental Systems Research Institute), maintain registries of projections. For example, EPSG:4326 represents unprojected longitude and latitude values in the WGS 84 coordinate system used by GPS. Several websites provide convenient access to these registered projections, including http://spatialreference.org/ and https://epsg.io/.
 
 One of the earliest map projections in use, the Mercator projection, was developed in the 16th century for nautical navigation. It is a conformal projection that accurately represents shapes but introduces severe area distortions near the poles (Figure \@ref(fig:world-mercator)). The Mercator projection maps the globe onto a cylinder and then unrolls the cylinder to arrive at a rectangular map. Meridians in this projection are evenly spaced vertical lines, whereas parallels are horizontal lines whose spacing increases the further we move away from the equator (Figure \@ref(fig:world-mercator)). The spacing between parallels increases in proportion to the extent to which they have to be stretched closer to the poles to keep meridians perfectly vertical.
 
@@ -167,7 +167,7 @@ text(
 
 Figure \@ref(fig:usa-true-albers) shows a map of all 50 states, made using an equal-area Albers projection. While it provides a reasonable representation of the relative shapes, areas, and locations of the 50 states, we notice some issues. First, Alaska seems weirdly stretched out compared to how it looks, for example, in Figures \@ref(fig:world-mercator) or \@ref(fig:usa-orthographic). Second, the map is dominated by ocean/empty space. As a map intended to show the United States, Figure \@ref(fig:usa-true-albers) does not work very well.
 
-(ref:usa-true-albers) Map of the United States of America, using an area-preserving Albers projection (EPSG:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations.
+(ref:usa-true-albers) Map of the United States of America, using an area-preserving Albers projection (ESRI:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations.
 
 ```{r usa-true-albers, fig.asp = 0.72, fig.cap = '(ref:usa-true-albers)'}
 longs <- -180:-20
@@ -234,7 +234,7 @@ p <- ggplot(US_states_geoms$us_albers) +
 stamp_bad(p)
 ```
 
-Instead of moving and scaling Alaska, we could choose to move it without changing its scale (Figure \@ref(fig:usa-albers-revised)). This visualization clearly shows that Alaska is the largest state, over twice the size of Texas. **A few more sentences.**
+Instead of moving and scaling Alaska, we could choose to move it without changing its scale (Figure \@ref(fig:usa-albers-revised)). This visualization clearly shows that Alaska is the largest state, over twice the size of Texas. We are not used to seeing the U.S. shown in this way, but in my mind it is a much more reasonable representation of the 50 states than Figure \@ref(fig:usa-albers).
 
 (ref:usa-albers-revised) Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states.
 
@@ -251,7 +251,7 @@ ggplot(US_states_geoms$albers_revised) +
 
 
 ## Layers
-
+*Intro sentences here.*
 
 It is generally recommended to add a scale bar, so the reader can have a sense of the size of the spatial features shown in the map.
 
@@ -655,7 +655,7 @@ ggdraw(align_legend(p))
 
 While continuous color scales tend to yield visualizations that look very appealing, they can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
 
-(ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:median-income-counties) except median income values have been binned into five distinct groups. Binned color scales are often easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
+(ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. The median income values have been binned into five distinct groups, because binned color scales are generally easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-counties-binned, fig.asp = 0.73, fig.cap = '(ref:median-income-counties-binned)'}
 # x range: -3683715  2258154

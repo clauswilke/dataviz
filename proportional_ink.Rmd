@@ -67,7 +67,7 @@ p_income_good
 ```
 
 ```{block type='rmdtip', echo=TRUE}
-Bars on a linear scale must always start 0.
+Bars on a linear scale must always start at 0.
 ```
 
 Similar visualization problems frequently arise in the visualization of time series, such as those of stock prices. Figure \@ref(fig:fb-stock-drop-bad) suggests a massive collapse in the stock price of Facebook occurred around Nov. 1, 2016. In reality, the price decline was moderate relative to the total price of the stock (Figure \@ref(fig:fb-stock-drop-good)). The *y*-axis range in Figure \@ref(fig:fb-stock-drop-bad) would be questionable even without the shading undearneath the curve. But with the shading, the figure becomes particularly problematic. The shading emphasizes the distance from the location of the *x* axis to the specific *y* values shown, and thus it creates the visual impression that the height of the shaded area at a given day represents the stock price of that day. Instead, it only represents the difference in stock price from the baseline, which is $110 in Figure \@ref(fig:fb-stock-drop-bad).
@@ -273,19 +273,23 @@ RI_pop <- US_census %>%
   filter(state == "Rhode Island") %>%
   extract(name, "county", regex = "(.+) County") %>%
   select(county, pop2010) %>%
-  mutate(label_pop = scales::comma(signif(pop2010, 3)),
-         label_comb = paste(county, label_pop, sep = "\n")) %>%
+  mutate(
+    label_pop = scales::comma(signif(pop2010, 3)),
+    label_comb = paste(county, label_pop, sep = "\n")
+  ) %>%
   arrange(desc(pop2010))
 
 RI_pop$county = factor(RI_pop$county, levels = RI_pop$county)
 
 RI_pie <- RI_pop %>%
-  mutate(total = sum(pop2010),
-         end_angle = 2*pi*cumsum(pop2010)/total,      # ending angle for each pie slice
-         start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
-         mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
-         hjust = ifelse(mid_angle>pi, 1, 0),
-         vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1))
+  mutate(
+    total = sum(pop2010),
+    end_angle = 2*pi*cumsum(pop2010)/total,      # ending angle for each pie slice
+    start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
+    mid_angle = 0.5*(start_angle + end_angle),   # middle of each pie slice, for the text label
+    hjust = ifelse(mid_angle>pi, 1, 0),
+    vjust = ifelse(mid_angle<pi/2 | mid_angle>3*pi/2, 0, 1)
+  )
 
 rpie = 1
 
@@ -293,11 +297,23 @@ RI_pie$rlabel = c(.3, .4, .4, 1.02, 1.02) * rpie
 RI_pie$size = c(16, 14, 14, 12, 12)/.pt
 
 plot_RI_pies <- ggplot(RI_pie) + 
-  geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
-                   start = start_angle, end = end_angle, fill = county), color = "white", size = 0.75) +
-  geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = label_pop,
-                family = dviz_font_family,
-                hjust = hjust, vjust = vjust, size = size)) +
+  geom_arc_bar(
+    aes(
+      x0 = 0, y0 = 0, r0 = 0, r = rpie,
+      start = start_angle, end = end_angle, fill = county
+    ),
+    color = "white", size = 0.75
+  ) +
+  geom_text(
+    aes(
+      x = rlabel*sin(mid_angle),
+      y = rlabel*cos(mid_angle),
+      label = label_pop,
+      hjust = hjust, vjust = vjust,
+      size = size
+    ),
+    family = dviz_font_family
+  ) +
   coord_fixed() +
   scale_x_continuous(limits = c(-1.1, 1.1), expand = c(0, 0), name = NULL, breaks = NULL, labels = NULL) +
   scale_y_continuous(limits = c(-1.1, 1.1), expand = c(0, 0),name = NULL, breaks = NULL, labels = NULL) +
@@ -306,14 +322,16 @@ plot_RI_pies <- ggplot(RI_pie) +
   scale_size_identity() +
   guides(fill = guide_legend(override.aes = list(size = 1.))) +
   theme_dviz_open() +
-  theme(axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        legend.title.align = 0.5,
-        legend.key.size = grid::unit(25, "pt"),
-        legend.spacing.x = grid::unit(2, "pt"),
-        legend.spacing.y = grid::unit(2, "pt"),
-        plot.margin = margin(7, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    legend.title.align = 0.5,
+    legend.key.size = grid::unit(25, "pt"),
+    legend.spacing.x = grid::unit(2, "pt"),
+    legend.spacing.y = grid::unit(2, "pt"),
+    plot.margin = margin(7, 7, 3, 0)
+  )
 
 plot_RI_pies
 ```
@@ -326,17 +344,21 @@ Because the area of each pie wedge is proportional to its angle which is proport
 ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill = county)) + 
   geom_col() +
   scale_fill_OkabeIto(darken = -.3, guide = "none") +
-  scale_y_continuous(expand = c(0, 0),
-                     breaks = c(0, 2e5, 4e5, 6e5),
-                     labels = c("0", "200,000", "400,000", "600,000"),
-                     name = "number of inhabitants") +
+  scale_y_continuous(
+    expand = c(0, 0),
+    breaks = c(0, 2e5, 4e5, 6e5),
+    labels = c("0", "200,000", "400,000", "600,000"),
+    name = "number of inhabitants"
+  ) +
   scale_x_discrete(name = "county") +
   coord_flip() +
   theme_dviz_vgrid() +
-  theme(#axis.line = element_blank(),
-        #axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks.y = element_blank(),
-        plot.margin = margin(3, 0, 3, 0))
+  theme(
+    #axis.line = element_blank(),
+    #axis.ticks.length = grid::unit(0, "pt"),
+    axis.ticks.y = element_blank(),
+    plot.margin = margin(3, 14, 3, 0)
+  )
 
 ```
 
@@ -345,12 +367,21 @@ The problem that human perception is better at judging distances than at judging
 (ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties, shown as a treemap. The area of each rectangle is proportional to the number of inhabitants in the respective county.  Data source: 2010 Decennial U.S. Census.
 
 ```{r RI-pop-treemap, fig.width = 4.5, fig.asp = .75, fig.cap = '(ref:RI-pop-treemap)'}
+# fix label for Bristol
+RI_pop$label_comb[5] <- paste(RI_pop$county[5], RI_pop$label_pop[5])
+RI_pop$label_comb = factor(RI_pop$label_comb, levels = RI_pop$label_comb)
 
 p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) + 
-  geom_treemap(color = "white", size = .75*.pt) + 
-  geom_treemap_text(family = dviz_font_family,
-                    colour = "black", place = "centre",
-                    grow = FALSE) +
+  geom_treemap(
+    color = "white", size = .75*.pt,
+    fixed = FALSE
+  ) + 
+  geom_treemap_text(
+    family = dviz_font_family,
+    colour = "black", place = "centre",
+    grow = FALSE,
+    fixed = FALSE
+  ) +
   scale_fill_OkabeIto(darken = -.3, guide = "none")
 
 p
