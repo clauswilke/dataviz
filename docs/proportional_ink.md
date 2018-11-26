@@ -20,7 +20,7 @@ We first consider the most common scenario, visualization of amounts along a lin
 (ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is incorrect, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the bar heights are not proportional to the values shown, and the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/hawaii-income-bars-bad-1.png" alt="(ref:hawaii-income-bars-bad)" width="630" />
+<img src="proportional_ink_files/figure-html/hawaii-income-bars-bad-1.png" alt="(ref:hawaii-income-bars-bad)" width="576" />
 <p class="caption">(\#fig:hawaii-income-bars-bad)(ref:hawaii-income-bars-bad)</p>
 </div>
 
@@ -29,12 +29,12 @@ An appropriate visualization of these data makes for a less exciting story (Figu
 (ref:hawaii-income-bars-good) Median income in the five counties of the state of Hawaii. Here, the *y* axis scale starts at \$0 and therefore the relative magnitudes of the median incomes in the five counties are accurately shown. Data source: 2015 Five-Year American Community Survey.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/hawaii-income-bars-good-1.png" alt="(ref:hawaii-income-bars-good)" width="630" />
+<img src="proportional_ink_files/figure-html/hawaii-income-bars-good-1.png" alt="(ref:hawaii-income-bars-good)" width="576" />
 <p class="caption">(\#fig:hawaii-income-bars-good)(ref:hawaii-income-bars-good)</p>
 </div>
 
 <div class="rmdtip">
-<p>Bars on a linear scale must always start 0.</p>
+<p>Bars on a linear scale must always start at 0.</p>
 </div>
 
 Similar visualization problems frequently arise in the visualization of time series, such as those of stock prices. Figure \@ref(fig:fb-stock-drop-bad) suggests a massive collapse in the stock price of Facebook occurred around Nov. 1, 2016. In reality, the price decline was moderate relative to the total price of the stock (Figure \@ref(fig:fb-stock-drop-good)). The *y*-axis range in Figure \@ref(fig:fb-stock-drop-bad) would be questionable even without the shading undearneath the curve. But with the shading, the figure becomes particularly problematic. The shading emphasizes the distance from the location of the *x* axis to the specific *y* values shown, and thus it creates the visual impression that the height of the shaded area at a given day represents the stock price of that day. Instead, it only represents the difference in stock price from the baseline, which is $110 in Figure \@ref(fig:fb-stock-drop-bad).
@@ -42,14 +42,14 @@ Similar visualization problems frequently arise in the visualization of time ser
 (ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 22, 2016 to Jan. 21, 2017. This figure seems to imply that the Facebook stock pice collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/fb-stock-drop-bad-1.png" alt="(ref:fb-stock-drop-bad)" width="630" />
+<img src="proportional_ink_files/figure-html/fb-stock-drop-bad-1.png" alt="(ref:fb-stock-drop-bad)" width="576" />
 <p class="caption">(\#fig:fb-stock-drop-bad)(ref:fb-stock-drop-bad)</p>
 </div>
 
 (ref:fb-stock-drop-good) Stock price of Facebook (FB) from Oct. 22, 2016 to Jan. 21, 2017. By showing the stock price on a *y* scale from $0 to $150, this figure more accurately relays the magnitude of the FB price drop around Nov. 1, 2016.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/fb-stock-drop-good-1.png" alt="(ref:fb-stock-drop-good)" width="630" />
+<img src="proportional_ink_files/figure-html/fb-stock-drop-good-1.png" alt="(ref:fb-stock-drop-good)" width="576" />
 <p class="caption">(\#fig:fb-stock-drop-good)(ref:fb-stock-drop-good)</p>
 </div>
 
@@ -58,7 +58,7 @@ The examples of Figures \@ref(fig:hawaii-income-bars-good) and Figure \@ref(fig:
 (ref:hawaii-income-change) Change in median income in Hawaiian counties from 2010 to 2015. Data source: 2010 and 2015 Five-Year American Community Surveys.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/hawaii-income-change-1.png" alt="(ref:hawaii-income-change)" width="630" />
+<img src="proportional_ink_files/figure-html/hawaii-income-change-1.png" alt="(ref:hawaii-income-change)" width="576" />
 <p class="caption">(\#fig:hawaii-income-change)(ref:hawaii-income-change)</p>
 </div>
 
@@ -67,7 +67,7 @@ Similarly, we can draw the change in Facebook stock price over time as the diffe
 (ref:fb-stock-drop-inverse) Loss in Facebook (FB) stock price relative to the price of Oct. 22, 2016. Between Nov. 1, 2016 and Jan. 1, 2017, the price remained approximately \$15 lower than it was at its high point on Oct. 22, 2016. But then the price started to recover in Jan. 2017.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/fb-stock-drop-inverse-1.png" alt="(ref:fb-stock-drop-inverse)" width="630" />
+<img src="proportional_ink_files/figure-html/fb-stock-drop-inverse-1.png" alt="(ref:fb-stock-drop-inverse)" width="576" />
 <p class="caption">(\#fig:fb-stock-drop-inverse)(ref:fb-stock-drop-inverse)</p>
 </div>
 
@@ -80,7 +80,7 @@ In Chapter \@ref(coordinate-systems-axes), I have explained that a log scale is 
 (ref:oceania-gdp-logbars) GDP in 2007 of countries in Oceania. The lengths of the bars do not accurately reflect the data values shown, since bars start at the arbitrary value of 0.3 billion USD. Data source: Gapminder.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/oceania-gdp-logbars-1.png" alt="(ref:oceania-gdp-logbars)" width="630" />
+<img src="proportional_ink_files/figure-html/oceania-gdp-logbars-1.png" alt="(ref:oceania-gdp-logbars)" width="576" />
 <p class="caption">(\#fig:oceania-gdp-logbars)(ref:oceania-gdp-logbars)</p>
 </div>
 
@@ -89,7 +89,7 @@ However, the visualization with bars on a log scale (Figure \@ref(fig:oceania-gd
 (ref:oceania-gdp-logbars-long) GDP in 2007 of countries in Oceania. The lengths of the bars do not accurately reflect the data values shown, since bars start at the arbitrary value of 10<sup>-9</sup> billion USD. Data source: Gapminder.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/oceania-gdp-logbars-long-1.png" alt="(ref:oceania-gdp-logbars-long)" width="630" />
+<img src="proportional_ink_files/figure-html/oceania-gdp-logbars-long-1.png" alt="(ref:oceania-gdp-logbars-long)" width="576" />
 <p class="caption">(\#fig:oceania-gdp-logbars-long)(ref:oceania-gdp-logbars-long)</p>
 </div>
 
@@ -98,7 +98,7 @@ For the data of Figure \@ref(fig:oceania-gdp-logbars), I think bars are inapprop
 (ref:oceania-gdp-dots) GDP in 2007 of countries in Oceania. Data source: Gapminder.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/oceania-gdp-dots-1.png" alt="(ref:oceania-gdp-dots)" width="630" />
+<img src="proportional_ink_files/figure-html/oceania-gdp-dots-1.png" alt="(ref:oceania-gdp-dots)" width="576" />
 <p class="caption">(\#fig:oceania-gdp-dots)(ref:oceania-gdp-dots)</p>
 </div>
 
@@ -107,7 +107,7 @@ If we want to visualize ratios rather than amounts, however, bars on a log scale
 (ref:oceania-gdp-relative) GDP in 2007 of countries in Oceania, relative to the GDP of Papua New Guinea. Data source: Gapminder.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/oceania-gdp-relative-1.png" alt="(ref:oceania-gdp-relative)" width="630" />
+<img src="proportional_ink_files/figure-html/oceania-gdp-relative-1.png" alt="(ref:oceania-gdp-relative)" width="576" />
 <p class="caption">(\#fig:oceania-gdp-relative)(ref:oceania-gdp-relative)</p>
 </div>
 
@@ -124,7 +124,7 @@ All preceding examples visualized data along one linear dimension, so that the d
 (ref:RI-pop-pie) Number of inhabitants in Rhode Island counties, shown as a pie chart. Both the angle and the area of each pie wedge are proportional to the number of inhabitants in the respective county. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/RI-pop-pie-1.png" alt="(ref:RI-pop-pie)" width="630" />
+<img src="proportional_ink_files/figure-html/RI-pop-pie-1.png" alt="(ref:RI-pop-pie)" width="576" />
 <p class="caption">(\#fig:RI-pop-pie)(ref:RI-pop-pie)</p>
 </div>
 
@@ -133,7 +133,7 @@ Because the area of each pie wedge is proportional to its angle which is proport
 (ref:RI-pop-bars) Number of inhabitants in Rhode Island counties, shown as bars. The length of each bar is proportional to the number of inhabitants in the respective county. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/RI-pop-bars-1.png" alt="(ref:RI-pop-bars)" width="577.5" />
+<img src="proportional_ink_files/figure-html/RI-pop-bars-1.png" alt="(ref:RI-pop-bars)" width="528" />
 <p class="caption">(\#fig:RI-pop-bars)(ref:RI-pop-bars)</p>
 </div>
 
@@ -142,6 +142,6 @@ The problem that human perception is better at judging distances than at judging
 (ref:RI-pop-treemap) Number of inhabitants in Rhode Island counties, shown as a treemap. The area of each rectangle is proportional to the number of inhabitants in the respective county.  Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="proportional_ink_files/figure-html/RI-pop-treemap-1.png" alt="(ref:RI-pop-treemap)" width="472.5" />
+<img src="proportional_ink_files/figure-html/RI-pop-treemap-1.png" alt="(ref:RI-pop-treemap)" width="432" />
 <p class="caption">(\#fig:RI-pop-treemap)(ref:RI-pop-treemap)</p>
 </div>

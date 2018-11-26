@@ -287,7 +287,7 @@ primarily to higher-order PCs (not shown).
 
 (ref:forensic-PCA-rotation) Composition of the first two components in a
 principal components analysis (PCA) of the forensic glass dataset.
-Component one (PC 1) measures primarily the amount of aluminun, barium,
+Component one (PC 1) measures primarily the amount of aluminum, barium,
 sodium, and magnesium contents in a glass fragment, whereas component
 two (PC 2) measures primarily the amount of calcium and potassium
 content, and to some extent the amount of aluminum and magnesium.
@@ -386,7 +386,7 @@ can modify Figure @ref(fig:CO2-slopegraph) to show CO2 emissions at
 three time points, here the years 2000, 2005, and 2010 (Figure
 @ref(fig:CO2-slopegraph-three-year)). This choice highlights both
 countries with a large change in emissions over the entire decade as
-well as countries such as Qatar or Trinidad and Tobego for which there
+well as countries such as Qatar or Trinidad and Tobago for which there
 is a large difference in the trend seen for the first five-year interval
 and the second one.
 

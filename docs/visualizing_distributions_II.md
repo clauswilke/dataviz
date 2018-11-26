@@ -17,7 +17,7 @@ We can plot the total number of students that have received at least a certain n
 (ref:student-grades) Empirical cumulative distribution function of student grades for a hypothetical class of 50 students.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" alt="(ref:student-grades)" width="630" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-1.png" alt="(ref:student-grades)" width="576" />
 <p class="caption">(\#fig:student-grades)(ref:student-grades)</p>
 </div>
 
@@ -27,7 +27,7 @@ You may wonder what happens if we rank the students the other way round, in desc
 (ref:student-grades-desc) Distribution of student grades plotted as a descending ecdf.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" alt="(ref:student-grades-desc)" width="630" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-desc-1.png" alt="(ref:student-grades-desc)" width="576" />
 <p class="caption">(\#fig:student-grades-desc)(ref:student-grades-desc)</p>
 </div>
 
@@ -38,7 +38,7 @@ In practical applications, it is quite common to draw the ecdf without highlight
 (ref:student-grades-normalized) Ecdf of student grades. The student ranks have been normalized to the total number of students, such that the *y* values plotted correspond to the fraction of students in the class with at most that many points.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" alt="(ref:student-grades-normalized)" width="630" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-normalized-1.png" alt="(ref:student-grades-normalized)" width="576" />
 <p class="caption">(\#fig:student-grades-normalized)(ref:student-grades-normalized)</p>
 </div>
 
@@ -55,7 +55,7 @@ Here, I will first discuss the number of people living in different US counties 
 (ref:county-populations) Distribution of the number of inhabitants in US counties, according to the 2010 US Census. (a) Density plot. (b) Empirical cumulative distribution function.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" alt="(ref:county-populations)" width="525" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-1.png" alt="(ref:county-populations)" width="480" />
 <p class="caption">(\#fig:county-populations)(ref:county-populations)</p>
 </div>
 
@@ -64,7 +64,7 @@ The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak righ
 (ref:county-populations-log) Distribution of the logarithm of the number of inhabitants in US counties. (a) Density plot. (b) Empirical cumulative distribution function.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" alt="(ref:county-populations-log)" width="525" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-log-1.png" alt="(ref:county-populations-log)" width="480" />
 <p class="caption">(\#fig:county-populations-log)(ref:county-populations-log)</p>
 </div>
 
@@ -73,7 +73,7 @@ To see that this distribution is not a power law, we plot it as a descending ecd
 (ref:county-populations-tail-log-log) Relative frequency of counties with at least that many inhabitants versus the number of county inhabitants.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" alt="(ref:county-populations-tail-log-log)" width="630" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-tail-log-log-1.png" alt="(ref:county-populations-tail-log-log)" width="576" />
 <p class="caption">(\#fig:county-populations-tail-log-log)(ref:county-populations-tail-log-log)</p>
 </div>
 
@@ -82,7 +82,7 @@ As a second example, I will use the distribution of word frequencies for all wor
 (ref:word-counts-tail-log-log) Distribution of word counts in the novel Moby Dick. Shown is the relative frequency of words that occur at least that many times in the novel versus the number of times words are used.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" alt="(ref:word-counts-tail-log-log)" width="630" />
+<img src="visualizing_distributions_II_files/figure-html/word-counts-tail-log-log-1.png" alt="(ref:word-counts-tail-log-log)" width="576" />
 <p class="caption">(\#fig:word-counts-tail-log-log)(ref:word-counts-tail-log-log)</p>
 </div>
 
@@ -95,7 +95,7 @@ When we perform this procedure for the student grades distribution from the begi
 (ref:student-grades-qq) q-q plot of student grades.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/student-grades-qq-1.png" alt="(ref:student-grades-qq)" width="525" />
+<img src="visualizing_distributions_II_files/figure-html/student-grades-qq-1.png" alt="(ref:student-grades-qq)" width="480" />
 <p class="caption">(\#fig:student-grades-qq)(ref:student-grades-qq)</p>
 </div>
 
@@ -107,7 +107,7 @@ We can also use a q-q plot to test my assertion from earlier in this chapter tha
 (ref:county-populations-qq) q-q plot of the logarithm of the number of inhabitants in US counties.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_II_files/figure-html/county-populations-qq-1.png" alt="(ref:county-populations-qq)" width="525" />
+<img src="visualizing_distributions_II_files/figure-html/county-populations-qq-1.png" alt="(ref:county-populations-qq)" width="480" />
 <p class="caption">(\#fig:county-populations-qq)(ref:county-populations-qq)</p>
 </div>
 

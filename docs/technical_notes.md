@@ -24,37 +24,41 @@ The book was last compiled using the following environment:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] nycflights13_0.2.2  gapminder_0.3.0     RColorBrewer_1.1-2 
-##  [4] maps_3.2.0          sf_0.6-3            maptools_0.9-2     
-##  [7] sp_1.3-1            rgeos_0.3-28        plot3D_1.1.1       
-## [10] magick_1.9          hexbin_1.27.2       treemapify_2.4.0   
-## [13] gridExtra_2.3       ggthemes_3.4.0      ggridges_0.5.0.9000
-## [16] ggrepel_0.8.0       ggforce_0.1.1       patchwork_0.0.1    
-## [19] lubridate_1.7.3     forcats_0.3.0       stringr_1.3.1      
-## [22] purrr_0.2.5         readr_1.1.1         tidyr_0.8.0        
-## [25] tibble_1.4.2        tidyverse_1.2.1     dviz.supp_0.1.0    
-## [28] dplyr_0.7.99.9000   colorblindr_0.1.0   ggplot2_3.0.0.9000 
-## [31] colorspace_1.4-0    cowplot_0.9.99     
+##  [1] nycflights13_1.0.0 gapminder_0.3.0    RColorBrewer_1.1-2
+##  [4] maps_3.3.0         statebins_2.0.0    sf_0.7-1          
+##  [7] maptools_0.9-4     sp_1.3-1           rgeos_0.3-28      
+## [10] geofacet_0.1.9     plot3D_1.1.1       magick_1.9        
+## [13] hexbin_1.27.2      treemapify_2.5.0   gridExtra_2.3     
+## [16] ggmap_2.7.904      ggthemes_4.0.1     ggridges_0.5.1    
+## [19] ggrepel_0.8.0      ggforce_0.1.1      patchwork_0.0.1   
+## [22] lubridate_1.7.4    forcats_0.3.0      stringr_1.3.1     
+## [25] purrr_0.2.5        readr_1.1.1        tidyr_0.8.1       
+## [28] tibble_1.4.2       tidyverse_1.2.1    dviz.supp_0.1.0   
+## [31] dplyr_0.7.99.9000  colorblindr_0.1.0  ggplot2_3.1.0     
+## [34] colorspace_1.4-0   cowplot_0.9.99    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] httr_1.3.1        jsonlite_1.5      modelr_0.1.1     
-##  [4] assertthat_0.2.0  cellranger_1.1.0  yaml_2.2.0       
-##  [7] pillar_1.2.1      backports_1.1.2   lattice_0.20-35  
-## [10] glue_1.3.0        digest_0.6.16     polyclip_1.6-1   
-## [13] rvest_0.3.2       htmltools_0.3.6   plyr_1.8.4       
-## [16] pkgconfig_2.0.2   broom_0.5.0       misc3d_0.8-4     
-## [19] haven_1.1.1       bookdown_0.7      scales_1.0.0     
-## [22] tweenr_0.1.5.9999 farver_1.0        withr_2.1.2      
-## [25] lazyeval_0.2.1    cli_1.0.1.9000    magrittr_1.5     
-## [28] crayon_1.3.4      readxl_1.1.0      deldir_0.1-14    
-## [31] evaluate_0.10.1   nlme_3.1-137      MASS_7.3-49      
-## [34] class_7.3-14      xml2_1.2.0        foreign_0.8-70   
-## [37] tools_3.5.0       hms_0.4.2         munsell_0.5.0    
-## [40] e1071_1.6-8       compiler_3.5.0    concaveman_1.0.0 
-## [43] rlang_0.2.2.9001  classInt_0.2-3    units_0.6-0      
-## [46] grid_3.5.0        rstudioapi_0.7    rmarkdown_1.9    
-## [49] gtable_0.2.0      DBI_1.0.0         R6_2.2.2         
-## [52] knitr_1.20        rprojroot_1.3-2   stringi_1.2.4    
-## [55] Rcpp_0.12.18      ggfittext_0.5.0   spData_0.2.8.3   
-## [58] tidyselect_0.2.4  xfun_0.1
+##  [1] nlme_3.1-137        bitops_1.0-6        httr_1.3.1         
+##  [4] rprojroot_1.3-2     tools_3.5.0         backports_1.1.2    
+##  [7] R6_2.3.0            spData_0.2.9.4      DBI_1.0.0          
+## [10] lazyeval_0.2.1      withr_2.1.2.9000    tidyselect_0.2.4   
+## [13] compiler_3.5.0      cli_1.0.1.9000      rvest_0.3.2        
+## [16] xml2_1.2.0          bookdown_0.7        scales_1.0.0       
+## [19] classInt_0.2-3      digest_0.6.18       foreign_0.8-71     
+## [22] rmarkdown_1.10      jpeg_0.1-8          pkgconfig_2.0.2    
+## [25] htmltools_0.3.6     rlang_0.3.0.1       readxl_1.1.0       
+## [28] rstudioapi_0.7      farver_1.0.0.9999   jsonlite_1.5       
+## [31] magrittr_1.5        Rcpp_1.0.0          munsell_0.5.0      
+## [34] ggfittext_0.6.0     stringi_1.2.4       yaml_2.2.0         
+## [37] MASS_7.3-50         geogrid_0.1.1       plyr_1.8.4         
+## [40] grid_3.5.0          misc3d_0.8-4        crayon_1.3.4       
+## [43] deldir_0.1-15       lattice_0.20-35     haven_1.1.2        
+## [46] hms_0.4.2           knitr_1.20          pillar_1.3.0       
+## [49] rjson_0.2.20        imguR_1.0.3         glue_1.3.0         
+## [52] evaluate_0.11       modelr_0.1.2        png_0.1-7          
+## [55] tweenr_0.1.5.9999   RgoogleMaps_1.4.3   cellranger_1.1.0   
+## [58] gtable_0.2.0        polyclip_1.9-1      assertthat_0.2.0   
+## [61] xfun_0.3            broom_0.5.0         rnaturalearth_0.1.0
+## [64] e1071_1.7-0         class_7.3-14        units_0.6-1        
+## [67] concaveman_1.0.0
 ```

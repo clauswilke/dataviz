@@ -11,7 +11,7 @@ One common mistake is trying to give color a job that is too big for it to handl
 (ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 U.S. states and the Discrict of Columbia. Every state is marked in a different color. Because there are so many states, it is very difficult to match the colors in the legend to the dots in the scatter plot.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-colored-1.png" alt="(ref:popgrowth-vs-popsize-colored)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-colored-1.png" alt="(ref:popgrowth-vs-popsize-colored)" width="576" />
 <p class="caption">(\#fig:popgrowth-vs-popsize-colored)(ref:popgrowth-vs-popsize-colored)</p>
 </div>
 
@@ -20,7 +20,7 @@ As a rule of thumb, qualitative color scales work best when there are three to f
 (ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. In contrast to Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now colored states by region and have directly labeled a subset of states. The majority of states have been left unlabeled to keep the figure from overcrowding.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-bw-1.png" alt="(ref:popgrowth-vs-popsize-bw)" width="892.5" />
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-bw-1.png" alt="(ref:popgrowth-vs-popsize-bw)" width="816" />
 <p class="caption">(\#fig:popgrowth-vs-popsize-bw)(ref:popgrowth-vs-popsize-bw)</p>
 </div>
 
@@ -34,7 +34,7 @@ A second common problem is coloring for the sake of coloring, without having a c
 (ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/popgrowth-US-rainbow-1.png" alt="(ref:popgrowth-US-rainbow)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/popgrowth-US-rainbow-1.png" alt="(ref:popgrowth-US-rainbow)" width="576" />
 <p class="caption">(\#fig:popgrowth-US-rainbow)(ref:popgrowth-US-rainbow)</p>
 </div>
 
@@ -52,7 +52,7 @@ In Chapter \@ref(color-basics), I listed two critical conditions for designing s
 (ref:rainbow-desaturated) The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/rainbow-desaturated-1.png" alt="(ref:rainbow-desaturated)" width="682.5" />
+<img src="pitfalls_of_color_use_files/figure-html/rainbow-desaturated-1.png" alt="(ref:rainbow-desaturated)" width="624" />
 <p class="caption">(\#fig:rainbow-desaturated)(ref:rainbow-desaturated)</p>
 </div>
 
@@ -62,7 +62,7 @@ In a visualization of actual data, the rainbow scale tends to obscure data featu
 (ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. The rainbow color scale is not an appropriate scale to visualize continuous data values, because it tends to place emphasis on arbitrary features of the data. Here, it emphasizes counties in which approximately 75% of the population identify as white.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="(ref:map-Texas-rainbow)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="(ref:map-Texas-rainbow)" width="576" />
 <p class="caption">(\#fig:map-Texas-rainbow)(ref:map-Texas-rainbow)</p>
 </div>
 
@@ -76,7 +76,7 @@ As discussed in Chapter \@ref(color-basics), there are three fundamental types o
 (ref:heat-cvd-sim) Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly simulations. Even though the specific colors look different under the three types of cvd, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/heat-cvd-sim-1.png" alt="(ref:heat-cvd-sim)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/heat-cvd-sim-1.png" alt="(ref:heat-cvd-sim)" width="576" />
 <p class="caption">(\#fig:heat-cvd-sim)(ref:heat-cvd-sim)</p>
 </div>
 
@@ -85,14 +85,14 @@ Things become more complicated for diverging scales, because popular color contr
 (ref:red-green-cvd-sim) A red--green contrast becomes indistinguishable under red--green cvd (deuteranomaly or protanomaly).
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/red-green-cvd-sim-1.png" alt="(ref:red-green-cvd-sim)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/red-green-cvd-sim-1.png" alt="(ref:red-green-cvd-sim)" width="576" />
 <p class="caption">(\#fig:red-green-cvd-sim)(ref:red-green-cvd-sim)</p>
 </div>
 
 (ref:blue-green-cvd-sim) A blue--green contrast becomes indistinguishable under blue--yellow cvd (tritanomaly).
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/blue-green-cvd-sim-1.png" alt="(ref:blue-green-cvd-sim)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/blue-green-cvd-sim-1.png" alt="(ref:blue-green-cvd-sim)" width="576" />
 <p class="caption">(\#fig:blue-green-cvd-sim)(ref:blue-green-cvd-sim)</p>
 </div>
 
@@ -101,7 +101,7 @@ With these examples, it might seem that it is nearly impossible to find two cont
 (ref:PiYG-cvd-sim) The ColorBrewer PiYG (pink to yellow-green) scale from Figure \@ref(fig:diverging-scales) looks like a red--green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is actually pink (a mix of red and blue) while the greenish color also contains yellow. The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/PiYG-cvd-sim-1.png" alt="(ref:PiYG-cvd-sim)" width="630" />
+<img src="pitfalls_of_color_use_files/figure-html/PiYG-cvd-sim-1.png" alt="(ref:PiYG-cvd-sim)" width="576" />
 <p class="caption">(\#fig:PiYG-cvd-sim)(ref:PiYG-cvd-sim)</p>
 </div>
 
@@ -110,7 +110,7 @@ Things are most complicated for qualitative scales, because there we need many d
 (ref:palette-Okabe-Ito) Qualitative color palette for all color-vision deficiencies [@Okabe-Ito-CUD]. The alphanumeric codes represent the colors in RGB space, encoded as hexadecimals. In many plot libraries and image-manipulation programs, you can just enter these codes directly. If your software does not take hexadecimals directly, you can also use the values in Table \@ref(tab:color-codes).
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/palette-Okabe-Ito-1.png" alt="(ref:palette-Okabe-Ito)" width="892.5" />
+<img src="pitfalls_of_color_use_files/figure-html/palette-Okabe-Ito-1.png" alt="(ref:palette-Okabe-Ito)" width="816" />
 <p class="caption">(\#fig:palette-Okabe-Ito)(ref:palette-Okabe-Ito)</p>
 </div>
 
@@ -133,7 +133,7 @@ While there are several good, cvd-safe color scales readily available, we need t
 (ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, four thin lines, and four groups of points, all colored in the same four colors. We can see that the colors become more difficult to distinguish the smaller or thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
 
 <div class="figure" style="text-align: center">
-<img src="pitfalls_of_color_use_files/figure-html/colors-thin-lines-1.png" alt="(ref:colors-thin-lines)" width="682.5" />
+<img src="pitfalls_of_color_use_files/figure-html/colors-thin-lines-1.png" alt="(ref:colors-thin-lines)" width="624" />
 <p class="caption">(\#fig:colors-thin-lines)(ref:colors-thin-lines)</p>
 </div>
 

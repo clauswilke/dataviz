@@ -14,9 +14,9 @@ also discuss how to present data in table form.
 Figure titles and captions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One critical components of every figure is the figure title. Every
-figure needs the title. The job of the title is to accurately convey to
-the reader what the figure is about, what point it makes. However, the
+One critical component of every figure is the figure title. Every figure
+needs the title. The job of the title is to accurately convey to the
+reader what the figure is about, what point it makes. However, the
 figure title may not necessarily appear where you were expecting to see
 it. Consider Figure @ref(fig:corruption-development). This figure is
 inspired by a posting in @Economist-corruption. I have recreated their

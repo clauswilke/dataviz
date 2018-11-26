@@ -223,8 +223,8 @@ connected scatter plot. Darker shades represent more recent months. The
 anti-correlation seen in Figure @ref(fig:house-price-unemploy) between
 the change in house prices and the unemployment rate causes the
 connected scatter plot to form two counter-clockwise circles. Data
-sources: Freddie Mac House Prices Index, U.S. Bureau of Labor
-Statistics. Original figure concept: Len Kiefer
+sources: Freddie Mac House Price Index, U.S. Bureau of Labor Statistics.
+Original figure concept: Len Kiefer
 
 (#fig:house-price-path)(ref:house-price-path)
 
@@ -258,7 +258,7 @@ Is it better to use a connected scatter plot or two separate line
 graphs? Separate line graphs tend to be easier to read, but once people
 are used to connected scatter plots they may be able to extract certain
 patterns (such as cyclical behavior with some irregularity) that can be
-difficult to splot in line graphs. In fact, to me the cyclical
+difficult to spot in line graphs. In fact, to me the cyclical
 relationship between change in house prices and unemployment rate is
 hard to spot in Figure @ref(fig:house-price-unemploy), but the
 counter-clockwise spiral in Figure @ref(fig:house-price-path) clearly

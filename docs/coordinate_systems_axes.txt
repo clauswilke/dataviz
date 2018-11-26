@@ -318,23 +318,24 @@ starting with Jan. 1st at the 6:00 position.
 
 A second setting in which we encounter curved axes is in the context of
 geospatial data, i.e., maps. Locations on the globe are specified by
-their latitude and longitude. But because the earth is a sphere, drawing
+their longitude and latitude. But because the earth is a sphere, drawing
 latitude and longitude as Cartesian axes is misleading and not
-recommended (Figure @ref(fig:continental-usa-four-projections)).
-Instead, we use various types of non-linear projections that attempt to
-minimize artifacts and that strike different balances between conserving
-areas or angles relative to the true shape lines on the globe (Figure
-@ref(fig:continental-usa-four-projections)).
+recommended (Figure @ref(fig:worldmap-four-projections)). Instead, we
+use various types of non-linear projections that attempt to minimize
+artifacts and that strike different balances between conserving areas or
+angles relative to the true shape lines on the globe (Figure
+@ref(fig:worldmap-four-projections)).
 
-(ref:continental-usa-four-projections) The continental U.S.A. shown in
-four different coordinate systems. The Cartesian latitude and longitude
-system maps latitude and longitude of each location onto a regular
-Cartesian coordinate system. This mapping causes substantial distortions
-in both areas and angles relative to their true values on the 3d globe.
-The Robinson projection is commonly used to project the entire world. It
-preserves neither areas nor angles perfectly but attempts to strike a
-balance between the two. The Lambert projection preserves areas but
-distorts angles. The Transverse Mercator projection preserves angles but
-distorts areas.
+(ref:worldmap-four-projections) Map of the world, shown in four
+different projections. The Cartesian longitude and latitude system maps
+the longitude and latitude of each location onto a regular Cartesian
+coordinate system. This mapping causes substantial distortions in both
+areas and angles relative to their true values on the 3D globe. The
+interrupted Goode homolosine projection perfectly represents true
+surface areas, at the cost of dividing some land masses into separate
+pieces, most notably Greenland and Antarctica. The Robinson projection
+and the Winkel tripel projection both strike a balance between angular
+and area distortions, and they are commonly used for maps of the entire
+globe.
 
-(#fig:continental-usa-four-projections)(ref:continental-usa-four-projections)
+(#fig:worldmap-four-projections)(ref:worldmap-four-projections)

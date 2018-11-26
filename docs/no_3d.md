@@ -13,7 +13,7 @@ The problem with gratuitous 3D is that the projection of 3D objects into two dim
 (ref:rotated-pie) The same 3D pie chart shown from four different angles. Rotating a pie into the third dimension makes pie slices in the front appear larger than they really are and pie slices in the back appear smaller. Here, in parts (a), (b), and (c), the blue slice corresponding to 25% of the data visually occupies more than 25% of the area representing the pie. Only part (d) is an accurate representation of the data.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/rotated-pie-1.png" alt="(ref:rotated-pie)" width="630" />
+<img src="no_3d_files/figure-html/rotated-pie-1.png" alt="(ref:rotated-pie)" width="576" />
 <p class="caption">(\#fig:rotated-pie)(ref:rotated-pie)</p>
 </div>
 
@@ -22,7 +22,7 @@ Similar problems arise for other types of 3D plot. Figure \@ref(fig:titanic-3d) 
 (ref:titanic-3d) Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class, shown as a 3D stacked bar plot. The total numbers of passengers in 1st, 2nd, and 3rd class are 322, 279, and 711, respectively (see Figure \@ref(fig:titanic-passengers-by-class-sex)). Yet in this plot, the 1st class bar appears to represent fewer than 300 passengers, the 3rd class bar appears to represent fewer than 700 passengers, and the 2nd class bar seems to be closer to 210--220 passengers than the actual 279 passengers. Furthermore, the 3rd class bar visually dominates the figure and makes the number of passengers in 3rd class appear larger than it actually is. 
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/titanic-3d-1.png" alt="(ref:titanic-3d)" width="630" />
+<img src="no_3d_files/figure-html/titanic-3d-1.png" alt="(ref:titanic-3d)" width="576" />
 <p class="caption">(\#fig:titanic-3d)(ref:titanic-3d)</p>
 </div>
 
@@ -37,7 +37,7 @@ Consider a 3D scatter plot of fuel efficiency versus displacement and power for 
 
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-3d-1.png" alt="(ref:mtcars-3d)" width="630" />
+<img src="no_3d_files/figure-html/mtcars-3d-1.png" alt="(ref:mtcars-3d)" width="576" />
 <p class="caption">(\#fig:mtcars-3d)(ref:mtcars-3d)</p>
 </div>
 
@@ -48,7 +48,7 @@ Our visual system nevertheless attempts to invert the 3D to 2D transformation. H
 (ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power for 32 cars (1973–74 models). The four panels (a)--(d) correspond to the same panels in Figure \@ref(fig:mtcars-3d), only that all grid lines providing depth cues have been removed. Data source: *Motor Trend,* 1974.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-3d-no-axes-1.png" alt="(ref:mtcars-3d-no-axes)" width="630" />
+<img src="no_3d_files/figure-html/mtcars-3d-no-axes-1.png" alt="(ref:mtcars-3d-no-axes)" width="576" />
 <p class="caption">(\#fig:mtcars-3d-no-axes)(ref:mtcars-3d-no-axes)</p>
 </div>
 
@@ -59,14 +59,14 @@ Here, I want to show two alternative ways of plotting exactly the variables used
 (ref:mtcars-2d-multiple) Fuel efficiency versus displacement (a) and power (b). Data source: *Motor Trend,* 1974.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-2d-multiple-1.png" alt="(ref:mtcars-2d-multiple)" width="630" />
+<img src="no_3d_files/figure-html/mtcars-2d-multiple-1.png" alt="(ref:mtcars-2d-multiple)" width="576" />
 <p class="caption">(\#fig:mtcars-2d-multiple)(ref:mtcars-2d-multiple)</p>
 </div>
 
 (ref:mtcars-2d-size) Power versus displacement for 32 cars, with fuel efficiency represented by dot size. Data source: *Motor Trend,* 1974.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-2d-size-1.png" alt="(ref:mtcars-2d-size)" width="577.5" />
+<img src="no_3d_files/figure-html/mtcars-2d-size-1.png" alt="(ref:mtcars-2d-size)" width="528" />
 <p class="caption">(\#fig:mtcars-2d-size)(ref:mtcars-2d-size)</p>
 </div>
 
@@ -75,7 +75,7 @@ You may wonder whether the problem with 3D scatter plots is that the actual data
 (ref:VA-death-rates-3d) Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons. This figure is labeled as "bad" because the 3D perspective makes the plot difficult to read. Data source: @Molyneaux-et-al-1947
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/VA-death-rates-3d-1.png" alt="(ref:VA-death-rates-3d)" width="487.2" />
+<img src="no_3d_files/figure-html/VA-death-rates-3d-1.png" alt="(ref:VA-death-rates-3d)" width="445.44" />
 <p class="caption">(\#fig:VA-death-rates-3d)(ref:VA-death-rates-3d)</p>
 </div>
 
@@ -84,7 +84,7 @@ In general, it is better to use Trellis plots (Chapter \@ref(multi-panel-figures
 (ref:VA-death-rates-Trellis) Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons.  Data source: @Molyneaux-et-al-1947
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/VA-death-rates-Trellis-1.png" alt="(ref:VA-death-rates-Trellis)" width="630" />
+<img src="no_3d_files/figure-html/VA-death-rates-Trellis-1.png" alt="(ref:VA-death-rates-Trellis)" width="576" />
 <p class="caption">(\#fig:VA-death-rates-Trellis)(ref:VA-death-rates-Trellis)</p>
 </div>
 
@@ -97,7 +97,7 @@ Finally, it makes sense to use 3D visualizations when we want to show actual 3D 
 (ref:volcano-relief) Relief of Maungawhau (Mount Eden), a volcano in the city of Auckland, New Zealand. Data source: Ross Ihaka
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/volcano-relief-1.png" alt="(ref:volcano-relief)" width="630" />
+<img src="no_3d_files/figure-html/volcano-relief-1.png" alt="(ref:volcano-relief)" width="576" />
 <p class="caption">(\#fig:volcano-relief)(ref:volcano-relief)</p>
 </div>
 
@@ -105,6 +105,6 @@ Finally, it makes sense to use 3D visualizations when we want to show actual 3D 
 (ref:protein-3d) Patterns of evolutionary variation in a protein. The colored tube represents the backbone of the protein Exonuclease III from the bacterium *Escherichia coli* (Protein Data Bank identifier: 1AKO). The coloring indicates the evolutionary conservation of the individual sites in this protein, with dark coloring indicating conserved amino acids and light coloring indicating variable amino acids. Data source: @Marcos-Echave-2015
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/protein-3d-1.png" alt="(ref:protein-3d)" width="472.5" />
+<img src="no_3d_files/figure-html/protein-3d-1.png" alt="(ref:protein-3d)" width="432" />
 <p class="caption">(\#fig:protein-3d)(ref:protein-3d)</p>
 </div>

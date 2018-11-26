@@ -81,7 +81,7 @@ accurately shown. Data source: 2015 Five-Year American Community Survey.
 
 (#fig:hawaii-income-bars-good)(ref:hawaii-income-bars-good)
 
-Bars on a linear scale must always start 0.
+Bars on a linear scale must always start at 0.
 
 Similar visualization problems frequently arise in the visualization of
 time series, such as those of stock prices. Figure

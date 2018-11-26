@@ -15,7 +15,7 @@ Aesthetics describe every aspect of a given graphical element. A few examples ar
 (ref:common-aesthetics) Commonly used aesthetics in data visualization: position, shape, size, color, line width, line type. Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can only represent discrete data (shape, line type).
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/common-aesthetics-1.png" alt="(ref:common-aesthetics)" width="630" />
+<img src="aesthetic_mapping_files/figure-html/common-aesthetics-1.png" alt="(ref:common-aesthetics)" width="576" />
 <p class="caption">(\#fig:common-aesthetics)(ref:common-aesthetics)</p>
 </div>
 
@@ -86,7 +86,7 @@ To map data values onto aesthetics, we need to specify which data values corresp
 (ref:basic-scales-example) Scales link data values to aesthetics. Here, the numbers 1 through 4 have been mapped onto a position scale, a shape scale, and a color scale. For each scale, each number corresponds to a unique position, shape, or color and vice versa.
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/basic-scales-example-1.png" alt="(ref:basic-scales-example)" width="577.5" />
+<img src="aesthetic_mapping_files/figure-html/basic-scales-example-1.png" alt="(ref:basic-scales-example)" width="528" />
 <p class="caption">(\#fig:basic-scales-example)(ref:basic-scales-example)</p>
 </div>
 
@@ -96,7 +96,7 @@ Let's put things into practice. We can take the dataset shown in Table \@ref(tab
 (ref:temp-normals-vs-time) Daily temperature normals for four selected locations in the U.S. Temperature is mapped to the *y* axis, day of the year to the *x* axis, and location to line color. Data source: NOAA.
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/temp-normals-vs-time-1.png" alt="(ref:temp-normals-vs-time)" width="630" />
+<img src="aesthetic_mapping_files/figure-html/temp-normals-vs-time-1.png" alt="(ref:temp-normals-vs-time)" width="576" />
 <p class="caption">(\#fig:temp-normals-vs-time)(ref:temp-normals-vs-time)</p>
 </div>
 
@@ -105,7 +105,7 @@ Figure \@ref(fig:temp-normals-vs-time) is a fairly standard visualization for a 
 (ref:four-locations-temps-by-month) Monthly normal mean temperatures for four locations in the U.S. Data source: NOAA 
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/four-locations-temps-by-month-1.png" alt="(ref:four-locations-temps-by-month)" width="892.5" />
+<img src="aesthetic_mapping_files/figure-html/four-locations-temps-by-month-1.png" alt="(ref:four-locations-temps-by-month)" width="816" />
 <p class="caption">(\#fig:four-locations-temps-by-month)(ref:four-locations-temps-by-month)</p>
 </div>
 
@@ -117,7 +117,7 @@ Both Figures \@ref(fig:temp-normals-vs-time) and \@ref(fig:four-locations-temps-
 (ref:mtcars-five-scale) Fuel efficiency versus displacement, for 32 cars (1973--74 models). This figure uses five separate scales to represent data: (i) the *x* axis (displacement); (ii) the *y* axis (fuel efficiency); (iii) the color of the data points (power); (iv) the size of the data points (weight); and (v) the shape of the data points (number of cylinders). Four of the five variables displayed (displacement, fuel efficiency, power, and weight) are numerical continuous. The remaining one (number of cylinders) can be considered to be either numerical discrete or qualitative ordered. Data source: *Motor Trend*, 1974.
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/mtcars-five-scale-1.png" alt="(ref:mtcars-five-scale)" width="630" />
+<img src="aesthetic_mapping_files/figure-html/mtcars-five-scale-1.png" alt="(ref:mtcars-five-scale)" width="576" />
 <p class="caption">(\#fig:mtcars-five-scale)(ref:mtcars-five-scale)</p>
 </div>
 

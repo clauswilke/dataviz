@@ -254,7 +254,7 @@ The pie chart of Figure @ref(fig:bridges-nested-pie2) represents a
 reasonable visualization of the bridges dataset, but in a direct
 comparison to the equivalent treemap (Figure @ref(fig:bridges-treemap))
 I think the treemap is preferable. First, the rectangular shape of the
-treemap allows it to make better us of the available space. Figures
+treemap allows it to make better use of the available space. Figures
 @ref(fig:bridges-treemap) and @ref(fig:bridges-nested-pie2) are of
 exactly equal size, but in Figure @ref(fig:bridges-nested-pie2) much of
 the figure is wasted as white space. Figure @ref(fig:bridges-treemap),

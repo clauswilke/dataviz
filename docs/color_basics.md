@@ -15,7 +15,7 @@ Many appropriate qualitative color scales are readily available. Figure \@ref(fi
 (ref:qualitative-scales) Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book [@Okabe-Ito-CUD]. The ColorBrewer Dark2 scale is provided by the ColorBrewer project [@ColorBrewer]. The ggplot2 scale is the default qualitative scale in the widely used plotting software ggplot2.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/qualitative-scales-1.png" alt="(ref:qualitative-scales)" width="630" />
+<img src="color_basics_files/figure-html/qualitative-scales-1.png" alt="(ref:qualitative-scales)" width="576" />
 <p class="caption">(\#fig:qualitative-scales)(ref:qualitative-scales)</p>
 </div>
 
@@ -24,7 +24,7 @@ As an example of how we use qualitative color scales, consider Figure \@ref(fig:
 (ref:popgrowth-US) Population growth in the U.S. from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/popgrowth-US-1.png" alt="(ref:popgrowth-US)" width="630" />
+<img src="color_basics_files/figure-html/popgrowth-US-1.png" alt="(ref:popgrowth-US)" width="576" />
 <p class="caption">(\#fig:popgrowth-US)(ref:popgrowth-US)</p>
 </div>
 
@@ -39,7 +39,7 @@ Sequential scales can be based on a single hue (e.g., from dark blue to light bl
 (ref:sequential-scales) Example sequential color scales. The ColorBrewer Blues scale is a monochromatic scale that varies from dark to light blue. The Heat and Viridis scales are multi-hue scales that vary from dark red to light yellow and from dark blue via green to light yellow, respectively. 
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/sequential-scales-1.png" alt="(ref:sequential-scales)" width="630" />
+<img src="color_basics_files/figure-html/sequential-scales-1.png" alt="(ref:sequential-scales)" width="576" />
 <p class="caption">(\#fig:sequential-scales)(ref:sequential-scales)</p>
 </div>
 
@@ -49,7 +49,7 @@ Representing data values as colors is particularly useful when we want to show h
 
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/map-Texas-income-1.png" alt="(ref:map-Texas-income)" width="630" />
+<img src="color_basics_files/figure-html/map-Texas-income-1.png" alt="(ref:map-Texas-income)" width="576" />
 <p class="caption">(\#fig:map-Texas-income)(ref:map-Texas-income)</p>
 </div>
 
@@ -58,7 +58,7 @@ In some cases, we need to visualize the deviation of data values in one of two d
 (ref:diverging-scales) Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown to greenish blue, pink to yellow-green, and blue to red.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/diverging-scales-1.png" alt="(ref:diverging-scales)" width="630" />
+<img src="color_basics_files/figure-html/diverging-scales-1.png" alt="(ref:diverging-scales)" width="576" />
 <p class="caption">(\#fig:diverging-scales)(ref:diverging-scales)</p>
 </div>
 
@@ -67,7 +67,7 @@ As an example application of a diverging color scale, consider Figure \@ref(fig:
 (ref:map-Texas-race) Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/map-Texas-race-1.png" alt="(ref:map-Texas-race)" width="630" />
+<img src="color_basics_files/figure-html/map-Texas-race-1.png" alt="(ref:map-Texas-race)" width="576" />
 <p class="caption">(\#fig:map-Texas-race)(ref:map-Texas-race)</p>
 </div>
 
@@ -80,7 +80,7 @@ Color can also be an effective tool to highlight specific elements in the data. 
 (ref:accent-scales) Example accent color scales, each with four base colors and three accent colors. Accent color scales can be derived in several different ways. First, we can take an existing color scale (e.g., the Okabe Ito scale, Fig \@ref(fig:qualitative-scales)) and lighten and/or partially desaturate some colors while darkening others. Second, we can take gray values and pair them with colors. Third, we can take work with an existing accent color scale, e.g. the one from the ColorBrewer project.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/accent-scales-1.png" alt="(ref:accent-scales)" width="630" />
+<img src="color_basics_files/figure-html/accent-scales-1.png" alt="(ref:accent-scales)" width="576" />
 <p class="caption">(\#fig:accent-scales)(ref:accent-scales)</p>
 </div>
 
@@ -89,7 +89,7 @@ As an example of how the same data can support differing stories with different 
 (ref:popgrowth-US-highlight) From 2000 to 2010, the two neighboring southern states Texas and Louisiana have experienced among the highest and lowest population growth across the U.S.
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/popgrowth-US-highlight-1.png" alt="(ref:popgrowth-US-highlight)" width="630" />
+<img src="color_basics_files/figure-html/popgrowth-US-highlight-1.png" alt="(ref:popgrowth-US-highlight)" width="576" />
 <p class="caption">(\#fig:popgrowth-US-highlight)(ref:popgrowth-US-highlight)</p>
 </div>
 
@@ -99,7 +99,7 @@ When working with accent colors, it is critical that the baseline colors do not 
 (ref:Aus-athletes-track) Track athletes are among the shortest and leanest of male professional athletes participating in popular sports. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="color_basics_files/figure-html/Aus-athletes-track-1.png" alt="(ref:Aus-athletes-track)" width="630" />
+<img src="color_basics_files/figure-html/Aus-athletes-track-1.png" alt="(ref:Aus-athletes-track)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-track)(ref:Aus-athletes-track)</p>
 </div>
 

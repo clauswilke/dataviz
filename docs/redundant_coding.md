@@ -12,7 +12,7 @@ Scatter plots of several groups of data are frequently designed such that the po
 (ref:iris-scatter-one-shape) Sepal width versus sepal length for three different iris species (*Iris setosa*, *Iris virginica*, and *Iris versicolor*). Each point represents the measurements for one plant sample. A small amount of jitter has been applied to all point positions to prevent overplotting. The figure is labeled "bad" because the *virginica* points in green and the *versicolor* points in blue are difficult to distinguish from each other.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-1.png" alt="(ref:iris-scatter-one-shape)" width="630" />
+<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-1.png" alt="(ref:iris-scatter-one-shape)" width="576" />
 <p class="caption">(\#fig:iris-scatter-one-shape)(ref:iris-scatter-one-shape)</p>
 </div>
 
@@ -21,7 +21,7 @@ Surprisingly, the green and blue points look more distinct for people with red--
 (ref:iris-scatter-one-shape-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-one-shape).
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-cvd-1.png" alt="(ref:iris-scatter-one-shape-cvd)" width="892.5" />
+<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-cvd-1.png" alt="(ref:iris-scatter-one-shape-cvd)" width="816" />
 <p class="caption">(\#fig:iris-scatter-one-shape-cvd)(ref:iris-scatter-one-shape-cvd)</p>
 </div>
 
@@ -30,7 +30,7 @@ There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-o
 (ref:iris-scatter-three-shapes) Sepal width versus sepal length for three different iris species. Compared to Figure \@ref(fig:iris-scatter-one-shape), we have swapped the colors for *Iris setosa* and *Iris versicolor* and we have given each iris species its own point shape.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-1.png" alt="(ref:iris-scatter-three-shapes)" width="630" />
+<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-1.png" alt="(ref:iris-scatter-three-shapes)" width="576" />
 <p class="caption">(\#fig:iris-scatter-three-shapes)(ref:iris-scatter-three-shapes)</p>
 </div>
 
@@ -38,7 +38,7 @@ There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-o
 (ref:iris-scatter-three-shapes-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-three-shapes). Because of the use of different point shapes, even the fully desaturated gray-scale version of the figure is legible.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-cvd-1.png" alt="(ref:iris-scatter-three-shapes-cvd)" width="892.5" />
+<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-cvd-1.png" alt="(ref:iris-scatter-three-shapes-cvd)" width="816" />
 <p class="caption">(\#fig:iris-scatter-three-shapes-cvd)(ref:iris-scatter-three-shapes-cvd)</p>
 </div>
 
@@ -47,7 +47,7 @@ Changing the point shape is a simple strategy for scatter plots but it doesn't n
 (ref:tech-stocks-bad-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as "bad" because it takes considerable mental energy to match the company names in the legend to the data curves.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/tech-stocks-bad-legend-1.png" alt="(ref:tech-stocks-bad-legend)" width="630" />
+<img src="redundant_coding_files/figure-html/tech-stocks-bad-legend-1.png" alt="(ref:tech-stocks-bad-legend)" width="576" />
 <p class="caption">(\#fig:tech-stocks-bad-legend)(ref:tech-stocks-bad-legend)</p>
 </div>
 
@@ -59,7 +59,7 @@ This problem arises commonly with plotting software that autogenerates legends. 
 (ref:tech-stocks-good-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-1.png" alt="(ref:tech-stocks-good-legend)" width="630" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-1.png" alt="(ref:tech-stocks-good-legend)" width="576" />
 <p class="caption">(\#fig:tech-stocks-good-legend)(ref:tech-stocks-good-legend)</p>
 </div>
 
@@ -73,7 +73,7 @@ Matching the legend order to the data order is always helpful, but the benefits 
 (ref:tech-stocks-good-legend-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:tech-stocks-good-legend).
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-cvd-1.png" alt="(ref:tech-stocks-good-legend-cvd)" width="892.5" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-cvd-1.png" alt="(ref:tech-stocks-good-legend-cvd)" width="816" />
 <p class="caption">(\#fig:tech-stocks-good-legend-cvd)(ref:tech-stocks-good-legend-cvd)</p>
 </div>
 
@@ -87,7 +87,7 @@ The general strategy we can employ is called *direct labeling*, whereby we place
 (ref:tech-stocks-good-no-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/tech-stocks-good-no-legend-1.png" alt="(ref:tech-stocks-good-no-legend)" width="630" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-no-legend-1.png" alt="(ref:tech-stocks-good-no-legend)" width="576" />
 <p class="caption">(\#fig:tech-stocks-good-no-legend)(ref:tech-stocks-good-no-legend)</p>
 </div>
 
@@ -101,7 +101,7 @@ We can also apply the direct labeling concept to the iris data from the beginnin
 (ref:iris-scatter-with-ellipses) Sepal width versus sepal length for three different iris species. I have removed the background grid from this figure because otherwise the figure was becoming too busy.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-with-ellipses-1.png" alt="(ref:iris-scatter-with-ellipses)" width="483" />
+<img src="redundant_coding_files/figure-html/iris-scatter-with-ellipses-1.png" alt="(ref:iris-scatter-with-ellipses)" width="441.6" />
 <p class="caption">(\#fig:iris-scatter-with-ellipses)(ref:iris-scatter-with-ellipses)</p>
 </div>
 
@@ -110,7 +110,7 @@ For density plots, we can similarly direct-label the curves rather than providin
 (ref:iris-densities-direct-label) Density estimates of the sepal lengths of three different iris species. Each density estimate is directly labeled with the respective species name.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-densities-direct-label-1.png" alt="(ref:iris-densities-direct-label)" width="630" />
+<img src="redundant_coding_files/figure-html/iris-densities-direct-label-1.png" alt="(ref:iris-densities-direct-label)" width="576" />
 <p class="caption">(\#fig:iris-densities-direct-label)(ref:iris-densities-direct-label)</p>
 </div>
 
@@ -119,7 +119,7 @@ We can also use density plots such as the one in Figure \@ref(fig:iris-densities
 (ref:iris-scatter-dens) Sepal width versus sepal length for three different iris species, with marginal density estimates of each variable for each species.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-dens-1.png" alt="(ref:iris-scatter-dens)" width="630" />
+<img src="redundant_coding_files/figure-html/iris-scatter-dens-1.png" alt="(ref:iris-scatter-dens)" width="576" />
 <p class="caption">(\#fig:iris-scatter-dens)(ref:iris-scatter-dens)</p>
 </div>
 
@@ -128,6 +128,6 @@ And finally, whenever we encode a single variable in multiple aesthetics, we don
 (ref:temp-ridgeline-colorbar) Temperatures in Lincoln, Nebraska, in 2016. This figure is a variation of Figure \@ref(fig:temp-ridgeline). Temperature is now shown both by location along the *x* axis and by color, and a color bar along the *x* axis visualizes the scale that converts temperatures into colors.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/temp-ridgeline-colorbar-1.png" alt="(ref:temp-ridgeline-colorbar)" width="630" />
+<img src="redundant_coding_files/figure-html/temp-ridgeline-colorbar-1.png" alt="(ref:temp-ridgeline-colorbar)" width="576" />
 <p class="caption">(\#fig:temp-ridgeline-colorbar)(ref:temp-ridgeline-colorbar)</p>
 </div>

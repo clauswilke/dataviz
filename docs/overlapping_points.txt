@@ -171,7 +171,7 @@ population number and area for counties in the Midwest. We have data for
 1055 counties, and a scatter plot looks like a cloud of points (Figure
 @ref(fig:midwest-scatter)). We can highlight the distribution of points
 more clearly by making them very small and partially transparent and
-ploting them on top of contour lines that delineate regions of
+plotting them on top of contour lines that delineate regions of
 comparable point density (Figure @ref(fig:midwest-density-dots)). We can
 also plot just the contour lines, without the individual points (Figure
 @ref(fig:midwest-density-smooth)). In this case, it can be helpful to

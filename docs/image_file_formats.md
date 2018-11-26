@@ -25,14 +25,13 @@ tiff      Tagged Image File Format          bitmap       print production, accur
 raw       Raw Image File                    bitmap       digital photography, needs post-processing
 gif       Graphics Interchange Format       bitmap       outdated, do not use
 
-Vector graphics are also called "resolution-independent," because they can be magnified to arbitrary size without losing detail or sharpness. See Figure \@ref(fig:iris-zoom) for a demonstration.
+Vector graphics are also called "resolution-independent," because they can be magnified to arbitrary size without losing detail or sharpness. See Figure \@ref(fig:bitmap-zoom) for a demonstration.
 
-
-(ref:iris-zoom) Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square around the number seven indicates the area we're magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated and blurry as we zoom in further. (c) Increasing magnification of a vector representation of the image. The image maintains perfect sharpness at arbitrary magnification levels.
+(ref:bitmap-zoom) Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square indicates the area we are magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated as we zoom in further. (c) Increasing magnification of a vector representation of the image. The image maintains perfect sharpness at arbitrary magnification levels.
 
 <div class="figure" style="text-align: center">
-<img src="figures/iris_zoom.png" alt="(ref:iris-zoom)" width="2222" />
-<p class="caption">(\#fig:iris-zoom)(ref:iris-zoom)</p>
+<img src="image_file_formats_files/figure-html/bitmap-zoom-1.png" alt="(ref:bitmap-zoom)" width="816" />
+<p class="caption">(\#fig:bitmap-zoom)(ref:bitmap-zoom)</p>
 </div>
 
 Vector graphics have two downsides that can and often do cause trouble in real-world applications. First, because vector graphics are redrawn on the fly by the graphics program with which they are displayed, it can happen that there are differences in how the same graphic looks in two different programs, or on two different computers. This problem occurs most frequently with text, for example when the required font is not available and the rendering software substitutes a different font. Font substitutions will typically allow the viewer to read the text as intended, but the resulting image rarely looks good. There are ways to avoid these problems, such as outlining or embedding all fonts in a pdf file, but they may require special software and/or special technical knowledge to achieve. By contrast, bitmap images will always look correct.
@@ -50,10 +49,10 @@ Photographic images rarely have multiple pixels of identical color and brightnes
 The most widely used lossy image format is jpeg (Table \@ref(tab:file-formats)), and indeed many digital cameras output images as jpeg by default. Jpeg compression works exceptionally well for photographic images, and huge reductions in file size can often be obtained with very little degradation in image quality. However, jpeg compression fails when images contain sharp edges, such as created by line drawings or by text. In those cases, jpeg compression can result in very noticeable artifacts (Figure \@ref(fig:jpeg-example)). 
 
 
-(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in the top-right corner of each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. *Image credit: Claus O. Wilke* 
+(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in red text above each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. *Image credit: Claus O. Wilke* 
 
 <div class="figure" style="text-align: center">
-<img src="figures/jpeg_example_combined.jpg" alt="(ref:jpeg-example)"  />
+<img src="figures/jpeg_example_combined.png" alt="(ref:jpeg-example)" width="576" />
 <p class="caption">(\#fig:jpeg-example)(ref:jpeg-example)</p>
 </div>
 

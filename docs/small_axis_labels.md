@@ -9,7 +9,7 @@ For example, consider Figure \@ref(fig:Aus-athletes-small). I see figures like t
 (ref:Aus-athletes-small) Percent body fat versus height in professional male Australian athletes. (Each point represents one athlete.) This figure suffers from the common affliction that the text elements are way too small and are barely legible. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/Aus-athletes-small-1.png" alt="(ref:Aus-athletes-small)" width="630" />
+<img src="small_axis_labels_files/figure-html/Aus-athletes-small-1.png" alt="(ref:Aus-athletes-small)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-small)(ref:Aus-athletes-small)</p>
 </div>
 
@@ -18,7 +18,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athlet
 (ref:Aus-athletes-ugly) Percent body fat versus height in male athletes. This figure is an improvement over Figure \@ref(fig:Aus-athletes-small), but the text elements remain too small and the figure is not balanced. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/Aus-athletes-ugly-1.png" alt="(ref:Aus-athletes-ugly)" width="630" />
+<img src="small_axis_labels_files/figure-html/Aus-athletes-ugly-1.png" alt="(ref:Aus-athletes-ugly)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-ugly)(ref:Aus-athletes-ugly)</p>
 </div>
 
@@ -28,7 +28,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 (ref:Aus-athletes-good) Percent body fat versus height in male athletes. All figure elements are appropriately scaled. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/Aus-athletes-good-1.png" alt="(ref:Aus-athletes-good)" width="630" />
+<img src="small_axis_labels_files/figure-html/Aus-athletes-good-1.png" alt="(ref:Aus-athletes-good)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-good)(ref:Aus-athletes-good)</p>
 </div>
 
@@ -37,7 +37,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-
 (ref:Aus-athletes-big-ugly) Percent body fat versus height in male athletes. The text elements are fairly large, and their size may be appropriate if the figure is meant to be reproduced at a very small scale. However, the figure overall is not balanced; the points are too small relative to the text elements. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/Aus-athletes-big-ugly-1.png" alt="(ref:Aus-athletes-big-ugly)" width="630" />
+<img src="small_axis_labels_files/figure-html/Aus-athletes-big-ugly-1.png" alt="(ref:Aus-athletes-big-ugly)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-big-ugly)(ref:Aus-athletes-big-ugly)</p>
 </div>
 
@@ -45,7 +45,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-
 (ref:Aus-athletes-big-good) Percent body fat versus height in male athletes. All figure elements are sized such that the figure is balanced and can be reproduced at a small scale. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="small_axis_labels_files/figure-html/Aus-athletes-big-good-1.png" alt="(ref:Aus-athletes-big-good)" width="630" />
+<img src="small_axis_labels_files/figure-html/Aus-athletes-big-good-1.png" alt="(ref:Aus-athletes-big-good)" width="576" />
 <p class="caption">(\#fig:Aus-athletes-big-good)(ref:Aus-athletes-big-good)</p>
 </div>
 

@@ -12,7 +12,7 @@ The most widely used coordinate system for data visualization is the 2d *Cartesi
 (ref:cartesian-coord) Standard cartesian coordinate system. The horizontal axis is conventionally called *x* and the vertical axis *y*. The two axes form a grid with equidistant spacing. Here, both the *x* and the *y* grid lines are separated by units of one. The point (2, 1) is located two *x* units to the right and one *y* unit above the origin (0, 0). The point (-1, -1) is located one *x* unit to the left and one *y* unit below the origin. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/cartesian-coord-1.png" alt="(ref:cartesian-coord)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/cartesian-coord-1.png" alt="(ref:cartesian-coord)" width="576" />
 <p class="caption">(\#fig:cartesian-coord)(ref:cartesian-coord)</p>
 </div>
 
@@ -23,7 +23,7 @@ A Cartesian coordinate system can have two axes representing two different units
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-1.png" alt="(ref:temperature-normals-Houston)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-1.png" alt="(ref:temperature-normals-Houston)" width="576" />
 <p class="caption">(\#fig:temperature-normals-Houston)(ref:temperature-normals-Houston)</p>
 </div>
 
@@ -32,7 +32,7 @@ If on the other hand the *x* and the *y* axes are measured in the same units, th
 (ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Fahrenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-San-Diego-1.png" alt="(ref:temperature-normals-Houston-San-Diego)" width="892.5" />
+<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-San-Diego-1.png" alt="(ref:temperature-normals-Houston-San-Diego)" width="816" />
 <p class="caption">(\#fig:temperature-normals-Houston-San-Diego)(ref:temperature-normals-Houston-San-Diego)</p>
 </div>
 
@@ -48,7 +48,7 @@ The most commonly used nonlinear scale is the *logarithmic scale* or *log scale*
 (ref:linear-log-scales) Relationship between linear and logarithmic scales. The dots correspond to data values 1, 3.16, 10, 31.6, 100, which are evenly-spaced numbers on a logarithmic scale. We can display these data points on a linear scale, we can log-transform them and then show on a linear scale, or we can show them on a logarithmic scale. Importantly, the correct axis title for a logarithmic scale is the name of the variable shown, not the logarithm of that variable.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/linear-log-scales-1.png" alt="(ref:linear-log-scales)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/linear-log-scales-1.png" alt="(ref:linear-log-scales)" width="576" />
 <p class="caption">(\#fig:linear-log-scales)(ref:linear-log-scales)</p>
 </div>
 
@@ -57,14 +57,14 @@ Because multiplication on a log scale looks like addition on a linear scale, log
 (ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighted by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-log-1.png" alt="(ref:texas-counties-pop-ratio-log)" width="787.5" />
+<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-log-1.png" alt="(ref:texas-counties-pop-ratio-log)" width="720" />
 <p class="caption">(\#fig:texas-counties-pop-ratio-log)(ref:texas-counties-pop-ratio-log)</p>
 </div>
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-lin-1.png" alt="(ref:texas-counties-pop-ratio-lin)" width="787.5" />
+<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-lin-1.png" alt="(ref:texas-counties-pop-ratio-lin)" width="720" />
 <p class="caption">(\#fig:texas-counties-pop-ratio-lin)(ref:texas-counties-pop-ratio-lin)</p>
 </div>
 
@@ -75,7 +75,7 @@ Log scales are frequently used when the data set contains numbers of very differ
 (ref:sqrt-scales) Relationship between linear and square-root scales. The dots correspond to data values 0, 1, 4, 9, 16, 25, 36, 49, which are evenly-spaced numbers on a square-root scale, since they are the squares of the integers from 0 to 7. We can display these data points on a linear scale, we can square-root-transform them and then show on a linear scale, or we can show them on a square-root scale. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/sqrt-scales-1.png" alt="(ref:sqrt-scales)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/sqrt-scales-1.png" alt="(ref:sqrt-scales)" width="576" />
 <p class="caption">(\#fig:sqrt-scales)(ref:sqrt-scales)</p>
 </div>
 
@@ -86,7 +86,7 @@ Despite these problems with square-root scales, they are valid position scales a
 (ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a linear scale. (b) Areas shown on a square-root scale. Data source: Google. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/northeast-state-areas-1.png" alt="(ref:northeast-state-areas)" width="892.5" />
+<img src="coordinate_systems_axes_files/figure-html/northeast-state-areas-1.png" alt="(ref:northeast-state-areas)" width="816" />
 <p class="caption">(\#fig:northeast-state-areas)(ref:northeast-state-areas)</p>
 </div>
 
@@ -97,7 +97,7 @@ All coordinate systems we have encountered so far used two straight axes positio
 (ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/polar-coord-1.png" alt="(ref:polar-coord)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/polar-coord-1.png" alt="(ref:polar-coord)" width="576" />
 <p class="caption">(\#fig:polar-coord)(ref:polar-coord)</p>
 </div>
 
@@ -106,16 +106,16 @@ Polar coordinates can be useful for data of a periodic nature, such that data va
 (ref:temperature-normals-polar) Daily temperature normals for four selected locations in the U.S., shown in polar coordinates. The radial distance from the center point indicates the daily temperature in Fahrenheit, and the days of the year are arranged counter-clockwise starting with Jan. 1st at the 6:00 position.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/temperature-normals-polar-1.png" alt="(ref:temperature-normals-polar)" width="630" />
+<img src="coordinate_systems_axes_files/figure-html/temperature-normals-polar-1.png" alt="(ref:temperature-normals-polar)" width="576" />
 <p class="caption">(\#fig:temperature-normals-polar)(ref:temperature-normals-polar)</p>
 </div>
 
 
-A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their latitude and longitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:continental-usa-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:continental-usa-four-projections)).
+A second setting in which we encounter curved axes is in the context of geospatial data, i.e., maps. Locations on the globe are specified by their longitude and latitude. But because the earth is a sphere, drawing latitude and longitude as Cartesian axes is misleading and not recommended (Figure \@ref(fig:worldmap-four-projections)). Instead, we use various types of non-linear projections that attempt to minimize artifacts and that strike different balances between conserving areas or angles relative to the true shape lines on the globe (Figure \@ref(fig:worldmap-four-projections)).
 
-(ref:continental-usa-four-projections) The continental U.S.A. shown in four different coordinate systems. The Cartesian latitude and longitude system maps latitude and longitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3d globe. The Robinson projection is commonly used to project the entire world. It preserves neither areas nor angles perfectly but attempts to strike a balance between the two. The Lambert projection preserves areas but distorts angles. The Transverse Mercator projection preserves angles but distorts areas.
+(ref:worldmap-four-projections) Map of the world, shown in four different projections. The Cartesian longitude and latitude system maps the longitude and latitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3D globe. The interrupted Goode homolosine projection perfectly represents true surface areas, at the cost of dividing some land masses into separate pieces, most notably Greenland and Antarctica. The Robinson projection and the Winkel tripel projection both strike a balance between angular and area distortions, and they are commonly used for maps of the entire globe.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/continental-usa-four-projections-1.png" alt="(ref:continental-usa-four-projections)" width="892.5" />
-<p class="caption">(\#fig:continental-usa-four-projections)(ref:continental-usa-four-projections)</p>
+<img src="coordinate_systems_axes_files/figure-html/worldmap-four-projections-1.png" alt="(ref:worldmap-four-projections)" width="816" />
+<p class="caption">(\#fig:worldmap-four-projections)(ref:worldmap-four-projections)</p>
 </div>

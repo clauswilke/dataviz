@@ -28,7 +28,7 @@ Throughout this book, I frequently show different versions of the same figures, 
 
 
 <div class="figure" style="text-align: center">
-<img src="introduction_files/figure-html/ugly-bad-wrong-examples-1.png" alt="(ref:ugly-bad-wrong-examples)" width="630" />
+<img src="introduction_files/figure-html/ugly-bad-wrong-examples-1.png" alt="(ref:ugly-bad-wrong-examples)" width="576" />
 <p class="caption">(\#fig:ugly-bad-wrong-examples)(ref:ugly-bad-wrong-examples)</p>
 </div>
 
