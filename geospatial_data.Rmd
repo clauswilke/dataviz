@@ -602,8 +602,7 @@ ggdraw(align_legend(p))
 ```
 
 
-Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. We can also use the inverse choice, however, such that high-density metropolitan areas appear to light up on a dark background (Figure \@ref(fig:population-density-counties2)). Either choice is equally valid. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
-
+Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. We can also use the inverse choice, however, such that high-density metropolitan areas appear to light up on a dark background (Figure \@ref(fig:population-density-counties2)). Either choice is valid. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
 
 (ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
 
@@ -683,6 +682,8 @@ p <- ggplot(US_counties_income) +
 
 ggdraw(align_legend(p))
 ```
+
+*Transition to median figure.*
 
 While continuous color scales tend to yield visualizations that look very appealing, they can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
 
@@ -784,7 +785,7 @@ As we see from Figure \@ref(fig:median-income-counties-binned), the vast majorit
 
 ## Cartograms
 
-*Not every map-like visualization has to be spatially accurate.*
+Not every map-like visualization has to be geographically accurate to be useful. For example, the problem with Figure \@ref(fig:median-income-states) is that some states take up a comparatively large area but are sparsely populated while others take up a small area yet have a large number of inhabitants. What if we deformed the states so their size was proportional to their number of inhabitants? Such a modified map is called a *cartogram*, and Figure \@ref(fig:median-income-cartogram) shows what it can look like for the median income dataset. We can still recognize individual states, yet we also see how adjustment for population numbers has introduced important modifications. The east coast states, Florida, and California have grown a lot in size, whereas the other western states and Alaska have collapsed.
 
 (ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
@@ -819,6 +820,8 @@ p <- ggplot(US_income_cartogram, aes(fill = income_bins)) +
 
 p
 ```
+
+As an alternative to a cartogram with distorted shapes, we can also draw a much simpler *cartogram heatmap,* where each state is represented by a colored square (Figure \@ref(fig:median-income-statebins)). *A few more sentences here.* 
 
 (ref:median-income-statebins) Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
 
