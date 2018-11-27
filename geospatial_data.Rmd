@@ -602,7 +602,7 @@ ggdraw(align_legend(p))
 ```
 
 
-Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. We can also use the inverse choice, however, such that high-density metropolitan areas appear to light up on a dark background (Figure \@ref(fig:population-density-counties2)). Either choice is valid. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
+Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. For many color scales, darker values are perceived as representing higher intensities, so this color scale works well. However, we can also pick a color scale where high values light up on a dark background (Figure \@ref(fig:population-density-counties2)). Either choice is valid. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
 
 (ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
 
@@ -683,9 +683,9 @@ p <- ggplot(US_counties_income) +
 ggdraw(align_legend(p))
 ```
 
-*Transition to median figure.*
+Choropleths work best when the coloring represents a density (i.e., some quantity divided by surface area, as in Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)). The human eye will perceive larger areas as corresponding to larger amounts than smaller areas (see also proportional ink, Chapter \@ref(proportional-ink)), and shading by density corrects for this effect. However, in practice, we often see choropleths colored according to some quantity that is not a density. For example, in Figure \@ref(fig:map-Texas-income) I showed a choropleth of median annual income in Texas counties. Such choropleth maps are appropriate when they are made with caution. There are two conditions under which we don't have to worry about showing a density: First, if all the individual areas we color have approximately the same size and shape, then we don't have to worry about some areas drawing disproportionate attention solely due to their size. Second, if the individual areas we color are relatively small compared to the overall size of the map and if the quantity of interest changes on a scale larger than the individual colored areas, then again we don't have to worry about some areas drawing disproportionate attention solely due to their size. Both of these conditions are approximately met in Figure \@ref(fig:map-Texas-income).
 
-While continuous color scales tend to yield visualizations that look very appealing, they can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. 
+It is also important to consider the effect of continuous versus discrete color scales in choropleth mapping. While continuous color scales tend to look visually appealing (e.g., Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2), they can be difficult to read. The human eye is not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. As an example, Figure \@ref(fig:median-income-counties-binned) expands the map of median income in Texas counties (Figure \@ref(fig:map-Texas-income)) to all counties in the U.S., and it uses a color scale consisting of five distinct income bins. 
 
 (ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. The median income values have been binned into five distinct groups, because binned color scales are generally easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
 
@@ -734,6 +734,11 @@ p <- ggplot(US_counties_income) +
 p
 ```
 
+**Talk about state-wide coloring.**
+
+As we see from Figure \@ref(fig:median-income-counties-binned), the vast majority of U.S. counties have a median income of below \$60,000. Yet Figure \@ref(fig:median-income-states) suggests median incomes above \$70,000 are common, because the figure is visually dominated by the state of Alaska, whose median income is above \$70,000. Since Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), this impression is highly misleading.
+
+
 (ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. **Say why this is bad.** Data source: 2015 Five-Year American Community Survey
 
 
@@ -780,8 +785,6 @@ p <- ggplot(US_income, aes(fill = income_bins)) +
 stamp_bad(p)
 ```
 
-As we see from Figure \@ref(fig:median-income-counties-binned), the vast majority of U.S. counties have a median income of below \$60,000. Yet Figure \@ref(fig:median-income-states) suggests median incomes above \$70,000 are common, because the figure is visually dominated by the state of Alaska, whose median income is above \$70,000. Since Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), this impression is highly misleading.
-
 
 ## Cartograms
 
@@ -821,7 +824,7 @@ p <- ggplot(US_income_cartogram, aes(fill = income_bins)) +
 p
 ```
 
-As an alternative to a cartogram with distorted shapes, we can also draw a much simpler *cartogram heatmap,* where each state is represented by a colored square (Figure \@ref(fig:median-income-statebins)). *A few more sentences here.* 
+As an alternative to a cartogram with distorted shapes, we can also draw a much simpler *cartogram heatmap,* where each state is represented by a colored square (Figure \@ref(fig:median-income-statebins)). While this representation does not correct for the population number in each state, and thus underrepresents more populous states and overrepresents less populous states, at least it treats all states equally and doesn't weigh them arbitrarily by their shape or size.
 
 (ref:median-income-statebins) Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
 
@@ -856,9 +859,9 @@ filter(US_income, name != "Puerto Rico", GEOID != "11") %>% # remove Puerto Rico
   )
 ```
 
-Instead of representing each state as an individual, colored square, we can also place more complex plots in the location of each state. For example, if we want to visualize the evolution of the unemployment rate over time for each state, it can help to draw an individual graph for each state and then arrange them based on the approximate relative position of the states to each other (Figure \@ref(fig:unemployment-geofacet)). For anybody who is familiar with the geography of the United States, this arrangement makes it easier to find the graphs for specific states than arranging them, for example, in alphabetical order. Furthermore, one would expect neighboring states to display similar patterns, and Figure \@ref(fig:unemployment-geofacet) shows that this is indeed the case. 
+We can also draw more complex cartograms by placing individual plots at the location of each state. For example, if we want to visualize the evolution of the unemployment rate over time for each state, it can help to draw an individual graph for each state and then arrange them based on the approximate relative position of the states to each other (Figure \@ref(fig:unemployment-geofacet)). For anybody who is familiar with the geography of the United States, this arrangement makes it easier to find the graphs for specific states than arranging them, for example, in alphabetical order. Furthermore, one would expect neighboring states to display similar patterns, and Figure \@ref(fig:unemployment-geofacet) shows that this is indeed the case. 
 
-(ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
+(ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, including the District of Columbia (DC), from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
 
 ```{r unemployment-geofacet, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:unemployment-geofacet)'}
 adjust_labels <- as_labeller(

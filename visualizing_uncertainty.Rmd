@@ -8,6 +8,8 @@ library(patchwork)
 
 # Visualizing uncertainty {#visualizing-uncertainty}
 
+## Error bars and confidence bands
+
 ```{r fig.asp = 1.2}
 n <- c(10, 30, 100, 300, 1000)
 
@@ -172,4 +174,12 @@ ggplot(df_out, aes(x = mean, y = group)) +
   theme_minimal()
 ```
 
+
+## Distributions
+
+
+## Hypothetical outcomes plots
+
 Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-outcomes-plots-experiencing-the-uncertain-b9ea60d7c740
+
+## Value-suppressing uncertainty palette
