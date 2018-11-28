@@ -604,7 +604,7 @@ ggdraw(align_legend(p))
 ```
 
 
-Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. This color choice is aligned with human perception, which tends to associate darker colors wuth higher intensities. However, we can also pick a color scale where high values light up on a dark background (Figure \@ref(fig:population-density-counties2)). As longs as the light colors fall into the red-yellow spectrum, so that the lighter colors appear to be glowing, they can be perceived as representing higher intensities. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
+Figure \@ref(fig:population-density-counties) uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. This color choice is aligned with human perception, which tends to associate darker colors with higher intensities. However, we can also pick a color scale where high values light up on a dark background (Figure \@ref(fig:population-density-counties2)). As longs as the lighter colors fall into the red-yellow spectrum, so that they appear to be glowing, they can be perceived as representing higher intensities. As a general principle, though, when figures are meant to be printed on white paper then light-colored background areas (as in Figure \@ref(fig:population-density-counties)) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure \@ref(fig:population-density-counties2)) may be preferable.
 
 (ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
 
@@ -736,12 +736,9 @@ p <- ggplot(US_counties_income) +
 p
 ```
 
-**Talk about state-wide coloring.**
+Even though counties are not quite as equal-sized and even-shaped across the entire U.S. as they are just within Texas, I think Figure \@ref(fig:median-income-counties-binned) still works as a choropleth map. No individidual county overly dominates the map. However, things look different when we draw a comparable map at the state level (Figure \@ref(fig:median-income-states)). Then Alaska dominates the choropleth and, because of its size, suggests that median incomes above \$70,000 are common. Yet Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), and thus the income levels in Alaska apply only to a small portion of the U.S. population. The vast majority of U.S. counties, which are nearly all more populous than counties in Alaska, have a median income of below \$60,000.
 
-As we see from Figure \@ref(fig:median-income-counties-binned), the vast majority of U.S. counties have a median income of below \$60,000. Yet Figure \@ref(fig:median-income-states) suggests median incomes above \$70,000 are common, because the figure is visually dominated by the state of Alaska, whose median income is above \$70,000. Since Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), this impression is highly misleading.
-
-
-(ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. **Say why this is bad.** Data source: 2015 Five-Year American Community Survey
+(ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. This map is visually dominated by the state of Alaska, which has a high median income but very low population density. At the same time, the densely populated high-income states on the East Coast do not appear very prominent on this map. In aggregate, this map provides a poor visualization of the income distribution in the U.S., and therefore I have labeled it as "bad." Data source: 2015 Five-Year American Community Survey
 
 
 ```{r median-income-states, fig.asp = 0.73, fig.cap = '(ref:median-income-states)'}
