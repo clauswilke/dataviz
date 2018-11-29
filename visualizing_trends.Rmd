@@ -12,6 +12,10 @@ library(tidyr)
 
 ## Smoothing
 
+*A few sentences stock market intro.*
+
+The market lost over 2400 points (~27%) in the first three months of the year, and then it slowly recovered for the remainder of the year. How can we visualize these longer-term trends while de-emphasizing the less important short-term fluctuations?
+
 (ref:dow-jones) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
 ```{r dow-jones, fig.asp = 0.5, fig.cap = '(ref:dow-jones)'}
@@ -26,20 +30,25 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   )
 ```
 
-(ref:dow-jones-moving-ave) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
+In the financial world, it is commonplace to visualize trends with moving averages. To calculate a moving average for a stock price, we take a time window, say the first 20 days in the time series, calculate the average price over these 20 days, then move the time window by a day so it now spans the 2nd to 21st day, calculate the average over these 20 days, move the time window again, and so on. The result is a new time series consisting of a sequence of averaged prices.
+
+*financial vs. statistical moving average, end of interval vs. center.*
+
+
+(ref:dow-jones-moving-ave) Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance
 
 ```{r dow-jones-moving-ave, fig.asp = 1, fig.cap = '(ref:dow-jones-moving-ave)'}
 p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01/10")) %>%
   mutate(
-    close_20d_ave_c = moving_ave(date, close, 20),
-    close_50d_ave_c = moving_ave(date, close, 50),
-    close_100d_ave_c = moving_ave(date, close, 100)
+    close_20d_ave = moving_ave(date, close, 20, center = FALSE),
+    close_50d_ave = moving_ave(date, close, 50, center = FALSE),
+    close_100d_ave = moving_ave(date, close, 100, center = FALSE)
   ) %>%
   ggplot(aes(date, close)) + 
   geom_line(color = "grey20", size = .25) +
-  geom_line(aes(date, close_20d_ave_c, color = "20d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_50d_ave_c, color = "50d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_100d_ave_c, color = "100d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_20d_ave, color = "20d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_50d_ave, color = "50d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
   scale_color_manual(
     values = c(
       `20d` = "#009e73",
@@ -67,9 +76,9 @@ p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
 
 p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01/10")) %>%
   mutate(
-    close_20d_ave = moving_ave(date, close, 20, center = FALSE),
-    close_50d_ave = moving_ave(date, close, 50, center = FALSE),
-    close_100d_ave = moving_ave(date, close, 100, center = FALSE)
+    close_20d_ave = moving_ave(date, close, 20, center = TRUE),
+    close_50d_ave = moving_ave(date, close, 50, center = TRUE),
+    close_100d_ave = moving_ave(date, close, 100, center = TRUE)
   ) %>%
   ggplot(aes(date, close)) + 
   geom_line(color = "grey20", size = .25) +
@@ -96,6 +105,8 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
 
 plot_grid(p1, p2, ncol = 1, align = 'h', labels = "auto")
 ```
+
+Because the drop to below 7000 points happened rapidly and the market quickly recovered to levels above 7500 points, the smoothing function removes this severe dip and replaces it with a gentle bend that doesn't dip much below 8000 points.
 
 (ref:dow-jones-loess) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
@@ -131,7 +142,7 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   )
 ```
 
-
+There are many different smoothing functions ... This is important, because most statistical packages will provide a default smoother, and you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.
 
 (ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
 
@@ -256,6 +267,8 @@ ggplot(hpi_trends, aes(date, hpi)) +
   theme_dviz_hgrid(12, rel_small = 1) +
   theme(
     strip.background = element_rect(fill = "grey90"),
+    axis.line.x = element_line(color = "grey50"),
+    axis.ticks.x = element_line(color = "grey50"),
     axis.ticks.y = element_blank(),
     axis.text.y = element_text(margin = margin(0, 0, 0, 0))
   )
@@ -276,6 +289,8 @@ ggplot(hpi_trends, aes(date, hpi_detrended)) +
   theme_dviz_hgrid(12, rel_small = 1) +
   theme(
     strip.background = element_rect(fill = "grey90"),
+    axis.line.x = element_line(color = "grey50"),
+    axis.ticks.x = element_line(color = "grey50"),
     axis.ticks.y = element_blank(),
     axis.text.y = element_text(margin = margin(0, 0, 0, 0))
   )
