@@ -14,7 +14,7 @@ library(tidyr)
 
 *A few sentences stock market intro.*
 
-The market lost over 2400 points (~27%) in the first three months of the year, and then it slowly recovered for the remainder of the year. How can we visualize these longer-term trends while de-emphasizing the less important short-term fluctuations?
+The market lost over 2400 points (~27%) in the first three months of the year, and then it slowly recovered for the remainder of the year (Figure \@ref(fig:dow-jones)). How can we visualize these longer-term trends while de-emphasizing the less important short-term fluctuations?
 
 (ref:dow-jones) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
@@ -30,9 +30,9 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   )
 ```
 
-In the financial world, it is commonplace to visualize trends with moving averages. To calculate a moving average for a stock price, we take a time window, say the first 20 days in the time series, calculate the average price over these 20 days, then move the time window by one day, so it now spans the 2nd to 21st day, calculate the average over these 20 days, move the time window again, and so on. The result is a new time series consisting of a sequence of averaged prices.
+In the financial world, it is commonplace to visualize trends with moving averages. To calculate a moving average, we take a time window, say the first 20 days in the time series, calculate the average price over these 20 days, then move the time window by one day, so it now spans the 2nd to 21st day, calculate the average over these 20 days, move the time window again, and so on. The result is a new time series consisting of a sequence of averaged prices.
 
-To plot the time series of moving averages, we need to decide which specific time point to associate with the average for each time window. Financial analysts often plot the average at the end of the time window, which results in a curve that seems to lag the original data (Figure \@ref(fig:dow-jones-moving-ave)a), with more severe lags corresponding to longer averaging time windows. Statisticians, on the other hand, plot the average at the center of the time window, which results in a curve that overlays perfectly on the original data (Figure \@ref(fig:dow-jones-moving-ave)b).
+To plot the time series of moving averages, we need to decide which specific time point to associate with the average for each time window. Financial analysts often plot each average at the end of its respective time window. This choice results in a curve that lags the original data (Figure \@ref(fig:dow-jones-moving-ave)a), with more severe lags corresponding to larger averaging time windows. Statisticians, on the other hand, plot the average at the center of the time window, which results in a curve that overlays perfectly on the original data (Figure \@ref(fig:dow-jones-moving-ave)b).
 
 (ref:dow-jones-moving-ave) Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance
 
@@ -45,9 +45,9 @@ p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
   ) %>%
   ggplot(aes(date, close)) + 
   geom_line(color = "grey20", size = .25) +
-  geom_line(aes(date, close_20d_ave, color = "20d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_50d_ave, color = "50d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_20d_ave, color = "20d"), size = 1, na.rm = TRUE) +
+  geom_line(aes(date, close_50d_ave, color = "50d"), size = 1, na.rm = TRUE) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
   scale_color_manual(
     values = c(
       `20d` = "#009e73",
@@ -81,9 +81,9 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
   ) %>%
   ggplot(aes(date, close)) + 
   geom_line(color = "grey20", size = .25) +
-  geom_line(aes(date, close_20d_ave, color = "20d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_50d_ave, color = "50d"), size = .75, na.rm = TRUE) +
-  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
+  geom_line(aes(date, close_20d_ave, color = "20d"), size = 1, na.rm = TRUE) +
+  geom_line(aes(date, close_50d_ave, color = "50d"), size = 1, na.rm = TRUE) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
   scale_color_manual(
     values = c(
       `20d` = "#009e73",
@@ -105,13 +105,13 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
 plot_grid(p1, p2, ncol = 1, align = 'h', labels = "auto")
 ```
 
-Regardless of whether we plot the smoothed time series with or without lag, we can see that the length of the time window over which we average sets the scale of the fluctuations that remain visible in the smoothed curve. The 20-day moving average only removes small, short-term spikes but otherwise follows the daily data closely. The 100-day moving average, on the other hand, 
+Regardless of whether we plot the smoothed time series with or without lag, we can see that the length of the time window over which we average sets the scale of the fluctuations that remain visible in the smoothed curve. The 20-day moving average only removes small, short-term spikes but otherwise follows the daily data closely. The 100-day moving average, on the other hand, removes even fairly substantial drops or spikes that play out over a time span of multiple weeks. For example, the massive drop to below 7000 points in the first quarter of 2009 is not visible in the 100-day moving average, which replaces it with a gentle curve that doesn't dip much below 8000 points (Figure \@ref(fig:dow-jones-moving-ave)). Similarly, the drop around July 2009 is completely invisible in the 100-day moving average.
 
-For example, the massive drop to below 7000 points in the first quarter of 2009 is not visible in the 100-day moving average, which replaces it with a gentle curve that doesn't dip much below 8000 points.
+The moving average is a fairly simplistic approach to smoothing, and it has some obvious limitations. First, the moving window approach results in a smoothed curve that is shorter than the original curve (Figure \@ref(fig:dow-jones-moving-ave)). Parts are missing at either the beginning or the end or both. And the more the time series is smoothed (i.e., the larger the averaging window), the shorter the smoothed curve. Second, even though a moving average with large averaging window can smooth over fairly substantial deviations from the overall trend, the resulting curve is not necessarily that smooth. It may display small scale bumps and wiggles despite the larger-scale smoothing that has been achieved (Figure \@ref(fig:dow-jones-moving-ave)). These wiggles are caused by individual data points that enter or exit the averaging window. Since all data points in the window are weighted equally, individual data points at the window boundaries can have visible impact on the average.
 
-*Down sides of moving average: little wiggles, doesn't cover the whole data range.*
+Statisticians have developed numerous approaches to smoothing that alleviate the downsides of moving averages. These approaches are much more complex and computationally costly, but they are readily available in modern statistical computing environments. One widely used method is LOESS (locally estimated scatterplot smoothing, @Cleveland1979), which fits low-degree polynomials to subsets of the data. Importantly, the points in the center of each subset are weighted more heavily than points at the boundaries, and this weighting scheme yields a much smoother result than we get from a weighted average (Figure \@ref(fig:dow-jones-loess)).
 
-(ref:dow-jones-loess) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
+(ref:dow-jones-loess) Comparison of LOESS fit to 100-day moving average for the Dow Jones data of Figure \@ref(fig:dow-jones-moving-ave). The overall trend shown by the LOESS smooth is nearly identical to the 100-day moving average, but the LOESS curve is much smoother and it extends to the entire range of the data. Data source: Yahoo! Finance
 
 ```{r dow-jones-loess, fig.asp = 0.5, fig.cap = '(ref:dow-jones-loess)'}
 # LOESS (locally estimated scatterplot smoothing) 
@@ -122,8 +122,8 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   ) %>%
   ggplot(aes(date, close)) + 
   geom_line(color = "grey20", size = .25) +
-  geom_line(aes(date, close_100d_ave, color = "100d"), size = .75, na.rm = TRUE) +
-  geom_smooth(aes(color = "smooth"), size = .75, na.rm = TRUE, se = FALSE) +
+  geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
+  geom_smooth(aes(color = "smooth"), size = 1, na.rm = TRUE, se = FALSE) +
   scale_color_manual(
     values = c(
       `100d` = "#d55e00",
@@ -145,17 +145,40 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   )
 ```
 
-There are many different smoothing functions ... This is important, because most statistical packages will provide a default smoother, and you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.
+Another advantage of LOESS is that it is not limited to time series. It can be applied to arbitrary scatter plots, as is apparent from its name, *locally estimated scatterplot smoothing*.  *continue here.*
 
-(ref:tank-capacity-smoothers) **Figure title.** (a) LOESS smoother. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots.
+(ref:tank-capacity-loess) Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University
 
-```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
+```{r tank-capacity-loess, fig.width = 5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-loess)'}
 cars93 <- MASS::Cars93
 
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + 
+  geom_point(color = "grey60") + 
+  geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2") +
+  scale_x_continuous(
+    name = "price (USD)",
+    breaks = c(20, 40, 60),
+    labels = c("$20,000", "$40,000", "$60,000")
+  ) +
+  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  theme_minimal_grid()
+```
+
+Because LOESS requires the fitting of many separate regression models, it can be slow for large datasets, even on modern computing equipment. To rapidly smooth large datasets, we can instead use spline models. A spline is a piecewise polynomial function *continue.*
+
+
+
+There are many different smoothing functions ... This is important, because most statistical packages will provide a default smoother, and you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.
+
+(ref:tank-capacity-smoothers) Different smoothing models display widely different behaviors near the boundaries of the data. (a) LOESS smoother, as in Figure \@ref(fig:tank-capacity-loess). (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
+
+```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
 cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
-  scale_x_continuous(name = "price (USD)",
-                     breaks = c(20, 40, 60),
-                     labels = c("$20,000", "$40,000", "$60,000")) +
+  scale_x_continuous(
+    name = "price (USD)",
+    breaks = c(20, 40, 60),
+    labels = c("$20,000", "$40,000", "$60,000")
+  ) +
   scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
   theme_minimal_grid(12)  
   
@@ -164,15 +187,17 @@ p2 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k =
 p3 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 3), color = "#0072B2")
 p4 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 6, bs = 'gp'), color = "#0072B2")
 
-plot_grid(p1, p2, p3, p4, align = 'hv',
-          labels = 'auto', label_fontface = "plain")
+plot_grid(
+  p1, p2, p3, p4, align = 'hv',
+  labels = 'auto'
+)
 
 # See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
 ```
 
 ## Explicit models
 
-(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$.
+(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$. Data source: Robin H. Lock, St. Lawrence University
 
 ```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
 fit.out <- nls(Fuel.tank.capacity ~ a*Price/(Price + b) + c, data = cars93, start = c(a = -45, b = -1, c = 70))
@@ -334,7 +359,7 @@ ggplot(CO2, aes(date_dec, co2_interp)) +
   theme_dviz_grid()
 ```
 
-We can decompose the Keeling curve into its long-term trend, seasonal fluctuations, and remainder (Figure \@ref(fig:keeling-curve-decomposition)). The specific method I am using here is called STL (Seasonal decomposition of Time series by LOESS, @Cleveland_et_al_1990), but there are many other methods that achieve similar goals. The decomposition shows that over the last three decades, CO<sub>2</sub> abundance has increased by over 50 ppm. By comparison, seasonal fluctuations amount to less than 8 ppm (they never cause an increase or a decrease in more than 4 ppm relative to the long-term trend), and the remainder amounts to less than 1.6 ppm (Figure \@ref(fig:keeling-curve-decomposition)). The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and here it corresponds to random noise in the monthly CO<sub>2</sub> readings. More generally, however, the remainder could also capture unique external events. For example, a massive volcano erruption releasing substantial amounts of CO<sub>2</sub> might be visible as a sudden spike in the remainder. Figure \@ref(fig:keeling-curve-decomposition) shows that no such unique external events have had a major effect on the Keeling curve in recent decades. 
+We can decompose the Keeling curve into its long-term trend, seasonal fluctuations, and remainder (Figure \@ref(fig:keeling-curve-decomposition)). The specific method I am using here is called STL (Seasonal decomposition of Time series by LOESS, @Cleveland_et_al_1990), but there are many other methods that achieve similar goals. The decomposition shows that over the last three decades, CO<sub>2</sub> abundance has increased by over 50 ppm. By comparison, seasonal fluctuations amount to less than 8 ppm (they never cause an increase or a decrease in more than 4 ppm relative to the long-term trend), and the remainder amounts to less than 1.6 ppm (Figure \@ref(fig:keeling-curve-decomposition)). The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and here it corresponds to random noise in the monthly CO<sub>2</sub> readings. More generally, however, the remainder could also capture unique external events. For example, if a massive volcano erruption released substantial amounts of CO<sub>2</sub>, such an event might be visible as a sudden spike in the remainder. Figure \@ref(fig:keeling-curve-decomposition) shows that no such unique external events have had a major effect on the Keeling curve in recent decades. 
 
 (ref:keeling-curve-decomposition) Time-series decomposition of the Keeling curve, showing the montly average (as in Figure \@ref(fig:keeling-curve)), the long-term trend, seasonal fluctuations, and remainder. The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and it represents random noise. I have zoomed into the most recent 30 years of data to more clearly show the shape of the annual fluctuations. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
 
