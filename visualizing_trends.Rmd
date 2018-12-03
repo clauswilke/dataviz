@@ -145,9 +145,9 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   )
 ```
 
-Another advantage of LOESS is that it is not limited to time series. It can be applied to arbitrary scatter plots, as is apparent from its name, *locally estimated scatterplot smoothing*.  *continue here.*
+Another advantage of LOESS is that it is not limited to time series. It can be applied to arbitrary scatter plots, as is apparent from its name, *locally estimated scatterplot smoothing*. For example, we can use LOESS to look for trends in the relationship between a car's fuel-tank capacity and its price (Figure \@ref(fig:tank-capacity-loess)).
 
-(ref:tank-capacity-loess) Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University
+(ref:tank-capacity-loess) Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price, up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University
 
 ```{r tank-capacity-loess, fig.width = 5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-loess)'}
 cars93 <- MASS::Cars93
@@ -160,17 +160,13 @@ ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
     breaks = c(20, 40, 60),
     labels = c("$20,000", "$40,000", "$60,000")
   ) +
-  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
   theme_minimal_grid()
 ```
 
-Because LOESS requires the fitting of many separate regression models, it can be slow for large datasets, even on modern computing equipment. To rapidly smooth large datasets, we can instead use spline models. A spline is a piecewise polynomial function *continue.*
+LOESS tends to produce results that look right to the human eye, and therefore it is a very popular smoothing approach. However, it requires the fitting of many separate regression models. This makes it slow for large datasets, even on modern computing equipment. As a faster alternative, we can use spline models. A spline is a piecewise polynomial function that is highly flexible yet always looks smooth to the human eye. When fitting splines, we usually encounter the term *knot.* The knots in a spline are the endpoints of the individual spline segments. If we fit a spline with *k* segments, we will have *k* + 1 knots. The downside of splines is the bewildering array of different types of splines, including cubic splines, B-splines, thin-plate splines, Gaussian process splines, and many others. The specific choice of the type of spline and number of knots used can result in widely different smoothing functions for the same data (Figure \@ref(fig:tank-capacity-smoothers)).
 
-
-
-There are many different smoothing functions ... This is important, because most statistical packages will provide a default smoother, and you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.
-
-(ref:tank-capacity-smoothers) Different smoothing models display widely different behaviors near the boundaries of the data. (a) LOESS smoother, as in Figure \@ref(fig:tank-capacity-loess). (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
+(ref:tank-capacity-smoothers) Different smoothing models display widely different behaviors, in particular near the boundaries of the data. (a) LOESS smoother, as in Figure \@ref(fig:tank-capacity-loess). (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
 
 ```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
 cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
@@ -179,7 +175,7 @@ cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point
     breaks = c(20, 40, 60),
     labels = c("$20,000", "$40,000", "$60,000")
   ) +
-  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
   theme_minimal_grid(12)  
   
 p1 <- cars_base + geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2")
@@ -195,24 +191,56 @@ plot_grid(
 # See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
 ```
 
-## Explicit models
+Most data visualization software will provide smoothing features, which will most likely be implemented as either a type of local regression (such as LOESS) or a type of spline. In the software, the method used may be referred to as GAM, generalized additive model, which supports all of these approaches. It is important to be aware that the output of the smoother is highly dependent on the specific GAM model that is fit. Unless you try out a number of different choices you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.
 
-(ref:tank-capacity-model) **Figure title.** The solid line corresponds to the formula $y = 68.20 - 46.37 x/(x - 1,560)$. Data source: Robin H. Lock, St. Lawrence University
+```{block type='rmdtip', echo=TRUE}
+Be careful when interpreting the results from a smoothing function. The same dataset can be smoothed in many different ways.
+```
+
+
+## Showing trends with a defined functional form
+
+As we have seen in the previous section, the behavior of general-purpose smoothers can be somewhat unpredictable for any given dataset. They also do not provide parameter estimates that can be interpreted. Therefore, whenever possible, it is preferable to fit a curve a specific functional form that is appropriate for the data and that contains parameters with clear meaning. 
+
+For the fuel-tank data, we need a curve that initially rises linearly but then levels off at a constant value. The equation $y = A - B \exp(-mx)$ may fit that bill. It is approximately linear for small $x$, with $y \approx A - B + B m x$, it approaches a constant value for large $x$, $y \approx A$, and it is strictly increasing for all values of $x$. Figure \@ref(fig:tank-capacity-model) shows that this equation fits the data at least as well as any of the smoothers we considered previously (Figure \@ref(fig:tank-capacity-smoothers)).
+
+(ref:tank-capacity-model) Fuel-tank data represented with an explicit analytical model. The solid line corresponds to a least-squares fit of the formula $y = A - B \exp(-mx)$ to the data. Fitted parameters are $A = 19.6$, $B = 29.2$, $m = 0.00015$.  Data source: Robin H. Lock, St. Lawrence University
 
 ```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
-fit.out <- nls(Fuel.tank.capacity ~ a*Price/(Price + b) + c, data = cars93, start = c(a = -45, b = -1, c = 70))
-fit.df <- data.frame(Price = 7:62,
-                     Fuel.tank.capacity = predict(fit.out, data.frame(Price = 7:62)))
+# first model
+fit.out <- nls(
+  Fuel.tank.capacity ~ a*Price/(Price + b) + c,
+  data = cars93,
+  start = c(a = -45, b = -1, c = 70)
+)
 
-ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
+# second model
+fit.out <- nls(
+  Fuel.tank.capacity ~ A1 - A0*exp(-m*Price),
+  data = cars93,
+  start = c(A0 = 29.249, A1 = 19.621, m = 0.149),
+  control = nls.control(maxiter = 1000, warnOnly = TRUE)
+)
+
+fit.df <- data.frame(
+  Price = 7:62,
+  Fuel.tank.capacity = predict(fit.out, data.frame(Price = 7:62))
+)
+
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + 
+  geom_point(color = "grey60") + 
   geom_line(data = fit.df, size = 1, color = "#0072B2") +
-  scale_x_continuous(name = "price (USD)",
-                     breaks = c(20, 40, 60),
-                     labels = c("$20,000", "$40,000", "$60,000")) +
-  scale_y_continuous(name = "fuel tank capacity\n(US gallons)") +
+  #stat_function(fun = function(x) -24.22+1.38*x  + 22) +
+  scale_x_continuous(
+    name = "price (USD)",
+    breaks = c(20, 40, 60),
+    labels = c("$20,000", "$40,000", "$60,000")
+  ) +
+  scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
   theme_minimal_grid()
 ```
 
+*now linear models: the most commonly used version of curves with defined form.*
 
 (ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. At the same body mass, male birds tend to have longer heads (and specifically, longer bills) than female birds. Data source: Keith Tarvin, Oberlin College
 
@@ -244,23 +272,114 @@ ggplot(blue_jays, aes(Mass, Head, color = KnownSex, fill = KnownSex)) +
   )
 ```
 
-(ref:biorxiv-logscale) Monthly submissions to the preprint server bioRxiv. **comment on the log scale.** Data source: Jordan Anaya, http://www.prepubmed.org/
+*now coordinate transformations. whenever possible, transform to linear.*
+
+(ref:biorxiv-expfit) Monthly submissions to the preprint server bioRxiv. The solid blue line represents the actual monthly preprint counts and the dashed black line represents an exponential fit to the data, $y = 60\exp[0.77(x - 2014)]$. Data source: Jordan Anaya, http://www.prepubmed.org/
+
+```{r biorxiv-expfit, fig.cap = '(ref:biorxiv-expfit)'}
+preprint_growth %>% filter(archive == "bioRxiv") %>%
+  filter(count > 0) %>%
+  mutate(date_dec = decimal_date(date)) -> biorxiv_growth
+
+expfit.out <- nls(
+  count ~ a*exp(b*(date_dec-2014)),
+  data = biorxiv_growth,
+  start = c(a = 60.004, b = .773)
+)
+
+linfit.out <- nls(
+  log(count) ~ log(a) + b*(date_dec-2014),
+  data = biorxiv_growth,
+  start = c(a = 42.576, b = .878)
+)
+
+date_seq = seq(min(biorxiv_growth$date_dec), max(biorxiv_growth$date_dec), by = 0.1)
+expfit.df <- data.frame(
+  date_dec = date_seq,
+  count = predict(expfit.out, data.frame(date_dec = date_seq))
+)
+
+linfit.df <- data.frame(
+  date_dec = date_seq,
+  count = exp(predict(linfit.out, data.frame(date_dec = date_seq)))
+)
+
+ggplot(biorxiv_growth, aes(date_dec, count)) + 
+  geom_line(aes(color = "data"), size = 1) +
+  geom_line(data = expfit.df, aes(color = "expfit"), size = .5, linetype = 2) +
+  scale_y_continuous(
+     limits = c(0, 1550),
+     breaks = c(0, 500, 1000, 1500),
+     expand = c(0, 0),
+     name = "preprints / month"
+  ) + 
+  scale_x_continuous(name = NULL) +
+  scale_color_manual(
+    values = c(data = "#0072B2", expfit = "black"),
+    breaks = c("data", "expfit"),
+    labels = c("actual counts", "exponential fit"),
+    guide = guide_legend(
+      override.aes = list(
+        size = c(1, 0.5),
+        linetype = c(1, 2)
+      )
+    )
+  ) +
+  theme_dviz_open() +
+  theme(
+    legend.position = c(.05, 1),
+    legend.justification = c(0, 1),
+    legend.key.width = unit(25, "pt"),
+    legend.title = element_blank(), 
+    plot.margin = margin(7, 7, 3, 0)
+  )
+```
+
+The non-linear fit suggests that preprints grow by a factor of $e^{0.77} = 2.16$ each year, but the linear fit to log-transformed data shows that the annual growth is closer to a factor of $e^{0.88} = 2.41$.
+
+
+(ref:biorxiv-logscale) Monthly submissions to the preprint server bioRxiv, shown on a log scale. The solid blue line represents the actual monthly preprint counts, the dashed black line represents the exponential fit from Figure \@ref(fig:biorxiv-expfit), and the solid black line represents a linear fit to log-transformed data, corresponding to $y = 43\exp[0.88(x - 2014)]$. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r biorxiv-logscale, fig.cap = '(ref:biorxiv-logscale)'}
-preprint_growth %>% filter(archive == "bioRxiv") %>%
-  filter(count > 0) -> biorxiv_growth
-
-ggplot(biorxiv_growth, aes(date, count)) + 
-  geom_line(color = "#0072B2", size = .75) +
-  scale_y_log10(limits = c(30, 1600),
-                breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
-                labels = c("", "", "50", "", "", "", "",
-                           "100", "", "", "", "500", "", "", "", "",
-                           "1000", ""), expand = c(0, 0),
-                name = "preprints / month") + 
-  scale_x_date(name = NULL) +
+ggplot(biorxiv_growth, aes(date_dec, count)) + 
+  geom_line(aes(color = "data"), size = 1) +
+  geom_line(data = expfit.df, aes(color = "expfit"), size = .5, linetype = 2) +
+  geom_line(data = linfit.df, aes(color = "linfit"), size = .5) +
+  scale_y_log10(
+    limits = c(30, 1670),
+    breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
+    labels = c(
+      "", "", "50", "", "", "", "", "100", "", "", "", "500",
+      "", "", "", "", "1000", ""
+    ),
+    expand = c(0, 0),
+    name = "preprints / month"
+  ) + 
+  scale_x_continuous(name = NULL) +
+  scale_color_manual(
+    values = c(data = "#0072B2", expfit = "black", linfit = "black"),
+    breaks = c("data", "expfit", "linfit"),
+    labels = c("actual counts", "exponential fit", "linear fit, log-transformed data"),
+    guide = guide_legend(
+      override.aes = list(
+        size = c(1, 0.5, 0.5),
+        linetype = c(1, 2, 1)
+      )
+    )
+  ) +
   theme_dviz_open() +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(
+    legend.position = c(.05, 1),
+    legend.justification = c(0, 1),
+    legend.key.width = unit(28, "pt"),
+    legend.title = element_blank(), 
+    plot.margin = margin(7, 7, 3, 0)
+  )
+
+```
+
+```{block type='rmdtip', echo=TRUE}
+It is usually better to fit a straight line to transformed data than to fit a nonlinear curve to untransformed data.
 ```
 
 
