@@ -15,7 +15,7 @@ The following books discuss the thought processes and decision making required f
 *Excellent all-around introduction to data visualization, in particular for journalists. The book covers many important concepts of data visualization, such as how to visualize distributions, trends, uncertainty, and maps. In many chapters, the book also serves as an introduction to basic statistical principles, explaining concepts such as population, sample, and confidence level.* 
 
 * Stephen Few. *"Show Me the Numbers."* Analytics Press, 2012.  
-*A book about data visualization for the business professional. It is similar in scope and target audience to the book by Nussbaumer-Knaflic (see below). However, Few’s book contains more material and covers many topics in more depth. At the same time, the book is not as well written and as carefully produced as the Nussbaumer-Knaflic book.*
+*A book about data visualization for the business professional. It is similar in scope and target audience to the book by Nussbaumer Knaflic (see below). However, Few’s book contains more material and covers many topics in more depth. At the same time, the book is not as well written and as carefully produced as the Nussbaumer Knaflic book.*
 
 * Cole Nussbaumer Knaflic. *"Storytelling with Data."* John Wiley & Sons, 2015.  
 *A well written and carefully produced book on how to turn data into visuals. The book’s primary audience are people making business graphics, and the book is excellent for the topics it covers. However, the book is missing many topics of importance to scientists, such as the visualization of distributions, trends, or uncertainty.*
