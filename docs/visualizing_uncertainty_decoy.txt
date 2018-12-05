@@ -1,0 +1,10 @@
+[[visualizing-uncertainty]]
+Visualizing uncertainty
+-----------------------
+
+_Chapter under construction. Tentative outline:_
+
+* _Error bars and confidence bands_
+* _Distributions_
+* _Hypothetical outcomes plots_
+* _Value suppression_

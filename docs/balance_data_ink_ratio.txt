@@ -71,7 +71,7 @@ presence draws attention away from the data points. Data source:
 (ref:Aus-athletes-grid-good) Percent body fat versus height in
 professional male Australian athletes. This figure is a cleaned-up
 version of Figure @ref(fig:Aus-athletes-grid-bad). Unnecessary frames
-have been removed, minor grid lines have been removed, and majore grid
+have been removed, minor grid lines have been removed, and major grid
 lines have been drawn in light gray to stand back relative to the data
 points. Data source: @Telford-Cunningham-1991
 
@@ -102,7 +102,7 @@ are part of the data. Data source: @Telford-Cunningham-1991
 (#fig:Aus-athletes-min-bad)(ref:Aus-athletes-min-bad)
 
 In Figure @ref(fig:Aus-athletes-grid-good), I am using an open
-background grid and no aixs lines or frame around the plot panel. I like
+background grid and no axis lines or frame around the plot panel. I like
 this design because it conveys to the reader that range of possible data
 values extends beyond the axis limits. For example, even though Figure
 @ref(fig:Aus-athletes-grid-good) shows no athlete taller than 210 cm,

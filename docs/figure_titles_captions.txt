@@ -185,7 +185,7 @@ because it is labeled excessively. In particular, providing a unit
 Finally, in some cases it is acceptable to omit not only the axis title
 but the entire axis. Pie charts typically don't have explicit axes
 (e.g., Figure @ref(fig:bundestag-pie)), and neither do treemaps (Figure
-@ref(ref:bridges-treemap)). Mosaic plots or bar charts can be shown
+@ref(fig:bridges-treemap)). Mosaic plots or bar charts can be shown
 without one or both axes if the meaning of the plot is otherwise clear
 (Figures @ref(fig:bridges-mosaic) and
 @ref(fig:titanic-passengers-by-class-sex)). Omitting explicit axes with

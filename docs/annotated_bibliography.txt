@@ -34,10 +34,10 @@ introduction to basic statistical principles, explaining concepts such
 as population, sample, and confidence level._
 * Stephen Few. _"Show Me the Numbers."_ Analytics Press, 2012. +
 _A book about data visualization for the business professional. It is
-similar in scope and target audience to the book by Nussbaumer-Knaflic
+similar in scope and target audience to the book by Nussbaumer Knaflic
 (see below). However, Few’s book contains more material and covers many
 topics in more depth. At the same time, the book is not as well written
-and as carefully produced as the Nussbaumer-Knaflic book._
+and as carefully produced as the Nussbaumer Knaflic book._
 * Cole Nussbaumer Knaflic. _"Storytelling with Data."_ John Wiley &
 Sons, 2015. +
 _A well written and carefully produced book on how to turn data into

@@ -21,7 +21,7 @@ To explore the extremes, let's consider a figure that clearly has too much non-d
 <p class="caption">(\#fig:Aus-athletes-grid-bad)(ref:Aus-athletes-grid-bad)</p>
 </div>
 
-(ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and majore grid lines have been drawn in light gray to stand back relative to the data points. Data source: @Telford-Cunningham-1991
+(ref:Aus-athletes-grid-good) Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure \@ref(fig:Aus-athletes-grid-bad). Unnecessary frames have been removed, minor grid lines have been removed, and major grid lines have been drawn in light gray to stand back relative to the data points. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
 <img src="balance_data_ink_ratio_files/figure-html/Aus-athletes-grid-good-1.png" alt="(ref:Aus-athletes-grid-good)" width="576" />
@@ -37,7 +37,7 @@ At the other extreme of the data-to-ink-ratio scale, we might end up with a figu
 <p class="caption">(\#fig:Aus-athletes-min-bad)(ref:Aus-athletes-min-bad)</p>
 </div>
 
-In Figure \@ref(fig:Aus-athletes-grid-good), I am using an open background grid and no aixs lines or frame around the plot panel. I like this design because it conveys to the reader that range of possible data values extends beyond the axis limits. For example, even though Figure \@ref(fig:Aus-athletes-grid-good) shows no athlete taller than 210 cm, such an athlete could conceivably exist. However, some authors prefer to delineate the extent of the plot panel, by drawing a frame around it (Figure \@ref(fig:Aus-athletes-grid-good-frame)). Both options are reasonable, and which is preferable is primarily a matter of personal opinion. One advantage of the framed version is that it clearly separates the legend from the plot panel.
+In Figure \@ref(fig:Aus-athletes-grid-good), I am using an open background grid and no axis lines or frame around the plot panel. I like this design because it conveys to the reader that range of possible data values extends beyond the axis limits. For example, even though Figure \@ref(fig:Aus-athletes-grid-good) shows no athlete taller than 210 cm, such an athlete could conceivably exist. However, some authors prefer to delineate the extent of the plot panel, by drawing a frame around it (Figure \@ref(fig:Aus-athletes-grid-good-frame)). Both options are reasonable, and which is preferable is primarily a matter of personal opinion. One advantage of the framed version is that it clearly separates the legend from the plot panel.
 
 (ref:Aus-athletes-grid-good-frame) Percent body fat versus height in professional male Australian athletes. This figure adds a frame around the plot panel of Figure \@ref(fig:Aus-athletes-grid-good), and this frame helps separate the legend from the data. Data source: @Telford-Cunningham-1991
 
