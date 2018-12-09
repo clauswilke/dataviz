@@ -126,8 +126,14 @@ breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
 p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (minutes)`)) + 
   geom_abline(slope = 0, intercept = 0, color="grey80") +
-  scale_x_time(breaks = hm(breaks_x),
-               labels = breaks_x) +
+  scale_x_time(
+    name = "departure time",
+    breaks = hm(breaks_x),
+    labels = breaks_x
+  ) +
+  scale_y_continuous(
+    name = "departure delay (minutes)"
+  ) +
   theme_dviz_open() +
   theme(plot.margin = margin(3, 7, 3, 0))
   
@@ -145,7 +151,13 @@ In such cases, instead of plotting individual points, we can make a 2d histogram
 ```{r nycflights-2d-bins, fig.asp = 0.75, fig.cap = '(ref:nycflights-2d-bins)'}
 p_flights_2d_bins <- p_flights_base +
   geom_bin2d(bins=50) +
-  scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+  #scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+    scale_fill_continuous_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, 
+    rev = TRUE,
+    begin = 0.2,
+    name = "departures"
+  ) +
   theme(legend.position = c(0.85, .85))
 
 p_flights_2d_bins
@@ -160,7 +172,13 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 ```{r nycflights-hex-bins, fig.asp = 0.75, fig.cap = '(ref:nycflights-hex-bins)'}
 p_flights_hex_bins <- p_flights_base +
   geom_hex(bins=50) +
-  scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+  #scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
+  scale_fill_continuous_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, 
+    rev = TRUE,
+    begin = 0.2,
+    name = "departures"
+  ) +
   theme(legend.position = c(0.85, .85))
 
 p_flights_hex_bins
@@ -212,7 +230,7 @@ p_midwest_base +
 
 
 ```{r eval = FALSE}
-# As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamons as contours (labelled bad), then contours faceted? And then maybe the following plot?
+# As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamonds as contours (labelled bad), then contours faceted? And then maybe the following plot?
 
 ggplot(diamonds, aes(carat, price)) + 
   geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5) + 

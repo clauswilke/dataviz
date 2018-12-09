@@ -191,3 +191,178 @@ ggplot(df_out, aes(x = mean, y = group)) +
 Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-outcomes-plots-experiencing-the-uncertain-b9ea60d7c740
 
 ## Value-suppressing uncertainty palette
+
+
+## Contour lines (Staging for overlapping points chapter)
+
+Instead of binning data points into rectangles or hexagons, we can also estimate the point density across the plot area and indicate regions of different point densities with contour lines. This technique works well when the point density changes slowly across both the *x* and the *y* dimensions.
+
+As an example for this approach, we consider the relationship between population number and area for counties in the Midwest. We have data for 1055 counties, and a scatter plot looks like a cloud of points (Figure \@ref(fig:midwest-scatter)). We can highlight the distribution of points more clearly by making them very small and partially transparent and plotting them on top of contour lines that delineate regions of comparable point density (Figure \@ref(fig:midwest-density-dots)). We can also plot just the contour lines, without the individual points (Figure \@ref(fig:midwest-density-smooth)). In this case, it can be helpful to add a trendline that shows the overall trend in the data. Here, there isn't much of a trend, and the shape of the trendline (approximately flat) reflects this lack of a trend.
+
+(ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
+
+```{r midwest-scatter, fig.asp = 0.8, fig.cap = '(ref:midwest-scatter)'}
+county_midwest <- left_join(US_census, US_regions) %>%
+  filter(region == "Midwest")
+
+p_midwest_base <- ggplot(county_midwest, aes(area, pop2010)) + 
+  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
+  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
+                limits = c(450, 5.2e6),
+                labels = label_log10) +
+  scale_x_log10(breaks = c(100, 300, 1000, 3000),
+                limits = c(50, 7000), expand = c(0, 0)) +
+  ylab("population total") +
+  xlab("area (square miles)") +
+  theme_dviz_grid()
+
+p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7)
+```
+
+(ref:blue-jays-contour)
+
+```{r blue-jays-contour, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour)'}
+
+blue_jays_base <- ggplot(blue_jays, aes(Mass, Head)) + 
+  scale_fill_gradient(low = "grey95", high = "grey60", guide = "none") +
+  scale_x_continuous(
+    limits = c(56, 84),
+    expand = c(0, 0),
+    name = "body mass (g)") +
+  scale_y_continuous(
+    limits = c(49, 61),
+    expand = c(0, 0),
+    name = "head length (mm)"
+  ) +
+  theme_dviz_grid()
+
+blue_jays_base + 
+  stat_density_2d(color = "black", size = 0.2) +
+  geom_point(color = "#0072B2", size = .75)
+
+blue_jays_base + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2) +
+  geom_point(color = "#0072B2", size = .75)
+
+blue_jays_base + 
+  aes(color = KnownSex) +
+  stat_density_2d(size = 0.3) +
+  geom_point(size = .75) +
+  scale_color_manual(
+    values = c(F = "#D55E00", M = "#0072B2"),
+    breaks = c("F", "M"),
+    labels = c("female birds   ", "male birds"),
+    name = NULL,
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(size = 2, linetype = 0)
+    )
+  ) +
+  theme_dviz_grid() +
+  theme(
+    legend.position = c(1, 0),
+    legend.justification = c(1, 0),
+    #legend.position = "top",
+    #legend.justification = "right",
+    #legend.box.spacing = unit(3.5, "pt"), # distance between legend and plot
+    legend.text = element_text(vjust = 0.6),
+    legend.spacing.x = unit(2, "pt"),
+    legend.background = element_rect(fill = "white", color = NA),
+    #legend.key.width = unit(10, "pt")
+    axis.ticks.length = unit(0, "pt"),
+    axis.ticks = element_blank()
+  )
+```
+
+
+
+(ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
+
+```{r midwest-density-dots, fig.asp = 0.8, fig.cap = '(ref:midwest-density-dots)'}
+p_midwest_base + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
+  geom_point(color = "navy", size = .5, alpha = .4)
+```
+
+(ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
+
+```{r midwest-density-smooth, fig.asp = 0.8, fig.cap = '(ref:midwest-density-smooth)'}
+p_midwest_base + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
+  geom_smooth(color = "navy", se = FALSE, size = 0.5)
+```
+
+
+```{r}
+# As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamonds as contours (labelled bad), then contours faceted? And then maybe the following plot?
+
+ggplot(diamonds, aes(carat, price)) + 
+  geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5, na.rm = TRUE) + 
+  geom_density2d(color = "#035F33", size = 0.25, na.rm = TRUE) +
+  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
+  scale_y_log10(limits = c(300, 20000),
+                breaks = c(300, 1000, 3000, 10000)) +
+  theme_dviz_grid()
+
+p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
+  geom_density2d(size = .2, na.rm = TRUE) +
+  scale_x_continuous(
+    limits = c(-.4, 4.4), expand = c(0, 0)
+  ) +
+  scale_y_log10(
+    limits = c(200, 25000),
+    breaks = c(300, 1000, 3000, 10000),
+    expand = c(0, 0)
+  ) +
+  theme_dviz_grid() +
+  panel_border() +
+  theme(
+    plot.margin = margin(18, 7, 1, 0),
+    legend.title = element_text(hjust = 0.5),
+    legend.position = c(.95, .5),
+    legend.justification = c(1, 0.5),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    axis.ticks.length = unit(0, "pt")
+  )
+
+stamp_bad(p)
+
+
+ggplot(diamonds, aes(carat, price)) + 
+  geom_density2d(color = "#0072B2", size = .2, na.rm = TRUE) +
+  scale_x_continuous(
+    limits = c(-.4, 4.4), expand = c(0, 0)
+  ) +
+  scale_y_log10(
+    limits = c(200, 25000),
+    breaks = c(300, 1000, 3000, 10000),
+    expand = c(0, 0)
+  ) +
+  facet_wrap(~cut, scales = "free_x", labeller = labeller(cut = tolower)) +
+  theme_dviz_grid() +
+  panel_border() +
+  theme(
+    legend.title = element_text(hjust = 0.5),
+    legend.position = c(.95, .05),
+    legend.justification = c(1, 0),
+    axis.ticks.length = unit(0, "pt")
+  )
+
+
+
+# ggplot(diamonds, aes(carat, price)) + 
+#   geom_bin2d(bins = 50) +
+#   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
+#   scale_y_log10(limits = c(300, 20000),
+#                 breaks = c(300, 1000, 3000, 10000)) +
+#   scale_fill_continuous_sequential("Green-Yellow", rev = TRUE, begin = 0) +
+#   theme_dviz_grid() +
+#   theme(legend.position = c(0.9, 0.4),
+#         legend.justification = c(1, 0.5),
+#         legend.box.background = element_rect(fill = "white",
+#                                              color = NA),
+#         legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
+```
+
+
+
