@@ -4,6 +4,11 @@ source("_common.R")
 
 library(forcats)
 library(patchwork)
+library(lubridate)
+library(mgcv)
+library(mvtnorm)
+library(rlang)
+library(tidyr)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -182,6 +187,142 @@ ggplot(df_out, aes(x = mean, y = group)) +
   theme_minimal()
 ```
 
+```{r fig.width = 5.5, fig.asp = 3/4}
+sample_posterior_preds <- function(model, samples = 20, n = 100, unconditional = TRUE) {
+  predictor <- model$pred.formula[[2]]
+  response <- model$terms[[2]]
+   
+  # make a tibble with a sequence of predictor values
+  pred_seq <- tibble(
+    !!predictor := seq(
+      min(model$model[[predictor]]),
+      max(model$model[[predictor]]), 
+      length.out = n
+    )
+  )
+  
+  # Get the linear prediction matrix
+  pred_mat <- predict(
+    model,
+    newdata  = pred_seq,
+    type = "lpmatrix",
+    unconditional = unconditional
+  )
+
+  # Get the variance-covariance matrix of coefficients
+  vcov_mat <- vcov(model, unconditional = unconditional)
+
+  # Draw 20 samples from the posterior and make predictions from them
+  coefs <- rmvnorm(samples, mean = coef(model), sigma = vcov_mat)
+  preds <- pred_mat %*% t(coefs)
+  pred_df <- as_tibble(preds) %>%
+    set_names(as.character(1:samples)) %>%
+    cbind(pred_seq) %>%
+    gather(sample, !!response, -!!predictor)
+  
+  pred_df
+}
+
+# Get the smoothing-uncertainty corrected confidence intervals
+confidence_band <- function(model, level = 0.95, n = 100, unconditional = TRUE) {
+  predictor <- model$pred.formula[[2]]
+  response <- model$terms[[2]]
+   
+  # make a tibble with a sequence of predictor values
+  pred_seq <- tibble(
+    !!predictor := seq(
+      min(model$model[[predictor]]),
+      max(model$model[[predictor]]), 
+      length.out = n
+    )
+  )
+
+  # normal quantile corresponding to confidence level
+  std <- stats::qnorm(level / 2 + 0.5)
+
+  # predict confidence band
+  predict(
+    model,
+    newdata = pred_seq,
+    se.fit = TRUE,
+    unconditional = unconditional
+  ) %>%
+    as_tibble() %>%
+    cbind(pred_seq) %>%
+    rename(!!response := fit) %>%
+    mutate(
+      lo = !!response - std*se.fit,
+      hi = !!response + std*se.fit
+    )
+}
+
+
+blue_jays_male <- filter(blue_jays, KnownSex == "M")
+
+fit <- gam(Head ~ Mass, data = blue_jays_male, method = "REML")
+sample_df <- sample_posterior_preds(fit, 20)
+ci_df <- confidence_band(fit)
+
+ggplot(blue_jays_male, aes(Mass, Head)) + 
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="#80808080", color = NA) +
+  geom_point(color = "#0072B2", size = 1.5) +
+  geom_line(data = sample_df, aes(group = sample), color = "blue", size = 0.3) +
+  geom_line(data = ci_df, color = "red", size = 0.5) +
+  scale_x_continuous(
+    limits = c(59, 82),
+    expand = c(0, 0),
+    name = "body mass (g)") +
+  scale_y_continuous(
+    limits = c(52, 61),
+    expand = c(0, 0),
+    name = "head length (mm)"
+  ) +
+  theme_dviz_open()
+
+```
+
+```{r tank-capacity-uncertain, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:tank-capacity-uncertain)'}
+cars93 <- MASS::Cars93
+
+set.seed(8692282)
+
+fit <- gam(Fuel.tank.capacity ~ s(Price, k = 5, bs = 'cr'), data = cars93)
+#fit <- gam(Fuel.tank.capacity ~ s(Price, k = 6, bs = 'gp'), data=cars93)
+#fit <- gam(Fuel.tank.capacity ~ s(Price), data = cars93, method = "REML")
+sample_df <- sample_posterior_preds(fit, 10, unconditional = FALSE)
+ci_df <- confidence_band(fit, unconditional = FALSE)
+
+cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + 
+  scale_x_continuous(
+    name = "price (USD)",
+    breaks = c(20, 40, 60),
+    labels = c("$20,000", "$40,000", "$60,000")
+  ) +
+  scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
+  theme_minimal_grid(12)
+
+p1 <- cars_base +
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60") +
+  geom_line(data = ci_df, color = "#0072B2", size = 1)
+
+p2 <- cars_base +
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60") +
+  geom_line(data = sample_df, aes(group = sample), color = "#0072B2", size = 0.3)
+
+plot_grid(
+  p1, p2, align = 'hv',
+  labels = 'auto'
+)
+
+```
+
+```{r}
+pima <- rbind(MASS::Pima.te, MASS::Pima.tr)
+
+fit <- glm(type ~ npreg + glu + bp + skin + bmi + age, data = pima, family = "binomial")
+```
 
 ## Distributions
 
@@ -201,7 +342,7 @@ As an example for this approach, we consider the relationship between population
 
 (ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
 
-```{r midwest-scatter, fig.asp = 0.8, fig.cap = '(ref:midwest-scatter)'}
+```{r midwest-scatter, fig.asp = 0.8, fig.cap = '(ref:midwest-scatter)', eval = FALSE}
 county_midwest <- left_join(US_census, US_regions) %>%
   filter(region == "Midwest")
 
@@ -224,9 +365,8 @@ p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7)
 ```{r blue-jays-contour, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour)'}
 
 blue_jays_base <- ggplot(blue_jays, aes(Mass, Head)) + 
-  scale_fill_gradient(low = "grey95", high = "grey60", guide = "none") +
   scale_x_continuous(
-    limits = c(56, 84),
+    limits = c(57, 82),
     expand = c(0, 0),
     name = "body mass (g)") +
   scale_y_continuous(
@@ -237,17 +377,22 @@ blue_jays_base <- ggplot(blue_jays, aes(Mass, Head)) +
   theme_dviz_grid()
 
 blue_jays_base + 
-  stat_density_2d(color = "black", size = 0.2) +
-  geom_point(color = "#0072B2", size = .75)
+  stat_density_2d(color = "black", size = 0.4, binwidth = 0.004) +
+  geom_point(color = "black", size = 1.5, alpha = 1/3)
+```
 
+```{r blue-jays-contour-filled, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour-filled)'}
 blue_jays_base + 
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2) +
-  geom_point(color = "#0072B2", size = .75)
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.15, binwidth = 0.004) +
+  geom_point(color = "black", size = 1.5, alpha = .4) +
+  scale_fill_gradient(low = "grey95", high = "grey70", guide = "none")
+```
 
+```{r blue-jays-contour-by-sex, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour-by-sex)'}
 blue_jays_base + 
   aes(color = KnownSex) +
-  stat_density_2d(size = 0.3) +
-  geom_point(size = .75) +
+  stat_density_2d(size = 0.4, binwidth = 0.006) +
+  geom_point(size = 1.5, alpha = 0.7) +
   scale_color_manual(
     values = c(F = "#D55E00", M = "#0072B2"),
     breaks = c("F", "M"),
@@ -275,10 +420,9 @@ blue_jays_base +
 ```
 
 
-
 (ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
 
-```{r midwest-density-dots, fig.asp = 0.8, fig.cap = '(ref:midwest-density-dots)'}
+```{r midwest-density-dots, fig.asp = 0.8, fig.cap = '(ref:midwest-density-dots)', eval = FALSE}
 p_midwest_base + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
   geom_point(color = "navy", size = .5, alpha = .4)
@@ -286,14 +430,14 @@ p_midwest_base +
 
 (ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
 
-```{r midwest-density-smooth, fig.asp = 0.8, fig.cap = '(ref:midwest-density-smooth)'}
+```{r midwest-density-smooth, fig.asp = 0.8, fig.cap = '(ref:midwest-density-smooth)', eval = FALSE}
 p_midwest_base + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
   geom_smooth(color = "navy", se = FALSE, size = 0.5)
 ```
 
 
-```{r}
+```{r eval = FALSE}
 # As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamonds as contours (labelled bad), then contours faceted? And then maybe the following plot?
 
 ggplot(diamonds, aes(carat, price)) + 
@@ -303,41 +447,91 @@ ggplot(diamonds, aes(carat, price)) +
   scale_y_log10(limits = c(300, 20000),
                 breaks = c(300, 1000, 3000, 10000)) +
   theme_dviz_grid()
+```
 
+```{r diamonds-points, fig.asp = 3/4, fig.cap = '(ref:diamonds-points)'}
 p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
-  geom_density2d(size = .2, na.rm = TRUE) +
+  geom_point(size = .2, alpha = 1/5) +
   scale_x_continuous(
-    limits = c(-.4, 4.4), expand = c(0, 0)
+    limits = c(-1, 5.1)
   ) +
   scale_y_log10(
-    limits = c(200, 25000),
-    breaks = c(300, 1000, 3000, 10000),
-    expand = c(0, 0)
+    breaks = c(300, 1000, 3000, 10000)
   ) +
+  scale_color_discrete_sequential(
+    palette = "Inferno",
+    nmax = 6,
+    order = 1:5,
+    breaks = c("Ideal", "Premium", "Very Good", "Good", "Fair"),
+    labels = c("ideal", "premium", "very good", "good", "fair"),
+    guide = guide_legend(
+      override.aes = list(size = 2, alpha = 1)
+    )
+  ) +
+  coord_cartesian(xlim = c(-.1, 3.2), ylim = c(240, 25000), expand = FALSE) + 
   theme_dviz_grid() +
   panel_border() +
   theme(
     plot.margin = margin(18, 7, 1, 0),
-    legend.title = element_text(hjust = 0.5),
-    legend.position = c(.95, .5),
+    legend.key.width = unit(6, "pt"),
+    legend.spacing.y = unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5, margin = margin(0, 0, 0, 0)),
+    legend.position = c(.97, .3),
     legend.justification = c(1, 0.5),
+    legend.box.margin = margin(7, 7, 7, 7),
     legend.box.background = element_rect(fill = "white", color = NA),
     axis.ticks.length = unit(0, "pt")
   )
 
 stamp_bad(p)
+```
 
-
-ggplot(diamonds, aes(carat, price)) + 
-  geom_density2d(color = "#0072B2", size = .2, na.rm = TRUE) +
+```{r diamonds-contour-colors, fig.asp = 3/4}
+p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
+  geom_density2d(size = .35, binwidth = 0.8) +
   scale_x_continuous(
-    limits = c(-.4, 4.4), expand = c(0, 0)
+    limits = c(-1, 5.1)
   ) +
   scale_y_log10(
-    limits = c(200, 25000),
-    breaks = c(300, 1000, 3000, 10000),
-    expand = c(0, 0)
+    breaks = c(300, 1000, 3000, 10000)
   ) +
+  scale_color_discrete_sequential(
+    palette = "Inferno",
+    nmax = 6,
+    order = 1:5,
+    breaks = c("Ideal", "Premium", "Very Good", "Good", "Fair"),
+    labels = c("ideal", "premium", "very good", "good", "fair"),
+    guide = guide_legend(
+      override.aes = list(size = 0.5)
+    )
+  ) +
+  coord_cartesian(xlim = c(-.1, 2.3), ylim = c(240, 25000), expand = FALSE) + 
+  theme_dviz_grid() +
+  panel_border() +
+  theme(
+    plot.margin = margin(18, 7, 1, 0),
+    legend.spacing.y = unit(3, "pt"),
+    legend.title = element_text(hjust = 0.5, margin = margin(0, 0, 0, 0)),
+    legend.position = c(.97, .3),
+    legend.justification = c(1, 0.5),
+    legend.box.margin = margin(7, 7, 7, 7),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    axis.ticks.length = unit(0, "pt")
+  )
+
+stamp_bad(p)
+```
+
+```{r diamonds-contour-facets, fig.asp = 3/4}
+ggplot(diamonds, aes(carat, price)) + 
+  geom_density2d(color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +
+  scale_x_continuous(
+    limits = c(-1, 5.1)
+  ) +
+  scale_y_log10(
+    breaks = c(300, 1000, 3000, 10000)
+  ) +
+  coord_cartesian(xlim = c(-.1, 2.3), ylim = c(200, 25000), expand = FALSE) + 
   facet_wrap(~cut, scales = "free_x", labeller = labeller(cut = tolower)) +
   theme_dviz_grid() +
   panel_border() +
