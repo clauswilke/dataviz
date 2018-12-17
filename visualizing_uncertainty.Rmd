@@ -81,6 +81,11 @@ ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) 
   theme_dviz_hgrid()
 ```
 
+```{block type='rmdtip', echo=TRUE}
+Whenever you visualize uncertainty with error bars, you must specify what quantity and/or confidence level the error bars represent.
+```
+
+
 *Include a coefficient plot from a regression model, as in Cleveland's book?*
 
 ```{r}
@@ -318,13 +323,23 @@ plot_grid(
 
 ```
 
-```{r}
-pima <- rbind(MASS::Pima.te, MASS::Pima.tr)
 
-fit <- glm(type ~ npreg + glu + bp + skin + bmi + age, data = pima, family = "binomial")
-```
+## Methods of uncertainty estimates
 
-## Distributions
+
+Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation.
+
+------------------------------------------------------------------------------------------
+approach       interpretability    computational       complexity of     assumptions on
+                of estimates         efficiency        modeling setup       data set
+------------ ------------------ ------------------- ------------------- ------------------
+Bayesian          high                 low                 high                few
+
+frequentist       moderate              high              moderate            several
+parametric  
+
+bootstrap           low                moderate             low                none
+------------------------------------------------------------------------------------------
 
 
 ## Hypothetical outcomes plots
@@ -338,29 +353,9 @@ Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-ou
 
 Instead of binning data points into rectangles or hexagons, we can also estimate the point density across the plot area and indicate regions of different point densities with contour lines. This technique works well when the point density changes slowly across both the *x* and the *y* dimensions.
 
-As an example for this approach, we consider the relationship between population number and area for counties in the Midwest. We have data for 1055 counties, and a scatter plot looks like a cloud of points (Figure \@ref(fig:midwest-scatter)). We can highlight the distribution of points more clearly by making them very small and partially transparent and plotting them on top of contour lines that delineate regions of comparable point density (Figure \@ref(fig:midwest-density-dots)). We can also plot just the contour lines, without the individual points (Figure \@ref(fig:midwest-density-smooth)). In this case, it can be helpful to add a trendline that shows the overall trend in the data. Here, there isn't much of a trend, and the shape of the trendline (approximately flat) reflects this lack of a trend.
+As an example for this approach, we return to the blue jays dataset from Chapter \@ref(visualizing-associations). Figure \@ref(fig:blue-jays-scatter) showed the relationship between head length and body mass for 123 blue jays, and there was some amount of overlap among the points. We can highlight the distribution of points more clearly by making the points smaller and partially transparent and plotting them on top of contour lines that delineate regions of similar point density (Figure \@ref(fig:blue-jays-contour)). We can further enhance the perception of changes in the point density by shading the regions enclosed by the contour lines, using darker colors for regions representing higher point densities (Figure \@ref(fig:blue-jays-contour-filled)).
 
-(ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
-
-```{r midwest-scatter, fig.asp = 0.8, fig.cap = '(ref:midwest-scatter)', eval = FALSE}
-county_midwest <- left_join(US_census, US_regions) %>%
-  filter(region == "Midwest")
-
-p_midwest_base <- ggplot(county_midwest, aes(area, pop2010)) + 
-  scale_fill_gradient(low = "grey70", high = "grey30", guide = "none") +
-  scale_y_log10(breaks = c(1000, 1e4, 1e5, 1e6, 1e7),
-                limits = c(450, 5.2e6),
-                labels = label_log10) +
-  scale_x_log10(breaks = c(100, 300, 1000, 3000),
-                limits = c(50, 7000), expand = c(0, 0)) +
-  ylab("population total") +
-  xlab("area (square miles)") +
-  theme_dviz_grid()
-
-p_midwest_base + geom_point(color = "navy", size = 1, alpha = .7)
-```
-
-(ref:blue-jays-contour)
+(ref:blue-jays-contour) Head length versus body mass for 123 blue jays, as in Figure \@ref(fig:blue-jays-scatter). Each dot corresponds to one bird, and the lines indicate regions of similar point density. The point density increases towards the center of the plot, near a body mass of 75g and a head length between 55mm and 57.5mm. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-contour, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour)'}
 
@@ -381,12 +376,18 @@ blue_jays_base +
   geom_point(color = "black", size = 1.5, alpha = 1/3)
 ```
 
+(ref:blue-jays-contour-filled) Head length versus body mass for 123 blue jays. This figure is nearly identical to Figure \@ref(fig:blue-jays-scatter), but now the areas enclosed by the contour lines are shaded with increasingly darker shades of gray. This shading creates a stronger visual impression of increasing point density towards the center of the point cloud. Data source: Keith Tarvin, Oberlin College
+
 ```{r blue-jays-contour-filled, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour-filled)'}
 blue_jays_base + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.15, binwidth = 0.004) +
   geom_point(color = "black", size = 1.5, alpha = .4) +
   scale_fill_gradient(low = "grey95", high = "grey70", guide = "none")
 ```
+
+In Chapter \@ref(visualizing-associations), we also looked at the relationship between head length and body mass separately for male and female birds (Figure \@ref(fig:blue-jays-scatter-sex)). We can do the same with contour lines, by drawing separately colored contour lines for male and female birds (Figure \@ref(fig:blue-jays-contour-by-sex)).
+
+(ref:blue-jays-contour-by-sex) Head length versus body mass for 123 blue jays. As in Figure \@ref(fig:blue-jays-scatter-sex), we can also indicate the birds' sex by color when drawing contour lines. This figure highlights how the point distribution is different for male and female birds. In particular, male birds are more densely clustered in one region of the plot area whereas female birds are more spread out. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-contour-by-sex, fig.width = 6, fig.asp = 3/4, fig.cap='(ref:blue-jays-contour-by-sex)'}
 blue_jays_base + 
@@ -419,35 +420,11 @@ blue_jays_base +
   )
 ```
 
+Drawing multiple sets of contour lines in different colors can be a powerful strategy for showing the distributions of several point clouds at once. However, this technique needs to be employed with care. It only works when the number of groups with distinct colors is small (two to three) and the groups are clearly separated. Otherwise, we may end up with a hairball of differently colored lines all crisscrossing each other and not showing any particular pattern at all.
 
-(ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
+To illustrate this potential problem, I will employ the diamonds dataset, which contains information for 53,940 diamonds, including their price, weight (carat), and cut. Figure \@ref(fig:diamonds-points) shows this dataset as a scatter plot. We see clear problems with overplotting. There are so many different-colored points on top of one another that it is impossible to discern anything beyond the overall broad outline of where diamonds fall on the price--carat spectrum.
 
-```{r midwest-density-dots, fig.asp = 0.8, fig.cap = '(ref:midwest-density-dots)', eval = FALSE}
-p_midwest_base + 
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
-  geom_point(color = "navy", size = .5, alpha = .4)
-```
-
-(ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
-
-```{r midwest-density-smooth, fig.asp = 0.8, fig.cap = '(ref:midwest-density-smooth)', eval = FALSE}
-p_midwest_base + 
-  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = "black", size = 0.2, alpha = 0.5) +
-  geom_smooth(color = "navy", se = FALSE, size = 0.5)
-```
-
-
-```{r eval = FALSE}
-# As an alternative plot with contour lines, show blue jays data as contours (no sex), then with sex (2 contour colours), then diamonds as contours (labelled bad), then contours faceted? And then maybe the following plot?
-
-ggplot(diamonds, aes(carat, price)) + 
-  geom_point(size = 0.1, color = "#E2E6CA", alpha = 0.5, na.rm = TRUE) + 
-  geom_density2d(color = "#035F33", size = 0.25, na.rm = TRUE) +
-  scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
-  scale_y_log10(limits = c(300, 20000),
-                breaks = c(300, 1000, 3000, 10000)) +
-  theme_dviz_grid()
-```
+(ref:diamonds-points) Price of diamonds versus their carat value, for 53,940 individual diamonds. Each diamond's cut is indicated by color. The plot is labeled as "bad" because the extensive overplotting makes it impossible to discern any patterns among the different diamond cuts. Data source: Hadley Wickham, ggplot2
 
 ```{r diamonds-points, fig.asp = 3/4, fig.cap = '(ref:diamonds-points)'}
 p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
@@ -456,7 +433,9 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
     limits = c(-1, 5.1)
   ) +
   scale_y_log10(
-    breaks = c(300, 1000, 3000, 10000)
+    name = "price (USD)",
+    breaks = c(300, 1000, 3000, 10000),
+    labels = c("$300", "$1,000", "$3,000", "$10,000")
   ) +
   scale_color_discrete_sequential(
     palette = "Inferno",
@@ -475,7 +454,7 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
     plot.margin = margin(18, 7, 1, 0),
     legend.key.width = unit(6, "pt"),
     legend.spacing.y = unit(3, "pt"),
-    legend.title = element_text(hjust = 0.5, margin = margin(0, 0, 0, 0)),
+    legend.title = element_text(hjust = 0, margin = margin(0, 0, 0, 0)),
     legend.position = c(.97, .3),
     legend.justification = c(1, 0.5),
     legend.box.margin = margin(7, 7, 7, 7),
@@ -486,6 +465,11 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
 stamp_bad(p)
 ```
 
+We could try to draw colored contour lines for the different qualities of cut, as in Figure \@ref(fig:blue-jays-contour-by-sex). However, in the diamonds dataset, we have five distinct colors and the groups strongly overlap. Therefore, the contour plot (Figure \@ref(fig:diamonds-contour-colors)) is not much better than the original scatter plot (Figure \@ref(fig:diamonds-points)).
+
+(ref:diamonds-contour-colors) Price of diamonds versus their carat value. As Figure \@ref(fig:diamonds-points), but now individual points have been replaced by contour lines. The resulting plot is still labeled "bad", because the contour lines all lie on top of each other. Neither the point distribution for individual cuts nor the overall point distribution can be discerned. Data source: Hadley Wickham, ggplot2
+
+
 ```{r diamonds-contour-colors, fig.asp = 3/4}
 p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
   geom_density2d(size = .35, binwidth = 0.8) +
@@ -493,7 +477,9 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
     limits = c(-1, 5.1)
   ) +
   scale_y_log10(
-    breaks = c(300, 1000, 3000, 10000)
+    name = "price (USD)",
+    breaks = c(300, 1000, 3000, 10000),
+    labels = c("$300", "$1,000", "$3,000", "$10,000")
   ) +
   scale_color_discrete_sequential(
     palette = "Inferno",
@@ -511,7 +497,7 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
   theme(
     plot.margin = margin(18, 7, 1, 0),
     legend.spacing.y = unit(3, "pt"),
-    legend.title = element_text(hjust = 0.5, margin = margin(0, 0, 0, 0)),
+    legend.title = element_text(hjust = 0, margin = margin(0, 0, 0, 0)),
     legend.position = c(.97, .3),
     legend.justification = c(1, 0.5),
     legend.box.margin = margin(7, 7, 7, 7),
@@ -522,14 +508,23 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
 stamp_bad(p)
 ```
 
-```{r diamonds-contour-facets, fig.asp = 3/4}
+What helps here is to draw the contour lines for each cut quality in its own plot panel (Figure \@ref(fig:diamonds-contour-facets)). The purpose of drawing them all in one panel might be to enable visual comparison between the groups, but Figure \@ref(fig:diamonds-contour-colors) is so busy that a comparison isn't possible.  Instead, in Figure \@ref(fig:diamonds-contour-facets), the background grid enables us to make  comparisons across cut qualities, by paying attention to where exactly the contour lines fall relative to the grid lines.
+
+(ref:diamonds-contour-facets) Price of diamonds versus their carat value. Here, we have taken the density contours from Figure \@ref(fig:diamonds-contour-colors) and drawn them separately for each cut. We can now see that better cuts (very good, premium, ideal) tend to have lower carat values than the poorer cuts (fair, good) but command a higher price per carat. Data source: Hadley Wickham, ggplot2
+
+
+```{r diamonds-contour-facets, fig.width = 8.5, fig.asp = 3/4, fig.cap = "(ref:diamonds-contour-facets)"}
 ggplot(diamonds, aes(carat, price)) + 
-  geom_density2d(color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon", color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +
+  #geom_density2d(color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +
+  scale_fill_gradient(low = desaturate(lighten("#0072B2", .9), .6), high = desaturate(lighten("#0072B2", .6), .6), guide = "none") +
   scale_x_continuous(
     limits = c(-1, 5.1)
   ) +
   scale_y_log10(
-    breaks = c(300, 1000, 3000, 10000)
+    name = "price (USD)",
+    breaks = c(300, 1000, 3000, 10000),
+    labels = c("$300", "$1,000", "$3,000", "$10,000")
   ) +
   coord_cartesian(xlim = c(-.1, 2.3), ylim = c(200, 25000), expand = FALSE) + 
   facet_wrap(~cut, scales = "free_x", labeller = labeller(cut = tolower)) +
@@ -541,22 +536,6 @@ ggplot(diamonds, aes(carat, price)) +
     legend.justification = c(1, 0),
     axis.ticks.length = unit(0, "pt")
   )
-
-
-
-# ggplot(diamonds, aes(carat, price)) + 
-#   geom_bin2d(bins = 50) +
-#   scale_x_continuous(limits = c(0, 4.2), expand = c(0, 0.1)) +
-#   scale_y_log10(limits = c(300, 20000),
-#                 breaks = c(300, 1000, 3000, 10000)) +
-#   scale_fill_continuous_sequential("Green-Yellow", rev = TRUE, begin = 0) +
-#   theme_dviz_grid() +
-#   theme(legend.position = c(0.9, 0.4),
-#         legend.justification = c(1, 0.5),
-#         legend.box.background = element_rect(fill = "white",
-#                                              color = NA),
-#         legend.box.margin = margin(3.5, 3.5, 3.5, 3.5))
 ```
 
-
-
+We can make out two main trends. First, the better cuts (very good, premium, ideal) tend to have lower carat values than the poorer cuts (fair, good). Recall that carat is a measure of diamond weight (1 carat = 0.2 gram). Better cuts tend to result (on average) in lighter diamonds because more material needs to be removed to create them. Second, at the same carat value, better cuts tend to command higher prices. To see this pattern, look for example at the price distribution for 0.5 carat. The distribution is shifted upwards for better cuts, and in particular it is substantially higher for diamonds with ideal cut than for diamonds with fair or good cut.
