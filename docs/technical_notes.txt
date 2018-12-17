@@ -56,18 +56,18 @@ The book was last compiled using the following environment:
 ## [19] classInt_0.2-3      digest_0.6.18       foreign_0.8-71     
 ## [22] rmarkdown_1.10      jpeg_0.1-8          pkgconfig_2.0.2    
 ## [25] htmltools_0.3.6     rlang_0.3.0.1       readxl_1.1.0       
-## [28] rstudioapi_0.7      farver_1.0.0.9999   jsonlite_1.5       
-## [31] magrittr_1.5        Rcpp_1.0.0          munsell_0.5.0      
-## [34] ggfittext_0.6.0     stringi_1.2.4       yaml_2.2.0         
-## [37] MASS_7.3-50         geogrid_0.1.1       plyr_1.8.4         
-## [40] grid_3.5.0          misc3d_0.8-4        crayon_1.3.4       
-## [43] deldir_0.1-15       lattice_0.20-35     haven_1.1.2        
-## [46] hms_0.4.2           knitr_1.20          pillar_1.3.0       
-## [49] rjson_0.2.20        imguR_1.0.3         glue_1.3.0         
-## [52] evaluate_0.11       modelr_0.1.2        png_0.1-7          
-## [55] tweenr_0.1.5.9999   RgoogleMaps_1.4.3   cellranger_1.1.0   
-## [58] gtable_0.2.0        polyclip_1.9-1      assertthat_0.2.0   
-## [61] xfun_0.3            broom_0.5.0         rnaturalearth_0.1.0
-## [64] e1071_1.7-0         class_7.3-14        units_0.6-1        
-## [67] concaveman_1.0.0
+## [28] rstudioapi_0.7      farver_1.0.0.9999   generics_0.0.2     
+## [31] jsonlite_1.5        magrittr_1.5        Rcpp_1.0.0         
+## [34] munsell_0.5.0       ggfittext_0.6.0     stringi_1.2.4      
+## [37] yaml_2.2.0          MASS_7.3-50         geogrid_0.1.1      
+## [40] plyr_1.8.4          grid_3.5.0          misc3d_0.8-4       
+## [43] crayon_1.3.4        deldir_0.1-15       lattice_0.20-35    
+## [46] haven_1.1.2         hms_0.4.2           knitr_1.20         
+## [49] pillar_1.3.0        rjson_0.2.20        imguR_1.0.3        
+## [52] glue_1.3.0          evaluate_0.11       modelr_0.1.2       
+## [55] png_0.1-7           tweenr_0.1.5.9999   RgoogleMaps_1.4.3  
+## [58] cellranger_1.1.0    gtable_0.2.0        polyclip_1.9-1     
+## [61] assertthat_0.2.0    xfun_0.3            broom_0.5.1        
+## [64] rnaturalearth_0.1.0 e1071_1.7-0         class_7.3-14       
+## [67] units_0.6-1         concaveman_1.0.0
 ....

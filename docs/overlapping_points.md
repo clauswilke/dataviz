@@ -43,7 +43,7 @@ One downside of jittering is that it does change the data and therefore has to b
 <p class="caption">(\#fig:mpg-cty-displ-jitter-extreme)(ref:mpg-cty-displ-jitter-extreme)</p>
 </div>
 
-## 2d histograms
+## 2D histograms
 
 When the number of individual points gets very large, partial transparency (with or without jittering) will not be sufficient to resolve the overplotting issue. What will typically happen is that areas with high point density will appear as uniform blobs of dark color while in areas with low point density the individual points are barely visible (Figure \@ref(fig:nycflights-points)). And changing the transparency level of individual points will either ameliorate one or the other of these problems while worsening the other; no transparency setting can address both at the same time. 
 
@@ -56,7 +56,7 @@ When the number of individual points gets very large, partial transparency (with
 
 Figure \@ref(fig:nycflights-points) shows departure delays for over 100,000 individual flights, with each dot representing one flight departure. Even though we have made the individual dots fairly transparent, the majority of them just forms a black band between 0 and 300 minutes departure delay. This band obscures whether most flights depart approximately on time or with substantial delay (say 50 minutes or more). At the same time, the most delayed flights (with delays of 400 minutes or more) are barely visible due to the transparency of the dots.
 
-In such cases, instead of plotting individual points, we can make a 2d histogram, where we subdivide the entire *x*--*y* plane into small rectangles, count how many observations fall into each rectangles, and then color the rectangles by that count. Figure \@ref(fig:nycflights-2d-bins) shows the result of this approach for the departure-delay data. This visualization clearly highlights several important features of the flight-departure data. First, the vast majority of departures during the day (6am to about 9pm) actually depart without delay or even early (negative delay). However, a modest number of departures has a substantial delay. Moreover, the later a plane departs in the day the more of a delay it can have. Importantly, the departure time is the actual time of departure, not the scheduled time of departure. So this figure does not necessarily tell us that planes scheduled to depart early never experience delay. What it does tell us, though, is that if a plane departs early it either has little delay or, in very rare cases, a delay of around 900 minutes.
+In such cases, instead of plotting individual points, we can make a 2D histogram. A 2D histogram is conceptually similar to a 1D histogram as discussed in Chapter \@ref(histograms-density-plots), but now we bin the data in two dimensions. We subdivide the entire *x*--*y* plane into small rectangles, count how many observations fall into each one, and then color the rectangles by that count. Figure \@ref(fig:nycflights-2d-bins) shows the result of this approach for the departure-delay data. This visualization clearly highlights several important features of the flight-departure data. First, the vast majority of departures during the day (6am to about 9pm) actually depart without delay or even early (negative delay). However, a modest number of departures has a substantial delay. Moreover, the later a plane departs in the day the more of a delay it can have. Importantly, the departure time is the actual time of departure, not the scheduled time of departure. So this figure does not necessarily tell us that planes scheduled to depart early never experience delay. What it does tell us, though, is that if a plane departs early it either has little delay or, in very rare cases, a delay of around 900 minutes.
 
 (ref:nycflights-2d-bins) Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle.
 
@@ -81,30 +81,60 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 
 Instead of binning data points into rectangles or hexagons, we can also estimate the point density across the plot area and indicate regions of different point densities with contour lines. This technique works well when the point density changes slowly across both the *x* and the *y* dimensions.
 
-As an example for this approach, we consider the relationship between population number and area for counties in the Midwest. We have data for 1055 counties, and a scatter plot looks like a cloud of points (Figure \@ref(fig:midwest-scatter)). We can highlight the distribution of points more clearly by making them very small and partially transparent and plotting them on top of contour lines that delineate regions of comparable point density (Figure \@ref(fig:midwest-density-dots)). We can also plot just the contour lines, without the individual points (Figure \@ref(fig:midwest-density-smooth)). In this case, it can be helpful to add a trendline that shows the overall trend in the data. Here, there isn't much of a trend, and the shape of the trendline (approximately flat) reflects this lack of a trend.
+As an example for this approach, we return to the blue jays dataset from Chapter \@ref(visualizing-associations). Figure \@ref(fig:blue-jays-scatter) showed the relationship between head length and body mass for 123 blue jays, and there was some amount of overlap among the points. We can highlight the distribution of points more clearly by making the points smaller and partially transparent and plotting them on top of contour lines that delineate regions of similar point density (Figure \@ref(fig:blue-jays-contour)). We can further enhance the perception of changes in the point density by shading the regions enclosed by the contour lines, using darker colors for regions representing higher point densities (Figure \@ref(fig:blue-jays-contour-filled)).
 
-(ref:midwest-scatter) Population versus area for counties in midwestern states. Data are taken from the 2010 US census and are shown for 1055 counties covering 12 states. Each dot represents one county. 
-
-<div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-scatter-1.png" alt="(ref:midwest-scatter)" width="576" />
-<p class="caption">(\#fig:midwest-scatter)(ref:midwest-scatter)</p>
-</div>
-
-
-(ref:midwest-density-dots) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Individual counties are shown as light blue dots.
+(ref:blue-jays-contour) Head length versus body mass for 123 blue jays, as in Figure \@ref(fig:blue-jays-scatter). Each dot corresponds to one bird, and the lines indicate regions of similar point density. The point density increases towards the center of the plot, near a body mass of 75g and a head length between 55mm and 57.5mm. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-density-dots-1.png" alt="(ref:midwest-density-dots)" width="576" />
-<p class="caption">(\#fig:midwest-density-dots)(ref:midwest-density-dots)</p>
+<img src="overlapping_points_files/figure-html/blue-jays-contour-1.png" alt="(ref:blue-jays-contour)" width="576" />
+<p class="caption">(\#fig:blue-jays-contour)(ref:blue-jays-contour)</p>
 </div>
 
-(ref:midwest-density-smooth) Population versus area for counties in midwestern states. Contour lines and shaded areas indicate the density of counties for that combination of population total and area. Note that some counties lie outside the largest shaded area. The solid blue line highlights the mean relationship between population total and county area. It was obtained via least-square fitting of a general additive model with cubic spline base to the underlying data.
+(ref:blue-jays-contour-filled) Head length versus body mass for 123 blue jays. This figure is nearly identical to Figure \@ref(fig:blue-jays-scatter), but now the areas enclosed by the contour lines are shaded with increasingly darker shades of gray. This shading creates a stronger visual impression of increasing point density towards the center of the point cloud. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/midwest-density-smooth-1.png" alt="(ref:midwest-density-smooth)" width="576" />
-<p class="caption">(\#fig:midwest-density-smooth)(ref:midwest-density-smooth)</p>
+<img src="overlapping_points_files/figure-html/blue-jays-contour-filled-1.png" alt="(ref:blue-jays-contour-filled)" width="576" />
+<p class="caption">(\#fig:blue-jays-contour-filled)(ref:blue-jays-contour-filled)</p>
 </div>
 
+In Chapter \@ref(visualizing-associations), we also looked at the relationship between head length and body mass separately for male and female birds (Figure \@ref(fig:blue-jays-scatter-sex)). We can do the same with contour lines, by drawing separately colored contour lines for male and female birds (Figure \@ref(fig:blue-jays-contour-by-sex)).
+
+(ref:blue-jays-contour-by-sex) Head length versus body mass for 123 blue jays. As in Figure \@ref(fig:blue-jays-scatter-sex), we can also indicate the birds' sex by color when drawing contour lines. This figure highlights how the point distribution is different for male and female birds. In particular, male birds are more densely clustered in one region of the plot area whereas female birds are more spread out. Data source: Keith Tarvin, Oberlin College
+
+<div class="figure" style="text-align: center">
+<img src="overlapping_points_files/figure-html/blue-jays-contour-by-sex-1.png" alt="(ref:blue-jays-contour-by-sex)" width="576" />
+<p class="caption">(\#fig:blue-jays-contour-by-sex)(ref:blue-jays-contour-by-sex)</p>
+</div>
+
+Drawing multiple sets of contour lines in different colors can be a powerful strategy for showing the distributions of several point clouds at once. However, this technique needs to be employed with care. It only works when the number of groups with distinct colors is small (two to three) and the groups are clearly separated. Otherwise, we may end up with a hairball of differently colored lines all crisscrossing each other and not showing any particular pattern at all.
+
+To illustrate this potential problem, I will employ the diamonds dataset, which contains information for 53,940 diamonds, including their price, weight (carat), and cut. Figure \@ref(fig:diamonds-points) shows this dataset as a scatter plot. We see clear problems with overplotting. There are so many different-colored points on top of one another that it is impossible to discern anything beyond the overall broad outline of where diamonds fall on the price--carat spectrum.
+
+(ref:diamonds-points) Price of diamonds versus their carat value, for 53,940 individual diamonds. Each diamond's cut is indicated by color. The plot is labeled as "bad" because the extensive overplotting makes it impossible to discern any patterns among the different diamond cuts. Data source: Hadley Wickham, ggplot2
+
+<div class="figure" style="text-align: center">
+<img src="overlapping_points_files/figure-html/diamonds-points-1.png" alt="(ref:diamonds-points)" width="576" />
+<p class="caption">(\#fig:diamonds-points)(ref:diamonds-points)</p>
+</div>
+
+We could try to draw colored contour lines for the different qualities of cut, as in Figure \@ref(fig:blue-jays-contour-by-sex). However, in the diamonds dataset, we have five distinct colors and the groups strongly overlap. Therefore, the contour plot (Figure \@ref(fig:diamonds-contour-colors)) is not much better than the original scatter plot (Figure \@ref(fig:diamonds-points)).
+
+(ref:diamonds-contour-colors) Price of diamonds versus their carat value. As Figure \@ref(fig:diamonds-points), but now individual points have been replaced by contour lines. The resulting plot is still labeled "bad", because the contour lines all lie on top of each other. Neither the point distribution for individual cuts nor the overall point distribution can be discerned. Data source: Hadley Wickham, ggplot2
 
 
+<div class="figure" style="text-align: center">
+<img src="overlapping_points_files/figure-html/diamonds-contour-colors-1.png" alt="(ref:diamonds-contour-colors)" width="576" />
+<p class="caption">(\#fig:diamonds-contour-colors)(ref:diamonds-contour-colors)</p>
+</div>
 
+What helps here is to draw the contour lines for each cut quality in its own plot panel (Figure \@ref(fig:diamonds-contour-facets)). The purpose of drawing them all in one panel might be to enable visual comparison between the groups, but Figure \@ref(fig:diamonds-contour-colors) is so busy that a comparison isn't possible.  Instead, in Figure \@ref(fig:diamonds-contour-facets), the background grid enables us to make  comparisons across cut qualities, by paying attention to where exactly the contour lines fall relative to the grid lines.
+
+(ref:diamonds-contour-facets) Price of diamonds versus their carat value. Here, we have taken the density contours from Figure \@ref(fig:diamonds-contour-colors) and drawn them separately for each cut. We can now see that better cuts (very good, premium, ideal) tend to have lower carat values than the poorer cuts (fair, good) but command a higher price per carat. Data source: Hadley Wickham, ggplot2
+
+
+<div class="figure" style="text-align: center">
+<img src="overlapping_points_files/figure-html/diamonds-contour-facets-1.png" alt="(ref:diamonds-contour-facets)" width="816" />
+<p class="caption">(\#fig:diamonds-contour-facets)(ref:diamonds-contour-facets)</p>
+</div>
+
+We can make out two main trends. First, the better cuts (very good, premium, ideal) tend to have lower carat values than the poorer cuts (fair, good). Recall that carat is a measure of diamond weight (1 carat = 0.2 gram). Better cuts tend to result (on average) in lighter diamonds because more material needs to be removed to create them. Second, at the same carat value, better cuts tend to command higher prices. To see this pattern, look for example at the price distribution for 0.5 carat. The distribution is shifted upwards for better cuts, and in particular it is substantially higher for diamonds with ideal cut than for diamonds with fair or good cut.
