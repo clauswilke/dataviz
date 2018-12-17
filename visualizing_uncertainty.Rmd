@@ -28,7 +28,7 @@ library(emmeans)
 
 (ref:cocoa-data-vs-CI) *Figure caption.*
 
-```{r cocoa-data-vs-CI, fig.asp = 0.4, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
+```{r cocoa-data-vs-CI, fig.asp = 0.48, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
 cacao %>% 
   filter(location == "Canada") -> cacao_single
 
@@ -74,9 +74,9 @@ label_x <- filter(CI_df, type == "standard deviation")$conf.high + 0.04
 ggplot(CI_df, aes(estimate, type)) + 
   geom_point(
     data = cacao_single, aes(rating, "original data"), 
-    position = position_jitter(height = 0.6, width = 0.02),
-    color = "#0072B2",
-    size = 0.2
+    position = position_jitter(height = 0.6, width = 0.02, seed = 7843),
+    color = "#009E73",
+    size = 0.3
   ) +
   geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2, na.rm = TRUE) +
   geom_point(size = 2, color = "#D55E00") +
@@ -129,7 +129,7 @@ cacao_CH <- filter(cacao, location == "Switzerland")
 fit_CA <- lm(rating ~ 1, data = cacao_CA)
 fit_CH <- lm(rating ~ 1, data = cacao_CH)
 
-CI_CA <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
+CI_CA <- data.frame(level = c(0.99, 0.95, 0.8)) %>%
   mutate(df = map(level, ~tidy(emmeans(fit_CA, ~ 1, options = list(level = .x))))) %>%
   unnest() %>%
   select(level, estimate, conf.low, conf.high) %>%
@@ -139,7 +139,7 @@ CI_CA <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
     location = "Canada"
   )
 
-CI_CH <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
+CI_CH <- data.frame(level = c(0.99, 0.95, 0.8)) %>%
   mutate(df = map(level, ~tidy(emmeans(fit_CH, ~ 1, options = list(level = .x))))) %>%
   unnest() %>%
   select(level, estimate, conf.low, conf.high) %>%
@@ -149,8 +149,9 @@ CI_CH <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
     location = "Switzerland"
   )
 
-CI_df <- rbind(
-  CI_CA,
+CI_df <- rbind(CI_CA, CI_CH)
+
+sd_df <- rbind(
   data.frame(
     level = NA,
     estimate = mean(cacao_CA$rating),
@@ -159,7 +160,6 @@ CI_df <- rbind(
     type = "original data",
     location = "Canada"
   ),
-  CI_CH,
   data.frame(
     level = NA,
     estimate = mean(cacao_CH$rating),
@@ -172,29 +172,56 @@ CI_df <- rbind(
 
 #label_x <- filter(CI_df, type == "standard deviation")$conf.high + 0.04
 
-ggplot(CI_df, aes(estimate, interaction(location, type))) + 
+ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) + 
   geom_point(
-    data = rbind(cacao_CA, cacao_CH), 
-    aes(rating, interaction(location, "original data")), 
-    position = position_jitter(height = 0.6, width = 0.02),
-    color = "#0072B2",
-    size = 0.2
+    data = cacao_CA,
+    aes(rating, interaction(location, "original data")),
+    position = position_jitter(height = 0.6, width = 0.02, seed = 7843),
+    color = "#009E73",
+    size = 0.3
   ) +
-  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2, na.rm = TRUE) +
+  geom_point(
+    data = cacao_CH,
+    aes(rating, interaction(location, "original data")),
+    position = position_jitter(height = 0.6, width = 0.02, seed = 7844),
+    color = "#009E73",
+    size = 0.3
+  ) +
+  geom_errorbarh(
+    data = sd_df,
+    aes(y = interaction(location, "original data"), xmin = conf.low, xmax = conf.high),
+    height = 0.2
+  ) +
+#  geom_tile(
+#    data = CI_df,
+#    aes(width = conf.high - conf.low, fill = level), height = 0.2
+#  ) +
+  geom_errorbarh(
+    data = CI_df,
+    aes(y = interaction(location, "CI"), xmin = conf.low, xmax = conf.high, color = level, size = level),
+    height = 0
+  ) +
+  geom_errorbarh(
+    data = CI_df,
+    aes(y = interaction(location, "CI"), xmin = conf.low, xmax = conf.high, color = level),
+    height = 0.2
+  ) +
   geom_point(size = 2, color = "#D55E00") +
-#  geom_label(
-#    aes(label_x, label = label), hjust = 0, nudge_y = 0.01, na.rm = TRUE,
-#    family = dviz_font_family,
-#    size = 12/.pt,
-#    label.size = 0
-#  ) +
-#  geom_label(
-#    data = filter(CI_df, type == "original data"),
-#    aes(conf.high + 0.06, label = type), hjust = 0, nudge_y = 0.01,
-#    family = dviz_font_family,
-#    size = 12/.pt,
-#    label.size = 0
-#  ) +
+  geom_label(
+    data = data.frame(
+      estimate = 4.06,
+      location = c("Canada", "Switzerland"),
+      type = "original data",
+      label = c(
+        paste0("Canada,\nn = ", nrow(cacao_CA)),
+        paste0("Switzerland,\nn = ", nrow(cacao_CH))
+      )
+    ),
+    aes(label = label), hjust = 0, vjust = 0.5, nudge_y = 0.01,
+    family = dviz_font_family,
+    size = 12/.pt,
+    label.size = 0
+  ) +
   scale_x_continuous(
     position = "bottom",
     limits = c(1.95, 4.1),
@@ -207,13 +234,51 @@ ggplot(CI_df, aes(estimate, interaction(location, type))) +
     limits = rev(c("Canada.original data", "Canada.CI", "Switzerland.original data", "Switzerland.CI")),
     breaks = NULL
   ) +
+  scale_fill_manual(
+    aesthetics = c("color", "fill"),
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(darken("#0072B2", .2), .3),
+     `95%` = desaturate(lighten("#0072B2", .2), .3),
+     `99%` = desaturate(lighten("#0072B2", .4), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_size_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = 1.5,
+     `95%` = 1,
+     `99%` = 0.5
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
   coord_cartesian(clip = "off") +
   theme_dviz_vgrid(12, rel_small = 1) +
   theme(
     plot.margin = margin(3, 73, 3, 0),
     axis.line.x = element_line(),
     axis.ticks.x = element_line(color = "black"),
-    axis.title.x = element_text(hjust = 1)
+    axis.title.x = element_text(hjust = 1),
+    legend.position = c(0, 0.01),
+    legend.justification = c(0, 0),
+    #legend.position = "bottom",
+    #legend.justification = "left",
+    legend.key.height = grid::unit(6, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
   )
 
 ```
