@@ -9,6 +9,9 @@ library(mgcv)
 library(mvtnorm)
 library(rlang)
 library(tidyr)
+library(purrr)
+library(broom)
+library(emmeans)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -23,7 +26,199 @@ library(tidyr)
 
 ## Error bars and confidence bands
 
-```{r fig.asp = 1.2}
+(ref:cocoa-data-vs-CI) *Figure caption.*
+
+```{r cocoa-data-vs-CI, fig.asp = 0.4, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
+cacao %>% 
+  filter(location == "Canada") -> cacao_single
+
+fit <- lm(rating ~ 1, data = cacao_single)
+
+CI_df <- data.frame(type = c(0.8, 0.95, 0.99)) %>%
+  mutate(df = map(type, ~tidy(emmeans(fit, ~ 1, options = list(level = .x))))) %>%
+  unnest() %>%
+  select(type, estimate, std.error, conf.low, conf.high) %>%
+  mutate(type = paste0(signif(100*type, 2), "% confidence interval"))
+
+CI_df <- rbind(
+  CI_df,
+  data.frame(
+    type = "standard error",
+    estimate = CI_df$estimate[1],
+    std.error = CI_df$std.error[1],
+    conf.low = CI_df$estimate[1] - CI_df$std.error[1],
+    conf.high = CI_df$estimate[1] + CI_df$std.error[1]
+  ),
+  data.frame(
+    type = "standard deviation",
+    estimate = mean(cacao_single$rating),
+    std.error = CI_df$std.error[1],
+    conf.low = mean(cacao_single$rating) - sd(cacao_single$rating),
+    conf.high = mean(cacao_single$rating) + sd(cacao_single$rating)
+  ),
+  data.frame(
+    type = "original data", estimate = mean(cacao_single$rating), std.error = NA,
+    conf.low = NA, conf.high = max(cacao_single$rating)
+  )
+) %>%
+  mutate(
+    type = fct_relevel(factor(type), "original data", "standard deviation", "standard error"),
+    label = case_when(
+      type == "original data" ~ NA_character_,
+      TRUE ~ as.character(type) #paste0("mean +/- ", type)
+    )
+  )
+
+label_x <- filter(CI_df, type == "standard deviation")$conf.high + 0.04
+
+ggplot(CI_df, aes(estimate, type)) + 
+  geom_point(
+    data = cacao_single, aes(rating, "original data"), 
+    position = position_jitter(height = 0.6, width = 0.02),
+    color = "#0072B2",
+    size = 0.2
+  ) +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2, na.rm = TRUE) +
+  geom_point(size = 2, color = "#D55E00") +
+  geom_label(
+    aes(label_x, label = label), hjust = 0, nudge_y = 0.01, na.rm = TRUE,
+    family = dviz_font_family,
+    size = 12/.pt,
+    label.size = 0
+  ) +
+  geom_label(
+    data = filter(CI_df, type == "original data"),
+    aes(conf.high + 0.06, label = type), hjust = 0, nudge_y = 0.01,
+    family = dviz_font_family,
+    size = 12/.pt,
+    label.size = 0
+  ) +
+  geom_text(
+    data = filter(CI_df, type == "original data"),
+    aes(estimate, label = "mean"), hjust = 0.2, vjust = 0, nudge_y = 0.2,
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+  scale_x_continuous(
+    position = "bottom",
+    limits = c(1.95, 4.1),
+    expand = c(0, 0),
+    name = "chocolate flavor rating"
+  ) +
+  scale_y_discrete(
+    position = "right",
+    name = NULL,
+    limits = rev(levels(CI_df$type)),
+    breaks = NULL
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_vgrid(12, rel_small = 1) +
+  theme(
+    plot.margin = margin(3, 73, 3, 0),
+    axis.line.x = element_line(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1)
+  )
+
+```
+
+```{r cocoa-CI-vs-n, fig.asp = 0.4, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-CI-vs-n)'}
+cacao_CA <- filter(cacao, location == "Canada")
+cacao_CH <- filter(cacao, location == "Switzerland")
+
+fit_CA <- lm(rating ~ 1, data = cacao_CA)
+fit_CH <- lm(rating ~ 1, data = cacao_CH)
+
+CI_CA <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
+  mutate(df = map(level, ~tidy(emmeans(fit_CA, ~ 1, options = list(level = .x))))) %>%
+  unnest() %>%
+  select(level, estimate, conf.low, conf.high) %>%
+  mutate(
+    level = paste0(signif(100*level, 2), "%"),
+    type = "CI",
+    location = "Canada"
+  )
+
+CI_CH <- data.frame(level = c(0.8, 0.95, 0.99)) %>%
+  mutate(df = map(level, ~tidy(emmeans(fit_CH, ~ 1, options = list(level = .x))))) %>%
+  unnest() %>%
+  select(level, estimate, conf.low, conf.high) %>%
+  mutate(
+    level = paste0(signif(100*level, 2), "%"),
+    type = "CI",
+    location = "Switzerland"
+  )
+
+CI_df <- rbind(
+  CI_CA,
+  data.frame(
+    level = NA,
+    estimate = mean(cacao_CA$rating),
+    conf.low = mean(cacao_CA$rating) - sd(cacao_CA$rating),
+    conf.high = mean(cacao_CA$rating) + sd(cacao_CA$rating),
+    type = "original data",
+    location = "Canada"
+  ),
+  CI_CH,
+  data.frame(
+    level = NA,
+    estimate = mean(cacao_CH$rating),
+    conf.low = mean(cacao_CH$rating) - sd(cacao_CH$rating),
+    conf.high = mean(cacao_CH$rating) + sd(cacao_CH$rating),
+    type = "original data",
+    location = "Switzerland"
+  )
+)
+
+#label_x <- filter(CI_df, type == "standard deviation")$conf.high + 0.04
+
+ggplot(CI_df, aes(estimate, interaction(location, type))) + 
+  geom_point(
+    data = rbind(cacao_CA, cacao_CH), 
+    aes(rating, interaction(location, "original data")), 
+    position = position_jitter(height = 0.6, width = 0.02),
+    color = "#0072B2",
+    size = 0.2
+  ) +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2, na.rm = TRUE) +
+  geom_point(size = 2, color = "#D55E00") +
+#  geom_label(
+#    aes(label_x, label = label), hjust = 0, nudge_y = 0.01, na.rm = TRUE,
+#    family = dviz_font_family,
+#    size = 12/.pt,
+#    label.size = 0
+#  ) +
+#  geom_label(
+#    data = filter(CI_df, type == "original data"),
+#    aes(conf.high + 0.06, label = type), hjust = 0, nudge_y = 0.01,
+#    family = dviz_font_family,
+#    size = 12/.pt,
+#    label.size = 0
+#  ) +
+  scale_x_continuous(
+    position = "bottom",
+    limits = c(1.95, 4.1),
+    expand = c(0, 0),
+    name = "chocolate flavor rating"
+  ) +
+  scale_y_discrete(
+    position = "right",
+    name = NULL,
+    limits = rev(c("Canada.original data", "Canada.CI", "Switzerland.original data", "Switzerland.CI")),
+    breaks = NULL
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_vgrid(12, rel_small = 1) +
+  theme(
+    plot.margin = margin(3, 73, 3, 0),
+    axis.line.x = element_line(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1)
+  )
+
+```
+
+```{r fig.asp = 1.2, eval = FALSE}
 n <- c(10, 30, 100, 300, 1000)
 
 df <- data.frame(n = unlist(lapply(n, function(x) rep(x, x))),
@@ -56,7 +251,7 @@ p1 + p2 + p3 + plot_layout(ncol = 1)
 ```
 
 
-```{r fig.width = 5}
+```{r fig.width = 5, eval = FALSE}
 cows %>% filter(breed != "Canadian") %>%
   group_by(breed) %>%
   summarize(mean = mean(butterfat),
@@ -71,7 +266,7 @@ ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) 
   theme_dviz_hgrid()
 ```
 
-```{r fig.width = 5}
+```{r fig.width = 5, eval = FALSE}
 ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) +
   geom_col(fill = "gray70") +
   geom_linerange() +
