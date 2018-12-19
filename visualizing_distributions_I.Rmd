@@ -17,13 +17,17 @@ We can obtain a sense of the age distribution among the passengers by grouping a
 ```{r titanic-ages}
 titanic <- titanic_all
 age_counts <- hist(titanic$age, breaks = (0:15) * 5 + .01, plot = FALSE)$counts
-age_hist <- data.frame(`age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
-                       count = age_counts,
-                       check.names = FALSE)
+age_hist <- data.frame(
+  `age range` = c("0--5", "6--10", "11--15", "16--20", "21--25", "26--30", "31--35", "36--40", "41--45", "46--50", "51--55", "56--60", "61--65", "66--70", "71--75"),
+  count = age_counts,
+  check.names = FALSE
+)
 
-age_hist_display <- rename(age_hist,
-                           `Age range` = `age range`,
-                           Count = count)
+age_hist_display <- rename(
+  age_hist,
+  `Age range` = `age range`,
+  Count = count
+)
 
 knitr::kable(
   list(
@@ -44,8 +48,12 @@ age_hist <- cbind(age_hist, age = (1:15) * 5 - 2.5)
 h1 <- ggplot(age_hist, aes(x = age, y = count)) + geom_col(width = 4.7, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 h1
 ```
 
@@ -56,38 +64,59 @@ For the age distribution of Titanic passengers, we can see that a bin width of o
 (ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
 ```{r titanic-ages-hist-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-hist-grid)'}
-age_hist_1 <- data.frame(age = (1:75) - 0.5, 
-                         count = hist(titanic$age, breaks = (0:75) + .01, plot = FALSE)$counts)
+age_hist_1 <- data.frame(
+  age = (1:75) - 0.5, 
+  count = hist(titanic$age, breaks = (0:75) + .01, plot = FALSE)$counts
+)
 
-age_hist_3 <- data.frame(age = (1:25) * 3 - 1.5, 
-                         count = hist(titanic$age, breaks = (0:25) * 3 + .01, plot = FALSE)$counts)
+age_hist_3 <- data.frame(
+  age = (1:25) * 3 - 1.5, 
+  count = hist(titanic$age, breaks = (0:25) * 3 + .01, plot = FALSE)$counts
+)
 
-age_hist_15 <- data.frame(age = (1:5) * 15 - 7.5, 
-                         count = hist(titanic$age, breaks = (0:5) * 15 + .01, plot = FALSE)$counts)
+age_hist_15 <- data.frame(
+  age = (1:5) * 15 - 7.5, 
+  count = hist(titanic$age, breaks = (0:5) * 15 + .01, plot = FALSE)$counts
+)
 
-h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + geom_col(width = .85, fill = "#56B4E9")  + 
+h2 <- ggplot(age_hist_1, aes(x = age, y = count)) + 
+  geom_col(width = .85, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 10 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 25 * (0:5)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
   scale_y_continuous(expand = c(0, 0), breaks = 100 * (0:4)) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 
-plot_grid(h2, h3,
-          h1 + theme_dviz_hgrid(12) + theme(plot.margin = margin(3, 12, 12, 0)), h4,
-          align = 'hv', labels = 'auto')
-
+plot_grid(
+  h2, h3,
+  h1 + theme_dviz_hgrid(12) + theme(axis.line.x = element_blank(), plot.margin = margin(3, 12, 12, 0)),
+  h4,
+  align = 'hv', labels = 'auto'
+)
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -103,8 +132,12 @@ ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 ```
 
 Just as is the case with histograms, the exact visual appearance of a density plot depends on the kernel and bandwidth choices (Figure \@ref(fig:titanic-ages-dens-grid)). The bandwidth parameter behaves similarly to the bin width in histograms. If the bandwidth is too small, then the density estimate can become overly peaky and visually busy and the main trends in the data may be obscured. On the other hand, if the bandwidth is too large, then smaller features in the distribution of the data may disappear. In addition, the choice of the kernel affects the shape of the density curve. For example, a Gaussian kernel will have a tendency to produce density estimates that look Gaussian-like, with smooth features and tails. By contrast, a rectangular kernel can generate the appearance of steps in the density curve (Figure \@ref(fig:titanic-ages-dens-grid)d). In general, the more data points there are in the data set, the less the choice of the kernel matters. Therefore, density plots tend to be quite reliable and informative for large data sets but can be misleading for data sets of only a few points.
@@ -116,32 +149,47 @@ pdens1 <- ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 pdens2 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 pdens3 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
 pdens4 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = 2, kernel = "rectangular") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 12, 12, 0)
+  )
 
-plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv',
-          labels = 'auto')
+plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv', labels = 'auto')
 ```
 
 Density curves are usually scaled such that the area under the curve equals one. This convention can make the *y* axis scale confusing, because it depends on the units of the *x* axis. For example, in the case of the age distribution, the data range on the *x* axis goes from 0 to approximately 75. Therefore, we expect the mean height of the density curve to be 1/75 = 0.013. Indeed, when looking at the age density curves (e.g., Figure \@ref(fig:titanic-ages-dens-grid)), we see that the *y* values range from 0 to approximately 0.04, with an average of somewhere close to 0.01.
@@ -156,8 +204,12 @@ pdens_neg <- ggplot(titanic, aes(x = age)) +
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5)) + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
   scale_x_continuous(limits = c(-10, 79), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 stamp_wrong(pdens_neg)
 ```
@@ -172,12 +224,14 @@ So should you use a histogram or a density plot to visualize a distribution? Hea
 
 In many scenarios we have multiple distributions we would like to visualize simultaneously. For example, let's say we'd like to see how the ages of Titanic passengers are distributed between men and women. Were men and women passengers generally of the same age, or was there an age difference between the genders? One commonly employed visualization strategy in this case is a stacked histogram, where we draw the histogram bars for women on top of the bars for men, in a different color (Figure \@ref(fig:titanic-age-stacked-hist)).
 
-(ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender.
+(ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender. This figure has been labeled as "bad" because stacked histograms are easily confused with overlapping histograms (see also Figure \@ref(fig:titanic-age-overlapping-hist)). In addition, the heights of the bars representing female passengers cannot easily be compared to each other.
 
 ```{r titanic-age-stacked-hist, fig.cap='(ref:titanic-age-stacked-hist)'}
-data.frame(age = (1:25)*3 - 1.5, 
-           male = hist(filter(titanic, sex == "male")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts,
-           female = hist(filter(titanic, sex == "female")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts) %>%
+data.frame(
+  age = (1:25)*3 - 1.5, 
+  male = hist(filter(titanic, sex == "male")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts,
+  female = hist(filter(titanic, sex == "female")$age, breaks = (0:25)*3 + .01, plot = FALSE)$counts
+) %>%
   gather(gender, count, -age) -> gender_counts
 
 gender_counts$gender <- factor(gender_counts$gender, levels = c("female", "male"))
@@ -187,11 +241,15 @@ p_hist_stacked <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) 
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 89), expand = c(0, 0), name = "count") +
   scale_fill_manual(values = c("#D55E00", "#0072B2")) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(legend.position = c(.9, .87),
-        legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(3, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    legend.position = c(.9, .87),
+    legend.justification = c("right", "top"),
+    legend.box.background = element_rect(fill = "white", color = "white"),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 stamp_bad(p_hist_stacked)
 ```
@@ -200,20 +258,26 @@ In my opinion, this type of visualization should be avoided. There are two key p
 
 We could try to address these problems by having all bars start at zero and making the bars partially transparent (Figure \@ref(fig:titanic-age-overlapping-hist)).
 
-(ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
+(ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms. This figure has been labeled as "bad" because there is no clear visual indication that all blue bars start at a count of 0.
 
 ```{r titanic-age-overlapping-hist, fig.cap='(ref:titanic-age-overlapping-hist)'}
 p_hist_overlapped <- ggplot(gender_counts, aes(x = age, y = count, fill = gender)) + 
   geom_col(position = "identity", alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 56), expand = c(0, 0), name = "count") +
-  scale_fill_manual(values = c("#D55E00", "#0072B2"),
-                    guide = guide_legend(reverse = TRUE)) +
+  scale_fill_manual(
+    values = c("#D55E00", "#0072B2"),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(legend.position = c(.9, .87),
-        legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(3, 7, 3, 0))
+  theme(
+    axis.line.x = element_blank(),
+    legend.position = c(.9, .87),
+    legend.justification = c("right", "top"),
+    legend.box.background = element_rect(fill = "white", color = "white"),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 stamp_bad(p_hist_overlapped)
 ```
@@ -227,20 +291,23 @@ Overlapping density plots don't typically have the problem that overlapping hist
 ```{r titanic-age-overlapping-dens, fig.cap='(ref:titanic-age-overlapping-dens)'}
 titanic2 <- titanic
 titanic2$sex <- factor(titanic2$sex, levels = c("male", "female"))
-p_dens_overlapped <- ggplot(titanic2, aes(x = age, y = ..count.., fill = sex, color = sex)) + 
+
+ggplot(titanic2, aes(x = age, y = ..count.., fill = sex, color = sex)) + 
   geom_density_line(bw = 2, alpha = 0.7) +
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 19), expand = c(0, 0), name = "scaled density") +
   scale_fill_manual(values = c("#0072B2", "#D55E00"), name = "gender") +
   scale_color_manual(values = darken(c("#0072B2", "#D55E00"), 0.5), name = "gender") +
   guides(fill = guide_legend(override.aes = list(linetype = 0))) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(legend.position = c(.9, .87),
-        legend.justification = c("right", "top"),
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(3, 7, 3, 0))
-
-stamp_phantom(p_dens_overlapped)
+  theme(
+    axis.line.x = element_blank(),
+    legend.position = c(.9, .87),
+    legend.justification = c("right", "top"),
+    legend.box.background = element_rect(fill = "white", color = "white"),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 ```
 
 A solution that works well for this dataset is to show the age distributions of male and female passengers separately, each as a proportion of the overall age distribution (Figure \@ref(fig:titanic-age-fractional-dens)). This visualization shows intuitively and clearly that there were many fewer women than men in the 20--50-year age range on the Titanic.
@@ -248,24 +315,30 @@ A solution that works well for this dataset is to show the age distributions of 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
 ```{r titanic-age-fractional-dens, fig.width = 8.5, fig.asp = .45, fig.cap='(ref:titanic-age-fractional-dens)'}
-p_dens_fraction <- ggplot(titanic2, aes(x = age, y = ..count..)) +
-  geom_density_line(data = select(titanic, -sex), aes(fill = "all passengers"),
-                    color = "transparent") + 
+ggplot(titanic2, aes(x = age, y = ..count..)) +
+  geom_density_line(
+    data = select(titanic, -sex), aes(fill = "all passengers"),
+    color = "transparent"
+  ) + 
   geom_density_line(aes(fill = sex), bw = 2, color = "transparent") +
   scale_x_continuous(limits = c(0, 75), name = "passenger age", expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 26), name = "scaled density", expand = c(0, 0)) +
-  scale_fill_manual(values = c("#b3b3b3a0", "#D55E00", "#0072B2"), 
-                    breaks = c("all passengers", "male", "female"),
-                    labels = c("all passengers  ", "males  ", "females"),
-                    name = "") +
+  scale_fill_manual(
+    values = c("#b3b3b3a0", "#D55E00", "#0072B2"), 
+    breaks = c("all passengers", "male", "female"),
+    labels = c("all passengers  ", "males  ", "females"),
+    name = NULL
+  ) +
+  coord_cartesian(clip = "off") +
   facet_wrap(~sex, labeller = labeller(sex = function(sex) paste(sex, "passengers"))) +
   theme_dviz_hgrid() +
-  theme(legend.position = "bottom",
-        legend.justification = "right",
-        legend.margin = margin(0, 0, 0.2, 0, "cm"),
-        legend.spacing.x = grid::unit(0.2, "cm"))
-
-p_dens_fraction
+  theme(
+    axis.line.x = element_blank(),
+    legend.position = "bottom",
+    legend.justification = "right",
+    legend.margin = margin(0, 0, 0.2, 0, "cm"),
+    legend.spacing.x = grid::unit(0.2, "cm")
+  )
 ```
 
 
@@ -284,8 +357,6 @@ ggplot(gender_counts, aes(x = age, y = ifelse(gender == "male",-1, 1)*count, fil
   coord_flip() +
   theme_dviz_grid() +
   theme(axis.title.x = element_text(hjust = 0.61))
-
-
 ```
 
 Importantly, this trick does not work when there are more than two distributions we want to visualize at the same time. For multiple distributions, histograms tend to become highly confusing, whereas density plots work well as long as the distributions are somewhat distinct. For example, to visualize the distribution of butterfat percentage among cows from four different cattle breeds, density plots are fine (Figure \@ref(fig:butterfat-densitites)).
@@ -305,28 +376,45 @@ cows_dens <- group_by(cows_filtered, breed) %>%
 # get the maximum values
 cows_max <- filter(cows_dens, density == max(density)) %>%
   ungroup() %>%
-  mutate(hjust = c(0, 0, 0, 0),
-         vjust = c(0, 0, 0, 0),
-         nudge_x = c(-0.2, -0.2, 0.1, 0.23),
-         nudge_y = c(0.03, 0.03, -0.2, -0.06) 
-        )
+  mutate(
+    hjust = c(0, 0, 0, 0),
+    vjust = c(0, 0, 0, 0),
+    nudge_x = c(-0.2, -0.2, 0.1, 0.23),
+    nudge_y = c(0.03, 0.03, -0.2, -0.06) 
+  )
 
 cows_p <- ggplot(cows_dens, aes(x = butterfat, y = density, color = breed, fill = breed)) + 
   geom_density_line(stat = "identity") +
-  geom_text(data = cows_max, aes(label = breed, hjust = hjust, vjust = vjust,
-                                 color = breed,
-                                 x = butterfat + nudge_x, 
-                                 y = density + nudge_y),
-            inherit.aes = FALSE, size = 12/.pt) +
-  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#D55E00", "#009E73"), 0.3),
-                     breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
-                     guide = "none") +
-  scale_fill_manual(values = c("#56B4E950", "#E69F0050", "#D55E0050", "#009E7350"),
-                    breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
-                    guide = "none") +
-  scale_x_continuous(expand = c(0, 0), name = "% butterfat") +
+  geom_text(
+    data = cows_max,
+    aes(
+      label = breed, hjust = hjust, vjust = vjust,
+      color = breed,
+      x = butterfat + nudge_x, 
+      y = density + nudge_y
+    ),
+    inherit.aes = FALSE,
+    size = 12/.pt
+  ) +
+  scale_color_manual(
+    values = darken(c("#56B4E9", "#E69F00", "#D55E00", "#009E73"), 0.3),
+    breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
+    guide = "none"
+  ) +
+  scale_fill_manual(
+    values = c("#56B4E950", "#E69F0050", "#D55E0050", "#009E7350"),
+    breaks = c("Ayrshire", "Guernsey", "Holstein-Friesian", "Jersey"),
+    guide = "none"
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    name = "butterfat contents"
+  ) +
   scale_y_continuous(limits = c(0, 1.99), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid() +
+  theme(axis.line.x = element_blank())
   
 cows_p
 ```
