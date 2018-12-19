@@ -26,9 +26,13 @@ library(emmeans)
 
 ## Error bars and confidence bands
 
-(ref:cocoa-data-vs-CI) *Figure caption.*
+(ref:cocoa-data-vs-CI) Relationship between original data and mean, standard deviation, standard error, and confidence intervals. The original data points (small green dots) represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dots represent the mean of the ratings. Error bars indicate, from top to bottom, the standard deviation, the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 ```{r cocoa-data-vs-CI, fig.asp = 0.48, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
+
+# color for individual small data points
+point_color <- darken("#009E73", .3)
+
 cacao %>% 
   filter(location == "Canada") -> cacao_single
 
@@ -75,7 +79,7 @@ ggplot(CI_df, aes(estimate, type)) +
   geom_point(
     data = cacao_single, aes(rating, "original data"), 
     position = position_jitter(height = 0.6, width = 0.02, seed = 7843),
-    color = "#009E73",
+    color = point_color,
     size = 0.3
   ) +
   geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.2, na.rm = TRUE) +
@@ -100,15 +104,14 @@ ggplot(CI_df, aes(estimate, type)) +
     size = 12/.pt
   ) +
   scale_x_continuous(
-    position = "bottom",
     limits = c(1.95, 4.1),
     expand = c(0, 0),
     name = "chocolate flavor rating"
   ) +
   scale_y_discrete(
-    position = "right",
     name = NULL,
     limits = rev(levels(CI_df$type)),
+    expand = expand_scale(add = c(0.6, 0.8)),
     breaks = NULL
   ) +
   coord_cartesian(clip = "off") +
@@ -122,7 +125,9 @@ ggplot(CI_df, aes(estimate, type)) +
 
 ```
 
-```{r cocoa-CI-vs-n, fig.asp = 0.4, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-CI-vs-n)'}
+(ref:cocoa-CI-vs-n) Confidence intervals widen with smaller sample size. Chocolate bars from Canada and Switzerland have comparable mean ratings and comparable standard deviations (indicated with simple black error bars). However, over three times as many Canadian bars were rated than Swiss bars, and therefore the confidence intervals around the means (indicated with stacked, colored confidence bands) are substantially wider for the mean of the Swiss ratings than for the mean of the Canadian ratings. Data source: Brady Brelinski, Manhattan Chocolate Society
+
+```{r cocoa-CI-vs-n, fig.asp = 0.46, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-CI-vs-n)'}
 cacao_CA <- filter(cacao, location == "Canada")
 cacao_CH <- filter(cacao, location == "Switzerland")
 
@@ -174,17 +179,17 @@ sd_df <- rbind(
 
 ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) + 
   geom_point(
-    data = cacao_CA,
+    data = cacao_CA, # draw two separate layers to get jittering right relative to previous figure
     aes(rating, interaction(location, "original data")),
     position = position_jitter(height = 0.6, width = 0.02, seed = 7843),
-    color = "#009E73",
+    color = point_color,
     size = 0.3
   ) +
   geom_point(
     data = cacao_CH,
     aes(rating, interaction(location, "original data")),
     position = position_jitter(height = 0.6, width = 0.02, seed = 7844),
-    color = "#009E73",
+    color = point_color,
     size = 0.3
   ) +
   geom_errorbarh(
@@ -223,15 +228,14 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
     label.size = 0
   ) +
   scale_x_continuous(
-    position = "bottom",
     limits = c(1.95, 4.1),
     expand = c(0, 0),
     name = "chocolate flavor rating"
   ) +
   scale_y_discrete(
-    position = "right",
     name = NULL,
-    limits = rev(c("Canada.original data", "Canada.CI", "Switzerland.original data", "Switzerland.CI")),
+    limits = rev(c("Canada.original data", "Canada.CI", "dummy", "Switzerland.original data", "Switzerland.CI")),
+    expand = expand_scale(add = c(1, 0.8)),
     breaks = NULL
   ) +
   scale_fill_manual(
@@ -270,8 +274,6 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
     axis.title.x = element_text(hjust = 1),
     legend.position = c(0, 0.01),
     legend.justification = c(0, 0),
-    #legend.position = "bottom",
-    #legend.justification = "left",
     legend.key.height = grid::unit(6, "pt"),
     legend.key.width = grid::unit(24, "pt"),
     legend.spacing.x = grid::unit(6, "pt"),
@@ -283,62 +285,140 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
 
 ```
 
-```{r fig.asp = 1.2, eval = FALSE}
-n <- c(10, 30, 100, 300, 1000)
+(ref:mean-chocolate-ratings) Mean chocolate flavor ratings and associated confidence intervals for chocolate bars from manufacturers in six different countries. Data source: Brady Brelinski, Manhattan Chocolate Society
 
-df <- data.frame(n = unlist(lapply(n, function(x) rep(x, x))),
-                 x = c(rnorm(sum(n))))
+```{r mean-chocolate-ratings, fig.asp = 0.5, fig.cap = '(ref:mean-chocolate-ratings)'}
+countries <- c("Austria", "Belgium", "Canada", "Peru", "Switzerland")
 
-df %>% group_by(n) %>%
-  summarize(mean = mean(x),
-            se = sd(x)/sqrt(n())) -> df_mean
+cacao_small <- cacao %>% 
+  filter(location %in% c("U.S.A.", countries)) %>%
+  mutate(location = factor(location, levels = c("U.S.A.", countries)))
 
-p1 <- ggplot(df, aes(x = factor(n), y = x)) + 
-  geom_point(size = 0.5, position = position_jitter(width = 0.3)) +
-  scale_x_discrete(breaks = NULL, name = NULL) +
-  scale_y_continuous(breaks = c(-2, 0, 2)) +
-  theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 0, 14, 0))
-p2 <- ggplot(df, aes(x = factor(n), y = x)) + 
-  geom_boxplot(fill = "gray90") +
-  scale_x_discrete(breaks = NULL, name = NULL) +
-  scale_y_continuous(breaks = c(-2, 0, 2)) +
-  theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 0, 14, 0))
-p3 <- ggplot(df_mean, aes(x = factor(n), y = mean)) + 
-  geom_pointrange(aes(ymin = mean - se, ymax = mean + se)) +
-  scale_x_discrete(name = "n") +
-  scale_y_continuous(breaks = c(-.2, 0, .2), name = "mean(x)") +
-  theme_dviz_hgrid()
+fit <- lm(rating ~ location, data = cacao_small)
 
-p1 + p2 + p3 + plot_layout(ncol = 1)
+conf_df <- data.frame(level = c(0.99, 0.95, 0.8)) %>%
+  mutate(df = map(level, ~tidy(emmeans(fit, ~location, options = list(level = .x))))) %>%
+  unnest() %>%
+  select(level, location, estimate, std.error, conf.low, conf.high) %>%
+  mutate(level = paste0(signif(100*level, 2), "%"))
+
+ggplot(conf_df, aes(estimate, reorder(location, estimate))) + 
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level, size = level),
+    height = 0
+  ) +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level),
+    height = 0.2
+  ) +
+  geom_point(data = filter(conf_df, level == "80%"), size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    limits = c(2.6, 3.6),
+#    expand = c(0, 0),
+    name = "chocolate flavor rating"
+  ) +
+ scale_y_discrete(
+#    position = "right",
+#    limits = rev(c("Canada.original data", "Canada.CI", "Switzerland.original data", "Switzerland.CI")),
+#    breaks = NULL,
+   name = NULL
+  ) +
+  scale_fill_manual(
+    aesthetics = c("color", "fill"),
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(darken("#0072B2", .2), .3),
+     `95%` = desaturate(lighten("#0072B2", .2), .3),
+     `99%` = desaturate(lighten("#0072B2", .4), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_size_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = 1.5,
+     `95%` = 1,
+     `99%` = 0.5
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    legend.position = c(1, 0.01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(6, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
 
 ```
 
+(ref:butterfat-bars) *Update: Density estimates of the butterfat percentage in the milk of four cattle breeds.* Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
-```{r fig.width = 5, eval = FALSE}
+```{r butterfat-bars, fig.width = 5, fig.cap = '(ref:butterfat-bars)'}
 cows %>% filter(breed != "Canadian") %>%
+  mutate(breed = as.character(breed)) %>%
   group_by(breed) %>%
-  summarize(mean = mean(butterfat),
-            se = sd(butterfat)/sqrt(n())) %>%
-  mutate(breed = fct_reorder(breed, desc(mean)))-> cow_means
+  summarize(
+    mean = mean(butterfat),
+    se = sd(butterfat)/sqrt(n())
+  ) %>%
+  mutate(breed = fct_reorder(factor(breed), desc(mean)))-> cow_means
 
-ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) +
-  geom_pointrange() +
-  scale_x_discrete(labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
-                   name = NULL) +
-  scale_y_continuous(name = "mean % butterfat", expand = c(0, 0)) +
-  theme_dviz_hgrid()
+ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - 1.96*se, ymax = mean + 1.96*se)) +
+  geom_col(fill = "#56B4E9", alpha = 0.7, width = 0.7) +
+  geom_linerange(size = 0.75) +
+  scale_x_discrete(
+    labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
+    name = NULL
+  ) +
+  scale_y_continuous(
+    name = "mean butterfat contents", expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1, scale = 1)
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid() +
+  theme(axis.line.x = element_blank())
 ```
 
-```{r fig.width = 5, eval = FALSE}
-ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - se, ymax = mean + se)) +
-  geom_col(fill = "gray70") +
-  geom_linerange() +
-  scale_x_discrete(labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
-                   name = NULL) +
-  scale_y_continuous(name = "mean % butterfat", expand = c(0, 0)) +
-  theme_dviz_hgrid()
+(ref:median-age-income) Median income versus median age for 67 counties in Pennsylvania. Error bars represent 90% confidence intervals. Data source: 2015 Five-Year American Community Survey
+
+```{r median-age-income, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:median-age-income)'}
+filter(US_income_age, state == "Pennsylvania") %>%
+  ggplot(aes(age, income)) + 
+  geom_errorbarh(
+    aes(xmin = age - age.moe, xmax = age + age.moe),
+    height = 0,
+    color = "#0072B2"
+  ) +
+  geom_errorbar(
+    aes(ymin = income - income.moe, ymax = income + income.moe),
+    width = 0,
+    color = "#0072B2"
+  ) +
+  geom_point(color = "#0072B2", size = 0.7) +
+  scale_x_continuous(name = "median age") +
+  scale_y_continuous(
+    name = "median income",
+    labels = scales::dollar
+  ) +
+  theme_dviz_open()
 ```
 
 ```{block type='rmdtip', echo=TRUE}
