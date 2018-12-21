@@ -159,7 +159,7 @@ ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
     labels = c("$20,000", "$40,000", "$60,000")
   ) +
   scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 LOESS is a very popular smoothing approach because it tends to produce results that look right to the human eye. However, it requires the fitting of many separate regression models. This makes it slow for large datasets, even on modern computing equipment. As a faster alternative, we can use spline models. A spline is a piecewise polynomial function that is highly flexible yet always looks smooth. When working with splines, we will encounter the term *knot.* The knots in a spline are the endpoints of the individual spline segments. If we fit a spline with *k* segments, we need to specify *k* + 1 knots. While spline fitting is computationally efficient, in particular if the number of knots is not too large, splines have their own downsides. Most importantly, there is a bewildering array of different types of splines, including cubic splines, B-splines, thin-plate splines, Gaussian process splines, and many others, and which one to pick may not be obvious. The specific choice of the type of spline and number of knots used can result in widely different smoothing functions for the same data (Figure \@ref(fig:tank-capacity-smoothers)).
@@ -174,7 +174,7 @@ cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point
     labels = c("$20,000", "$40,000", "$60,000")
   ) +
   scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
-  theme_minimal_grid(12)  
+  theme_dviz_grid(12)  
   
 p1 <- cars_base + geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2")
 p2 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 5, bs = 'cr'), color = "#0072B2")
@@ -182,8 +182,15 @@ p3 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k =
 p4 <- cars_base + geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x, k = 6, bs = 'gp'), color = "#0072B2")
 
 plot_grid(
-  p1, p2, p3, p4, align = 'hv',
-  labels = 'auto'
+  p1, NULL, p2,
+  NULL, NULL, NULL,
+  p3, NULL, p4,
+  align = 'hv',
+  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  hjust = -.5,
+  vjust = 1.5,
+  rel_widths = c(1, .02, 1),
+  rel_heights = c(1, .02, 1)
 )
 
 # See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
@@ -235,7 +242,7 @@ ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
     labels = c("$20,000", "$40,000", "$60,000")
   ) +
   scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
-  theme_minimal_grid()
+  theme_dviz_grid()
 ```
 
 A functional form that is applicable in many different contexts is the simple straight line, $y = A + mx$. Approximately linear relationships between two variables are surprisingly common in real-world datasets. For example, in Chapter \@ref(visualizing-associations), I discussed the relationship between head length and body mass in blue jays. This relationship is approximately linear, for both female and male birds, and drawing linear trend lines on top of the points in a scatter plot helps the reader perceive the trends (Figure \@ref(fig:blue-jays-scatter-line)).
