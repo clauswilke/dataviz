@@ -187,13 +187,9 @@ plot_grid(
   p3, NULL, p4,
   align = 'hv',
   labels = c("a", "", "b", "", "", "", "c", "", "d"),
-  hjust = -.5,
-  vjust = 1.5,
   rel_widths = c(1, .02, 1),
   rel_heights = c(1, .02, 1)
 )
-
-# See also: https://altaf-ali.github.io/ggplot_tutorial/smoother.html
 ```
 
 Most data visualization software will provide smoothing features, likely implemented as either a type of local regression (such as LOESS) or a type of spline. The smoothing method may be referred to as a GAM, a generalized additive model, which is a superset of all these types of smoothers. It is important to be aware that the output of the smoothing feature is highly dependent on the specific GAM model that is fit. Unless you try out a number of different choices you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.

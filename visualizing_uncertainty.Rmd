@@ -12,6 +12,7 @@ library(tidyr)
 library(purrr)
 library(broom)
 library(emmeans)
+library(ungeviz)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -323,8 +324,7 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
 #    breaks = NULL,
    name = NULL
   ) +
-  scale_fill_manual(
-    aesthetics = c("color", "fill"),
+  scale_color_manual(
     name = "confidence level",
     values = c(
      `80%` = desaturate(darken("#0072B2", .2), .3),
@@ -368,6 +368,219 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
   )
 
 ```
+
+(ref:chocolate-ratings-contrasts) Mean chocolate flavor ratings for manufacturers from five different countries, relative to the mean rating of U.S. chocolate bars. Canadian chocolate bars are significantly higher rated that U.S. bars. For the other four countries there is no significant difference in mean rating to the U.S. at the 95% confidence level. Data source: Brady Brelinski, Manhattan Chocolate Society
+
+```{r chocolate-ratings-contrasts, fig.asp = 0.5, fig.cap = '(ref:chocolate-ratings-contrasts)'}
+# need reference grid for contrasts
+fit_rg <- ref_grid(fit)
+
+contrasts_dunnettx <- data.frame(level = c(0.99, 0.95, 0.8)) %>%
+  mutate(
+    df = map(
+      level,
+      ~data.frame(confint(contrast(fit_rg, method = "trt.vs.ctrl1"), level = .x))
+    )
+  ) %>%
+  unnest() %>%
+  select(level, contrast, estimate, std.error = SE, conf.low = lower.CL, conf.high = upper.CL) %>%
+  mutate(
+    level = paste0(signif(100*level, 2), "%"),
+    contrast = stringr::str_extract(as.character(contrast), "[a-zA-Z]+")
+  )
+
+ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level, size = level),
+    height = 0
+  ) +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level),
+    height = 0.2
+  ) +
+  geom_point(data = filter(contrasts_dunnettx, level == "80%"), size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    sec.axis = dup_axis(
+      name = NULL,
+      breaks = 0,
+      labels = "U.S.A. mean rating"
+    )
+  ) +
+  scale_y_discrete(
+    name = NULL
+  ) +
+  scale_color_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(darken("#0072B2", .2), .3),
+     `95%` = desaturate(lighten("#0072B2", .2), .3),
+     `99%` = desaturate(lighten("#0072B2", .4), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_size_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = 1.5,
+     `95%` = 1,
+     `99%` = 0.5
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50"),
+    #axis.title.x = element_text(hjust = 1),
+    legend.position = c(1, 0.01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(6, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
+
+```
+
+```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:confidence-visualizations)'}
+cacao_smaller <- filter(cacao_small, location != "Switzerland")
+
+fit <- lm(rating ~ location, data = cacao_smaller)
+fit_rg <- ref_grid(fit)
+
+contrasts_dunnettx <- data.frame(level = c(0.99, 0.95, 0.8)) %>%
+  mutate(
+    df = map(
+      level,
+      ~data.frame(confint(contrast(fit_rg, method = "trt.vs.ctrl1"), level = .x))
+    )
+  ) %>%
+  unnest() %>%
+  select(level, contrast, estimate, std.error = SE, conf.low = lower.CL, conf.high = upper.CL) %>%
+  mutate(
+    level = paste0(signif(100*level, 2), "%"),
+    contrast = stringr::str_extract(as.character(contrast), "[a-zA-Z]+")
+  )
+
+p1 <- ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level, size = level),
+    height = 0
+  ) +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level),
+    height = 0.2
+  ) +
+  geom_point(data = filter(contrasts_dunnettx, level == "80%"), size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.604, .423)
+  ) +
+  scale_y_discrete(name = NULL) +
+  scale_color_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(darken("#0072B2", .2), .3),
+     `95%` = desaturate(lighten("#0072B2", .2), .3),
+     `99%` = desaturate(lighten("#0072B2", .4), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_size_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = 1.5,
+     `95%` = 1,
+     `99%` = 0.5
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50"),
+    #axis.title.x = element_text(hjust = 1),
+    legend.position = "none",
+    #legend.position = c(1, .01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(6, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
+
+p2 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+             aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high),
+    height = 0.2
+  ) +
+  geom_point(size = 2.5, color = "#D55E00") +
+  geom_segment(
+    aes(
+      x = estimate, xend = estimate,
+      y = as.integer(reorder(contrast, estimate)) - 0.2,
+      yend = as.integer(reorder(contrast, estimate)) + 0.2
+    ),
+    size = 2, color = "#D55E00"
+  ) +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.604, .423)
+  ) +
+  scale_y_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50")
+  )
+
+
+plot_grid(
+  p1, NULL, p2,
+  NULL, NULL, NULL,
+  p2, NULL, p1,
+  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  rel_widths = c(1, .02, 1),
+  rel_heights = c(1, .02, 1)
+)
+```
+
 
 (ref:butterfat-bars) *Update: Density estimates of the butterfat percentage in the milk of four cattle breeds.* Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
@@ -429,82 +642,6 @@ Whenever you visualize uncertainty with error bars, you must specify what quanti
 *Include a coefficient plot from a regression model, as in Cleveland's book?*
 
 ```{r}
-# relevant materials: 
-# Bowman "Graphs for Uncertainty": http://www.rss.org.uk/Images/PDF/events/2018/Bowman-5-Sept-2018.pdf
-# R package denstrip: https://cran.r-project.org/package=denstrip
-
-library(ggplot2)
-library(rlang)
-library(dplyr)
-library(tidyr)
-
-stat_conf_band <- function(mapping = NULL, data = NULL,
-                           geom = "tile", position = "identity",
-                           ...,
-                           confidence = 0.95,
-                           xlim = NULL,
-                           n = 501,
-                           na.rm = FALSE,
-                           show.legend = FALSE,
-                           inherit.aes = TRUE) {
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = StatConfBand,
-    geom = geom,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      confidence = confidence,
-      n = n,
-      na.rm = na.rm,
-      xlim = xlim,
-      ...
-    )
-  )
-}
-
-fit_normal <- function(mean, moe, confidence = 0.95) {
-  # convert to two-tailed value
-  confidence <- 1-(1-confidence)/2
-  function(x) dnorm(x, mean = mean, sd = moe/qnorm(confidence))
-}
-
-StatConfBand <- ggproto("StatConfBand", Stat,
-  required_aes = c("mean", "moe"),                        
-  default_aes = aes(fill = stat(ndensity)),
-                        
-  compute_group = function(data, scales, confidence = 0.95, xlim = NULL, n = 501) {
-    # Check that confidence band parameters are constant within group
-    params <- unique(data[c("mean", "moe")])
-    if (nrow(params) > 1) {
-      stop("Confidence band parameters can not vary within data groups", call. = FALSE)
-    }
-    params <- c(as.list(params), list(confidence = confidence))
-    
-    range <- xlim %||% scales$x$dimension()
-    xseq <- seq(range[1], range[2], length.out = n)
-    
-    if (scales$x$is_discrete()) {
-      x_trans <- xseq
-    } else {
-      # For continuous scales, need to back transform from transformed range
-      # to original values
-      x_trans <- scales$x$trans$inverse(xseq)
-    }
-    
-    fun <- do.call(fit_normal, params)
-    density <- fun(x_trans)
-    
-    data.frame(
-      x = xseq,
-      density = density,
-      ndensity = density/max(density)
-    )
-  }
-)
-
 df_in <- data.frame(
   group = letters[1:3],
   mean = c(1, 3, 2),
@@ -524,7 +661,7 @@ df_out <- group_by(df_data, group) %>%
   )
 
 ggplot(df_out, aes(x = mean, y = group)) +
-  stat_conf_band(aes(mean = mean, moe = sd), height = 0.8, confidence = 0.67) +
+  stat_confidence_density(aes(x = mean, moe = sd, fill = stat(ndensity)), height = 0.8, confidence = 0.68) +
   geom_point(data = df_data, aes(x = value), position = position_jitter(width = 0), size = 1) +
   geom_errorbarh(aes(xmin = mean - sd, xmax = mean + sd), height = 0.2, color = "darkred", size = 1) +
   geom_point(size = 3, color = "darkred") +
@@ -533,86 +670,19 @@ ggplot(df_out, aes(x = mean, y = group)) +
 ```
 
 ```{r fig.width = 5.5, fig.asp = 3/4}
-sample_posterior_preds <- function(model, samples = 20, n = 100, unconditional = TRUE) {
-  predictor <- model$pred.formula[[2]]
-  response <- model$terms[[2]]
-   
-  # make a tibble with a sequence of predictor values
-  pred_seq <- tibble(
-    !!predictor := seq(
-      min(model$model[[predictor]]),
-      max(model$model[[predictor]]), 
-      length.out = n
-    )
-  )
-  
-  # Get the linear prediction matrix
-  pred_mat <- predict(
-    model,
-    newdata  = pred_seq,
-    type = "lpmatrix",
-    unconditional = unconditional
-  )
-
-  # Get the variance-covariance matrix of coefficients
-  vcov_mat <- vcov(model, unconditional = unconditional)
-
-  # Draw 20 samples from the posterior and make predictions from them
-  coefs <- rmvnorm(samples, mean = coef(model), sigma = vcov_mat)
-  preds <- pred_mat %*% t(coefs)
-  pred_df <- as_tibble(preds) %>%
-    set_names(as.character(1:samples)) %>%
-    cbind(pred_seq) %>%
-    gather(sample, !!response, -!!predictor)
-  
-  pred_df
-}
-
-# Get the smoothing-uncertainty corrected confidence intervals
-confidence_band <- function(model, level = 0.95, n = 100, unconditional = TRUE) {
-  predictor <- model$pred.formula[[2]]
-  response <- model$terms[[2]]
-   
-  # make a tibble with a sequence of predictor values
-  pred_seq <- tibble(
-    !!predictor := seq(
-      min(model$model[[predictor]]),
-      max(model$model[[predictor]]), 
-      length.out = n
-    )
-  )
-
-  # normal quantile corresponding to confidence level
-  std <- stats::qnorm(level / 2 + 0.5)
-
-  # predict confidence band
-  predict(
-    model,
-    newdata = pred_seq,
-    se.fit = TRUE,
-    unconditional = unconditional
-  ) %>%
-    as_tibble() %>%
-    cbind(pred_seq) %>%
-    rename(!!response := fit) %>%
-    mutate(
-      lo = !!response - std*se.fit,
-      hi = !!response + std*se.fit
-    )
-}
-
-
 blue_jays_male <- filter(blue_jays, KnownSex == "M")
 
 fit <- gam(Head ~ Mass, data = blue_jays_male, method = "REML")
-sample_df <- sample_posterior_preds(fit, 20)
-ci_df <- confidence_band(fit)
+newdata <- data.frame(Mass = seq(min(blue_jays_male$Mass), max(blue_jays_male$Mass), length.out = 100))
+
+sample_df <- sample_outcomes(fit, newdata, 20, unconditional = TRUE)
+ci_df <- confidence_band(fit, newdata, unconditional = TRUE)
 
 ggplot(blue_jays_male, aes(Mass, Head)) + 
-  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="#80808080", color = NA) +
+  #geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="#80808080", color = NA) +
   geom_point(color = "#0072B2", size = 1.5) +
   geom_line(data = sample_df, aes(group = sample), color = "blue", size = 0.3) +
-  geom_line(data = ci_df, color = "red", size = 0.5) +
+  #geom_line(data = ci_df, color = "red", size = 0.5) +
   scale_x_continuous(
     limits = c(59, 82),
     expand = c(0, 0),
@@ -626,7 +696,8 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
 
 ```
 
-```{r tank-capacity-uncertain, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:tank-capacity-uncertain)'}
+
+```{r tank-capacity-uncertain, eval = FALSE, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:tank-capacity-uncertain)'}
 cars93 <- MASS::Cars93
 
 set.seed(8692282)
@@ -634,8 +705,10 @@ set.seed(8692282)
 fit <- gam(Fuel.tank.capacity ~ s(Price, k = 5, bs = 'cr'), data = cars93)
 #fit <- gam(Fuel.tank.capacity ~ s(Price, k = 6, bs = 'gp'), data=cars93)
 #fit <- gam(Fuel.tank.capacity ~ s(Price), data = cars93, method = "REML")
-sample_df <- sample_posterior_preds(fit, 10, unconditional = FALSE)
-ci_df <- confidence_band(fit, unconditional = FALSE)
+
+newdata <- data.frame(Price = seq(min(cars93$Price), max(cars93$Price), length.out = 100))
+sample_df <- sample_outcomes(fit, newdata, 10, unconditional = FALSE)
+ci_df <- confidence_band(fit, newdata, unconditional = FALSE)
 
 cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + 
   scale_x_continuous(
@@ -659,6 +732,45 @@ p2 <- cars_base +
 plot_grid(
   p1, p2, align = 'hv',
   labels = 'auto'
+)
+
+```
+
+(ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Cubic regression splines with 5 knots. **Complete caption.** Data source: Motor Trend, 1974.
+
+```{r mpg-uncertain, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:mpg-uncertain)'}
+set.seed(8692282)
+
+fit <- gam(mpg ~ s(disp, bs = 'cr', k = 5), data = mtcars, method = "REML")
+#fit <- gam(mpg ~ s(disp, bs = 'ts', k = 6), data = mtcars, method = "REML")
+
+newdata <- data.frame(disp = seq(min(mtcars$disp), max(mtcars$disp), length.out = 100))
+sample_df <- sample_outcomes(fit, newdata, 10, unconditional = TRUE)
+ci_df <- confidence_band(fit, newdata, unconditional = TRUE)
+
+cars_base <- ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  scale_x_continuous(
+    name = "displacement (cu. in.)",
+    expand = c(0.01, 0)
+  ) +
+  ylab("fuel efficiency (mpg)") +
+  theme_dviz_grid(12)
+
+p1 <- cars_base +
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60") +
+  geom_line(data = ci_df, color = "#0072B2", size = 1)
+
+p2 <- cars_base +
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60") +
+  geom_line(data = sample_df, aes(group = sample), color = "#0072B2", size = 0.3)
+
+plot_grid(
+  p1, NULL, p2, align = 'hv',
+  nrow = 1,
+  labels = c("a", "", "b"),
+  rel_widths = c(1, .02, 1)
 )
 
 ```
