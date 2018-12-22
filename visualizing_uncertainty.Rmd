@@ -13,6 +13,7 @@ library(purrr)
 library(broom)
 library(emmeans)
 library(ungeviz)
+library(ggridges)
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -491,7 +492,8 @@ p1 <- ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimat
   geom_point(data = filter(contrasts_dunnettx, level == "80%"), size = 2.5, color = "#D55E00") +
   scale_x_continuous(
     name = "difference in mean rating",
-    limits = c(-.604, .423)
+    limits = c(-.65, .47),
+    expand = c(0, 0)
   ) +
   scale_y_discrete(name = NULL) +
   scale_color_manual(
@@ -548,17 +550,43 @@ p2 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
     height = 0.2
   ) +
   geom_point(size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.65, .47),
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50")
+  )
+
+p3 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+             aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  stat_confidence_density(
+    aes(moe = conf.high-estimate, fill = stat(ndensity)),
+    height = 0.7,
+    confidence = 0.95,
+    alpha = NA
+  ) +
   geom_segment(
     aes(
       x = estimate, xend = estimate,
-      y = as.integer(reorder(contrast, estimate)) - 0.2,
-      yend = as.integer(reorder(contrast, estimate)) + 0.2
+      y = as.integer(reorder(contrast, estimate)) - 0.35,
+      yend = as.integer(reorder(contrast, estimate)) + 0.35
     ),
     size = 2, color = "#D55E00"
   ) +
+  scale_fill_gradient(low = "#81A7D600", high = "#345A7FD0") +
   scale_x_continuous(
     name = "difference in mean rating",
-    limits = c(-.604, .423)
+    limits = c(-.65, .47),
+    expand = c(0, 0)
   ) +
   scale_y_discrete(name = NULL) +
   coord_cartesian(clip = "off") +
@@ -571,10 +599,48 @@ p2 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
   )
 
 
+p4 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+             aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  stat_confidence_density(
+    aes(moe = conf.high-estimate, height = stat(density)),
+    geom = "ridgeline",
+    confidence = 0.95,
+    scale = 0.2,
+    min_height = 0.001,
+    alpha = 0.7,
+    fill = "#81A7D6",
+    size = 0.4
+  ) +
+  geom_segment(
+    aes(
+      x = estimate, xend = estimate,
+      y = as.integer(reorder(contrast, estimate)) - 0.2,
+      yend = as.integer(reorder(contrast, estimate)) + 0.5
+    ),
+    size = 2, color = "#D55E00"
+  ) +
+  scale_fill_gradient(low = "#81A7D600", high = "#345A7FD0") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.65, .47),
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50"),
+    axis.text.y = element_text(vjust = 0)
+  )
+
 plot_grid(
   p1, NULL, p2,
   NULL, NULL, NULL,
-  p2, NULL, p1,
+  p3, NULL, p4,
   labels = c("a", "", "b", "", "", "", "c", "", "d"),
   rel_widths = c(1, .02, 1),
   rel_heights = c(1, .02, 1)
@@ -639,50 +705,40 @@ Whenever you visualize uncertainty with error bars, you must specify what quanti
 ```
 
 
-*Include a coefficient plot from a regression model, as in Cleveland's book?*
-
-```{r}
-df_in <- data.frame(
-  group = letters[1:3],
-  mean = c(1, 3, 2),
-  sd = c(.8, .4, .7)
-)
-
-df_data <- mutate(df_in, 
-    value = purrr::map2(mean, sd, ~rnorm(250, .x, .y))
-  ) %>%
-  unnest()
-
-df_out <- group_by(df_data, group) %>%
-  summarize(
-    mean = mean(value),
-    sd = sd(value),
-    moe = sd*1.96
-  )
-
-ggplot(df_out, aes(x = mean, y = group)) +
-  stat_confidence_density(aes(x = mean, moe = sd, fill = stat(ndensity)), height = 0.8, confidence = 0.68) +
-  geom_point(data = df_data, aes(x = value), position = position_jitter(width = 0), size = 1) +
-  geom_errorbarh(aes(xmin = mean - sd, xmax = mean + sd), height = 0.2, color = "darkred", size = 1) +
-  geom_point(size = 3, color = "darkred") +
-  scale_fill_gradient(low = "#132B4300", high = "#56B1F7FF") +
-  theme_minimal()
-```
-
 ```{r fig.width = 5.5, fig.asp = 3/4}
 blue_jays_male <- filter(blue_jays, KnownSex == "M")
 
 fit <- gam(Head ~ Mass, data = blue_jays_male, method = "REML")
-newdata <- data.frame(Mass = seq(min(blue_jays_male$Mass), max(blue_jays_male$Mass), length.out = 100))
 
-sample_df <- sample_outcomes(fit, newdata, 20, unconditional = TRUE)
+newdata <- data.frame(Mass = seq(59, 82, length.out = 100))
+
+sample_df <- sample_outcomes(fit, newdata, 15, unconditional = TRUE)
 ci_df <- confidence_band(fit, newdata, unconditional = TRUE)
 
 ggplot(blue_jays_male, aes(Mass, Head)) + 
-  #geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="#80808080", color = NA) +
-  geom_point(color = "#0072B2", size = 1.5) +
-  geom_line(data = sample_df, aes(group = sample), color = "blue", size = 0.3) +
-  #geom_line(data = ci_df, color = "red", size = 0.5) +
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60", size = 1.5) +
+  #geom_line(data = sample_df, aes(group = .draw), color = "#0072B2", size = 0.3) +
+  geom_line(data = ci_df, color = "#0072B2", size = 1) +
+  scale_x_continuous(
+    limits = c(59, 82),
+    expand = c(0, 0),
+    name = "body mass (g)") +
+  scale_y_continuous(
+    limits = c(52, 61),
+    expand = c(0, 0),
+    name = "head length (mm)"
+  ) +
+  theme_dviz_open()
+```
+
+```{r fig.width = 5.5, fig.asp = 3/4}
+
+ggplot(blue_jays_male, aes(Mass, Head)) + 
+  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
+  geom_point(color = "grey60", size = 1.5) +
+  geom_line(data = sample_df, aes(group = .draw), color = "#0072B2", size = 0.3) +
+  #geom_line(data = ci_df, color = "#0072B2", size = 1) +
   scale_x_continuous(
     limits = c(59, 82),
     expand = c(0, 0),
@@ -695,7 +751,66 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   theme_dviz_open()
 
 ```
+**Graded confidence band**
 
+```{r fig.width = 5.5, fig.asp = 3/4}
+ci_99_df <- confidence_band(fit, newdata, level = 0.99, unconditional = TRUE)
+ci_80_df <- confidence_band(fit, newdata, level = 0.80, unconditional = TRUE)
+
+ggplot(blue_jays_male, aes(Mass, Head)) + 
+  geom_ribbon(
+    data = ci_99_df,
+    aes(ymin = lo, ymax = hi, fill = "99%"),
+    color = NA
+  ) +
+  geom_ribbon(
+    data = ci_df,
+    aes(ymin = lo, ymax = hi, fill = "95%"),
+    color = NA
+  ) +
+  geom_ribbon(
+    data = ci_80_df,
+    aes(ymin = lo, ymax = hi, fill = "80%"),
+    color = NA
+  ) +
+  geom_point(color = "grey40", size = 1.5) +
+  geom_line(data = ci_df, color = "#D55E00", size = 1.5) +
+  scale_fill_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(lighten("#0072B2", .4), .3),
+     `95%` = desaturate(lighten("#0072B2", .6), .3),
+     `99%` = desaturate(lighten("#0072B2", .8), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_x_continuous(
+    limits = c(59, 82),
+    expand = c(0, 0),
+    name = "body mass (g)"
+  ) +
+  scale_y_continuous(
+    limits = c(52, 61),
+    expand = c(0, 0),
+    name = "head length (mm)"
+  ) +
+  theme_dviz_open() +
+  theme(
+    legend.position = c(1, .01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(12, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title = element_text(size = 12, hjust = 0.5)
+  )
+```
 
 ```{r tank-capacity-uncertain, eval = FALSE, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:tank-capacity-uncertain)'}
 cars93 <- MASS::Cars93
@@ -727,7 +842,7 @@ p1 <- cars_base +
 p2 <- cars_base +
   geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
   geom_point(color = "grey60") +
-  geom_line(data = sample_df, aes(group = sample), color = "#0072B2", size = 0.3)
+  geom_line(data = sample_df, aes(group = .draw), color = "#0072B2", size = 0.3)
 
 plot_grid(
   p1, p2, align = 'hv',
@@ -764,7 +879,7 @@ p1 <- cars_base +
 p2 <- cars_base +
   geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
   geom_point(color = "grey60") +
-  geom_line(data = sample_df, aes(group = sample), color = "#0072B2", size = 0.3)
+  geom_line(data = sample_df, aes(group = .draw), color = "#0072B2", size = 0.3)
 
 plot_grid(
   p1, NULL, p2, align = 'hv',
@@ -778,6 +893,7 @@ plot_grid(
 
 ## Methods of uncertainty estimates
 
+Explain confidence via hypothesis testing: 95% confidence means less than 5% prob. of seeing result we saw if null were true.
 
 Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation.
 
