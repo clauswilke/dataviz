@@ -26,6 +26,152 @@ library(ggridges)
 - *Value suppression*
 
 
+## Visualizing probabilities
+
+Probability 
+
+(ref:probability-waffle) Visualizing probability as frequency. There are 100 squares in each grid, and each square represents either success of failure in some random trial. A 1% chance of success corresponds to one dark and 99 light squares, a 10% chance of success corresponds to ten dark and 90 light squares, and a 40% chance of success corresponds to 40 dark and 60 light squares. By randomly placing the dark squares among the light squares, we can create a visual impression of randomness that emphasizes the uncertainty of the outcome of a single trial.
+
+```{r probability-waffle, fig.asp = 1.2/3, fig.cap = '(ref:probability-waffle)'}
+g <- expand.grid(x = 1:10, y = 1:10)
+
+set.seed(84524)
+
+data <- data.frame(ratio = c(0.01, 0.1, 0.4)) %>%
+  mutate(
+    out = purrr::map(
+      ratio,
+      ~g %>% mutate(
+        value = {
+          n <- n()
+          i <- round(n*.x)
+          sample(c(rep("S", i), rep("F", n - i)), n)
+        }
+      )
+    )
+  ) %>%
+  unnest() %>%
+  mutate(
+    label = paste0(round(100*ratio), "% chance")
+  )
+
+ggplot(data, aes(x, y, fill = value)) +
+  geom_tile(color = "white", size = 1) +
+  coord_fixed(expand = FALSE, clip = "off") +
+  scale_x_continuous(name = NULL, breaks = NULL) +
+  scale_y_continuous(name = NULL, breaks = NULL) +
+  scale_fill_manual(
+    name = NULL,
+    breaks = c("S", "F"),
+    labels = c("success   ", "failure"),
+    values = c(
+      "S" = desaturate(darken("#0072B2", .4), .5),
+      "F" = desaturate(lighten("#0072B2", .7), .5)
+    ),
+    guide = guide_legend(override.aes = list(size = 0))
+  ) +
+  facet_wrap(~label) +
+  theme_dviz_grid() +
+  theme(
+    panel.spacing = unit(12, "pt"),
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.justification = "right",
+    legend.box.spacing = unit(6, "pt"),
+    legend.spacing.x = unit(3, "pt"),
+    legend.key.size = unit(10, "pt")
+  )
+```
+
+(ref:estimate-uncertainty) *Figure caption.*
+
+```{r estimate-uncertainty, fig.cap = '(ref:estimate-uncertainty)'}
+x <- c(seq(-2.5, 0, length.out = 50), seq(0.00001, 5, length.out = 100))
+mu <- 1
+sd <- .9
+
+df_norm <- data.frame(
+  x,
+  y = dnorm(x, mu, sd),
+  type = ifelse(x <= 0, "A", "B")
+)
+
+ci_x <- c(qnorm(.025, mu, sd), qnorm(0.975, mu, sd))
+ci_y <- dnorm(ci_x, mu, sd)
+
+df_annot <- data.frame(
+  x = c(mu + 0.05, mu + 0.1),
+  y = c(dnorm(mu, mu, sd) + 0.03, ci_y[1]) + 0.01,
+  hjust = c(0, 0),
+  vjust = c(1, 0),
+  label = c("parameter estimate", "margin of error")
+)
+
+ggplot(df_norm, aes(x, y)) +
+  geom_area(aes(fill = type), alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_line() +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = ci_x[1], xend = ci_x[2], y = ci_y[1], yend = ci_y[2],
+    arrow = arrow(angle = 15, length = grid::unit(9, "pt"), ends = "both", type = "closed"),
+    inherit.aes = FALSE
+  ) +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = mu, xend = mu, y = 0, yend = dnorm(mu, mu, sd) + 0.04,
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = df_annot,
+    aes(x, y, label = label, hjust = hjust, vjust = vjust),
+    family = dviz_font_family,
+    size = 12/.pt
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    breaks = NULL,
+    expand = expand_scale(mult = c(0, 0.05))
+  ) +
+  scale_fill_manual(
+    values = c(A = "#F0E442", B = "#56B4E9"),
+    guide = "none"
+  ) +
+  theme_dviz_open()
+```
+
+## Methods of uncertainty estimates
+
+
+Bayesians ask about the probability that the parameter lies in a particular location or region. Frequentists ask about the probability to see an outcome if the parameter lies elsewhere. The frequentist approach may seem backwards, but it is reasonable if we have specific hypotheses we want to test. For example, *put example here, US vs Canada chocolate? Not sure how detailed I want to go.*
+
+
+A Bayesian credible interval tells you about where the true parameter likely is, whereas a frequentist confidence interval tells you about where the true parameter likely not is. Upon first reading, this distinction may seem like semantics, but there are important differences between these two approaches. Under the Bayesian approach, you use the data and your prior knowledge about the system under study (called the *prior*) to calculate a probability distribution (called the *posterior*) that tells you where you can expect the true parameter value to lie. By contrast, under the frequentist approach, you first make an assumption that you intend to disprove. This assumption is called the *null hypothesis*, and it is usually simply the assumption that the parameter equals zero. You then calculate the probability that random sampling would generate data similar to what was observed if the null hypothesis were true. The confidence interval is a representation of this probability. If the confidence interval at, say 95% confidence, excludes the parameter value under the null hypothesis (i.e., the value zero), then you are at least 95% confident that the null hypothesis is false. Thus, to summarize, a Bayesian credible interval makes a statement about the true parameter value and a frequentist confidence interval makes a statement about the null hypothesis.
+
+```{block type='rmdtip', echo=TRUE}
+A Bayesian credible interval answers the question: "Where do we expect the true parameter value to lie?" A frequentist confidence interval answers the question: "How certain are we that the true parameter value is not zero?" 
+```
+
+The discussion of whether Bayesian or frequentist approaches are preferable has endured for over a century, and it is unlikely to go away any time soon. For either approach, there are applications and settings where it is preferable. In Table \@ref(tab:estimation-frameworks), I provide a very rough overview of their respective strengths and weaknesses. From a purely practical perspective, Bayesian approaches often incur an additional level of modeling complexity and computational cost that may not be warranted or cost effective in certain applications. 
+
+Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation. This table is meant as a rough guideline differentiating the most commonly used methods and procedures. Any particular analysis may deviate from the classification provided here.
+
+------------------------------------------------------------------------------------------
+approach       interpretability    computational       complexity of     assumptions on
+                of estimates         efficiency        modeling setup       data set
+------------ ------------------ ------------------- ------------------- ------------------
+Bayesian          high                 low                 high                few
+
+frequentist       moderate              high              moderate            several
+parametric  
+
+bootstrap         moderate            moderate             low                minimal
+------------------------------------------------------------------------------------------
+
+In Table \@ref(tab:estimation-frameworks), I have also added the bootstrap. I would like to emphasize that while Bayesian and frequentist approaches are broad conceptual frameworks, the bootstrap is primarily a procedure, and it can be performed within either framework. In the classical, non-Bayesian setup, the bootstrap consists of resampling the data many times with replacement and performing the analysis of interest separately on each bootstrap sample. The variability in analysis outcomes among samples provides an estimate of the uncertainty inherent in the sample. The bootstrap is popular because it can be performed easily on any dataset and for any analysis. It is particularly useful in settings with novel, complex, or otherwise poorly understood statistics. Where Bayesian and frequentist approaches often require careful mathematical modeling and theory development, the boostrap only requires a powerful computer.
+
+
+
 ## Error bars and confidence bands
 
 (ref:cocoa-data-vs-CI) Relationship between original data and mean, standard deviation, standard error, and confidence intervals. The original data points (small green dots) represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dots represent the mean of the ratings. Error bars indicate, from top to bottom, the standard deviation, the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
@@ -459,7 +605,7 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
 
 ```
 
-```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:confidence-visualizations)'}
+```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:confidence-visualizations)'}
 cacao_smaller <- filter(cacao_small, location != "Switzerland")
 
 fit <- lm(rating ~ location, data = cacao_smaller)
@@ -565,7 +711,90 @@ p2 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
     axis.ticks.x.top = element_line(color = "gray50")
   )
 
-p3 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+p3 <- ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high, color = level, size = level),
+    height = 0
+  ) +
+  geom_point(data = filter(contrasts_dunnettx, level == "80%"), size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.65, .47),
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL) +
+  scale_color_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = desaturate(darken("#0072B2", .2), .3),
+     `95%` = desaturate(lighten("#0072B2", .2), .3),
+     `99%` = desaturate(lighten("#0072B2", .4), .3)
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  scale_size_manual(
+    name = "confidence level",
+    values = c(
+     `80%` = 1.5,
+     `95%` = 1,
+     `99%` = 0.5
+    ),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom"
+    )
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50"),
+    #axis.title.x = element_text(hjust = 1),
+    legend.position = "none",
+    #legend.position = c(1, .01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(6, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
+
+p4 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+             aes(x = estimate, y = reorder(contrast, estimate))) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high),
+    height = 0
+  ) +
+  geom_point(size = 2.5, color = "#D55E00") +
+  scale_x_continuous(
+    name = "difference in mean rating",
+    limits = c(-.65, .47),
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.line.x.top = element_blank(),
+    axis.ticks.x = element_line(color = "black"),
+    axis.ticks.x.top = element_line(color = "gray50")
+  )
+
+
+p5 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
              aes(x = estimate, y = reorder(contrast, estimate))) +
   geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
   stat_confidence_density(
@@ -599,7 +828,7 @@ p3 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
   )
 
 
-p4 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
+p6 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
              aes(x = estimate, y = reorder(contrast, estimate))) +
   geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
   stat_confidence_density(
@@ -638,12 +867,15 @@ p4 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
   )
 
 plot_grid(
-  p1, NULL, p2,
+  p2, NULL, p1,
   NULL, NULL, NULL,
-  p3, NULL, p4,
-  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  p4, NULL, p3,
+  NULL, NULL, NULL,
+  p5, NULL, p6,
+  ncol = 3,
+  labels = c("a", "", "b", "", "", "", "c", "", "d", "", "", "", "e", "", "f"),
   rel_widths = c(1, .02, 1),
-  rel_heights = c(1, .02, 1)
+  rel_heights = c(1, .02, 1, .02, 1)
 )
 ```
 
@@ -751,7 +983,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   theme_dviz_open()
 
 ```
-**Graded confidence band**
+
 
 ```{r fig.width = 5.5, fig.asp = 3/4}
 ci_99_df <- confidence_band(fit, newdata, level = 0.99, unconditional = TRUE)
@@ -774,7 +1006,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
     color = NA
   ) +
   geom_point(color = "grey40", size = 1.5) +
-  geom_line(data = ci_df, color = "#D55E00", size = 1.5) +
+  geom_line(data = ci_df, color = darken("#0072B2", .4), size = 1) +
   scale_fill_manual(
     name = "confidence level",
     values = c(
@@ -890,24 +1122,6 @@ plot_grid(
 
 ```
 
-
-## Methods of uncertainty estimates
-
-Explain confidence via hypothesis testing: 95% confidence means less than 5% prob. of seeing result we saw if null were true.
-
-Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation.
-
-------------------------------------------------------------------------------------------
-approach       interpretability    computational       complexity of     assumptions on
-                of estimates         efficiency        modeling setup       data set
------------- ------------------ ------------------- ------------------- ------------------
-Bayesian          high                 low                 high                few
-
-frequentist       moderate              high              moderate            several
-parametric  
-
-bootstrap           low                moderate             low                none
-------------------------------------------------------------------------------------------
 
 
 ## Hypothetical outcomes plots
