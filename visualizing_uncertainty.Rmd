@@ -3,11 +3,8 @@
 source("_common.R")
 
 library(forcats)
-library(patchwork)
 library(lubridate)
 library(mgcv)
-library(mvtnorm)
-library(rlang)
 library(tidyr)
 library(purrr)
 library(broom)
@@ -26,13 +23,15 @@ library(ggridges)
 - *Value suppression*
 
 
-## Visualizing probabilities
+## Framing probabilities as frequencies
+
+*Intro sentences, uncertainty is related to probability.*
 
 Probability is most easily understood as a frequency in the context of many repeated trials. If a particular outcome occurs with a probability of 10%, then we expect that among many repeated trials that outcome will be seen in one out of ten cases.
 
 Visualizing a single probability is difficult. How would you visualize the chance of winning in the lottery, or the chance of rolling a six with a fair die? In both cases, the probability is a single number. We could treat that number as an amount and display it using any of the techniques discussed in Chapter \@ref(visualizing-amounts), such as a bar graph or a dot plot, but the result would not be very useful. Most people lack an intuitive understanding of how a probability value translates into experienced reality, and showing the probability as a bar or dot along the line does not help with this problem.
 
-We can make the concept of probability tangible by creating a graph that emphasizes both the frequency aspect and the unpredictability of a random trial, for example by drawing squares of different colors in a random arrangement (Figure \@ref(fig:probability-waffle)). Imagine you are given the task of picking a dark square, but you have to choose a square before knowing which squares are dark and which are light. (If you will, you can think of picking a square with your eyes closed.) Intuitively, by looking at Figure \@ref(fig:probability-waffle), you probably get the sense that it would be quite unlikely to select the one dark square in the 1%-chance case, and it would still be fairly unlikely to select one in the 10%-chance case. However, in the 40%-chance case the odds don't look so bad.
+We can make the concept of probability tangible by creating a graph that emphasizes both the frequency aspect and the unpredictability of a random trial, for example by drawing squares of different colors in a random arrangement (Figure \@ref(fig:probability-waffle)). Imagine you are given the task of picking a dark square, but you have to choose a square before knowing which squares will be dark and which will be light. (If you will, you can think of picking a square with your eyes closed.) Intuitively, by looking at Figure \@ref(fig:probability-waffle), you probably get the sense that it would be quite unlikely to select the one dark square in the 1%-chance case, and it would still be fairly unlikely to select one in the 10%-chance case. However, in the 40%-chance case the odds don't look so bad. This style of visualization, where we show specific potential outcomes, is called a *discrete outcome visualization,* and the act of visualizing a probability as a frequency is called *frequency framing.* We are framing the probabilistic nature of a result in terms of easily understood frequencies of outcomes.
 
 (ref:probability-waffle) Visualizing probability as frequency. There are 100 squares in each grid, and each square represents either success of failure in some random trial. A 1% chance of success corresponds to one dark and 99 light squares, a 10% chance of success corresponds to ten dark and 90 light squares, and a 40% chance of success corresponds to 40 dark and 60 light squares. By randomly placing the dark squares among the light squares, we can create a visual impression of randomness that emphasizes the uncertainty of the outcome of a single trial.
 
@@ -87,9 +86,14 @@ ggplot(data, aes(x, y, fill = value)) +
   )
 ```
 
-(ref:estimate-uncertainty) *Figure caption.*
 
-```{r estimate-uncertainty, fig.cap = '(ref:estimate-uncertainty)'}
+*intro sentences, transition from binary outcomes to numerical outcomes.*
+
+One common scenario is that of election predictions. Let's consider a hypothetical example of an upcoming election with two parties, the yellow party and the blue party. Assume you hear on the radio that the blue party is predicted to have a one percentage point advantage over the yellow party, with a margin of error of 1.76 percentage points. What is this information telling you about the likely outcome of the election? It is human nature to hear "the blue party will win," but reality is more complicated. First, and most importantly, there is a range of different possible outcomes. The blue party could end up winning with a lead of two percentage points, or the yellow party could end up winning with a lead of half a percentage point. The range of possible outcomes with their associated likelihoods is called a probability distribution, and we can draw it as a smooth curve that rises and then falls over the range of possible outcomes (Figure \@ref(fig:election-prediction)). The higher the curve for a specific outcome, the more likely that outcome is. Probability distributions are closely related to histograms and kernel densities discussed in Chapter \@ref(histograms-density-plots), and you may want to re-read that chapter to refresh your memory.
+
+(ref:election-prediction) Hypothetical prediction of an election outcome. The blue party is predicted to win over the yellow party by approximately one percentage point (labeled "best estimate"), but that prediction has a margin of error (here drawn so it covers 95% of the likely outcomes, 1.76 percentage points in either direction from the best estimate). The area shaded in blue, corresponding to 87.1% of the total, represents all outcomes under which blue would win. Likewise, the area shaded in yellow, corresponding to 12.9% of the total, represents all outcomes under which yellow would win. In this example, blue has an 87% chance of winning the election.
+
+```{r election-prediction, fig.asp = 0.5, fig.cap = '(ref:election-prediction)'}
 x <- c(seq(-2.5, 0, length.out = 50), seq(0.00001, 5, length.out = 100))
 mu <- 1.02
 sd <- .9
@@ -104,15 +108,15 @@ ci_x <- c(qnorm(.025, mu, sd), qnorm(0.975, mu, sd))
 ci_y <- dnorm(ci_x, mu, sd)
 
 df_annot <- data.frame(
-  x = c(mu + 0.05, mu + 0.1),
-  y = c(dnorm(mu, mu, sd) + 0.04, ci_y[1] + 0.01),
-  hjust = c(0, 0),
-  vjust = c(1, 0),
-  label = c("parameter estimate", "margin of error")
+  x = c(mu + 0.05, mu + 0.1, mu + 2.3*sd, mu - 2.5*sd),
+  y = c(dnorm(mu, mu, sd) + 0.04, ci_y[1] + 0.01, 3*ci_y[1], 3*ci_y[1]),
+  hjust = c(0, 0, 0.5, 0.5),
+  vjust = c(1, 0, 0.5, 0.5),
+  label = c("best estimate", "margin of error", "blue wins", "yellow wins")
 )
 
 ggplot(df_norm, aes(x, y)) +
-  geom_area(aes(fill = type), alpha = 0.5) +
+  geom_area(aes(fill = type)) +
   geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
   geom_line() +
   geom_segment(
@@ -132,6 +136,10 @@ ggplot(df_norm, aes(x, y)) +
     family = dviz_font_family,
     size = 12/.pt
   ) +
+  scale_x_continuous(
+    name = "percentag point advantage for blue",
+    labels = scales::percent_format(accuracy = 0.1, scale = 1)
+  ) +
   scale_y_continuous(
     name = NULL,
     breaks = NULL,
@@ -139,25 +147,35 @@ ggplot(df_norm, aes(x, y)) +
     limits = c(0, dnorm(mu, mu, sd) + 0.045)
   ) +
   scale_fill_manual(
-    values = c(A = "#F0E442", B = "#56B4E9"),
+    values = c(A = "#f8f1a9", B = "#b1daf4"),
     guide = "none"
   ) +
   theme_dviz_open()
 ```
 
-(ref:quantile-dot) *Cite: Matthew Kay, Tara Kola, Jessica Hullman, Sean Munson. When (ish) is My Bus? User-centered Visualizations of Uncertainty in Everyday, Mobile Predictive Systems. CHI 2016. DOI: 10.1145/2858036.2858558.*
+By doing some math, we can calculate that for our made-up example, the chance of the yellow party winning is 12.9%. So the chance of yellow winning is a tad better than the 10% chance scenario shown in Figure \@ref(fig:probability-waffle). If you favor the blue party, you may not be overly worried, but the yellow party does have a realistic shot at winning and should not be counted out. If you compare Figure \@ref(fig:probability-waffle) to Figure \@ref(fig:election-prediction), you may find that Figure \@ref(fig:probability-waffle) creates a much better sense of the uncertainty in outcome, even though the shaded areas in Figure \@ref(fig:election-prediction) acurately represent the chance of blue or yellow winning. This is the power of discrete outcome visualization. Research in human perception shows that we are much better at perceiving, counting, and judging the relative frequencies of discrete objects---as long as their total number is not too large---than we are at judging the relative sizes of different areas.
 
-```{r quantile-dot, fig.asp = 0.36, fig.cap = '(ref:quantile-dot)'}
+We can combine the discrete outcome nature of Figure \@ref(fig:probability-waffle) with the specific setting of a distribution of election outcomes by drawing a quantile dotplot [@Kay_et_al_2016]. In the quantile dotplot, we subdivide the total area under the curve into evenly sized units and draw each unit as a circle. We then stack the circles such that their arrangement approximately represents the original distribution curve (Figure \@ref(fig:election-quantile-dot)).
+
+(ref:election-quantile-dot) Quantile dotplot representations of the election outcome distribution of Figure \@ref(fig:election-prediction). (a) The smooth distribution is approximated with 50 dots representing a 2% chance each. The six yellow dots thus correspond to a 12% chance, reasonably close to the true value of 12.9%. (b) The smooth distribution is approximated with 10 dots representing a 10% chance each. The one yellow dot thus corresponds to a 10% chance, still close to the true value. Quantile dot plots with a smaller number of dots tend to be easier to read, so in this example, the 10-dot version might be preferable to the 50-dot version.
+
+```{r election-quantile-dot, fig.asp = 0.72, fig.cap = '(ref:election-quantile-dot)'}
 mu <- 1.02
 sd <- 0.9
 binwidth <- 0.31
+binwidth <- 0.29
 
 df_q <- data.frame(x = qnorm(ppoints(50), mu, sd)) %>%
   mutate(type = ifelse(x <= 0, "A", "B"))
 
-ggplot(df_q, aes(x, fill = type)) +
-  geom_dotplot(binwidth = binwidth) +
+p1 <- ggplot(df_q, aes(x, fill = type)) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
   geom_line(data = df_norm, aes(x, 1.92*y)) + # factor 1.92 manually determined
+  geom_dotplot(binwidth = binwidth) +
+  scale_x_continuous(
+    name = NULL, #"percent point advantage for blue",
+    labels = scales::percent_format(accuracy = 0.1, scale = 1)
+  ) +
   scale_y_continuous(
     name = NULL,
     breaks = NULL,
@@ -165,18 +183,44 @@ ggplot(df_q, aes(x, fill = type)) +
     limits = c(0, 0.9)
   ) +
   scale_fill_manual(
-    values = c(A = "#F0E44280", B = "#56B4E980"),
+    values = c(A = "#f8f1a9", B = "#b1daf4"),
     guide = "none"
   ) +
   theme_dviz_open()
 
+binwidth <- 0.31*2.1
+
+df_q <- data.frame(x = qnorm(ppoints(10), mu, sd)) %>%
+  mutate(type = ifelse(x <= 0, "A", "B"))
+
+p2 <- ggplot(df_q, aes(x, fill = type)) +
+  geom_vline(xintercept = 0, linetype = 2, color = "gray50") +
+  geom_line(data = df_norm, aes(x, 1.92*y)) + # factor 1.92 manually determined
+  geom_dotplot(binwidth = binwidth) +
+  scale_x_continuous(
+    name = "percentage point advantage for blue",
+    labels = scales::percent_format(accuracy = 0.1, scale = 1)
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    breaks = NULL,
+    expand = c(0, 0),
+    limits = c(0, 0.9)
+  ) +
+  scale_fill_manual(
+    values = c(A = "#f8f1a9", B = "#b1daf4"),
+    guide = "none"
+  ) +
+  theme_dviz_open()
+
+plot_grid(p1, p2, align = 'h', labels = "auto", ncol = 1)
 ```
 
-## Methods of uncertainty estimates
+As a general principle, quantile dotplots should use a small to moderate number of dots. If there are too many, then we tend to perceive them as a continuum rather than as individual, discrete units. This negates the advantages of the discrete plots. Figure \@ref(fig:election-quantile-dot) shows variants with 50 dots (Figure \@ref(fig:election-quantile-dot)a) and with ten dots (Figure \@ref(fig:election-quantile-dot)b). While the version with 50 dots more accurately captures the true probability distribution, the number of dots is too large for easy perception. The version with ten dots more immediately conveys the relative chances of blue or yellow winning. One objection to the ten-dot version might be that it is not very precise. We are underrepresenting the chance of yellow winning by 2.9 percentage points. However, it is worthwhile to trade some mathematical precision for more accurate human perception of the resulting visualization. A visualization that is mathematically correct but not properly perceived is not that useful in practice.
 
+## Approaches to uncertainty estimation
 
-Bayesians ask about the probability that the parameter lies in a particular location or region. Frequentists ask about the probability to see an outcome if the parameter lies elsewhere. The frequentist approach may seem backwards, but it is reasonable if we have specific hypotheses we want to test. For example, *put example here, US vs Canada chocolate? Not sure how detailed I want to go.*
-
+*Introduce concepts such as parameter, estimate, Bayesian analysis, frequentist analysis. Others?*
 
 A Bayesian credible interval tells you about where the true parameter likely is, whereas a frequentist confidence interval tells you about where the true parameter likely not is. Upon first reading, this distinction may seem like semantics, but there are important differences between these two approaches. Under the Bayesian approach, you use the data and your prior knowledge about the system under study (called the *prior*) to calculate a probability distribution (called the *posterior*) that tells you where you can expect the true parameter value to lie. By contrast, under the frequentist approach, you first make an assumption that you intend to disprove. This assumption is called the *null hypothesis*, and it is usually simply the assumption that the parameter equals zero. You then calculate the probability that random sampling would generate data similar to what was observed if the null hypothesis were true. The confidence interval is a representation of this probability. If the confidence interval at, say 95% confidence, excludes the parameter value under the null hypothesis (i.e., the value zero), then you are at least 95% confident that the null hypothesis is false. Thus, to summarize, a Bayesian credible interval makes a statement about the true parameter value and a frequentist confidence interval makes a statement about the null hypothesis.
 
@@ -186,7 +230,7 @@ A Bayesian credible interval answers the question: "Where do we expect the true 
 
 The discussion of whether Bayesian or frequentist approaches are preferable has endured for over a century, and it is unlikely to go away any time soon. For either approach, there are applications and settings where it is preferable. In Table \@ref(tab:estimation-frameworks), I provide a very rough overview of their respective strengths and weaknesses. From a purely practical perspective, Bayesian approaches often incur an additional level of modeling complexity and computational cost that may not be warranted or cost effective in certain applications. 
 
-Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation. This table is meant as a rough guideline differentiating the most commonly used methods and procedures. Any particular analysis may deviate from the classification provided here.
+Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation. This table is meant as a rough guideline differentiating the most commonly used methods and procedures. Any particular analysis approach may deviate from the classification provided here.
 
 ------------------------------------------------------------------------------------------
 approach       interpretability    computational       complexity of     assumptions on
@@ -204,7 +248,7 @@ In Table \@ref(tab:estimation-frameworks), I have also added the bootstrap. I wo
 
 
 
-## Error bars and confidence bands
+## Visualizing the uncertainty of point estimates
 
 (ref:cocoa-data-vs-CI) Relationship between original data and mean, standard deviation, standard error, and confidence intervals. The original data points (small green dots) represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dots represent the mean of the ratings. Error bars indicate, from top to bottom, the standard deviation, the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
@@ -968,8 +1012,11 @@ filter(US_income_age, state == "Pennsylvania") %>%
 Whenever you visualize uncertainty with error bars, you must specify what quantity and/or confidence level the error bars represent.
 ```
 
+## Visualizing the uncertainty of curve fits
 
-```{r fig.width = 5.5, fig.asp = 3/4}
+(ref:blue-jays-male-conf-band)  *Figure caption*
+
+```{r blue-jays-male-conf-band, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-conf-band)'}
 blue_jays_male <- filter(blue_jays, KnownSex == "M")
 
 fit <- gam(Head ~ Mass, data = blue_jays_male, method = "REML")
@@ -996,7 +1043,9 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   theme_dviz_open()
 ```
 
-```{r fig.width = 5.5, fig.asp = 3/4}
+(ref:blue-jays-male-fitted-draws) *Figure caption*
+
+```{r blue-jays-male-fitted-draws, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-fitted-draws)'}
 
 ggplot(blue_jays_male, aes(Mass, Head)) + 
   geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
@@ -1016,8 +1065,9 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
 
 ```
 
+(ref:blue-jays-male-graded-conf-band) *Figure caption*
 
-```{r fig.width = 5.5, fig.asp = 3/4}
+```{r blue-jays-male-graded-conf-band, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-graded-conf-band)'}
 ci_99_df <- confidence_band(fit, newdata, level = 0.99, unconditional = TRUE)
 ci_80_df <- confidence_band(fit, newdata, level = 0.80, unconditional = TRUE)
 
@@ -1162,3 +1212,4 @@ Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-ou
 
 ## Value-suppressing uncertainty palette
 
+*Keep section only if a good example can be found.*
