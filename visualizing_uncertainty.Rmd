@@ -28,7 +28,11 @@ library(ggridges)
 
 ## Visualizing probabilities
 
-Probability 
+Probability is most easily understood as a frequency in the context of many repeated trials. If a particular outcome occurs with a probability of 10%, then we expect that among many repeated trials that outcome will be seen in one out of ten cases.
+
+Visualizing a single probability is difficult. How would you visualize the chance of winning in the lottery, or the chance of rolling a six with a fair die? In both cases, the probability is a single number. We could treat that number as an amount and display it using any of the techniques discussed in Chapter \@ref(visualizing-amounts), such as a bar graph or a dot plot, but the result would not be very useful. Most people lack an intuitive understanding of how a probability value translates into experienced reality, and showing the probability as a bar or dot along the line does not help with this problem.
+
+We can make the concept of probability tangible by creating a graph that emphasizes both the frequency aspect and the unpredictability of a random trial, for example by drawing squares of different colors in a random arrangement (Figure \@ref(fig:probability-waffle)). Imagine you are given the task of picking a dark square, but you have to choose a square before knowing which squares are dark and which are light. (If you will, you can think of picking a square with your eyes closed.) Intuitively, by looking at Figure \@ref(fig:probability-waffle), you probably get the sense that it would be quite unlikely to select the one dark square in the 1%-chance case, and it would still be fairly unlikely to select one in the 10%-chance case. However, in the 40%-chance case the odds don't look so bad.
 
 (ref:probability-waffle) Visualizing probability as frequency. There are 100 squares in each grid, and each square represents either success of failure in some random trial. A 1% chance of success corresponds to one dark and 99 light squares, a 10% chance of success corresponds to ten dark and 90 light squares, and a 40% chance of success corresponds to 40 dark and 60 light squares. By randomly placing the dark squares among the light squares, we can create a visual impression of randomness that emphasizes the uncertainty of the outcome of a single trial.
 
@@ -87,7 +91,7 @@ ggplot(data, aes(x, y, fill = value)) +
 
 ```{r estimate-uncertainty, fig.cap = '(ref:estimate-uncertainty)'}
 x <- c(seq(-2.5, 0, length.out = 50), seq(0.00001, 5, length.out = 100))
-mu <- 1
+mu <- 1.02
 sd <- .9
 
 df_norm <- data.frame(
@@ -101,7 +105,7 @@ ci_y <- dnorm(ci_x, mu, sd)
 
 df_annot <- data.frame(
   x = c(mu + 0.05, mu + 0.1),
-  y = c(dnorm(mu, mu, sd) + 0.03, ci_y[1]) + 0.01,
+  y = c(dnorm(mu, mu, sd) + 0.04, ci_y[1] + 0.01),
   hjust = c(0, 0),
   vjust = c(1, 0),
   label = c("parameter estimate", "margin of error")
@@ -131,13 +135,41 @@ ggplot(df_norm, aes(x, y)) +
   scale_y_continuous(
     name = NULL,
     breaks = NULL,
-    expand = expand_scale(mult = c(0, 0.05))
+    expand = c(0, 0),
+    limits = c(0, dnorm(mu, mu, sd) + 0.045)
   ) +
   scale_fill_manual(
     values = c(A = "#F0E442", B = "#56B4E9"),
     guide = "none"
   ) +
   theme_dviz_open()
+```
+
+(ref:quantile-dot) *Cite: Matthew Kay, Tara Kola, Jessica Hullman, Sean Munson. When (ish) is My Bus? User-centered Visualizations of Uncertainty in Everyday, Mobile Predictive Systems. CHI 2016. DOI: 10.1145/2858036.2858558.*
+
+```{r quantile-dot, fig.asp = 0.36, fig.cap = '(ref:quantile-dot)'}
+mu <- 1.02
+sd <- 0.9
+binwidth <- 0.31
+
+df_q <- data.frame(x = qnorm(ppoints(50), mu, sd)) %>%
+  mutate(type = ifelse(x <= 0, "A", "B"))
+
+ggplot(df_q, aes(x, fill = type)) +
+  geom_dotplot(binwidth = binwidth) +
+  geom_line(data = df_norm, aes(x, 1.92*y)) + # factor 1.92 manually determined
+  scale_y_continuous(
+    name = NULL,
+    breaks = NULL,
+    expand = c(0, 0),
+    limits = c(0, 0.9)
+  ) +
+  scale_fill_manual(
+    values = c(A = "#F0E44280", B = "#56B4E980"),
+    guide = "none"
+  ) +
+  theme_dviz_open()
+
 ```
 
 ## Methods of uncertainty estimates
