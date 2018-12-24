@@ -11,6 +11,9 @@ library(broom)
 library(emmeans)
 library(ungeviz)
 library(ggridges)
+
+animate <- TRUE # should animated figures be included or not
+animate <- FALSE
 ```
 
 # Visualizing uncertainty {#visualizing-uncertainty}
@@ -1012,6 +1015,10 @@ filter(US_income_age, state == "Pennsylvania") %>%
 Whenever you visualize uncertainty with error bars, you must specify what quantity and/or confidence level the error bars represent.
 ```
 
+*Discuss Bayesian inference briefly; mention that methods from visualizing distributions chapters apply.*
+
+*Do a ridgeline example with shaded areas?*
+
 ## Visualizing the uncertainty of curve fits
 
 (ref:blue-jays-male-conf-band)  *Figure caption*
@@ -1206,10 +1213,174 @@ plot_grid(
 
 
 
-## Hypothetical outcomes plots
+## Hypothetical outcome plots
 
-Hypothetical outcomes plots: https://medium.com/hci-design-at-uw/hypothetical-outcomes-plots-experiencing-the-uncertain-b9ea60d7c740
+Hypothetical outcomes plots [@Hullman_et_al_2015] 
 
-## Value-suppressing uncertainty palette
+The true value is approximately 0.53.
 
-*Keep section only if a good example can be found.*
+We need to make sure to sample sufficiently many states that the presented sequence is actually representative. If we sampled only, say, 10 states it would be easy to create a non-representative sample that produces misleading results.
+
+(ref:chocolate-HOP-static) (for print edition) *Figure caption*
+
+```{r chocolate-HOP-static, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:chocolate-HOP-static)'}
+cacao %>% 
+  filter(location %in% c("Canada", "U.S.A.")) -> cacao_US_CA
+
+set.seed(49323)
+n <- 9
+CA_ratings <- sample_n(filter(cacao_US_CA, location == "Canada"), n, replace = TRUE) %>%
+  mutate(.draw = 1:n())
+US_ratings <- sample_n(filter(cacao_US_CA, location == "U.S.A."), n, replace = TRUE) %>%
+  mutate(.draw = 1:n())
+
+sample_df <- rbind(CA_ratings, US_ratings) %>%
+  mutate(location = fct_relevel(location, "U.S.A.", "Canada"))
+
+ggplot(sample_df) +
+  geom_segment(
+    aes(
+      x = rating, xend = rating,
+      y = as.integer(location) - 0.35,
+      yend = as.integer(location) + 0.35
+    ),
+    size = 1.5, color = darken("#009E73", .3)
+  ) +
+  scale_x_continuous(
+    limits = c(1.95, 4.1),
+    expand = c(0, 0),
+    name = "chocolate flavor rating"
+  ) +
+  scale_y_discrete(
+    name = NULL,
+    limits = c("U.S.A.", "Canada"),
+    expand = c(0, 0.25)
+  ) +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.ticks.x = element_line(color = "black"),
+    #axis.title.x = element_text(hjust = 1),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    strip.text = element_blank()
+  ) + 
+  panel_border() +
+  facet_wrap(~.draw, scales = "free_x")
+```
+
+(ref:chocolate-HOP-animated) (for online edition) *Figure caption*
+
+```{r chocolate-HOP-animated, eval = animate, gganimate = list(nframes = 200), fig.asp = 0.6, fig.retina = 1, fig.cap = '(ref:chocolate-HOP-animated)'}
+library(gganimate)
+
+set.seed(49316)
+n <- 30
+
+CA_ratings <- sample_n(filter(cacao_US_CA, location == "Canada"), n, replace = TRUE) %>%
+  mutate(.draw = 1:n())
+US_ratings <- sample_n(filter(cacao_US_CA, location == "U.S.A."), n, replace = TRUE) %>%
+  mutate(.draw = 1:n())
+
+sample_df <- rbind(CA_ratings, US_ratings) %>%
+  mutate(location = fct_relevel(location, "U.S.A.", "Canada"))
+
+ggplot(sample_df) +
+  geom_segment(
+    aes(
+      x = rating, xend = rating,
+      y = as.integer(location) - 0.35,
+      yend = as.integer(location) + 0.35
+    ),
+    size = 1.5, color = darken("#009E73", .3)
+  ) +
+  scale_x_continuous(
+    limits = c(1.95, 4.1),
+    expand = c(0, 0),
+    name = "chocolate flavor rating"
+  ) +
+  scale_y_discrete(
+    name = NULL,
+    limits = c("U.S.A.", "Canada"),
+    expand = c(0, 0.25)
+  ) +
+  theme_dviz_hgrid() +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    strip.text = element_blank()
+  ) + 
+  #panel_border() +
+  transition_states(.draw, 1, 2)
+```
+
+(ref:mpg-uncertain-HOP-static) (for print edition) *Figure caption*
+
+```{r mpg-uncertain-HOP-static, fig.width = 8.5, fig.asp = 2/4, fig.cap = '(ref:mpg-uncertain-HOP-static)'}
+#set.seed(8692282)
+set.seed(8692276)
+
+fit <- gam(mpg ~ s(disp, bs = 'cr', k = 5), data = mtcars, method = "REML")
+
+newdata <- data.frame(disp = seq(min(mtcars$disp), max(mtcars$disp), length.out = 100))
+sample_df <- sample_outcomes(fit, newdata, 6, unconditional = TRUE)
+
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  scale_x_continuous(
+    name = "displacement (cu. in.)",
+    expand = c(0.03, 0)
+  ) +
+  scale_y_continuous(
+    name = "fuel efficiency (mpg)",
+    limits = c(8.5, 35),
+    expand = c(0, 0)
+  ) +
+  geom_point(color = "grey60") +
+  geom_line(data = sample_df, color = "#0072B2", size = 0.5) +
+  facet_wrap(~.draw, scales = "free") + 
+  theme_dviz_grid(12) +
+  theme(
+    strip.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = unit(0, "pt")
+  ) +
+  panel_border()
+```
+
+(ref:mpg-uncertain-HOP-animated) (for online edition) *Figure caption*
+
+```{r mpg-uncertain-HOP-animated, eval = animate, fig.width = 5.5, fig.asp = 3/4, fig.retina = 1, fig.cap = '(ref:mpg-uncertain-HOP-animated)'}
+library(gganimate)
+
+#set.seed(8692282)
+set.seed(8692276)
+
+fit <- gam(mpg ~ s(disp, bs = 'cr', k = 5), data = mtcars, method = "REML")
+
+newdata <- data.frame(disp = seq(min(mtcars$disp), max(mtcars$disp), length.out = 100))
+sample_df <- sample_outcomes(fit, newdata, 20, unconditional = TRUE)
+
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  scale_x_continuous(
+    name = "displacement (cu. in.)",
+    expand = c(0.03, 0)
+  ) +
+  scale_y_continuous(
+    name = "fuel efficiency (mpg)",
+    limits = c(8.5, 35),
+    expand = c(0, 0)
+  ) +
+  geom_point(color = "grey60") +
+  geom_line(data = sample_df, color = "#0072B2", size = 0.5) +
+  theme_dviz_grid() +
+  theme(
+    strip.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = unit(0, "pt")
+  ) +
+  panel_border() +
+  transition_states(.draw, 1, 2)
+```
