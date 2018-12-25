@@ -25,6 +25,7 @@ animate <- FALSE
 - *Hypothetical outcomes plots*
 - *Value suppression*
 
+We also need to consider the audience: 
 
 ## Framing probabilities as frequencies
 
@@ -252,6 +253,161 @@ In Table \@ref(tab:estimation-frameworks), I have also added the bootstrap. I wo
 
 
 ## Visualizing the uncertainty of point estimates
+
+
+(ref:sampling-schematic) *Figure caption.*
+
+```{r sampling-schematic, fig.asp = 3/4, fig.cap = '(ref:sampling-schematic)'}
+fill_color <- lighten("#56B4E9", 0.2)
+fill_color <- "lightblue"
+
+set.seed(452061)
+
+
+empty_theme <- theme_dviz_open(12, rel_small = 1, rel_large = 1) +
+  theme(
+    axis.line = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt")
+  )
+
+x <- c(seq(-4, 4, length.out = 200))
+
+df_norm <- data.frame(
+  x,
+  y = dnorm(x)
+)
+
+sd_x <- c(-1, 1)
+sd_y <- dnorm(sd_x)
+
+df_annot <- data.frame(
+  x = c(0.05, sd_x[2] + 0.04, -Inf),
+  y = c(dnorm(0) * 0.4, sd_y[2] * 1.01, Inf), #sd_y[1] * 1.1
+  hjust = c(0, 0, 0),
+  vjust = c(1, 0.5, 1),
+  label = c("mean", "standard deviation", "population distribution")
+)
+
+
+p1 <- ggplot(df_norm, aes(x, y)) +
+  geom_area(fill = fill_color) +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = sd_x[1], xend = sd_x[2], y = sd_y[1], yend = sd_y[2],
+    arrow = arrow(angle = 90, length = grid::unit(3, "pt"), ends = "both", type = "closed"),
+    inherit.aes = FALSE
+  ) +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = 0, xend = 0, y = 0, yend = dnorm(0),
+    linetype = 2,
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = df_annot,
+    aes(x, y, label = label, hjust = hjust, vjust = vjust),
+    family = dviz_font_family,
+    size = c(12, 12, 14)/.pt
+  ) +
+  scale_x_continuous(
+    limits = c(-4, 4), expand = c(0, 0),
+    breaks = 0, # workaround to fix missing axis line
+    name = "variable of interest"
+  ) +
+  scale_y_continuous(breaks = NULL, name = NULL, expand = expand_scale(mult = c(0, 0.1))) +
+  empty_theme +
+  theme(axis.line.x = element_line(), axis.title.x = element_text(hjust = 1))
+
+n <- 15
+df_sample <- data.frame(
+  x = rnorm(n),
+  y = 0
+)
+
+df_annot2 <- data.frame(
+  x = c(mean(df_sample$x) + 0.05, max(df_sample$x) + 0.1, -Inf),
+  y = c(0.15, 0.01, Inf),
+  hjust = c(0, 0, 0),
+  vjust = c(0.5, 0.5, 1),
+  label = c("sample mean", "observations", "sample")
+)
+
+
+p2 <- ggplot(df_sample, aes(x, y)) +
+  geom_point(
+    size = 3, fill = fill_color, shape = 21, stroke = 0.5,
+    position = position_jitter(width = 0, height = 0.01, seed = 127)
+  ) +
+  geom_segment(
+    data = data.frame(x = 1),
+    aes(x = mean(df_sample$x), xend = mean(df_sample$x), y = -.2, yend = .2),
+    size = 1.5,
+    color = "#D55E00"
+  ) +
+  geom_text(
+    data = df_annot2,
+    aes(x, y, label = label, hjust = hjust, vjust = vjust),
+    family = dviz_font_family,
+    size = c(12, 12, 14)/.pt
+  ) +
+  scale_x_continuous(limits = c(-4, 4), expand = c(0, 0), breaks = NULL, name = NULL) +
+  scale_y_continuous(expand = c(0.1, 0), breaks = NULL, name = NULL) +
+  empty_theme
+
+df_samplingdist <- data.frame(
+  x,
+  y = dnorm(x, 0, 1/sqrt(n))
+)
+
+se_x <- c(-1/sqrt(n), 1/sqrt(n))
+se_y <- dnorm(se_x, 0, 1/sqrt(n))
+
+df_annot3 <- data.frame(
+  x = c(0.05, se_x[2] + 0.04, -Inf),
+  y = c(dnorm(0, 0, 1/sqrt(n)) * 0.4, se_y[2] * 1.01, Inf),
+  hjust = c(0, 0, 0),
+  vjust = c(1, 0.5, 1),
+  label = c("mean sample mean", "standard error", "sampling distribution")
+)
+
+p3 <- ggplot(df_samplingdist, aes(x, y)) +
+  geom_area(fill = fill_color) +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = se_x[1], xend = se_x[2], y = se_y[1], yend = se_y[2],
+    arrow = arrow(angle = 90, length = grid::unit(3, "pt"), ends = "both", type = "closed"),
+    inherit.aes = FALSE
+  ) +
+  geom_segment(
+    data = data.frame(x = 1),
+    x = 0, xend = 0, y = 0, yend = dnorm(0, 0, 1/sqrt(n)),
+    linetype = 2,
+    inherit.aes = FALSE
+  ) +
+  geom_text(
+    data = df_annot3,
+    aes(x, y, label = label, hjust = hjust, vjust = vjust),
+    family = dviz_font_family,
+    size = c(12, 12, 14)/.pt
+  ) +
+  scale_x_continuous(
+    limits = c(-4, 4), expand = c(0, 0),
+    breaks = 0, # workaround to fix missing axis line
+    name = "sample mean"
+  ) +
+  scale_y_continuous(breaks = NULL, name = NULL, expand = expand_scale(mult = c(0, 0.1))) +
+  empty_theme +
+  theme(axis.line.x = element_line(), axis.title.x = element_text(hjust = 1))
+
+plot_grid(
+  p1,
+  p2,
+  p3,
+  ncol = 1, rel_heights = c(1, .4, 1), align = 'v'
+)
+```
 
 (ref:cocoa-data-vs-CI) Relationship between original data and mean, standard deviation, standard error, and confidence intervals. The original data points (small green dots) represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dots represent the mean of the ratings. Error bars indicate, from top to bottom, the standard deviation, the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
