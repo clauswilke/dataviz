@@ -15,9 +15,9 @@ Whenever we are dealing with many distributions, it is helpful to think in terms
 
 ## Visualizing distributions along the vertical axis {#boxplots-violins-vertical}
 
-The simplest approach to showing many distributions at once is to show their mean or median as points, with some indication of the variation around the mean or median shown by error bars. Figure \@ref(fig:lincoln-temp-points-errorbars) demonstrates this approach for the distributions of monthly temperatures in Lincoln, Nebraska, in 2016. I have labeled this figure as bad because there are multiple problems with this approach. First, by representing each distribution by only one point and two error bars, we are losing a lot of information about the data. Second, it is not immediately obvious what the points represent, even though most readers would likely guess that they represent either the mean or the median. Third, it is definitely not obvious what the error bars represent. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? There is no commonly accepted standard. By reading the figure caption of Figure \@ref(fig:lincoln-temp-points-errorbars), we can see that they represent here twice the standard deviation of the daily mean temperatures, meant to indicate the range that contains approximately 95% of the data. However, many authors show instead the standard error of the mean, and it is easy for readers to confuse the standard error with the standard deviation. The standard error quantifies how accurate our estimate of the mean is, whereas the standard deviation estimates how much spread there is in the data around the mean. It is possible for a dataset to have both a very small standard error of the mean and a very large standard deviation. Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
+The simplest approach to showing many distributions at once is to show their mean or median as points, with some indication of the variation around the mean or median shown by error bars. Figure \@ref(fig:lincoln-temp-points-errorbars) demonstrates this approach for the distributions of monthly temperatures in Lincoln, Nebraska, in 2016. I have labeled this figure as bad because there are multiple problems with this approach. First, by representing each distribution by only one point and two error bars, we are losing a lot of information about the data. Second, it is not immediately obvious what the points represent, even though most readers would likely guess that they represent either the mean or the median. Third, it is definitely not obvious what the error bars represent. Do they represent the standard deviation of the data, the standard error of the mean, a 95% confidence interval, or something else altogether? There is no commonly accepted standard. By reading the figure caption of Figure \@ref(fig:lincoln-temp-points-errorbars), we can see that they represent here twice the standard deviation of the daily mean temperatures, meant to indicate the range that contains approximately 95% of the data. However, error bars are more commonly employed to visualize the standard error (or twice the standard error for a 95% confidence interval), and it is easy for readers to confuse the standard error with the standard deviation. The standard error quantifies how accurate our estimate of the mean is, whereas the standard deviation estimates how much spread there is in the data around the mean. It is possible for a dataset to have both a very small standard error of the mean and a very large standard deviation. Fourth, symmetric error bars are misleading if there is any skew in the data, which is the case here and almost always for real-world datasets.
 
-(ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average daily mean temperatures for each month, averaged over all days of the month, and error bars represent twice the standard deviation of the daily mean temperatures within each month.
+(ref:lincoln-temp-points-errorbars) Mean daily temperatures in Lincoln, Nebraska in 2016. Points represent the average daily mean temperatures for each month, averaged over all days of the month, and error bars represent twice the standard deviation of the daily mean temperatures within each month. This figure has been labeled as "bad" because because error bars are conventionally used to visualize the uncertainty of an estimate, not the variability in a population.
 
 ```{r lincoln-temp-points-errorbars, fig.cap = '(ref:lincoln-temp-points-errorbars)'}
 lincoln_weather %>%
@@ -144,7 +144,7 @@ lincoln_violin
 ```
 
 
-Because violin plots are derived from density estimates, they have similar shortcomings (Chapter \@ref(histograms-density-plots)). In particular, they can generate the appearance that there is data where none exists, or that the data set is very dense when actually it is quite sparse. We can try to circumvent these issues by simply plotting all the individual data points directly, as dots (Figure \@ref(fig:lincoln-temp-all-points)). This is a fine idea in principle, as long as we make sure that we don't plot too many points on top of each other. A simple solution to overplotting is to spread out the points somewhat along the *x* axis, by adding some random noise in the *x* dimension (Figure \@ref(fig:lincoln-temp-jittered)). This technique is also called "jittering".
+Because violin plots are derived from density estimates, they have similar shortcomings (Chapter \@ref(histograms-density-plots)). In particular, they can generate the appearance that there is data where none exists, or that the data set is very dense when actually it is quite sparse. We can try to circumvent these issues by simply plotting all the individual data points directly, as dots (Figure \@ref(fig:lincoln-temp-all-points)). Such a figure is called a *strip chart.* Strip charts are fine in principle, as long as we make sure that we don't plot too many points on top of each other. A simple solution to overplotting is to spread out the points somewhat along the *x* axis, by adding some random noise in the *x* dimension (Figure \@ref(fig:lincoln-temp-jittered)). This technique is also called *jittering.*
 
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln, Nebraska, visualized as individual temperature values. Each point represents the mean temperature for one day. This figure is labeled as "bad" because so many points are plotted on top of each other that it is not possible to ascertain which temperatures were the most common in each month. 
 
@@ -207,13 +207,20 @@ The standard ridgeline plot uses density estimates (Figure \@ref(fig:temp-ridgel
 bandwidth <- 3.4
 
 ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
-  geom_density_ridges(scale = 3, rel_min_height = 0.01,
-                      bandwidth = bandwidth, fill = lighten("#56B4E9", .3), color = "white") +
-  scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
-  scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
-  xlab("mean temperature (°F)") +
-  theme_ridges(font_family = dviz_font_family, grid = TRUE, center = TRUE) +
-  theme(axis.title.y = element_blank())
+  geom_density_ridges(
+    scale = 3, rel_min_height = 0.01,
+    bandwidth = bandwidth, fill = lighten("#56B4E9", .3), color = "white"
+  ) +
+  scale_x_continuous(
+    name = "mean temperature (°F)",
+    expand = c(0, 0), breaks = c(0, 25, 50, 75)
+  ) +
+  scale_y_discrete(name = NULL, expand = c(0, .2, 0, 2.6)) +
+  theme_dviz_grid() +
+  theme(
+    axis.text.y = element_text(vjust = 0),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 ```
 
 Because the *x* axis shows the response variable and the *y* axis shows the grouping variable, there is no separate axis for the density estimates in a ridgeline plot. Density estimates are shown alongside the grouping variable. This is no different from the violin plot, where densities are also shown alongside the grouping variable, without a separate, explicit scale. In both cases, the purpose of the plot is not to show specific density values but instead to allow for easy comparison of density shapes and relative heights across groups.
@@ -227,13 +234,23 @@ In principle, we can use histograms instead of density plots in a ridgeline visu
 bandwidth <- 3.4
 
 p_binline <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
-  stat_binline(scale = 3, bins = 17, draw_baseline = FALSE,
-               fill = lighten("#56B4E9", .3), color = "black", alpha = 1) +
-  scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75)) +
-  scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
-  xlab("mean temperature (°F)") +
-  theme_ridges(font_family = dviz_font_family, grid = TRUE, center = TRUE) +
-  theme(axis.title.y = element_blank())
+  stat_binline(
+    scale = 3, bins = 17, draw_baseline = FALSE,
+    fill = lighten("#56B4E9", .3), color = "black", alpha = 1
+  ) +
+  scale_x_continuous(
+    name = "mean temperature (°F)",
+    expand = c(0, 0), breaks = c(0, 25, 50, 75)
+  ) +
+  scale_y_discrete(
+    name = NULL,
+    expand = c(0, .2, 0, 2.6)
+  ) +
+  theme_dviz_grid() +
+  theme(
+    axis.text.y = element_text(vjust = 0),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 stamp_ugly(p_binline) 
 ```
@@ -246,11 +263,17 @@ Ridgeline plots scale to very large numbers of distributions. For example, Figur
 
 ```{r movies-ridgeline, fig.width = 5, fig.asp = 1, fig.cap = '(ref:movies-ridgeline)'}
 ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
-  geom_density_ridges(scale = 10, size = 0.25, rel_min_height = 0.03, fill = "grey85") +
-  theme_ridges(font_family = dviz_font_family, center = TRUE) +
+  geom_density_ridges(scale = 10, size = 0.25, rel_min_height = 0.03, fill = "grey85", na.rm = TRUE) +
   scale_x_continuous(limits = c(0, 200), expand = c(0, 0), name = "length (minutes)") +
-  scale_y_reverse(breaks = c(2000, 1980, 1960, 1940, 1920),
-                  limits = c(2005, 1903), expand = c(0, 0))
+  scale_y_reverse(
+    breaks = c(2000, 1980, 1960, 1940, 1920),
+    limits = c(2005, 1903), expand = c(0, 0)
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_grid() +
+  theme(
+    plot.margin = margin(3, 14, 3, 0)
+    )
 ```
 
 Ridgeline plots also work well if we want to compare two trends over time. This is a scenario that arises commonly if we want to analyze the voting patterns of the members of two different parties. We can make this comparison by staggering the distributions vertically by time and drawing two differently colored distributions at each time point, representing the two parties (Figure \@ref(fig:dw-nominate-ridgeline)).
@@ -266,22 +289,37 @@ all_house_88_113 <- dw_nominate_house %>%
   arrange(desc(year1))
 
 ggplot(all_house_88_113,
-       aes(x = dim_1,
-           y = year1,
-           group = interaction(party_code, factor(year1)),
-           fill = interaction(party_code, factor(year1)))) +
+       aes(
+         x = dim_1,
+         y = year1,
+         group = interaction(party_code, factor(year1)),
+         fill = interaction(party_code, factor(year1))
+        )
+      ) +
   geom_density_ridges(scale = 5, size = 0.25, rel_min_height = 0.01, alpha=0.9, color = "white") +
-  scale_x_continuous(limits=c(-.8, 1.3), expand = c(0.01, 0), breaks=c(-1,-.75,-.5,-.25,0,.25,.5,.75,1)) +
-  scale_y_reverse(expand = c(0, 0), breaks=c(seq(2013, 1963, -10))) +
-  scale_fill_cyclical(breaks = c("100.1963", "200.1963"),
-                      labels = c(`100.1963` = "Democrats  ", `200.1963` = "Republicans"),
-                      values = c("#4040ff", "#ff4040", "#6060ff", "#ff6060"),
-                      name = NULL, guide = "legend") +
-  ylab("year") + # ylab("first year of each congress") +
-  xlab("DW-NOMINATE score") +
-  theme_ridges(font_family = dviz_font_family, center = TRUE) +
-  theme(legend.position = c(1, .95),
-        legend.justification = "right",
-        legend.direction = "horizontal",
-        legend.background = element_rect(fill = "white"))
+  scale_x_continuous(
+    name = "DW-NOMINATE score",
+    limits = c(-.8, 1.3),
+    breaks = c(-1,-.75,-.5,-.25,0,.25,.5,.75,1)
+  ) +
+  scale_y_reverse(
+    name = "year",
+    expand = c(0, 0), breaks=c(seq(2013, 1963, -10))
+  ) +
+  scale_fill_cyclical(
+    breaks = c("100.1963", "200.1963"),
+    labels = c(`100.1963` = "Democrats  ", `200.1963` = "Republicans"),
+    values = c("#4040ff", "#ff4040", "#6060ff", "#ff6060"),
+    name = NULL,
+    guide = "legend"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_grid() +
+  theme(
+    axis.text.y = element_text(vjust = 0),
+    legend.position = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.direction = "horizontal",
+    legend.background = element_rect(fill = "white")
+  )
 ```

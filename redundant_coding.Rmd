@@ -396,15 +396,22 @@ And finally, whenever we encode a single variable in multiple aesthetics, we don
 bandwidth <- 3.4
 
 lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
-  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01, bandwidth = bandwidth,
-                               color = "black", size = 0.25) +
-  scale_x_continuous(expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL) +
-  scale_y_discrete(expand = c(0, .2, 0, 2.6)) +
+  geom_density_ridges_gradient(
+    scale = 3, rel_min_height = 0.01, bandwidth = bandwidth,
+    color = "black", size = 0.25
+  ) +
+  scale_x_continuous(
+    name = "mean temperature (°F)",
+    expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL
+  ) +
+  scale_y_discrete(name = NULL, expand = c(0, .2, 0, 2.6)) +
   scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
-  xlab("mean temperature (°F)") +
   guides(fill = "none") +
-  theme_ridges(center = TRUE, grid = TRUE, font_family = dviz_font_family) +
-  theme(axis.title.y = element_blank())
+  theme_dviz_grid() +
+  theme(
+    axis.text.y = element_text(vjust = 0),
+    plot.margin = margin(3, 7, 3, 0)
+  )
 
 # x axis labels
 temps <- data.frame(temp = c(0, 25, 50, 75))
