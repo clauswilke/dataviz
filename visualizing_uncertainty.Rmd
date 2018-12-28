@@ -841,6 +841,9 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
 
 ```
 
+Caps at the ends of error bars can ... [@Skau_et_al_2015]
+
+
 (ref:confidence-visualizations) Mean chocolate flavor ratings for manufacturers from four different countries, relative to the mean rating of U.S. chocolate bars. Each panel uses a different approach to visualizing the same uncertainty information. (a) Graded error bars with cap. (b) Graded error bars without cap. (c) Single-interval error bars with cap. (d) Single-interval error bars without cap. (e) Confidence strips. (f) Confidence distributions.
 
 ```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:confidence-visualizations)'}
@@ -1118,10 +1121,9 @@ plot_grid(
 ```
 
 
-Error bars can be added to a variety of different types of plots to indicate uncertainty. For example, we can show amounts with uncertainty by drawing a bar plot with error bars (Figure \@ref(fig:butterfat-bars)). *one more sentence; not necessarily the best choice*. We can also draw error bars along both the *x* and the *y* direction in a scatter plot (Figure \@ref(fig:median-age-income)). 
+Error bars can be added to a variety of different types of plots to indicate uncertainty. For example, we can show amounts with uncertainty by drawing a bar plot with error bars (Figure \@ref(fig:butterfat-bars)). This type of visualization is commonly used in scientific publications. We can also draw error bars along both the *x* and the *y* direction in a scatter plot (Figure \@ref(fig:median-age-income)). 
 
-
-(ref:butterfat-bars) Mean butterfat contents in the milk of four cattle breads. Error bars indicate +/- one standard error of the mean. Visualizations of this type are frequently seen in the scientific literature. While they are technically correct, they represent neither the variation within each sample nor the uncertainty of the sample mean particularly well. See Figure \@ref(fig:butterfat-densitites) for the variation in butterfat contents within each sample. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
+(ref:butterfat-bars) Mean butterfat contents in the milk of four cattle breeds. Error bars indicate +/- one standard error of the mean. Visualizations of this type are frequently seen in the scientific literature. While they are technically correct, they represent neither the variation within each category nor the uncertainty of the sample means particularly well. See Figure \@ref(fig:butterfat-densitites) for the variation in butterfat contents within individual breeds. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
 ```{r butterfat-bars, fig.width = 5, fig.cap = '(ref:butterfat-bars)'}
 cows %>% filter(breed != "Canadian") %>%
@@ -1176,9 +1178,15 @@ filter(US_income_age, state == "Pennsylvania") %>%
 
 *Discuss Bayesian inference briefly; mention that methods from visualizing distributions chapters apply.*
 
-*Do a ridgeline example with shaded areas?*
+A Bayesian credible interval tells you about where the true parameter likely is, whereas a frequentist confidence interval tells you about where the true parameter likely not is. Upon first reading, this distinction may seem like semantics, but there are important differences between these two approaches. Under the Bayesian approach, you use the data and your prior knowledge about the system under study (called the *prior*) to calculate a probability distribution (called the *posterior*) that tells you where you can expect the true parameter value to lie. By contrast, under the frequentist approach, you first make an assumption that you intend to disprove. This assumption is called the *null hypothesis*, and it is usually simply the assumption that the parameter equals zero. You then calculate the probability that random sampling would generate data similar to what was observed if the null hypothesis were true. The confidence interval is a representation of this probability. If the confidence interval at, say 95% confidence, excludes the parameter value under the null hypothesis (i.e., the value zero), then you are at least 95% confident that the null hypothesis is false. Thus, to summarize, a Bayesian credible interval makes a statement about the true parameter value and a frequentist confidence interval makes a statement about the null hypothesis.
 
-```{r bayes-vs-ols, fig.asp = 0.6}
+```{block type='rmdtip', echo=TRUE}
+A Bayesian credible interval answers the question: "Where do we expect the true parameter value to lie?" A frequentist confidence interval answers the question: "How certain are we that the true parameter value is not zero?" 
+```
+
+(ref:bayes-vs-ols) *Figure caption goes here.* The estimates and confidence intervals labeled "ordinary least squares" are identical to the results for 95% confidence shown in Figure \@ref(fig:mean-chocolate-ratings). 
+
+```{r bayes-vs-ols, fig.asp = 0.6, fig.cap = '(ref:bayes-vs-ols)'}
 linear_results <-
   lm(rating ~ location, data = cacao_small) %>% 
   emmeans(~ location) %>% 
@@ -1234,7 +1242,9 @@ bind_rows(linear_results, bayes_results) %>%
   )
 ```
 
-```{r bayes-ridgeline, fig.asp = 0.6}
+(ref:bayes-ridgeline) *Figure caption goes here.*
+
+```{r bayes-ridgeline, fig.asp = 0.6, fig.cap = '(ref:bayes-ridgeline)'}
 bayes_emmeans %>%
   ggplot(aes(.value, reorder(location, .value))) +
   geom_density_ridges_gradient(
@@ -1294,37 +1304,10 @@ bayes_emmeans %>%
   )
 ```
 
-## Approaches to uncertainty estimation
-
-*Introduce concepts such as parameter, estimate, Bayesian analysis, frequentist analysis. Others?*
-
-A Bayesian credible interval tells you about where the true parameter likely is, whereas a frequentist confidence interval tells you about where the true parameter likely not is. Upon first reading, this distinction may seem like semantics, but there are important differences between these two approaches. Under the Bayesian approach, you use the data and your prior knowledge about the system under study (called the *prior*) to calculate a probability distribution (called the *posterior*) that tells you where you can expect the true parameter value to lie. By contrast, under the frequentist approach, you first make an assumption that you intend to disprove. This assumption is called the *null hypothesis*, and it is usually simply the assumption that the parameter equals zero. You then calculate the probability that random sampling would generate data similar to what was observed if the null hypothesis were true. The confidence interval is a representation of this probability. If the confidence interval at, say 95% confidence, excludes the parameter value under the null hypothesis (i.e., the value zero), then you are at least 95% confident that the null hypothesis is false. Thus, to summarize, a Bayesian credible interval makes a statement about the true parameter value and a frequentist confidence interval makes a statement about the null hypothesis.
-
-```{block type='rmdtip', echo=TRUE}
-A Bayesian credible interval answers the question: "Where do we expect the true parameter value to lie?" A frequentist confidence interval answers the question: "How certain are we that the true parameter value is not zero?" 
-```
-
-The discussion of whether Bayesian or frequentist approaches are preferable has endured for over a century, and it is unlikely to go away any time soon. For either approach, there are applications and settings where it is preferable. In Table \@ref(tab:estimation-frameworks), I provide a very rough overview of their respective strengths and weaknesses. From a purely practical perspective, Bayesian approaches often incur an additional level of modeling complexity and computational cost that may not be warranted or cost effective in certain applications. 
-
-Table: (\#tab:estimation-frameworks) Comparisons of different approaches to parameter and uncertainty estimation. This table is meant as a rough guideline differentiating the most commonly used methods and procedures. Any particular analysis approach may deviate from the classification provided here.
-
-------------------------------------------------------------------------------------------
-approach       interpretability    computational       complexity of     assumptions on
-                of estimates         efficiency        modeling setup       data set
------------- ------------------ ------------------- ------------------- ------------------
-Bayesian          high                 low                 high                few
-
-frequentist       moderate              high              moderate            several
-parametric  
-
-bootstrap         moderate            moderate             low                minimal
-------------------------------------------------------------------------------------------
-
-In Table \@ref(tab:estimation-frameworks), I have also added the bootstrap. I would like to emphasize that while Bayesian and frequentist approaches are broad conceptual frameworks, the bootstrap is primarily a procedure, and it can be performed within either framework. In the classical, non-Bayesian setup, the bootstrap consists of resampling the data many times with replacement and performing the analysis of interest separately on each bootstrap sample. The variability in analysis outcomes among samples provides an estimate of the uncertainty inherent in the sample. The bootstrap is popular because it can be performed easily on any dataset and for any analysis. It is particularly useful in settings with novel, complex, or otherwise poorly understood statistics. Where Bayesian and frequentist approaches often require careful mathematical modeling and theory development, the boostrap only requires a powerful computer.
-
-
 
 ## Visualizing the uncertainty of curve fits
+
+In Chapter \@ref(visualizing-trends), we discussed how to show a trend in a dataset by fitting a straight line or curve to the data. These trend estimates also have uncertainty, and it is customary to show the uncertainty in a trend line with a confidence band (Figure \@ref(fig:blue-jays-male-conf-band)). The confidence band provides us with a range of different fit lines that would be compatible with the data. When students encounter a confidence band for the first time, they are often surprised that even a perfectly straight line fit produces a confidence band that is curved. The reason for the curvature is that the straight line fit can move in two distinct directions: it can move up and down (i.e., have different interepts), and it can rotate (i.e., have different slopes). We can visually show how the confidence band arises by drawing a set of alternative fit lines randomly generated from the posterior distribution of the fit parameters. This is done in Figure \@ref(fig:blue-jays-male-fitted-draws), which shows 15 randomly chosen alternative fits. We see that even though each line is perfectly straight, the combination of different slopes and intercepts of each line generates an overall shape that looks just like the confidence band.
 
 (ref:blue-jays-male-conf-band) Head length versus body mass for male blue jays, as in Figure \@ref(fig:blue-jays-scatter-line). The straight blue line represents the best linear fit to the data, and the gray band around the line shows the uncertainty in the linear fit. The gray band represents a 95% confidence level. Data source: Keith Tarvin, Oberlin College
 
@@ -1376,6 +1359,8 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   theme_dviz_open()
 
 ```
+
+To draw a confidence band, we need to specify a confidence level, and just as we saw for error bars and posterior probabilities, it can be useful to highlight different levels of confidence. This leads us to the graded confidence band, which shows several confidence levels at once (Figure \@ref(fig:blue-jays-male-graded-conf-band)). Just like in the case of error bars, a graded confidence band enhances the sense of uncertainty in the reader, and it forces the reader to confront the possibility that the data might support different alternative trend lines.
 
 (ref:blue-jays-male-graded-conf-band) Head length versus body mass for male blue jays. As in the case of error bars, we can draw graded confidence bands to highlight the uncertainty in the estimate. Data source: Keith Tarvin, Oberlin College
 
@@ -1438,6 +1423,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   )
 ```
 
+We can also draw confidence bands for non-linear curve fits. Such confidence bands look nice but can be difficult to interpret (Figure \@ref(fig:mpg-uncertain)). If we look at Figure \@ref(fig:mpg-uncertain)a, we may think that the confidence band arises by moving the blue line up and down and maybe deforming it slightly. However, as Figure \@ref(fig:mpg-uncertain)b reveals, the confidence band represents a family of curves that are all quite a bit more wiggly than the overall best fit shown in part (a). This is a general principle of non-linear curve fits. Uncertainty corresponds not just to a movement of the curve up and down, but also to increased wiggliness. 
 
 (ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. (a) Best fit spline and confidence band. (b) Equally likely alternative fits drawn from the posterior distribution. Data source: Motor Trend, 1974.
 
@@ -1482,13 +1468,13 @@ plot_grid(
 
 ## Hypothetical outcome plots
 
-Hypothetical outcomes plots [@Hullman_et_al_2015] 
+All static visualizations of uncertainty suffer from the problem that viewers may interpret some aspect of the visualization that is meant to convey uncertainty as a determinstic feature of the data (deterministic construal error). We can avoid this problem by visualizing uncertainty through animation, by cycling through a number of different but equally likely plots. This kind of a visualization is called a hypothetical outcome plot [@Hullman_et_al_2015] or HOP. While HOPs are not possible in a print medium, they are becoming increasingly popular in online settings where animated visualizations can be provided in the form of GIFs or MP4 videos. HOPs can also work well in a presentation setting.
+
+To illustrate the concept of a HOP, let's consider once more the problem of chocolate bar ratings. When you are standing in the grocery store thinking about buying some chocolate, you probably don't care about the mean flavor rating and associated uncertainty for certain groups of chocolate bars. Instead, you might want to know the answer to a simpler question, such as: If I randomly pick up a Canadian and a U.S. manufactured chocolate bar, which one of the two should I expect to taste better? *continue here*
 
 The true value is approximately 0.53.
 
-We need to make sure to sample sufficiently many states that the presented sequence is actually representative. If we sampled only, say, 10 states it would be easy to create a non-representative sample that produces misleading results.
-
-(ref:chocolate-HOP-static) (for print edition) *Figure caption*
+(ref:chocolate-HOP-static) (for print edition) Schematic of a hypothetical outcome plot for chocolate bar ratings of Canadian and U.S. manufactured bars. Each vertical green bar represents the rating for one bar, and each panel shows a comparison of two randomly chosen bars, one Canadian and one U.S. In an actual hypothetical outcome plot, the display would cycle between the distinct plot panels instead of showing them side-by-side.
 
 ```{r chocolate-HOP-static, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:chocolate-HOP-static)'}
 cacao %>% 
@@ -1516,7 +1502,7 @@ ggplot(sample_df) +
   scale_x_continuous(
     limits = c(1.95, 4.1),
     expand = c(0, 0),
-    name = "mean rating"
+    name = "chocolate flavor rating"
   ) +
   scale_y_discrete(
     name = NULL,
@@ -1536,7 +1522,7 @@ ggplot(sample_df) +
   facet_wrap(~.draw, scales = "free_x")
 ```
 
-(ref:chocolate-HOP-animated) (for online edition) *Figure caption*
+(ref:chocolate-HOP-animated) (for online edition) Hypothetical outcome plot for chocolate bar ratings of Canadian and U.S. manufactured bars. Each vertical green bar represents the rating for one bar, and each frame of the animation shows a comparison of two randomly chosen bars, one Canadian and one U.S.
 
 ```{r chocolate-HOP-animated, eval = animate, gganimate = list(nframes = 200), fig.asp = 0.6, fig.retina = 1, fig.cap = '(ref:chocolate-HOP-animated)'}
 library(gganimate)
@@ -1564,7 +1550,7 @@ ggplot(sample_df) +
   scale_x_continuous(
     limits = c(1.95, 4.1),
     expand = c(0, 0),
-    name = "mean rating"
+    name = "chocolate flavor rating"
   ) +
   scale_y_discrete(
     name = NULL,
@@ -1584,7 +1570,12 @@ ggplot(sample_df) +
   transition_states(.draw, 1, 2)
 ```
 
-(ref:mpg-uncertain-HOP-static) (for print edition) *Figure caption*
+
+*We need to make sure to sample sufficiently many states that the presented sequence is actually representative. If we sampled only, say, 10 states it would be easy to create a non-representative sample that produces misleading results.*
+
+
+(ref:mpg-uncertain-HOP-static) (for print edition) Schematic of a hypothetical outcome plot for fuel efficiency versus displacement. Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. Each line in each panel represents one alternative fit outcome, drawn from the posterior distribution of the fit parameters. In an actual hypothetical outcome plot, the display would cycle between the distinct plot panels instead of showing them side-by-side.
+
 
 ```{r mpg-uncertain-HOP-static, fig.width = 8.5, fig.asp = 2/4, fig.cap = '(ref:mpg-uncertain-HOP-static)'}
 #set.seed(8692282)
@@ -1617,7 +1608,7 @@ ggplot(mtcars, aes(x = disp, y = mpg)) +
   panel_border()
 ```
 
-(ref:mpg-uncertain-HOP-animated) (for online edition) *Figure caption*
+(ref:mpg-uncertain-HOP-animated) (for online edition) Hypothetical outcome plot for fuel efficiency versus displacement. Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. Each line in each frame of the animation represents one alternative fit outcome, drawn from the posterior distribution of the fit parameters.
 
 ```{r mpg-uncertain-HOP-animated, eval = animate, fig.width = 5.5, fig.asp = 3/4, fig.retina = 1, fig.cap = '(ref:mpg-uncertain-HOP-animated)'}
 library(gganimate)
