@@ -11,6 +11,7 @@ library(broom)
 library(emmeans)
 library(ungeviz)
 library(ggridges)
+library(tidybayes)
 
 animate <- TRUE # should animated figures be included or not
 animate <- FALSE
@@ -223,7 +224,7 @@ We are normally interested in specific quantities that summarize important prope
 
 Figure \@ref(fig:sampling-schematic) shows how these key concepts are related to each other. The variable of interest (e.g., vote outcome in each district) has some distribution in the population, with a population mean and a population standard deviation. A sample will consist of a set specific observations. The number of the individual observations in the sample is called the *sample size.* From the sample we can calculate a sample mean and a sample standard deviation, and these will generally differ from the population mean and standard deviation. Finally, we can define a *sampling distribution,* which is the distribution of estimates we would obtain if we repeated the sampling process many times. The width of the sampling distribution is called the *standard error,* and it tells us how precise our estimates are. In other words, the standard error provides a measure of the uncertainty associated with our parameter estimate. As a generaly rule, the larger the sample size, the smaller the standard error and thus the less uncertain the estimate.
 
-(ref:sampling-schematic) Key concepts of statistical sampling. The variable of interest that we are studying has some true distribution in the population, with a true population mean and standard deviation. Any finite sample of that variable will have a sample mean and standard deviation that differ from the population parameters. If we sampled repeatedly and calculated a mean each time, then those means would be distributed according to the sampling distribution of the mean. The standard error provides information about the width of the sampling distribution, which informs us about how precisely we are estimating the parameter of interest (here, the population mean).
+(ref:sampling-schematic) Key concepts of statistical sampling. The variable of interest that we are studying has some true distribution in the population, with a true population mean and standard deviation. Any finite sample of that variable will have a sample mean and standard deviation that differ from the population parameters. If we sampled repeatedly and calculated a mean each time, then the resulting means would be distributed according to the sampling distribution of the mean. The standard error provides information about the width of the sampling distribution, which informs us about how precisely we are estimating the parameter of interest (here, the population mean).
 
 ```{r sampling-schematic, fig.asp = 3/4, fig.cap = '(ref:sampling-schematic)'}
 fill_color <- lighten("#56B4E9", 0.2)
@@ -385,9 +386,9 @@ plot_grid(
 )
 ```
 
-All statisticians use samples to calculate parameter estimates and their uncertainties. However, statisticians are deeply divided in how they approach these calculations, into Bayesians and frequentists. Bayesians assume that they have some prior knowledge about the world, and they use the sample to update this knowledge. By contrast, frequentists attempt to make precise statements about the world without any prior knowledge in hand. Fortunately, in terms of visualizing uncertainty, most approaches apply---with minor modifications---in both Bayesian and frequentist settings. Here, I will first discuss the frequentist approach and then describe what we may want to do differently in a Bayesian context.
+All statisticians use samples to calculate parameter estimates and their uncertainties. However, they are divided in how they approach these calculations, into Bayesians and frequentists. Bayesians assume that they have some prior knowledge about the world, and they use the sample to update this knowledge. By contrast, frequentists attempt to make precise statements about the world without having any prior knowledge in hand. Fortunately, in terms of visualizing uncertainty, most approaches apply---with minor modifications---in both Bayesian and frequentist settings. Here, I will first discuss the frequentist approach and then describe what we may want to do differently in a Bayesian context.
 
-Frequentists most commonly visualize uncertainty with error bars. While error bars can be useful as a visualization of uncertainty, they are not without problems, as I already alluded to in Chapter \@ref(boxplots-violins) (see Figure \@ref(fig:lincoln-temp-points-errorbars)). It is easy for readers to be confused about what an error bar represents. To highlight this problem, in Figure \@ref(fig:cocoa-data-vs-CI) I show five different uses of error bars for the same dataset. The dataset contains expert ratings of chocolate bars, rated on a scale from 1 to 5, for chocolate bars manufactured in a number of different countries. For Figure \@ref(fig:cocoa-data-vs-CI) I have selected specifically the ratings for chocolate bars manufactured in Canada. Underneath the sample, which is shown as a strip chart, we see the mean plus/minus the standard deviation of the sample, the mean plus/minus the standard error, and 80%, 95%, and 99% confidence intervals. *one more sentence here?*
+Frequentists most commonly visualize uncertainty with error bars. While error bars can be useful as a visualization of uncertainty, they are not without problems, as I already alluded to in Chapter \@ref(boxplots-violins) (see Figure \@ref(fig:lincoln-temp-points-errorbars)). It is easy for readers to be confused about what an error bar represents. To highlight this problem, in Figure \@ref(fig:cocoa-data-vs-CI) I show five different uses of error bars for the same dataset. The dataset contains expert ratings of chocolate bars, rated on a scale from 1 to 5, for chocolate bars manufactured in a number of different countries. For Figure \@ref(fig:cocoa-data-vs-CI) I have extracted all ratings for chocolate bars manufactured in Canada. Underneath the sample, which is shown as a strip chart, we see the mean plus/minus the standard deviation of the sample, the mean plus/minus the standard error, and 80%, 95%, and 99% confidence intervals. All five error bars are derived from the variation in the sample, and they are all mathematically related, but they have different meanings. And they are also visually quite different.
 
 (ref:cocoa-data-vs-CI) Relationship between sample, mean, standard deviation, standard error, and confidence intervals, in an example of chocolate bar ratings. The observations (shown as small green dots) that make up the sample represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dot represents the mean of the ratings. Error bars indicate, from top to bottom, twice the standard deviation, twice the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
@@ -495,8 +496,7 @@ ggplot(CI_df, aes(estimate, type)) +
 Whenever you visualize uncertainty with error bars, you must specify what quantity and/or confidence level the error bars represent.
 ```
 
-The standard error is approximately given by the sample standard deviation divided by the square root of the sample size. (This relationship follows from the central limit theorem.) Therefore, larger samples *continue here. Figure \@ref(fig:cocoa-CI-vs-n).*
-
+The standard error is approximately given by the sample standard deviation divided by the square root of the sample size, and confidence intervals are calculated by multiplying the standard error with small, constant values. For example, a 95% confidence interval extends approximately two times the standard error in either direction from the mean. (These relationships follows from the central limit theorem.) Therefore, larger samples tend to have narrower standard errors and confidence intervals, even if their standard deviation is the same. We can see this effect when we compare ratings for chocolate bars from Canada to ones from Switzerland (Figure \@ref(fig:cocoa-CI-vs-n)). The mean rating and sample standard deviation are comparable between Canadian and Swiss chocolate bars, but we have ratings for 125 Canadian bars and only 38 Swiss bars, and consequently the confidence intervals around the mean are much wider in the case bars from Switzerland.
 
 (ref:cocoa-CI-vs-n) Confidence intervals widen with smaller sample size. Chocolate bars from Canada and Switzerland have comparable mean ratings and comparable standard deviations (indicated with simple black error bars). However, over three times as many Canadian bars were rated than Swiss bars, and therefore the confidence intervals around the means (indicated with stacked, colored confidence bands) are substantially wider for the mean of the Swiss ratings than for the mean of the Canadian ratings. Data source: Brady Brelinski, Manhattan Chocolate Society
 
@@ -658,7 +658,10 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
 
 ```
 
-Error bars are convenient because they allow us to show many estimates and their uncertainties all at once. *Continue here. Figure \@ref(fig:mean-chocolate-ratings)*
+In Figure \@ref(fig:cocoa-CI-vs-n), I am showing error bars representing three different confidence intervals at the same time, using darker colors and thicker lines for intervals representing lower confidence levels. *discuss: humans tend to take whatever they see at face value; this heightens the sense of uncertainty. determinstic construal error.*
+
+
+Error bars are convenient because they allow us to show many estimates with their uncertainties all at once. Therefore, they are commonly used in scientific publications, where the primary goal is usually to convey a large amount of information to an expert audience. As an example of this type of application, Figure \@ref(fig:mean-chocolate-ratings) shows mean chocolate ratings and associated confidence intervals for chocolate bars manufactured in six different countries.
 
 (ref:mean-chocolate-ratings) Mean chocolate flavor ratings and associated confidence intervals for chocolate bars from manufacturers in six different countries. Data source: Brady Brelinski, Manhattan Chocolate Society
 
@@ -690,7 +693,7 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
   scale_x_continuous(
     limits = c(2.6, 3.6),
 #    expand = c(0, 0),
-    name = "chocolate flavor rating"
+    name = "mean rating"
   ) +
  scale_y_discrete(
 #    position = "right",
@@ -743,9 +746,13 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
 
 ```
 
-Error bars are in general not a suitable means to determine whether two groups are different. *Continue here. Figure \@ref(fig:chocolate-ratings-contrasts)*
+*transition sentence*
 
-(ref:chocolate-ratings-contrasts) Mean chocolate flavor ratings for manufacturers from five different countries, relative to the mean rating of U.S. chocolate bars. Canadian chocolate bars are significantly higher rated that U.S. bars. For the other four countries there is no significant difference in mean rating to the U.S. at the 95% confidence level. Data source: Brady Brelinski, Manhattan Chocolate Society
+The chocolate bars from Switzerland have a higher mean rating than those from the U.S.A., but how confident are we that this difference reflects a real difference in chocolate flavor and not just random variation associated with sampling a finite number of bar? Judging this from Figure \@ref(fig:mean-chocolate-ratings) is difficult, because both the mean Swiss rating and the mean U.S. rating have uncertainty, and both uncertainties matter to the question whether the means are different. Some people attempt to use rules of thumb to judge significance in difference from the extent to which error bars do or don't overlap, but this should be a practice of last resort.
+
+The correct way to address whether there are differences in mean rating is to calculate confidence intervals for the differences. If those confidence intervals exclude zero, then we know the difference is significant at the respective confidence level. For the chocolate ratings dataset, we see that only bars from Canada are significantly higher rated than bars from the U.S. (Figure \@ref(fig:chocolate-ratings-contrasts)). For bars from Switzerland, the 95% confidence interval on the difference just barely includes the value zero. Thus, there is a slightly bigger than 5% chance that the observed difference between mean ratings of U.S. and Swiss chocolate bars represents nothing more than sampling variation.
+
+(ref:chocolate-ratings-contrasts) Mean chocolate flavor ratings for manufacturers from five different countries, relative to the mean rating of U.S. chocolate bars. Canadian chocolate bars are significantly higher rated that U.S. bars. For the other four countries there is no significant difference in mean rating to the U.S. at the 95% confidence level. Confidence levels have been adjusted for multiple comparisons using Dunnett's method. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 ```{r chocolate-ratings-contrasts, fig.asp = 0.5, fig.cap = '(ref:chocolate-ratings-contrasts)'}
 # need reference grid for contrasts
@@ -833,6 +840,8 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
   )
 
 ```
+
+(ref:confidence-visualizations) Mean chocolate flavor ratings for manufacturers from four different countries, relative to the mean rating of U.S. chocolate bars. Each panel uses a different approach to visualizing the same uncertainty information. (a) Graded error bars with cap. (b) Graded error bars without cap. (c) Single-interval error bars with cap. (d) Single-interval error bars without cap. (e) Confidence strips. (f) Confidence distributions.
 
 ```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:confidence-visualizations)'}
 cacao_smaller <- filter(cacao_small, location != "Switzerland")
@@ -1096,9 +1105,9 @@ p6 <- ggplot(filter(contrasts_dunnettx, level == "95%"),
   )
 
 plot_grid(
-  p2, NULL, p1,
+  p1, NULL, p3,
   NULL, NULL, NULL,
-  p4, NULL, p3,
+  p2, NULL, p4,
   NULL, NULL, NULL,
   p5, NULL, p6,
   ncol = 3,
@@ -1109,7 +1118,10 @@ plot_grid(
 ```
 
 
-(ref:butterfat-bars) *Update: Density estimates of the butterfat percentage in the milk of four cattle breeds.* Data Source: Canadian Record of Performance for Purebred Dairy Cattle
+Error bars can be added to a variety of different types of plots to indicate uncertainty. For example, we can show amounts with uncertainty by drawing a bar plot with error bars (Figure \@ref(fig:butterfat-bars)). *one more sentence; not necessarily the best choice*. We can also draw error bars along both the *x* and the *y* direction in a scatter plot (Figure \@ref(fig:median-age-income)). 
+
+
+(ref:butterfat-bars) Mean butterfat contents in the milk of four cattle breads. Error bars indicate +/- one standard error of the mean. Visualizations of this type are frequently seen in the scientific literature. While they are technically correct, they represent neither the variation within each sample nor the uncertainty of the sample mean particularly well. See Figure \@ref(fig:butterfat-densitites) for the variation in butterfat contents within each sample. Data Source: Canadian Record of Performance for Purebred Dairy Cattle
 
 ```{r butterfat-bars, fig.width = 5, fig.cap = '(ref:butterfat-bars)'}
 cows %>% filter(breed != "Canadian") %>%
@@ -1124,7 +1136,7 @@ cows %>% filter(breed != "Canadian") %>%
 ggplot(cow_means, aes(x = breed, y = mean, ymin = mean - 1.96*se, ymax = mean + 1.96*se)) +
   geom_col(fill = "#56B4E9", alpha = 0.7, width = 0.7) +
   #geom_linerange(size = 0.75) +
-  geom_errorbar(size = 0.75, width = 0.1) +
+  geom_errorbar(size = 0.5, width = 0.1) +
   scale_x_discrete(
     labels = c("Jersey", "Guernsey", "Ayrshire", "Holstein-\nFriesian"),
     name = NULL
@@ -1165,6 +1177,123 @@ filter(US_income_age, state == "Pennsylvania") %>%
 *Discuss Bayesian inference briefly; mention that methods from visualizing distributions chapters apply.*
 
 *Do a ridgeline example with shaded areas?*
+
+```{r bayes-vs-ols, fig.asp = 0.6}
+linear_results <-
+  lm(rating ~ location, data = cacao_small) %>% 
+  emmeans(~ location) %>% 
+  tidy() %>%
+  mutate(model = "OLS")
+
+# store these separately, will need them again
+bayes_emmeans <- cacao_mcmc %>%
+  emmeans(~ location) %>%
+  gather_emmeans_draws()
+
+bayes_results <- bayes_emmeans %>%
+  mean_qi() %>%
+  to_broom_names() %>%
+  mutate(model = "Bayes")
+
+bind_rows(linear_results, bayes_results) %>%
+  mutate(model = factor(model, levels = c("Bayes", "OLS"))) %>%
+  ggplot(aes(x = estimate, y = reorder(location, estimate), xmin = conf.low, xmax = conf.high, color = model)) +
+  ggplot2::geom_errorbarh(position = ggstance::position_dodgev(height = .7), height = 0.2) +
+  geom_point(position = ggstance::position_dodgev(height = .7), size = 2.5) +
+  scale_x_continuous(
+    limits = c(2.6, 3.6),
+#    expand = c(0, 0),
+    name = "mean rating"
+  ) +
+  scale_y_discrete(name = NULL) +
+  scale_color_manual(
+    name = NULL,
+    values = c(
+      OLS = "grey40",
+      Bayes = desaturate(darken("#0072B2", .2), 0.1)
+    ),
+    breaks = c("OLS", "Bayes"),
+    labels = c("ordinary least squares", "Bayesian estimation")
+    #guide = guide_legend(direction = "horizontal")
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    legend.position = c(1, 0.01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(13, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(3, "pt"),
+    legend.spacing.y = grid::unit(12, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
+```
+
+```{r bayes-ridgeline, fig.asp = 0.6}
+bayes_emmeans %>%
+  ggplot(aes(.value, reorder(location, .value))) +
+  geom_density_ridges_gradient(
+    aes(fill = stat(quantile)),
+    quantiles = c(0.005, 0.025, 0.1, 0.9, 0.975, 0.995),
+    calc_ecdf = TRUE,
+    scale = 1.5,
+    color = darken("#0072B2", .4),
+    size = 0.3,
+    rel_min_height = 0.005
+  ) +
+  geom_point(
+    stat = ggstance:::StatSummaryh,
+    fun.x = median,
+    size = 2.5, color = "#D55E00"
+  ) +
+  scale_x_continuous(
+#    expand = c(0, 0),
+    name = "mean rating"
+  ) +
+  scale_y_discrete(name = NULL) +
+  scale_fill_manual(
+    name = "posterior prob.",
+    values = c(
+      "#00000000",
+      "#81A7D6A0", # desaturate(lighten("#0072B2", .4), .3)
+      "#508CC6A0", # desaturate(lighten("#0072B2", .2), .1)
+      "#035B8FA0", # darken("#0072B2", .2)
+      "#508CC6A0",
+      "#81A7D6A0",
+      "#00000000"
+    ),
+    breaks = c(4, 3, 2),
+    labels = c("80%", "95%", "99%"),
+    guide = guide_legend(
+      direction = "horizontal",
+      title.position = "top",
+      label.position = "bottom",
+      override.aes = list(color = NA)
+    )
+  ) +
+  coord_cartesian(xlim = c(2.6, 3.6), clip = "off") +
+  theme_dviz_hgrid(12, rel_small = 1) +
+  theme(
+    axis.line.x = element_line(color = "black"),
+    axis.ticks.x = element_line(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    legend.position = c(1, 0.01),
+    legend.justification = c(1, 0),
+    legend.key.height = grid::unit(12, "pt"),
+    legend.key.width = grid::unit(24, "pt"),
+    legend.spacing.x = grid::unit(6, "pt"),
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.box.background = element_rect(fill = "white", color = NA),
+    legend.box.spacing = grid::unit(0, "pt"),
+    legend.title.align = 0.5
+  )
+```
+
 ## Approaches to uncertainty estimation
 
 *Introduce concepts such as parameter, estimate, Bayesian analysis, frequentist analysis. Others?*
@@ -1197,7 +1326,7 @@ In Table \@ref(tab:estimation-frameworks), I have also added the bootstrap. I wo
 
 ## Visualizing the uncertainty of curve fits
 
-(ref:blue-jays-male-conf-band)  *Figure caption*
+(ref:blue-jays-male-conf-band) Head length versus body mass for male blue jays, as in Figure \@ref(fig:blue-jays-scatter-line). The straight blue line represents the best linear fit to the data, and the gray band around the line shows the uncertainty in the linear fit. The gray band represents a 95% confidence level. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-male-conf-band, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-conf-band)'}
 blue_jays_male <- filter(blue_jays, KnownSex == "M")
@@ -1226,7 +1355,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   theme_dviz_open()
 ```
 
-(ref:blue-jays-male-fitted-draws) *Figure caption*
+(ref:blue-jays-male-fitted-draws) Head length versus body mass for male blue jays. In contrast to Figure  \@ref(fig:blue-jays-male-conf-band), the straight blue lines now represent equally likely alternative fits randomly drawn from the posterior distribution. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-male-fitted-draws, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-fitted-draws)'}
 
@@ -1248,7 +1377,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
 
 ```
 
-(ref:blue-jays-male-graded-conf-band) *Figure caption*
+(ref:blue-jays-male-graded-conf-band) Head length versus body mass for male blue jays. As in the case of error bars, we can draw graded confidence bands to highlight the uncertainty in the estimate. Data source: Keith Tarvin, Oberlin College
 
 ```{r blue-jays-male-graded-conf-band, fig.width = 5.5, fig.asp = 3/4, fig.cap = '(ref:blue-jays-male-graded-conf-band)'}
 ci_99_df <- confidence_band(fit, newdata, level = 0.99, unconditional = TRUE)
@@ -1309,46 +1438,8 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
   )
 ```
 
-```{r tank-capacity-uncertain, eval = FALSE, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:tank-capacity-uncertain)'}
-cars93 <- MASS::Cars93
 
-set.seed(8692282)
-
-fit <- gam(Fuel.tank.capacity ~ s(Price, k = 5, bs = 'cr'), data = cars93)
-#fit <- gam(Fuel.tank.capacity ~ s(Price, k = 6, bs = 'gp'), data=cars93)
-#fit <- gam(Fuel.tank.capacity ~ s(Price), data = cars93, method = "REML")
-
-newdata <- data.frame(Price = seq(min(cars93$Price), max(cars93$Price), length.out = 100))
-sample_df <- sample_outcomes(fit, newdata, 10, unconditional = FALSE)
-ci_df <- confidence_band(fit, newdata, unconditional = FALSE)
-
-cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + 
-  scale_x_continuous(
-    name = "price (USD)",
-    breaks = c(20, 40, 60),
-    labels = c("$20,000", "$40,000", "$60,000")
-  ) +
-  scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
-  theme_minimal_grid(12)
-
-p1 <- cars_base +
-  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
-  geom_point(color = "grey60") +
-  geom_line(data = ci_df, color = "#0072B2", size = 1)
-
-p2 <- cars_base +
-  geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
-  geom_point(color = "grey60") +
-  geom_line(data = sample_df, aes(group = .draw), color = "#0072B2", size = 0.3)
-
-plot_grid(
-  p1, p2, align = 'hv',
-  labels = 'auto'
-)
-
-```
-
-(ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Cubic regression splines with 5 knots. **Complete caption.** Data source: Motor Trend, 1974.
+(ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. (a) Best fit spline and confidence band. (b) Equally likely alternative fits drawn from the posterior distribution. Data source: Motor Trend, 1974.
 
 ```{r mpg-uncertain, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:mpg-uncertain)'}
 set.seed(8692282)
@@ -1425,7 +1516,7 @@ ggplot(sample_df) +
   scale_x_continuous(
     limits = c(1.95, 4.1),
     expand = c(0, 0),
-    name = "chocolate flavor rating"
+    name = "mean rating"
   ) +
   scale_y_discrete(
     name = NULL,
@@ -1473,7 +1564,7 @@ ggplot(sample_df) +
   scale_x_continuous(
     limits = c(1.95, 4.1),
     expand = c(0, 0),
-    name = "chocolate flavor rating"
+    name = "mean rating"
   ) +
   scale_y_discrete(
     name = NULL,
