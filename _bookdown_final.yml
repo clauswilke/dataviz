@@ -21,9 +21,9 @@ rmd_files: [
   "nested_proportions.Rmd", # completed
   "visualizing_associations.Rmd", # completed
   "time_series.Rmd", # completed
-  "visualizing_trends.Rmd",
-  "geospatial_data.Rmd",
-  "visualizing_uncertainty_decoy.Rmd",
+  "visualizing_trends.Rmd", # completed
+  "geospatial_data.Rmd", # completed
+  "visualizing_uncertainty.Rmd", # completed
 
   # Part II
 

@@ -156,7 +156,12 @@
 <li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
 <li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#framing-probabilities-as-frequencies"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
 <li class="part"><span><b>Part II: Principles of figure design</b></span></li>
 <li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
 <li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
@@ -266,43 +271,61 @@
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] nycflights13_1.0.0 gapminder_0.3.0    RColorBrewer_1.1-2
-##  [4] maps_3.3.0         statebins_2.0.0    sf_0.7-1          
-##  [7] maptools_0.9-4     sp_1.3-1           rgeos_0.3-28      
-## [10] geofacet_0.1.9     plot3D_1.1.1       magick_1.9        
-## [13] hexbin_1.27.2      treemapify_2.5.0   gridExtra_2.3     
-## [16] ggmap_2.7.904      ggthemes_4.0.1     ggridges_0.5.1    
-## [19] ggrepel_0.8.0      ggforce_0.1.1      patchwork_0.0.1   
-## [22] lubridate_1.7.4    forcats_0.3.0      stringr_1.3.1     
-## [25] purrr_0.2.5        readr_1.1.1        tidyr_0.8.1       
-## [28] tibble_1.4.2       tidyverse_1.2.1    dviz.supp_0.1.0   
-## [31] dplyr_0.7.99.9000  colorblindr_0.1.0  ggplot2_3.1.0     
-## [34] colorspace_1.4-0   cowplot_0.9.99    
+##  [1] nycflights13_1.0.0   gapminder_0.3.0      RColorBrewer_1.1-2  
+##  [4] gganimate_0.9.9.9999 ungeviz_0.1.0        emmeans_1.3.1       
+##  [7] mgcv_1.8-24          nlme_3.1-137         broom_0.5.1         
+## [10] tidybayes_1.0.3      maps_3.3.0           statebins_2.0.0     
+## [13] sf_0.7-1             maptools_0.9-4       sp_1.3-1            
+## [16] rgeos_0.3-28         geofacet_0.1.9       plot3D_1.1.1        
+## [19] magick_1.9           hexbin_1.27.2        treemapify_2.5.0    
+## [22] gridExtra_2.3        ggmap_2.7.904        ggthemes_4.0.1      
+## [25] ggridges_0.5.1       ggrepel_0.8.0        ggforce_0.1.1       
+## [28] patchwork_0.0.1      lubridate_1.7.4      forcats_0.3.0       
+## [31] stringr_1.3.1        purrr_0.2.5          readr_1.1.1         
+## [34] tidyr_0.8.2          tibble_1.4.2         tidyverse_1.2.1     
+## [37] dviz.supp_0.1.0      dplyr_0.7.99.9000    colorblindr_0.1.0   
+## [40] ggplot2_3.1.0        colorspace_1.4-0     cowplot_0.9.99      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-137        bitops_1.0-6        httr_1.3.1         
-##  [4] rprojroot_1.3-2     tools_3.5.0         backports_1.1.2    
-##  [7] R6_2.3.0            spData_0.2.9.4      DBI_1.0.0          
-## [10] lazyeval_0.2.1      withr_2.1.2.9000    tidyselect_0.2.4   
-## [13] compiler_3.5.0      cli_1.0.1.9000      rvest_0.3.2        
-## [16] xml2_1.2.0          bookdown_0.7        scales_1.0.0       
-## [19] classInt_0.2-3      digest_0.6.18       foreign_0.8-71     
-## [22] rmarkdown_1.10      jpeg_0.1-8          pkgconfig_2.0.2    
-## [25] htmltools_0.3.6     rlang_0.3.0.1       readxl_1.1.0       
-## [28] rstudioapi_0.7      farver_1.0.0.9999   generics_0.0.2     
-## [31] jsonlite_1.5        magrittr_1.5        Rcpp_1.0.0         
-## [34] munsell_0.5.0       ggfittext_0.6.0     stringi_1.2.4      
-## [37] yaml_2.2.0          MASS_7.3-50         geogrid_0.1.1      
-## [40] plyr_1.8.4          grid_3.5.0          misc3d_0.8-4       
-## [43] crayon_1.3.4        deldir_0.1-15       lattice_0.20-35    
-## [46] haven_1.1.2         hms_0.4.2           knitr_1.20         
-## [49] pillar_1.3.0        rjson_0.2.20        imguR_1.0.3        
-## [52] glue_1.3.0          evaluate_0.11       modelr_0.1.2       
-## [55] png_0.1-7           tweenr_0.1.5.9999   RgoogleMaps_1.4.3  
-## [58] cellranger_1.1.0    gtable_0.2.0        polyclip_1.9-1     
-## [61] assertthat_0.2.0    xfun_0.3            broom_0.5.1        
-## [64] rnaturalearth_0.1.0 e1071_1.7-0         class_7.3-14       
-## [67] units_0.6-1         concaveman_1.0.0</code></pre>
+##  [1] rjson_0.2.20              deldir_0.1-15            
+##  [3] class_7.3-14              rprojroot_1.3-2          
+##  [5] estimability_1.3          ggstance_0.3.1           
+##  [7] rstudioapi_0.7            farver_1.0.0.9999        
+##  [9] ggfittext_0.6.0           svUnit_0.7-12            
+## [11] mvtnorm_1.0-8             xml2_1.2.0               
+## [13] knitr_1.20                polyclip_1.9-1           
+## [15] jsonlite_1.5              png_0.1-7                
+## [17] compiler_3.5.0            httr_1.3.1               
+## [19] backports_1.1.2           assertthat_0.2.0         
+## [21] Matrix_1.2-14             lazyeval_0.2.1           
+## [23] cli_1.0.1.9000            tweenr_0.1.5.9999        
+## [25] prettyunits_1.0.2         htmltools_0.3.6          
+## [27] tools_3.5.0               misc3d_0.8-4             
+## [29] coda_0.19-2               gtable_0.2.0             
+## [31] glue_1.3.0                Rcpp_1.0.0               
+## [33] cellranger_1.1.0          imguR_1.0.3              
+## [35] xfun_0.3                  strapgod_0.0.0.9000      
+## [37] rvest_0.3.2               MASS_7.3-50              
+## [39] scales_1.0.0              hms_0.4.2                
+## [41] yaml_2.2.0                stringi_1.2.4            
+## [43] gifski_0.8.6              e1071_1.7-0              
+## [45] spData_0.2.9.4            RgoogleMaps_1.4.3        
+## [47] rlang_0.3.0.1             pkgconfig_2.0.2          
+## [49] bitops_1.0-6              geogrid_0.1.1            
+## [51] evaluate_0.11             lattice_0.20-35          
+## [53] tidyselect_0.2.5          plyr_1.8.4               
+## [55] magrittr_1.5              bookdown_0.7             
+## [57] R6_2.3.0                  generics_0.0.2           
+## [59] DBI_1.0.0                 pillar_1.3.0             
+## [61] haven_1.1.2               foreign_0.8-71           
+## [63] withr_2.1.2.9000          units_0.6-1              
+## [65] modelr_0.1.2              crayon_1.3.4             
+## [67] arrayhelpers_1.0-20160527 rmarkdown_1.10           
+## [69] progress_1.2.0.9000       jpeg_0.1-8               
+## [71] rnaturalearth_0.1.0       grid_3.5.0               
+## [73] readxl_1.1.0              digest_0.6.18            
+## [75] classInt_0.2-3            xtable_1.8-3             
+## [77] munsell_0.5.0             concaveman_1.0.0</code></pre>
 
 </div>
             </section>

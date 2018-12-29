@@ -114,7 +114,7 @@ So should you use a histogram or a density plot to visualize a distribution? Hea
 
 In many scenarios we have multiple distributions we would like to visualize simultaneously. For example, let's say we'd like to see how the ages of Titanic passengers are distributed between men and women. Were men and women passengers generally of the same age, or was there an age difference between the genders? One commonly employed visualization strategy in this case is a stacked histogram, where we draw the histogram bars for women on top of the bars for men, in a different color (Figure \@ref(fig:titanic-age-stacked-hist)).
 
-(ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender.
+(ref:titanic-age-stacked-hist) Histogram of the ages of Titanic passengers stratified by gender. This figure has been labeled as "bad" because stacked histograms are easily confused with overlapping histograms (see also Figure \@ref(fig:titanic-age-overlapping-hist)). In addition, the heights of the bars representing female passengers cannot easily be compared to each other.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="(ref:titanic-age-stacked-hist)" width="576" />
@@ -125,7 +125,7 @@ In my opinion, this type of visualization should be avoided. There are two key p
 
 We could try to address these problems by having all bars start at zero and making the bars partially transparent (Figure \@ref(fig:titanic-age-overlapping-hist)).
 
-(ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
+(ref:titanic-age-overlapping-hist) Age distributions of male and female Titanic passengers, shown as two overlapping histograms. This figure has been labeled as "bad" because there is no clear visual indication that all blue bars start at a count of 0.
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="(ref:titanic-age-overlapping-hist)" width="576" />

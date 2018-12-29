@@ -195,7 +195,11 @@ histogram bars for women on top of the bars for men, in a different
 color (Figure @ref(fig:titanic-age-stacked-hist)).
 
 (ref:titanic-age-stacked-hist) Histogram of the ages of Titanic
-passengers stratified by gender.
+passengers stratified by gender. This figure has been labeled as "bad"
+because stacked histograms are easily confused with overlapping
+histograms (see also Figure @ref(fig:titanic-age-overlapping-hist)). In
+addition, the heights of the bars representing female passengers cannot
+easily be compared to each other.
 
 (#fig:titanic-age-stacked-hist)(ref:titanic-age-stacked-hist)
 
@@ -215,7 +219,9 @@ and making the bars partially transparent (Figure
 @ref(fig:titanic-age-overlapping-hist)).
 
 (ref:titanic-age-overlapping-hist) Age distributions of male and female
-Titanic passengers, shown as two overlapping histograms.
+Titanic passengers, shown as two overlapping histograms. This figure has
+been labeled as "bad" because there is no clear visual indication that
+all blue bars start at a count of 0.
 
 (#fig:titanic-age-overlapping-hist)(ref:titanic-age-overlapping-hist)
 

@@ -49,7 +49,8 @@ reading the figure caption of Figure
 @ref(fig:lincoln-temp-points-errorbars), we can see that they represent
 here twice the standard deviation of the daily mean temperatures, meant
 to indicate the range that contains approximately 95% of the data.
-However, many authors show instead the standard error of the mean, and
+However, error bars are more commonly employed to visualize the standard
+error (or twice the standard error for a 95% confidence interval), and
 it is easy for readers to confuse the standard error with the standard
 deviation. The standard error quantifies how accurate our estimate of
 the mean is, whereas the standard deviation estimates how much spread
@@ -63,7 +64,9 @@ real-world datasets.
 Nebraska in 2016. Points represent the average daily mean temperatures
 for each month, averaged over all days of the month, and error bars
 represent twice the standard deviation of the daily mean temperatures
-within each month.
+within each month. This figure has been labeled as "bad" because because
+error bars are conventionally used to visualize the uncertainty of an
+estimate, not the variability in a population.
 
 (#fig:lincoln-temp-points-errorbars)(ref:lincoln-temp-points-errorbars)
 
@@ -145,12 +148,13 @@ particular, they can generate the appearance that there is data where
 none exists, or that the data set is very dense when actually it is
 quite sparse. We can try to circumvent these issues by simply plotting
 all the individual data points directly, as dots (Figure
-@ref(fig:lincoln-temp-all-points)). This is a fine idea in principle, as
-long as we make sure that we don't plot too many points on top of each
-other. A simple solution to overplotting is to spread out the points
-somewhat along the _x_ axis, by adding some random noise in the _x_
-dimension (Figure @ref(fig:lincoln-temp-jittered)). This technique is
-also called "jittering".
+@ref(fig:lincoln-temp-all-points)). Such a figure is called a _strip
+chart._ Strip charts are fine in principle, as long as we make sure that
+we don't plot too many points on top of each other. A simple solution to
+overplotting is to spread out the points somewhat along the _x_ axis, by
+adding some random noise in the _x_ dimension (Figure
+@ref(fig:lincoln-temp-jittered)). This technique is also called
+_jittering._
 
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln,
 Nebraska, visualized as individual temperature values. Each point

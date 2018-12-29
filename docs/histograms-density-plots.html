@@ -156,7 +156,12 @@
 <li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
 <li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#framing-probabilities-as-frequencies"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
 <li class="part"><span><b>Part II: Principles of figure design</b></span></li>
 <li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
 <li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
@@ -416,18 +421,18 @@ Always verify that your density estimate does not predict the existence of nonse
 <p>In many scenarios we have multiple distributions we would like to visualize simultaneously. For example, let’s say we’d like to see how the ages of Titanic passengers are distributed between men and women. Were men and women passengers generally of the same age, or was there an age difference between the genders? One commonly employed visualization strategy in this case is a stacked histogram, where we draw the histogram bars for women on top of the bars for men, in a different color (Figure <a href="histograms-density-plots.html#fig:titanic-age-stacked-hist">7.6</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-stacked-hist"></span>
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="Histogram of the ages of Titanic passengers stratified by gender." width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-stacked-hist-1.png" alt="Histogram of the ages of Titanic passengers stratified by gender. This figure has been labeled as “bad” because stacked histograms are easily confused with overlapping histograms (see also Figure 7.7). In addition, the heights of the bars representing female passengers cannot easily be compared to each other." width="576" />
 <p class="caption">
-Figure 7.6: Histogram of the ages of Titanic passengers stratified by gender.
+Figure 7.6: Histogram of the ages of Titanic passengers stratified by gender. This figure has been labeled as “bad” because stacked histograms are easily confused with overlapping histograms (see also Figure <a href="histograms-density-plots.html#fig:titanic-age-overlapping-hist">7.7</a>). In addition, the heights of the bars representing female passengers cannot easily be compared to each other.
 </p>
 </div>
 <p>In my opinion, this type of visualization should be avoided. There are two key problems here: First, from just looking at the figure, it is never entirely clear where exactly the bars begin. Do they start where the color changes or are they meant to start at zero? In other words, are there about 25 females of age 18–20 or are there almost 80? (The former is the case.) Second, the bar heights for the female counts cannot be directly compared to each other, because the bars all start at a different height. For example, the men were on average older than the women, and this fact is not at all visible in Figure <a href="histograms-density-plots.html#fig:titanic-age-stacked-hist">7.6</a>.</p>
 <p>We could try to address these problems by having all bars start at zero and making the bars partially transparent (Figure <a href="histograms-density-plots.html#fig:titanic-age-overlapping-hist">7.7</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:titanic-age-overlapping-hist"></span>
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="Age distributions of male and female Titanic passengers, shown as two overlapping histograms." width="576" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-overlapping-hist-1.png" alt="Age distributions of male and female Titanic passengers, shown as two overlapping histograms. This figure has been labeled as “bad” because there is no clear visual indication that all blue bars start at a count of 0." width="576" />
 <p class="caption">
-Figure 7.7: Age distributions of male and female Titanic passengers, shown as two overlapping histograms.
+Figure 7.7: Age distributions of male and female Titanic passengers, shown as two overlapping histograms. This figure has been labeled as “bad” because there is no clear visual indication that all blue bars start at a count of 0.
 </p>
 </div>
 <p>However, this approach generates new problems. Now it appears that there are actually three different groups, not just two, and we’re still not entirely sure where each bar starts and ends. Overlapping histograms don’t work well because a semi-transparent bar drawn on top of another tends to not look like a semi-transparent bar but instead like a bar drawn in a different color.</p>
