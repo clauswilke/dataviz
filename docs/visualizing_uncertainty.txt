@@ -43,7 +43,7 @@ eight hours.
 
 Mathematically, we deal with uncertainty by employing the concept of
 probability. A precise definition of probability is complicated and far
-beyond the scope of this book. Yet we can successfuly reason about
+beyond the scope of this book. Yet we can successfully reason about
 probabilities without understanding all the mathematical intricacies.
 For many problems of practical relevance it is sufficient to think about
 relative frequencies. Assume you perform some sort of random trial, such
@@ -142,7 +142,7 @@ winning and should not be counted out. If you compare Figure
 @ref(fig:election-prediction) to Figure @ref(fig:probability-waffle),
 you may find that Figure @ref(fig:probability-waffle) creates a much
 better sense of the uncertainty in outcome, even though the shaded areas
-in Figure @ref(fig:election-prediction) acurately represent the
+in Figure @ref(fig:election-prediction) accurately represent the
 probabilities of blue or yellow winning. This is the power of a discrete
 outcome visualization. Research in human perception shows that we are
 much better at perceiving, counting, and judging the relative
@@ -229,7 +229,7 @@ Figure @ref(fig:sampling-schematic) shows how these key concepts are
 related to each other. The variable of interest (e.g., vote outcome in
 each district) has some distribution in the population, with a
 population mean and a population standard deviation. A sample will
-consist of a set specific observations. The number of the individual
+consist of a set of specific observations. The number of the individual
 observations in the sample is called the _sample size._ From the sample
 we can calculate a sample mean and a sample standard deviation, and
 these will generally differ from the population mean and standard
@@ -334,11 +334,11 @@ these visualizations as _graded error bars_. The grading helps the
 reader perceive that there is a range of different possibilities. If I
 showed simple error bars (without grading) to a group of people, chances
 are at least some of them would perceive the error bars
-determinstically, for example as representing minimum and maximum of the
-data. Alternatively, they might think the error bars delineate the range
-of possible parameter estimates, i.e., the estimate could never fall
-outside the error bars. These types of misperception are called
-_determinstic construal errors._ The more we can minimze the risk of
+deterministically, for example as representing minimum and maximum of
+the data. Alternatively, they might think the error bars delineate the
+range of possible parameter estimates, i.e., the estimate could never
+fall outside the error bars. These types of misperception are called
+_deterministic construal errors._ The more we can minimze the risk of
 determinsitic construal error, the better our visualization of
 uncertainty.
 
@@ -638,8 +638,8 @@ Hypothetical outcome plots
 
 All static visualizations of uncertainty suffer from the problem that
 viewers may interpret some aspect of the uncertainty visualization as a
-determinstic feature of the data (deterministic construal error). We can
-avoid this problem by visualizing uncertainty through animation, by
+deterministic feature of the data (deterministic construal error). We
+can avoid this problem by visualizing uncertainty through animation, by
 cycling through a number of different but equally likely plots. This
 kind of a visualization is called a hypothetical outcome plot
 [@Hullman_et_al_2015] or HOP. While HOPs are not possible in a print
