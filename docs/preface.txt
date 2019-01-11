@@ -103,8 +103,8 @@ irreproducible. A third party cannot generate the exact same figure you
 did. While this may not matter much if all you did was change the font
 of the axis labels, the lines are blurry, and it's easy to cross over
 into territory where things are less clear cut. As an example, let's say
-to manually replaced cryptic labels with more readable ones. A third
-party may not be able to verify that the label replacement was
+you want to manually replace cryptic labels with more readable ones. A
+third party may not be able to verify that the label replacement was
 appropriate. Second, if you add a lot of manual post-processing to your
 figure-preparation pipeline then you will be more reluctant to make any
 changes or redo your work. Thus, you may ignore reasonable requests for

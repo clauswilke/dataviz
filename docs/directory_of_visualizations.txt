@@ -35,9 +35,9 @@ require arbitrary parameter choices and can be misleading. Cumulative
 densities and q-q plots (Chapter @ref(ecdf-qq)) always represent the
 data faithfully but can be more difficult to interpret.
 
-Boxplots, violin plots, jittered points, and sina plots are useful when
-we want to visualize many distributions at once and/or if we are
-primarily interested in overall shifts among the distributions (Chapter
+Boxplots, violins, strip charts, and sina plots are useful when we want
+to visualize many distributions at once and/or if we are primarily
+interested in overall shifts among the distributions (Chapter
 @ref(boxplots-violins-vertical)). Stacked histograms and overlapping
 densities allow a more in-depth comparison of a smaller number of
 distributions, though stacked histograms can be difficult to interpret
@@ -107,9 +107,54 @@ as a treatment dose, we commonly draw line graphs (Chapter
 variables, we draw a connected scatter plot where we first plot the two
 response variables in a scatter plot and then connect dots corresponding
 to adjacent time points (Chapter @ref(time-series-connected-scatter)).
-We use smooth lines to represent trends in a larger dataset (_chapter to
-be written_).
+We use smooth lines to represent trends in a larger dataset (Chapter
+@ref(visualizing-trends)).
+
+[[directory-geospatial-data]]
+Geospatial data
+~~~~~~~~~~~~~~~
+
+The primary mode of showing geospatial data is in the form of a map
+(Chapter @ref(geospatial-data)). A map takes coordinates on the globe
+and projects them onto a flat surface, such that shapes and distances on
+the globe are approximately represented by shapes and distances in the
+2D representation. In addition, we can show data values in different
+regions by coloring those regions in the map according to the data. Such
+a map is called a choropleth (Chapter @ref(choropleth-mapping)). In some
+cases, it may be helpful to distort the different regions according to
+some other quantity (e.g., population number) or simplify each region
+into a square. Such visualizations are called cartograms.
 
 [[uncertainty]]
 Uncertainty
 ~~~~~~~~~~~
+
+Error bars are meant to indicate the range of likely values for some
+estimate or measurement. They extend horizontally and/or vertically from
+some reference point representing the estimate or measurement (Chapter
+@ref(visualizing-uncertainty)). Reference points can be shown in various
+ways, such as by dots or by bars. Graded error bars show multiple ranges
+at the same time, where each range corresponds to a different degree of
+confidence. They are in effect multiple error bars with different line
+thicknesses plotted on top of each other.
+
+To achieve a more detailed visualization than is possible with error
+bars or graded error bars, we can visualize the actual confidence or
+posterior distributions (Chapter @ref(visualizing-uncertainty)).
+Confidence strips provide a clear visual sense of uncertainty but are
+difficult to read accurately. Eyes and half-eyes combine error bars with
+approaches to visualize distributions (violins and ridgelines,
+respectively), and thus show both precise ranges for some confidence
+levels and the overall uncertainty distribution. A quantile dotplot can
+serve as an alternative visualization of an uncertainty distribution
+(Chapter @ref(frequency-framing)). By showing the distribution in
+discrete units, the quantile dotplot is not as precise but can be easier
+to read than the continuous distribution shown by a violin or ridgeline
+plot.
+
+For smooth line graphs, the equivalent of an error bar is a confidence
+band (Chapter @ref(uncertainty-curve-fits)). It shows a range of values
+the line might pass through at a given confidence level. As in the case
+of error bars, we can draw graded confidence bands that show multiple
+confidence levels at once. We can also show individual fitted draws in
+lieu of or in addition to the confidence bands.

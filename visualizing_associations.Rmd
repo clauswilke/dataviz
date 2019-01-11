@@ -593,8 +593,8 @@ Scatter plots such as Figure \@ref(fig:CO2-paired-scatter) work well when we hav
 CO2_emissions %>% filter(year %in% c(2000, 2005, 2010)) %>%
   spread(year, emissions) %>% 
   na.omit() %>%
-  mutate(diff = `2010` - `2000`) %>%
-  arrange(desc(abs(diff))) -> emissions_diff
+  mutate(diff = `2010` - `2000`, absdiff = abs(diff)) %>%
+  arrange(desc(absdiff)) -> emissions_diff
 
 emissions_diff[1:10,] %>% select(-diff) %>% 
   gather(year, emissions, `2000`:`2010`) %>%

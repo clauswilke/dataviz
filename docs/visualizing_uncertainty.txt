@@ -25,7 +25,7 @@ data-dense displays. Options here include frequency framing, where we
 explicitly draw different possible scenarios in approximate proportions,
 or animations that cycle through different possible scenarios.
 
-[[framing-probabilities-as-frequencies]]
+[[frequency-framing]]
 Framing probabilities as frequencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -47,11 +47,11 @@ beyond the scope of this book. Yet we can successfully reason about
 probabilities without understanding all the mathematical intricacies.
 For many problems of practical relevance it is sufficient to think about
 relative frequencies. Assume you perform some sort of random trial, such
-as a coin flip or rolling a die, and look for a particular outcome (e.g.
-heads, or rolling a six). You can call this outcome _success,_ and any
-other outcome _failure._ Then, the probability of success is
+as a coin flip or rolling a die, and look for a particular outcome
+(e.g., heads or rolling a six). You can call this outcome _success,_ and
+any other outcome _failure._ Then, the probability of success is
 approximately given by the fraction of times you'd see that outcome if
-you repeated the random trail over and over again. For instance, if a
+you repeated the random trial over and over again. For instance, if a
 particular outcome occurs with a probability of 10%, then we expect that
 among many repeated trials that outcome will be seen in approximately
 one out of ten cases.
@@ -338,8 +338,8 @@ deterministically, for example as representing minimum and maximum of
 the data. Alternatively, they might think the error bars delineate the
 range of possible parameter estimates, i.e., the estimate could never
 fall outside the error bars. These types of misperception are called
-_deterministic construal errors._ The more we can minimze the risk of
-determinsitic construal error, the better our visualization of
+_deterministic construal errors._ The more we can minimize the risk of
+deterministic construal error, the better our visualization of
 uncertainty.
 
 Error bars are convenient because they allow us to show many estimates
@@ -556,7 +556,7 @@ eye, I have added shading under each curve to indicate the center 80%,
 
 (#fig:bayes-ridgeline)(ref:bayes-ridgeline)
 
-[[visualizing-the-uncertainty-of-curve-fits]]
+[[uncertainty-curve-fits]]
 Visualizing the uncertainty of curve fits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -715,7 +715,7 @@ There are two ways in which we can switch from one hypothetical outcome
 to the next in a HOP animation: First, we can execute a hard switch, as
 in a slide projector. We show one outcome for some time period, say 0.5
 seconds, and then the next one, and so on. Second, we can smoothly
-interpolate between outcomes, e.g., slowly deform the trendline for one
+interpolate between outcomes, i.e., slowly deform the trendline for one
 outcome until it looks like the trendline for another outcome. In my
 personal opinion, the smooth transition is preferable, because it again
 reduces the risk of deterministic construal error. By seeing a wide

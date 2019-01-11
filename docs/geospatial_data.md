@@ -108,7 +108,7 @@ All the concepts discussed in Chapter \@ref(aesthetic-mapping) of mapping data o
 </div>
 
 
-## Choropleth mapping
+## Choropleth mapping {#choropleth-mapping}
 
 We frequently want to show how some quantity varies across locations. We can do so by coloring individual regions in a map according to the data dimension we want to display. Such maps are called *choropleth maps.*
 
