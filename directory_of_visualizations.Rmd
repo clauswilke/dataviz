@@ -578,7 +578,7 @@ When proportions are specified according to multiple grouping variables, then mo
 
 ## *x*--*y* relationships
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r basic-scatter, fig.width = 6, fig.asp = 1/4}
 palette <- pal_steel_blue
 
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
@@ -628,7 +628,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 
 Scatter plots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatter plot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r xy-binning, fig.width = 6, fig.asp = 1/4}
 p5 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_density2d(binwidth = 0.02, color = palette[1]) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
@@ -677,7 +677,7 @@ plot_grid(p5, p6, p7, p8, ncol = 4, scale = .9)
 
 For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, contour lines, 2D bins, or hex bins may provide an alternative (Chapter \@ref(overlapping-points)). When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a correlogram instead of the underlying raw data (Chapter \@ref(associations-correlograms)).
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r xy-lines, fig.width = 6, fig.asp = 1/4}
 p1 <- ggplot(df_one_line, aes(x, y)) +
   geom_line(color = palette[1]) + 
   geom_point(
@@ -724,7 +724,7 @@ When the *x* axis represents time or a strictly increasing quantity such as a tr
 
 ## Geospatial data {#directory-geospatial-data}
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r geospatial, fig.width = 6, fig.asp = 1/4}
 palette <- pal_green_brown
 
 lower48 <- mutate(
@@ -817,7 +817,7 @@ The primary mode of showing geospatial data is in the form of a map (Chapter \@r
 
 ## Uncertainty
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r errorbars, fig.width = 6, fig.asp = 1/4}
 palette <- pal_brown_red
 
 p1 <- ggplot(df_uncertain, aes(y, type)) +
@@ -905,7 +905,7 @@ plot_grid(p1, p2, p4, p3, ncol = 4, scale = .9)
 Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement (Chapter \@ref(visualizing-uncertainty)). Reference points can be shown in various ways, such as by dots or by bars. Graded 
 error bars show multiple ranges at the same time, where each range corresponds to a different degree of confidence. They are in effect multiple error bars with different line thicknesses plotted on top of each other.
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r confidence-dists, fig.width = 6, fig.asp = 1/4}
 
 p1 <- ggplot(df_uncertain, aes(y, type)) +
   stat_confidence_density(aes(moe = dy), fill = palette[3], height = 0.6, confidence = 0.68) +
@@ -1008,7 +1008,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 
 To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dotplot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dotplot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
 
-```{r fig.width = 6, fig.asp = 1/4}
+```{r confidence-bands, fig.width = 6, fig.asp = 1/4}
 p1 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
   geom_smooth(
     color = palette[1],
