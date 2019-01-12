@@ -121,16 +121,16 @@ For such a minimal grid, we generally draw the lines orthogonally to direction a
 <p>Grid lines that run perpendicular to the key variable of interest tend to be the most useful.</p>
 </div>
 
-For bar graphs such as Figure \@ref(fig:price-increase), @TufteQuantDispl recommends to draw white grid lines on top of the bars instead of dark grid lines underneath. In my opinion, this style is another example of overly trying to remove non-data-ink from a figure, with detrimental consequences (Figure \@ref(fig:price-increase-ugly)). Most importantly, the white grid lines make it look like the bar is broken into separate pieces. In fact, I used this style purposefully in Figure \@ref(fig:titanic-passengers-by-class-sex) to visually separate stacked bars representing male and female passengers. Second, because the grid lines are not visible outside the bars, they are difficult to connect to axis ticks, and they obscure how close or distant the end of a bar is to the next grid line. Finally, because the grid lines are on top of the bars, I had to move the percentages outside the bars. This choice inappropriately visually elongates the bars.
+For bar graphs such as Figure \@ref(fig:price-increase), @TufteQuantDispl recommends to draw white grid lines on top of the bars instead of dark grid lines underneath (Figure \@ref(fig:price-increase-tufte)). These white grid lines have the effect of separating the bars into distinct segments of equal length. I'm of two minds on this style. On the one hand, research into human perception suggests that breaking bars into discrete segments helps the reader to perceive bar lengths [@Haroz_et_al_2015]. On the other hand, to my eye the bars look like they are falling apart and don't form a clear visual unit. In fact, I used this style purposefully in Figure \@ref(fig:titanic-passengers-by-class-sex) to visually separate stacked bars representing male and female passengers. Which effect dominates may depend on the specific choices of bar width, distance between bars, and thickness of the white grid lines. Thus, if you intend to use this style, I encourage you to vary these parameters until you have a figure that creates the desired visual effect.
 
-(ref:price-increase-ugly) Percent increase in stock price from June 2012 to June 2017, for four major tech companies. White grid lines on top of bars are a suboptimal choice. They make it look like the bars are falling apart, and, because they are not visible against the white background, they also obscure how close any one bar is to the next higher grid line. Data source: Yahoo Finance
+(ref:price-increase-tufte) Percent increase in stock price from June 2012 to June 2017, for four major tech companies. White grid lines on top of bars can help the reader perceive the relative lengths of the bars. At the same time, they can also create the perception that the bars are falling apart. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="balance_data_ink_ratio_files/figure-html/price-increase-ugly-1.png" alt="(ref:price-increase-ugly)" width="576" />
-<p class="caption">(\#fig:price-increase-ugly)(ref:price-increase-ugly)</p>
+<img src="balance_data_ink_ratio_files/figure-html/price-increase-tufte-1.png" alt="(ref:price-increase-tufte)" width="576" />
+<p class="caption">(\#fig:price-increase-tufte)(ref:price-increase-tufte)</p>
 </div>
 
-
+I would like to point out another downside of Figure \@ref(fig:price-increase-tufte). I had to move the percentage values outside the bars, because the labels didn't fit into the final segments of several of the bars. However, this choice inappropriately visually elongates the bars and should be avoided whenever possible. 
 
 Background grids along both axis directions are most appropriate for scatter plots where there is no primary axis of interest. Figure \@ref(fig:Aus-athletes-grid-good) at the beginning of this chapter provides an example. When a figure has a full background grid, axis lines are generally not needed (Figure \@ref(fig:Aus-athletes-grid-good)).
 

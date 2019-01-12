@@ -92,13 +92,13 @@ In general, it is better to use Trellis plots (Chapter \@ref(multi-panel-figures
 
 Visualizations using 3D position scales can sometimes be appropriate, however. First, the issues described in the preceding section are of lesser concern if the visualization is interactive and can be rotated by the viewer, or alternatively, if it is shown in a VR or augmented reality environment where it can be inspected from multiple angles. Second, even if the visualization isn't interactive, showing it slowly rotating, rather than as a static image from one perspective, will allow the viewer to discern where in 3D space different graphical elements reside. The human brain is very good at reconstructing a 3D scene from a series of images taken from different angles, and the slow rotation of the graphic provides exactly these images.
 
-Finally, it makes sense to use 3D visualizations when we want to show actual 3D objects and/or data mapped onto them. For example, showing the topographic relief of a mountain as a 3D plot is a reasonable choice (Figure \@ref(fig:volcano-relief)). Similarly, if we want to visualize the evolutionary sequence conservation of a protein mapped onto its structure, it makes sense to show the structure as a 3D object (Figure \@ref(fig:protein-3d)). In either case, however, these visualizations would still be easier to interpret if they were shown as rotating animations. While this is not possible in traditional print publications, it can be done easily when posting figures on the web or when giving presentations.
+Finally, it makes sense to use 3D visualizations when we want to show actual 3D objects and/or data mapped onto them. For example, showing the topographic relief of a mountainous island is a reasonable choice (Figure \@ref(fig:corsica-relief)). Similarly, if we want to visualize the evolutionary sequence conservation of a protein mapped onto its structure, it makes sense to show the structure as a 3D object (Figure \@ref(fig:protein-3d)). In either case, however, these visualizations would still be easier to interpret if they were shown as rotating animations. While this is not possible in traditional print publications, it can be done easily when posting figures on the web or when giving presentations.
 
-(ref:volcano-relief) Relief of Maungawhau (Mount Eden), a volcano in the city of Auckland, New Zealand. Data source: Ross Ihaka
+(ref:corsica-relief) Relief of the Island of Corsica in the Mediterranean Sea. Data source: Copernicus Land Monitoring Service
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/volcano-relief-1.png" alt="(ref:volcano-relief)" width="576" />
-<p class="caption">(\#fig:volcano-relief)(ref:volcano-relief)</p>
+<img src="figures/Corsica.png" alt="(ref:corsica-relief)" width="630" />
+<p class="caption">(\#fig:corsica-relief)(ref:corsica-relief)</p>
 </div>
 
 

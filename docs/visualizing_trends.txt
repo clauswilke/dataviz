@@ -101,7 +101,11 @@ fits low-degree polynomials to subsets of the data. Importantly, the
 points in the center of each subset are weighted more heavily than
 points at the boundaries, and this weighting scheme yields a much
 smoother result than we get from a weighted average (Figure
-@ref(fig:dow-jones-loess)).
+@ref(fig:dow-jones-loess)). The LOESS curve shown here looks similar to
+the 100-day average, but this similarity should not be overinterpreted.
+The smoothness of a LOESS curve can be tuned by adjusting a parameter,
+and different parameter choices would have produced LOESS curves looking
+more like the 20-day or 50-day average.
 
 (ref:dow-jones-loess) Comparison of LOESS fit to 100-day moving average
 for the Dow Jones data of Figure @ref(fig:dow-jones-moving-ave). The
@@ -111,15 +115,15 @@ extends to the entire range of the data. Data source: Yahoo! Finance
 
 (#fig:dow-jones-loess)(ref:dow-jones-loess)
 
-Another advantage of LOESS is that it is not limited to time series. It
-can be applied to arbitrary scatter plots, as is apparent from its name,
-_locally estimated scatterplot smoothing_. For example, we can use LOESS
-to look for trends in the relationship between a car's fuel-tank
-capacity and its price (Figure @ref(fig:tank-capacity-loess)). The LOESS
-line shows that tank capacity grows approximately linearly with price
-for cheap cars (below $20,000) but it levels off for more expensive
-cars. Above a price of approximately $20,000, buying a more expensive
-car will not get you one with a larger fuel tank.
+Importantly, LOESS is not limited to time series. It can be applied to
+arbitrary scatter plots, as is apparent from its name, _locally
+estimated scatterplot smoothing_. For example, we can use LOESS to look
+for trends in the relationship between a car's fuel-tank capacity and
+its price (Figure @ref(fig:tank-capacity-loess)). The LOESS line shows
+that tank capacity grows approximately linearly with price for cheap
+cars (below $20,000) but it levels off for more expensive cars. Above a
+price of approximately $20,000, buying a more expensive car will not get
+you one with a larger fuel tank.
 
 (ref:tank-capacity-loess) Fuel-tank capacity versus price of 93 cars
 released for the 1993 model year. Each dot corresponds to one car. The
@@ -133,20 +137,21 @@ Lock, St. Lawrence University
 LOESS is a very popular smoothing approach because it tends to produce
 results that look right to the human eye. However, it requires the
 fitting of many separate regression models. This makes it slow for large
-datasets, even on modern computing equipment. As a faster alternative,
-we can use spline models. A spline is a piecewise polynomial function
-that is highly flexible yet always looks smooth. When working with
-splines, we will encounter the term _knot._ The knots in a spline are
-the endpoints of the individual spline segments. If we fit a spline with
-_k_ segments, we need to specify _k_ + 1 knots. While spline fitting is
-computationally efficient, in particular if the number of knots is not
-too large, splines have their own downsides. Most importantly, there is
-a bewildering array of different types of splines, including cubic
-splines, B-splines, thin-plate splines, Gaussian process splines, and
-many others, and which one to pick may not be obvious. The specific
-choice of the type of spline and number of knots used can result in
-widely different smoothing functions for the same data (Figure
-@ref(fig:tank-capacity-smoothers)).
+datasets, even on modern computing equipment.
+
+As a faster alternative to LOESS, we can use spline models. A spline is
+a piecewise polynomial function that is highly flexible yet always looks
+smooth. When working with splines, we will encounter the term _knot._
+The knots in a spline are the endpoints of the individual spline
+segments. If we fit a spline with _k_ segments, we need to specify _k_ +
+1 knots. While spline fitting is computationally efficient, in
+particular if the number of knots is not too large, splines have their
+own downsides. Most importantly, there is a bewildering array of
+different types of splines, including cubic splines, B-splines,
+thin-plate splines, Gaussian process splines, and many others, and which
+one to pick may not be obvious. The specific choice of the type of
+spline and number of knots used can result in widely different smoothing
+functions for the same data (Figure @ref(fig:tank-capacity-smoothers)).
 
 (ref:tank-capacity-smoothers) Different smoothing models display widely
 different behaviors, in particular near the boundaries of the data. (a)
@@ -182,8 +187,10 @@ preferable to fit a curve with a specific functional form that is
 appropriate for the data and that uses parameters with clear meaning.
 
 For the fuel-tank data, we need a curve that initially rises linearly
-but then levels off at a constant value. The equation
-latexmath:[$y = A - B \exp(-mx)$] may fit that bill. It is approximately
+but then levels off at a constant value. The function
+latexmath:[$y = A - B \exp(-mx)$] may fit that bill. Here,
+latexmath:[$A$], latexmath:[$B$], and latexmath:[$m$] are the constants
+we adjust to fit the curve to the data. The function is approximately
 linear for small latexmath:[$x$], with
 latexmath:[$y \approx A - B + B m x$], it approaches a constant value
 for large latexmath:[$x$], latexmath:[$y \approx A$], and it is strictly
@@ -219,16 +226,16 @@ Keith Tarvin, Oberlin College
 
 (#fig:blue-jays-scatter-line)(ref:blue-jays-scatter-line)
 
-The linear functional form can be useful even if the data points appear
-to follow a non-linear relationship, if we can identify the non-linear
-relationship and transform the coordinates such that it becomes linear.
-To demonstrate this principle, let's return to the monthly submissions
-to the preprint server bioRxiv, discussed in Chapter
-@ref(visualizing-associations). If the increase in submissions in each
-month is proportional to the number of submissions in the previous
-month, i.e., if submissions grow by a fixed percentage each month, then
-the resulting curve is exponential. This assumption seems to be met for
-the bioRxiv data, because a curve with exponential form,
+When the data display a non-linear relationship, we need to guess what
+an appropriate functional form might be. In this case, we can assess the
+accuracy of our guess by transforming the axes in such a way that a
+linear relationship emerges. To demonstrate this principle, let's return
+to the monthly submissions to the preprint server bioRxiv, discussed in
+Chapter @ref(visualizing-associations). If the increase in submissions
+in each month is proportional to the number of submissions in the
+previous month, i.e., if submissions grow by a fixed percentage each
+month, then the resulting curve is exponential. This assumption seems to
+be met for the bioRxiv data, because a curve with exponential form,
 latexmath:[$y = A\exp(mx)$], fits the bioRxiv submission data well
 (Figure @ref(fig:biorxiv-expfit)).
 
@@ -242,7 +249,7 @@ http://www.prepubmed.org/
 
 If the original curve is exponential, latexmath:[$y = A\exp(mx)$], then
 a log-transformation of the _y_ values will turn it into a linear
-relationship, latexmath:[$\log(y) = \log(A) + mx$]. In fact, plotting
+relationship, latexmath:[$\log(y) = \log(A) + mx$]. Therefore, plotting
 the data with log-transformed _y_ values (or equivalently, with a
 logarithmic _y_ axis) and looking for a linear relationship is a good
 way of determining whether a dataset exhibits exponential growth. For

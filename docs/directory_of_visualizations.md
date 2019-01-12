@@ -47,38 +47,38 @@ When proportions are specified according to multiple grouping variables, then mo
 
 ## *x*--*y* relationships
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/basic-scatter-1.png" width="576" style="display: block; margin: auto;" />
 
 
 Scatter plots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatter plot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/xy-binning-1.png" width="576" style="display: block; margin: auto;" />
 
 For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, contour lines, 2D bins, or hex bins may provide an alternative (Chapter \@ref(overlapping-points)). When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a correlogram instead of the underlying raw data (Chapter \@ref(associations-correlograms)).
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/xy-lines-1.png" width="576" style="display: block; margin: auto;" />
 
 When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we draw a connected scatter plot where we first plot the two response variables in a scatter plot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
 
 
 ## Geospatial data {#directory-geospatial-data}
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/geospatial-1.png" width="576" style="display: block; margin: auto;" />
 
 The primary mode of showing geospatial data is in the form of a map (Chapter \@ref(geospatial-data)). A map takes coordinates on the globe and projects them onto a flat surface, such that shapes and distances on the globe are approximately represented by shapes and distances in the 2D representation. In addition, we can show data values in different regions by coloring those regions in the map according to the data. Such a map is called a choropleth (Chapter \@ref(choropleth-mapping)). In some cases, it may be helpful to distort the different regions according to some other quantity (e.g., population number) or simplify each region into a square. Such visualizations are called cartograms.
 
 ## Uncertainty
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/errorbars-1.png" width="576" style="display: block; margin: auto;" />
 
 Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement (Chapter \@ref(visualizing-uncertainty)). Reference points can be shown in various ways, such as by dots or by bars. Graded 
 error bars show multiple ranges at the same time, where each range corresponds to a different degree of confidence. They are in effect multiple error bars with different line thicknesses plotted on top of each other.
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/confidence-dists-1.png" width="576" style="display: block; margin: auto;" />
 
 To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dotplot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dotplot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
 
-<img src="directory_of_visualizations_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+<img src="directory_of_visualizations_files/figure-html/confidence-bands-1.png" width="576" style="display: block; margin: auto;" />
 
 For smooth line graphs, the equivalent of an error bar is a confidence band (Chapter \@ref(uncertainty-curve-fits)). It shows a range of values the line might pass through at a given confidence level. As in the case of error bars, we can draw graded confidence bands that show multiple confidence levels at once. We can also show individual fitted draws in lieu of or in addition to the confidence bands.
 

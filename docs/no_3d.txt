@@ -230,8 +230,8 @@ the graphic provides exactly these images.
 
 Finally, it makes sense to use 3D visualizations when we want to show
 actual 3D objects and/or data mapped onto them. For example, showing the
-topographic relief of a mountain as a 3D plot is a reasonable choice
-(Figure @ref(fig:volcano-relief)). Similarly, if we want to visualize
+topographic relief of a mountainous island is a reasonable choice
+(Figure @ref(fig:corsica-relief)). Similarly, if we want to visualize
 the evolutionary sequence conservation of a protein mapped onto its
 structure, it makes sense to show the structure as a 3D object (Figure
 @ref(fig:protein-3d)). In either case, however, these visualizations
@@ -240,10 +240,10 @@ animations. While this is not possible in traditional print
 publications, it can be done easily when posting figures on the web or
 when giving presentations.
 
-(ref:volcano-relief) Relief of Maungawhau (Mount Eden), a volcano in the
-city of Auckland, New Zealand. Data source: Ross Ihaka
+(ref:corsica-relief) Relief of the Island of Corsica in the
+Mediterranean Sea. Data source: Copernicus Land Monitoring Service
 
-(#fig:volcano-relief)(ref:volcano-relief)
+(#fig:corsica-relief)(ref:corsica-relief)
 
 (ref:protein-3d) Patterns of evolutionary variation in a protein. The
 colored tube represents the backbone of the protein Exonuclease III from
