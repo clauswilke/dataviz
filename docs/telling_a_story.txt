@@ -9,15 +9,15 @@ insight successfully, we will have to present the audience with a clear
 and exciting story. The need for a story may seem disturbing to
 scientists and engineers, who may equate it with making things up,
 putting a spin on things, or overselling results. However, this
-perspective misses a fundamental truth about how human cognition works:
-All our thinking is based on stories. We get excited when we hear a good
-story, and we get bored when the story is bad or when there is none.
-Moreover, any communication creates a story in the audience's minds. If
-we don't provide a clear story ourselves, then our audience will make
-one up. In the best-case scenario, the story they make up is reasonably
-close to our own view of the material presented. However, it can be and
-often is much worse. The made-up story could be "this is boring," "the
-author is wrong," or "the author is incompetent."
+perspective misses the important role that stories play in reasoning and
+memory. We get excited when we hear a good story, and we get bored when
+the story is bad or when there is none. Moreover, any communication
+creates a story in the audience's minds. If we don't provide a clear
+story ourselves, then our audience will make one up. In the best-case
+scenario, the story they make up is reasonably close to our own view of
+the material presented. However, it can be and often is much worse. The
+made-up story could be "this is boring," "the author is wrong," or "the
+author is incompetent."
 
 Your goal in telling a story should be to use facts and logical
 reasoning to get your audience interested and excited. Let me tell you a

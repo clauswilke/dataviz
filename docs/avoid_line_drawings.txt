@@ -4,13 +4,13 @@ Avoid line drawings
 
 Whenever possible, visualize your data with solid, colored shapes rather
 than with lines that outline those shapes. Solid shapes are more easily
-perceived, are less likely to create visual artifacts or optical
-illusions, and do more immediately convey amounts than do outlines. In
-my experience, visualizations using solid shapes are both clearer and
-more pleasant to look at than equivalent versions that use line
-drawings. Thus, I avoid line drawings as much as possible. However, I
-want to emphasize that this recommendation does not supersede the
-principle of proportional ink (Chapter @ref(proportional-ink)).
+perceived as coherent objects, are less likely to create visual
+artifacts or optical illusions, and do more immediately convey amounts
+than do outlines. In my experience, visualizations using solid shapes
+are both clearer and more pleasant to look at than equivalent versions
+that use line drawings. Thus, I avoid line drawings as much as possible.
+However, I want to emphasize that this recommendation does not supersede
+the principle of proportional ink (Chapter @ref(proportional-ink)).
 
 Line drawings have a long history in the field of data visualization
 because throughout most of the 20th century, scientific visualizations
@@ -63,10 +63,9 @@ our visual system is quite good at connecting the individual line
 elements into a continuous line, the dashed lines nevertheless look
 porous and do not serve as a strong boundary of the enclosed area.
 Second, because the lines intersect and the areas they enclose are not
-shaded, we can perceive six different distinct shapes and we need to
-expend some additional mental energy to merge the correct shapes
-together. This effect would have been even stronger had I used solid
-rather than dashed lines for all three distributions.
+shaded, it is difficult to segment the different densities from the six
+distinct shape outlines. This effect would have been even stronger had I
+used solid rather than dashed lines for all three distributions.
 
 (ref:iris-densities-lines) Density estimates of the sepal lengths of
 three different iris species. The broken line styles used for versicolor

@@ -112,13 +112,13 @@ discussed in Chapters @ref(aesthetic-mapping) and
 @ref(coordinate-systems-axes) in the context of position scales. The
 second one maps the data from the 3D visualization space into the 2D
 space of the final figure. (This second transformation obviously does
-not occur for visualizations shown in a true 3D environment, such as on
-a VR display or produced as physical sculptures or 3D-printed objects.
-My primary objection here is to 3D visualizations shown on 2D displays.)
-The second transformation is non-invertible, because each point on the
-2D display corresponds to a line of points in the 3D visualization
-space. Therefore, we cannot uniquely determine where in 3D space any
-particular data point lies.
+not occur for visualizations shown in a true 3D environment, such as
+when shown as physical sculptures or 3D-printed objects. My primary
+objection here is to 3D visualizations shown on 2D displays.) The second
+transformation is non-invertible, because each point on the 2D display
+corresponds to a line of points in the 3D visualization space.
+Therefore, we cannot uniquely determine where in 3D space any particular
+data point lies.
 
 Our visual system nevertheless attempts to invert the 3D to 2D
 transformation. However, this process is unreliable, fraught with error,
@@ -176,9 +176,9 @@ information. What happens, for example, if we use 3D bars instead?
 Figure @ref(fig:VA-death-rates-3d) shows a typical dataset that one
 might visualize with 3D bars, the mortality rates in 1940 Virginia
 stratified by age group and by gender and housing location. We can see
-that indeed the 3D bars help with the visual perception. It is unlikely
-that one might mistake a bar in the foreground for one in the background
-or vise versa. Nevertheless, the problems discussed in the context of
+that indeed the 3D bars help us interpret the plot. It is unlikely that
+one might mistake a bar in the foreground for one in the background or
+vise versa. Nevertheless, the problems discussed in the context of
 Figure @ref(fig:titanic-3d) exist here as well. It is difficult to judge
 exactly how tall the individual bars are, and it is also difficult to
 make direct comparisons. For example, was the mortality rate of urban

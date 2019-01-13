@@ -55,10 +55,11 @@ titles, subtitles, and data source statements are appropriate, however,
 if they are meant to be used as stand-alone infographics or to be posted
 on social media or on a web page without accompanying caption text.
 
-(ref:corruption-development-infographic) Figure
-@ref(fig:corruption-development) reformatted to be posted on the web or
-to be used as an infographic. The title, subtitle, and data source
-statements have been incorporated into the figure.
+(ref:corruption-development-infographic) Infographic version of Figure
+@ref(fig:corruption-development). The title, subtitle, and data source
+statements have been incorporated into the figure. This figure could be
+posted on the web as is or otherwise used without separate caption
+block.
 
 (#fig:corruption-development-infographic)(ref:corruption-development-infographic)
 
@@ -201,9 +202,9 @@ Tables @ref(tab:boxoffice-gross), @ref(tab:titanic-ages), and
 @ref(tab:color-codes). Take a moment and locate these tables, look how
 they are formatted, and compare them to a table you or a colleague has
 recently made. In all likelihood, there are important differences. In my
-experience, absent proper training in table formatting few people will
-instinctively make the right formatting choices, and in self-published
-documents poorly formatted tables are even more prevalent than poorly
+experience, absent proper training in table formatting, few people will
+instinctively make the right formatting choices. In self-published
+documents, poorly formatted tables are even more prevalent than poorly
 designed figures. Also, most software commonly used to create tables
 provides defaults that are not recommended. For example, my version of
 Microsoft Word provides 105 pre-defined table styles, and of these at

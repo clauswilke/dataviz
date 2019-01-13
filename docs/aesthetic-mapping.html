@@ -103,7 +103,7 @@
 <li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
 <li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
 <li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
-<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
 <li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
@@ -254,7 +254,7 @@
             <section class="normal" id="section-">
 <div id="aesthetic-mapping" class="section level1">
 <h1><span class="header-section-number">2</span> Visualizing data: Mapping data onto aesthetics</h1>
-<p>Whenever we visualize data, we take data values and convert them in a systematic and logical way into the visual elements that make up the final graphic. Even though there are myriad different data visualizations, and on first glance a scatter plot, a pie chart, and a heatmap don’t seem to have much in common, all these visualizations can be described with a common language that captures how data values are turned into blobs of ink on paper or colored pixels on screen. The key insight is the following: All data visualizations map data values into quantifiable features of the resulting graphic. We refer to these features as <em>aesthetics.</em></p>
+<p>Whenever we visualize data, we take data values and convert them in a systematic and logical way into the visual elements that make up the final graphic. Even though there are many different types of data visualizations, and on first glance a scatter plot, a pie chart, and a heatmap don’t seem to have much in common, all these visualizations can be described with a common language that captures how data values are turned into blobs of ink on paper or colored pixels on screen. The key insight is the following: All data visualizations map data values into quantifiable features of the resulting graphic. We refer to these features as <em>aesthetics.</em></p>
 <div id="aesthetics-and-types-of-data" class="section level2">
 <h2><span class="header-section-number">2.1</span> Aesthetics and types of data</h2>
 <p>Aesthetics describe every aspect of a given graphical element. A few examples are provided in Figure <a href="aesthetic-mapping.html#fig:common-aesthetics">2.1</a>. A critical component of every graphical element is of course its <em>position,</em> which describes where the element is located. In standard 2d graphics, we describe positions by an <em>x</em> and <em>y</em> value, but other coordinate systems and one- or three-dimensional visualizations are possible. Next, all graphical elements have a <em>shape</em>, a <em>size</em>, and a <em>color.</em> Even if we are preparing a black-and-white drawing, graphical elements need to have a color to be visible, for example black if the background is white or white if the background is black. Finally, to the extent we are using lines to visualize data, these lines may have different widths or dash–dot patterns. Beyond the examples shown in Figure <a href="aesthetic-mapping.html#fig:common-aesthetics">2.1</a>, there are many other aesthetics we may encounter in a data visualization. For example, if we want to display text, we may have to specify font family, font face, and font size, and if graphical objects overlap, we may have to specify whether they are partially transparent.</p>
@@ -440,7 +440,7 @@ Figure 2.2: Scales link data values to aesthetics. Here, the numbers 1 through 4
 Figure 2.3: Daily temperature normals for four selected locations in the U.S. Temperature is mapped to the <em>y</em> axis, day of the year to the <em>x</em> axis, and location to line color. Data source: NOAA.
 </p>
 </div>
-<p>Figure <a href="aesthetic-mapping.html#fig:temp-normals-vs-time">2.3</a> is a fairly standard visualization for a temperature curve and likely the visualization most data scientists would intuitively choose first. However, it is up to us which variables we map onto which scales. For example, instead of mapping temperature onto the <em>y</em> axis and location onto color, we can do the opposite. Because now the key variable of interest (temperature) is shown as color, we need to show sufficiently large colored areas for the color to convey useful information. Therefore, for this visualization I have chosen squares instead of lines, one for each month and location, and I have colored them by the average temperature normal for each month (Figure <a href="aesthetic-mapping.html#fig:four-locations-temps-by-month">2.4</a>).</p>
+<p>Figure <a href="aesthetic-mapping.html#fig:temp-normals-vs-time">2.3</a> is a fairly standard visualization for a temperature curve and likely the visualization most data scientists would intuitively choose first. However, it is up to us which variables we map onto which scales. For example, instead of mapping temperature onto the <em>y</em> axis and location onto color, we can do the opposite. Because now the key variable of interest (temperature) is shown as color, we need to show sufficiently large colored areas for the color to convey useful information <span class="citation">(Stone, Albers Szafir, and Setlur <a href="#ref-Stone_et_al_2014">2014</a>)</span>. Therefore, for this visualization I have chosen squares instead of lines, one for each month and location, and I have colored them by the average temperature normal for each month (Figure <a href="aesthetic-mapping.html#fig:four-locations-temps-by-month">2.4</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:four-locations-temps-by-month"></span>
 <img src="aesthetic_mapping_files/figure-html/four-locations-temps-by-month-1.png" alt="Monthly normal mean temperatures for four locations in the U.S. Data source: NOAA" width="816" />
@@ -458,6 +458,12 @@ Figure 2.5: Fuel efficiency versus displacement, for 32 cars (1973–74 models).
 </p>
 </div>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Stone_et_al_2014">
+<p>Stone, M., D. Albers Szafir, and V. Setlur. 2014. “An Engineering Model for Color Difference as a Function of Size.” In <em>22nd Color and Imaging Conference</em>. Society for Imaging Science and Technology.</p>
 </div>
 </div>
             </section>

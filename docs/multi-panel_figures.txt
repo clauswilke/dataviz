@@ -17,8 +17,8 @@ entirely different visualizations, or possibly even different datasets.
 We have encountered both types of multi-panel figures in many places
 throughout this book. In general, these figures are intuitive and
 straightforward to interpret. However, when preparing such figures,
-there are a few issues we need to pay attention to, and the purpose of
-this chapter is to make you aware of these issues.
+there are a few issues we need to pay attention to, such as appropriate
+axis scaling, alignment, and consistency between separate panels.
 
 [[small-multiples]]
 Small multiples

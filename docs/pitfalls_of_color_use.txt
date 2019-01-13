@@ -87,8 +87,7 @@ the figure difficult to look at. For example, it is difficult to read
 the names of the states without having our eyes drawn to the large,
 strongly colored areas right next to the state names. Similarly, it is
 difficult to compare the endpoints of the bars to the underlying grid
-lines. In addition, if we stare at the figure for too long, we will see
-afterimages of the figure once we move our attention elsewhere.
+lines.
 
 Avoid large filled areas of overly saturated colors. They make it
 difficult for your reader to carefully inspect your figure.
@@ -157,12 +156,15 @@ see any colors, however. Instead, they will typically have difficulty to
 distinguish certain types of colors, for example red and green
 (red--green color-vision deficiency) or blue and green (blue--yellow
 color-vision deficiency). The technical terms for these deficiencies are
-deuteranomaly or protanomaly for the red--green variant (where people
-have difficulty perceiving either green or red, respectively) and
-tritanomaly for the blue--yellow variant (where people have difficulty
-perceiving blue). Approximately 8% of males and 0.5% of females suffer
-from some sort of color-vision deficiency, and deuteranomaly is the most
-common form whereas tritanomaly is relatively rare.
+deuteranomaly/deuteranopia and protanomaly/protanopia for the red--green
+variant (where people have difficulty perceiving either green or red,
+respectively) and tritanomaly/tritanopia for the blue--yellow variant
+(where people have difficulty perceiving blue). The terms ending in
+"anomaly" refer to some impairment in the perception of the respective
+color, and the terms ending in "anopia" refer to complete absence of
+perception of that color. Approximately 8% of males and 0.5% of females
+suffer from some sort of color-vision deficiency, and deuteranomaly is
+the most common form whereas tritanomaly is relatively rare.
 
 As discussed in Chapter @ref(color-basics), there are three fundamental
 types of color scales used in data visualization: sequential scales,
@@ -264,14 +266,14 @@ we need to recognize that they are no magic bullets. It is very possible
 to use a cvd-safe scale and yet produce a figure a person with cvd
 cannot decipher. One critical parameter is the size of the colored
 graphical elements. Colors are much easier to distinguish when they are
-applied to large areas than to small ones or thin lines. And this effect
-is exacerbated under cvd (Figure @ref(fig:colors-thin-lines)). In
-addition to the various color-design considerations discussed in this
-chapter and in Chapter @ref(color-basics), I recommend to view color
-figures under cvd simulations to get a sense of what they may look like
-for a person with cvd. There are several online services and desktop
-apps available that allow users to run arbitrary figures through a cvd
-simulation.
+applied to large areas than to small ones or thin lines
+[@Stone_et_al_2014]. And this effect is exacerbated under cvd (Figure
+@ref(fig:colors-thin-lines)). In addition to the various color-design
+considerations discussed in this chapter and in Chapter
+@ref(color-basics), I recommend to view color figures under cvd
+simulations to get a sense of what they may look like for a person with
+cvd. There are several online services and desktop apps available that
+allow users to run arbitrary figures through a cvd simulation.
 
 (ref:colors-thin-lines) Colored elements become difficult to distinguish
 at small sizes. The top left panel (labeled "original") shows four

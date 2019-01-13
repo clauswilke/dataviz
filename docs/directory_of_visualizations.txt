@@ -104,11 +104,11 @@ data (Chapter @ref(associations-correlograms)).
 When the _x_ axis represents time or a strictly increasing quantity such
 as a treatment dose, we commonly draw line graphs (Chapter
 @ref(time-series)). If we have a temporal sequence of two response
-variables, we draw a connected scatter plot where we first plot the two
-response variables in a scatter plot and then connect dots corresponding
-to adjacent time points (Chapter @ref(time-series-connected-scatter)).
-We use smooth lines to represent trends in a larger dataset (Chapter
-@ref(visualizing-trends)).
+variables, we can draw a connected scatter plot where we first plot the
+two response variables in a scatter plot and then connect dots
+corresponding to adjacent time points (Chapter
+@ref(time-series-connected-scatter)). We can use smooth lines to
+represent trends in a larger dataset (Chapter @ref(visualizing-trends)).
 
 [[directory-geospatial-data]]
 Geospatial data
@@ -125,7 +125,7 @@ cases, it may be helpful to distort the different regions according to
 some other quantity (e.g., population number) or simplify each region
 into a square. Such visualizations are called cartograms.
 
-[[uncertainty]]
+[[directory-uncertainty]]
 Uncertainty
 ~~~~~~~~~~~
 

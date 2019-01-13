@@ -29,12 +29,13 @@ definition could include topics as varied as schematic technical
 drawings, 3D animations, and user interfaces, I necessarily had to limit
 my scope for this book. I am specifically covering the case of static
 visualizations presented in print, online, or as slides. The book does
-not cover interactive visuals or movies. For this reason, I will use the
-words "visualization" and "figure" somewhat interchangeably. The book
-also does not provide any instruction on _how_ to make figures with
-existing visualization softwares or programming libraries. The annotated
-bibliography at the end of the book includes pointers to appropriate
-texts covering these topics.
+not cover interactive visuals or movies, except in one brief section in
+the chapter on visualizing uncertainty. Therefore, throughout this book,
+I will use the words "visualization" and "figure" somewhat
+interchangeably. The book also does not provide any instruction on _how_
+to make figures with existing visualization softwares or programming
+libraries. The annotated bibliography at the end of the book includes
+pointers to appropriate texts covering these topics.
 
 The book is divided into three parts. The first, "From data to
 visualization," describes different types of plots and charts, such as

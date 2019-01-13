@@ -17,13 +17,14 @@ confidence bands. These approaches were developed in the context of
 scientific publications, and they require some amount of expert
 knowledge to be interpreted correctly. Yet they are precise and space
 efficient. By using error bars, for example, we can show the
-uncertainties of many different data points in a single graph. For a lay
-audience, however, visualization strategies that create a strong
-intuitive impression of the uncertainty will be preferable, even if they
-come at the cost of either reduced visualization accuracy or less
-data-dense displays. Options here include frequency framing, where we
-explicitly draw different possible scenarios in approximate proportions,
-or animations that cycle through different possible scenarios.
+uncertainties of many different parameter estimates in a single graph.
+For a lay audience, however, visualization strategies that create a
+strong intuitive impression of the uncertainty will be preferable, even
+if they come at the cost of either reduced visualization accuracy or
+less data-dense displays. Options here include frequency framing, where
+we explicitly draw different possible scenarios in approximate
+proportions, or animations that cycle through different possible
+scenarios.
 
 [[frequency-framing]]
 Framing probabilities as frequencies
@@ -75,8 +76,8 @@ success, a 10% chance of success, and a 40% chance of success. To read
 this figure, imagine you are given the task of picking a dark square by
 choosing a square before you can see which of the squares will be dark
 and which ones will be light. (If you will, you can think of picking a
-square with your eyes closed.) Intuitively, you will probably sense that
-it would be unlikely to select the one dark square in the 1%-chance
+square with your eyes closed.) Intuitively, you will probably understand
+that it would be unlikely to select the one dark square in the 1%-chance
 case. Similarly, it would still be fairly unlikely to select a dark
 square in the 10%-chance case. However, in the 40%-chance case the odds
 don't look so bad. This style of visualization, where we show specific
@@ -137,8 +138,8 @@ By doing some math, we can calculate that for our made-up example, the
 chance of the yellow party winning is 12.9%. So the chance of yellow
 winning is a tad better than the 10% chance scenario shown in Figure
 @ref(fig:probability-waffle). If you favor the blue party, you may not
-be overly worried, but the yellow party does have a realistic shot at
-winning and should not be counted out. If you compare Figure
+be overly worried, but the yellow party has enough of a chance of
+winning that they might just be successful. If you compare Figure
 @ref(fig:election-prediction) to Figure @ref(fig:probability-waffle),
 you may find that Figure @ref(fig:probability-waffle) creates a much
 better sense of the uncertainty in outcome, even though the shaded areas
@@ -180,15 +181,15 @@ negates the advantages of the discrete plots. Figure
 @ref(fig:election-quantile-dot)a) and with ten dots (Figure
 @ref(fig:election-quantile-dot)b). While the version with 50 dots more
 accurately captures the true probability distribution, the number of
-dots is too large for easy perception. The version with ten dots more
-immediately conveys the relative chances of blue or yellow winning. One
-objection to the ten-dot version might be that it is not very precise.
-We are underrepresenting the chance of yellow winning by 2.9 percentage
-points. However, it is often worthwhile to trade some mathematical
-precision for more accurate human perception of the resulting
-visualization, in particular when communicating to a lay audience. A
-visualization that is mathematically correct but not properly perceived
-is not that useful in practice.
+dots is too large to easily discriminate individual ones. The version
+with ten dots more immediately conveys the relative chances of blue or
+yellow winning. One objection to the ten-dot version might be that it is
+not very precise. We are underrepresenting the chance of yellow winning
+by 2.9 percentage points. However, it is often worthwhile to trade some
+mathematical precision for more accurate human perception of the
+resulting visualization, in particular when communicating to a lay
+audience. A visualization that is mathematically correct but not
+properly perceived is not that useful in practice.
 
 [[visualizing-the-uncertainty-of-point-estimates]]
 Visualizing the uncertainty of point estimates
@@ -254,6 +255,16 @@ distribution, which informs us about how precisely we are estimating the
 parameter of interest (here, the population mean).
 
 (#fig:sampling-schematic)(ref:sampling-schematic)
+
+It is critical that we don't confuse the standard deviation and the
+standard error. The standard deviation is a property of the population.
+It tells us how much spread there is among individual observations we
+could make. For example, if we consider the population of voting
+districts, the standard deviation tells us how different different
+districts are from one another. By contrast, the standard error tells us
+how precisely we have determined a parameter estimate. If we wanted to
+estimate the mean voting outcome over all districts, the standard error
+would tells us how accurate our estimate for the mean is.
 
 All statisticians use samples to calculate parameter estimates and their
 uncertainties. However, they are divided in how they approach these
@@ -412,14 +423,11 @@ levels. However, the flip side of this additional information is added
 visual noise. Depending on how complex and information-dense a figure is
 otherwise, simple error bars may be preferable to graded ones. Whether
 to draw error bars with or without cap is primarily a question of
-personal taste, though some evidence suggests that caps at the end of a
-line or bar help with the perception of position [@Skau_et_al_2015].
-Thus, if we want to highlight where exactly an error bar ends, we may
-choose a variant with a cap (Figure
-@ref(fig:confidence-visualizations)a, c). If we instead want to
-emphasize the aspect of uncertainty, we may choose to omit the cap
-(Figure @ref(fig:confidence-visualizations)b, d). Also, again, caps add
-visual noise, so in a figure with many error bars omitting caps may be
+personal taste. A cap highlights where exactly an error bar ends (Figure
+@ref(fig:confidence-visualizations)a, c), whereas an error bar without
+cap puts equal emphasis on the entire range of the interval (Figure
+@ref(fig:confidence-visualizations)b, d). Also, again, caps add visual
+noise, so in a figure with many error bars omitting caps may be
 preferable.
 
 (ref:confidence-visualizations) Mean chocolate flavor ratings for
@@ -434,28 +442,28 @@ strips. (f) Confidence distributions.
 
 As an alternative to error bars we could draw confidence strips that
 gradually fade into nothing (Figure
-@ref(fig:confidence-visualizations)e). Confidence strips do a good job
-at emphasizing the presence of uncertainty in the estimate, but they are
-difficult to read. We would have to visually integrate the different
-shadings of color to determine where a specific confidence level ends.
-From Figure @ref(fig:confidence-visualizations)e we might conclude that
-the mean rating for Peruvian chocolate bars is significantly lower than
-that of U.S. chocolate bars, and yet this is not the case. Similar
-problems arise when we show explicit confidence distributions (Figure
+@ref(fig:confidence-visualizations)e). Confidence strips better convey
+how probable different values are, but they are difficult to read. We
+would have to visually integrate the different shadings of color to
+determine where a specific confidence level ends. From Figure
+@ref(fig:confidence-visualizations)e we might conclude that the mean
+rating for Peruvian chocolate bars is significantly lower than that of
+U.S. chocolate bars, and yet this is not the case. Similar problems
+arise when we show explicit confidence distributions (Figure
 @ref(fig:confidence-visualizations)f). It is difficult to visually
 integrate the area under the curve and to determine where exactly a
 given confidence level is reached. This issue can be somewhat
 alleviated, however, by drawing quantile dotplots as in Figure
 @ref(fig:election-quantile-dot).
 
-Error bars have one important advantage over more complex displays of
-uncertainty: They can be combined with many other types of plots. For
-nearly any visualization we may have, we can add some indication of
-uncertainty by adding error bars. For example, we can show amounts with
-uncertainty by drawing a bar plot with error bars (Figure
-@ref(fig:butterfat-bars)). This type of visualization is commonly used
-in scientific publications. We can also draw error bars along both the
-_x_ and the _y_ direction in a scatter plot (Figure
+For simple 2D figures, error bars have one important advantage over more
+complex displays of uncertainty: They can be combined with many other
+types of plots. For nearly any visualization we may have, we can add
+some indication of uncertainty by adding error bars. For example, we can
+show amounts with uncertainty by drawing a bar plot with error bars
+(Figure @ref(fig:butterfat-bars)). This type of visualization is
+commonly used in scientific publications. We can also draw error bars
+along both the _x_ and the _y_ direction in a scatter plot (Figure
 @ref(fig:median-age-income)).
 
 (ref:butterfat-bars) Mean butterfat contents in the milk of four cattle
@@ -498,18 +506,38 @@ system under study (called the _prior_) to calculate a probability
 distribution (the posterior) that tells you where you can expect the
 true parameter value to lie. By contrast, under the frequentist
 approach, you first make an assumption that you intend to disprove. This
-assumption is called the _null hypothesis_, and it is usually simply the
-assumption that the parameter equals zero. You then calculate the
-probability that random sampling would generate data similar to what was
-observed if the null hypothesis were true. The confidence interval is a
-representation of this probability. If a given confidence interval
-excludes the parameter value under the null hypothesis (i.e., the value
-zero), then you are at least that confident that the null hypothesis is
-false. Thus, to summarize, a Bayesian credible interval makes a
-statement about the true parameter value and a frequentist confidence
-interval makes a statement about the null hypothesis. In practice,
-however, Bayesian and frequentist estimates are often quite similar
-(Figure @ref(fig:bayes-vs-ols)).
+assumption is called the _null hypothesis_, and it is often simply the
+assumption that the parameter equals zero (e.g., there is no difference
+between two conditions). You then calculate the probability that random
+sampling would generate data similar to what was observed if the null
+hypothesis were true. The confidence interval is a representation of
+this probability. If a given confidence interval excludes the parameter
+value under the null hypothesis (i.e., the value zero), then you can
+reject the null hypothesis at that confidence level. Alternatively, you
+can think of a confidence interval as an interval that captures the true
+parameter value with the specified likelihood under repeated sampling
+(Figure @ref(fig:ci-frequentist-expl)). Thus, if the true parameter
+value were zero, a 95% confidence interval would only exclude zero in 5%
+of the samples analyzed.
+
+(ref:ci-frequentist-expl) Frequency interpretation of a confidence
+interval. Confidence intervals are best understood in the context of
+repeated sampling. For each sample, a specific confidence interval
+either includes or excludes the true parameter, here the mean. However,
+if we sample repeatedly, then the confidence intervals (shown here are
+68% confidence intervals, corresponding to sample mean +/- standard
+error) include the true mean approximately 68% of the time.
+
+(#fig:ci-frequentist-expl)(ref:ci-frequentist-expl)
+
+To summarize, a Bayesian credible interval makes a statement about the
+true parameter value and a frequentist confidence interval makes a
+statement about the null hypothesis. In practice, however, Bayesian and
+frequentist estimates are often quite similar (Figure
+@ref(fig:bayes-vs-ols)). Once conceptual advantage of the Bayesian
+approach is that it emphasizes thinking about the magnitude of an
+effect, whereas the frequentist thinking emphasizes a binary perspective
+of an effect either existing or not.
 
 (ref:bayes-vs-ols) Comparison of frequentist confidence intervals and
 Bayesian credible intervals for mean chocolate ratings. We see that both
@@ -546,6 +574,9 @@ distributions of mean chocolate ratings (Figure
 under the curve to indicate defined regions of posterior probabilities.
 As alternative to shading, I could also have drawn quantile dotplots, or
 I could have added graded error bars underneath each distribution.
+Ridgeline plots with error bars underneath are called half eyes, and
+violin plots with error bars are called eye plots (Chapter
+@ref(directory-uncertainty)).
 
 (ref:bayes-ridgeline) Bayesian posterior distributions of mean chocolate
 bar ratings, shown as a ridgeline plot. The red dots represent the
@@ -711,17 +742,17 @@ of the fit parameters.
 
 (#fig:mpg-uncertain-HOP-animated)(ref:mpg-uncertain-HOP-animated)
 
-There are two ways in which we can switch from one hypothetical outcome
-to the next in a HOP animation: First, we can execute a hard switch, as
-in a slide projector. We show one outcome for some time period, say 0.5
-seconds, and then the next one, and so on. Second, we can smoothly
-interpolate between outcomes, i.e., slowly deform the trendline for one
-outcome until it looks like the trendline for another outcome. In my
-personal opinion, the smooth transition is preferable, because it again
-reduces the risk of deterministic construal error. By seeing a wide
-range of intermediate states, even if some of them are not proper
-hypothetical outcomes, we are reminded that there is a continuum of
-different outcomes that all could occur.
+When preparing a HOP, you may wonder whether it is better to make a hard
+switch between different outcomes (as in a slide projector) or rather
+smoothly animate from one outcome to the next (e.g., slowly deform the
+trendline for one outcome until it looks like the trendline for another
+outcome). While this is to some extent an open question that continues
+to be researched, some evidence indicates that smooth transitions make
+it harder to judge about the probabilities represented
+[@Kale_et_al_2018]. If you consider animating between outcomes, you may
+want to at least make these animations very fast, or choose an animation
+style where outcomes fade in and out rather than deform from one to the
+other.
 
 There is one critical aspect we need to pay attention to when preparing
 a HOP: We need to make sure that the outcomes we do show are
@@ -733,7 +764,7 @@ Canadian bar in seven cases, then the HOP would erroneously create the
 impression that U.S. bars tend to be higher rated than Canadian bars. We
 can prevent this issue either by choosing a very large number of
 outcomes, so sampling biases are unlikely, or by verifying in some form
-that the outcomes that are shown are appropriate. For example, in Figure
+that the outcomes that are shown are appropriate. When making Figure
 @ref(fig:chocolate-HOP-static)/Figure @ref(fig:chocolate-HOP-animated),
 I verified that the number of times the Canadian bar was shown winning
 was close to the true percentage of 53%.

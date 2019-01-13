@@ -58,7 +58,7 @@ For large numbers of points, regular scatterplots can become uninformative due t
 
 <img src="directory_of_visualizations_files/figure-html/xy-lines-1.png" width="576" style="display: block; margin: auto;" />
 
-When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we draw a connected scatter plot where we first plot the two response variables in a scatter plot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
+When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we can draw a connected scatter plot where we first plot the two response variables in a scatter plot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We can use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
 
 
 ## Geospatial data {#directory-geospatial-data}
@@ -67,7 +67,7 @@ When the *x* axis represents time or a strictly increasing quantity such as a tr
 
 The primary mode of showing geospatial data is in the form of a map (Chapter \@ref(geospatial-data)). A map takes coordinates on the globe and projects them onto a flat surface, such that shapes and distances on the globe are approximately represented by shapes and distances in the 2D representation. In addition, we can show data values in different regions by coloring those regions in the map according to the data. Such a map is called a choropleth (Chapter \@ref(choropleth-mapping)). In some cases, it may be helpful to distort the different regions according to some other quantity (e.g., population number) or simplify each region into a square. Such visualizations are called cartograms.
 
-## Uncertainty
+## Uncertainty {#directory-uncertainty}
 
 <img src="directory_of_visualizations_files/figure-html/errorbars-1.png" width="576" style="display: block; margin: auto;" />
 

@@ -68,8 +68,8 @@ a valid visualization of the data (Figure
 @ref(fig:temperature-normals-Houston)). Which version is preferable may
 depend on the story we want to convey. A tall and narrow figure
 emphasizes change along the _y_ axis and a short and wide figure does
-the opposite. Ideally, we want to choose an aspect ratio that provides a
-clear and accurate presentation of the data.
+the opposite. Ideally, we want to choose an aspect ratio that ensures
+that any important differences in position are noticeable.
 
 (ref:temperature-normals-Houston) Daily temperature normals for Houston,
 TX. Temperature is mapped to the _y_ axis and day of the year to the _x_

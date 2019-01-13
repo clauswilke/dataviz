@@ -59,7 +59,7 @@ Even though nearly all of the figures in this book were made with R and
 ggplot2, I do not see this as an R book. I am talking about general
 principles of figure preparation. The software used to make the figures
 is incidental. You can use any plotting software you want to generate
-the kinds of figures I'm showing here, even if ggplot2 and similar
+the kinds of figures I'm showing here. However, ggplot2 and similar
 packages make many of the techniques I'm using much simpler than other
 plotting libraries. Importantly, because this is not an R book, I do not
 discuss code or programming techniques anywhere in this book. I want you

@@ -8,7 +8,7 @@ Visualizing data: Mapping data onto aesthetics
 
 Whenever we visualize data, we take data values and convert them in a
 systematic and logical way into the visual elements that make up the
-final graphic. Even though there are myriad different data
+final graphic. Even though there are many different types of data
 visualizations, and on first glance a scatter plot, a pie chart, and a
 heatmap don't seem to have much in common, all these visualizations can
 be described with a common language that captures how data values are
@@ -176,10 +176,10 @@ variables we map onto which scales. For example, instead of mapping
 temperature onto the _y_ axis and location onto color, we can do the
 opposite. Because now the key variable of interest (temperature) is
 shown as color, we need to show sufficiently large colored areas for the
-color to convey useful information. Therefore, for this visualization I
-have chosen squares instead of lines, one for each month and location,
-and I have colored them by the average temperature normal for each month
-(Figure @ref(fig:four-locations-temps-by-month)).
+color to convey useful information [@Stone_et_al_2014]. Therefore, for
+this visualization I have chosen squares instead of lines, one for each
+month and location, and I have colored them by the average temperature
+normal for each month (Figure @ref(fig:four-locations-temps-by-month)).
 
 (ref:four-locations-temps-by-month) Monthly normal mean temperatures for
 four locations in the U.S. Data source: NOAA
