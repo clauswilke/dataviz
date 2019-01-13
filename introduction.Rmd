@@ -6,7 +6,7 @@ source("_common.R")
 
 # Introduction {#introduction}
 
-Data visualization is part art and part science. The challenge is to get the art right without getting the science wrong and vice versa. A data visualization first and foremost has to be correct. It must not mislead about or distort the data. If one number is twice as large as another, but in the visualization they look to be about the same, then the visualization is wrong. At the same time, a data visualization should be aesthetically pleasing. Good visual presentations tend to enhance the message of the visualization. If a figure contains jarring colors, imbalanced visual elements, or other features that distract, then the viewer will find it harder to inspect the figure and interpret it correctly.
+Data visualization is part art and part science. The challenge is to get the art right without getting the science wrong and vice versa. A data visualization first and foremost has to accurately convey the data. It must not mislead or distort. If one number is twice as large as another, but in the visualization they look to be about the same, then the visualization is wrong. At the same time, a data visualization should be aesthetically pleasing. Good visual presentations tend to enhance the message of the visualization. If a figure contains jarring colors, imbalanced visual elements, or other features that distract, then the viewer will find it harder to inspect the figure and interpret it correctly.
 
 In my experience, scientists frequently (though not always!) know how to visualize data without being grossly misleading. However, they may not have a well developed sense of visual aesthetics, and they may inadvertantly make visual choices that detract from their desired message. Designers, on the other hand, may prepare visualizations that look beautiful but play fast and loose with the data. It is my goal to provide useful information to both groups. 
 
@@ -27,7 +27,7 @@ Throughout this book, I frequently show different versions of the same figures, 
 - **wrong**---A figure that has problems related to mathematics; it is objectively incorrect.
 
 
-(ref:ugly-bad-wrong-examples) Examples of ugly, bad, and wrong figures. (a) A bar plot showing three values (A = 3, B = 5, and C = 4). This is a reasonable visualization with no major flaws. (b) An ugly version of part (a). While the plot is technically correct, it is not aesthetically pleasing. The colors are too bright and not useful. The background grid is too prominent. The text is displayed using three different fonts in three different sizes. (c) A bad version of part (a). Each bar is shown with its own *y*-axis scale. Because the scales don't align, this makes the figure misleading. One can easily get the impression that the three values are closer together than they actually are. (d) A wrong version of part (a). Because the *y* axis does not start at 0, the bars do not have the correct length. The bar lengths are 1, 3, and 2, even though the values displayed are 3, 5, and 4.
+(ref:ugly-bad-wrong-examples) Examples of ugly, bad, and wrong figures. (a) A bar plot showing three values (A = 3, B = 5, and C = 4). This is a reasonable visualization with no major flaws. (b) An ugly version of part (a). While the plot is technically correct, it is not aesthetically pleasing. The colors are too bright and not useful. The background grid is too prominent. The text is displayed using three different fonts in three different sizes. (c) A bad version of part (a). Each bar is shown with its own *y*-axis scale. Because the scales don't align, this makes the figure misleading. One can easily get the impression that the three values are closer together than they actually are. (d) A wrong version of part (a). Without an explicit *y* axis scale, the numbers represented by the bars cannot be ascertained. The bars appear to be of lengths 1, 3, and 2, even though the values displayed are meant to be 3, 5, and 4.
 
 
 ```{r ugly-bad-wrong-examples, fig.asp = 3/4, fig.cap = '(ref:ugly-bad-wrong-examples)'}
@@ -100,9 +100,14 @@ p3a <- ggplot(df, aes(type, value)) +
 p4 <- ggplot(df, aes(type, value)) + 
   geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
   coord_cartesian(xlim = c(0.4, 3.6), ylim = c(2, 6.2), expand = FALSE, clip = "on") +
+  scale_y_continuous(breaks = 2:4, name = "", labels = c("", "", "")) +
   scale_x_discrete(name = NULL) +
   theme_dviz_hgrid(12) +
-  theme(plot.margin = margin(18, 12, 0, 0))
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.margin = margin(18, 12, 0, 0)
+  )
 
 plot_grid(
   p1, NULL, stamp_ugly(p2),

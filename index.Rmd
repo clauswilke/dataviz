@@ -15,7 +15,7 @@ link-citations: true
 
 # Welcome {-}
 
-This is an online preview of the book "Fundamentals of Data Visualization" to be published with O’Reilly Media, Inc. Completed chapters will be posted here as they become available.
+This is an online preview of the book "Fundamentals of Data Visualization" to be published with O’Reilly Media, Inc.
 
 The book is meant as a guide to making visualizations that accurately reflect the data, tell a story, and look professional. It has grown out of my experience of working with students and postdocs in my laboratory on thousands of data visualizations. Over the years, I have noticed that the same issues arise over and over. I have attempted to collect my accumulated knowledge from these interactions in the form of this book.
 

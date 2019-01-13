@@ -33,7 +33,7 @@ rmd_files: [
   "redundant_coding.Rmd", # completed
   "multi-panel_figures.Rmd", # completed
   "figure_titles_captions.Rmd", # completed
-  "balance_data_ink_ratio.Rmd", # completed
+  "balance_data_context.Rmd", # completed
   "small_axis_labels.Rmd", # completed
   "avoid_line_drawings.Rmd", # completed
   "no_3d.Rmd", # completed
@@ -45,8 +45,6 @@ rmd_files: [
   "annotated_bibliography.Rmd",
 
   "technical_notes.Rmd",
-
-  #"notes.Rmd",
 
   "references.Rmd"
 ]

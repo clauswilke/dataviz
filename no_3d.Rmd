@@ -233,7 +233,7 @@ Finally, it makes sense to use 3D visualizations when we want to show actual 3D 
 
 ```{r corsica-relief, fig.cap = '(ref:corsica-relief)'}
 # figure rendered with rayshader; it's too slow to do while rendering the R markdown
-knitr::include_graphics("figures/Corsica.png", auto_pdf = FALSE)
+knitr::include_graphics("figures/3d/Corsica.png", auto_pdf = FALSE)
 ```
 
 

@@ -45,7 +45,7 @@ knitr::kable(
 )
 ```
 
-This kind of data is commonly visualized with vertical bars. For each movie, we draw a bar that starts at zero and extends all the way to the dollar value for that movie's weekend gross (Figure \@ref(fig:boxoffice-vertical)). This visualization is called a *bar plot* or *bar chart*. Bar plots are most effective if, as is the case here, the bars are placed in order such that the values are continuously decreasing or increasing.
+This kind of data is commonly visualized with vertical bars. For each movie, we draw a bar that starts at zero and extends all the way to the dollar value for that movie's weekend gross (Figure \@ref(fig:boxoffice-vertical)). This visualization is called a *bar plot* or *bar chart*.
 
 (ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
@@ -193,6 +193,9 @@ income_by_age %>% filter(race == "all") %>%
 stamp_bad(p_income_sorted)
 ```
 
+```{block type='rmdtip', echo=TRUE}
+Pay attention to the bar order. If the bars represent unordered categories, order them by ascending or descending data values.
+```
 
 ## Grouped and stacked bars
 

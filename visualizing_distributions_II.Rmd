@@ -109,14 +109,20 @@ The density plot (Figure \@ref(fig:county-populations)a) shows a sharp peak righ
 ```{r county-populations-log, fig.width = 5, fig.asp = 2*0.618, fig.cap='(ref:county-populations-log)'}
 p1_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   geom_density(fill = "#56B4E9", color = "transparent") +
-  scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
+  scale_x_continuous(
+    expand = c(0.01, 0),
+    name = expression(paste("log"["10"], "(number of inhabitants)"))
+  ) +
   scale_y_continuous(expand = c(0, 0), name = "density") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 0, 12, 0))
 
 p2_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
-  scale_x_continuous(expand = c(0.01, 0), name = "log10(number of inhabitants)") +
+  scale_x_continuous(
+    expand = c(0.01, 0),
+    name = expression(paste("log"["10"], "(number of inhabitants)"))
+  ) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 0, 12, 0))
