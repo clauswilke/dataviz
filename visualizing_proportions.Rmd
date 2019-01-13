@@ -271,7 +271,7 @@ ggplot(marketshare, aes(x = company, y = percent, fill = company)) +
 
 ## A case for stacked bars and stacked densities {#stacked-densities}
 
-In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be quite clear. As an example, consider the proportion of women in a country's national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament members. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a thin horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered.
+In Section \@ref(side-by-side-bars), I wrote that I don't normally recommend sequences of stacked bars, because the location of the internal bars shifts along the sequence. However, the problem of shifting internal bars disappears if there are only two bars in each stack, and in those cases the resulting visualization can be quite clear. As an example, consider the proportion of women in a country's national parliament. We will specifically look at the African country Rwanda, which as of 2016 tops the list of countries with the highest proportion of female parliament members. Rwanda has had a majority female parliament since 2008, and since 2013 nearly two-thirds of its members of parliament are female. To visualize how the proportion of women in the Rwandan parliament has changed over time, we can draw a sequence of stacked bar graphs (Figure \@ref(fig:women-parliament)). This figure provides an immediate visual representation of the changing proportions over time. To help the reader see exactly when the majority turned female, I have added a dashed horizontal line at 50%. Without this line, it would be near impossible to determine whether from 2003 to 2007 the majority was male or female. I have not added similar lines at 25% and 75%, to avoid making the figure too cluttered.
 
 (ref:women-parliament) Change in the gender composition of the Rwandan parliament over time, 1997 to 2016. Data source: Inter-Parliamentary Union (IPU), ipu.org.
 
@@ -290,17 +290,29 @@ women_parliaments %>% filter(country_code == ccode & year > 1990) %>%
 
 plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
     #geom_col(position = "stack", width = .9, color = "white") +
-    geom_col(position = "stack", width = 1, color = "white", size = .75) +
-    geom_hline(yintercept = c(50), color = "#FFFFFFA0") +
+    geom_col(position = "stack", width = 1, color = "#FFFFFF", size = .75, alpha = 0.8) +
+    geom_hline(
+      yintercept = c(50),
+      color = "#000000FF", size = 0.4, linetype = 2
+      #color = "#FFFFFFA0"
+    ) +
+    geom_hline(yintercept = 100, color = "black") +
     scale_x_continuous(expand = c(0, 0)) +
-    scale_y_continuous(expand = c(0, 0)) +
+    scale_y_continuous(
+      name = "relative proportion",
+      labels = scales::percent_format(accuracy = 1, scale = 1),
+      expand = c(0, 0)
+    ) +
     scale_fill_manual(values = c("#D55E00E0", "#0072B2E0"), guide = "none") +
+    coord_cartesian(clip = "off") +
     theme_dviz_open() + 
-    theme(#axis.ticks.y = element_blank(),
-          #axis.ticks.x = element_blank(),
-          #axis.line.x = element_blank(),
-          axis.line.y = element_blank(),
-          plot.margin = margin(14, 0, 3, 0))
+    theme(
+      #axis.ticks.y = element_blank(),
+      #axis.ticks.x = element_blank(),
+      #axis.line.x = element_blank(),
+      axis.line.y = element_blank(),
+      plot.margin = margin(14, 0, 3, 0)
+    )
 
 # calculate label position
 labels <- filter(women_rwanda, year == max(year)) %>%
@@ -332,16 +344,20 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
   geom_density(position = "fill") +
   #geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
   scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0), name = "percent",
-                     labels = c(0, 25, 50, 75, 100)) + 
+  scale_y_continuous(
+    expand = c(0, 0), name = "relative proportion",
+    labels = scales::percent
+  ) + 
   scale_color_manual(values = colors) + 
   scale_fill_manual(values = colors) +
   theme_dviz_open() + 
-  theme(#axis.ticks.y = element_blank(),
-        #axis.ticks.x = element_blank(),
-        axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        plot.margin = margin(7, 7, 3, 0))
+  theme(
+    #axis.ticks.y = element_blank(),
+    #axis.ticks.x = element_blank(),
+    axis.line.x = element_blank(),
+    axis.line.y = element_blank(),
+    plot.margin = margin(7, 7, 3, 0)
+  )
 
 df_marital <- select(happy, age, marital) %>%
   na.omit() %>%
@@ -351,15 +367,19 @@ df_marital <- select(happy, age, marital) %>%
 p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, color = marital)) + 
   geom_density(position = "fill") +
   scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0), name = "percent",
-                     labels = c(0, 25, 50, 75, 100)) + 
+  scale_y_continuous(
+    expand = c(0, 0), name = "relative proportion",
+    labels = scales::percent
+  ) + 
   scale_color_manual(values = colors, name = "marital status") + 
   scale_fill_manual(values = colors, name = "marital status") +
   theme_dviz_open() + 
-  theme(#axis.ticks.y = element_blank(),
-        axis.line.x = element_blank(),
-        axis.line.y = element_blank(),
-        plot.margin = margin(7, 7, 3, 0))
+  theme(
+    #axis.ticks.y = element_blank(),
+    axis.line.x = element_blank(),
+    axis.line.y = element_blank(),
+    plot.margin = margin(7, 7, 3, 0)
+  )
 
 p_aligned <- align_plots(p_health, p_marital, align = 'v')
 ggdraw(p_aligned[[1]])
@@ -468,7 +488,10 @@ df_marital2 <- rbind(
   )
 
 ggplot(df_marital2, aes(age)) +
-  geom_density_line(aes(y = stat(count), fill = marital), color = "transparent", position = "fill") +
+  annotate(geom = "rect", xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, fill = "#b3b3b3a0", color = NA) +
+  geom_density_line(
+    aes(y = stat(count), fill = marital), color = "transparent", position = "fill"
+  ) +
   facet_wrap(~highlight, nrow = 1) +
   scale_x_continuous(
     #limits = c(15, 98), 
@@ -476,11 +499,14 @@ ggplot(df_marital2, aes(age)) +
   ) +
   scale_y_continuous(name = "relative proportion", expand = c(0, 0), labels = scales::percent) +
   scale_fill_manual(
-    values = c("#b3b3b3a0", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0"),
+    values = c("transparent", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0"),
     name = NULL,
     breaks = c("aother", "divorced"),
     labels = c("all people surveyed", "highlighted group"),
-    guide = guide_legend(direction = "horizontal")
+    guide = guide_legend(
+      direction = "horizontal",
+      override.aes = list(fill = c("#bebebe", "#3590c0"))
+    )
   ) +
   coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
