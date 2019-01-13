@@ -158,6 +158,11 @@ The same dataset visualized as partial densities is much clearer (Figure \@ref(f
 <p class="caption">(\#fig:marital-vs-age-facets)(ref:marital-vs-age-facets)</p>
 </div>
 
+However, one downside of Figure \@ref(fig:marital-vs-age-facets) is that this representation doesn't make it easy to determine relative proportions at any given point in time. For example, if we wanted to know at what age more than 50% of all people surveyed are married, we could not easily tell from Figure \@ref(fig:marital-vs-age-facets). To answer this question, we can instead use the same type of display but show relative proportions instead of absolute counts along the *y* axis (Figure \@ref(fig:marital-vs-age-proportions)). Now we see that married people are in the majority starting in their late 20s, and widowed people are in the majority starting in their mid 70s.
 
+(ref:marital-vs-age-proportions) Marital status by age, shown as proportion of the total number of people in the survey. The areas colored in blue show the percent of people at the given age with the respective status, and the areas colored in gray show the percent of people with all other marital statuses.
 
-
+<div class="figure" style="text-align: center">
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-proportions-1.png" alt="(ref:marital-vs-age-proportions)" width="816" />
+<p class="caption">(\#fig:marital-vs-age-proportions)(ref:marital-vs-age-proportions)</p>
+</div>

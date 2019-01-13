@@ -327,7 +327,8 @@ ggplot(titanic2, aes(x = age, y = ..count..)) +
     values = c("#b3b3b3a0", "#D55E00", "#0072B2"), 
     breaks = c("all passengers", "male", "female"),
     labels = c("all passengers  ", "males  ", "females"),
-    name = NULL
+    name = NULL,
+    guide = guide_legend(direction = "horizontal")
   ) +
   coord_cartesian(clip = "off") +
   facet_wrap(~sex, labeller = labeller(sex = function(sex) paste(sex, "passengers"))) +
@@ -337,7 +338,9 @@ ggplot(titanic2, aes(x = age, y = ..count..)) +
     legend.position = "bottom",
     legend.justification = "right",
     legend.margin = margin(0, 0, 0.2, 0, "cm"),
-    legend.spacing.x = grid::unit(0.2, "cm")
+    legend.spacing.x = grid::unit(0.2, "cm"),
+    legend.spacing.y = grid::unit(0, "cm"),
+    legend.box.spacing = grid::unit(0, "cm")
   )
 ```
 

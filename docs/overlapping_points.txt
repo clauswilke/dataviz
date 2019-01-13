@@ -29,7 +29,11 @@ cars total with 2.0 liter engine displacement, and as a group they have
 only four different fuel economy values, 19, 20, 21, or 22 mpg.
 Therefore, in Figure @ref(fig:mpg-cty-displ-solid) these 21 cars are
 represented by only four distinct points, so that 2.0 liter engines
-appear much less popular than they actually are.
+appear much less popular than they actually are. Moreover, the dataset
+contains two four-wheel drive cars with 2.0 liter engines, which are
+represented by black dots. However, these black dots are fully occluded
+by yellow dots, so that it looks like there are no four-wheel drive cars
+with a 2.0 liter engine.
 
 (ref:mpg-cty-displ-solid) City fuel economy versus engine displacement,
 for popular cars released between 1999 and 2008. Each point represents
@@ -66,7 +70,9 @@ small amount of jitter to the points, i.e., to displace each point
 randomly by a small amount in either the _x_ or the _y_ direction or
 both. With jitter, it is immediately apparent that the darker areas
 arise from points that are plotted on top of each other (Figure
-@ref(fig:mpg-cty-displ-jitter)).
+@ref(fig:mpg-cty-displ-jitter)). Also, now, for the first time the black
+dots representing four-wheel drive cars with 2.0 liter engines are
+clearly visible.
 
 (ref:mpg-cty-displ-jitter) City fuel economy versus engine displacement.
 By adding a small amount of jitter to each point, we can make the
@@ -263,7 +269,9 @@ between the groups, but Figure @ref(fig:diamonds-contour-colors) is so
 busy that a comparison isn't possible. Instead, in Figure
 @ref(fig:diamonds-contour-facets), the background grid enables us to
 make comparisons across cut qualities, by paying attention to where
-exactly the contour lines fall relative to the grid lines.
+exactly the contour lines fall relative to the grid lines. (A similar
+effect could have been achieved by plotting partially transparent
+individual points instead of contour lines in each panel.)
 
 (ref:diamonds-contour-facets) Price of diamonds versus their carat
 value. Here, we have taken the density contours from Figure

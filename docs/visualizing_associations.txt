@@ -22,10 +22,10 @@ using a dataset of measurements performed on 123 blue jay birds. The
 dataset contains information such as the head length (measured from the
 tip of the bill to the back of the head), the skull size (head length
 minus bill length), and the body mass of each bird. We expect that there
-are relationships between these variables. For example, bird with longer
-bills would be expected to have larger skull sizes, and birds with
-higher body mass should have larger bills and skulls than birds with
-lower body mass.
+are relationships between these variables. For example, birds with
+longer bills would be expected to have larger skull sizes, and birds
+with higher body mass should have larger bills and skulls than birds
+with lower body mass.
 
 To explore these relationships, I begin with a plot of head length
 against body mass (Figure @ref(fig:blue-jays-scatter)). In this plot,
@@ -194,9 +194,10 @@ German
 (#fig:forensic-correlations1)(ref:forensic-correlations1)
 
 One weakness of the correlogram of Figure
-@ref(fig:forensic-correlations1) is that low correlations are not as
-visually suppressed as they should be. For example, magnesium (Mg) and
-potassium (K) are not at all correlated but Figure
+@ref(fig:forensic-correlations1) is that low correlations, i.e.
+correlations with absolute value near zero, are not as visually
+suppressed as they should be. For example, magnesium (Mg) and potassium
+(K) are not at all correlated but Figure
 @ref(fig:forensic-correlations1) doesn't immediately show this. To
 overcome this limitation, we can display the correlations as colored
 circles and scale the circle size with the absolute value of the
