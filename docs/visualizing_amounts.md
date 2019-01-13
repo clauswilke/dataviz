@@ -21,7 +21,7 @@ Table: (\#tab:boxoffice-gross)Highest grossing movies for the weekend of Decembe
        4     The Greatest Showman                 $8,805,843          
        5     Ferdinand                            $7,316,746          
 
-This kind of data is commonly visualized with vertical bars. For each movie, we draw a bar that starts at zero and extends all the way to the dollar value for that movie's weekend gross (Figure \@ref(fig:boxoffice-vertical)). This visualization is called a *bar plot* or *bar chart*. Bar plots are most effective if, as is the case here, the bars are placed in order such that the values are continuously decreasing or increasing.
+This kind of data is commonly visualized with vertical bars. For each movie, we draw a bar that starts at zero and extends all the way to the dollar value for that movie's weekend gross (Figure \@ref(fig:boxoffice-vertical)). This visualization is called a *bar plot* or *bar chart*.
 
 (ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
@@ -75,6 +75,9 @@ We should only rearrange bars, however, when there is no natural ordering to the
 <p class="caption">(\#fig:income-by-age-sorted)(ref:income-by-age-sorted)</p>
 </div>
 
+<div class="rmdtip">
+<p>Pay attention to the bar order. If the bars represent unordered categories, order them by ascending or descending data values.</p>
+</div>
 
 ## Grouped and stacked bars
 

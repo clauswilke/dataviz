@@ -97,7 +97,7 @@ Finally, it makes sense to use 3D visualizations when we want to show actual 3D 
 (ref:corsica-relief) Relief of the Island of Corsica in the Mediterranean Sea. Data source: Copernicus Land Monitoring Service
 
 <div class="figure" style="text-align: center">
-<img src="figures/Corsica.png" alt="(ref:corsica-relief)" width="630" />
+<img src="figures/3d/Corsica.png" alt="(ref:corsica-relief)" width="630" />
 <p class="caption">(\#fig:corsica-relief)(ref:corsica-relief)</p>
 </div>
 

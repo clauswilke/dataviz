@@ -3,8 +3,7 @@ Welcome
 -------
 
 This is an online preview of the book "Fundamentals of Data
-Visualization" to be published with O’Reilly Media, Inc. Completed
-chapters will be posted here as they become available.
+Visualization" to be published with O’Reilly Media, Inc.
 
 The book is meant as a guide to making visualizations that accurately
 reflect the data, tell a story, and look professional. It has grown out

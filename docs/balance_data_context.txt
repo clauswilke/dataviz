@@ -1,24 +1,26 @@
-[[balance-data-ink]]
-Balance the data-to-ink ratio
------------------------------
+[[balance-data-context]]
+Balance the data and the context
+--------------------------------
 
 We can broadly subdivide the graphical elements in any visualization
 into elements that represent data and elements that do not. The former
 are elements such as the points in a scatter plot, the bars in a
 histogram or barplot, or the shaded areas in a heatmap. The latter are
 elements such as plot axes, axis ticks and labels, axis titles, legends,
-and plot annotations. When designing a plot, it can be helpful to think
-about the amount of ink (Chapter @ref(proportional-ink)) used to
-represent data and non-data elements. A common recommendation is to
-reduce the amount of non-data ink, and following this advice can often
-yield less cluttered and more elegant visualizations. At the same time,
-non-data ink provides context and visual structure, and overly
-minimizing such plot elements can result in figures that are difficult
-to read, confusing, or simply not that compelling.
+and plot annotations. These elements generally provide context for the
+data and/or visual structure to the plot. When designing a plot, it can
+be helpful to think about the amount of ink (Chapter
+@ref(proportional-ink)) used to represent data and context. A common
+recommendation is to reduce the amount of non-data ink, and following
+this advice can often yield less cluttered and more elegant
+visualizations. At the same time, context and visual structure are
+important, and overly minimizing the plot elements that provide them can
+result in figures that are difficult to read, confusing, or simply not
+that compelling.
 
-[[finding-the-appropriate-data-to-ink-ratio]]
-Finding the appropriate data-to-ink ratio
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[providing-the-appropriate-amount-of-context]]
+Providing the appropriate amount of context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The idea that distinguishing between data and non-data ink may be useful
 was popularized by Edward Tufte in his book "The Visual Display of
@@ -39,11 +41,9 @@ If we interpret the phrase "maximize the data--ink ratio" to mean
 "remove clutter and strive for clean and elegant designs," then I think
 it is reasonable advice. But if we interpret it as "do everything you
 can to remove non-data ink" then it will result in poor design choices.
-If we go too far in either direction along the scale of possible
-data-to-ink ratios we will end up with ugly figures. However, away from
-the extremes there is wide range of designs with different data-to-ink
-ratios that are all acceptable and may be appropriate in different
-contexts.
+If we go too far in either direction we will end up with ugly figures.
+However, away from the extremes there is wide range of designs that are
+all acceptable and may be appropriate in different settings.
 
 To explore the extremes, let's consider a figure that clearly has too
 much non-data ink (Figure @ref(fig:Aus-athletes-grid-bad)). The colored
@@ -77,27 +77,27 @@ points. Data source: @Telford-Cunningham-1991
 
 (#fig:Aus-athletes-grid-good)(ref:Aus-athletes-grid-good)
 
-At the other extreme of the data-to-ink-ratio scale, we might end up
-with a figure such as Figure @ref(fig:Aus-athletes-min-bad), which is a
-minimalist version of Figure @ref(fig:Aus-athletes-grid-good). In this
-figure, the axis tick labels and titles have been made so faint that
-they are hard to see. If we just glance at the figure we will not
-immediately perceive what data is actually shown. We only see points
-floating in space. Moreover, the legend annotations are so faint that
-the points in the legend could be mistaken for data points. This effect
-is amplified because there is no clear visual separation between the
-plot area and the legend. Notice how the background grid in Figure
-@ref(fig:Aus-athletes-grid-good) both anchors the points in space and
-sets off the data area from the legend area. Both of these effects have
-been lost in Figure @ref(fig:Aus-athletes-min-bad).
+At the other extreme, we might end up with a figure such as Figure
+@ref(fig:Aus-athletes-min-bad), which is a minimalist version of Figure
+@ref(fig:Aus-athletes-grid-good). In this figure, the axis tick labels
+and titles have been made so faint that they are hard to see. If we just
+glance at the figure we will not immediately perceive what data is
+actually shown. We only see points floating in space. Moreover, the
+legend annotations are so faint that the points in the legend could be
+mistaken for data points. This effect is amplified because there is no
+clear visual separation between the plot area and the legend. Notice how
+the background grid in Figure @ref(fig:Aus-athletes-grid-good) both
+anchors the points in space and sets off the data area from the legend
+area. Both of these effects have been lost in Figure
+@ref(fig:Aus-athletes-min-bad).
 
 (ref:Aus-athletes-min-bad) Percent body fat versus height in
 professional male Australian athletes. In this example, the concept of
-maximizing the data--ink ratio has been taken too far. The axis tick
-labels and title are too faint and are barely visible. The data points
-seem to float in space. The points in the legend are not sufficiently
-set off from the data points, and the casual observer might think they
-are part of the data. Data source: @Telford-Cunningham-1991
+removing non-data ink has been taken too far. The axis tick labels and
+title are too faint and are barely visible. The data points seem to
+float in space. The points in the legend are not sufficiently set off
+from the data points, and the casual observer might think they are part
+of the data. Data source: @Telford-Cunningham-1991
 
 (#fig:Aus-athletes-min-bad)(ref:Aus-athletes-min-bad)
 

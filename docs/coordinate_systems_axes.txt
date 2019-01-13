@@ -151,6 +151,22 @@ of the variable shown, not the logarithm of that variable.
 
 (#fig:linear-log-scales)(ref:linear-log-scales)
 
+Mathematically, there is no difference between plotting the
+log-transformed data on a linear scale or plotting the original data on
+a logarithmic scale (Figure @ref(fig:linear-log-scales)). The only
+difference lies in the labeling for the individual axis ticks and for
+the axis as a whole. In most cases, the labeling for a logarithmic scale
+is preferable, because it places less mental burden on the reader to
+interpret the numbers shown as the axis tick labels. There is also less
+of a risk of confusion about the base of the logarithm. When working
+with log-transformed data, we can get confused about whether the data
+were transformed using the natural logarithm or the logarithm to base
+10. And it's not uncommon for labeling to be ambiguous, e.g. "log(x)",
+which doesn't specify a base at all. I recommend that you always verify
+the base when working with log-transformed data. When plotting
+log-transformed data, always specify the base in the labeling of the
+axis.
+
 Because multiplication on a log scale looks like addition on a linear
 scale, log scales are the natural choice for any data that have been
 obtained by multiplication or division. In particular, ratios should
