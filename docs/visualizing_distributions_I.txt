@@ -72,8 +72,8 @@ different bin widths to verify that the resulting histogram reflects the
 underlying data accurately. In general, if the bin width is too small,
 then the histogram becomes overly peaky and visually busy and the main
 trends in the data may be obscured. On the other hand, if the bin width
-is too large, then smaller features in the distribution of the data may
-disappear.
+is too large, then smaller features in the distribution of the data,
+such as the dip around age 10, may disappear.
 
 For the age distribution of Titanic passengers, we can see that a bin
 width of one year is too small and a bin width of fifteen years is too
@@ -279,9 +279,9 @@ Importantly, this trick does not work when there are more than two
 distributions we want to visualize at the same time. For multiple
 distributions, histograms tend to become highly confusing, whereas
 density plots work well as long as the distributions are somewhat
-distinct. For example, to visualize the distribution of butterfat
-percentage among cows from four different cattle breeds, density plots
-are fine (Figure @ref(fig:butterfat-densitites)).
+distinct and contiguous. For example, to visualize the distribution of
+butterfat percentage among cows from four different cattle breeds,
+density plots are fine (Figure @ref(fig:butterfat-densitites)).
 
 (ref:butterfat-densitites) Density estimates of the butterfat percentage
 in the milk of four cattle breeds. Data Source: Canadian Record of

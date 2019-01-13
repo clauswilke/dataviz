@@ -158,18 +158,18 @@ and Claire McWhite for her work on *colorspace* and *colorblindr* to
 simulate color-vision deficiency in assembled R figures.
 
 Several people have provided helpful feedback on draft versions of this
-book. Most importantly, Mike Loukides, my editor at O'Reilly, has read
-and commented on every chapter. I also received helpful comments from
-Carl Bergstrom, Steve Haroz, Jessica Hullman, Matthew Kay, Edzer
-Pebesma, Tristan Mahr, Jon Schwabish, and Hadley Wickham. Len Kiefer's
-blog and Kieran Healy's book and blog postings have provided numerous
-inspirations for figures to make and datasets to use. A number of people
-pointed out minor issues or typos, including Thiago Arrais, Malcolm
-Barrett, Jon Calder, Antônio Pedro Camargo, Daren Card, Kim Cressman,
-Andrew Kinsman, Will Koehrsen, Alex Lalejini, Katrin Leinweber, Mikel
-Madina, Claire McWhite, S'busiso Mkhondwane, Jose Nazario, Steve Putman,
-Maëlle Salmon, Christian Schudoma, James Scott-Brown, Enrico Spinielli,
-Wouter van der Bijl, and Ron Yurko.
+book. Most importantly, Mike Loukides, my editor at O'Reilly, and Steve
+Haroz have both read and commented on every chapter. I also received
+helpful comments from Carl Bergstrom, Jessica Hullman, Matthew Kay,
+Edzer Pebesma, Tristan Mahr, Jon Schwabish, and Hadley Wickham. Len
+Kiefer's blog and Kieran Healy's book and blog postings have provided
+numerous inspirations for figures to make and datasets to use. A number
+of people pointed out minor issues or typos, including Thiago Arrais,
+Malcolm Barrett, Jon Calder, Antônio Pedro Camargo, Daren Card, Kim
+Cressman, Andrew Kinsman, Will Koehrsen, Alex Lalejini, Katrin
+Leinweber, Mikel Madina, Claire McWhite, S'busiso Mkhondwane, Jose
+Nazario, Steve Putman, Maëlle Salmon, Christian Schudoma, James
+Scott-Brown, Enrico Spinielli, Wouter van der Bijl, and Ron Yurko.
 
 I would also more broadly like to thank all the other contributors to
 the tidyverse and the R community in general. There truly is an R

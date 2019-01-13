@@ -15,17 +15,17 @@ and ridgeline plots.
 Whenever we are dealing with many distributions, it is helpful to think
 in terms of the response variable and one or more grouping variables.
 The response variable is the variable whose distributions we want to
-show, and the grouping variables define subsets of the data with
-distinct distributions of the response variable. For example, for
-temperature distributions across months, the response variable is the
-temperature and the grouping variable is the month. All techniques
-discussed in this chapter draw the response variable along one axis and
-the grouping variables along the other. In the following, I will first
-describe approaches that show the response variable along the vertical
-axis, and then I will describe approaches that show the response
-variable along the horizontal axis. In all cases discussed, we could
-flip the axes and arrive at an alternative and viable visualization. I
-am showing here the canonical forms of the various visualizations.
+show. The grouping variables define subsets of the data with distinct
+distributions of the response variable. For example, for temperature
+distributions across months, the response variable is the temperature
+and the grouping variable is the month. All techniques discussed in this
+chapter draw the response variable along one axis and the grouping
+variables along the other. In the following, I will first describe
+approaches that show the response variable along the vertical axis, and
+then I will describe approaches that show the response variable along
+the horizontal axis. In all cases discussed, we could flip the axes and
+arrive at an alternative and viable visualization. I am showing here the
+canonical forms of the various visualizations.
 
 [[boxplots-violins-vertical]]
 Visualizing distributions along the vertical axis
@@ -66,7 +66,8 @@ for each month, averaged over all days of the month, and error bars
 represent twice the standard deviation of the daily mean temperatures
 within each month. This figure has been labeled as "bad" because because
 error bars are conventionally used to visualize the uncertainty of an
-estimate, not the variability in a population.
+estimate, not the variability in a population. Data source: Weather
+Underground
 
 (#fig:lincoln-temp-points-errorbars)(ref:lincoln-temp-points-errorbars)
 
@@ -74,14 +75,7 @@ We can address all four shortcomings of Figure
 @ref(fig:lincoln-temp-points-errorbars) by using a traditional and
 commonly used method for visualizing distributions, the boxplot. A
 boxplot divides the data into quartiles and visualizes them in a
-standardized manner (Figure @ref(fig:boxplot-schematic)). Boxplots are
-simple yet informative, and they work well when plotted next to each
-other to visualize many distributions at once. For the Lincoln
-temperature data, using boxplots leads to Figure
-@ref(fig:lincoln-temp-boxplots). In that figure, we can now see that
-temperature is highly skewed in December (most days are moderately cold
-and a few are extremely cold) and not very skewed at all in some other
-months, for example in July.
+standardized manner (Figure @ref(fig:boxplot-schematic)).
 
 (ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of
 points (left) and the corresponding boxplot (right). Only the _y_ values
@@ -96,6 +90,14 @@ beyond the fences are referred to as outliers and are usually showns as
 individual dots.
 
 (#fig:boxplot-schematic)(ref:boxplot-schematic)
+
+Boxplots are simple yet informative, and they work well when plotted
+next to each other to visualize many distributions at once. For the
+Lincoln temperature data, using boxplots leads to Figure
+@ref(fig:lincoln-temp-boxplots). In that figure, we can now see that
+temperature is highly skewed in December (most days are moderately cold
+and a few are extremely cold) and not very skewed at all in some other
+months, for example in July.
 
 (ref:lincoln-temp-boxplots) Mean daily temperatures in Lincoln,
 Nebraska, visualized as boxplots.
@@ -157,18 +159,17 @@ adding some random noise in the _x_ dimension (Figure
 _jittering._
 
 (ref:lincoln-temp-all-points) Mean daily temperatures in Lincoln,
-Nebraska, visualized as individual temperature values. Each point
-represents the mean temperature for one day. This figure is labeled as
-"bad" because so many points are plotted on top of each other that it is
-not possible to ascertain which temperatures were the most common in
-each month.
+Nebraska, visualized as strip chart. Each point represents the mean
+temperature for one day. This figure is labeled as "bad" because so many
+points are plotted on top of each other that it is not possible to
+ascertain which temperatures were the most common in each month.
 
 (#fig:lincoln-temp-all-points)(ref:lincoln-temp-all-points)
 
 (ref:lincoln-temp-jittered) Mean daily temperatures in Lincoln,
-Nebraska, visualized as individual temperature values. The points have
-been jittered along the _x_ axis to better show the density of points at
-each temperature value.
+Nebraska, visualized as strip chart. The points have been jittered along
+the _x_ axis to better show the density of points at each temperature
+value.
 
 (#fig:lincoln-temp-jittered)(ref:lincoln-temp-jittered)
 

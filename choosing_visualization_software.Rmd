@@ -44,7 +44,7 @@ ggridges::lincoln_weather %>% mutate(month_short = fct_recode(Month,
 
 lincoln1 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point(position = position_jitter(width = .15, height = 0, seed = 320),
-             size = .75) +
+             size = .5) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open(12) + theme(plot.margin = margin(3, 12, 3, 0))
