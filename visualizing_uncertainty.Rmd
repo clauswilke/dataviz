@@ -1493,7 +1493,8 @@ cars_base <- ggplot(mtcars, aes(x = disp, y = mpg)) +
     expand = c(0.01, 0)
   ) +
   ylab("fuel efficiency (mpg)") +
-  theme_dviz_grid(12)
+  theme_dviz_grid(12) +
+  theme(plot.margin = margin(6, 1.5, 3, 1.5))
 
 p1 <- cars_base +
   geom_ribbon(data = ci_df, aes(ymin = lo, ymax = hi), fill="grey70", color = NA, alpha = 1/2) +
@@ -1650,7 +1651,8 @@ ggplot(mtcars, aes(x = disp, y = mpg)) +
   theme(
     strip.text = element_blank(),
     axis.ticks = element_blank(),
-    axis.ticks.length = unit(0, "pt")
+    axis.ticks.length = unit(0, "pt"),
+    plot.margin = margin(6, 1.5, 3, 1.5)
   ) +
   panel_border()
 ```
@@ -1684,7 +1686,8 @@ ggplot(mtcars, aes(x = disp, y = mpg)) +
   theme(
     strip.text = element_blank(),
     axis.ticks = element_blank(),
-    axis.ticks.length = unit(0, "pt")
+    axis.ticks.length = unit(0, "pt"),
+    plot.margin = margin(7, 1.5, 3.5, 1.5)
   ) +
   panel_border() +
   transition_states(.draw, 0, 1)
