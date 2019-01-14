@@ -44,7 +44,7 @@ There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-o
 
 Changing the point shape is a simple strategy for scatter plots but it doesn't necessarily work for other types of plots. In line plots, we could change the line type (solid, dashed, dotted, etc., see also Figure \@ref(fig:common-aesthetics)), but using dashed or dotted lines often yields sub-optimal results. In particular, dashed or dotted lines usually don't look good unless they are perfectly straight or only gently curved, and in either case they create visual noise. Also, it frequently requires significant mental effort to match different types of dash or dot--dash patterns from the plot to the legend. So what do we do with a visualization such as Figure \@ref(fig:tech-stocks-bad-legend), which uses lines to show the change in stock price over time for four different major tech companies?
 
-(ref:tech-stocks-bad-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as "bad" because it takes considerable mental energy to match the company names in the legend to the data curves.
+(ref:tech-stocks-bad-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as "bad" because it takes considerable mental energy to match the company names in the legend to the data curves. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
 <img src="redundant_coding_files/figure-html/tech-stocks-bad-legend-1.png" alt="(ref:tech-stocks-bad-legend)" width="576" />
@@ -56,7 +56,7 @@ The figure contains four lines representing the stock prices of the four differe
 
 This problem arises commonly with plotting software that autogenerates legends. The plotting software has no concept of the visual order the viewer will perceive. Instead, the software sorts the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data (Figure \@ref(fig:tech-stocks-good-legend)). The result is a figure that makes it much easier to match the legend to the data.
 
-(ref:tech-stocks-good-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+(ref:tech-stocks-good-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
 <img src="redundant_coding_files/figure-html/tech-stocks-good-legend-1.png" alt="(ref:tech-stocks-good-legend)" width="576" />
@@ -84,7 +84,7 @@ Even though legend legibility can be improved by encoding data redundantly, in m
 
 The general strategy we can employ is called *direct labeling*, whereby we place appropriate text labels or other visual elements that serve as guideposts to the rest of the figure. We have previously encountered direct labeling in Chapter \@ref(color-pitfalls) (Figure \@ref(fig:popgrowth-vs-popsize-bw)), as an alternative to drawing a legend with over 50 distinct colors. To apply the direct labeling concept to the stock-price figure, we place the name of each company right next to the end of its respective data line (Figure \@ref(fig:tech-stocks-good-no-legend)). 
 
-(ref:tech-stocks-good-no-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+(ref:tech-stocks-good-no-legend) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
 <img src="redundant_coding_files/figure-html/tech-stocks-good-no-legend-1.png" alt="(ref:tech-stocks-good-no-legend)" width="576" />

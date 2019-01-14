@@ -291,18 +291,18 @@ Figure 20.4: Color-vision-deficiency simulation of Figure <a href="redundant-cod
 <p>Changing the point shape is a simple strategy for scatter plots but it doesn’t necessarily work for other types of plots. In line plots, we could change the line type (solid, dashed, dotted, etc., see also Figure <a href="aesthetic-mapping.html#fig:common-aesthetics">2.1</a>), but using dashed or dotted lines often yields sub-optimal results. In particular, dashed or dotted lines usually don’t look good unless they are perfectly straight or only gently curved, and in either case they create visual noise. Also, it frequently requires significant mental effort to match different types of dash or dot–dash patterns from the plot to the legend. So what do we do with a visualization such as Figure <a href="redundant-coding.html#fig:tech-stocks-bad-legend">20.5</a>, which uses lines to show the change in stock price over time for four different major tech companies?</p>
 
 <div class="figure" style="text-align: center"><span id="fig:tech-stocks-bad-legend"></span>
-<img src="redundant_coding_files/figure-html/tech-stocks-bad-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as “bad” because it takes considerable mental energy to match the company names in the legend to the data curves." width="576" />
+<img src="redundant_coding_files/figure-html/tech-stocks-bad-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as “bad” because it takes considerable mental energy to match the company names in the legend to the data curves. Data source: Yahoo Finance" width="576" />
 <p class="caption">
-Figure 20.5: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as “bad” because it takes considerable mental energy to match the company names in the legend to the data curves.
+Figure 20.5: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is labeled as “bad” because it takes considerable mental energy to match the company names in the legend to the data curves. Data source: Yahoo Finance
 </p>
 </div>
 <p>The figure contains four lines representing the stock prices of the four different companies. The lines are color coded using a colorblind-friendly color scale. So it should be relatively straightfoward to associate each line with the corresponding company. Yet it is not. The problem here is that the data lines have a clear visual order. The yellow line, representing Facebook, is clearly the highest line, and the black line, representing Apple, is clearly the lowest, with Alphabet and Microsoft in between, in that order. Yet the order of the four companies in the legend is Alphabet, Apple, Facebook, Microsoft (alphabetic order). Thus, the perceived order of the data lines differs from the order of the companies in the legend, and it takes a surprising amount of mental effort to match data lines with company names.</p>
 <p>This problem arises commonly with plotting software that autogenerates legends. The plotting software has no concept of the visual order the viewer will perceive. Instead, the software sorts the legend by some other order, most commonly alphabetical. We can fix this problem by manually reordering the entries in the legend so they match the preceived ordering in the data (Figure <a href="redundant-coding.html#fig:tech-stocks-good-legend">20.6</a>). The result is a figure that makes it much easier to match the legend to the data.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:tech-stocks-good-legend"></span>
-<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012." width="576" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance" width="576" />
 <p class="caption">
-Figure 20.6: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+Figure 20.6: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance
 </p>
 </div>
 <div class="rmdtip">
@@ -325,9 +325,9 @@ Figure 20.7: Color-vision-deficiency simulation of Figure <a href="redundant-cod
 <p>The general strategy we can employ is called <em>direct labeling</em>, whereby we place appropriate text labels or other visual elements that serve as guideposts to the rest of the figure. We have previously encountered direct labeling in Chapter <a href="color-pitfalls.html#color-pitfalls">19</a> (Figure <a href="color-pitfalls.html#fig:popgrowth-vs-popsize-bw">19.2</a>), as an alternative to drawing a legend with over 50 distinct colors. To apply the direct labeling concept to the stock-price figure, we place the name of each company right next to the end of its respective data line (Figure <a href="redundant-coding.html#fig:tech-stocks-good-no-legend">20.8</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:tech-stocks-good-no-legend"></span>
-<img src="redundant_coding_files/figure-html/tech-stocks-good-no-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012." width="576" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-no-legend-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance" width="576" />
 <p class="caption">
-Figure 20.8: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012.
+Figure 20.8: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. Data source: Yahoo Finance
 </p>
 </div>
 <div class="rmdtip">
