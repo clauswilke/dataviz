@@ -24,7 +24,7 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
   theme_dviz_grid(12) +
   theme(
-    plot.margin = margin(3, 12, 3, 0)
+    plot.margin = margin(3, 12, 3, 1.5)
   )
 ```
 
@@ -63,7 +63,7 @@ p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
   theme_dviz_grid(12) +
   theme(
-    plot.margin = margin(3, 12, 3, 0),
+    plot.margin = margin(3, 12, 3, 1.5),
     legend.position = c(1, 0),
     legend.justification = c(1, 0),
     legend.box.background = element_rect(fill = "white", color = NA),
@@ -97,7 +97,7 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
   theme_dviz_grid(12) +
   theme(
-    plot.margin = margin(3, 12, 3, 0)
+    plot.margin = margin(3, 12, 3, 1.5)
   )
 
 plot_grid(p1, p2, ncol = 1, align = 'h', labels = "auto")
@@ -139,7 +139,7 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
     legend.justification = c(1, 0.5),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.margin = margin(0, 12, 6, 12),
-    plot.margin = margin(3, 12, 3, 0)
+    plot.margin = margin(3, 12, 3, 1.5)
   )
 ```
 
@@ -353,7 +353,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
     legend.justification = c(0, 1),
     legend.spacing.x = unit(3, "pt"),
     legend.title = element_blank(), 
-    plot.margin = margin(7, 7, 3, 0)
+    plot.margin = margin(7, 7, 3, 1.5)
   )
 ```
 
@@ -406,7 +406,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
     legend.justification = c(0, 1),
     legend.spacing.x = unit(3, "pt"),
     legend.title = element_blank(), 
-    plot.margin = margin(7, 7, 3, 0)
+    plot.margin = margin(7, 7, 3, 1.5)
   )
 
 ```

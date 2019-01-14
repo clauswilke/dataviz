@@ -88,7 +88,7 @@ boxoffice %>%
       axis.line.x = element_blank(),
       axis.ticks.x = element_blank(),
       axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-      plot.margin = margin(3, 7, 3, 0)
+      plot.margin = margin(3, 7, 3, 1.5)
     ) -> p_box_axrot
 
 stamp_ugly(p_box_axrot)
@@ -164,7 +164,7 @@ income_by_age %>% filter(race == "all") %>%
       #axis.ticks.length = grid::unit(0, "pt"),
       axis.ticks.x = element_blank(),
       axis.line = element_blank(),
-      plot.margin = margin(3, 7, 3, 0)
+      plot.margin = margin(3, 7, 3, 1.5)
     )
 ```
 
@@ -187,7 +187,7 @@ income_by_age %>% filter(race == "all") %>%
       #axis.ticks.length = grid::unit(0, "pt"),
       axis.ticks.x = element_blank(),
       axis.line = element_blank(),
-      plot.margin = margin(3, 7, 3, 0)
+      plot.margin = margin(3, 7, 3, 1.5)
     ) -> p_income_sorted
 
 stamp_bad(p_income_sorted)
@@ -350,14 +350,18 @@ library(gapminder)
 df_Americas <- gapminder %>% filter(year == 2007, continent == "Americas")
 ggplot(df_Americas, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
   geom_point(color = "#0072B2", size = 3) +
-  scale_x_continuous(name = "life expectancy (years)",
-                     limits = c(59.7, 81.5),
-                     expand = c(0, 0)) +
+  scale_x_continuous(
+    name = "life expectancy (years)",
+    limits = c(59.7, 81.5),
+    expand = c(0, 0)
+  ) +
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
   theme_dviz_grid(12, rel_small = 1) +
-  theme(#axis.ticks.length = grid::unit(0, "pt"),
-        #axis.title = element_text(size = 12),
-        plot.margin = margin(18, 6, 3, 0))
+  theme(
+    #axis.ticks.length = grid::unit(0, "pt"),
+    #axis.title = element_text(size = 12),
+    plot.margin = margin(18, 6, 3, 1.5)
+  )
 ```
 
 (ref:Americas-life-expect-bars) Life expectancies of countries in the Americas, for the year 2007, shown as bars. This dataset is not suitable for being visualized with bars. The bars are too long and they draw attention away from the key feature of the data, the differences in life expectancy among the different countries. Data source: Gapminder project
@@ -378,7 +382,7 @@ life_bars <- ggplot(df_Americas, aes(y = lifeExp, x = fct_reorder(country, lifeE
     axis.line.y = element_blank(),
     axis.ticks.y = element_blank(),
     #axis.title = element_text(size = 12),
-    plot.margin = margin(18, 6, 3, 0)
+    plot.margin = margin(18, 6, 3, 1.5)
   )
 
 stamp_bad(life_bars)
@@ -398,7 +402,7 @@ p <- ggplot(df_Americas, aes(x = lifeExp, y = fct_rev(country))) +
   theme_dviz_grid(12, rel_small = 1) +
   theme(#axis.ticks.length = grid::unit(0, "pt"),
         #axis.title = element_text(size = 12),
-        plot.margin = margin(18, 6, 3, 0))
+        plot.margin = margin(18, 6, 3, 1.5))
 
 stamp_bad(p)
 ```

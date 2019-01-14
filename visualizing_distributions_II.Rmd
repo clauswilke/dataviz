@@ -87,7 +87,7 @@ p1 <- ggplot(US_census, aes(x=pop2010)) +
                      breaks = c(0, 4e-6, 8e-6, 1.2e-5, 1.6e-5),
                      labels = c(0, 0.4, 0.8, 1.2, 1.6)) +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 0, 12, 0))
+  theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
 p2 <- ggplot(US_census, aes(x=pop2010)) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
@@ -97,7 +97,7 @@ p2 <- ggplot(US_census, aes(x=pop2010)) +
                      labels = label_log10) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 0, 12, 0))
+  theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
 plot_grid(p1, p2, ncol = 1, align = 'v', labels = 'auto')
 ```
@@ -115,7 +115,7 @@ p1_log <- ggplot(US_census, aes(x=log10(pop2010))) +
   ) +
   scale_y_continuous(expand = c(0, 0), name = "density") +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 0, 12, 0))
+  theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
 p2_log <- ggplot(US_census, aes(x=log10(pop2010))) + 
   stat_ecdf(geom = "step", color = "#0072B2", pad = FALSE) +
@@ -125,7 +125,7 @@ p2_log <- ggplot(US_census, aes(x=log10(pop2010))) +
   ) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 0, 12, 0))
+  theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
 plot_grid(p1_log, p2_log, ncol = 1, align = 'v', labels = 'auto')
 ```
@@ -144,7 +144,7 @@ ggplot(US_census, aes(x=pop2010, y = 1-..y..)) +
                 name = "number of county inhabitants") +
   scale_y_log10(expand = c(0.01, 0), breaks = c(1e-3, 1e-2, 1e-1, 1), name = "relative frequency") +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3.5, 7, 3.5, 0))
+  theme(plot.margin = margin(3.5, 7, 3.5, 1.5))
 ```
 
 As a second example, I will use the distribution of word frequencies for all words that appear in the novel Moby Dick. This distribution follows a perfect power law. When plotted as descending ecdf with logarithmic axes, we see a nearly perfect straight line (Figure \@ref(fig:word-counts-tail-log-log)).

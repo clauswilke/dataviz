@@ -31,7 +31,7 @@ p <- ggplot(male_Aus, aes(x = height, y = pcBfat, color = sport, fill = sport, s
 
 stamp_bad(p + geom_point(size = 1.5) + 
             theme_dviz_grid(7) + 
-            theme(plot.margin = margin(7, 7, 3, 0)))
+            theme(plot.margin = margin(7, 7, 3, 1.5)))
 ```
 
 A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athletes-ugly). I think the fonts are still too small, and that's why I have labeled the figure as ugly. However, we are moving in the right direction. This figure might be passable under some circumstances. My main criticism here is not so much that the labels aren't legible as that the figure is not balanced; the text elements are too small compared to the rest of the figure.
@@ -40,7 +40,7 @@ A somewhat better version of this figure is shown as Figure \@ref(fig:Aus-athlet
 
 ```{r Aus-athletes-ugly, fig.width = 6, fig.cap='(ref:Aus-athletes-ugly)'}
 stamp_ugly(p + geom_point(size = 1.5) +
-             theme_dviz_grid(10) + theme(plot.margin = margin(7, 7, 3, 0)))
+             theme_dviz_grid(10) + theme(plot.margin = margin(7, 7, 3, 1.5)))
 ```
 
 
@@ -50,7 +50,7 @@ The next figure uses the default settings I'm applying throughout this book. I t
 
 ```{r Aus-athletes-good, fig.width = 6, fig.cap='(ref:Aus-athletes-good)'}
 p + geom_point(size = 2.25) +
-  theme_dviz_grid() + theme(plot.margin = margin(7, 7, 3, 0))
+  theme_dviz_grid() + theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-athletes-big-ugly)). Sometimes we need big labels, for example if the figure is meant to be reduced in size, but the various elements of the figure (in particular, label text and plot symbols) need to fit together. In Figure \@ref(fig:Aus-athletes-big-ugly), the points used to visualize the data are too small relative to the text.  Once we fix this issue, the figure becomes acceptable again (Figure \@ref(fig:Aus-athletes-big-good)).
@@ -59,7 +59,7 @@ Importantly, we can overdo it and make the labels too big (Figure \@ref(fig:Aus-
 
 ```{r Aus-athletes-big-ugly, fig.width = 6, fig.cap='(ref:Aus-athletes-big-ugly)'}
 stamp_ugly(p + geom_point(size = 2.25) +
-             theme_dviz_grid(19) + theme(plot.margin = margin(7, 7, 3, 0)))
+             theme_dviz_grid(19) + theme(plot.margin = margin(7, 7, 3, 1.5)))
 ```
 
 
@@ -67,7 +67,7 @@ stamp_ugly(p + geom_point(size = 2.25) +
 
 ```{r Aus-athletes-big-good, fig.width=6, fig.cap='(ref:Aus-athletes-big-good)'}
 p + geom_point(size = 3.5) +
-  theme_dviz_grid(19) + theme(plot.margin = margin(7, 7, 3, 0))
+  theme_dviz_grid(19) + theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 You may look at Figure \@ref(fig:Aus-athletes-big-good) and find everything too big. However, keep in mind that it is meant to be scaled down. Scale the figure down so that it is only an inch or two in width, and it looks just fine. In fact, at that scaling this is the only figure in this chapter that looks good.

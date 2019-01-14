@@ -262,7 +262,7 @@ p <- ggplot(US_states_geoms$us_albers) +
   theme_dviz_map() +
   theme(
     #plot.background = element_rect(fill = "cornsilk"),
-    plot.margin = margin(6, 6, 1, 0) 
+    plot.margin = margin(6, 6, 1, 1.5) 
   )
 
 stamp_bad(p)
@@ -635,7 +635,7 @@ p <- ggplot(US_counties_income) +
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
     legend.title = element_text(hjust = 0.5),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 ggdraw(align_legend(p))
@@ -677,7 +677,7 @@ p <- ggplot(US_counties_income) +
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
     legend.title = element_text(hjust = 0.5),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 ggdraw(align_legend(p))
@@ -719,7 +719,7 @@ p <- ggplot(US_counties_income) +
     legend.justification = c(0, 1),
     legend.spacing.x = grid::unit(3, "pt"),
     legend.title = element_text(hjust = 0.5),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 ggdraw(align_legend(p))
@@ -771,7 +771,7 @@ p <- ggplot(US_counties_income) +
     legend.title = element_text(hjust = 0.5),
     legend.key.width = grid::unit(18, "pt"),
     legend.key.height = grid::unit(15, "pt"),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 p
@@ -820,7 +820,7 @@ p <- ggplot(US_income, aes(fill = income_bins)) +
     legend.title = element_text(hjust = 0.5),
     legend.key.width = grid::unit(18, "pt"),
     legend.key.height = grid::unit(15, "pt"),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 stamp_bad(p)
@@ -860,7 +860,7 @@ p <- ggplot(US_income_cartogram, aes(fill = income_bins)) +
     legend.title = element_text(hjust = 0.5),
     legend.key.width = grid::unit(18, "pt"),
     legend.key.height = grid::unit(15, "pt"),
-    plot.margin = margin(3, 3, 3, 0)
+    plot.margin = margin(3, 3, 3, 1.5)
   )
 
 p

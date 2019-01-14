@@ -31,7 +31,7 @@ p_mpg_solid <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme_dviz_open() +
   theme(legend.position = c(.7, .8),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(p_mpg_solid)
 ```
@@ -55,7 +55,7 @@ p_mpg_transp <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme_dviz_open() +
   theme(legend.position = c(.7, .8),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 p_mpg_transp
 ```
@@ -82,7 +82,7 @@ p_mpg_jitter <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv)) +
                      labels=c("FWD", "RWD", "4WD")) +
   theme_dviz_open() +
   theme(legend.position = c(.7, .8),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 p_mpg_jitter
 ```
@@ -109,7 +109,7 @@ p_mpg_jitter_extreme <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = 
                      labels=c("FWD", "RWD", "4WD")) +
   theme_dviz_open() +
   theme(legend.position = c(.7, .8),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(p_mpg_jitter_extreme)
 ```
@@ -135,7 +135,7 @@ p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (
     name = "departure delay (minutes)"
   ) +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
   
 p_flights_scatter <- p_flights_base + geom_point(alpha = 0.2)
 
@@ -287,7 +287,7 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
   theme_dviz_grid() +
   panel_border() +
   theme(
-    plot.margin = margin(18, 7, 1, 0),
+    plot.margin = margin(18, 7, 1, 1.5),
     legend.key.width = unit(6, "pt"),
     legend.spacing.y = unit(3, "pt"),
     legend.title = element_text(hjust = 0, margin = margin(0, 0, 0, 0)),
@@ -331,7 +331,7 @@ p <- ggplot(diamonds, aes(carat, price, color = cut)) +
   theme_dviz_grid() +
   panel_border() +
   theme(
-    plot.margin = margin(18, 7, 1, 0),
+    plot.margin = margin(18, 7, 1, 1.5),
     legend.spacing.y = unit(3, "pt"),
     legend.title = element_text(hjust = 0, margin = margin(0, 0, 0, 0)),
     legend.position = c(.97, .3),

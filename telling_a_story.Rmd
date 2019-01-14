@@ -125,7 +125,7 @@ p_delay_distance <- ggplot(delay, aes(x = distance, y = arr_delay, color = name,
          fill = guide_legend(override.aes = list(size = 4, alpha = .7), order = 1),
          size = guide_legend(override.aes = list(fill = "gray70"), order = 2)) +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3.5, 14, 3.5, 0))
+  theme(plot.margin = margin(3.5, 14, 3.5, 1.5))
 
 stamp_bad(p_delay_distance) 
 ```
@@ -410,7 +410,7 @@ p2 <- ggplot(cc_df, aes(x = sex, y = mean, fill = sex)) +
         plot.margin = margin(3, 0, 0, 0))
 
 p_row <- plot_grid(p1, p2, labels = "auto", rel_widths = c(0.7, 1)) +
-  theme(plot.margin = margin(0, 0, 12, 0))
+  theme(plot.margin = margin(0, 0, 12, 1.5))
 
 bf_df <- athletes_df %>%
   select(sex, sport, pcBfat) %>%
@@ -435,7 +435,7 @@ p3 <- ggplot(bf_df, aes(x = sport, y = mean, fill = sex)) +
         legend.justification = "right")
 
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0)))
+            theme(plot.margin = margin(6, 12, 0, 1.5)))
 ```
 
 
@@ -485,7 +485,7 @@ stamp_ugly(
     fb_price_plot,
     all_indexed_price_plot,
     ncol = 1, align = "v", labels = "auto"
-  ) + theme(plot.margin = margin(14, 7, 0, 0))
+  ) + theme(plot.margin = margin(14, 7, 0, 1.5))
 )
 ```
 
@@ -523,7 +523,7 @@ perc_plot <- ggplot(perc_increase, aes(x=ticker, y=perc, fill = ticker)) +
 plot_grid(fb_price_plot,
           perc_plot,
           ncol = 1, labels = "auto") +
-  theme(plot.margin = margin(14, 7, 0, 0))
+  theme(plot.margin = margin(14, 7, 0, 1.5))
 ```
 
 Figure \@ref(fig:tech-stocks-diverse) highlights a general principle that I follow when preparing sets of figures to tell a story: I start with a figure that is as close as possible to showing the raw data, and in subsequent figures I show increasingly more derived quantities. Derived quantities (such as percent increases, averages, coefficients of fitted models, and so on) are useful to summarize key trends in large and complex datasets. However, because they are derived they are less intuitive, and if we show a derived quantity before we have shown the raw data our audience will find it difficult to follow. On the flip side, if we try to show all trends by showing raw data we will end up needing too many figures and/or being repetitive.

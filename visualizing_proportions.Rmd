@@ -105,30 +105,39 @@ bundestag <- mutate(bundestag,
 
 bt_bars_stacked_base <- ggplot(bundestag, aes(x = 1, y = seats, fill = factor(party, levels = rev(party)))) + 
   geom_col(position = "stack", color = "white") + 
-  geom_text(aes(x = 1., y = label_y, label = seats), 
-            size = main_size, family = dviz_font_family,
-            color = c("white", "white", "black")) +
+  geom_text(
+    aes(x = 1., y = label_y, label = seats), 
+    size = main_size, family = dviz_font_family,
+    color = c("white", "white", "black")
+  ) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_x_discrete(expand = c(0, 0), breaks = NULL, name = NULL) +
   scale_fill_manual(values = rev(bundestag$colors), guide = "none")
 
 bt_bars_yax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag,
-            aes(x = 0.06, y = label_y, label = party),
-            hjust = 0, vjust = 0.5, size = small_size,
-            family = dviz_font_family) +
+  geom_text(
+    data = bundestag,
+    aes(x = 0.06, y = label_y, label = party),
+    hjust = 0, vjust = 0.5, size = small_size,
+    family = dviz_font_family
+  ) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1))
 
 bt_bars_stacked <- insert_yaxis_grob(
   bt_bars_stacked_base + 
     theme_dviz_hgrid() +
-    theme(plot.margin = margin(7, 0, 7, 0)),
+    theme(
+      axis.ticks = element_line(color = "gray70"),
+      plot.margin = margin(7, 1.5, 7, 1.5)
+    ),
   bt_bars_yax, grid::unit(.5, "null"))
 
 bt_bars_xax <- axis_canvas(bt_bars_stacked_base, axis = "y") +
-  geom_text(data = bundestag,
-            aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = small_size),
-            family = dviz_font_family) +
+  geom_text(
+    data = bundestag,
+    aes(x = 0., y = label_y, label = party, hjust = 0.5, vjust = 0, size = small_size),
+    family = dviz_font_family
+  ) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 1)) +
   coord_flip()
 
@@ -136,12 +145,20 @@ bt_bars_hstacked <- insert_xaxis_grob(
   bt_bars_stacked_base + coord_flip() +
     scale_y_continuous(expand = c(0, 0), position = "right") +
     theme_dviz_vgrid() +
-    theme(plot.margin = margin(3, 0, 3, 3)),
+    theme(
+      axis.ticks = element_line(color = "gray70"),
+      plot.margin = margin(3, 1.5, 3, 3)
+    ),
   bt_bars_xax, grid::unit(14, "pt"), position = "bottom")
 
-plot_grid(bt_bars_stacked, plot_grid(NULL, bt_bars_hstacked, NULL,
-                                     ncol = 1, rel_heights = c(1, 6, 7.5)),
-          rel_widths = c(4, 7), labels = "auto")
+plot_grid(
+  bt_bars_stacked,
+  plot_grid(
+    NULL, bt_bars_hstacked, NULL,
+    ncol = 1, rel_heights = c(1, 6, 7.5)
+  ),
+  rel_widths = c(4, 7), labels = "auto"
+)
 ```
 
 We can also take the bars from Figure \@ref(fig:bundestag-stacked-bars)a and place them side-by-side rather than stacking them on top of each other. This visualization makes it easier to perform a direct comparison of the three groups, though it obscures other aspects of the data (Figure \@ref(fig:bundestag-bars-side-by-side)). Most importantly, in a side-by-side bar plot the relationship of each bar to the total is not visually obvious.
@@ -156,8 +173,12 @@ bt_bars <- ggplot(bundestag, aes(x = factor(party, levels = bundestag$party), y 
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(values = bundestag$colors[order(bundestag$party)], guide = "none") + 
   #geom_hline(yintercept = c(50, 100, 150, 200), color = "#ffffff70", size = .5) +
+  coord_cartesian(clip = "off") +
   theme_dviz_hgrid() +
-  theme(axis.ticks.x = element_blank())
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
 bt_bars
 ```
@@ -422,7 +443,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
     legend.position = "bottom",
     legend.justification = "right",
     legend.margin = margin(0, 0, 0.2, 0, "cm"),
-    legend.spacing.x = grid::unit(0.2, "cm"),
+    legend.spacing.x = grid::unit(4.5, "pt"),
     legend.spacing.y = grid::unit(0, "cm"),
     legend.box.spacing = grid::unit(0, "cm")
   )
@@ -462,7 +483,7 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
     legend.position = "bottom",
     legend.justification = "right",
     legend.margin = margin(0, 0, 0.2, 0, "cm"),
-    legend.spacing.x = grid::unit(0.2, "cm"),
+    legend.spacing.x = grid::unit(4.5, "pt"),
     legend.spacing.y = grid::unit(0, "cm"),
     legend.box.spacing = grid::unit(0, "cm")
   )
@@ -510,7 +531,7 @@ ggplot(df_marital2, aes(age)) +
     values = c("transparent", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0", "#2b8cbed0"),
     name = NULL,
     breaks = c("aother", "divorced"),
-    labels = c("all people surveyed", "highlighted group"),
+    labels = c("all people surveyed  ", "highlighted group"),
     guide = guide_legend(
       direction = "horizontal",
       override.aes = list(fill = c("#bebebe", "#3590c0"))
@@ -524,7 +545,7 @@ ggplot(df_marital2, aes(age)) +
     legend.position = "bottom",
     legend.justification = "right",
     legend.margin = margin(0, 0, 0.2, 0, "cm"),
-    legend.spacing.x = grid::unit(0.2, "cm"),
+    legend.spacing.x = grid::unit(4.5, "pt"),
     legend.spacing.y = grid::unit(0, "cm"),
     legend.box.spacing = grid::unit(0, "cm")
   )

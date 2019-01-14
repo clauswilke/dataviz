@@ -35,7 +35,7 @@ p_income_base <- ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(cou
   theme_dviz_hgrid() +
   theme(
     axis.ticks.x = element_blank(),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
 
 p_income_bad <- p_income_base + 
@@ -88,7 +88,7 @@ fb_drop_bad <- ggplot(df_fb_drop, aes(x=date, height=price - 110, y = 110)) +
                      expand=c(0, 0)) + 
   theme_dviz_open() +
   background_grid(major = 'y', minor = 'none') +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_wrong(fb_drop_bad)
 ```
@@ -107,7 +107,7 @@ fb_drop_good <- ggplot(df_fb_drop, aes(x=date, height=price, y = 0)) +
                      expand=c(0,0)) +
   theme_dviz_open() +
   background_grid(major = 'y', minor = 'none') +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_phantom(fb_drop_good)
 ```
@@ -132,7 +132,7 @@ ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, ye
                      labels = function(x) paste0("$", scales::comma(x))) +
   theme_dviz_hgrid() + 
   theme(axis.ticks.x = element_blank(),
-        plot.margin = margin(7, 7, 3, 0))
+        plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 Similarly, we can draw the change in Facebook stock price over time as the difference from its temporary high point on Oct. 22, 2016 (Figure \@ref(fig:fb-stock-drop-inverse)). By shading an area that represents the distance from the high point, we are accurately representing the absolute magnitude of the price drop without making any implicit statement about the magnitude of the price drop relative to the total stock price.
@@ -155,7 +155,7 @@ fb_drop_inverse <- ggplot(df_fb_drop2, aes(x=date, height=price_drop, y = 0)) +
                      expand=c(0, 0)) + 
   theme_dviz_open() +
   background_grid(major = 'y', minor = 'none') +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(plot.margin = margin(7, 7, 3, 1.5))
 
 stamp_phantom(fb_drop_inverse)
 ```
@@ -184,7 +184,7 @@ oc_bad <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   coord_flip(ylim = log10(c(3.1e8, 9.9e11)), expand = FALSE) +
   theme_dviz_vgrid(12, rel_small = 1) +
   theme(axis.ticks.y = element_blank(),
-        plot.margin = margin(12, 6, 3, 0))
+        plot.margin = margin(12, 6, 3, 1.5))
 
 stamp_wrong(oc_bad)
 ```
@@ -203,7 +203,7 @@ oc_bad2 <- ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   coord_flip(ylim = log10(c(1, 9.9e11)), expand = FALSE) +
   theme_dviz_vgrid(12, rel_small = 1) +
   theme(axis.ticks.y = element_blank(),
-        plot.margin = margin(12, 6, 3, 0))
+        plot.margin = margin(12, 6, 3, 1.5))
 
 stamp_wrong(oc_bad2)
 ```
@@ -227,7 +227,7 @@ ggplot(df_oceania, aes(x = reorder(country, -GDP), y = log10(GDP))) +
   scale_x_discrete(name = NULL, breaks = NULL) +
   coord_flip() +
   theme_dviz_vgrid(12, rel_small = 1) +
-  theme(plot.margin = margin(12, 6, 3, 0))
+  theme(plot.margin = margin(12, 6, 3, 1.5))
 ```
 
 If we want to visualize ratios rather than amounts, however, bars on a log scale are a perfectly good option. In fact, they are preferable over bars on a linear scale in that case. As an example, let's visualize the GDP values of countries in Oceania relative to the GDP of Papua New Guinea. The resulting figure does a good job highlighting the key relationships between the GDPs of the various countries (Figure \@ref(fig:oceania-gdp-relative)). We can see that New Zealand has over eight times the GDP of Papua New Guinea and Australia over 64 times, while Tonga and the Federated States of Micronesia have less than one-sixteenth of the GDP of Papua New Guinea. French Polynesia and New Caledonia are close but have a slightly smaller GDPs than Papua New Guinea does.
@@ -253,7 +253,7 @@ ggplot(df_oceania_ratios, aes(x = reorder(country, gdp_ratio), y = gdp_ratio)) +
   theme(axis.line = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
         axis.ticks.y = element_blank(),
-        plot.margin = margin(12, 6, 3, 0))
+        plot.margin = margin(12, 6, 3, 1.5))
 ```
 
 Figure \@ref(fig:oceania-gdp-relative) also highlights that the natural midpoint of a log scale is 1, with bars representing numbers above 1 going in one direction and bars representing numbers below one going in the other direction. Bars on a log scale represent ratios and must always start at 1, and bars on a linear scale represent amounts and must always start at 0.
@@ -330,7 +330,7 @@ plot_RI_pies <- ggplot(RI_pie) +
     legend.key.size = grid::unit(25, "pt"),
     legend.spacing.x = grid::unit(2, "pt"),
     legend.spacing.y = grid::unit(2, "pt"),
-    plot.margin = margin(7, 7, 3, 0)
+    plot.margin = margin(7, 7, 3, 1.5)
   )
 
 plot_RI_pies
@@ -357,7 +357,7 @@ ggplot(RI_pop, aes(x = factor(county, levels = rev(county)), y = pop2010, fill =
     #axis.line = element_blank(),
     #axis.ticks.length = grid::unit(0, "pt"),
     axis.ticks.y = element_blank(),
-    plot.margin = margin(3, 14, 3, 0)
+    plot.margin = margin(3, 14, 3, 1.5)
   )
 
 ```

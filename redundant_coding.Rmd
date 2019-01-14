@@ -46,7 +46,7 @@ iris_scatter <- iris_scatter_base +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = unit(3.5, "pt"),
-        plot.margin = margin(7, 7, 3, 0))
+        plot.margin = margin(7, 7, 3, 1.5))
 
 stamp_bad(iris_scatter)
 ```
@@ -65,7 +65,7 @@ iris_scatter_small <- iris_scatter_base +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = grid::unit(3, "pt"),
-        plot.margin = margin(24, 6, 6, 0))
+        plot.margin = margin(24, 6, 6, 1.5))
 
 cvd_sim2(iris_scatter_small,
          scale = 1, label_x = 0.)
@@ -104,7 +104,7 @@ iris_scatter2 <- iris_scatter2_base +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = unit(3.5, "pt"),
-        plot.margin = margin(7, 7, 3, 0))
+        plot.margin = margin(7, 7, 3, 1.5))
 
 iris_scatter2
 ```
@@ -122,7 +122,7 @@ iris_scatter2_small <- iris_scatter2_base +
   theme(legend.title.align = 0.5,
         legend.text = element_text(face = "italic"),
         legend.spacing.y = grid::unit(3, "pt"),
-        plot.margin = margin(24, 6, 6, 0))
+        plot.margin = margin(24, 6, 6, 1.5))
 
 cvd_sim2(iris_scatter2_small,
          scale = 1, label_x = 0.)
@@ -148,7 +148,7 @@ price_plot_base <- ggplot(tech_stocks, aes(x = date, y = price_indexed, color = 
 
 stamp_bad(price_plot_base + 
             theme_dviz_hgrid() + 
-            theme(plot.margin = margin(3, 7, 3, 0)))
+            theme(plot.margin = margin(3, 7, 3, 1.5)))
 ```
 
 
@@ -174,7 +174,7 @@ price_plot_base_good <- ggplot(tech_stocks, aes(x = date, y = price_indexed, col
 
 price_plot_base_good +
   theme_dviz_hgrid() + 
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 ```
 
 ```{block type='rmdtip', echo=TRUE}
@@ -187,7 +187,7 @@ Matching the legend order to the data order is always helpful, but the benefits 
 (ref:tech-stocks-good-legend-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:tech-stocks-good-legend).
 
 ```{r tech-stocks-good-legend-cvd, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:tech-stocks-good-legend-cvd)'}
-cvd_sim2(price_plot_base_good + theme_dviz_hgrid(12) + theme(plot.margin = margin(18, 6, 6, 0)),
+cvd_sim2(price_plot_base_good + theme_dviz_hgrid(12) + theme(plot.margin = margin(18, 6, 6, 1.5)),
          scale = 1, label_x = 0.)
 ```
 
@@ -301,30 +301,42 @@ iris_dens <- group_by(iris, Species) %>%
 # get the maximum values
 iris_max <- filter(iris_dens, density == max(density)) %>%
   ungroup() %>%
-  mutate(hjust = c(0, 0.4, 0),
-         vjust = c(1, 0, 1),
-         nudge_x = c(0.11, 0, 0.24),
-         nudge_y = c(-0.02, 0.02, -0.02),
-         label = paste0("Iris ", Species)
-        )
+  mutate(
+    hjust = c(0, 0.4, 0),
+    vjust = c(1, 0, 1),
+    nudge_x = c(0.11, 0, 0.24),
+    nudge_y = c(-0.02, 0.02, -0.02),
+    label = paste0("Iris ", Species)
+  )
 
 iris_p <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Species, color = Species)) + 
   geom_density_line(stat = "identity") +
-  geom_text(data = iris_max, aes(label = label, hjust = hjust, vjust = vjust, color = Species,
-                                 x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y), 
-            family = dviz_font_family, size = 12/.pt,
-            inherit.aes = FALSE,
-            fontface = "italic") +
-  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
-  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
+  geom_text(
+    data = iris_max,
+    aes(
+      label = label, hjust = hjust, vjust = vjust, color = Species,
+      x = Sepal.Length + nudge_x, 
+      y = density + nudge_y
+    ), 
+    family = dviz_font_family, size = 12/.pt,
+    inherit.aes = FALSE,
+    fontface = "italic"
+  ) +
+  scale_color_manual(
+    values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
+  scale_fill_manual(
+    values = c("#56B4E950", "#E69F0050", "#009E7350"),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
-  theme_dviz_hgrid()
+  coord_cartesian(clip = "off") +
+  theme_dviz_hgrid() +
+  theme(axis.line.x = element_blank())
   
 iris_p
 ```
@@ -352,37 +364,58 @@ iris_max <- mutate(iris_max,
 
 
 xdens <- axis_canvas(iris_scatter2, axis = "x") +
-  geom_density_line(data=iris_dens, aes(x = Sepal.Length, y = density, fill = Species, color = Species),
-                    stat = "identity", size = .2) +
-  geom_text(data = iris_max, aes(label = label, hjust = hjust, vjust = vjust, color = Species,
-                                 x = Sepal.Length + nudge_x, 
-                                 y = density + nudge_y),
-            family = dviz_font_family, size = 11/.pt, 
-            #color = "black", inherit.aes = FALSE,
-            fontface = "italic") +
-  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
-  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
+  geom_density_line(
+    data=iris_dens,
+    aes(x = Sepal.Length, y = density, fill = Species, color = Species),
+    stat = "identity", size = .2
+  ) +
+  geom_text(
+    data = iris_max,
+    aes(
+      label = label, hjust = hjust, vjust = vjust, color = Species,
+      x = Sepal.Length + nudge_x, 
+      y = density + nudge_y
+    ),
+    family = dviz_font_family, size = 11/.pt, 
+    #color = "black", inherit.aes = FALSE,
+    fontface = "italic"
+  ) +
+  scale_color_manual(
+    values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
+  scale_fill_manual(
+    values = c("#56B4E950", "#E69F0050", "#009E7350"),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
   scale_y_continuous(limits = c(0, dens_limit), expand = c(0, 0))
 
 ydens <- axis_canvas(iris_scatter2, axis = "y", coord_flip = TRUE) +
-  geom_density_line(data = iris_dens2, aes(x = Sepal.Width, y = density, fill = Species, color = Species),
-                    stat = "identity", alpha = 0.5, size = .2)  +
-  scale_color_manual(values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
-  scale_fill_manual(values = c("#56B4E980", "#E69F0080", "#009E7380"),
-                    breaks = c("virginica", "versicolor", "setosa"),
-                    guide = "none") +
+  geom_density_line(
+    data = iris_dens2,
+    aes(x = Sepal.Width, y = density, fill = Species, color = Species),
+    stat = "identity", alpha = 0.5, size = .2
+  )  +
+  scale_color_manual(
+    values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
+  scale_fill_manual(
+    values = c("#56B4E950", "#E69F0050", "#009E7350"),
+    breaks = c("virginica", "versicolor", "setosa"),
+    guide = "none"
+  ) +
   scale_y_continuous(limits = c(0, dens_limit), expand = c(0, 0)) +
   coord_flip()
 
-p1 <- insert_xaxis_grob(iris_scatter2 + 
-                          theme(legend.position = "none"),
-                        xdens, grid::unit(3*14, "pt"), position = "top")
+p1 <- insert_xaxis_grob(
+  iris_scatter2 + theme(legend.position = "none"),
+  xdens,
+  grid::unit(3*14, "pt"), position = "top"
+)
 p2 <- insert_yaxis_grob(p1, ydens, grid::unit(3*14, "pt"), position = "right")
 
 ggdraw(p2)
@@ -410,7 +443,7 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
   theme_dviz_grid() +
   theme(
     axis.text.y = element_text(vjust = 0),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
 
 # x axis labels

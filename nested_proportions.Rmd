@@ -154,7 +154,7 @@ p_bridges_bars <- ggplot(bridges_material_erected) +
     axis.line.x = element_blank(),
     axis.ticks.x = element_blank(),
     legend.position = "none",
-    plot.margin = margin(3.5, 7, 3.5, 0)
+    plot.margin = margin(3.5, 7, 3.5, 1.5)
   )
 
 stamp_bad(p_bridges_bars)
@@ -592,7 +592,7 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   theme(
     axis.line = element_blank(),
     axis.ticks = element_blank(),
-    plot.margin = margin(14, 0, 2, 0)
+    plot.margin = margin(14, 1.5, 2, 1.5)
   )
 
 ```
@@ -627,7 +627,7 @@ p_ugly <- ggplot(data, aes(x, id = id, split = y, value = count)) +
   theme(
     axis.line = element_blank(),
     axis.ticks = element_blank(),
-    plot.margin = margin(14, 0, 2, 0)
+    plot.margin = margin(14, 1.5, 2, 1.5)
   )
 
 stamp_ugly(p_ugly)
@@ -664,6 +664,6 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   theme(
     axis.line = element_blank(),
     axis.ticks = element_blank(),
-    plot.margin = margin(14, 0, 2, 0)
+    plot.margin = margin(14, 1.5, 2, 1.5)
   )
 ```

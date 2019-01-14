@@ -47,7 +47,7 @@ lincoln1 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`))
              size = .5) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_dviz_open(12) + theme(plot.margin = margin(3, 12, 3, 0))
+  theme_dviz_open(12) + theme(plot.margin = margin(3, 12, 3, 1.5))
 
 lincoln2 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
   geom_point(position = position_jitter(width = .2, height = 0, seed = 321),

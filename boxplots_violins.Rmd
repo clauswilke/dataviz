@@ -48,7 +48,7 @@ lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(lincoln_errbar)
 ```
@@ -90,7 +90,7 @@ lincoln_box <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_box
 ```
@@ -139,7 +139,7 @@ lincoln_violin <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_violin
 ```
@@ -155,7 +155,7 @@ lincoln_points <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(lincoln_points)
 ```
@@ -169,7 +169,7 @@ lincoln_jitter <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature 
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_jitter
 ```
@@ -190,7 +190,7 @@ lincoln_sina <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_sina
 ```
@@ -220,7 +220,7 @@ ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   theme_dviz_grid() +
   theme(
     axis.text.y = element_text(vjust = 0),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
 ```
 
@@ -250,7 +250,7 @@ p_binline <- ggplot(lincoln_df, aes(x = `Mean Temperature [F]`, y = `Month`)) +
   theme_dviz_grid() +
   theme(
     axis.text.y = element_text(vjust = 0),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
 
 stamp_ugly(p_binline) 
@@ -273,7 +273,7 @@ ggplot(movie_lengths, aes(x = length, y = year, group = year)) +
   coord_cartesian(clip = "off") +
   theme_dviz_grid() +
   theme(
-    plot.margin = margin(3, 14, 3, 0)
+    plot.margin = margin(3, 14, 3, 1.5)
     )
 ```
 
