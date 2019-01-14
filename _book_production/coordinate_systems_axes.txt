@@ -79,7 +79,7 @@ data. Data source: NOAA.
 
 (#fig:temperature-normals-Houston)(ref:temperature-normals-Houston)
 
-If on the other hand the _x_ and the _y_ axes are measured in the same
+On the other hand, if the _x_ and the _y_ axes are measured in the same
 units, then the grid spacings for the two axes should be equal, such
 that the same distance along the _x_ or _y_ axis corresponds to the same
 number of data units. As an example, we can plot the temperature in

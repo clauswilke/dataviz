@@ -13,7 +13,7 @@ contract won or lost, a job interview gone well or poorly. And yet,
 there are surprisingly few resources to teach you how to make compelling
 data visualizations. Few colleges offer courses on this topic, and there
 are not that many books on this topic either. (Some exist, of course.)
-Tutorials for plotting sofware typically focus on how to achieve
+Tutorials for plotting software typically focus on how to achieve
 specific visual effects rather than explaining why certain choices are
 preferred and others not. In your day-to-day work, you are simply
 expected to know how to make good figures, and if you're lucky you have
@@ -165,11 +165,12 @@ Edzer Pebesma, Tristan Mahr, Jon Schwabish, and Hadley Wickham. Len
 Kiefer's blog and Kieran Healy's book and blog postings have provided
 numerous inspirations for figures to make and datasets to use. A number
 of people pointed out minor issues or typos, including Thiago Arrais,
-Malcolm Barrett, Jon Calder, Antônio Pedro Camargo, Daren Card, Kim
-Cressman, Andrew Kinsman, Will Koehrsen, Alex Lalejini, Katrin
-Leinweber, Mikel Madina, Claire McWhite, S'busiso Mkhondwane, Jose
-Nazario, Steve Putman, Maëlle Salmon, Christian Schudoma, James
-Scott-Brown, Enrico Spinielli, Wouter van der Bijl, and Ron Yurko.
+Malcolm Barrett, Jessica Burnett, Jon Calder, Antônio Pedro Camargo,
+Daren Card, Kim Cressman, Akos Hajdu, Andrew Kinsman, Will Koehrsen,
+Alex Lalejini, John Leadley, Katrin Leinweber, Mikel Madina, Claire
+McWhite, S'busiso Mkhondwane, Jose Nazario, Steve Putman, Maëlle Salmon,
+Christian Schudoma, James Scott-Brown, Enrico Spinielli, Wouter van der
+Bijl, and Ron Yurko.
 
 I would also more broadly like to thank all the other contributors to
 the tidyverse and the R community in general. There truly is an R

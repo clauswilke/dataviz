@@ -103,7 +103,7 @@ different major tech companies?
 companies. The stock price for each company has been normalized to equal
 100 in June 2012. This figure is labeled as "bad" because it takes
 considerable mental energy to match the company names in the legend to
-the data curves.
+the data curves. Data source: Yahoo Finance
 
 (#fig:tech-stocks-bad-legend)(ref:tech-stocks-bad-legend)
 
@@ -132,7 +132,7 @@ much easier to match the legend to the data.
 
 (ref:tech-stocks-good-legend) Stock price over time for four major tech
 companies. The stock price for each company has been normalized to equal
-100 in June 2012.
+100 in June 2012. Data source: Yahoo Finance
 
 (#fig:tech-stocks-good-legend)(ref:tech-stocks-good-legend)
 
@@ -185,7 +185,7 @@ right next to the end of its respective data line (Figure
 
 (ref:tech-stocks-good-no-legend) Stock price over time for four major
 tech companies. The stock price for each company has been normalized to
-equal 100 in June 2012.
+equal 100 in June 2012. Data source: Yahoo Finance
 
 (#fig:tech-stocks-good-no-legend)(ref:tech-stocks-good-no-legend)
 

@@ -33,8 +33,8 @@ colors [@ColorBrewer].
 (ref:qualitative-scales) Example qualitative color scales. The Okabe Ito
 scale is the default scale used throughout this book [@Okabe-Ito-CUD].
 The ColorBrewer Dark2 scale is provided by the ColorBrewer project
-[@ColorBrewer]. The ggplot2 scale is the default qualitative scale in
-the widely used plotting software ggplot2.
+[@ColorBrewer]. The ggplot2 hue scale is the default qualitative scale
+in the widely used plotting software ggplot2.
 
 (#fig:qualitative-scales)(ref:qualitative-scales)
 
@@ -50,7 +50,8 @@ Midwest and the Northeast have grown much less.
 (ref:popgrowth-US) Population growth in the U.S. from 2000 to 2010.
 States in the West and South have seen the largest increases, whereas
 states in the Midwest and Northeast have seen much smaller increases or
-even, in the case of Michigan, a decrease.
+even, in the case of Michigan, a decrease. Data source: U.S. Census
+Bureau
 
 (#fig:popgrowth-US)(ref:popgrowth-US)
 
@@ -93,7 +94,7 @@ median income within each county in Texas onto a map of those counties.
 highest median incomes are seen in major Texas metropolitan areas, in
 particular near Houston and Dallas. No median income estimate is
 available for Loving County in West Texas and therefore that county is
-shown in gray. Data source: 2015 Five-Year American Community Survey.
+shown in gray. Data source: 2015 Five-Year American Community Survey
 
 (#fig:map-Texas-income)(ref:map-Texas-income)
 
@@ -131,7 +132,7 @@ non-whites occur in approximately equal proportions.
 
 (ref:map-Texas-race) Percentage of people identifying as white in Texas
 counties. Whites are in the majority in North and East Texas but not in
-South or West Texas. Data source: 2010 Decennial U.S. Census.
+South or West Texas. Data source: 2010 Decennial U.S. Census
 
 (#fig:map-Texas-race)(ref:map-Texas-race)
 
@@ -155,9 +156,9 @@ colors and three accent colors. Accent color scales can be derived in
 several different ways: (top) we can take an existing color scale (e.g.,
 the Okabe Ito scale, Fig @ref(fig:qualitative-scales)) and lighten
 and/or partially desaturate some colors while darkening others; (middle)
-we can take gray values and pair them with colors; (bottom) we can take
-work with an existing accent color scale, e.g. the one from the
-ColorBrewer project.
+we can take gray values and pair them with colors; (bottom) we can use
+an existing accent color scale, e.g. the one from the ColorBrewer
+project.
 
 (#fig:accent-scales)(ref:accent-scales)
 
@@ -171,7 +172,8 @@ was the third slowest growing from 2000 to 2010.
 
 (ref:popgrowth-US-highlight) From 2000 to 2010, the two neighboring
 southern states Texas and Louisiana have experienced among the highest
-and lowest population growth across the U.S.
+and lowest population growth across the U.S. Data source: U.S. Census
+Bureau
 
 (#fig:popgrowth-US-highlight)(ref:popgrowth-US-highlight)
 

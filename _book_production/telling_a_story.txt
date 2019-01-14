@@ -362,17 +362,19 @@ Association
 
 Research on human perception shows that more visually complex and unique
 figures are more memorable [@Bateman_et_al_2010; @Borgo_et_al_2012].
-However, memorability alone is not that useful for a data visualization.
-At the extreme, a figure could be highly memorable but utterly
-confusing. Such a figure would not be a good data visualization, even if
-it works well as a stunning piece of art. At the other extreme, figures
-may be very clear but forgettable and boring, and those figures may not
-have the impact we might hope for either. In general, we want to strike
-a balance between the two extremes and make our figures both memorable
-and clear. (The intended audience matters as well, however. If a figure
-is intended for a technical scientific publication, we will generally
-worry less about memorability than if the figure is intended for a
-broadly read newspaper or blog.)
+However, visual uniqueness and complexity do not just affect
+memorability, as they may hinder a person's ability to get a quick
+overview of the information or make it difficult to distinguish small
+differences in values. At the extreme, a figure could be highly
+memorable but utterly confusing. Such a figure would not be a good data
+visualization, even if it works well as a stunning piece of art. At the
+other extreme, figures may be very clear but forgettable and boring, and
+those figures may not have the impact we might hope for either. In
+general, we want to strike a balance between the two extremes and make
+our figures both memorable and clear. (The intended audience matters as
+well, however. If a figure is intended for a technical scientific
+publication, we will generally worry less about memorability than if the
+figure is intended for a broadly read newspaper or blog.)
 
 We can make a figure more memorable by adding visual elements that
 reflect features of the data, for example drawings or pictograms of the

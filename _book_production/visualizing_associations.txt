@@ -87,14 +87,19 @@ College
 Bubble charts have the disadvantage that they show the same types of
 variables, quantitative variables, with two different types of scales,
 position and size. This makes it difficult to visually ascertain the
-strengths of associations between the various variables. Humans are much
-better at judging the position of objects than their size. And in
-particular, small size differences are virtually impossible to see. In
-Figure @ref(fig:blue-jays-scatter-bubbles), I used a size mapping that
-visually amplified the difference between the smallest skulls (around
-28mm) and the largest skulls (around 34mm), and yet it is difficult to
-determine what the relationship is between skull size and either body
-mass or head length.
+strengths of associations between the various variables. Moreover,
+differences between data values encoded as bubble size are harder to
+perceive than differences between data values encoded as position.
+Because even the largest bubbles need to be somewhat small compared to
+the total figure size, the size differences between even the largest and
+the smallest bubbles are necessarily small. Consequently, smaller
+differences in data values will correspond to very small size
+differences that can be virtually impossible to see. In Figure
+@ref(fig:blue-jays-scatter-bubbles), I used a size mapping that visually
+amplified the difference between the smallest skulls (around 28mm) and
+the largest skulls (around 34mm), and yet it is difficult to determine
+what the relationship is between skull size and either body mass or head
+length.
 
 As an alternative to a bubble chart, it may be preferable to show an
 all-against-all matrix of scatter plots, where each individual plot

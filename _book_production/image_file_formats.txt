@@ -168,7 +168,7 @@ image to 43kB in the compressed image, results in only minor perceptible
 reduction in image quality. However, a further reduction in file size by
 a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b)
 Zooming in to the most highly compressed image reveals the various
-compression artifacts. _Image credit: Claus O. Wilke_
+compression artifacts. Photo credit: Claus O. Wilke
 
 (#fig:jpeg-example)(ref:jpeg-example)
 

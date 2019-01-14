@@ -8,7 +8,7 @@ Color can be an incredibly effective tool to enhance data visualizations. At the
 
 One common mistake is trying to give color a job that is too big for it to handle, by encoding too many different items in different colors. As an example, consider Figure \@ref(fig:popgrowth-vs-popsize-colored). It shows population growth versus population size for all 50 U.S. states and the District of Columbia. I have attempted to identify each state by giving it its own color. However, the result is not very useful. Even though we can guess which state is which by looking at the colored points in the plot and in the legend, it takes a lot of effort to go back and forth between the two to try to match them up. There are simply too many different colors, and many of them are quite similar to each other. Even if with a lot of effort we can figure out exactly which state is which, this visualization defeats the purpose of coloring. We should use color to enhance figures and make them easier to read, not to obscure the data by creating visual puzzles.
 
-(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 U.S. states and the Discrict of Columbia. Every state is marked in a different color. Because there are so many states, it is very difficult to match the colors in the legend to the dots in the scatter plot.
+(ref:popgrowth-vs-popsize-colored) Population growth from 2000 to 2010 versus population size in 2000, for all 50 U.S. states and the Discrict of Columbia. Every state is marked in a different color. Because there are so many states, it is very difficult to match the colors in the legend to the dots in the scatter plot. Data source: U.S. Census Bureau
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-colored-1.png" alt="(ref:popgrowth-vs-popsize-colored)" width="1260" />
@@ -17,7 +17,7 @@ One common mistake is trying to give color a job that is too big for it to handl
 
 As a rule of thumb, qualitative color scales work best when there are three to five different categories that need to be colored. Once we reach eight to ten different categories or more, the task of matching colors to categories becomes too burdensome to be useful, even if the colors remain sufficiently different to be distinguishable in principle. For the dataset of Figure \@ref(fig:popgrowth-vs-popsize-colored), it is probably best to use color only to indicate the geographic region of each state and to identify individual states by direct labeling, i.e., by placing appropriate text labels adjacent to the data points (Figure \@ref(fig:popgrowth-vs-popsize-bw)). Even though we cannot label every individual state without making the figure too crowded, direct labeling is the right choice for this figure. In general, for figures such as this one, we don't need to label every single data point. It is sufficient to label a representative subset, for example a set of states we specifically want to call out in the text that will accompany the figure. We always have the option to also provide the underlying data as a table if we want to make sure the reader has access to it in its entirety.
 
-(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. In contrast to Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now colored states by region and have directly labeled a subset of states. The majority of states have been left unlabeled to keep the figure from overcrowding.
+(ref:popgrowth-vs-popsize-bw) Population growth from 2000 to 2010 versus population size in 2000. In contrast to Figure \@ref(fig:popgrowth-vs-popsize-colored), I have now colored states by region and have directly labeled a subset of states. The majority of states have been left unlabeled to keep the figure from overcrowding. Data source: U.S. Census Bureau
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-vs-popsize-bw-1.png" alt="(ref:popgrowth-vs-popsize-bw)" width="1785" />
@@ -29,9 +29,9 @@ As a rule of thumb, qualitative color scales work best when there are three to f
 <p>Use direct labeling instead of colors when you need to distinguish between more than about eight categorical items.</p>
 </div>
 
-A second common problem is coloring for the sake of coloring, without having a clear purpose for the colors. As an example, consider Figure \@ref(fig:popgrowth-US-rainbow), which is a variation of Figure \@ref(fig:popgrowth-US). However, now instead of coloring the bars by geographic regions, I have given each bar its own color, so that in aggregate the bars create a rainbow effect. This may look like an interesting visual effect, but it is in no way creating new insight into the data or making the figure easier to read. In general, it is best to not use color when color isn't needed.
+A second common problem is coloring for the sake of coloring, without having a clear purpose for the colors. As an example, consider Figure \@ref(fig:popgrowth-US-rainbow), which is a variation of Figure \@ref(fig:popgrowth-US). However, now instead of coloring the bars by geographic regions, I have given each bar its own color, so that in aggregate the bars create a rainbow effect. This may look like an interesting visual effect, but it is not creating any new insight into the data or making the figure easier to read.
 
-(ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated.
+(ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to 2010. The rainbow coloring of states serves no purpose and is distracting. Furthermore, the colors are overly saturated. Data source: U.S. Census Bureau
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/popgrowth-US-rainbow-1.png" alt="(ref:popgrowth-US-rainbow)" width="1260" />
@@ -59,7 +59,7 @@ In Chapter \@ref(color-basics), I listed two critical conditions for designing s
 In a visualization of actual data, the rainbow scale tends to obscure data features and/or highlight arbitrary aspects of the data (Figure \@ref(fig:map-Texas-rainbow)). As an aside, the colors in the rainbow scale are also overly saturated. Looking at Figure \@ref(fig:map-Texas-rainbow) for any extended period of time can be quite uncomfortable.
 
 
-(ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. The rainbow color scale is not an appropriate scale to visualize continuous data values, because it tends to place emphasis on arbitrary features of the data. Here, it emphasizes counties in which approximately 75% of the population identify as white.
+(ref:map-Texas-rainbow) Percentage of people identifying as white in Texas counties. The rainbow color scale is not an appropriate scale to visualize continuous data values, because it tends to place emphasis on arbitrary features of the data. Here, it emphasizes counties in which approximately 75% of the population identify as white. Data source: 2010 Decennial U.S. Census
 
 <div class="figure" style="text-align: center">
 <img src="pitfalls_of_color_use_files/figure-html/map-Texas-rainbow-1.png" alt="(ref:map-Texas-rainbow)" width="1260" />

@@ -194,12 +194,12 @@ interpretation of the shaded areas is correct.
 Nested pies
 ~~~~~~~~~~~
 
-At the beginnig of this chapter, I visualized the bridges dataset with a
-flawed pie chart (Figure @ref(fig:bridges-pie-wrong)), and I then argued
-that a mosaic plot or a treemap are more appropriate. However, both of
-these latter plot types are closely related to pie charts, since they
-all use area to represent data values. The primary difference is the
-type of coordinate system, polar in the case of a pie chart versus
+At the beginning of this chapter, I visualized the bridges dataset with
+a flawed pie chart (Figure @ref(fig:bridges-pie-wrong)), and I then
+argued that a mosaic plot or a treemap are more appropriate. However,
+both of these latter plot types are closely related to pie charts, since
+they all use area to represent data values. The primary difference is
+the type of coordinate system, polar in the case of a pie chart versus
 cartesian in the case of a mosaic plot or treemap. This close
 relationship between these different plots begs the question whether
 some variant of a pie chart can be used to visualize this dataset.

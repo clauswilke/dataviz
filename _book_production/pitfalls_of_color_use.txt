@@ -30,7 +30,7 @@ obscure the data by creating visual puzzles.
 versus population size in 2000, for all 50 U.S. states and the Discrict
 of Columbia. Every state is marked in a different color. Because there
 are so many states, it is very difficult to match the colors in the
-legend to the dots in the scatter plot.
+legend to the dots in the scatter plot. Data source: U.S. Census Bureau
 
 (#fig:popgrowth-vs-popsize-colored)(ref:popgrowth-vs-popsize-colored)
 
@@ -58,6 +58,7 @@ population size in 2000. In contrast to Figure
 @ref(fig:popgrowth-vs-popsize-colored), I have now colored states by
 region and have directly labeled a subset of states. The majority of
 states have been left unlabeled to keep the figure from overcrowding.
+Data source: U.S. Census Bureau
 
 (#fig:popgrowth-vs-popsize-bw)(ref:popgrowth-vs-popsize-bw)
 
@@ -70,13 +71,13 @@ having a clear purpose for the colors. As an example, consider Figure
 @ref(fig:popgrowth-US). However, now instead of coloring the bars by
 geographic regions, I have given each bar its own color, so that in
 aggregate the bars create a rainbow effect. This may look like an
-interesting visual effect, but it is in no way creating new insight into
-the data or making the figure easier to read. In general, it is best to
-not use color when color isn't needed.
+interesting visual effect, but it is not creating any new insight into
+the data or making the figure easier to read.
 
 (ref:popgrowth-US-rainbow) Population growth in the U.S. from 2000 to
 2010. The rainbow coloring of states serves no purpose and is
-distracting. Furthermore, the colors are overly saturated.
+distracting. Furthermore, the colors are overly saturated. Data source:
+U.S. Census Bureau
 
 (#fig:popgrowth-US-rainbow)(ref:popgrowth-US-rainbow)
 
@@ -139,7 +140,8 @@ uncomfortable.
 Texas counties. The rainbow color scale is not an appropriate scale to
 visualize continuous data values, because it tends to place emphasis on
 arbitrary features of the data. Here, it emphasizes counties in which
-approximately 75% of the population identify as white.
+approximately 75% of the population identify as white. Data source: 2010
+Decennial U.S. Census
 
 (#fig:map-Texas-rainbow)(ref:map-Texas-rainbow)
 
