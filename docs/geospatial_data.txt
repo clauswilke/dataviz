@@ -19,10 +19,10 @@ whether for our specific application the accurate representation of
 angles or areas is more critical. A common mapping technique, the
 _choropleth map,_ consists of representing data values as differently
 colored spatial areas. Choropleth maps can at times be very useful and
-at other times highly misleading. However, misleading visualizations can
-usually be avoided by making map-like diagrams called _cartograms,_
-which may purposefully distort map areas or represent them in stylized
-form, for example as equal-sized squares.
+at other times highly misleading. As an alternative, we can construct
+map-like diagrams called _cartograms,_ which may purposefully distort
+map areas or represent them in stylized form, for example as equal-sized
+squares.
 
 [[projections]]
 Projections
@@ -39,10 +39,12 @@ _equator._ To uniquely specify a location on the earth, we need three
 pieces of information: where we are located along the direction of the
 equator (the longitude), how close we are to either pole when moving
 perpendicular to the equator (the latitude), and how far we are from the
-earth's center (the altitude). Longitude, latitude, and altidue are
-specified relative to a defined coordinate system called the _datum._
-One widely used datum is the World Geodetic System (WGS) 84, which is
-used by the Global Positioning System (GPS).
+earth's center (the altitude). Longitude, latitude, and altitude are
+specified relative to a reference system called the _datum._ The datum
+specifies properties such as the shape and size of the earth, as well as
+the location of zero longitude, latitude, and altitude. One widely used
+datum is the World Geodetic System (WGS) 84, which is used by the Global
+Positioning System (GPS).
 
 (ref:world-orthographic) Orthographic projection of the world, showing
 Europe and Northern Africa as they would be visible from space. The
@@ -128,7 +130,7 @@ However, variants of this projection continue to live on. For example,
 the transverse Mercator projection is routinely used for large-scale
 maps that show moderately small areas (spanning less than a few degrees
 in longitude) at large magnification. Another variant, the web Mercator
-projection, was introduced by Google for Google maps and is used by
+projection, was introduced by Google for Google Maps and is used by
 several online mapping applications.
 
 A whole-world projection that is perfectly area-preserving is the Goode
@@ -171,8 +173,9 @@ reasonable representation of the relative shapes, areas, and locations
 of the 50 states, but we notice some issues. First, Alaska seems weirdly
 stretched out compared to how it looks, for example, in Figures
 @ref(fig:world-mercator) or @ref(fig:usa-orthographic). Second, the map
-is dominated by ocean/empty space. As a map intended to show the United
-States, Figure @ref(fig:usa-true-albers) does not work very well.
+is dominated by ocean/empty space. It would be preferable if we could
+zoom in further, so that the lower 48 states take up a larger proportion
+of the map area.
 
 (ref:usa-true-albers) Map of the United States of America, using an
 area-preserving Albers projection (ESRI:102003, commonly used to project
@@ -223,45 +226,47 @@ To visualize geospatial data in the proper context, we usually create
 maps consisting of multiple layers showing different types of
 information. To demonstrate this concept, I will visualize the locations
 of wind turbines in the San Francisco Bay area. In the Bay Area, wind
-turbines are clustered in two locations. One location lies east of
-Hayward near Tracy and the other (which I will call the Shiloh Wind
-Farm) lies near Rio Vista (Figure @ref(fig:sfbay-overview)).
+turbines are clustered in two locations. One location, which I will
+refer to as the Shiloh Wind Farm, lies near Rio Vista and the other lies
+east of Hayward near Tracy (Figure @ref(fig:sfbay-overview)).
 
 (ref:sfbay-overview) Wind turbines in the San Francisco Bay Area.
-Individual wind turbines are shown as purple-colored dots. A large wind
-farm, the Shiloh Wind Farm near Rio Vista, is highlighted with a black
-rectangle. Map tiles by Stamen Design, under CC BY 3.0. Map data by
-OpenStreetMap, under ODbL. Wind turbine data: United States Wind Turbine
-Database
+Individual wind turbines are shown as purple-colored dots. Two regions
+with a high concentration of wind turbines are highlighted with black
+rectangles. I refer to the wind turbines near Rio Vista collectively as
+the Shiloh Wind Farm. Map tiles by Stamen Design, under CC BY 3.0. Map
+data by OpenStreetMap, under ODbL. Wind turbine data: United States Wind
+Turbine Database
 
 (#fig:sfbay-overview)(ref:sfbay-overview)
 
 Figure @ref(fig:sfbay-overview) consists of four separate layers. At the
 bottom, we have the terrain layer, which shows hills, valleys, and
 water. The next layer shows the road network. On top of the road layer,
-I have placed a layer highlighting the location of individual wind
-turbines, as well as the location of the Shiloh Wind Farm. Finally, the
-top layer adds the locations and names of cities. These four layers are
-shown separately in Figure @ref(fig:sfbay-layers). For any given map we
-want to make, we may want to add or remove some of these layers. For
-example, if we wanted to draw a map of voting districts, we might
-consider terrain information to be irrelevant and distracting.
-Alternatively, if we wanted to draw a map of exposed or covered roof
-areas to assess potential for solar power generation, we might want to
-replace terrain information with satellite imagery that shows individual
-roofs and actual vegetation. You can interactively try these different
-types of layers in most online map applications, such as Google maps. I
-would like to emphasize that regardless of which layers we decide to
-keep or remove, it is generally recommended to add a scale bar. The
-scale bar helps readers understand the size of the spatial features
-shown in the map.
+I have placed a layer indicating the location of individual wind
+turbines. This layer also contains the two rectangles highlighting the
+majority of the wind turbines. Finally, the top layer adds the locations
+and names of cities. These four layers are shown separately in Figure
+@ref(fig:sfbay-layers). For any given map we want to make, we may want
+to add or remove some of these layers. For example, if we wanted to draw
+a map of voting districts, we might consider terrain information to be
+irrelevant and distracting. Alternatively, if we wanted to draw a map of
+exposed or covered roof areas to assess potential for solar power
+generation, we might want to replace terrain information with satellite
+imagery that shows individual roofs and actual vegetation. You can
+interactively try these different types of layers in most online map
+applications, such as Google Maps. I would like to emphasize that
+regardless of which layers we decide to keep or remove, it is generally
+recommended to add a scale bar and a north arrow. The scale bar helps
+readers understand the size of the spatial features shown in the map,
+while the north arrow clarifies the map's orientation.
 
 (ref:sfbay-layers) The individual layers of Figure
 @ref(fig:sfbay-overview). From bottom to top, the figure consists of a
 terrain layer, a roads layer, a layer showning the wind turbines, and a
-layer labeling cities and adding a scale bar. Map tiles by Stamen
-Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind
-turbine data source: United States Wind Turbine Database
+layer labeling cities and adding a scale bar and north arrow. Map tiles
+by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under
+ODbL. Wind turbine data source: United States Wind Turbine Database
 
 (#fig:sfbay-layers)(ref:sfbay-layers)
 
@@ -458,13 +463,13 @@ American Community Survey
 
 (#fig:median-income-statebins)(ref:median-income-statebins)
 
-We can also draw more complex cartograms by placing individual plots at
-the location of each state. For example, if we want to visualize the
+Finally, we can draw more complex cartograms by placing individual plots
+at the location of each state. For example, if we want to visualize the
 evolution of the unemployment rate over time for each state, it can help
 to draw an individual graph for each state and then arrange the graphs
 based on the approximate relative position of the states to each other
-(Figure @ref(fig:unemployment-geofacet)). For anybody who is familiar
-with the geography of the United States, this arrangement makes it
+(Figure @ref(fig:unemployment-geofacet)). For somebody who is familiar
+with the geography of the United States, this arrangement may make it
 easier to find the graphs for specific states than arranging them, for
 example, in alphabetical order. Furthermore, one would expect
 neighboring states to display similar patterns, and Figure

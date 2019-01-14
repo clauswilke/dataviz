@@ -29,15 +29,16 @@ The book was last compiled using the following environment:
 ##  [7] mgcv_1.8-24          nlme_3.1-137         broom_0.5.1         
 ## [10] tidybayes_1.0.3      maps_3.3.0           statebins_2.0.0     
 ## [13] sf_0.7-1             maptools_0.9-4       sp_1.3-1            
-## [16] rgeos_0.3-28         geofacet_0.1.9       plot3D_1.1.1        
-## [19] magick_1.9           hexbin_1.27.2        treemapify_2.5.0    
-## [22] gridExtra_2.3        ggmap_2.7.904        ggthemes_4.0.1      
-## [25] ggridges_0.5.1       ggrepel_0.8.0        ggforce_0.1.1       
-## [28] patchwork_0.0.1      lubridate_1.7.4      forcats_0.3.0       
-## [31] stringr_1.3.1        purrr_0.2.5          readr_1.1.1         
-## [34] tidyr_0.8.2          tibble_1.4.2         tidyverse_1.2.1     
-## [37] dviz.supp_0.1.0      dplyr_0.8.0.9000     colorblindr_0.1.0   
-## [40] ggplot2_3.1.0        colorspace_1.4-0     cowplot_0.9.99      
+## [16] rgeos_0.3-28         ggspatial_1.0.3      geofacet_0.1.9      
+## [19] plot3D_1.1.1         magick_1.9           hexbin_1.27.2       
+## [22] treemapify_2.5.0     gridExtra_2.3        ggmap_2.7.904       
+## [25] ggthemes_4.0.1       ggridges_0.5.1       ggrepel_0.8.0       
+## [28] ggforce_0.1.1        patchwork_0.0.1      lubridate_1.7.4     
+## [31] forcats_0.3.0        stringr_1.3.1        purrr_0.2.5         
+## [34] readr_1.1.1          tidyr_0.8.2          tibble_1.4.2        
+## [37] tidyverse_1.2.1      dviz.supp_0.1.0      dplyr_0.8.0.9000    
+## [40] colorblindr_0.1.0    ggplot2_3.1.0        colorspace_1.4-0    
+## [43] cowplot_0.9.99      
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] rjson_0.2.20              deldir_0.1-15            
