@@ -1,0 +1,50 @@
+new_session: yes
+output_dir: "_book_production"
+delete_merged_file: true
+
+rmd_files: [
+  "index.Rmd",
+
+  "preface.Rmd",
+  "introduction.Rmd",
+
+  # Part I
+  "aesthetic_mapping.Rmd", # completed
+  "coordinate_systems_axes.Rmd", # completed
+  "color_basics.Rmd", # completed
+  "directory_of_visualizations.Rmd",
+  "visualizing_amounts.Rmd", # completed
+  "visualizing_distributions_I.Rmd", # completed
+  "visualizing_distributions_II.Rmd", # completed
+  "boxplots_violins.Rmd", # completed
+  "visualizing_proportions.Rmd", # completed
+  "nested_proportions.Rmd", # completed
+  "visualizing_associations.Rmd", # completed
+  "time_series.Rmd", # completed
+  "visualizing_trends.Rmd", # completed
+  "geospatial_data.Rmd", # completed
+  "visualizing_uncertainty.Rmd", # completed
+
+  # Part II
+
+  "proportional_ink.Rmd", # completed
+  "overlapping_points.Rmd", # completed
+  "pitfalls_of_color_use.Rmd", # completed
+  "redundant_coding.Rmd", # completed
+  "multi-panel_figures.Rmd", # completed
+  "figure_titles_captions.Rmd", # completed
+  "balance_data_context.Rmd", # completed
+  "small_axis_labels.Rmd", # completed
+  "avoid_line_drawings.Rmd", # completed
+  "no_3d.Rmd", # completed
+
+  # Part III
+  "image_file_formats.Rmd", # completed
+  "choosing_visualization_software.Rmd", # completed
+  "telling_a_story.Rmd", # completed
+  "annotated_bibliography.Rmd",
+
+  "technical_notes.Rmd",
+
+  "references.Rmd"
+]

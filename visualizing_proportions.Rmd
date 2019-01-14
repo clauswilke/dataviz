@@ -196,7 +196,7 @@ of proportions
 
 ## A case for side-by-side bars {#side-by-side-bars}
 
-I will now demonstrate a case where pie charts fail. This example is modeled after a critique of pie charts originally posted on Wikipedia [@Schutz-piecharts]. Consider the hypothetical scenario of five companies, A, B, C, D, and E, who all have roughly comparable market share of approximately 20%. Our hypothetical dataset lists the marketshare of each company for three consecutive years. When we visualize this dataset with pie charts, it is difficult to see what exactly is going on (Figure \@ref(fig:marketshare-pies)). It appears that the market share of company A is growing and the one of company E is shrinking, but beyond this one observation we can't tell what's going on. In particular, it is unclear how exactly the market shares of the different companies compare within each year.
+I will now demonstrate a case where pie charts fail. This example is modeled after a critique of pie charts originally posted on Wikipedia [@Schutz-piecharts]. Consider the hypothetical scenario of five companies, A, B, C, D, and E, who all have roughly comparable market share of approximately 20%. Our hypothetical dataset lists the market share of each company for three consecutive years. When we visualize this dataset with pie charts, it is difficult to see what exactly is going on (Figure \@ref(fig:marketshare-pies)). It appears that the market share of company A is growing and the one of company E is shrinking, but beyond this one observation we can't tell what's going on. In particular, it is unclear how exactly the market shares of the different companies compare within each year.
 
 
 (ref:marketshare-pies) Market share of five hypothetical companies, A--E, for the years 2015--2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
@@ -246,7 +246,11 @@ The picture becomes a little clearer when we switch to stacked bars (Figure \@re
 ```{r marketshare-stacked, fig.cap='(ref:marketshare-stacked)'}
 stacked_bars <- ggplot(marketshare, aes(x = year, y = percent, fill = company)) + 
   geom_col(position = "stack") + 
-  scale_y_continuous(expand = c(0, 0)) +
+  scale_y_continuous(
+    name = "market share",
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    expand = c(0, 0)
+  ) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
   theme_dviz_open() +
   theme(plot.margin = margin(14, 7, 3, 0))
@@ -262,7 +266,11 @@ For this hypothetical data set, side-by-side bars are the best choice (Figure \@
 ggplot(marketshare, aes(x = company, y = percent, fill = company)) + 
   geom_col() + 
   facet_wrap(~year) +
-  scale_y_continuous(expand = c(0, 0)) +
+  scale_y_continuous(
+    name = "market share",
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    expand = c(0, 0)
+  ) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4), guide = "none") + 
   theme_dviz_open() +
   theme(strip.background = element_blank())

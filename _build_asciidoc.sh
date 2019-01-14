@@ -2,7 +2,7 @@
 
 echo "Preparing AsciiDoc output"
 
-cd _book_final
+cd _book_production
 for f in *.md;
   do
     echo "converting $f"
