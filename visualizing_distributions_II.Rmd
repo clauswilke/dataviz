@@ -29,6 +29,7 @@ ggplot(student_data, aes(x = points, y = 50*..y..)) +
   geom_point(aes(y = rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (ascending)") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
@@ -44,6 +45,7 @@ ggplot(student_data, aes(x = points, y = 51-50*..y..)) +
   geom_point(aes(y = 51-rank), color = "#0072B2") +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.5, 55), expand = c(0, 0), name = "student rank (descending)") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 
@@ -60,6 +62,7 @@ ggplot(student_data, aes(x = points, y = ..y..)) +
   stat_ecdf(geom = "step", color = "#0072B2", size = 0.75) +
   scale_x_continuous(limits = c(40, 102), expand = c(0, 0), breaks = 10*(4:10)) +
   scale_y_continuous(limits = c(-.01, 1.01), expand = c(0, 0), name = "cumulative frequency") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid() +
   theme(axis.line.x = element_blank())
 ```
@@ -86,6 +89,7 @@ p1 <- ggplot(US_census, aes(x=pop2010)) +
   scale_y_continuous(expand = c(0, 0), name = expression(paste("density [x", 10^-5, "]")),
                      breaks = c(0, 4e-6, 8e-6, 1.2e-5, 1.6e-5),
                      labels = c(0, 0.4, 0.8, 1.2, 1.6)) +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
@@ -96,6 +100,7 @@ p2 <- ggplot(US_census, aes(x=pop2010)) +
                      breaks = 0.5e6*(0:4),
                      labels = label_log10) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
@@ -114,6 +119,7 @@ p1_log <- ggplot(US_census, aes(x=log10(pop2010))) +
     name = expression(paste("log"["10"], "(number of inhabitants)"))
   ) +
   scale_y_continuous(expand = c(0, 0), name = "density") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 1.5, 12, 1.5))
 
@@ -124,6 +130,7 @@ p2_log <- ggplot(US_census, aes(x=log10(pop2010))) +
     name = expression(paste("log"["10"], "(number of inhabitants)"))
   ) +
   scale_y_continuous(expand = c(0.01, 0), name = "cumulative frequency") +
+  coord_cartesian(clip = "off") +
   theme_dviz_grid(12) +
   theme(plot.margin = margin(3, 1.5, 12, 1.5))
 

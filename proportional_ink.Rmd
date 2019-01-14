@@ -384,7 +384,8 @@ p <- ggplot(RI_pop, aes(area = pop2010, fill = county, label = label_comb)) +
     grow = FALSE,
     fixed = FALSE
   ) +
-  scale_fill_OkabeIto(darken = -.3, guide = "none")
+  scale_fill_OkabeIto(darken = -.3, guide = "none") +
+  coord_cartesian(clip = "off")
 
 p
 ```
