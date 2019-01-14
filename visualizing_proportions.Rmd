@@ -91,7 +91,7 @@ ggplot(bund_pie) +
   theme_dviz_map() +
   theme(
     legend.position = "none",
-    plot.margin = margin(3.5, 0, 3.5, 0)
+    plot.margin = margin(3.5, 1.5, 3.5, 1.5)
   )
 ```
 
@@ -274,7 +274,7 @@ stacked_bars <- ggplot(marketshare, aes(x = year, y = percent, fill = company)) 
   ) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
   theme_dviz_open() +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_bad(stacked_bars)
 ```
@@ -340,7 +340,7 @@ plot_base <- ggplot(women_rwanda, aes(x = year, y = percent, fill = gender)) +
       #axis.ticks.x = element_blank(),
       #axis.line.x = element_blank(),
       axis.line.y = element_blank(),
-      plot.margin = margin(14, 0, 3, 0)
+      plot.margin = margin(14, 1.5, 3, 1.5)
     )
 
 # calculate label position
@@ -372,7 +372,7 @@ colors = c('#f1eef6', '#bdc9e1', '#74a9cf', '#2b8cbe', '#045a8d')[5:1]
 p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color = health)) + 
   geom_density(position = "fill") +
   #geom_hline(yintercept = c(.25, .50, .75), color = "#FFFFFF60") +
-  scale_x_continuous(expand = c(0, 0)) +
+  scale_x_continuous(name = "age (years)", expand = c(0, 0)) +
   scale_y_continuous(
     expand = c(0, 0), name = "relative proportion",
     labels = scales::percent
@@ -385,7 +385,7 @@ p_health <- ggplot(df_health, aes(x = age, y = ..count.., fill = health, color =
     #axis.ticks.x = element_blank(),
     axis.line.x = element_blank(),
     axis.line.y = element_blank(),
-    plot.margin = margin(7, 7, 3, 0)
+    plot.margin = margin(7, 7, 3, 1.5)
   )
 
 df_marital <- select(happy, age, marital) %>%
@@ -395,7 +395,7 @@ df_marital <- select(happy, age, marital) %>%
 
 p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, color = marital)) + 
   geom_density(position = "fill") +
-  scale_x_continuous(expand = c(0, 0)) +
+  scale_x_continuous(name = "age (years)", expand = c(0, 0)) +
   scale_y_continuous(
     expand = c(0, 0), name = "relative proportion",
     labels = scales::percent
@@ -407,7 +407,7 @@ p_marital <- ggplot(df_marital, aes(x = age, y = ..count.., fill = marital, colo
     #axis.ticks.y = element_blank(),
     axis.line.x = element_blank(),
     axis.line.y = element_blank(),
-    plot.margin = margin(7, 7, 3, 0)
+    plot.margin = margin(7, 7, 3, 1.5)
   )
 
 p_aligned <- align_plots(p_health, p_marital, align = 'v')
@@ -428,7 +428,7 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
   geom_density_line(data = select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~health, nrow = 1) +
-  scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
+  scale_x_continuous(name = "age (years)", limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(
     values = c("#b3b3b3a0", "#2b8cbed0"),
@@ -468,7 +468,7 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
   geom_density_line(data = select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
   facet_wrap(~marital, nrow = 1) +
-  scale_x_continuous(limits = c(15, 98), expand = c(0, 0)) +
+  scale_x_continuous(name = "age (years)", limits = c(15, 98), expand = c(0, 0)) +
   scale_y_continuous(name = "count", expand = c(0, 0)) +
   scale_fill_manual(
     values = c("#b3b3b3a0", "#2b8cbed0"),
@@ -523,6 +523,7 @@ ggplot(df_marital2, aes(age)) +
   ) +
   facet_wrap(~highlight, nrow = 1) +
   scale_x_continuous(
+    name = "age (years)",
     #limits = c(15, 98), 
     expand = c(0, 0)
   ) +

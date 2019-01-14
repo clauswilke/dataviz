@@ -29,7 +29,7 @@ ggplot(biorxiv_growth, aes(date, count)) +
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
   theme_dviz_open() +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 There is an important difference however between Figure \@ref(fig:biorxiv-dots) and the scatter plots discussed in Chapter \@ref(visualizing-associations). In Figure \@ref(fig:biorxiv-dots), the dots are spaced evenly along the *x* axis, and there is a defined order among them. Each dot has exactly one left and one right neighbor (except the leftmost and rightmost points which have only one neighbor each). We can visually emphasize this order by connecting neighboring points with lines (Figure \@ref(fig:biorxiv-dots-line)). Such a plot is called a *line graph*.
@@ -44,7 +44,7 @@ ggplot(biorxiv_growth, aes(date, count)) +
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
   theme_dviz_open() +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 Some people object to drawing lines between points because the lines do not represent observed data. In particular, if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they may help with perception when the points are spaced far apart or are unevenly spaced. We can somewhat resolve this dilemma by pointing it out in the figure caption, for example by writing "lines are meant as a guide to the eye" (see caption of Figure \@ref(fig:biorxiv-dots-line)).
@@ -59,7 +59,7 @@ ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
   theme_dviz_open() +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 We can also fill the area under the curve with a solid color (Figure \@ref(fig:biorxiv-line-area)). This choice further emphasizes the overarching trend in the data, because it visually separates the area above the curve from the area below. However, this visualization is only valid if the *y* axis starts at zero, so that the height of the shaded area at each time point represents the data value at that time point.
@@ -73,7 +73,7 @@ ggplot(biorxiv_growth, aes(date, height = count, y = 0)) +
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
   theme_dviz_open() +
-  theme(plot.margin = margin(7, 7, 3, 0))
+  theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 
 
@@ -104,7 +104,7 @@ p <- ggplot(preprints, aes(date, count, color = archive, fill = archive, shape =
   theme(legend.title.align = 0.5,
         legend.position = c(0.1, .9),
         legend.just = c(0, 1),
-        plot.margin = margin(14, 7, 3, 0))
+        plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_bad(p)
 ```
@@ -128,7 +128,7 @@ ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = arch
   theme(legend.title.align = 0.5,
         legend.position = c(0.1, .9),
         legend.just = c(0, 1),
-        plot.margin = margin(14, 7, 3, 0))
+        plot.margin = margin(14, 7, 3, 1.5))
 ```
 
 Figure \@ref(fig:bio-preprints-lines) represents an acceptable visualization of the preprints dataset. However, the separate legend creates unnecessary cognitive load. We can reduce this cognitive load by labeling the lines directly (Figure \@ref(fig:bio-preprints-direct-label)). We have also eliminated the individual dots in this figure, for a result that is much more streamlined and easy to read than the original starting point, Figure \@ref(fig:bio-preprints-dots).
@@ -165,7 +165,7 @@ ggplot(preprints) +
   theme(axis.line.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)),
-        plot.margin = margin(14, 7, 3, 0))
+        plot.margin = margin(14, 7, 3, 1.5))
 ```
 
 Line graphs are not limited to time series. They are appropriate whenever the data points have a natural order that is reflected in the variable shown along the *x* axis, so that neighboring points can be connected with a line. This situation arises, for example, in dose--response curves, where we measure how changing some numerical parameter in an experiment (the dose) affects an outcome of interest (the response). Figure \@ref(fig:oats-yield) shows a classic experiment of this type, measuring oat yield in response to increasing amounts of fertilization. The line-graph visualization highlights how the dose--response curve has a similar shape for the three oat varieties considered but differs in the starting point in the absence of fertilization (i.e., some varieties have naturally higher yield than others).
@@ -245,7 +245,7 @@ p1 <- ggplot(CA_house_prices, aes(date, house_price_perc)) +
   theme_dviz_grid(12) +
   theme(
     axis.line = element_blank(),
-    plot.margin = margin(12, 0, 0, 0)
+    plot.margin = margin(12, 1.5, 0, 1.5)
   )
 
 p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
@@ -259,7 +259,7 @@ p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
   theme_dviz_grid(12) +
   theme(
     axis.line = element_blank(),
-    plot.margin = margin(6, 0, 3, 0)
+    plot.margin = margin(6, 1.5, 3, 1.5)
   )
  
 plot_grid(p1, p2, align = 'v', ncol = 1, labels = "auto") 
@@ -299,7 +299,7 @@ ggplot(CA_house_prices) +
   theme_dviz_grid() +
   theme(
     axis.ticks.length = unit(0, "pt"),
-    plot.margin = margin(21, 7, 3.5, 0))
+    plot.margin = margin(21, 14, 3.5, 1.5))
 ```
 
 In a connected scatter plot, lines going in the direction from the lower left to the upper right represent correlated movement between the two variables (as one variable grows, so does the other), and lines going in the perpendicular direction, from the upper left to the lower right, represent anti-correlated movement (as one variable grows, the other shrinks). If the two variables have a somewhat cyclic relationship, we will see circles or spirals in the connected scatter plot. In Figure \@ref(fig:house-price-path), we see one small circle from 2001 through 2005 and one large circle for the remainder of the time course.
@@ -328,7 +328,7 @@ p <- ggplot(CA_house_prices) +
   theme_dviz_grid() +
   theme(
     axis.ticks.length = unit(0, "pt"),
-    plot.margin = margin(21, 7, 3.5, 0))
+    plot.margin = margin(21, 14, 3.5, 1.5))
 
 stamp_bad(p)
 ```

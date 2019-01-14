@@ -97,7 +97,7 @@ temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   scale_y_continuous(limits = c(50, 90),
                      name = "temperature (°F)") +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 12, 12, 0))
+  theme(plot.margin = margin(3, 12, 12, 1.5))
 
 plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
           temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
@@ -120,7 +120,7 @@ tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   xlab("temperature in San Diego (°F)") +
   ylab("temperature in Houston (°F)") +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3, 14, 3, 0))
+  theme(plot.margin = margin(3, 14, 3, 1.5))
 
 # Fahrenheit to Celsius conversion
 
@@ -138,7 +138,7 @@ tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houst
   xlab("temperature in San Diego (°C)") +
   ylab("temperature in Houston (°C)") +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3, 14, 3, 0))
+  theme(plot.margin = margin(3, 14, 3, 1.5))
 
 
 plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
@@ -167,7 +167,7 @@ xaxis_lin <- ggplot(df, aes(x, y = 1)) +
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3, 14, 3, 0))
+        plot.margin = margin(3, 14, 3, 1.5))
 
 xaxis_log <- ggplot(df, aes(log10(x), y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
@@ -178,7 +178,7 @@ xaxis_log <- ggplot(df, aes(log10(x), y = 1)) +
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3, 14, 3, 0))
+        plot.margin = margin(3, 14, 3, 1.5))
 
 plotlist <- 
   align_plots(xaxis_lin + scale_x_continuous(limits = c(0, 100)) + 
@@ -229,7 +229,7 @@ ggplot(tx_counties, aes(x = index, y = popratio)) +
                      name = "Texas counties, from most to least populous") +
   theme_dviz_hgrid() +
   theme(axis.line = element_blank(),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 ```
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
@@ -245,7 +245,7 @@ counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
                      name = "Texas counties, from most to least populous") +
   theme_dviz_hgrid() +
   theme(axis.line = element_blank(),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(counties_lin)
 ```
@@ -268,7 +268,7 @@ xaxis_lin <- ggplot(df, aes(x, y = 1)) +
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3, 14, 3, 0))
+        plot.margin = margin(3, 14, 3, 1.5))
 
 xaxis_sqrt <- ggplot(df, aes(sqrt(x), y = 1)) + 
   geom_point(size = 3, color = "#0072B2") + 
@@ -279,7 +279,7 @@ xaxis_sqrt <- ggplot(df, aes(sqrt(x), y = 1)) +
         axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         plot.title = element_text(face = "plain"),
-        plot.margin = margin(3, 14, 3, 0))
+        plot.margin = margin(3, 14, 3, 1.5))
 
 plotlist <- 
   align_plots(xaxis_lin + scale_x_continuous(limits = c(0, 50)) + 
@@ -323,7 +323,7 @@ areas_base <- ggplot(northeast_areas, aes(x = state_abr, y = area)) +
   ylab("area (square miles)") +
   xlab("state") +
   theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 14, 3, 0))
+  theme(plot.margin = margin(3, 14, 3, 1.5))
 
 p1 <- areas_base + scale_y_sqrt(limits = c(0, 55000), breaks = c(0, 1000, 5000, 10000*(1:5)), 
                                 expand = c(0, 0))
@@ -366,7 +366,7 @@ p_cart <- ggplot(df_points, aes(x, y)) +
   theme_dviz_grid(12) +
   theme(axis.ticks = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 12, 3, 0))
+        plot.margin = margin(3, 12, 3, 1.5))
 
 
 p_polar <- ggplot(df_points, aes(x, y)) +
@@ -391,7 +391,7 @@ p_polar <- ggplot(df_points, aes(x, y)) +
   background_grid(major = "none") +
   theme(axis.line.x = element_blank(),
         axis.ticks = element_line(color = "black"),
-        plot.margin = margin(3, 12, 3, 0))
+        plot.margin = margin(3, 12, 3, 1.5))
 
 plot_grid(p_cart, p_polar, labels = "auto")
 ```
@@ -453,7 +453,7 @@ p_longlat <- ggplot(world_sf) +
     panel.background = element_rect(fill = "#56B4E950", color = "grey30", size = 0.5),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt),
-    plot.margin = margin(5, 10, 0, 1)
+    plot.margin = margin(5, 10, 1.5, 1.5)
   )
 
 
@@ -521,7 +521,7 @@ p_goode <- ggplot(world_sf) +
   theme(
     panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
-    plot.margin = margin(0, 0, 24, 0)
+    plot.margin = margin(1.5, 1.5, 24, 1.5)
   )
 
 
@@ -573,7 +573,7 @@ p_robin <- ggplot(world_sf) +
   theme(
     panel.background = element_rect(fill = "#56B4E950", color = "white", size = 1),
     panel.grid.major = element_line(color = "gray30", size = 0.25),
-    plot.margin = margin(6, 0, 0, 0)
+    plot.margin = margin(6, 1.5, 1.5, 1.5)
   )
 
 
@@ -607,7 +607,7 @@ p_wintri <- ggplot() +
   coord_sf(datum = NA, expand = FALSE) +
   theme_dviz_grid(12, rel_small = 1) +
   theme(
-    plot.margin = margin(6, 0, 3, 0)
+    plot.margin = margin(6, 1.5, 3, 1.5)
   )
 
 p <- plot_grid(
@@ -618,5 +618,5 @@ p <- plot_grid(
   )
 )
 
-p
+p + theme(plot.margin = margin(1.5, 0, 0, 0))
 ```

@@ -62,7 +62,7 @@ p2 <- ggplot(df, aes(type, value)) +
     axis.text.y = element_text(family = "Arial", size = 13),
     panel.grid = element_line(color = "black"),
     axis.ticks = element_line(color = "black"),
-    plot.margin = margin(18, 12, 0, 0)
+    plot.margin = margin(18, 12, 1.5, 1.5)
   )
 
 
@@ -77,7 +77,7 @@ p3 <- ggplot(df, aes(type, value)) +
   theme(
     axis.line = element_blank(),
     strip.text = element_blank(),
-    plot.margin = margin(18, 12, 0, 0)
+    plot.margin = margin(18, 12, 1.5, 1.5)
   )
 
 p3a <- ggplot(df, aes(type, value)) + 
@@ -94,7 +94,7 @@ p3a <- ggplot(df, aes(type, value)) +
   ) +
   theme(
     axis.ticks = element_line(color = "grey30"),
-    plot.margin = margin(18, 12, 0, 0)
+    plot.margin = margin(18, 12, 1.5, 1.5)
   )
 
 p4 <- ggplot(df, aes(type, value)) + 
@@ -106,7 +106,7 @@ p4 <- ggplot(df, aes(type, value)) +
   theme(
     panel.grid.major.y = element_blank(),
     axis.ticks.y = element_blank(),
-    plot.margin = margin(18, 12, 0, 0)
+    plot.margin = margin(18, 12, 1.5, 1.5)
   )
 
 plot_grid(

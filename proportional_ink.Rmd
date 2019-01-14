@@ -41,7 +41,7 @@ p_income_base <- ggplot(filter(hawaii_income, year == 2015), aes(x = reorder(cou
 p_income_bad <- p_income_base + 
   coord_cartesian(xlim = c(0.5, 5.55), ylim = c(50000, 75000), expand = FALSE) +
   scale_y_continuous(
-    name = "median income", 
+    name = "median income (USD)", 
     breaks = 10000*(5:7),
     labels = function(x) paste0("$", scales::comma(x))
   )
@@ -57,7 +57,7 @@ An appropriate visualization of these data makes for a less exciting story (Figu
 p_income_good <- p_income_base + 
   coord_cartesian(xlim = c(0.5, 5.55), ylim = c(0, 78000), expand = FALSE, clip = "off") +
   scale_y_continuous(
-    name = "median income", 
+    name = "median income (USD)", 
     breaks = 20000*(0:3),
     labels = function(x) paste0("$", scales::comma(x))
   ) +
@@ -126,10 +126,12 @@ ggplot(hawaii_income_diff, aes(x = reorder(county, desc(filter(hawaii_income, ye
                                y = income_diff)) + 
   geom_col(fill = "#56B4E9") +
   xlab("county") +
-  scale_y_continuous(name = "5-year change in median income", 
-                     limits = c(-5000, 25000),
-                     expand = c(0, 0),
-                     labels = function(x) paste0("$", scales::comma(x))) +
+  scale_y_continuous(
+    name = "5-year change in median income (USD)", 
+    limits = c(-5000, 25000),
+    expand = c(0, 0),
+    labels = c("-$5,000", "$0", "$5,000", "$10,000", "$15,000", "$20,000", "$25,000")
+  ) +
   theme_dviz_hgrid() + 
   theme(axis.ticks.x = element_blank(),
         plot.margin = margin(7, 7, 3, 1.5))

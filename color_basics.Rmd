@@ -50,8 +50,11 @@ state_colors <- region_colors_dark[as.numeric(popgrowth_df$region[order(popgrowt
 
 ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = region)) + 
   geom_col() + 
-  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
-                     name = "percent population growth, 2000 to 2010") +
+  scale_y_continuous(
+    limits = c(-.6, 37.5), expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    name = "population growth, 2000 to 2010"
+  ) +
   scale_fill_manual(values = region_colors) +
   coord_flip() + 
   theme_dviz_vgrid(12, rel_small = 1) +
@@ -109,7 +112,7 @@ texas_income %>% st_transform(crs = texas_crs) %>%
   theme_dviz_map() + 
   scale_fill_distiller(
     palette = "Blues", type = 'seq', na.value = "grey60", direction = 1,
-    name = "annual median income",
+    name = "annual median income (USD)",
     limits = c(18000, 90000),
     breaks = 20000*c(1:4),
     labels = c("$20,000", "$40,000", "$60,000", "$80,000"),
@@ -227,21 +230,30 @@ state_fontface <- region_fontface[as.numeric(popgrowth_hilight$region[order(popg
 
 ggplot(popgrowth_hilight, aes(x = state, y = 100*popgrowth, fill = region)) + 
   geom_col() + 
-  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
-                     name = "percent population growth, 2000 to 2010") +
-  scale_fill_manual(values = region_colors_bars,
-                    breaks = c("West", "South", "Midwest", "Northeast")) +
+  scale_y_continuous(
+    limits = c(-.6, 37.5), expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    name = "population growth, 2000 to 2010"
+  ) +
+  scale_fill_manual(
+    values = region_colors_bars,
+    breaks = c("West", "South", "Midwest", "Northeast")
+  ) +
   coord_flip() + 
   theme_dviz_vgrid(12, rel_small = 1) +
-  theme(text = element_text(color = "gray30"),
-        axis.text.x = element_text(color = "gray30"),
-        axis.title.y = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.length = unit(0, "pt"),
-        axis.text.y = element_text(size = 10, color = state_colors,
-                                   face = state_fontface),
-        legend.position = c(.56, .68),
-        legend.background = element_rect(fill = "#ffffffb0"))
+  theme(
+    text = element_text(color = "gray30"),
+    axis.text.x = element_text(color = "gray30"),
+    axis.title.y = element_blank(),
+    axis.line.y = element_blank(),
+    axis.ticks.length = unit(0, "pt"),
+    axis.text.y = element_text(
+      size = 10, color = state_colors,
+      face = state_fontface
+    ),
+    legend.position = c(.56, .68),
+    legend.background = element_rect(fill = "#ffffffb0")
+  )
 ```
 
 When working with accent colors, it is critical that the baseline colors do not compete for attention. Notice how drab the baseline colors are in (Figure \@ref(fig:popgrowth-US-highlight)). Yet they work well to support the accent color. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader's attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points. An example of this strategy is provided in Figure \@ref(fig:Aus-athletes-track).

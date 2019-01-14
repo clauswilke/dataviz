@@ -50,7 +50,7 @@ p_base <- ggplot(popgrowth_df, aes(x = pop2000, y = 100*popgrowth, color = as.ch
         legend.justification = "center",
         legend.box.margin = margin(14, 0, 28, 0),
         legend.spacing.y = unit(2, "pt"),
-        plot.margin = margin(14, 14, 14, 0))
+        plot.margin = margin(14, 14, 14, 1.5))
 
 p_comb <- plot_grid(p_base + theme(legend.position = "none"), get_legend(p_base), ncol = 1)
 stamp_bad(p_comb)
@@ -104,8 +104,11 @@ A second common problem is coloring for the sake of coloring, without having a c
 ```{r popgrowth-US-rainbow, fig.width = 6, fig.asp = 1.2, fig.cap = '(ref:popgrowth-US-rainbow)'}
 popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth, fill = state)) + 
   geom_col() + 
-  scale_y_continuous(limits = c(-.6, 37.5), expand = c(0, 0),
-                     name = "percent population growth, 2000 to 2010") +
+  scale_y_continuous(
+    limits = c(-.6, 37.5), expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1, scale = 1),
+    name = "population growth, 2000 to 2010"
+  ) +
   scale_fill_hue(c = 140, l = 55) +
   coord_flip() + 
   theme_dviz_vgrid(12, rel_small = 1) +
@@ -114,7 +117,7 @@ popgrowth_bars_rainbow <- ggplot(popgrowth_df, aes(x = state, y = 100*popgrowth,
         axis.ticks.length = unit(0, "pt"),
         axis.text.y = element_text(size = 10),
         legend.position = "none",
-        plot.margin = margin(18, 0, 3, 0))
+        plot.margin = margin(18, 1.5, 3, 1.5))
 
 stamp_ugly(popgrowth_bars_rainbow)
 ```
