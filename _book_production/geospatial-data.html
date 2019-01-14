@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="visualizing-trends.html">
+<link rel="next" href="visualizing-uncertainty.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="visualizing-trends.html"><a href="visualizing-trends.html"><i class="fa fa-check"></i><b>14</b> Visualizing trends</a><ul>
+<li class="chapter" data-level="14.1" data-path="visualizing-trends.html"><a href="visualizing-trends.html#smoothing"><i class="fa fa-check"></i><b>14.1</b> Smoothing</a></li>
+<li class="chapter" data-level="14.2" data-path="visualizing-trends.html"><a href="visualizing-trends.html#showing-trends-with-a-defined-functional-form"><i class="fa fa-check"></i><b>14.2</b> Showing trends with a defined functional form</a></li>
+<li class="chapter" data-level="14.3" data-path="visualizing-trends.html"><a href="visualizing-trends.html#detrending-and-time-series-decomposition"><i class="fa fa-check"></i><b>14.3</b> Detrending and time-series decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="geospatial-data.html"><a href="geospatial-data.html"><i class="fa fa-check"></i><b>15</b> Visualizing geospatial data</a><ul>
+<li class="chapter" data-level="15.1" data-path="geospatial-data.html"><a href="geospatial-data.html#projections"><i class="fa fa-check"></i><b>15.1</b> Projections</a></li>
+<li class="chapter" data-level="15.2" data-path="geospatial-data.html"><a href="geospatial-data.html#layers"><i class="fa fa-check"></i><b>15.2</b> Layers</a></li>
+<li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
+<li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#frequency-framing"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#uncertainty-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="17.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>17.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="17.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>17.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>18</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="18.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>18.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="18.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>18.2</b> 2D histograms</a></li>
+<li class="chapter" data-level="18.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>18.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>19</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="19.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>19.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="19.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>19.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="19.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>19.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>20</b> Redundant coding</a><ul>
+<li class="chapter" data-level="20.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>20.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="20.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>20.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>21</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="21.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>21.1</b> Small multiples</a></li>
+<li class="chapter" data-level="21.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>21.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>22</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="22.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>22.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="22.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>22.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="22.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>22.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="balance-data-context.html"><a href="balance-data-context.html"><i class="fa fa-check"></i><b>23</b> Balance the data and the context</a><ul>
+<li class="chapter" data-level="23.1" data-path="balance-data-context.html"><a href="balance-data-context.html#providing-the-appropriate-amount-of-context"><i class="fa fa-check"></i><b>23.1</b> Providing the appropriate amount of context</a></li>
+<li class="chapter" data-level="23.2" data-path="balance-data-context.html"><a href="balance-data-context.html#background-grids"><i class="fa fa-check"></i><b>23.2</b> Background grids</a></li>
+<li class="chapter" data-level="23.3" data-path="balance-data-context.html"><a href="balance-data-context.html#paired-data"><i class="fa fa-check"></i><b>23.3</b> Paired data</a></li>
+<li class="chapter" data-level="23.4" data-path="balance-data-context.html"><a href="balance-data-context.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>24</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="25" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>25</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="26" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>26</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="26.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>26.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="26.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>26.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="26.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>26.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="27" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>27</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="27.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>27.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="27.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>27.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="27.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>27.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>28</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="28.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>28.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="28.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>28.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="28.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>28.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>29</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="29.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>29.1</b> What is a story?</a></li>
+<li class="chapter" data-level="29.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>29.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="29.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>29.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="29.4" data-path="telling-a-story.html"><a href="telling-a-story.html#make-your-figures-memorable"><i class="fa fa-check"></i><b>29.4</b> Make your figures memorable</a></li>
+<li class="chapter" data-level="29.5" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>29.5</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>30</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="30.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>30.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="30.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>30.2</b> Programming books</a></li>
+<li class="chapter" data-level="30.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>30.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="30.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>30.4</b> Historical texts</a></li>
+<li class="chapter" data-level="30.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>30.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="geospatial-data" class="section level1">
+<h1><span class="header-section-number">15</span> Visualizing geospatial data</h1>
+<p>Many datasets contain information linked to locations in the physical world. For example, in an ecological study, a dataset may list where specific plants or animals have been found. Similarly, in a socioeconomic or political context, a dataset may contain information about where people with specific attributes (such as income, age, or educational attainment) live, or where man-made objects (e.g., bridges, roads, buildings) have been constructed. In all these cases, it can be helpful to visualize the data in their proper geospatial context, i.e., to show the data on a realistic map or alternatively as a map-like diagram.</p>
+<p>Maps tend to be intuitive to readers but they can be challenging to design. We need to think about concepts such as map projections and whether for our specific application the accurate representation of angles or areas is more critical. A common mapping technique, the <em>choropleth map,</em> consists of representing data values as differently colored spatial areas. Choropleth maps can at times be very useful and at other times highly misleading. As an alternative, we can construct map-like diagrams called <em>cartograms,</em> which may purposefully distort map areas or represent them in stylized form, for example as equal-sized squares.</p>
+<div id="projections" class="section level2">
+<h2><span class="header-section-number">15.1</span> Projections</h2>
+<p>The earth is approximately a sphere (Figure <a href="geospatial-data.html#fig:world-orthographic">15.1</a>), and more precisely an oblate spheroid that is slightly flattened along its axis of rotation. The two locations where the axis of rotation intersects with the spheroid are called the <em>poles</em> (north pole and south pole). We separate the spheroid into two hemispheres, the northern and the southern hemisphere, by drawing a line equidistant to both poles around the spheroid. This line is called the <em>equator.</em> To uniquely specify a location on the earth, we need three pieces of information: where we are located along the direction of the equator (the longitude), how close we are to either pole when moving perpendicular to the equator (the latitude), and how far we are from the earth’s center (the altitude). Longitude, latitude, and altitude are specified relative to a reference system called the <em>datum.</em> The datum specifies properties such as the shape and size of the earth, as well as the location of zero longitude, latitude, and altitude. One widely used datum is the World Geodetic System (WGS) 84, which is used by the Global Positioning System (GPS).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:world-orthographic"></span>
+<img src="geospatial_data_files/figure-html/world-orthographic-1.png" alt="Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the north pole and runing south are called meridians, and the lines running orthogonal to the meridians are called parallels. All meridians have the same length but parallels become shorter the closer we are to either pole." width="1155" />
+<p class="caption">
+Figure 15.1: Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the north pole and runing south are called <em>meridians</em>, and the lines running orthogonal to the meridians are called <em>parallels.</em> All meridians have the same length but parallels become shorter the closer we are to either pole.
+</p>
+</div>
+<p>While altitude is an important quantity in many geospatial applications, when visualizing geospatial data in the form of maps we are primarily concerned with the other two dimensions, longitude and latitude. Both longitude and latitude are angles, expressed in degrees. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as <em>meridians</em>, and all meridians terminate at the two poles (Figure <a href="geospatial-data.html#fig:world-orthographic">15.1</a>). The prime meridian, corresponding to 0° longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the prime meridian lies at 180° longitude (also referred to as 180°E), which is equivalent to -180° longitude (also referred to as 180°W), near the international date line. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0° latitude, the north pole corresponds to 90° latitude (also referred to as 90°N), and the south pole corresponds to -90° latitude (also referred to as 90°S). Lines of equal latitude are referred to as <em>parallels</em>, since they run parallel to the equator. All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude (Figure <a href="geospatial-data.html#fig:world-orthographic">15.1</a>). The longest parallel is the equator, at 0° latitude, and the shortest parallels lie at the north and south poles, 90°N and 90°S, and have length zero.</p>
+<p>The challenge in map-making is that we need to take the spherical surface of the earth and flatten it out so we can display it on a map. This process, called <em>projection,</em> necessarily introduces distortions, because a curved surface cannot be projected exactly onto a flat surface. Specifically, the projection can preserve either angles or areas but not both. A projection that does the former is called <em>conformal</em> and a projection that does the latter is called <em>equal-area</em>. Other projections may preserve neither angles nor areas but instead preserve other quantities of interest, such as distances to some reference point or line. Finally, some projections attempt to strike a compromise between preserving angles and areas. These compromise projections are frequently used to display the entire world in an aesthetically pleasing manner, and they accept some amount of both angular and area distortion (Figure <a href="coordinate-systems-axes.html#fig:worldmap-four-projections">3.11</a>). To systematize and keep track of different ways of projecting parts or all of the earth for specific maps, various standards bodies and organizations, such as the EPSG (European Petroleum Survey Group) or the ESRI (Environmental Systems Research Institute), maintain registries of projections. For example, EPSG:4326 represents unprojected longitude and latitude values in the WGS 84 coordinate system used by GPS. Several websites provide convenient access to these registered projections, including <a href="http://spatialreference.org/" class="uri">http://spatialreference.org/</a> and <a href="https://epsg.io/" class="uri">https://epsg.io/</a>.</p>
+<p>One of the earliest map projections in use, the Mercator projection, was developed in the 16th century for nautical navigation. It is a conformal projection that accurately represents shapes but introduces severe area distortions near the poles (Figure <a href="geospatial-data.html#fig:world-mercator">15.2</a>). The Mercator projection maps the globe onto a cylinder and then unrolls the cylinder to arrive at a rectangular map. Meridians in this projection are evenly spaced vertical lines, whereas parallels are horizontal lines whose spacing increases the further we move away from the equator (Figure <a href="geospatial-data.html#fig:world-mercator">15.2</a>). The spacing between parallels increases in proportion to the extent to which they have to be stretched closer to the poles to keep meridians perfectly vertical.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:world-mercator"></span>
+<img src="geospatial_data_files/figure-html/world-mercator-1.png" alt="Mercator projection of the world. In this projection, parallels are straight horizontal lines and meridians are straight vertical lines. It is a conformal projection preserving local angles, but it introduces severe distortions in areas near the poles. For example, Greenland appears to be bigger than Africa in this projection, when in reality Africa is fourteen times bigger than Greenland (see Figures 15.1 and 15.3)." width="1050" />
+<p class="caption">
+Figure 15.2: Mercator projection of the world. In this projection, parallels are straight horizontal lines and meridians are straight vertical lines. It is a conformal projection preserving local angles, but it introduces severe distortions in areas near the poles. For example, Greenland appears to be bigger than Africa in this projection, when in reality Africa is fourteen times bigger than Greenland (see Figures <a href="geospatial-data.html#fig:world-orthographic">15.1</a> and <a href="geospatial-data.html#fig:world-goode">15.3</a>).
+</p>
+</div>
+<p>Because of the severe area distortions it produces, the Mercator projection has fallen out of favor for maps of the entire world. However, variants of this projection continue to live on. For example, the transverse Mercator projection is routinely used for large-scale maps that show moderately small areas (spanning less than a few degrees in longitude) at large magnification. Another variant, the web Mercator projection, was introduced by Google for Google Maps and is used by several online mapping applications.</p>
+<p>A whole-world projection that is perfectly area-preserving is the Goode homolosine (Figure <a href="geospatial-data.html#fig:world-goode">15.3</a>). It is usually shown in its interrupted form, which has one cut in the northern hemisphere and three cuts in the southern hemisphere, carefully chosen so they don’t interrupt major land masses (Figure <a href="geospatial-data.html#fig:world-goode">15.3</a>). The cuts allow the projection to both preserve areas and approximately preserve angles, at the cost of non-contiguous oceans, a cut through the middle of Greenland, and several cuts through Antarctica. While the interrupted Goode homolosine has an unusual aesthetic and a strange name, it is a good choice for mapping applications that require accurate reproduction of areas on a global scale.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:world-goode"></span>
+<img src="geospatial_data_files/figure-html/world-goode-1.png" alt="Interrupted Goode homolosine projection of the world. This projection accurately preserves areas while minimizing angular distortions, at the cost of showing oceans and some land masses (Greenland, Antarctica) in a non-contiguous way." width="1785" />
+<p class="caption">
+Figure 15.3: Interrupted Goode homolosine projection of the world. This projection accurately preserves areas while minimizing angular distortions, at the cost of showing oceans and some land masses (Greenland, Antarctica) in a non-contiguous way.
+</p>
+</div>
+<p>Shape or area distortions due to map projections are particularly prominent when we’re attempting to make a map of the whole world, but they can cause trouble even at the scale of individual continents or countries. As an example, consider the United States, which consist of the “lower 48” (which are 48 contiguous states), Alaska, and Hawaii (Figure <a href="geospatial-data.html#fig:usa-orthographic">15.4</a>). While the lower 48 alone are reasonably easy to project onto a map, Alaska and Hawaii are so distant from the lower 48 that projecting all 50 states onto one map becomes awkward.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:usa-orthographic"></span>
+<img src="geospatial_data_files/figure-html/usa-orthographic-1.png" alt="Relative locations of Alaska, Hawaii, and the lower 48 states shown on a globe." width="1155" />
+<p class="caption">
+Figure 15.4: Relative locations of Alaska, Hawaii, and the lower 48 states shown on a globe.
+</p>
+</div>
+<p>Figure <a href="geospatial-data.html#fig:usa-true-albers">15.5</a> shows a map of all 50 states, made using an equal-area Albers projection. This projection provides a reasonable representation of the relative shapes, areas, and locations of the 50 states, but we notice some issues. First, Alaska seems weirdly stretched out compared to how it looks, for example, in Figures <a href="geospatial-data.html#fig:world-mercator">15.2</a> or <a href="geospatial-data.html#fig:usa-orthographic">15.4</a>. Second, the map is dominated by ocean/empty space. It would be preferable if we could zoom in further, so that the lower 48 states take up a larger proportion of the map area.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:usa-true-albers"></span>
+<img src="geospatial_data_files/figure-html/usa-true-albers-1.png" alt="Map of the United States of America, using an area-preserving Albers projection (ESRI:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations." width="1260" />
+<p class="caption">
+Figure 15.5: Map of the United States of America, using an area-preserving Albers projection (ESRI:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations.
+</p>
+</div>
+<p>To address the problem of uninteresting empty space, it is common practice to project Alaska and Hawaii separately (to minimize shape distortions) and then move them so they are shown underneath the lower 48 (Figure <a href="geospatial-data.html#fig:usa-albers">15.6</a>). You may notice in Figure <a href="geospatial-data.html#fig:usa-albers">15.6</a> that Alaska looks much smaller relative to the lower 48 than it does in Figure <a href="geospatial-data.html#fig:usa-true-albers">15.5</a>. The reason for this discrepancy is that Alaska has not only been moved, it also has been scaled so it looks comparable in size to typical midwestern or western states. This scaling, while common practice, is highly misleading, and therefore I have labeled the figure as “bad.”</p>
+
+<div class="figure" style="text-align: center"><span id="fig:usa-albers"></span>
+<img src="geospatial_data_files/figure-html/usa-albers-1.png" alt="Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states. Alaska also has been scaled so its linear extent is only 35% of the state’s true size. (In other words, the state’s area has been reduced to approximately 12% of its true size.) Such a scaling is frequently applied to Alaska, to make it visually appear to be of similar size as typical midwestern or western states. However, the scaling is highly misleading, and therefore the figure has been labeled as “bad”." width="1260" />
+<p class="caption">
+Figure 15.6: Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states. Alaska also has been scaled so its linear extent is only 35% of the state’s true size. (In other words, the state’s area has been reduced to approximately 12% of its true size.) Such a scaling is frequently applied to Alaska, to make it visually appear to be of similar size as typical midwestern or western states. However, the scaling is highly misleading, and therefore the figure has been labeled as “bad”.
+</p>
+</div>
+<p>Instead of both moving and scaling Alaska, we could just move it without changing its scale (Figure <a href="geospatial-data.html#fig:usa-albers-revised">15.7</a>). This visualization clearly shows that Alaska is the largest state, over twice the size of Texas. We are not used to seeing the U.S. shown in this way, but in my mind it is a much more reasonable representation of the 50 states than is Figure <a href="geospatial-data.html#fig:usa-albers">15.6</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:usa-albers-revised"></span>
+<img src="geospatial_data_files/figure-html/usa-albers-revised-1.png" alt="Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states." width="1260" />
+<p class="caption">
+Figure 15.7: Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states.
+</p>
+</div>
+</div>
+<div id="layers" class="section level2">
+<h2><span class="header-section-number">15.2</span> Layers</h2>
+<p>To visualize geospatial data in the proper context, we usually create maps consisting of multiple layers showing different types of information. To demonstrate this concept, I will visualize the locations of wind turbines in the San Francisco Bay area. In the Bay Area, wind turbines are clustered in two locations. One location, which I will refer to as the Shiloh Wind Farm, lies near Rio Vista and the other lies east of Hayward near Tracy (Figure <a href="geospatial-data.html#fig:sfbay-overview">15.8</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sfbay-overview"></span>
+<img src="geospatial_data_files/figure-html/sfbay-overview-1.png" alt="Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as purple-colored dots. Two regions with a high concentration of wind turbines are highlighted with black rectangles. I refer to the wind turbines near Rio Vista collectively as the Shiloh Wind Farm. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data: United States Wind Turbine Database" width="1785" />
+<p class="caption">
+Figure 15.8: Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as purple-colored dots. Two regions with a high concentration of wind turbines are highlighted with black rectangles. I refer to the wind turbines near Rio Vista collectively as the Shiloh Wind Farm. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data: United States Wind Turbine Database
+</p>
+</div>
+<p>Figure <a href="geospatial-data.html#fig:sfbay-overview">15.8</a> consists of four separate layers. At the bottom, we have the terrain layer, which shows hills, valleys, and water. The next layer shows the road network. On top of the road layer, I have placed a layer indicating the location of individual wind turbines. This layer also contains the two rectangles highlighting the majority of the wind turbines. Finally, the top layer adds the locations and names of cities. These four layers are shown separately in Figure <a href="geospatial-data.html#fig:sfbay-layers">15.9</a>. For any given map we want to make, we may want to add or remove some of these layers. For example, if we wanted to draw a map of voting districts, we might consider terrain information to be irrelevant and distracting. Alternatively, if we wanted to draw a map of exposed or covered roof areas to assess potential for solar power generation, we might want to replace terrain information with satellite imagery that shows individual roofs and actual vegetation. You can interactively try these different types of layers in most online map applications, such as Google Maps. I would like to emphasize that regardless of which layers we decide to keep or remove, it is generally recommended to add a scale bar and a north arrow. The scale bar helps readers understand the size of the spatial features shown in the map, while the north arrow clarifies the map’s orientation.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sfbay-layers"></span>
+<img src="geospatial_data_files/figure-html/sfbay-layers-1.png" alt="The individual layers of Figure 15.8. From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database " width="1785" />
+<p class="caption">
+Figure 15.9: The individual layers of Figure <a href="geospatial-data.html#fig:sfbay-overview">15.8</a>. From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+</p>
+</div>
+<p>All the concepts discussed in Chapter <a href="aesthetic-mapping.html#aesthetic-mapping">2</a> of mapping data onto aesthetics carry over to maps. We can place data points into their geographic context and show other data dimensions via aesthetics such as color or shape. For example, Figure <a href="geospatial-data.html#fig:shiloh-map">15.10</a> provides a zoomed-in view of the rectangle labeled “Shiloh Wind Farm” in Figure <a href="geospatial-data.html#fig:sfbay-overview">15.8</a>. Individual wind turbines are shown as dots, with the color of the dots representing when a specific turbine was built and the shape representing the project to which the wind turbine belongs. A map such as this one can provide a quick overview of how an area was developed. E.g., here we see that EDF Renewables is a relatively small project built before 2000, High Winds is a moderately sized project build between 2000 and 2004, and Shiloh and Solano are the largest two projects in the area, both built over an extended period of time.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:shiloh-map"></span>
+<img src="geospatial_data_files/figure-html/shiloh-map-1.png" alt="Location of individual wind turbines in the Shiloh Wind Farm. Each dot highlights the location of one wind turbine. The map area corresponds to the rectangle in Figure 15.8. Dots are colored by when the wind turbine was built, and the shape of the dots represents the various projects to which the individual wind turbines belong. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database" width="1260" />
+<p class="caption">
+Figure 15.10: Location of individual wind turbines in the Shiloh Wind Farm. Each dot highlights the location of one wind turbine. The map area corresponds to the rectangle in Figure <a href="geospatial-data.html#fig:sfbay-overview">15.8</a>. Dots are colored by when the wind turbine was built, and the shape of the dots represents the various projects to which the individual wind turbines belong. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+</p>
+</div>
+</div>
+<div id="choropleth-mapping" class="section level2">
+<h2><span class="header-section-number">15.3</span> Choropleth mapping</h2>
+<p>We frequently want to show how some quantity varies across locations. We can do so by coloring individual regions in a map according to the data dimension we want to display. Such maps are called <em>choropleth maps.</em></p>
+<p>As a simple example, consider the population density (persons per square kilometer) across the United States. We take the population number for each county in the U.S., divide it by the county’s surface area, and then draw a map where the color of each county corresponds to the ratio between population number and area (Figure <a href="geospatial-data.html#fig:population-density-counties">15.11</a>). We can see how the the major cities on the east and the west coast are the most populated areas of the U.S., the great plains and western states have low population densities, and the state of Alaska is the least populated of all.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:population-density-counties"></span>
+<img src="geospatial_data_files/figure-html/population-density-counties-1.png" alt="Population density in every U.S. county, shown as a choropleth map. Population density is reported as persons per square kilometer. Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.11: Population density in every U.S. county, shown as a choropleth map. Population density is reported as persons per square kilometer. Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+<p>Figure <a href="geospatial-data.html#fig:population-density-counties">15.11</a> uses light colors to represent low population densities and dark colors to represent high densities, so that high-density metropolitan areas stand out as dark colors on a background of light colors. We tend to associate darker colors with higher intensities when the background color of the figure is light. However, we can also pick a color scale where high values light up on a dark background (Figure <a href="geospatial-data.html#fig:population-density-counties2">15.12</a>). As longs as the lighter colors fall into the red-yellow spectrum, so that they appear to be glowing, they can be perceived as representing higher intensities. As a general principle, when figures are meant to be printed on white paper then light-colored background areas (as in Figure <a href="geospatial-data.html#fig:population-density-counties">15.11</a>) will typically work better. For online viewing or on a dark background, dark-colored background areas (as in Figure <a href="geospatial-data.html#fig:population-density-counties2">15.12</a>) may be preferable.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:population-density-counties2"></span>
+<img src="geospatial_data_files/figure-html/population-density-counties2-1.png" alt="Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure 15.11 except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.12: Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure <a href="geospatial-data.html#fig:population-density-counties">15.11</a> except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+
+<p>Choropleths work best when the coloring represents a density (i.e., some quantity divided by surface area, as in Figures <a href="geospatial-data.html#fig:population-density-counties">15.11</a> and <a href="geospatial-data.html#fig:population-density-counties2">15.12</a>). We perceive larger areas as corresponding to larger amounts than smaller areas (see also the chapter on proportional ink, Chapter <a href="proportional-ink.html#proportional-ink">17</a>), and shading by density corrects for this effect. However, in practice, we often see choropleths colored according to some quantity that is not a density. For example, in Figure <a href="color-basics.html#fig:map-Texas-income">4.4</a> I showed a choropleth of median annual income in Texas counties. Such choropleth maps can be appropriate when they are prepared with caution. There are two conditions under which we can color-map quantities that are not densities: First, if all the individual areas we color have approximately the same size and shape, then we don’t have to worry about some areas drawing disproportionate attention solely due to their size. Second, if the individual areas we color are relatively small compared to the overall size of the map and if the quantity that color represents changes on a scale larger than the individual colored areas, then again we don’t have to worry about some areas drawing disproportionate attention solely due to their size. Both of these conditions are approximately met in Figure <a href="color-basics.html#fig:map-Texas-income">4.4</a>.</p>
+<p>It is also important to consider the effect of continuous versus discrete color scales in choropleth mapping. While continuous color scales tend to look visually appealing (e.g., Figures <a href="geospatial-data.html#fig:population-density-counties">15.11</a> and <a href="geospatial-data.html#fig:population-density-counties2">15.12</a>), they can be difficult to read. We are not very good at recognizing a specific color value and matching it against a continuous scale. Therefore, it is often appropriate to bin the data values into discrete groups that are represented with distinct colors. On the order of four to six bins is a good choice. The binning sacrifices some information, but on the flip side the binned colors can be uniquely recognized. As an example, Figure <a href="geospatial-data.html#fig:median-income-counties-binned">15.13</a> expands the map of median income in Texas counties (Figure <a href="color-basics.html#fig:map-Texas-income">4.4</a>) to all counties in the U.S., and it uses a color scale consisting of five distinct income bins.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:median-income-counties-binned"></span>
+<img src="geospatial_data_files/figure-html/median-income-counties-binned-1.png" alt="Median income in every U.S. county, shown as a choropleth map. The median income values have been binned into five distinct groups, because binned color scales are generally easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.13: Median income in every U.S. county, shown as a choropleth map. The median income values have been binned into five distinct groups, because binned color scales are generally easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+<p>Even though counties are not quite as equal-sized and even-shaped across the entire U.S. as they are just within Texas, I think Figure <a href="geospatial-data.html#fig:median-income-counties-binned">15.13</a> still works as a choropleth map. No individidual county overly dominates the map. However, things look different when we draw a comparable map at the state level (Figure <a href="geospatial-data.html#fig:median-income-states">15.14</a>). Then Alaska dominates the choropleth and, because of its size, suggests that median incomes above $70,000 are common. Yet Alaska is very sparsely populated (see Figures <a href="geospatial-data.html#fig:population-density-counties">15.11</a> and <a href="geospatial-data.html#fig:population-density-counties2">15.12</a>), and thus the income levels in Alaska apply only to a small portion of the U.S. population. The vast majority of U.S. counties, which are nearly all more populous than counties in Alaska, have a median income of below $60,000.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:median-income-states"></span>
+<img src="geospatial_data_files/figure-html/median-income-states-1.png" alt="Median income in every U.S. state, shown as a choropleth map. This map is visually dominated by the state of Alaska, which has a high median income but very low population density. At the same time, the densely populated high-income states on the East Coast do not appear very prominent on this map. In aggregate, this map provides a poor visualization of the income distribution in the U.S., and therefore I have labeled it as “bad.” Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.14: Median income in every U.S. state, shown as a choropleth map. This map is visually dominated by the state of Alaska, which has a high median income but very low population density. At the same time, the densely populated high-income states on the East Coast do not appear very prominent on this map. In aggregate, this map provides a poor visualization of the income distribution in the U.S., and therefore I have labeled it as “bad.” Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+</div>
+<div id="cartograms" class="section level2">
+<h2><span class="header-section-number">15.4</span> Cartograms</h2>
+<p>Not every map-like visualization has to be geographically accurate to be useful. For example, the problem with Figure <a href="geospatial-data.html#fig:median-income-states">15.14</a> is that some states take up a comparatively large area but are sparsely populated while others take up a small area yet have a large number of inhabitants. What if we deformed the states so their size was proportional to their number of inhabitants? Such a modified map is called a <em>cartogram</em>, and Figure <a href="geospatial-data.html#fig:median-income-cartogram">15.15</a> shows what it can look like for the median income dataset. We can still recognize individual states, yet we also see how the adjustment for population numbers has introduced important modifications. The east coast states, Florida, and California have grown a lot in size, whereas the other western states and Alaska have collapsed.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:median-income-cartogram"></span>
+<img src="geospatial_data_files/figure-html/median-income-cartogram-1.png" alt="Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.15: Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+<p>As an alternative to a cartogram with distorted shapes, we can also draw a much simpler <em>cartogram heatmap,</em> where each state is represented by a colored square (Figure <a href="geospatial-data.html#fig:median-income-statebins">15.16</a>). While this representation does not correct for the population number in each state, and thus underrepresents more populous states and overrepresents less populous states, at least it treats all states equally and doesn’t weigh them arbitrarily by their shape or size.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:median-income-statebins"></span>
+<img src="geospatial_data_files/figure-html/median-income-statebins-1.png" alt="Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey" width="1260" />
+<p class="caption">
+Figure 15.16: Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
+</p>
+</div>
+<p>Finally, we can draw more complex cartograms by placing individual plots at the location of each state. For example, if we want to visualize the evolution of the unemployment rate over time for each state, it can help to draw an individual graph for each state and then arrange the graphs based on the approximate relative position of the states to each other (Figure <a href="geospatial-data.html#fig:unemployment-geofacet">15.17</a>). For somebody who is familiar with the geography of the United States, this arrangement may make it easier to find the graphs for specific states than arranging them, for example, in alphabetical order. Furthermore, one would expect neighboring states to display similar patterns, and Figure <a href="geospatial-data.html#fig:unemployment-geofacet">15.17</a> shows that this is indeed the case.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:unemployment-geofacet"></span>
+<img src="geospatial_data_files/figure-html/unemployment-geofacet-1.png" alt="Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, including the District of Columbia (DC), from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics" width="1785" />
+<p class="caption">
+Figure 15.17: Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, including the District of Columbia (DC), from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualizing-trends.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizing-uncertainty.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

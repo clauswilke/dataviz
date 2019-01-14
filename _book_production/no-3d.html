@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="avoid-line-drawings.html">
+<link rel="next" href="image-file-formats.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="visualizing-trends.html"><a href="visualizing-trends.html"><i class="fa fa-check"></i><b>14</b> Visualizing trends</a><ul>
+<li class="chapter" data-level="14.1" data-path="visualizing-trends.html"><a href="visualizing-trends.html#smoothing"><i class="fa fa-check"></i><b>14.1</b> Smoothing</a></li>
+<li class="chapter" data-level="14.2" data-path="visualizing-trends.html"><a href="visualizing-trends.html#showing-trends-with-a-defined-functional-form"><i class="fa fa-check"></i><b>14.2</b> Showing trends with a defined functional form</a></li>
+<li class="chapter" data-level="14.3" data-path="visualizing-trends.html"><a href="visualizing-trends.html#detrending-and-time-series-decomposition"><i class="fa fa-check"></i><b>14.3</b> Detrending and time-series decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="geospatial-data.html"><a href="geospatial-data.html"><i class="fa fa-check"></i><b>15</b> Visualizing geospatial data</a><ul>
+<li class="chapter" data-level="15.1" data-path="geospatial-data.html"><a href="geospatial-data.html#projections"><i class="fa fa-check"></i><b>15.1</b> Projections</a></li>
+<li class="chapter" data-level="15.2" data-path="geospatial-data.html"><a href="geospatial-data.html#layers"><i class="fa fa-check"></i><b>15.2</b> Layers</a></li>
+<li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
+<li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#frequency-framing"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#uncertainty-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="17.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>17.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="17.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>17.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>18</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="18.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>18.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="18.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>18.2</b> 2D histograms</a></li>
+<li class="chapter" data-level="18.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>18.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>19</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="19.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>19.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="19.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>19.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="19.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>19.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>20</b> Redundant coding</a><ul>
+<li class="chapter" data-level="20.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>20.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="20.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>20.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>21</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="21.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>21.1</b> Small multiples</a></li>
+<li class="chapter" data-level="21.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>21.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>22</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="22.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>22.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="22.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>22.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="22.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>22.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="balance-data-context.html"><a href="balance-data-context.html"><i class="fa fa-check"></i><b>23</b> Balance the data and the context</a><ul>
+<li class="chapter" data-level="23.1" data-path="balance-data-context.html"><a href="balance-data-context.html#providing-the-appropriate-amount-of-context"><i class="fa fa-check"></i><b>23.1</b> Providing the appropriate amount of context</a></li>
+<li class="chapter" data-level="23.2" data-path="balance-data-context.html"><a href="balance-data-context.html#background-grids"><i class="fa fa-check"></i><b>23.2</b> Background grids</a></li>
+<li class="chapter" data-level="23.3" data-path="balance-data-context.html"><a href="balance-data-context.html#paired-data"><i class="fa fa-check"></i><b>23.3</b> Paired data</a></li>
+<li class="chapter" data-level="23.4" data-path="balance-data-context.html"><a href="balance-data-context.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>24</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="25" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>25</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="26" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>26</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="26.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>26.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="26.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>26.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="26.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>26.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="27" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>27</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="27.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>27.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="27.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>27.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="27.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>27.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>28</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="28.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>28.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="28.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>28.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="28.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>28.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>29</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="29.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>29.1</b> What is a story?</a></li>
+<li class="chapter" data-level="29.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>29.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="29.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>29.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="29.4" data-path="telling-a-story.html"><a href="telling-a-story.html#make-your-figures-memorable"><i class="fa fa-check"></i><b>29.4</b> Make your figures memorable</a></li>
+<li class="chapter" data-level="29.5" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>29.5</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>30</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="30.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>30.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="30.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>30.2</b> Programming books</a></li>
+<li class="chapter" data-level="30.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>30.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="30.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>30.4</b> Historical texts</a></li>
+<li class="chapter" data-level="30.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>30.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="no-3d" class="section level1">
+<h1><span class="header-section-number">26</span> Don’t go 3D</h1>
+<p>3D plots are quite popular, in particular in business presentations but also among academics. They are also almost always inappropriately used. It is rare that I see a 3D plot that couldn’t be improved by turning it into a regular 2D figure. In this chapter, I will explain why 3D plots have problems, why they generally are not needed, and in what limited circumstances 3D plots may be appropriate.</p>
+<div id="avoid-gratuitous-3d" class="section level2">
+<h2><span class="header-section-number">26.1</span> Avoid gratuitous 3D</h2>
+<p>Many visualization softwares enable you to spruce up your plots by turning the plots’ graphical elements into three-dimensional objects. Most commonly, we see pie charts turned into disks rotated in space, bar plots turned into columns, and line plots turned into bands. Notably, in none of these cases does the third dimension convey any actual data. 3D is used simply to decorate and adorn the plot. I consider this use of 3D as gratuitous. It is unequivocally bad and should be erased from the visual vocabulary of data scientists.</p>
+<p>The problem with gratuitous 3D is that the projection of 3D objects into two dimensions for printing or display on a monitor distorts the data. The human visual system tries to correct for this distortion as it maps the 2D projection of a 3D image back into a 3D space. However, this correction can only ever be partial. As an example, let’s take a simple pie chart with two slices, one representing 25% of the data and one 75%, and rotate this pie in space (Figure <a href="no-3d.html#fig:rotated-pie">26.1</a>). As we change the angle at which we’re looking at the pie, the size of the slices seems to change as well. In particular, the 25% slice, which is located in the front of the pie, looks much bigger than 25% when we look at the pie from a flat angle (Figure <a href="no-3d.html#fig:rotated-pie">26.1</a>a).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:rotated-pie"></span>
+<img src="no_3d_files/figure-html/rotated-pie-1.png" alt="The same 3D pie chart shown from four different angles. Rotating a pie into the third dimension makes pie slices in the front appear larger than they really are and pie slices in the back appear smaller. Here, in parts (a), (b), and (c), the blue slice corresponding to 25% of the data visually occupies more than 25% of the area representing the pie. Only part (d) is an accurate representation of the data." width="1260" />
+<p class="caption">
+Figure 26.1: The same 3D pie chart shown from four different angles. Rotating a pie into the third dimension makes pie slices in the front appear larger than they really are and pie slices in the back appear smaller. Here, in parts (a), (b), and (c), the blue slice corresponding to 25% of the data visually occupies more than 25% of the area representing the pie. Only part (d) is an accurate representation of the data.
+</p>
+</div>
+<p>Similar problems arise for other types of 3D plot. Figure <a href="no-3d.html#fig:titanic-3d">26.2</a> shows the breakdown of Titanic passengers by class and gender using 3D bars. Because of the way the bars are arranged relative to the axes, the bars all look shorter than they actually are. For example, there were 322 passengers total traveling in 1st class, yet Figure <a href="no-3d.html#fig:titanic-3d">26.2</a> suggests that the number was less than 300. This illusion arises because the columns representing the data are located at a distance from the two back surfaces on which the gray horizontal lines are drawn. To see this effect, consider extending any of the bottom edges of one of the columns until it hits the lowest gray line, which represents 0. Then, imagine doing the same to any of the top edges, and you’ll see that all columns are taller than they appear at first glance. (See Figure <a href="visualizing-amounts.html#fig:titanic-passengers-by-class-sex">6.10</a> in Chapter <a href="visualizing-amounts.html#visualizing-amounts">6</a> for a more reasonable 2D version of this figure.)</p>
+
+<div class="figure" style="text-align: center"><span id="fig:titanic-3d"></span>
+<img src="no_3d_files/figure-html/titanic-3d-1.png" alt="Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class, shown as a 3D stacked bar plot. The total numbers of passengers in 1st, 2nd, and 3rd class are 322, 279, and 711, respectively (see Figure 6.10). Yet in this plot, the 1st class bar appears to represent fewer than 300 passengers, the 3rd class bar appears to represent fewer than 700 passengers, and the 2nd class bar seems to be closer to 210–220 passengers than the actual 279 passengers. Furthermore, the 3rd class bar visually dominates the figure and makes the number of passengers in 3rd class appear larger than it actually is." width="1260" />
+<p class="caption">
+Figure 26.2: Numbers of female and male passengers on the Titanic traveling in 1st, 2nd, and 3rd class, shown as a 3D stacked bar plot. The total numbers of passengers in 1st, 2nd, and 3rd class are 322, 279, and 711, respectively (see Figure <a href="visualizing-amounts.html#fig:titanic-passengers-by-class-sex">6.10</a>). Yet in this plot, the 1st class bar appears to represent fewer than 300 passengers, the 3rd class bar appears to represent fewer than 700 passengers, and the 2nd class bar seems to be closer to 210–220 passengers than the actual 279 passengers. Furthermore, the 3rd class bar visually dominates the figure and makes the number of passengers in 3rd class appear larger than it actually is.
+</p>
+</div>
+</div>
+<div id="avoid-3d-position-scales" class="section level2">
+<h2><span class="header-section-number">26.2</span> Avoid 3D position scales</h2>
+<p>While visualizations with gratuitous 3D can easily be dismissed as bad, it is less clear what to think of visualizations using three genuine position scales (<em>x</em>, <em>y</em>, and <em>z</em>) to represent data. In this case, the use of the third dimension serves an actual purpose. Nevertheless, the resulting plots are frequently difficult to interpret, and in my mind they should be avoided.</p>
+<p>Consider a 3D scatter plot of fuel efficiency versus displacement and power for 32 cars. We have seen this dataset previously in Chapter <a href="aesthetic-mapping.html#aesthetic-mapping">2</a>, Figure <a href="aesthetic-mapping.html#fig:mtcars-five-scale">2.5</a>. Here, we plot displacement along the <em>x</em> axis, power along the <em>y</em> axis, and fuel efficiency along the <em>z</em> axis, and we represent each car with a dot (Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a>). Even though this 3D visualization is shown from four different perspectives, it is difficult to envision how exactly the points are distributed in space. I find part (d) of Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a> particularly confusing. It almost seems to show a different dataset, even though nothing has changed other than the angle from which we look at the dots.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:mtcars-3d"></span>
+<img src="no_3d_files/figure-html/mtcars-3d-1.png" alt="Fuel efficiency versus displacement and power for 32 cars (1973–74 models). Each dot represents one car, and the dot color represents the number of cylinders of the car. The four panels (a)–(d) show exactly the same data but use different perspectives. Data source: Motor Trend, 1974." width="1260" />
+<p class="caption">
+Figure 26.3: Fuel efficiency versus displacement and power for 32 cars (1973–74 models). Each dot represents one car, and the dot color represents the number of cylinders of the car. The four panels (a)–(d) show exactly the same data but use different perspectives. Data source: <em>Motor Trend,</em> 1974.
+</p>
+</div>
+<p>The fundamental problem with such 3D visualizations is that they require two separate, successive data transformations. The first transformation maps the data from the data space into the 3D visualization space, as discussed in Chapters <a href="aesthetic-mapping.html#aesthetic-mapping">2</a> and <a href="coordinate-systems-axes.html#coordinate-systems-axes">3</a> in the context of position scales. The second one maps the data from the 3D visualization space into the 2D space of the final figure. (This second transformation obviously does not occur for visualizations shown in a true 3D environment, such as when shown as physical sculptures or 3D-printed objects. My primary objection here is to 3D visualizations shown on 2D displays.) The second transformation is non-invertible, because each point on the 2D display corresponds to a line of points in the 3D visualization space. Therefore, we cannot uniquely determine where in 3D space any particular data point lies.</p>
+<p>Our visual system nevertheless attempts to invert the 3D to 2D transformation. However, this process is unreliable, fraught with error, and highly dependent on appropriate cues in the image that convey some sense of three-dimensionality. When we remove these cues the inversion becomes entirely impossible. This can be seen in Figure <a href="no-3d.html#fig:mtcars-3d-no-axes">26.4</a>, which is identical to Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a> except all depth cues have been removed. The result is four random arrangements of points that we cannot interpret at all and that aren’t even easily relatable to each other. Could you tell which points in part (a) correspond to which points in part (b)? I certainly cannot.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:mtcars-3d-no-axes"></span>
+<img src="no_3d_files/figure-html/mtcars-3d-no-axes-1.png" alt="Fuel efficiency versus displacement and power for 32 cars (1973–74 models). The four panels (a)–(d) correspond to the same panels in Figure 26.3, only that all grid lines providing depth cues have been removed. Data source: Motor Trend, 1974." width="1260" />
+<p class="caption">
+Figure 26.4: Fuel efficiency versus displacement and power for 32 cars (1973–74 models). The four panels (a)–(d) correspond to the same panels in Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a>, only that all grid lines providing depth cues have been removed. Data source: <em>Motor Trend,</em> 1974.
+</p>
+</div>
+<p>Instead of applying two separate data transformations, one of which is non-invertible, I think it is generally better to just apply one appropriate, invertible transformation and map the data directly into 2D space. It is rarely necessary to add a third dimension as a position scale, since variables can also be mapped onto color, size, or shape scales. For example, in Chapter <a href="aesthetic-mapping.html#aesthetic-mapping">2</a>, I plotted five variables of the fuel-efficency dataset at once yet used only two position scales (Figure <a href="aesthetic-mapping.html#fig:mtcars-five-scale">2.5</a>).</p>
+<p>Here, I want to show two alternative ways of plotting exactly the variables used in Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a>. First, if we primarily care about fuel efficiency as the response variable, we can plot it twice, once against displacement and once against power (Figure <a href="no-3d.html#fig:mtcars-2d-multiple">26.5</a>). Second, if we are more interested in how displacement and power relate to each other, with fuel efficiency as a secondary variable of interest, we can plot power versus displacement and map fuel efficiency onto the size of the dots (Figure <a href="no-3d.html#fig:mtcars-2d-size">26.6</a>). Both figures are more useful and less confusing than Figure <a href="no-3d.html#fig:mtcars-3d">26.3</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:mtcars-2d-multiple"></span>
+<img src="no_3d_files/figure-html/mtcars-2d-multiple-1.png" alt="Fuel efficiency versus displacement (a) and power (b). Data source: Motor Trend, 1974." width="1260" />
+<p class="caption">
+Figure 26.5: Fuel efficiency versus displacement (a) and power (b). Data source: <em>Motor Trend,</em> 1974.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:mtcars-2d-size"></span>
+<img src="no_3d_files/figure-html/mtcars-2d-size-1.png" alt="Power versus displacement for 32 cars, with fuel efficiency represented by dot size. Data source: Motor Trend, 1974." width="1155" />
+<p class="caption">
+Figure 26.6: Power versus displacement for 32 cars, with fuel efficiency represented by dot size. Data source: <em>Motor Trend,</em> 1974.
+</p>
+</div>
+<p>You may wonder whether the problem with 3D scatter plots is that the actual data representation, the dots, do not themselves convey any 3D information. What happens, for example, if we use 3D bars instead? Figure <a href="no-3d.html#fig:VA-death-rates-3d">26.7</a> shows a typical dataset that one might visualize with 3D bars, the mortality rates in 1940 Virginia stratified by age group and by gender and housing location. We can see that indeed the 3D bars help us interpret the plot. It is unlikely that one might mistake a bar in the foreground for one in the background or vise versa. Nevertheless, the problems discussed in the context of Figure <a href="no-3d.html#fig:titanic-3d">26.2</a> exist here as well. It is difficult to judge exactly how tall the individual bars are, and it is also difficult to make direct comparisons. For example, was the mortality rate of urban females in the 65–69 age group higher or lower than that of urban males in the 60–64 age group?</p>
+
+<div class="figure" style="text-align: center"><span id="fig:VA-death-rates-3d"></span>
+<img src="no_3d_files/figure-html/VA-death-rates-3d-1.png" alt="Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50–54, 55–59, 60–64, 65–69, 70–74), and they are reported in units of deaths per 1000 persons. This figure is labeled as “bad” because the 3D perspective makes the plot difficult to read. Data source: Molyneaux, Gilliam, and Florant (1947)" width="974.4" />
+<p class="caption">
+Figure 26.7: Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50–54, 55–59, 60–64, 65–69, 70–74), and they are reported in units of deaths per 1000 persons. This figure is labeled as “bad” because the 3D perspective makes the plot difficult to read. Data source: <span class="citation">Molyneaux, Gilliam, and Florant (<a href="#ref-Molyneaux-et-al-1947">1947</a>)</span>
+</p>
+</div>
+<p>In general, it is better to use Trellis plots (Chapter <a href="multi-panel-figures.html#multi-panel-figures">21</a>) instead of 3D visualizations. The Virginia mortality dataset requires only four panels when shown as Trellis plot (Figure <a href="no-3d.html#fig:VA-death-rates-Trellis">26.8</a>). I consider this figure clear and easy to interpret. It is immediately obvious that mortality rates were higher among men than among women, and also that urban males seem to have had higher mortality rates than rural males whereas no such trend is apparent for urban and rural females.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:VA-death-rates-Trellis"></span>
+<img src="no_3d_files/figure-html/VA-death-rates-Trellis-1.png" alt="Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50–54, 55–59, 60–64, 65–69, 70–74), and they are reported in units of deaths per 1000 persons. Data source: Molyneaux, Gilliam, and Florant (1947)" width="1260" />
+<p class="caption">
+Figure 26.8: Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50–54, 55–59, 60–64, 65–69, 70–74), and they are reported in units of deaths per 1000 persons. Data source: <span class="citation">Molyneaux, Gilliam, and Florant (<a href="#ref-Molyneaux-et-al-1947">1947</a>)</span>
+</p>
+</div>
+</div>
+<div id="appropriate-use-of-3d-visualizations" class="section level2">
+<h2><span class="header-section-number">26.3</span> Appropriate use of 3D visualizations</h2>
+<p>Visualizations using 3D position scales can sometimes be appropriate, however. First, the issues described in the preceding section are of lesser concern if the visualization is interactive and can be rotated by the viewer, or alternatively, if it is shown in a VR or augmented reality environment where it can be inspected from multiple angles. Second, even if the visualization isn’t interactive, showing it slowly rotating, rather than as a static image from one perspective, will allow the viewer to discern where in 3D space different graphical elements reside. The human brain is very good at reconstructing a 3D scene from a series of images taken from different angles, and the slow rotation of the graphic provides exactly these images.</p>
+<p>Finally, it makes sense to use 3D visualizations when we want to show actual 3D objects and/or data mapped onto them. For example, showing the topographic relief of a mountainous island is a reasonable choice (Figure <a href="no-3d.html#fig:corsica-relief">26.9</a>). Similarly, if we want to visualize the evolutionary sequence conservation of a protein mapped onto its structure, it makes sense to show the structure as a 3D object (Figure <a href="no-3d.html#fig:protein-3d">26.10</a>). In either case, however, these visualizations would still be easier to interpret if they were shown as rotating animations. While this is not possible in traditional print publications, it can be done easily when posting figures on the web or when giving presentations.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:corsica-relief"></span>
+<img src="figures/3d/Corsica.png" alt="Relief of the Island of Corsica in the Mediterranean Sea. Data source: Copernicus Land Monitoring Service" width="288" />
+<p class="caption">
+Figure 26.9: Relief of the Island of Corsica in the Mediterranean Sea. Data source: Copernicus Land Monitoring Service
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:protein-3d"></span>
+<img src="no_3d_files/figure-html/protein-3d-1.png" alt="Patterns of evolutionary variation in a protein. The colored tube represents the backbone of the protein Exonuclease III from the bacterium Escherichia coli (Protein Data Bank identifier: 1AKO). The coloring indicates the evolutionary conservation of the individual sites in this protein, with dark coloring indicating conserved amino acids and light coloring indicating variable amino acids. Data source: Marcos and Echave (2015)" width="945" />
+<p class="caption">
+Figure 26.10: Patterns of evolutionary variation in a protein. The colored tube represents the backbone of the protein Exonuclease III from the bacterium <em>Escherichia coli</em> (Protein Data Bank identifier: 1AKO). The coloring indicates the evolutionary conservation of the individual sites in this protein, with dark coloring indicating conserved amino acids and light coloring indicating variable amino acids. Data source: <span class="citation">Marcos and Echave (<a href="#ref-Marcos-Echave-2015">2015</a>)</span>
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Molyneaux-et-al-1947">
+<p>Molyneaux, L., S. K. Gilliam, and L. C. Florant. 1947. “Differences in Virginia Death Rates by Color, Sex, Age, and Rural or Urban Residence.” <em>American Sociological Review</em> 12: 525–35.</p>
+</div>
+<div id="ref-Marcos-Echave-2015">
+<p>Marcos, M. L., and J. Echave. 2015. “Too Packed to Change: Side-Chain Packing and Site-Specific Substitution Rates in Protein Evolution.” <em>PeerJ</em> 3: e911.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="avoid-line-drawings.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="image-file-formats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

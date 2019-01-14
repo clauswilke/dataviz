@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="time-series.html">
+<link rel="next" href="geospatial-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="visualizing-trends.html"><a href="visualizing-trends.html"><i class="fa fa-check"></i><b>14</b> Visualizing trends</a><ul>
+<li class="chapter" data-level="14.1" data-path="visualizing-trends.html"><a href="visualizing-trends.html#smoothing"><i class="fa fa-check"></i><b>14.1</b> Smoothing</a></li>
+<li class="chapter" data-level="14.2" data-path="visualizing-trends.html"><a href="visualizing-trends.html#showing-trends-with-a-defined-functional-form"><i class="fa fa-check"></i><b>14.2</b> Showing trends with a defined functional form</a></li>
+<li class="chapter" data-level="14.3" data-path="visualizing-trends.html"><a href="visualizing-trends.html#detrending-and-time-series-decomposition"><i class="fa fa-check"></i><b>14.3</b> Detrending and time-series decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="geospatial-data.html"><a href="geospatial-data.html"><i class="fa fa-check"></i><b>15</b> Visualizing geospatial data</a><ul>
+<li class="chapter" data-level="15.1" data-path="geospatial-data.html"><a href="geospatial-data.html#projections"><i class="fa fa-check"></i><b>15.1</b> Projections</a></li>
+<li class="chapter" data-level="15.2" data-path="geospatial-data.html"><a href="geospatial-data.html#layers"><i class="fa fa-check"></i><b>15.2</b> Layers</a></li>
+<li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
+<li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#frequency-framing"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#uncertainty-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="17.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>17.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="17.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>17.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>18</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="18.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>18.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="18.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>18.2</b> 2D histograms</a></li>
+<li class="chapter" data-level="18.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>18.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>19</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="19.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>19.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="19.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>19.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="19.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>19.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>20</b> Redundant coding</a><ul>
+<li class="chapter" data-level="20.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>20.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="20.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>20.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>21</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="21.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>21.1</b> Small multiples</a></li>
+<li class="chapter" data-level="21.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>21.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>22</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="22.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>22.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="22.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>22.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="22.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>22.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="balance-data-context.html"><a href="balance-data-context.html"><i class="fa fa-check"></i><b>23</b> Balance the data and the context</a><ul>
+<li class="chapter" data-level="23.1" data-path="balance-data-context.html"><a href="balance-data-context.html#providing-the-appropriate-amount-of-context"><i class="fa fa-check"></i><b>23.1</b> Providing the appropriate amount of context</a></li>
+<li class="chapter" data-level="23.2" data-path="balance-data-context.html"><a href="balance-data-context.html#background-grids"><i class="fa fa-check"></i><b>23.2</b> Background grids</a></li>
+<li class="chapter" data-level="23.3" data-path="balance-data-context.html"><a href="balance-data-context.html#paired-data"><i class="fa fa-check"></i><b>23.3</b> Paired data</a></li>
+<li class="chapter" data-level="23.4" data-path="balance-data-context.html"><a href="balance-data-context.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>24</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="25" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>25</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="26" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>26</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="26.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>26.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="26.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>26.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="26.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>26.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="27" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>27</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="27.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>27.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="27.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>27.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="27.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>27.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>28</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="28.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>28.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="28.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>28.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="28.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>28.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>29</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="29.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>29.1</b> What is a story?</a></li>
+<li class="chapter" data-level="29.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>29.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="29.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>29.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="29.4" data-path="telling-a-story.html"><a href="telling-a-story.html#make-your-figures-memorable"><i class="fa fa-check"></i><b>29.4</b> Make your figures memorable</a></li>
+<li class="chapter" data-level="29.5" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>29.5</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>30</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="30.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>30.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="30.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>30.2</b> Programming books</a></li>
+<li class="chapter" data-level="30.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>30.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="30.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>30.4</b> Historical texts</a></li>
+<li class="chapter" data-level="30.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>30.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualizing-trends" class="section level1">
+<h1><span class="header-section-number">14</span> Visualizing trends</h1>
+<p>When making scatter plots (Chapter <a href="visualizing-associations.html#visualizing-associations">12</a>) or time series (Chapter <a href="time-series.html#time-series">13</a>), we are often more interested in the overarching trend of the data than in the specific detail of where each individual data point lies. By drawing the trend on top of or instead of the actual data points, usually in the form of a straight or curved line, we can create a visualization that helps the reader immediately see key features of the data. There are two fundamental approaches to determining a trend: We can either smooth the data by some method, such as a moving average, or we can fit a curve with a defined functional form and then draw the fitted curve. Once we have identified a trend in a dataset, it may also be useful to look specifically at deviations from the trend or to separate the data into multiple components, including the underlying trend, any existing cyclical components, and episodic components or random noise.</p>
+<div id="smoothing" class="section level2">
+<h2><span class="header-section-number">14.1</span> Smoothing</h2>
+<p>Let us consider a time series of the Dow Jones Industrial Average (Dow Jones for short), a stock-market index representing the price of 30 large, publicly owned U.S. companies. Specifically, we will look at the year 2009, right after the 2008 crash (Figure <a href="visualizing-trends.html#fig:dow-jones">14.1</a>). During the tail end of the crash, in the first three months of the year 2009, the market lost over 2400 points (~27%). Then it slowly recovered for the remainder of the year. How can we visualize these longer-term trends while de-emphasizing the less important short-term fluctuations?</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dow-jones"></span>
+<img src="visualizing_trends_files/figure-html/dow-jones-1.png" alt="Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance" width="1260" />
+<p class="caption">
+Figure 14.1: Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
+</p>
+</div>
+<p>In statistical terms, we are looking for a way to <em>smooth</em> the stock-market time series. The act of smoothing produces a function that captures key patterns in the data while removing irrelevant minor detail or noise. Financial analysts usually smooth stock-market data by calculating moving averages. To generate a moving average, we take a time window, say the first 20 days in the time series, calculate the average price over these 20 days, then move the time window by one day, so it now spans the 2nd to 21st day, calculate the average over these 20 days, move the time window again, and so on. The result is a new time series consisting of a sequence of averaged prices.</p>
+<p>To plot this sequence of moving averages, we need to decide which specific time point to associate with the average for each time window. Financial analysts often plot each average at the end of its respective time window. This choice results in curves that lag the original data (Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>a), with more severe lags corresponding to larger averaging time windows. Statisticians, on the other hand, plot the average at the center of the time window, which results in a curve that overlays perfectly on the original data (Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>b).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dow-jones-moving-ave"></span>
+<img src="visualizing_trends_files/figure-html/dow-jones-moving-ave-1.png" alt="Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance" width="1260" />
+<p class="caption">
+Figure 14.2: Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance
+</p>
+</div>
+<p>Regardless of whether we plot the smoothed time series with or without lag, we can see that the length of the time window over which we average sets the scale of the fluctuations that remain visible in the smoothed curve. The 20-day moving average only removes small, short-term spikes but otherwise follows the daily data closely. The 100-day moving average, on the other hand, removes even fairly substantial drops or spikes that play out over a time span of multiple weeks. For example, the massive drop to below 7000 points in the first quarter of 2009 is not visible in the 100-day moving average, which replaces it with a gentle curve that doesn’t dip much below 8000 points (Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>). Similarly, the drop around July 2009 is completely invisible in the 100-day moving average.</p>
+<p>The moving average is the most simplistic approach to smoothing, and it has some obvious limitations. First, it results in a smoothed curve that is shorter than the original curve (Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>). Parts are missing at either the beginning or the end or both. And the more the time series is smoothed (i.e., the larger the averaging window), the shorter the smoothed curve. Second, even with a large averaging window, a moving average is not necessarily that smooth. It may exhibit small bumps and wiggles even though larger-scale smoothing has been achieved (Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>). These wiggles are caused by individual data points that enter or exit the averaging window. Since all data points in the window are weighted equally, individual data points at the window boundaries can have visible impact on the average.</p>
+<p>Statisticians have developed numerous approaches to smoothing that alleviate the downsides of moving averages. These approaches are much more complex and computationally costly, but they are readily available in modern statistical computing environments. One widely used method is LOESS (locally estimated scatterplot smoothing, <span class="citation">W. S. Cleveland (<a href="#ref-Cleveland1979">1979</a>)</span>), which fits low-degree polynomials to subsets of the data. Importantly, the points in the center of each subset are weighted more heavily than points at the boundaries, and this weighting scheme yields a much smoother result than we get from a weighted average (Figure <a href="visualizing-trends.html#fig:dow-jones-loess">14.3</a>). The LOESS curve shown here looks similar to the 100-day average, but this similarity should not be overinterpreted. The smoothness of a LOESS curve can be tuned by adjusting a parameter, and different parameter choices would have produced LOESS curves looking more like the 20-day or 50-day average.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dow-jones-loess"></span>
+<img src="visualizing_trends_files/figure-html/dow-jones-loess-1.png" alt="Comparison of LOESS fit to 100-day moving average for the Dow Jones data of Figure 14.2. The overall trend shown by the LOESS smooth is nearly identical to the 100-day moving average, but the LOESS curve is much smoother and it extends to the entire range of the data. Data source: Yahoo! Finance" width="1260" />
+<p class="caption">
+Figure 14.3: Comparison of LOESS fit to 100-day moving average for the Dow Jones data of Figure <a href="visualizing-trends.html#fig:dow-jones-moving-ave">14.2</a>. The overall trend shown by the LOESS smooth is nearly identical to the 100-day moving average, but the LOESS curve is much smoother and it extends to the entire range of the data. Data source: Yahoo! Finance
+</p>
+</div>
+<p>Importantly, LOESS is not limited to time series. It can be applied to arbitrary scatter plots, as is apparent from its name, <em>locally estimated scatterplot smoothing</em>. For example, we can use LOESS to look for trends in the relationship between a car’s fuel-tank capacity and its price (Figure <a href="visualizing-trends.html#fig:tank-capacity-loess">14.4</a>). The LOESS line shows that tank capacity grows approximately linearly with price for cheap cars (below $20,000) but it levels off for more expensive cars. Above a price of approximately $20,000, buying a more expensive car will not get you one with a larger fuel tank.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tank-capacity-loess"></span>
+<img src="visualizing_trends_files/figure-html/tank-capacity-loess-1.png" alt="Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price, up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University" width="1050" />
+<p class="caption">
+Figure 14.4: Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price, up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University
+</p>
+</div>
+<p>LOESS is a very popular smoothing approach because it tends to produce results that look right to the human eye. However, it requires the fitting of many separate regression models. This makes it slow for large datasets, even on modern computing equipment.</p>
+<p>As a faster alternative to LOESS, we can use spline models. A spline is a piecewise polynomial function that is highly flexible yet always looks smooth. When working with splines, we will encounter the term <em>knot.</em> The knots in a spline are the endpoints of the individual spline segments. If we fit a spline with <em>k</em> segments, we need to specify <em>k</em> + 1 knots. While spline fitting is computationally efficient, in particular if the number of knots is not too large, splines have their own downsides. Most importantly, there is a bewildering array of different types of splines, including cubic splines, B-splines, thin-plate splines, Gaussian process splines, and many others, and which one to pick may not be obvious. The specific choice of the type of spline and number of knots used can result in widely different smoothing functions for the same data (Figure <a href="visualizing-trends.html#fig:tank-capacity-smoothers">14.5</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tank-capacity-smoothers"></span>
+<img src="visualizing_trends_files/figure-html/tank-capacity-smoothers-1.png" alt="Different smoothing models display widely different behaviors, in particular near the boundaries of the data. (a) LOESS smoother, as in Figure 14.4. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d) Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University" width="1785" />
+<p class="caption">
+Figure 14.5: Different smoothing models display widely different behaviors, in particular near the boundaries of the data. (a) LOESS smoother, as in Figure <a href="visualizing-trends.html#fig:tank-capacity-loess">14.4</a>. (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d) Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
+</p>
+</div>
+<p>Most data visualization software will provide smoothing features, likely implemented as either a type of local regression (such as LOESS) or a type of spline. The smoothing method may be referred to as a GAM, a generalized additive model, which is a superset of all these types of smoothers. It is important to be aware that the output of the smoothing feature is highly dependent on the specific GAM model that is fit. Unless you try out a number of different choices you may never realize to what extent the results you see depend on the specific default choices made by your statistical software.</p>
+<div class="rmdtip">
+<p>
+Be careful when interpreting the results from a smoothing function. The same dataset can be smoothed in many different ways.
+</p>
+</div>
+</div>
+<div id="showing-trends-with-a-defined-functional-form" class="section level2">
+<h2><span class="header-section-number">14.2</span> Showing trends with a defined functional form</h2>
+<p>As we can see in Figure <a href="visualizing-trends.html#fig:tank-capacity-smoothers">14.5</a>, the behavior of general-purpose smoothers can be somewhat unpredictable for any given dataset. These smoothers also do not provide parameter estimates that have a meaningful interpretation. Therefore, whenever possible, it is preferable to fit a curve with a specific functional form that is appropriate for the data and that uses parameters with clear meaning.</p>
+<p>For the fuel-tank data, we need a curve that initially rises linearly but then levels off at a constant value. The function <span class="math inline">\(y = A - B \exp(-mx)\)</span> may fit that bill. Here, <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(m\)</span> are the constants we adjust to fit the curve to the data. The function is approximately linear for small <span class="math inline">\(x\)</span>, with <span class="math inline">\(y \approx A - B + B m x\)</span>, it approaches a constant value for large <span class="math inline">\(x\)</span>, <span class="math inline">\(y \approx A\)</span>, and it is strictly increasing for all values of <span class="math inline">\(x\)</span>. Figure <a href="visualizing-trends.html#fig:tank-capacity-model">14.6</a> shows that this equation fits the data at least as well as any of the smoothers we considered previously (Figure <a href="visualizing-trends.html#fig:tank-capacity-smoothers">14.5</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tank-capacity-model"></span>
+<img src="visualizing_trends_files/figure-html/tank-capacity-model-1.png" alt="Fuel-tank data represented with an explicit analytical model. The solid line corresponds to a least-squares fit of the formula \(y = A - B \exp(-mx)\) to the data. Fitted parameters are \(A = 19.6\), \(B = 29.2\), \(m = 0.00015\). Data source: Robin H. Lock, St. Lawrence University" width="1260" />
+<p class="caption">
+Figure 14.6: Fuel-tank data represented with an explicit analytical model. The solid line corresponds to a least-squares fit of the formula <span class="math inline">\(y = A - B \exp(-mx)\)</span> to the data. Fitted parameters are <span class="math inline">\(A = 19.6\)</span>, <span class="math inline">\(B = 29.2\)</span>, <span class="math inline">\(m = 0.00015\)</span>. Data source: Robin H. Lock, St. Lawrence University
+</p>
+</div>
+<p>A functional form that is applicable in many different contexts is the simple straight line, <span class="math inline">\(y = A + mx\)</span>. Approximately linear relationships between two variables are surprisingly common in real-world datasets. For example, in Chapter <a href="visualizing-associations.html#visualizing-associations">12</a>, I discussed the relationship between head length and body mass in blue jays. This relationship is approximately linear, for both female and male birds, and drawing linear trend lines on top of the points in a scatter plot helps the reader perceive the trends (Figure <a href="visualizing-trends.html#fig:blue-jays-scatter-line">14.7</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:blue-jays-scatter-line"></span>
+<img src="visualizing_trends_files/figure-html/blue-jays-scatter-line-1.png" alt="Head length versus body mass for 123 blue jays. The birds’ sex is indicated by color. This figure is equivalent to Figure 12.2, except that now we have drawn linear trend lines on top of the individual data points. Data source: Keith Tarvin, Oberlin College" width="1050" />
+<p class="caption">
+Figure 14.7: Head length versus body mass for 123 blue jays. The birds’ sex is indicated by color. This figure is equivalent to Figure <a href="visualizing-associations.html#fig:blue-jays-scatter-sex">12.2</a>, except that now we have drawn linear trend lines on top of the individual data points. Data source: Keith Tarvin, Oberlin College
+</p>
+</div>
+<p>When the data display a non-linear relationship, we need to guess what an appropriate functional form might be. In this case, we can assess the accuracy of our guess by transforming the axes in such a way that a linear relationship emerges. To demonstrate this principle, let’s return to the monthly submissions to the preprint server bioRxiv, discussed in Chapter <a href="visualizing-associations.html#visualizing-associations">12</a>. If the increase in submissions in each month is proportional to the number of submissions in the previous month, i.e., if submissions grow by a fixed percentage each month, then the resulting curve is exponential. This assumption seems to be met for the bioRxiv data, because a curve with exponential form, <span class="math inline">\(y = A\exp(mx)\)</span>, fits the bioRxiv submission data well (Figure <a href="visualizing-trends.html#fig:biorxiv-expfit">14.8</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:biorxiv-expfit"></span>
+<img src="visualizing_trends_files/figure-html/biorxiv-expfit-1.png" alt="Monthly submissions to the preprint server bioRxiv. The solid blue line represents the actual monthly preprint counts and the dashed black line represents an exponential fit to the data, \(y = 60\exp[0.77(x - 2014)]\). Data source: Jordan Anaya, http://www.prepubmed.org/" width="1260" />
+<p class="caption">
+Figure 14.8: Monthly submissions to the preprint server bioRxiv. The solid blue line represents the actual monthly preprint counts and the dashed black line represents an exponential fit to the data, <span class="math inline">\(y = 60\exp[0.77(x - 2014)]\)</span>. Data source: Jordan Anaya, <a href="http://www.prepubmed.org/" class="uri">http://www.prepubmed.org/</a>
+</p>
+</div>
+<p>If the original curve is exponential, <span class="math inline">\(y = A\exp(mx)\)</span>, then a log-transformation of the <em>y</em> values will turn it into a linear relationship, <span class="math inline">\(\log(y) = \log(A) + mx\)</span>. Therefore, plotting the data with log-transformed <em>y</em> values (or equivalently, with a logarithmic <em>y</em> axis) and looking for a linear relationship is a good way of determining whether a dataset exhibits exponential growth. For the bioRxiv submission numbers, we indeed obtain a linear relationship when using a logarithmic <em>y</em> axis (Figure <a href="visualizing-trends.html#fig:biorxiv-logscale">14.9</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:biorxiv-logscale"></span>
+<img src="visualizing_trends_files/figure-html/biorxiv-logscale-1.png" alt="Monthly submissions to the preprint server bioRxiv, shown on a log scale. The solid blue line represents the actual monthly preprint counts, the dashed black line represents the exponential fit from Figure 14.8, and the solid black line represents a linear fit to log-transformed data, corresponding to \(y = 43\exp[0.88(x - 2014)]\). Data source: Jordan Anaya, http://www.prepubmed.org/" width="1260" />
+<p class="caption">
+Figure 14.9: Monthly submissions to the preprint server bioRxiv, shown on a log scale. The solid blue line represents the actual monthly preprint counts, the dashed black line represents the exponential fit from Figure <a href="visualizing-trends.html#fig:biorxiv-expfit">14.8</a>, and the solid black line represents a linear fit to log-transformed data, corresponding to <span class="math inline">\(y = 43\exp[0.88(x - 2014)]\)</span>. Data source: Jordan Anaya, <a href="http://www.prepubmed.org/" class="uri">http://www.prepubmed.org/</a>
+</p>
+</div>
+<p>In Figure <a href="visualizing-trends.html#fig:biorxiv-logscale">14.9</a>, in addition to the actual submission counts, I am also showing the exponential fit from Figure <a href="visualizing-trends.html#fig:biorxiv-expfit">14.8</a> and a linear fit to the log-transformed data. These two fits are similar but not identical. In particular, the slope of the dashed line seems somewhat off. The line systematically falls above the individual data points for half the time series. This is a common problem with exponential fits: The square deviations from the data points to the fitted curve are so much larger for the largest data values than for the smallest data values that the deviations of the smallest data values contribute little to the overall sum squares that the fit minimizes. As a result, the fitted line systematically overshoots or undershoots the smallest data values. For this reason, I generally advise to avoid exponential fits and instead use linear fits on log-transformed data.</p>
+<div class="rmdtip">
+<p>
+It is usually better to fit a straight line to transformed data than to fit a nonlinear curve to untransformed data.
+</p>
+</div>
+<p>A plot such as Figure <a href="visualizing-trends.html#fig:biorxiv-logscale">14.9</a> is commonly referred to as <em>log–linear</em>, since the <em>y</em> axis is logarithmic and the <em>x</em> axis is linear. Other plots we may encounter include <em>log–log</em>, where both the <em>y</em> and the <em>x</em> axis are logarithmic, or <em>linear–log</em>, where <em>y</em> is linear and <em>x</em> is logarithmic. In a log–log plot, power laws of the form <span class="math inline">\(y \sim x^\alpha\)</span> appear as straight lines (see Figure <a href="ecdf-qq.html#fig:word-counts-tail-log-log">8.7</a> for an example), and in a linear–log plot, logarithmic relationships of the form <span class="math inline">\(y \sim \log(x)\)</span> appear as a straight lines. Other functional forms can be turned into linear relationships with more specialized coordinate transformations, but these three (log–linear, log–log, linear–log) cover a wide range of real-world applications.</p>
+</div>
+<div id="detrending-and-time-series-decomposition" class="section level2">
+<h2><span class="header-section-number">14.3</span> Detrending and time-series decomposition</h2>
+<p>For any time series with a prominent long-term trend, it may be useful to remove this trend to specifically highlight any notable deviations. This technique is called <em>detrending</em>, and I will demonstrate it here with house prices. In the U.S., the mortgage lender Freddie Mac publishes a monthly index, called the <em>Freddie Mac House Price Index,</em> that tracks the change in house prices over time. The index attempts to capture the state of the entire house market in a given region, such that an increase in the index by, for example, 10% can be interpreted as an average house price increase of 10% in the respective market. The index is arbitrarily set to a value of 100 in December 2000.</p>
+<p>Over long periods of time, house prices tend to display consistent annual growth, approximately in line with inflation. However, overlaid on top of this trend are housing bubbles that lead to severe boom and bust cycles. Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a> shows the actual house price index and its long-term trend for four select U.S. states. We see that between 1980 and 2017, California underwent two bubbles, one in 1990 and one in the mid-2000s. During the same period, Nevada experienced only one bubble, in the mid-2000s, and house prices in Texas and West Virginia closely followed their long-term trends the entire time. Because house prices tend to grow in percent increments, i.e., exponentially, I have chosen a logarithmic <em>y</em> axis in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>. The straight lines correspond to a 4.7% annual price increase in California and a 2.8% annual price increase each in Nevada, Texas, and West Virginia.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:hpi-trends"></span>
+<img src="visualizing_trends_files/figure-html/hpi-trends-1.png" alt="Freddie Mac House Price Index from 1980 through 2017, for four selected states (California, Nevada, Texas, and West Virginia). The House Price Index is a unitless number that tracks relative house prices in the chosen geographic region over time. The index is scaled arbitrarily such that it equals 100 in December of the year 2000. The blue lines show the monthly fluctuations in the index and the straight gray lines show the long-term price trends in the respective states. Note that the y axes are logarithmic, so that the straight gray lines represent consistent exponential growth. Data source: Freddie Mac House Prices Index" width="1260" />
+<p class="caption">
+Figure 14.10: Freddie Mac House Price Index from 1980 through 2017, for four selected states (California, Nevada, Texas, and West Virginia). The House Price Index is a unitless number that tracks relative house prices in the chosen geographic region over time. The index is scaled arbitrarily such that it equals 100 in December of the year 2000. The blue lines show the monthly fluctuations in the index and the straight gray lines show the long-term price trends in the respective states. Note that the <em>y</em> axes are logarithmic, so that the straight gray lines represent consistent exponential growth. Data source: Freddie Mac House Prices Index
+</p>
+</div>
+<p>We detrend housing prices by dividing the actual price index at each time point by the respective value in the long-term trend. Visually, this division will look like we are subtracting the gray lines from the blue lines in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>, because a division of the untransformed values is equivalent to a subtraction of the log-transformed values. The resulting detrended house prices show the housing bubbles more clearly (Figure <a href="visualizing-trends.html#fig:hpi-detrended">14.11</a>), as the detrending emphasizes the unexpected movements in a time series. For example, in the original time series, the decline in home prices in California from 1990 to about 1998 looks modest (Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>). However, during that same time period, on the basis of the long-term trend we would have expected prices to rise. Relative to the expected rise the drop in prices was substantial, amounting to 25% at the lowest point (Figure <a href="visualizing-trends.html#fig:hpi-detrended">14.11</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:hpi-detrended"></span>
+<img src="visualizing_trends_files/figure-html/hpi-detrended-1.png" alt="Detrended version of the Freddie Mac House Price Index shown in Figure 14.10. The detrended index was calculated by dividing the actual index (blue lines in Figure 14.10) by the expected value based on the long-term trend (straight gray lines in Figure 14.10). This visualization shows that California experienced two housing bubbles, around 1990 and in the mid-2000s, identifiable from a rapid rise and subsequent decline in the actual housing prices relative to what would have been expected from the long-term trend. Similarly, Nevada experienced one housing bubble, in the mid-2000s, and neither Texas nor West Virginia experienced much of a bubble at all. Data source: Freddie Mac House Prices Index" width="1260" />
+<p class="caption">
+Figure 14.11: Detrended version of the Freddie Mac House Price Index shown in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>. The detrended index was calculated by dividing the actual index (blue lines in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>) by the expected value based on the long-term trend (straight gray lines in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>). This visualization shows that California experienced two housing bubbles, around 1990 and in the mid-2000s, identifiable from a rapid rise and subsequent decline in the actual housing prices relative to what would have been expected from the long-term trend. Similarly, Nevada experienced one housing bubble, in the mid-2000s, and neither Texas nor West Virginia experienced much of a bubble at all. Data source: Freddie Mac House Prices Index
+</p>
+</div>
+<p>Beyond simple detrending, we can also separate a time series into multiple distinct components, such that their sum recovers the original time series. In general, in addition to a long-term trend, there are three distinct components that may shape a time series. First, there is random noise, which causes small, erratic movements up and down. This noise is visible in all the time series shown in this chapter, but maybe the most clearly in Figure <a href="visualizing-trends.html#fig:biorxiv-logscale">14.9</a>. Second, there can be unique external events that leave their mark in the time series, such as the distinct housing bubbles seen in Figure <a href="visualizing-trends.html#fig:hpi-trends">14.10</a>. Third, there can be cyclical variations. For example, outside temperatures show daily cyclical variations. The highest temperatures are reached in the early afternoon and the lowest temperatures in the early morning. Outside temperatures also show yearly cyclical variations. They tend to rise in the spring, reach their maximum in the summer, and then decline in fall and reach their minimum in the winter (Figure <a href="coordinate-systems-axes.html#fig:temperature-normals-Houston">3.2</a>).</p>
+<p>To demonstrate the concept of distinct time-series components, I will here decompose the Keeling curve, which shows changes in CO<sub>2</sub> abundance over time (Figure <a href="visualizing-trends.html#fig:keeling-curve">14.12</a>). CO<sub>2</sub> is measured in parts per million (ppm). We see a long-term increase in CO<sub>2</sub> abundance that is slightly faster than linear, from below 325 ppm in the 1960s to above 400 in the second decade of the 21st century (Figure <a href="visualizing-trends.html#fig:keeling-curve">14.12</a>). CO<sub>2</sub> abundance also fluctuates anually, following a consistent up-and-down pattern overlaid on top of the overall increase. The annual fluctuation are driven by plant growth in the northern hemisphere. Plants consume CO<sub>2</sub> during photosynthesis. Because most of the globe’s land masses are located in the northern hemisphere, and plant growth is most active in the spring and summer, we see an annual global decline in atmospheric CO<sub>2</sub> that coincides with the summer months in the northern hemisphere.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:keeling-curve"></span>
+<img src="visualizing_trends_files/figure-html/keeling-curve-1.png" alt="The Keeling curve. The Keeling curve shows the change of CO2 abundance in the atmosphere over time. Since 1958, CO2 abundance has been continuously monitored at the Mauna Loa Observatory in Hawaii, initially under the direction of Charles Keeling. Shown here are monthly average CO2 readings, expressed in parts per million (ppm). The CO2 readings fluctuate anually with the seasons but show a consistent long-term trend of increase. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography" width="1260" />
+<p class="caption">
+Figure 14.12: The Keeling curve. The Keeling curve shows the change of CO<sub>2</sub> abundance in the atmosphere over time. Since 1958, CO<sub>2</sub> abundance has been continuously monitored at the Mauna Loa Observatory in Hawaii, initially under the direction of Charles Keeling. Shown here are monthly average CO<sub>2</sub> readings, expressed in parts per million (ppm). The CO<sub>2</sub> readings fluctuate anually with the seasons but show a consistent long-term trend of increase. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
+</p>
+</div>
+<p>We can decompose the Keeling curve into its long-term trend, seasonal fluctuations, and remainder (Figure <a href="visualizing-trends.html#fig:keeling-curve-decomposition">14.13</a>). The specific method I am using here is called STL (Seasonal decomposition of Time series by LOESS, <span class="citation">R. B. Cleveland et al. (<a href="#ref-Cleveland_et_al_1990">1990</a>)</span>), but there are many other methods that achieve similar goals. The decomposition shows that over the last three decades, CO<sub>2</sub> abundance has increased by over 50 ppm. By comparison, seasonal fluctuations amount to less than 8 ppm (they never cause an increase or a decrease in more than 4 ppm relative to the long-term trend), and the remainder amounts to less than 1.6 ppm (Figure <a href="visualizing-trends.html#fig:keeling-curve-decomposition">14.13</a>). The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and here it corresponds to random noise in the monthly CO<sub>2</sub> readings. More generally, however, the remainder could also capture unique external events. For example, if a massive volcano erruption released substantial amounts of CO<sub>2</sub>, such an event might be visible as a sudden spike in the remainder. Figure <a href="visualizing-trends.html#fig:keeling-curve-decomposition">14.13</a> shows that no such unique external events have had a major effect on the Keeling curve in recent decades.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:keeling-curve-decomposition"></span>
+<img src="visualizing_trends_files/figure-html/keeling-curve-decomposition-1.png" alt="Time-series decomposition of the Keeling curve, showing the montly average (as in Figure 14.12), the long-term trend, seasonal fluctuations, and remainder. The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and it represents random noise. I have zoomed into the most recent 30 years of data to more clearly show the shape of the annual fluctuations. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography" width="1260" />
+<p class="caption">
+Figure 14.13: Time-series decomposition of the Keeling curve, showing the montly average (as in Figure <a href="visualizing-trends.html#fig:keeling-curve">14.12</a>), the long-term trend, seasonal fluctuations, and remainder. The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and it represents random noise. I have zoomed into the most recent 30 years of data to more clearly show the shape of the annual fluctuations. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Cleveland1979">
+<p>Cleveland, W. S. 1979. “Robust Locally Weighted Regression and Smoothing Scatterplots.” <em>Journal of the American Statistical Association</em> 74: 829–36.</p>
+</div>
+<div id="ref-Cleveland_et_al_1990">
+<p>Cleveland, R. B., W. S. Cleveland, J. E. McRae, and I. Terpenning. 1990. “STL: A Seasonal-Trend Decomposition Procedure Based on Loess.” <em>Journal of Official Statistics</em> 6: 3–73.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="time-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geospatial-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

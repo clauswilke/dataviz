@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="coordinate-systems-axes.html">
+<link rel="next" href="directory-of-visualizations.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="visualizing-trends.html"><a href="visualizing-trends.html"><i class="fa fa-check"></i><b>14</b> Visualizing trends</a><ul>
+<li class="chapter" data-level="14.1" data-path="visualizing-trends.html"><a href="visualizing-trends.html#smoothing"><i class="fa fa-check"></i><b>14.1</b> Smoothing</a></li>
+<li class="chapter" data-level="14.2" data-path="visualizing-trends.html"><a href="visualizing-trends.html#showing-trends-with-a-defined-functional-form"><i class="fa fa-check"></i><b>14.2</b> Showing trends with a defined functional form</a></li>
+<li class="chapter" data-level="14.3" data-path="visualizing-trends.html"><a href="visualizing-trends.html#detrending-and-time-series-decomposition"><i class="fa fa-check"></i><b>14.3</b> Detrending and time-series decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="geospatial-data.html"><a href="geospatial-data.html"><i class="fa fa-check"></i><b>15</b> Visualizing geospatial data</a><ul>
+<li class="chapter" data-level="15.1" data-path="geospatial-data.html"><a href="geospatial-data.html#projections"><i class="fa fa-check"></i><b>15.1</b> Projections</a></li>
+<li class="chapter" data-level="15.2" data-path="geospatial-data.html"><a href="geospatial-data.html#layers"><i class="fa fa-check"></i><b>15.2</b> Layers</a></li>
+<li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
+<li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#frequency-framing"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#uncertainty-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="17.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>17.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="17.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>17.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>18</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="18.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>18.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="18.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>18.2</b> 2D histograms</a></li>
+<li class="chapter" data-level="18.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>18.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>19</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="19.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>19.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="19.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>19.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="19.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>19.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>20</b> Redundant coding</a><ul>
+<li class="chapter" data-level="20.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>20.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="20.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>20.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>21</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="21.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>21.1</b> Small multiples</a></li>
+<li class="chapter" data-level="21.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>21.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>22</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="22.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>22.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="22.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>22.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="22.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>22.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="balance-data-context.html"><a href="balance-data-context.html"><i class="fa fa-check"></i><b>23</b> Balance the data and the context</a><ul>
+<li class="chapter" data-level="23.1" data-path="balance-data-context.html"><a href="balance-data-context.html#providing-the-appropriate-amount-of-context"><i class="fa fa-check"></i><b>23.1</b> Providing the appropriate amount of context</a></li>
+<li class="chapter" data-level="23.2" data-path="balance-data-context.html"><a href="balance-data-context.html#background-grids"><i class="fa fa-check"></i><b>23.2</b> Background grids</a></li>
+<li class="chapter" data-level="23.3" data-path="balance-data-context.html"><a href="balance-data-context.html#paired-data"><i class="fa fa-check"></i><b>23.3</b> Paired data</a></li>
+<li class="chapter" data-level="23.4" data-path="balance-data-context.html"><a href="balance-data-context.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>24</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="25" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>25</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="26" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>26</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="26.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>26.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="26.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>26.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="26.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>26.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="27" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>27</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="27.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>27.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="27.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>27.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="27.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>27.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>28</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="28.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>28.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="28.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>28.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="28.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>28.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>29</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="29.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>29.1</b> What is a story?</a></li>
+<li class="chapter" data-level="29.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>29.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="29.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>29.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="29.4" data-path="telling-a-story.html"><a href="telling-a-story.html#make-your-figures-memorable"><i class="fa fa-check"></i><b>29.4</b> Make your figures memorable</a></li>
+<li class="chapter" data-level="29.5" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>29.5</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>30</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="30.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>30.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="30.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>30.2</b> Programming books</a></li>
+<li class="chapter" data-level="30.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>30.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="30.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>30.4</b> Historical texts</a></li>
+<li class="chapter" data-level="30.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>30.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="color-basics" class="section level1">
+<h1><span class="header-section-number">4</span> Color scales</h1>
+<p>There are three fundamental use cases for color in data visualizations: (i) we can use color to distinguish groups of data from each other; (ii) we can use color to represent data values; and (iii) we can use color to highlight. The types of colors we use and the way in which we use them are quite different for these three cases.</p>
+<div id="color-as-a-tool-to-distinguish" class="section level2">
+<h2><span class="header-section-number">4.1</span> Color as a tool to distinguish</h2>
+<p>We frequently use color as a means to distinguish discrete items or groups that do not have an intrinsic order, such as different countries on a map or different manufacturers of a certain product. In this case, we use a <em>qualitative</em> color scale. Such a scale contains a finite set of specific colors that are chosen to look clearly distinct from each other while also being equivalent to each other. The second condition requires that no one color should stand out relative to the others. And, the colors should not create the impression of an order, as would be the case with a sequence of colors that get successively lighter. Such colors would create an apparent order among the items being colored, which by definition have no order.</p>
+<p>Many appropriate qualitative color scales are readily available. Figure <a href="color-basics.html#fig:qualitative-scales">4.1</a> shows three representative examples. In particular, the ColorBrewer project provides a nice selection of qualitative color scales, including both fairly light and fairly dark colors <span class="citation">(Brewer <a href="#ref-ColorBrewer">2017</a>)</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:qualitative-scales"></span>
+<img src="color_basics_files/figure-html/qualitative-scales-1.png" alt="Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book (Okabe and Ito 2008). The ColorBrewer Dark2 scale is provided by the ColorBrewer project (Brewer 2017). The ggplot2 scale is the default qualitative scale in the widely used plotting software ggplot2." width="1260" />
+<p class="caption">
+Figure 4.1: Example qualitative color scales. The Okabe Ito scale is the default scale used throughout this book <span class="citation">(Okabe and Ito <a href="#ref-Okabe-Ito-CUD">2008</a>)</span>. The ColorBrewer Dark2 scale is provided by the ColorBrewer project <span class="citation">(Brewer <a href="#ref-ColorBrewer">2017</a>)</span>. The ggplot2 scale is the default qualitative scale in the widely used plotting software ggplot2.
+</p>
+</div>
+<p>As an example of how we use qualitative color scales, consider Figure <a href="color-basics.html#fig:popgrowth-US">4.2</a>. It shows the percent population growth from 2000 to 2010 in U.S. states. I have arranged the states in order of their population growth, and I have colored them by geographic region. This coloring highlights that states in the same regions have experienced similar population growth. In particular, states in the West and the South have seen the largest population increases whereas states in the Midwest and the Northeast have grown much less.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:popgrowth-US"></span>
+<img src="color_basics_files/figure-html/popgrowth-US-1.png" alt="Population growth in the U.S. from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease." width="1260" />
+<p class="caption">
+Figure 4.2: Population growth in the U.S. from 2000 to 2010. States in the West and South have seen the largest increases, whereas states in the Midwest and Northeast have seen much smaller increases or even, in the case of Michigan, a decrease.
+</p>
+</div>
+</div>
+<div id="color-to-represent-data-values" class="section level2">
+<h2><span class="header-section-number">4.2</span> Color to represent data values</h2>
+<p>Color can also be used to represent data values, such as income, temperature, or speed. In this case, we use a <em>sequential</em> color scale. Such a scale contains a sequence of colors that clearly indicate (i) which values are larger or smaller than which other ones and (ii) how distant two specific values are from each other. The second point implies that the color scale needs to be perceived to vary uniformly across its entire range.</p>
+<p>Sequential scales can be based on a single hue (e.g., from dark blue to light blue) or on multiple hues (e.g., from dark red to light yellow) (Figure <a href="color-basics.html#fig:sequential-scales">4.3</a>). Multi-hue scales tend to follow color gradients that can be seen in the natural world, such as dark red, green, or blue to light yellow, or dark purple to light green. The reverse, e.g. dark yellow to light blue, looks unnatural and doesn’t make a useful sequential scale.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sequential-scales"></span>
+<img src="color_basics_files/figure-html/sequential-scales-1.png" alt="Example sequential color scales. The ColorBrewer Blues scale is a monochromatic scale that varies from dark to light blue. The Heat and Viridis scales are multi-hue scales that vary from dark red to light yellow and from dark blue via green to light yellow, respectively." width="1260" />
+<p class="caption">
+Figure 4.3: Example sequential color scales. The ColorBrewer Blues scale is a monochromatic scale that varies from dark to light blue. The Heat and Viridis scales are multi-hue scales that vary from dark red to light yellow and from dark blue via green to light yellow, respectively.
+</p>
+</div>
+<p>Representing data values as colors is particularly useful when we want to show how the data values vary across geographic regions. In this case, we can draw a map of the geographic regions and color them by the data values. Such maps are called <em>choropleths</em>. Figure <a href="color-basics.html#fig:map-Texas-income">4.4</a> shows an example where I have mapped annual median income within each county in Texas onto a map of those counties.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:map-Texas-income"></span>
+<img src="color_basics_files/figure-html/map-Texas-income-1.png" alt="Median annual income in Texas counties. The highest median incomes are seen in major Texas metropolitan areas, in particular near Houston and Dallas. No median income estimate is available for Loving County in West Texas and therefore that county is shown in gray. Data source: 2015 Five-Year American Community Survey." width="1260" />
+<p class="caption">
+Figure 4.4: Median annual income in Texas counties. The highest median incomes are seen in major Texas metropolitan areas, in particular near Houston and Dallas. No median income estimate is available for Loving County in West Texas and therefore that county is shown in gray. Data source: 2015 Five-Year American Community Survey.
+</p>
+</div>
+<p>In some cases, we need to visualize the deviation of data values in one of two directions relative to a neutral midpoint. One straightforward example is a dataset containing both positive and negative numbers. We may want to show those with different colors, so that it is immediately obvious whether a value is positive or negative as well as how far in either direction it deviates from zero. The appropriate color scale in this situation is a <em>diverging</em> color scale. We can think of a diverging scale as two sequential scales stiched together at a common midpoint, which usually is represented by a light color (Figure <a href="color-basics.html#fig:diverging-scales">4.5</a>). Diverging scales need to be balanced, so that the progression from light colors in the center to dark colors on the outside is approximately the same in either direction. Otherwise, the perceived magnitude of a data value would depend on whether it fell above or below the midpoint value.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:diverging-scales"></span>
+<img src="color_basics_files/figure-html/diverging-scales-1.png" alt="Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown to greenish blue, pink to yellow-green, and blue to red." width="1260" />
+<p class="caption">
+Figure 4.5: Example diverging color scales. Diverging scales can be thought of as two sequential scales stiched together at a common midpoint color. Common color choices for diverging scales include brown to greenish blue, pink to yellow-green, and blue to red.
+</p>
+</div>
+<p>As an example application of a diverging color scale, consider Figure <a href="color-basics.html#fig:map-Texas-race">4.6</a>, which shows the percentage of people identifying as white in Texas counties. Even though percentage is always a positive number, a diverging scale is justified here, because 50% is a meaningful midpoint value. Numbers above 50% indicate that whites are in the majority and numbers below 50% indicate the opposite. The visualization clearly shows in which counties whites are in the majority, in which they are in the minority, and in which whites and non-whites occur in approximately equal proportions.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:map-Texas-race"></span>
+<img src="color_basics_files/figure-html/map-Texas-race-1.png" alt="Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census." width="1260" />
+<p class="caption">
+Figure 4.6: Percentage of people identifying as white in Texas counties. Whites are in the majority in North and East Texas but not in South or West Texas. Data source: 2010 Decennial U.S. Census.
+</p>
+</div>
+</div>
+<div id="color-as-a-tool-to-highlight" class="section level2">
+<h2><span class="header-section-number">4.3</span> Color as a tool to highlight</h2>
+<p>Color can also be an effective tool to highlight specific elements in the data. There may be specific categories or values in the dataset that carry key information about the story we want to tell, and we can strengthen the story by emphasizing the relevant figure elements to the reader. An easy way to achieve this emphasis is to color these figure elements in a color or set of colors that vividly stand out against the rest of the figure. This effect can be achieved with <em>accent</em> color scales, which are color scales that contain both a set of subdued colors and a matching set of stronger, darker, and/or more saturated colors (Figure <a href="color-basics.html#fig:accent-scales">4.7</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:accent-scales"></span>
+<img src="color_basics_files/figure-html/accent-scales-1.png" alt="Example accent color scales, each with four base colors and three accent colors. Accent color scales can be derived in several different ways: (top) we can take an existing color scale (e.g., the Okabe Ito scale, Fig 4.1) and lighten and/or partially desaturate some colors while darkening others; (middle) we can take gray values and pair them with colors; (bottom) we can take work with an existing accent color scale, e.g. the one from the ColorBrewer project." width="1260" />
+<p class="caption">
+Figure 4.7: Example accent color scales, each with four base colors and three accent colors. Accent color scales can be derived in several different ways: (top) we can take an existing color scale (e.g., the Okabe Ito scale, Fig <a href="color-basics.html#fig:qualitative-scales">4.1</a>) and lighten and/or partially desaturate some colors while darkening others; (middle) we can take gray values and pair them with colors; (bottom) we can take work with an existing accent color scale, e.g. the one from the ColorBrewer project.
+</p>
+</div>
+<p>As an example of how the same data can support differing stories with different coloring approaches, I have created a variant of Figure <a href="color-basics.html#fig:popgrowth-US">4.2</a> where now I highlight two specific states, Texas and Louisiana (Figure <a href="color-basics.html#fig:popgrowth-US-highlight">4.8</a>). Both states are in the South, they are immediate neighbors, and yet one state (Texas) was the fifth-fastest growing state within the U.S. whereas the other was the third slowest growing from 2000 to 2010.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:popgrowth-US-highlight"></span>
+<img src="color_basics_files/figure-html/popgrowth-US-highlight-1.png" alt="From 2000 to 2010, the two neighboring southern states Texas and Louisiana have experienced among the highest and lowest population growth across the U.S." width="1260" />
+<p class="caption">
+Figure 4.8: From 2000 to 2010, the two neighboring southern states Texas and Louisiana have experienced among the highest and lowest population growth across the U.S.
+</p>
+</div>
+<p>When working with accent colors, it is critical that the baseline colors do not compete for attention. Notice how drab the baseline colors are in (Figure <a href="color-basics.html#fig:popgrowth-US-highlight">4.8</a>). Yet they work well to support the accent color. It is easy to make the mistake of using baseline colors that are too colorful, so that they end up competing for the reader’s attention against the accent colors. There is an easy remedy, however. Just remove all color from all elements in the figure except the highlighted data categories or points. An example of this strategy is provided in Figure <a href="color-basics.html#fig:Aus-athletes-track">4.9</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:Aus-athletes-track"></span>
+<img src="color_basics_files/figure-html/Aus-athletes-track-1.png" alt="Track athletes are among the shortest and leanest of male professional athletes participating in popular sports. Data source: Telford and Cunningham (1991)" width="1260" />
+<p class="caption">
+Figure 4.9: Track athletes are among the shortest and leanest of male professional athletes participating in popular sports. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-ColorBrewer">
+<p>Brewer, Cynthia A. 2017. “ColorBrewer 2.0. Color Advice for Cartography.” <a href="http://www.ColorBrewer.org" class="uri">http://www.ColorBrewer.org</a>.</p>
+</div>
+<div id="ref-Okabe-Ito-CUD">
+<p>Okabe, M., and K. Ito. 2008. “Color Universal Design (CUD): How to Make Figures and Presentations That Are Friendly to Colorblind People.” <a href="http://jfly.iam.u-tokyo.ac.jp/color/" class="uri">http://jfly.iam.u-tokyo.ac.jp/color/</a>.</p>
+</div>
+<div id="ref-Telford-Cunningham-1991">
+<p>Telford, R. D., and R. B. Cunningham. 1991. “Sex, Sport, and Body-Size Dependency of Hematology in Highly Trained Athletes.” <em>Medicine and Science in Sports and Exercise</em> 23: 788–94.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="coordinate-systems-axes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="directory-of-visualizations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

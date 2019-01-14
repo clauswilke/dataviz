@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fundamentals of Data Visualization</title>
+  <meta name="description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Fundamentals of Data Visualization" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  <meta name="github-repo" content="clauswilke/dataviz" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fundamentals of Data Visualization" />
+  
+  <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
+  
+
+<meta name="author" content="Claus O. Wilke">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="figure-titles-captions.html">
+<link rel="next" href="small-axis-labels.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<!-- Google analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43345810-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines"><i class="fa fa-check"></i>Thoughts on graphing software and figure-preparation pipelines</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#ugly-bad-and-wrong-figures"><i class="fa fa-check"></i>Ugly, bad, and wrong figures</a></li>
+</ul></li>
+<li class="part"><span><b>Part I: From data to visualization</b></span></li>
+<li class="chapter" data-level="2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html"><i class="fa fa-check"></i><b>2</b> Visualizing data: Mapping data onto aesthetics</a><ul>
+<li class="chapter" data-level="2.1" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#aesthetics-and-types-of-data"><i class="fa fa-check"></i><b>2.1</b> Aesthetics and types of data</a></li>
+<li class="chapter" data-level="2.2" data-path="aesthetic-mapping.html"><a href="aesthetic-mapping.html#scales-map-data-values-onto-aesthetics"><i class="fa fa-check"></i><b>2.2</b> Scales map data values onto aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html"><i class="fa fa-check"></i><b>3</b> Coordinate systems and axes</a><ul>
+<li class="chapter" data-level="3.1" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#cartesian-coordinates"><i class="fa fa-check"></i><b>3.1</b> Cartesian coordinates</a></li>
+<li class="chapter" data-level="3.2" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#nonlinear-axes"><i class="fa fa-check"></i><b>3.2</b> Nonlinear axes</a></li>
+<li class="chapter" data-level="3.3" data-path="coordinate-systems-axes.html"><a href="coordinate-systems-axes.html#coordinate-systems-with-curved-axes"><i class="fa fa-check"></i><b>3.3</b> Coordinate systems with curved axes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="color-basics.html"><a href="color-basics.html"><i class="fa fa-check"></i><b>4</b> Color scales</a><ul>
+<li class="chapter" data-level="4.1" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-distinguish"><i class="fa fa-check"></i><b>4.1</b> Color as a tool to distinguish</a></li>
+<li class="chapter" data-level="4.2" data-path="color-basics.html"><a href="color-basics.html#color-to-represent-data-values"><i class="fa fa-check"></i><b>4.2</b> Color to represent data values</a></li>
+<li class="chapter" data-level="4.3" data-path="color-basics.html"><a href="color-basics.html#color-as-a-tool-to-highlight"><i class="fa fa-check"></i><b>4.3</b> Color as a tool to highlight</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html"><i class="fa fa-check"></i><b>5</b> Directory of visualizations</a><ul>
+<li class="chapter" data-level="5.1" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#amounts"><i class="fa fa-check"></i><b>5.1</b> Amounts</a></li>
+<li class="chapter" data-level="5.2" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#proportions"><i class="fa fa-check"></i><b>5.3</b> Proportions</a></li>
+<li class="chapter" data-level="5.4" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#xy-relationships"><i class="fa fa-check"></i><b>5.4</b> <em>x</em>–<em>y</em> relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-geospatial-data"><i class="fa fa-check"></i><b>5.5</b> Geospatial data</a></li>
+<li class="chapter" data-level="5.6" data-path="directory-of-visualizations.html"><a href="directory-of-visualizations.html#directory-uncertainty"><i class="fa fa-check"></i><b>5.6</b> Uncertainty</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html"><i class="fa fa-check"></i><b>6</b> Visualizing amounts</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#bar-plots"><i class="fa fa-check"></i><b>6.1</b> Bar plots</a></li>
+<li class="chapter" data-level="6.2" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#grouped-and-stacked-bars"><i class="fa fa-check"></i><b>6.2</b> Grouped and stacked bars</a></li>
+<li class="chapter" data-level="6.3" data-path="visualizing-amounts.html"><a href="visualizing-amounts.html#dot-plots-and-heatmaps"><i class="fa fa-check"></i><b>6.3</b> Dot plots and heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html"><i class="fa fa-check"></i><b>7</b> Visualizing distributions: Histograms and density plots</a><ul>
+<li class="chapter" data-level="7.1" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#visualizing-a-single-distribution"><i class="fa fa-check"></i><b>7.1</b> Visualizing a single distribution</a></li>
+<li class="chapter" data-level="7.2" data-path="histograms-density-plots.html"><a href="histograms-density-plots.html#multiple-histograms-densities"><i class="fa fa-check"></i><b>7.2</b> Visualizing multiple distributions at the same time</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecdf-qq.html"><a href="ecdf-qq.html"><i class="fa fa-check"></i><b>8</b> Visualizing distributions: Empirical cumulative distribution functions and q-q plots</a><ul>
+<li class="chapter" data-level="8.1" data-path="ecdf-qq.html"><a href="ecdf-qq.html#empirical-cumulative-distribution-functions"><i class="fa fa-check"></i><b>8.1</b> Empirical cumulative distribution functions</a></li>
+<li class="chapter" data-level="8.2" data-path="ecdf-qq.html"><a href="ecdf-qq.html#skewed-distributions"><i class="fa fa-check"></i><b>8.2</b> Highly skewed distributions</a></li>
+<li class="chapter" data-level="8.3" data-path="ecdf-qq.html"><a href="ecdf-qq.html#qq-plots"><i class="fa fa-check"></i><b>8.3</b> Quantile–quantile plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplots-violins.html"><a href="boxplots-violins.html"><i class="fa fa-check"></i><b>9</b> Visualizing many distributions at once</a><ul>
+<li class="chapter" data-level="9.1" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-vertical"><i class="fa fa-check"></i><b>9.1</b> Visualizing distributions along the vertical axis</a></li>
+<li class="chapter" data-level="9.2" data-path="boxplots-violins.html"><a href="boxplots-violins.html#boxplots-violins-horizontal"><i class="fa fa-check"></i><b>9.2</b> Visualizing distributions along the horizontal axis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html"><i class="fa fa-check"></i><b>10</b> Visualizing proportions</a><ul>
+<li class="chapter" data-level="10.1" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#a-case-for-pie-charts"><i class="fa fa-check"></i><b>10.1</b> A case for pie charts</a></li>
+<li class="chapter" data-level="10.2" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#side-by-side-bars"><i class="fa fa-check"></i><b>10.2</b> A case for side-by-side bars</a></li>
+<li class="chapter" data-level="10.3" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#stacked-densities"><i class="fa fa-check"></i><b>10.3</b> A case for stacked bars and stacked densities</a></li>
+<li class="chapter" data-level="10.4" data-path="visualizing-proportions.html"><a href="visualizing-proportions.html#visualizing-proportions-separately-as-parts-of-the-total"><i class="fa fa-check"></i><b>10.4</b> Visualizing proportions separately as parts of the total</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="nested-proportions.html"><a href="nested-proportions.html"><i class="fa fa-check"></i><b>11</b> Visualizing nested proportions</a><ul>
+<li class="chapter" data-level="11.1" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-proportions-gone-wrong"><i class="fa fa-check"></i><b>11.1</b> Nested proportions gone wrong</a></li>
+<li class="chapter" data-level="11.2" data-path="nested-proportions.html"><a href="nested-proportions.html#mosaic-plots-and-treemaps"><i class="fa fa-check"></i><b>11.2</b> Mosaic plots and treemaps</a></li>
+<li class="chapter" data-level="11.3" data-path="nested-proportions.html"><a href="nested-proportions.html#nested-pies"><i class="fa fa-check"></i><b>11.3</b> Nested pies</a></li>
+<li class="chapter" data-level="11.4" data-path="nested-proportions.html"><a href="nested-proportions.html#parallel-sets"><i class="fa fa-check"></i><b>11.4</b> Parallel sets</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualizing-associations.html"><a href="visualizing-associations.html"><i class="fa fa-check"></i><b>12</b> Visualizing associations among two or more quantitative variables</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-scatterplots"><i class="fa fa-check"></i><b>12.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="12.2" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-correlograms"><i class="fa fa-check"></i><b>12.2</b> Correlograms</a></li>
+<li class="chapter" data-level="12.3" data-path="visualizing-associations.html"><a href="visualizing-associations.html#dimension-reduction"><i class="fa fa-check"></i><b>12.3</b> Dimension reduction</a></li>
+<li class="chapter" data-level="12.4" data-path="visualizing-associations.html"><a href="visualizing-associations.html#associations-paired-data"><i class="fa fa-check"></i><b>12.4</b> Paired data</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>13</b> Visualizing time series and other functions of an independent variable</a><ul>
+<li class="chapter" data-level="13.1" data-path="time-series.html"><a href="time-series.html#individual-time-series"><i class="fa fa-check"></i><b>13.1</b> Individual time series</a></li>
+<li class="chapter" data-level="13.2" data-path="time-series.html"><a href="time-series.html#multiple-time-series-and-doseresponse-curves"><i class="fa fa-check"></i><b>13.2</b> Multiple time series and dose–response curves</a></li>
+<li class="chapter" data-level="13.3" data-path="time-series.html"><a href="time-series.html#time-series-connected-scatter"><i class="fa fa-check"></i><b>13.3</b> Time series of two or more response variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="visualizing-trends.html"><a href="visualizing-trends.html"><i class="fa fa-check"></i><b>14</b> Visualizing trends</a><ul>
+<li class="chapter" data-level="14.1" data-path="visualizing-trends.html"><a href="visualizing-trends.html#smoothing"><i class="fa fa-check"></i><b>14.1</b> Smoothing</a></li>
+<li class="chapter" data-level="14.2" data-path="visualizing-trends.html"><a href="visualizing-trends.html#showing-trends-with-a-defined-functional-form"><i class="fa fa-check"></i><b>14.2</b> Showing trends with a defined functional form</a></li>
+<li class="chapter" data-level="14.3" data-path="visualizing-trends.html"><a href="visualizing-trends.html#detrending-and-time-series-decomposition"><i class="fa fa-check"></i><b>14.3</b> Detrending and time-series decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="geospatial-data.html"><a href="geospatial-data.html"><i class="fa fa-check"></i><b>15</b> Visualizing geospatial data</a><ul>
+<li class="chapter" data-level="15.1" data-path="geospatial-data.html"><a href="geospatial-data.html#projections"><i class="fa fa-check"></i><b>15.1</b> Projections</a></li>
+<li class="chapter" data-level="15.2" data-path="geospatial-data.html"><a href="geospatial-data.html#layers"><i class="fa fa-check"></i><b>15.2</b> Layers</a></li>
+<li class="chapter" data-level="15.3" data-path="geospatial-data.html"><a href="geospatial-data.html#choropleth-mapping"><i class="fa fa-check"></i><b>15.3</b> Choropleth mapping</a></li>
+<li class="chapter" data-level="15.4" data-path="geospatial-data.html"><a href="geospatial-data.html#cartograms"><i class="fa fa-check"></i><b>15.4</b> Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html"><i class="fa fa-check"></i><b>16</b> Visualizing uncertainty</a><ul>
+<li class="chapter" data-level="16.1" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#frequency-framing"><i class="fa fa-check"></i><b>16.1</b> Framing probabilities as frequencies</a></li>
+<li class="chapter" data-level="16.2" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#visualizing-the-uncertainty-of-point-estimates"><i class="fa fa-check"></i><b>16.2</b> Visualizing the uncertainty of point estimates</a></li>
+<li class="chapter" data-level="16.3" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#uncertainty-curve-fits"><i class="fa fa-check"></i><b>16.3</b> Visualizing the uncertainty of curve fits</a></li>
+<li class="chapter" data-level="16.4" data-path="visualizing-uncertainty.html"><a href="visualizing-uncertainty.html#hypothetical-outcome-plots"><i class="fa fa-check"></i><b>16.4</b> Hypothetical outcome plots</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: Principles of figure design</b></span></li>
+<li class="chapter" data-level="17" data-path="proportional-ink.html"><a href="proportional-ink.html"><i class="fa fa-check"></i><b>17</b> The principle of proportional ink</a><ul>
+<li class="chapter" data-level="17.1" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-linear-axes"><i class="fa fa-check"></i><b>17.1</b> Visualizations along linear axes</a></li>
+<li class="chapter" data-level="17.2" data-path="proportional-ink.html"><a href="proportional-ink.html#visualizations-along-logarithmic-axes"><i class="fa fa-check"></i><b>17.2</b> Visualizations along logarithmic axes</a></li>
+<li class="chapter" data-level="17.3" data-path="proportional-ink.html"><a href="proportional-ink.html#direct-area-visualizations"><i class="fa fa-check"></i><b>17.3</b> Direct area visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="overlapping-points.html"><a href="overlapping-points.html"><i class="fa fa-check"></i><b>18</b> Handling overlapping points</a><ul>
+<li class="chapter" data-level="18.1" data-path="overlapping-points.html"><a href="overlapping-points.html#partial-transparency-and-jittering"><i class="fa fa-check"></i><b>18.1</b> Partial transparency and jittering</a></li>
+<li class="chapter" data-level="18.2" data-path="overlapping-points.html"><a href="overlapping-points.html#d-histograms"><i class="fa fa-check"></i><b>18.2</b> 2D histograms</a></li>
+<li class="chapter" data-level="18.3" data-path="overlapping-points.html"><a href="overlapping-points.html#contour-lines"><i class="fa fa-check"></i><b>18.3</b> Contour lines</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="color-pitfalls.html"><a href="color-pitfalls.html"><i class="fa fa-check"></i><b>19</b> Common pitfalls of color use</a><ul>
+<li class="chapter" data-level="19.1" data-path="color-pitfalls.html"><a href="color-pitfalls.html#encoding-too-much-or-irrelevant-information"><i class="fa fa-check"></i><b>19.1</b> Encoding too much or irrelevant information</a></li>
+<li class="chapter" data-level="19.2" data-path="color-pitfalls.html"><a href="color-pitfalls.html#using-non-monotonic-color-scales-to-encode-data-values"><i class="fa fa-check"></i><b>19.2</b> Using non-monotonic color scales to encode data values</a></li>
+<li class="chapter" data-level="19.3" data-path="color-pitfalls.html"><a href="color-pitfalls.html#not-designing-for-color-vision-deficiency"><i class="fa fa-check"></i><b>19.3</b> Not designing for color-vision deficiency</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="redundant-coding.html"><a href="redundant-coding.html"><i class="fa fa-check"></i><b>20</b> Redundant coding</a><ul>
+<li class="chapter" data-level="20.1" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-legends-with-redundant-coding"><i class="fa fa-check"></i><b>20.1</b> Designing legends with redundant coding</a></li>
+<li class="chapter" data-level="20.2" data-path="redundant-coding.html"><a href="redundant-coding.html#designing-figures-without-legends"><i class="fa fa-check"></i><b>20.2</b> Designing figures without legends</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html"><i class="fa fa-check"></i><b>21</b> Multi-panel figures</a><ul>
+<li class="chapter" data-level="21.1" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#small-multiples"><i class="fa fa-check"></i><b>21.1</b> Small multiples</a></li>
+<li class="chapter" data-level="21.2" data-path="multi-panel-figures.html"><a href="multi-panel-figures.html#compound-figures"><i class="fa fa-check"></i><b>21.2</b> Compound figures</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html"><i class="fa fa-check"></i><b>22</b> Titles, captions, and tables</a><ul>
+<li class="chapter" data-level="22.1" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#figure-titles-and-captions"><i class="fa fa-check"></i><b>22.1</b> Figure titles and captions</a></li>
+<li class="chapter" data-level="22.2" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#axis-and-legend-titles"><i class="fa fa-check"></i><b>22.2</b> Axis and legend titles</a></li>
+<li class="chapter" data-level="22.3" data-path="figure-titles-captions.html"><a href="figure-titles-captions.html#tables"><i class="fa fa-check"></i><b>22.3</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="balance-data-context.html"><a href="balance-data-context.html"><i class="fa fa-check"></i><b>23</b> Balance the data and the context</a><ul>
+<li class="chapter" data-level="23.1" data-path="balance-data-context.html"><a href="balance-data-context.html#providing-the-appropriate-amount-of-context"><i class="fa fa-check"></i><b>23.1</b> Providing the appropriate amount of context</a></li>
+<li class="chapter" data-level="23.2" data-path="balance-data-context.html"><a href="balance-data-context.html#background-grids"><i class="fa fa-check"></i><b>23.2</b> Background grids</a></li>
+<li class="chapter" data-level="23.3" data-path="balance-data-context.html"><a href="balance-data-context.html#paired-data"><i class="fa fa-check"></i><b>23.3</b> Paired data</a></li>
+<li class="chapter" data-level="23.4" data-path="balance-data-context.html"><a href="balance-data-context.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="small-axis-labels.html"><a href="small-axis-labels.html"><i class="fa fa-check"></i><b>24</b> Your axis labels are too small</a></li>
+<li class="chapter" data-level="25" data-path="avoid-line-drawings.html"><a href="avoid-line-drawings.html"><i class="fa fa-check"></i><b>25</b> Avoid line drawings</a></li>
+<li class="chapter" data-level="26" data-path="no-3d.html"><a href="no-3d.html"><i class="fa fa-check"></i><b>26</b> Don’t go 3D</a><ul>
+<li class="chapter" data-level="26.1" data-path="no-3d.html"><a href="no-3d.html#avoid-gratuitous-3d"><i class="fa fa-check"></i><b>26.1</b> Avoid gratuitous 3D</a></li>
+<li class="chapter" data-level="26.2" data-path="no-3d.html"><a href="no-3d.html#avoid-3d-position-scales"><i class="fa fa-check"></i><b>26.2</b> Avoid 3D position scales</a></li>
+<li class="chapter" data-level="26.3" data-path="no-3d.html"><a href="no-3d.html#appropriate-use-of-3d-visualizations"><i class="fa fa-check"></i><b>26.3</b> Appropriate use of 3D visualizations</a></li>
+</ul></li>
+<li class="part"><span><b>Part III: Miscellaneous topics</b></span></li>
+<li class="chapter" data-level="27" data-path="image-file-formats.html"><a href="image-file-formats.html"><i class="fa fa-check"></i><b>27</b> Understanding the most commonly used image file formats</a><ul>
+<li class="chapter" data-level="27.1" data-path="image-file-formats.html"><a href="image-file-formats.html#bitmap-and-vector-graphics"><i class="fa fa-check"></i><b>27.1</b> Bitmap and vector graphics</a></li>
+<li class="chapter" data-level="27.2" data-path="image-file-formats.html"><a href="image-file-formats.html#lossless-and-lossy-compression-of-bitmap-graphics"><i class="fa fa-check"></i><b>27.2</b> Lossless and lossy compression of bitmap graphics</a></li>
+<li class="chapter" data-level="27.3" data-path="image-file-formats.html"><a href="image-file-formats.html#converting-between-image-formats"><i class="fa fa-check"></i><b>27.3</b> Converting between image formats</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html"><i class="fa fa-check"></i><b>28</b> Choosing the right visualization software</a><ul>
+<li class="chapter" data-level="28.1" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#reproducibility-and-repeatability"><i class="fa fa-check"></i><b>28.1</b> Reproducibility and repeatability</a></li>
+<li class="chapter" data-level="28.2" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#data-exploration-versus-data-presentation"><i class="fa fa-check"></i><b>28.2</b> Data exploration versus data presentation</a></li>
+<li class="chapter" data-level="28.3" data-path="choosing-visualization-software.html"><a href="choosing-visualization-software.html#separation-of-content-and-design"><i class="fa fa-check"></i><b>28.3</b> Separation of content and design</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="telling-a-story.html"><a href="telling-a-story.html"><i class="fa fa-check"></i><b>29</b> Telling a story and making a point</a><ul>
+<li class="chapter" data-level="29.1" data-path="telling-a-story.html"><a href="telling-a-story.html#what-is-a-story"><i class="fa fa-check"></i><b>29.1</b> What is a story?</a></li>
+<li class="chapter" data-level="29.2" data-path="telling-a-story.html"><a href="telling-a-story.html#make-a-figure-for-the-generals"><i class="fa fa-check"></i><b>29.2</b> Make a figure for the generals</a></li>
+<li class="chapter" data-level="29.3" data-path="telling-a-story.html"><a href="telling-a-story.html#build-up-towards-complex-figures"><i class="fa fa-check"></i><b>29.3</b> Build up towards complex figures</a></li>
+<li class="chapter" data-level="29.4" data-path="telling-a-story.html"><a href="telling-a-story.html#make-your-figures-memorable"><i class="fa fa-check"></i><b>29.4</b> Make your figures memorable</a></li>
+<li class="chapter" data-level="29.5" data-path="telling-a-story.html"><a href="telling-a-story.html#be-consistent-but-dont-be-repetitive"><i class="fa fa-check"></i><b>29.5</b> Be consistent but don’t be repetitive</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>30</b> Annotated bibliography</a><ul>
+<li class="chapter" data-level="30.1" data-path="bibliography.html"><a href="bibliography.html#bibliography-thinking"><i class="fa fa-check"></i><b>30.1</b> Thinking about data and visualization</a></li>
+<li class="chapter" data-level="30.2" data-path="bibliography.html"><a href="bibliography.html#bibliography-programming"><i class="fa fa-check"></i><b>30.2</b> Programming books</a></li>
+<li class="chapter" data-level="30.3" data-path="bibliography.html"><a href="bibliography.html#statistics-texts"><i class="fa fa-check"></i><b>30.3</b> Statistics texts</a></li>
+<li class="chapter" data-level="30.4" data-path="bibliography.html"><a href="bibliography.html#historical-texts"><i class="fa fa-check"></i><b>30.4</b> Historical texts</a></li>
+<li class="chapter" data-level="30.5" data-path="bibliography.html"><a href="bibliography.html#books-on-broadly-related-topics"><i class="fa fa-check"></i><b>30.5</b> Books on broadly related topics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="technical-notes.html"><a href="technical-notes.html"><i class="fa fa-check"></i>Technical notes</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fundamentals of Data Visualization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="balance-data-context" class="section level1">
+<h1><span class="header-section-number">23</span> Balance the data and the context</h1>
+<p>We can broadly subdivide the graphical elements in any visualization into elements that represent data and elements that do not. The former are elements such as the points in a scatter plot, the bars in a histogram or barplot, or the shaded areas in a heatmap. The latter are elements such as plot axes, axis ticks and labels, axis titles, legends, and plot annotations. These elements generally provide context for the data and/or visual structure to the plot. When designing a plot, it can be helpful to think about the amount of ink (Chapter <a href="proportional-ink.html#proportional-ink">17</a>) used to represent data and context. A common recommendation is to reduce the amount of non-data ink, and following this advice can often yield less cluttered and more elegant visualizations. At the same time, context and visual structure are important, and overly minimizing the plot elements that provide them can result in figures that are difficult to read, confusing, or simply not that compelling.</p>
+<div id="providing-the-appropriate-amount-of-context" class="section level2">
+<h2><span class="header-section-number">23.1</span> Providing the appropriate amount of context</h2>
+<p>The idea that distinguishing between data and non-data ink may be useful was popularized by Edward Tufte in his book “The Visual Display of Quantitative Information” <span class="citation">(Tufte <a href="#ref-TufteQuantDispl">2001</a>)</span>. Tufte introduces the concept of the “data–ink ratio”, which he defines as the “proportion of a graphic’s ink devoted to the non-redundant display of data-information.” He then writes (emphasis mine):</p>
+<blockquote>
+<p>Maximize the data–ink ratio, <em>within reason.</em></p>
+</blockquote>
+<p>I have emphasized the phrase “within reason” because it is critical and frequently forgotten. In fact, I think that Tufte himself forgets it in the remainder of his book, where he advocates overly minimalistic designs that, in my opinion, are neither elegant nor easy to decipher. If we interpret the phrase “maximize the data–ink ratio” to mean “remove clutter and strive for clean and elegant designs,” then I think it is reasonable advice. But if we interpret it as “do everything you can to remove non-data ink” then it will result in poor design choices. If we go too far in either direction we will end up with ugly figures. However, away from the extremes there is wide range of designs that are all acceptable and may be appropriate in different settings.</p>
+<p>To explore the extremes, let’s consider a figure that clearly has too much non-data ink (Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-bad">23.1</a>). The colored points in the plot panel (the framed center area containing data points) are data ink. Everything else is non-data ink. The non-data ink includes a frame around the entire figure, a frame around the plot panel, and a frame around the legend. None of these frames are needed. We also see a prominent and dense background grid that draws attention away from the actual data points. By removing the frames and minor grid lines and by drawing the major grid lines in a light gray, we arrive at Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a>. In this version of the figure, the actual data points stand out much more clearly, and they are perceived as the most important component of the figure.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:Aus-athletes-grid-bad"></span>
+<img src="balance_data_context_files/figure-html/Aus-athletes-grid-bad-1.png" alt="Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points. Data source: Telford and Cunningham (1991)" width="1260" />
+<p class="caption">
+Figure 23.1: Percent body fat versus height in professional male Australian athletes. Each point represents one athlete. This figure devotes way too much ink to non-data. There are unnecessary frames around the entire figure, around the plot panel, and around the legend. The coordinate grid is very prominent, and its presence draws attention away from the data points. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:Aus-athletes-grid-good"></span>
+<img src="balance_data_context_files/figure-html/Aus-athletes-grid-good-1.png" alt="Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure 23.1. Unnecessary frames have been removed, minor grid lines have been removed, and major grid lines have been drawn in light gray to stand back relative to the data points. Data source: Telford and Cunningham (1991)" width="1260" />
+<p class="caption">
+Figure 23.2: Percent body fat versus height in professional male Australian athletes. This figure is a cleaned-up version of Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-bad">23.1</a>. Unnecessary frames have been removed, minor grid lines have been removed, and major grid lines have been drawn in light gray to stand back relative to the data points. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+<p>At the other extreme, we might end up with a figure such as Figure <a href="balance-data-context.html#fig:Aus-athletes-min-bad">23.3</a>, which is a minimalist version of Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a>. In this figure, the axis tick labels and titles have been made so faint that they are hard to see. If we just glance at the figure we will not immediately perceive what data is actually shown. We only see points floating in space. Moreover, the legend annotations are so faint that the points in the legend could be mistaken for data points. This effect is amplified because there is no clear visual separation between the plot area and the legend. Notice how the background grid in Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a> both anchors the points in space and sets off the data area from the legend area. Both of these effects have been lost in Figure <a href="balance-data-context.html#fig:Aus-athletes-min-bad">23.3</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:Aus-athletes-min-bad"></span>
+<img src="balance_data_context_files/figure-html/Aus-athletes-min-bad-1.png" alt="Percent body fat versus height in professional male Australian athletes. In this example, the concept of removing non-data ink has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data. Data source: Telford and Cunningham (1991)" width="1260" />
+<p class="caption">
+Figure 23.3: Percent body fat versus height in professional male Australian athletes. In this example, the concept of removing non-data ink has been taken too far. The axis tick labels and title are too faint and are barely visible. The data points seem to float in space. The points in the legend are not sufficiently set off from the data points, and the casual observer might think they are part of the data. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+<p>In Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a>, I am using an open background grid and no axis lines or frame around the plot panel. I like this design because it conveys to the reader that range of possible data values extends beyond the axis limits. For example, even though Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a> shows no athlete taller than 210 cm, such an athlete could conceivably exist. However, some authors prefer to delineate the extent of the plot panel, by drawing a frame around it (Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good-frame">23.4</a>). Both options are reasonable, and which is preferable is primarily a matter of personal opinion. One advantage of the framed version is that it clearly separates the legend from the plot panel.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:Aus-athletes-grid-good-frame"></span>
+<img src="balance_data_context_files/figure-html/Aus-athletes-grid-good-frame-1.png" alt="Percent body fat versus height in professional male Australian athletes. This figure adds a frame around the plot panel of Figure 23.2, and this frame helps separate the legend from the data. Data source: Telford and Cunningham (1991)" width="1260" />
+<p class="caption">
+Figure 23.4: Percent body fat versus height in professional male Australian athletes. This figure adds a frame around the plot panel of Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a>, and this frame helps separate the legend from the data. Data source: <span class="citation">Telford and Cunningham (<a href="#ref-Telford-Cunningham-1991">1991</a>)</span>
+</p>
+</div>
+<p>Figures with too little non-data ink commonly suffer from the effect that figure elements appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure <a href="balance-data-context.html#fig:titanic-survival-by-gender-class-bad">23.5</a> shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure <a href="balance-data-context.html#fig:titanic-survival-by-gender-class">23.6</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:titanic-survival-by-gender-class-bad"></span>
+<img src="balance_data_context_files/figure-html/titanic-survival-by-gender-class-bad-1.png" alt="Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it’s difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float." width="1050" />
+<p class="caption">
+Figure 23.5: Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it’s difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:titanic-survival-by-gender-class"></span>
+<img src="balance_data_context_files/figure-html/titanic-survival-by-gender-class-1.png" alt="Survival of passengers on the Titanic, broken down by gender and class. This is an improved version of Figure 23.5. The gray background in each facet clearly delineates the six groupings (survived or died in first, second, or third class) that make up this plot. Thin horizontal lines in the background provide a reference for the bar heights and facility comparison of bar heights among facets." width="1050" />
+<p class="caption">
+Figure 23.6: Survival of passengers on the Titanic, broken down by gender and class. This is an improved version of Figure <a href="balance-data-context.html#fig:titanic-survival-by-gender-class-bad">23.5</a>. The gray background in each facet clearly delineates the six groupings (survived or died in first, second, or third class) that make up this plot. Thin horizontal lines in the background provide a reference for the bar heights and facility comparison of bar heights among facets.
+</p>
+</div>
+</div>
+<div id="background-grids" class="section level2">
+<h2><span class="header-section-number">23.2</span> Background grids</h2>
+<p>Gridlines in the background of a plot can help the reader discern specific data values and compare values in one part of a plot to values in another part. At the same time, gridlines can add visual noise, in particular when they are prominent or densely spaced. Reasonable people can disagree about whether to use a grid or not, and if so how to format it and how densely to space it. Throughout this book I am using a variety of different grid styles, to highlight that there isn’t necessarily one best choice.</p>
+<p>The R software ggplot2 has popularized a style using a fairly prominent background grid of white lines on a gray background. Figure <a href="balance-data-context.html#fig:price-plot-ggplot-default">23.7</a> shows an example in this style. The figure displays the change in stock price of four major tech companies over a five-year window, from 2012 to 2017. With apologies to the ggplot2 author Hadley Wickham, for whom I have the utmost respect, I don’t find the white-on-gray background grid particularly attractive. To my eye, the gray background can detract from the actual data, and a grid with major and minor lines can be too dense. I also find the gray squares in the legend confusing.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:price-plot-ggplot-default"></span>
+<img src="balance_data_context_files/figure-html/price-plot-ggplot-default-1.png" alt="Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimics the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn’t place sufficient emphasis on the data. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.7: Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure mimics the ggplot2 default look, with white major and minor grid lines on a gray background. In this particular example, I think the grid lines overpower the data lines, and the result is a figure that is not well balanced and that doesn’t place sufficient emphasis on the data. Data source: Yahoo Finance
+</p>
+</div>
+<p>Arguments in favor of the gray background include that it (i) helps the plot to be perceived as a single visual entity and (ii) prevents the plot to appear as a white box in surrounding dark text <span class="citation">(Wickham <a href="#ref-Wickham2016">2016</a>)</span>. I completely agree with the first point, and it was the reason I used gray backgrounds in Figure <a href="balance-data-context.html#fig:titanic-survival-by-gender-class">23.6</a>. For the second point, I’d like to caution that the perceived darkness of text will depend on the font size, fontface, and line spacing, and the perceived darkness of a figure will depend on the absolute amount and color of ink used, including all data ink. A scientific paper typeset in dense, 10-point Times New Roman will look much darker than a coffee-table book typeset in 14-point Palatino with one-and-a-half line spacing. Likewise, a scatter plot of five points in yellow will look much lighter than a scatter plot of 10,000 points in black. If you want to use a gray figure background, consider the color intensity of your figure foreground, as well as the expected layout and typography of the text around your figures, and adjust the choice of your background gray accordingly. Otherwise, it could happen that your figures end up standing out as dark boxes among the surrounding lighter text. Also, keep in mind that the colors you use to plot your data need to work with the gray background. We tend to perceive colors differently against different backgrounds, and a gray background requires darker and more saturated foreground colors than a white background.</p>
+<p>We can go all the way in the opposite direction and remove both the background and the grid lines (Figure <a href="balance-data-context.html#fig:price-plot-no-grid">23.8</a>). In this case, we need visible axis lines to frame the plot and keep it as a single visual unit. For this particular figure, I think this choice is a worse option, and I have labeled it as “bad”. In the absence of any background grid whatsoever, the curves seem to float in space, and it’s difficult to reference the final values on the right to the axis ticks on the left.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:price-plot-no-grid"></span>
+<img src="balance_data_context_files/figure-html/price-plot-no-grid-1.png" alt="Indexed stock price over time for four major tech companies. In this variant of Figure 23.7, the data lines are not sufficiently anchored. This makes it difficult to ascertain to what extent they have deviated from the index value of 100 at the end of the covered time interval. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.8: Indexed stock price over time for four major tech companies. In this variant of Figure <a href="balance-data-context.html#fig:price-plot-ggplot-default">23.7</a>, the data lines are not sufficiently anchored. This makes it difficult to ascertain to what extent they have deviated from the index value of 100 at the end of the covered time interval. Data source: Yahoo Finance
+</p>
+</div>
+<p>At the absolute minimum, we need to add one horizontal reference line. Since the stock prices in Figure <a href="balance-data-context.html#fig:price-plot-no-grid">23.8</a> indexed to 100 in June 2012, marking this value with a thin horizontal line at <em>y</em> = 100 helps a lot (Figure <a href="balance-data-context.html#fig:price-plot-refline">23.9</a>). Alternatively, we can use a minimal “grid” of horizontal lines. For a plot where we are primarily interested in the change in <em>y</em> values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure <a href="balance-data-context.html#fig:price-plot-hgrid">23.10</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:price-plot-refline"></span>
+<img src="balance_data_context_files/figure-html/price-plot-refline-1.png" alt="Indexed stock price over time for four major tech companies. Adding a thin horizontal line at the index value of 100 to Figure 23.8 helps provide an important reference throughout the entire time period the plot spans. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.9: Indexed stock price over time for four major tech companies. Adding a thin horizontal line at the index value of 100 to Figure <a href="balance-data-context.html#fig:price-plot-no-grid">23.8</a> helps provide an important reference throughout the entire time period the plot spans. Data source: Yahoo Finance
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:price-plot-hgrid"></span>
+<img src="balance_data_context_files/figure-html/price-plot-hgrid-1.png" alt="Indexed stock price over time for four major tech companies. Adding thin horizontal lines at all major y axis ticks provides a better set of reference points than just the one horizontal line of Figure 23.9. This design also removes the need for prominent x and y axis lines, since the evenly spaced horizontal lines create a visual frame for the plot panel. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.10: Indexed stock price over time for four major tech companies. Adding thin horizontal lines at all major <em>y</em> axis ticks provides a better set of reference points than just the one horizontal line of Figure <a href="balance-data-context.html#fig:price-plot-refline">23.9</a>. This design also removes the need for prominent <em>x</em> and <em>y</em> axis lines, since the evenly spaced horizontal lines create a visual frame for the plot panel. Data source: Yahoo Finance
+</p>
+</div>
+<p>For such a minimal grid, we generally draw the lines orthogonally to direction along which the numbers of interest vary. Therefore, if instead of plotting the stock price over time we plot the five-year increase, as horizontal bars, then we will want to use vertical lines instead (Figure <a href="balance-data-context.html#fig:price-increase">23.11</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:price-increase"></span>
+<img src="balance_data_context_files/figure-html/price-increase-1.png" alt="Percent increase in stock price from June 2012 to June 2017, for four major tech companies. Because the bars run horizontally, vertical grid lines are appropriate here. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.11: Percent increase in stock price from June 2012 to June 2017, for four major tech companies. Because the bars run horizontally, vertical grid lines are appropriate here. Data source: Yahoo Finance
+</p>
+</div>
+<div class="rmdtip">
+<p>
+Grid lines that run perpendicular to the key variable of interest tend to be the most useful.
+</p>
+</div>
+<p>For bar graphs such as Figure <a href="balance-data-context.html#fig:price-increase">23.11</a>, <span class="citation">Tufte (<a href="#ref-TufteQuantDispl">2001</a>)</span> recommends to draw white grid lines on top of the bars instead of dark grid lines underneath (Figure <a href="balance-data-context.html#fig:price-increase-tufte">23.12</a>). These white grid lines have the effect of separating the bars into distinct segments of equal length. I’m of two minds on this style. On the one hand, research into human perception suggests that breaking bars into discrete segments helps the reader to perceive bar lengths <span class="citation">(Haroz, Kosara, and Franconeri <a href="#ref-Haroz_et_al_2015">2015</a>)</span>. On the other hand, to my eye the bars look like they are falling apart and don’t form a clear visual unit. In fact, I used this style purposefully in Figure <a href="visualizing-amounts.html#fig:titanic-passengers-by-class-sex">6.10</a> to visually separate stacked bars representing male and female passengers. Which effect dominates may depend on the specific choices of bar width, distance between bars, and thickness of the white grid lines. Thus, if you intend to use this style, I encourage you to vary these parameters until you have a figure that creates the desired visual effect.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:price-increase-tufte"></span>
+<img src="balance_data_context_files/figure-html/price-increase-tufte-1.png" alt="Percent increase in stock price from June 2012 to June 2017, for four major tech companies. White grid lines on top of bars can help the reader perceive the relative lengths of the bars. At the same time, they can also create the perception that the bars are falling apart. Data source: Yahoo Finance" width="1260" />
+<p class="caption">
+Figure 23.12: Percent increase in stock price from June 2012 to June 2017, for four major tech companies. White grid lines on top of bars can help the reader perceive the relative lengths of the bars. At the same time, they can also create the perception that the bars are falling apart. Data source: Yahoo Finance
+</p>
+</div>
+<p>I would like to point out another downside of Figure <a href="balance-data-context.html#fig:price-increase-tufte">23.12</a>. I had to move the percentage values outside the bars, because the labels didn’t fit into the final segments of several of the bars. However, this choice inappropriately visually elongates the bars and should be avoided whenever possible.</p>
+<p>Background grids along both axis directions are most appropriate for scatter plots where there is no primary axis of interest. Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a> at the beginning of this chapter provides an example. When a figure has a full background grid, axis lines are generally not needed (Figure <a href="balance-data-context.html#fig:Aus-athletes-grid-good">23.2</a>).</p>
+</div>
+<div id="paired-data" class="section level2">
+<h2><span class="header-section-number">23.3</span> Paired data</h2>
+<p>For figures where the relevant comparison is the <em>x</em> = <em>y</em> line, such as in scatter plots of paired data, I prefer to draw a diagonal line rather than a grid. For example, consider Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>, which compares gene expression levels in a mutant virus to the non-mutated (wild-type) variant. By drawing the diagonal line, we can see immediately which genes are expressed higher or lower in the mutant relative to the wild type. The same observation is much harder to make when the figure has a background grid and no diagonal line (Figure <a href="balance-data-context.html#fig:gene-expression-bad">23.14</a>). Thus, even though Figure <a href="balance-data-context.html#fig:gene-expression-bad">23.14</a> looks pleasing, I label it as bad. In particular, gene <em>10A</em>, which clearly has a reduced expression level in the mutant relative to the wild-type (Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>), does not visually stand out in Figure <a href="balance-data-context.html#fig:gene-expression-bad">23.14</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:gene-expression"></span>
+<img src="balance_data_context_files/figure-html/gene-expression-1.png" alt="Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene 9 was deleted, and this resulted in reduced mRNA abundances of gene 9 as well as the neighboring genes 8 and 10A (highlighted). Data source: Paff et al. (2018)" width="945" />
+<p class="caption">
+Figure 23.13: Gene expression levels in a mutant bacteriophage T7 relative to wild-type. Gene expression levels are measured by mRNA abundances, in transcripts per million (TPM). Each dot corresponds to one gene. In the mutant bacteriophage T7, the promoter in front of gene <em>9</em> was deleted, and this resulted in reduced mRNA abundances of gene <em>9</em> as well as the neighboring genes <em>8</em> and <em>10A</em> (highlighted). Data source: <span class="citation">Paff et al. (<a href="#ref-Paffetal2018">2018</a>)</span>
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:gene-expression-bad"></span>
+<img src="balance_data_context_files/figure-html/gene-expression-bad-1.png" alt="Gene expression levels in a mutant bacteriophage T7 relative to wild-type. By plotting this dataset against a background grid, instead of a diagonal line, we are obscuring which genes are higher or lower in the mutant than in the wild-type bacteriophage. Data source: Paff et al. (2018)" width="945" />
+<p class="caption">
+Figure 23.14: Gene expression levels in a mutant bacteriophage T7 relative to wild-type. By plotting this dataset against a background grid, instead of a diagonal line, we are obscuring which genes are higher or lower in the mutant than in the wild-type bacteriophage. Data source: <span class="citation">Paff et al. (<a href="#ref-Paffetal2018">2018</a>)</span>
+</p>
+</div>
+<p>Of course we could take the diagonal line from Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a> and add it on top of the background grid of Figure <a href="balance-data-context.html#fig:gene-expression-bad">23.14</a>, to ensure that the relevant visual reference is present. However, the resulting figure is getting quite busy (Figure <a href="balance-data-context.html#fig:gene-expression-ugly">23.15</a>). I had to make the diagonal line darker so it would stand out against the background grid, but now the data points almost seem to fade into the background. We could ameliorate this issue by making the data points larger or darker, but all considered I’d rather choose Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:gene-expression-ugly"></span>
+<img src="balance_data_context_files/figure-html/gene-expression-ugly-1.png" alt="Gene expression levels in a mutant bacteriophage T7 relative to wild-type. This figure combines the background grid from Figure 23.14 with the diagonal line from Figure 23.13. In my opinion, this figure is visually too busy compared to Figure 23.13, and I would prefer Figure 23.13. Data source: Paff et al. (2018)" width="945" />
+<p class="caption">
+Figure 23.15: Gene expression levels in a mutant bacteriophage T7 relative to wild-type. This figure combines the background grid from Figure <a href="balance-data-context.html#fig:gene-expression-bad">23.14</a> with the diagonal line from Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>. In my opinion, this figure is visually too busy compared to Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>, and I would prefer Figure <a href="balance-data-context.html#fig:gene-expression">23.13</a>. Data source: <span class="citation">Paff et al. (<a href="#ref-Paffetal2018">2018</a>)</span>
+</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">23.4</span> Summary</h2>
+<p>Both overloading a figure with non-data ink and excessively erasing non-data ink can result in poor figure design. We need to find a healthy medium, where the data points are the main emphasis of the figure while sufficient context is provided about what data is shown, where the points lie relative to each other, and what they mean.</p>
+<p>With respect to backgrounds and background grids, there is no one choice that is preferable in all contexts. I recommend to be judicious about grid lines. Think carefully about which specific grid or guide lines are most informative for the plot you are making, and then only show those. I prefer minimal, light grids on a white background, since white is the default neutral color on paper and supports nearly any foreground color. However, a shaded background can help the plot appear as a single visual entity, and this may be particularly useful in small multiples plots. Finally, we have to consider how all these choices relate to visual branding and identity. Many magazines and websites like to have an immediately recognizable in-house style, and a shaded background and specific choice of background grid can help create a unique visual identity.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-TufteQuantDispl">
+<p>Tufte, E. 2001. <em>The Visual Display of Quantitative Information</em>. 2nd ed. Cheshire, Connecticut: Graphics Press.</p>
+</div>
+<div id="ref-Telford-Cunningham-1991">
+<p>Telford, R. D., and R. B. Cunningham. 1991. “Sex, Sport, and Body-Size Dependency of Hematology in Highly Trained Athletes.” <em>Medicine and Science in Sports and Exercise</em> 23: 788–94.</p>
+</div>
+<div id="ref-Wickham2016">
+<p>Wickham, H. 2016. <em>ggplot2: Elegant Graphics for Data Analysis</em>. 2nd ed. New York: Springer.</p>
+</div>
+<div id="ref-Haroz_et_al_2015">
+<p>Haroz, S., R. Kosara, and S. L. Franconeri. 2015. “ISOTYPE Visualization: Working Memory, Performance, and Engagement with Pictographs.” <em>ACM Conference on Human Factors in Computing Systems</em>, 1191–1200. doi:<a href="https://doi.org/10.1145/2702123.2702275">10.1145/2702123.2702275</a>.</p>
+</div>
+<div id="ref-Paffetal2018">
+<p>Paff, M. L., B. R. Jack, B. L. Smith, J. J. Bull, and C. O. Wilke. 2018. “Combinatorial Approaches to Viral Attenuation.” <em>bioRxiv</em>, 29918. doi:<a href="https://doi.org/10.1101/299180">10.1101/299180</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="figure-titles-captions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="small-axis-labels.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
