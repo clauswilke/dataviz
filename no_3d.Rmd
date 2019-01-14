@@ -50,7 +50,7 @@ cyls <- data.frame(cyl = factor(c(4, 6, 8)))
 
 p <- ggplot(cyls, aes(cyl, cyl, color = cyl)) + geom_point() +
   scale_color_manual(values = colors, name = "cylinders") +
-  theme_half_open(font_size = 12, font_family = dviz_font_family) +
+  theme_dviz_open(font_size = 12, font_family = dviz_font_family) +
   theme(legend.position = "top",
         legend.justification = "right")
 legend <- get_legend(p)
@@ -121,16 +121,19 @@ p1 <- ggplot(mtcars, aes(x = disp, y = mpg, color = factor(cyl))) +
   scale_color_manual(values = colors, name = "cylinders", guide = "none") +
   xlab("displacement (cu. in.)") +
   ylab("efficiency (mpg)") +
-  theme_half_open(12)
+  theme_dviz_open(12)
 
 p2 <- ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) +
   geom_point(size = 1.5) + 
   scale_color_manual(values = colors, name = "cylinders") +
   xlab("power (hp)") +
   ylab("efficiency (mpg)") +
-  theme_half_open(12) +
-  theme(legend.position = c(1, 1),
-        legend.justification = c(1, 1))
+  theme_dviz_open(12) +
+  theme(
+    legend.position = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.spacing.y = grid::unit(3, "pt")
+  )
 
 
 plot_grid(p1, p2)
@@ -141,17 +144,24 @@ plot_grid(p1, p2)
 ```{r mtcars-2d-size, fig.width = 5.5, fig.asp = 0.75, fig.cap = '(ref:mtcars-2d-size)'}
 p <- ggplot(mtcars, aes(x = disp, y = hp, size = mpg, fill = factor(cyl))) +
   geom_point(color = "white", pch = 21) + 
-  scale_fill_manual(values = colors, name = "cylinders",
-                     guide = guide_legend(override.aes = list(size = 3))) +
-  scale_size(name = "    mpg    ",
-             range = c(1, 8),
-             limits = c(8, 40),
-             breaks = c(5, 10, 20, 40),
-             guide = guide_legend(override.aes = list(fill = "gray50"))) +
+  scale_fill_manual(
+    values = colors, name = "cylinders",
+    guide = guide_legend(override.aes = list(size = 3))
+  ) +
+  scale_size(
+    name = "    mpg    ",
+    range = c(1, 8),
+    limits = c(8, 40),
+    breaks = c(5, 10, 20, 40),
+    guide = guide_legend(override.aes = list(fill = "gray50"))
+  ) +
   xlab("displacement (cu. in.)") +
   ylab("power (hp)") +
-  theme_half_open() +
-  theme(legend.title.align = 0.5)
+  theme_dviz_open() +
+  theme(
+    legend.title.align = 0.5,
+    legend.spacing.y = grid::unit(4, "pt")
+  )
 
 ggdraw(align_legend(p))
 ```

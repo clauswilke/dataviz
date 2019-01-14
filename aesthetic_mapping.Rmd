@@ -270,16 +270,20 @@ p_mtcars <- ggplot(mtcars, aes(disp, mpg, fill = hp, shape = factor(cyl), size =
   scale_fill_continuous_sequential(palette = "Emrld", name = "power (hp)", breaks = c(100, 200, 300)) +
   xlab("displacement (cu. in.)") +
   ylab("fuel efficiency (mpg)") +
-  guides(shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
-         size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
-                             title = "weight (1000 lbs)")) +
+  guides(
+    shape = guide_legend(override.aes = list(size = 4, fill = "#329D84")),
+    size = guide_legend(override.aes = list(shape = 21, fill = "#329D84"),
+    title = "weight (1000 lbs)")
+  ) +
   theme_dviz_open() + background_grid() +
-  theme(#legend.title = element_text(size = 12),
-        legend.box.background = element_rect(fill = "white", color = "white"),
-        legend.position = "top",
-        legend.direction = "vertical",
-        legend.justification = "center",
-        legend.box.margin = margin(7, 7, 7, 7))
+  theme(
+    #legend.title = element_text(size = 12),
+    legend.box.background = element_rect(fill = "white", color = "white"),
+    legend.position = "top",
+    legend.direction = "vertical",
+    legend.justification = "center",
+    legend.box.margin = margin(7, 7, 7, 7)
+  )
 
 legend <- get_legend(align_legend(p_mtcars))
 

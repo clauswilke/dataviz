@@ -28,7 +28,7 @@ h3_bad <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2., fil
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz_open() +
   background_grid(major = "y", minor = "none") +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 stamp_bad(h3_bad)
 ```
@@ -41,7 +41,7 @@ h3_good <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.7, f
   scale_x_continuous(limits = c(0, 75), expand = c(0, 0)) +
   theme_dviz_open() +
   background_grid(major = "y", minor = "none") +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 h3_good
 ```
@@ -88,7 +88,7 @@ iris_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, linetype = Sp
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz_open() +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_ugly(iris_lines)
 ```
@@ -120,7 +120,7 @@ iris_colored_lines <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, color
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz_open() +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 stamp_ugly(iris_colored_lines)
 ```
@@ -156,7 +156,7 @@ iris_filled <- ggplot(iris_dens, aes(x = Sepal.Length, y = density, fill = Speci
   scale_x_continuous(expand = c(0, 0), name = "sepal length") +
   scale_y_continuous(limits = c(0, 1.5), expand = c(0, 0)) +
   theme_dviz_open() +
-  theme(plot.margin = margin(14, 7, 3, 0))
+  theme(plot.margin = margin(14, 7, 3, 1.5))
 
 iris_filled
 ```
@@ -186,7 +186,7 @@ mpg_linespoints <- ggplot(mpg, aes(y=cty, x=displ, shape=drv)) +
   theme_dviz_open() +
   theme(
     legend.position = c(.7, .8),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
 
 stamp_ugly(mpg_linespoints)
@@ -228,7 +228,7 @@ mpg_filledpoints <- ggplot(mpg, aes(y = cty, x = displ, color = drv, fill = drv,
   theme_dviz_open() +
   theme(
     legend.position = c(.7, .8),
-    plot.margin = margin(3, 7, 3, 0)
+    plot.margin = margin(3, 7, 3, 1.5)
   )
         
 mpg_filledpoints
@@ -262,9 +262,11 @@ lincoln_weather %>%
   mutate(month_short = fct_rev(month_short)) -> lincoln_df
 
 lincoln_box_empty <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot() + xlab("Month") +
+  geom_boxplot() + 
+  xlab("Month") +
+  ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_box_empty
 ```
@@ -274,9 +276,11 @@ lincoln_box_empty
 
 ```{r lincoln-weather-box-filled, fig.cap='(ref:lincoln-weather-box-filled)'}
 lincoln_box_filled <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_boxplot(fill = 'grey90') + xlab("Month") +
+  geom_boxplot(fill = 'grey90') + 
+  xlab("Month") +
+  ylab("mean temperature (°F)") +
   theme_dviz_open() +
-  theme(plot.margin = margin(3, 7, 3, 0))
+  theme(plot.margin = margin(3, 7, 3, 1.5))
 
 lincoln_box_filled
 ```

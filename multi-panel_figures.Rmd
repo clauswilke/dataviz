@@ -69,7 +69,7 @@ ggplot(filter(movies, year > 1905), aes(y = rating, x = votes)) +
     panel.border = element_rect(
       colour = "grey80", fill = NA, linetype = 1, size = 1.
     ),
-    plot.margin = margin(3, 5, 3, 0)
+    plot.margin = margin(3, 5, 3, 1.5)
   )
 ```
 
@@ -96,11 +96,12 @@ p <- ggplot(BA_top_degrees, aes(year, perc)) +
   geom_line(color = "#0072B2") + 
   facet_wrap(~field, labeller = label_wrap_gen(width = 25), ncol = 3,
              scales = "free") +
-  ylab("percent") +
+  ylab("proportion of degrees") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = .1)) +
   theme_dviz_hgrid() +
   theme(strip.text = element_text(margin = margin(7, 7, 3, 7)),
         panel.spacing.x = grid::unit(14, "pt"),
-        plot.margin = margin(3.5, 14, 3.5, 0)) 
+        plot.margin = margin(3.5, 14, 3.5, 1.5)) 
 
 stamp_bad(p)
 ```
@@ -114,12 +115,15 @@ ggplot(BA_top_degrees, aes(year, perc)) +
   geom_line(color = "#0072B2") + 
   facet_wrap(~field, labeller = label_wrap_gen(width = 25), ncol = 3,
              scales = "free") +
-  scale_y_continuous(limits = c(0, 0.241), expand = c(0, 0),
-                     name = "percent") +
+  scale_y_continuous(
+    limits = c(0, 0.241), expand = c(0, 0),
+    name = "proportion of degrees",
+    labels = scales::percent_format(accuracy = 1)
+  ) +
   theme_dviz_hgrid() +
   theme(strip.text = element_text(margin = margin(7, 7, 3, 7)),
         panel.spacing.x = grid::unit(14, "pt"),
-        plot.margin = margin(3.5, 14, 3.5, 0)) 
+        plot.margin = margin(3.5, 14, 3.5, 1.5)) 
 
 ```
 
@@ -158,7 +162,7 @@ p1 <- ggplot(BA_totals, aes(year, total/1e6)) +
   theme_dviz_hgrid() +
   theme(axis.title = element_text(color = textcol),
         axis.text = element_text(color = textcol),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 BA_df %>% group_by(field) %>%
   summarize(mean_perc = mean(perc)) %>%
@@ -178,10 +182,15 @@ p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
                      expand = expand_scale(mult = c(0.1, 0.04)),
                      name = NULL,
                      position = "top") +
-  scale_y_continuous(limits = c(0.02, 0.22), expand = c(0, 0), name = "percent of degrees",
-                     sec.axis = dup_axis(breaks = filter(BA_top_pairs, year == 2015)$perc + 0.0001,
-                                         labels = filter(BA_top_pairs, year == 2015)$field_wrapped,
-                                         name = NULL)) +
+  scale_y_continuous(
+    limits = c(0.02, 0.22), expand = c(0, 0),
+    name = "proportion of degrees",
+    labels = scales::percent_format(accuracy = 1),
+    sec.axis = dup_axis(
+      breaks = filter(BA_top_pairs, year == 2015)$perc + 0.0001,
+      labels = filter(BA_top_pairs, year == 2015)$field_wrapped,
+      name = NULL)
+  ) +
   theme_dviz_open() +
   theme(axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
@@ -195,7 +204,7 @@ p2 <- ggplot(BA_top_pairs, aes(x = year, y = perc)) +
                                          ),
         axis.line.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
-        plot.margin = margin(3, 7, 3, 0))
+        plot.margin = margin(3, 7, 3, 1.5))
 
 plot_grid(p1, p2, labels = "auto", rel_widths = c(1.2, 1), align = 'h')
 ```
@@ -236,7 +245,7 @@ p1 <- ggplot(athletes_df, aes(x = sex)) +
   theme_dviz_hgrid(12, rel_small = 1) + 
   theme(axis.ticks.x = element_blank(),
         #axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 6, 0, 0))
+        plot.margin = margin(3, 6, 0, 1.5))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill = sex)) + 
   geom_point(size = 2.5) +
@@ -255,12 +264,12 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, shape = sex, color = sex, fill =
   theme(legend.position = c(1, .1),
         legend.justification = "right",
         legend.box.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(3, 0, 0, 0))
+        plot.margin = margin(3, 1.5, 0, 1.5))
 
 p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
   draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
             family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 6, 0))
+  theme(plot.margin = margin(0, 1.5, 6, 1.5))
 
 p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m"),
                               fill = fct_relevel(sex, "m"))) + 
@@ -278,7 +287,7 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = fct_relevel(sex, "m
         )
 
 stamp_bad(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0)))
+            theme(plot.margin = margin(6, 12, 0, 1.5)))
 ```
 
 Figure \@ref(fig:athletes-composite-good) fixes all these issues. In this figure, female athletes are consistently shown in orange and to the left of male athletes, who are shown in blue. Notice how much easier it is to read this figure than Figure \@ref(fig:athletes-composite-inconsistent). When we use a consistent visual language, it doesn't take much mental effort to determine which visual elements in the different panels represent women and which men. Figure \@ref(fig:athletes-composite-inconsistent), on the other hand, can be quite confusing. In particular, on first glance it may generate the impression that men tend to have higher body fat percentages than women. Notice also that we need only a single legend in Figure \@ref(fig:athletes-composite-good) but needed two in Figure \@ref(fig:athletes-composite-inconsistent). Since the visual language is consistent, the same legend works for panels (b) and (c).
@@ -295,7 +304,7 @@ p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) +
   theme(#axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         #axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 6, 0, 0))
+        plot.margin = margin(3, 6, 0, 1.5))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
   geom_point(pch = 21, color = "white", size = 2.5) +
@@ -303,12 +312,12 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
   scale_y_continuous(limits = c(2.2, 11.), expand = c(0, 0), name = "WBC count") +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_dviz_hgrid(12, rel_small = 1) +
-  theme(plot.margin = margin(3, 0, 0, 0))
+  theme(plot.margin = margin(3, 1.5, 0, 1.5))
 
 p_row <- plot_grid(p1, p2, labels = "auto", align = 'h', rel_widths = c(0.7, 1)) +
   draw_text("RBC count", x = 1, y = 0, size = 12, hjust = 1, vjust = -0.02,
             family = dviz_font_family) + 
-  theme(plot.margin = margin(0, 0, 6, 0))
+  theme(plot.margin = margin(0, 1.5, 6, 1.5))
 
 GeomBP <- GeomBoxplot
 GeomBP$draw_key <- draw_key_polygon
@@ -331,7 +340,7 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
         legend.justification = "right")
 
 plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0))
+            theme(plot.margin = margin(6, 12, 0, 1.5))
 ```
 
 Finally, we need to pay attention to the alignment of individual figure panels in a compound figure. The axes and other graphical elements of the individual panels should all be aligned to each other. Getting the alignment right can be quite tricky, in particular if individual panels are prepared separately, possibly by different people and/or in different programs, and then pasted together in an image manipulation program. To draw your attention to such alignment issues, Figure \@ref(fig:athletes-composite-misaligned) shows a variation of Figure \@ref(fig:athletes-composite-good) where now all figure elements are slightly out of alignment. I have added axis lines to all panels of Figure \@ref(fig:athletes-composite-misaligned) to emphasize these alignment problems. Notice how no axis line is aligned with any other axis line for any other panel of the figure.
@@ -349,7 +358,7 @@ p1 <- ggplot(athletes_df, aes(x = sex, fill = sex)) +
   theme(#axis.line.x = element_blank(),
         #axis.ticks.x = element_blank(),
         #axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 6, 6, 0))
+        plot.margin = margin(3, 6, 6, 1.5))
 
 p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) + 
   geom_point(pch = 21, color = "white", size = 2.5) +
@@ -358,7 +367,7 @@ p2 <- ggplot(athletes_df, aes(x = rcc, y = wcc, fill = sex)) +
   scale_fill_manual(values = c("#D55E00D0", "#0072B2D0"), guide = "none") +
   theme_dviz_open(12, rel_small = 1) +
   background_grid(major = "y") +
-  theme(plot.margin = margin(3, 18, 0, 0))
+  theme(plot.margin = margin(3, 18, 0, 1.5))
 
 p_row <- plot_grid(NULL, p1, p2, labels = c("", "a", "b"), nrow = 1,
                    rel_widths = c(0.03, 0.7, 1))
@@ -385,5 +394,5 @@ p3 <- ggplot(athletes_df, aes(x = sport, y = pcBfat, color = sex, fill = sex)) +
         legend.justification = "right")
 
 stamp_ugly(plot_grid(p_row, p3, ncol = 1, labels = c("", "c")) +
-            theme(plot.margin = margin(6, 12, 0, 0)))
+            theme(plot.margin = margin(6, 12, 0, 1.5)))
 ```
