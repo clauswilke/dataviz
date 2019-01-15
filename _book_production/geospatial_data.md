@@ -14,7 +14,7 @@ The earth is approximately a sphere (Figure \@ref(fig:world-orthographic)), and 
 (ref:world-orthographic) Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the north pole and runing south are called *meridians*, and the lines running orthogonal to the meridians are called *parallels.* All meridians have the same length but parallels become shorter the closer we are to either pole.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/world-orthographic-1.png" alt="(ref:world-orthographic)" width="1155" />
+<img src="geospatial_data_files/figure-html/world-orthographic-1.png" alt="(ref:world-orthographic)" width="577.5" />
 <p class="caption">(\#fig:world-orthographic)(ref:world-orthographic)</p>
 </div>
 While altitude is an important quantity in many geospatial applications, when visualizing geospatial data in the form of maps we are primarily concerned with the other two dimensions, longitude and latitude. Both longitude and latitude are angles, expressed in degrees. Degrees longitude measure how far east or west a location lies. Lines of equal longitude are referred to as *meridians*, and all meridians terminate at the two poles (Figure \@ref(fig:world-orthographic)). The prime meridian, corresponding to 0&deg; longitude, runs through the village of Greenwich in the United Kingdom. The meridian opposite to the prime meridian lies at 180&deg; longitude (also referred to as 180&deg;E), which is equivalent to -180&deg; longitude (also referred to as 180&deg;W), near the international date line. Degrees latitude measure how far north or south a location lies. The equator corresponds to 0&deg; latitude, the north pole corresponds to 90&deg; latitude (also referred to as 90&deg;N), and the south pole corresponds to -90&deg; latitude (also referred to as 90&deg;S). Lines of equal latitude are referred to as *parallels*, since they run parallel to the equator.  All meridians have the same length, corresponding to half of a great circle around the globe, whereas the length of parallels depends on their latitude (Figure \@ref(fig:world-orthographic)). The longest parallel is the equator, at 0&deg; latitude, and the shortest parallels lie at the north and south poles, 90&deg;N and 90&deg;S, and have length zero.
@@ -26,7 +26,7 @@ One of the earliest map projections in use, the Mercator projection, was develop
 (ref:world-mercator) Mercator projection of the world. In this projection, parallels are straight horizontal lines and meridians are straight vertical lines. It is a conformal projection preserving local angles, but it introduces severe distortions in areas near the poles. For example, Greenland appears to be bigger than Africa in this projection, when in reality Africa is fourteen times bigger than Greenland (see Figures \@ref(fig:world-orthographic) and \@ref(fig:world-goode)).
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/world-mercator-1.png" alt="(ref:world-mercator)" width="1050" />
+<img src="geospatial_data_files/figure-html/world-mercator-1.png" alt="(ref:world-mercator)" width="525" />
 <p class="caption">(\#fig:world-mercator)(ref:world-mercator)</p>
 </div>
 
@@ -37,7 +37,7 @@ A whole-world projection that is perfectly area-preserving is the Goode homolosi
 (ref:world-goode) Interrupted Goode homolosine projection of the world. This projection accurately preserves areas while minimizing angular distortions, at the cost of showing oceans and some land masses (Greenland, Antarctica) in a non-contiguous way.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/world-goode-1.png" alt="(ref:world-goode)" width="1785" />
+<img src="geospatial_data_files/figure-html/world-goode-1.png" alt="(ref:world-goode)" width="892.5" />
 <p class="caption">(\#fig:world-goode)(ref:world-goode)</p>
 </div>
 
@@ -46,7 +46,7 @@ Shape or area distortions due to map projections are particularly prominent when
 (ref:usa-orthographic) Relative locations of Alaska, Hawaii, and the lower 48 states shown on a globe.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/usa-orthographic-1.png" alt="(ref:usa-orthographic)" width="1155" />
+<img src="geospatial_data_files/figure-html/usa-orthographic-1.png" alt="(ref:usa-orthographic)" width="577.5" />
 <p class="caption">(\#fig:usa-orthographic)(ref:usa-orthographic)</p>
 </div>
 
@@ -55,7 +55,7 @@ Figure \@ref(fig:usa-true-albers) shows a map of all 50 states, made using an eq
 (ref:usa-true-albers) Map of the United States of America, using an area-preserving Albers projection (ESRI:102003, commonly used to project the lower 48 states). Alaska and Hawaii are shown in their true locations.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/usa-true-albers-1.png" alt="(ref:usa-true-albers)" width="1260" />
+<img src="geospatial_data_files/figure-html/usa-true-albers-1.png" alt="(ref:usa-true-albers)" width="630" />
 <p class="caption">(\#fig:usa-true-albers)(ref:usa-true-albers)</p>
 </div>
 
@@ -64,7 +64,7 @@ To address the problem of uninteresting empty space, it is common practice to pr
 (ref:usa-albers) Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states. Alaska also has been scaled so its linear extent is only 35% of the state's true size. (In other words, the state's area has been reduced to approximately 12% of its true size.) Such a scaling is frequently applied to Alaska, to make it visually appear to be of similar size as typical midwestern or western states. However, the scaling is highly misleading, and therefore the figure has been labeled as "bad".
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/usa-albers-1.png" alt="(ref:usa-albers)" width="1260" />
+<img src="geospatial_data_files/figure-html/usa-albers-1.png" alt="(ref:usa-albers)" width="630" />
 <p class="caption">(\#fig:usa-albers)(ref:usa-albers)</p>
 </div>
 
@@ -73,7 +73,7 @@ Instead of both moving and scaling Alaska, we could just move it without changin
 (ref:usa-albers-revised) Visualization of the United States, with the states of Alaska and Hawaii moved to lie underneath the lower 48 states.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/usa-albers-revised-1.png" alt="(ref:usa-albers-revised)" width="1260" />
+<img src="geospatial_data_files/figure-html/usa-albers-revised-1.png" alt="(ref:usa-albers-revised)" width="630" />
 <p class="caption">(\#fig:usa-albers-revised)(ref:usa-albers-revised)</p>
 </div>
 
@@ -85,7 +85,7 @@ To visualize geospatial data in the proper context, we usually create maps consi
 (ref:sfbay-overview) Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as purple-colored dots. Two regions with a high concentration of wind turbines are highlighted with black rectangles. I refer to the wind turbines near Rio Vista collectively as the Shiloh Wind Farm. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data: United States Wind Turbine Database
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/sfbay-overview-1.png" alt="(ref:sfbay-overview)" width="1785" />
+<img src="geospatial_data_files/figure-html/sfbay-overview-1.png" alt="(ref:sfbay-overview)" width="892.5" />
 <p class="caption">(\#fig:sfbay-overview)(ref:sfbay-overview)</p>
 </div>
 
@@ -94,7 +94,7 @@ Figure \@ref(fig:sfbay-overview) consists of four separate layers. At the bottom
 (ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/sfbay-layers-1.png" alt="(ref:sfbay-layers) " width="1785" />
+<img src="geospatial_data_files/figure-html/sfbay-layers-1.png" alt="(ref:sfbay-layers) " width="892.5" />
 <p class="caption">(\#fig:sfbay-layers)(ref:sfbay-layers) </p>
 </div>
 
@@ -103,7 +103,7 @@ All the concepts discussed in Chapter \@ref(aesthetic-mapping) of mapping data o
 (ref:shiloh-map) Location of individual wind turbines in the Shiloh Wind Farm. Each dot highlights the location of one wind turbine. The map area corresponds to the rectangle in Figure \@ref(fig:sfbay-overview). Dots are colored by when the wind turbine was built, and the shape of the dots represents the various projects to which the individual wind turbines belong. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/shiloh-map-1.png" alt="(ref:shiloh-map)" width="1260" />
+<img src="geospatial_data_files/figure-html/shiloh-map-1.png" alt="(ref:shiloh-map)" width="630" />
 <p class="caption">(\#fig:shiloh-map)(ref:shiloh-map)</p>
 </div>
 
@@ -117,7 +117,7 @@ As a simple example, consider the population density (persons per square kilomet
 (ref:population-density-counties) Population density in every U.S. county, shown as a choropleth map. Population density is reported as persons per square kilometer. Data source: 2015 Five-Year American Community Survey
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/population-density-counties-1.png" alt="(ref:population-density-counties)" width="1260" />
+<img src="geospatial_data_files/figure-html/population-density-counties-1.png" alt="(ref:population-density-counties)" width="630" />
 <p class="caption">(\#fig:population-density-counties)(ref:population-density-counties)</p>
 </div>
 
@@ -127,7 +127,7 @@ Figure \@ref(fig:population-density-counties) uses light colors to represent low
 (ref:population-density-counties2) Population density in every U.S. county, shown as a choropleth map. This map is identical to Figure \@ref(fig:population-density-counties) except that now the color scale uses light colors for high population densities and dark colors for low population densities. Data source: 2015 Five-Year American Community Survey
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/population-density-counties2-1.png" alt="(ref:population-density-counties2)" width="1260" />
+<img src="geospatial_data_files/figure-html/population-density-counties2-1.png" alt="(ref:population-density-counties2)" width="630" />
 <p class="caption">(\#fig:population-density-counties2)(ref:population-density-counties2)</p>
 </div>
 
@@ -144,7 +144,7 @@ It is also important to consider the effect of continuous versus discrete color 
 (ref:median-income-counties-binned) Median income in every U.S. county, shown as a choropleth map. The median income values have been binned into five distinct groups, because binned color scales are generally easier to read than continuous color scales. Data source: 2015 Five-Year American Community Survey
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/median-income-counties-binned-1.png" alt="(ref:median-income-counties-binned)" width="1260" />
+<img src="geospatial_data_files/figure-html/median-income-counties-binned-1.png" alt="(ref:median-income-counties-binned)" width="630" />
 <p class="caption">(\#fig:median-income-counties-binned)(ref:median-income-counties-binned)</p>
 </div>
 
@@ -154,7 +154,7 @@ Even though counties are not quite as equal-sized and even-shaped across the ent
 
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/median-income-states-1.png" alt="(ref:median-income-states)" width="1260" />
+<img src="geospatial_data_files/figure-html/median-income-states-1.png" alt="(ref:median-income-states)" width="630" />
 <p class="caption">(\#fig:median-income-states)(ref:median-income-states)</p>
 </div>
 
@@ -166,7 +166,7 @@ Not every map-like visualization has to be geographically accurate to be useful.
 (ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/median-income-cartogram-1.png" alt="(ref:median-income-cartogram)" width="1260" />
+<img src="geospatial_data_files/figure-html/median-income-cartogram-1.png" alt="(ref:median-income-cartogram)" width="630" />
 <p class="caption">(\#fig:median-income-cartogram)(ref:median-income-cartogram)</p>
 </div>
 
@@ -175,7 +175,7 @@ As an alternative to a cartogram with distorted shapes, we can also draw a much 
 (ref:median-income-statebins) Median income in every U.S. state, shown as a cartogram heatmap. Each state is represented by an equally sized square, and the squares are arranged according to the approximate position of each state relative to the other states. This representation gives the same visual weight to each state. Data source: 2015 Five-Year American Community Survey
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/median-income-statebins-1.png" alt="(ref:median-income-statebins)" width="1260" />
+<img src="geospatial_data_files/figure-html/median-income-statebins-1.png" alt="(ref:median-income-statebins)" width="630" />
 <p class="caption">(\#fig:median-income-statebins)(ref:median-income-statebins)</p>
 </div>
 
@@ -184,7 +184,7 @@ Finally, we can draw more complex cartograms by placing individual plots at the 
 (ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, including the District of Columbia (DC), from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/unemployment-geofacet-1.png" alt="(ref:unemployment-geofacet)" width="1785" />
+<img src="geospatial_data_files/figure-html/unemployment-geofacet-1.png" alt="(ref:unemployment-geofacet)" width="892.5" />
 <p class="caption">(\#fig:unemployment-geofacet)(ref:unemployment-geofacet)</p>
 </div>
 

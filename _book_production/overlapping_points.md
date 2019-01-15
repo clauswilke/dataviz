@@ -12,7 +12,7 @@ We first consider a scenario with only a moderate number of data points but with
 (ref:mpg-cty-displ-solid) City fuel economy versus engine displacement, for popular cars released between 1999 and 2008. Each point represents one car. The point color encodes the drive train: front-wheel drive (FWD), rear-wheel drive (RWD), or four-wheel drive (4WD). The figure is labeled "bad" because many points are plotted on top of others and obscure them. 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" alt="(ref:mpg-cty-displ-solid)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-solid-1.png" alt="(ref:mpg-cty-displ-solid)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-solid)(ref:mpg-cty-displ-solid)</p>
 </div>
 
@@ -21,7 +21,7 @@ One way to ameliorate this problem is to use partial transparency. If we make in
 (ref:mpg-cty-displ-transp) City fuel economy versus engine displacement. Because points have been made partially transparent, points that lie on top of other points can now be identified by their darker shade. 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" alt="(ref:mpg-cty-displ-transp)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-transp-1.png" alt="(ref:mpg-cty-displ-transp)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-transp)(ref:mpg-cty-displ-transp)</p>
 </div>
 
@@ -30,7 +30,7 @@ However, making points partially transparent is not always sufficient to solve t
 (ref:mpg-cty-displ-jitter) City fuel economy versus engine displacement. By adding a small amount of jitter to each point, we can make the overplotted points more clearly visible without substantially distorting the message of the plot.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-1.png" alt="(ref:mpg-cty-displ-jitter)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-1.png" alt="(ref:mpg-cty-displ-jitter)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-jitter)(ref:mpg-cty-displ-jitter)</p>
 </div>
 
@@ -39,7 +39,7 @@ One downside of jittering is that it does change the data and therefore has to b
 (ref:mpg-cty-displ-jitter-extreme) City fuel economy versus engine displacement. By adding too much jitter to the points, we have created a visualization that does not accurately reflect the underlying dataset.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-extreme-1.png" alt="(ref:mpg-cty-displ-jitter-extreme)" width="1155" />
+<img src="overlapping_points_files/figure-html/mpg-cty-displ-jitter-extreme-1.png" alt="(ref:mpg-cty-displ-jitter-extreme)" width="577.5" />
 <p class="caption">(\#fig:mpg-cty-displ-jitter-extreme)(ref:mpg-cty-displ-jitter-extreme)</p>
 </div>
 
@@ -50,7 +50,7 @@ When the number of individual points gets very large, partial transparency (with
 (ref:nycflights-points) Departure delay in minutes versus the flight departure time, for all flights departing Newark airport (EWR) in 2013. Each dot represents one departure.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-points-1.png" alt="(ref:nycflights-points)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-points-1.png" alt="(ref:nycflights-points)" width="630" />
 <p class="caption">(\#fig:nycflights-points)(ref:nycflights-points)</p>
 </div>
 
@@ -61,7 +61,7 @@ In such cases, instead of plotting individual points, we can make a 2D histogram
 (ref:nycflights-2d-bins) Departure delay in minutes versus the flight departure time. Each colored rectangle represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that rectangle.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-2d-bins-1.png" alt="(ref:nycflights-2d-bins)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-2d-bins-1.png" alt="(ref:nycflights-2d-bins)" width="630" />
 <p class="caption">(\#fig:nycflights-2d-bins)(ref:nycflights-2d-bins)</p>
 </div>
 
@@ -72,7 +72,7 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 (ref:nycflights-hex-bins) Departure delay in minutes versus the flight departure time. Each colored hexagon represents all flights departing at that time with that departure delay. Coloring represents the number of flights represented by that hexagon.
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/nycflights-hex-bins-1.png" alt="(ref:nycflights-hex-bins)" width="1260" />
+<img src="overlapping_points_files/figure-html/nycflights-hex-bins-1.png" alt="(ref:nycflights-hex-bins)" width="630" />
 <p class="caption">(\#fig:nycflights-hex-bins)(ref:nycflights-hex-bins)</p>
 </div>
 
@@ -86,14 +86,14 @@ As an example for this approach, we return to the blue jays dataset from Chapter
 (ref:blue-jays-contour) Head length versus body mass for 123 blue jays, as in Figure \@ref(fig:blue-jays-scatter). Each dot corresponds to one bird, and the lines indicate regions of similar point density. The point density increases towards the center of the plot, near a body mass of 75g and a head length between 55mm and 57.5mm. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/blue-jays-contour-1.png" alt="(ref:blue-jays-contour)" width="1260" />
+<img src="overlapping_points_files/figure-html/blue-jays-contour-1.png" alt="(ref:blue-jays-contour)" width="630" />
 <p class="caption">(\#fig:blue-jays-contour)(ref:blue-jays-contour)</p>
 </div>
 
 (ref:blue-jays-contour-filled) Head length versus body mass for 123 blue jays. This figure is nearly identical to Figure \@ref(fig:blue-jays-scatter), but now the areas enclosed by the contour lines are shaded with increasingly darker shades of gray. This shading creates a stronger visual impression of increasing point density towards the center of the point cloud. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/blue-jays-contour-filled-1.png" alt="(ref:blue-jays-contour-filled)" width="1260" />
+<img src="overlapping_points_files/figure-html/blue-jays-contour-filled-1.png" alt="(ref:blue-jays-contour-filled)" width="630" />
 <p class="caption">(\#fig:blue-jays-contour-filled)(ref:blue-jays-contour-filled)</p>
 </div>
 
@@ -102,7 +102,7 @@ In Chapter \@ref(visualizing-associations), we also looked at the relationship b
 (ref:blue-jays-contour-by-sex) Head length versus body mass for 123 blue jays. As in Figure \@ref(fig:blue-jays-scatter-sex), we can also indicate the birds' sex by color when drawing contour lines. This figure highlights how the point distribution is different for male and female birds. In particular, male birds are more densely clustered in one region of the plot area whereas female birds are more spread out. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/blue-jays-contour-by-sex-1.png" alt="(ref:blue-jays-contour-by-sex)" width="1260" />
+<img src="overlapping_points_files/figure-html/blue-jays-contour-by-sex-1.png" alt="(ref:blue-jays-contour-by-sex)" width="630" />
 <p class="caption">(\#fig:blue-jays-contour-by-sex)(ref:blue-jays-contour-by-sex)</p>
 </div>
 
@@ -113,7 +113,7 @@ To illustrate this potential problem, I will employ the diamonds dataset, which 
 (ref:diamonds-points) Price of diamonds versus their carat value, for 53,940 individual diamonds. Each diamond's cut is indicated by color. The plot is labeled as "bad" because the extensive overplotting makes it impossible to discern any patterns among the different diamond cuts. Data source: Hadley Wickham, ggplot2
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-points-1.png" alt="(ref:diamonds-points)" width="1260" />
+<img src="overlapping_points_files/figure-html/diamonds-points-1.png" alt="(ref:diamonds-points)" width="630" />
 <p class="caption">(\#fig:diamonds-points)(ref:diamonds-points)</p>
 </div>
 
@@ -123,7 +123,7 @@ We could try to draw colored contour lines for the different qualities of cut, a
 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-contour-colors-1.png" alt="(ref:diamonds-contour-colors)" width="1260" />
+<img src="overlapping_points_files/figure-html/diamonds-contour-colors-1.png" alt="(ref:diamonds-contour-colors)" width="630" />
 <p class="caption">(\#fig:diamonds-contour-colors)(ref:diamonds-contour-colors)</p>
 </div>
 
@@ -133,7 +133,7 @@ What helps here is to draw the contour lines for each cut quality in its own plo
 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-contour-facets-1.png" alt="(ref:diamonds-contour-facets)" width="1785" />
+<img src="overlapping_points_files/figure-html/diamonds-contour-facets-1.png" alt="(ref:diamonds-contour-facets)" width="892.5" />
 <p class="caption">(\#fig:diamonds-contour-facets)(ref:diamonds-contour-facets)</p>
 </div>
 

@@ -21,7 +21,7 @@ The preprint server physicists developed and still use today is called arXiv.org
 (ref:q-bio-monthly-growth) Growth in monthly submissions to the quantitative biology (q-bio) section of the preprint server arXiv.org. A sharp transition in the rate of growth can be seen around 2014. While growth was rapid up to 2014, almost no growth occurred from 2014 to 2018. Note that the *y* axis is logarithmic, so a linear increase in *y* corresponds to exponential growth in preprint submissions. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/q-bio-monthly-growth-1.png" alt="(ref:q-bio-monthly-growth)" width="1260" />
+<img src="telling_a_story_files/figure-html/q-bio-monthly-growth-1.png" alt="(ref:q-bio-monthly-growth)" width="630" />
 <p class="caption">(\#fig:q-bio-monthly-growth)(ref:q-bio-monthly-growth)</p>
 </div>
 
@@ -30,7 +30,7 @@ I will argue that late 2013 marks the point in time when preprints took off in b
 (ref:q-bio-bioRxiv-monthly-growth) The leveling off of submission growth to q-bio coincided with the introduction of the bioRxiv server. Shown are the growth in monthly submissions to the q-bio section of the general-purpose preprint server arxiv.org and to the dedicated biology preprint server bioRxiv. The bioRxiv server went live in November 2013, and its submission rate has grown exponentially since. It seems likely that many scientists who otherwise would have submitted preprints to q-bio chose to submit to bioRxiv instead. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/q-bio-bioRxiv-monthly-growth-1.png" alt="(ref:q-bio-bioRxiv-monthly-growth)" width="1260" />
+<img src="telling_a_story_files/figure-html/q-bio-bioRxiv-monthly-growth-1.png" alt="(ref:q-bio-bioRxiv-monthly-growth)" width="630" />
 <p class="caption">(\#fig:q-bio-bioRxiv-monthly-growth)(ref:q-bio-bioRxiv-monthly-growth)</p>
 </div>
 
@@ -54,7 +54,7 @@ The first thing that will get in the way of making a figure for the generals is,
 (ref:arrival-delay-vs-distance) Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination in 2013. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistenly lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled.  This figure is labeled as "bad" because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/arrival-delay-vs-distance-1.png" alt="(ref:arrival-delay-vs-distance)" width="1680" />
+<img src="telling_a_story_files/figure-html/arrival-delay-vs-distance-1.png" alt="(ref:arrival-delay-vs-distance)" width="840" />
 <p class="caption">(\#fig:arrival-delay-vs-distance)(ref:arrival-delay-vs-distance)</p>
 </div>
 
@@ -63,14 +63,14 @@ I think the most important feature of Figure \@ref(fig:arrival-delay-vs-distance
 (ref:mean-arrival-delay-nyc) Mean arrival delay for flights out of the New York City area in 2013, by airline. American and Delta have the lowest mean arrival delays of all airlines flying out of the New York City area. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/mean-arrival-delay-nyc-1.png" alt="(ref:mean-arrival-delay-nyc)" width="1260" />
+<img src="telling_a_story_files/figure-html/mean-arrival-delay-nyc-1.png" alt="(ref:mean-arrival-delay-nyc)" width="630" />
 <p class="caption">(\#fig:mean-arrival-delay-nyc)(ref:mean-arrival-delay-nyc)</p>
 </div>
 
 (ref:number-of-flights-nyc) Number of flights out of the New York City area in 2013, by airline. Delta and American are fourth and fifths largest carrier by flights out of the New York City area.  Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/number-of-flights-nyc-1.png" alt="(ref:number-of-flights-nyc)" width="1260" />
+<img src="telling_a_story_files/figure-html/number-of-flights-nyc-1.png" alt="(ref:number-of-flights-nyc)" width="630" />
 <p class="caption">(\#fig:number-of-flights-nyc)(ref:number-of-flights-nyc)</p>
 </div>
 
@@ -89,7 +89,7 @@ This recommendation is particularly relevant if the final figure is a small mult
 (ref:united-departures-weekdays) United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekdays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/united-departures-weekdays-1.png" alt="(ref:united-departures-weekdays)" width="735" />
+<img src="telling_a_story_files/figure-html/united-departures-weekdays-1.png" alt="(ref:united-departures-weekdays)" width="367.5" />
 <p class="caption">(\#fig:united-departures-weekdays)(ref:united-departures-weekdays)</p>
 </div>
 
@@ -97,7 +97,7 @@ This recommendation is particularly relevant if the final figure is a small mult
 (ref:all-departures-weekdays) Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR),  JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
  
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/all-departures-weekdays-1.png" alt="(ref:all-departures-weekdays)" width="1785" />
+<img src="telling_a_story_files/figure-html/all-departures-weekdays-1.png" alt="(ref:all-departures-weekdays)" width="892.5" />
 <p class="caption">(\#fig:all-departures-weekdays)(ref:all-departures-weekdays)</p>
 </div>
 
@@ -108,7 +108,7 @@ Simple and clean figures such as simple bar plots have the advantage that they a
 (ref:petownership-bar) Number of households having one or more of the most popular pets: dogs, cats, fish, or birds. This bar graph is perfectly clear but not necessarily particularly memorable. The "cats" column has been highlighted solely to create visual similarity with Figure \@ref(fig:number-of-flights-nyc). Data source: 2012 U.S. Pet Ownership & Demographics Sourcebook, American Veterinary Medical Association
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/petownership-bar-1.png" alt="(ref:petownership-bar)" width="1260" />
+<img src="telling_a_story_files/figure-html/petownership-bar-1.png" alt="(ref:petownership-bar)" width="630" />
 <p class="caption">(\#fig:petownership-bar)(ref:petownership-bar)</p>
 </div>
 
@@ -119,7 +119,7 @@ We can make a figure more memorable by adding visual elements that reflect featu
 (ref:petownership-isotype) Number of households having one or more of the most popular pets, shown as an isotype graph. Each complete animal represents 5 million households who have that kind of pet. Data source: 2012 U.S. Pet Ownership & Demographics Sourcebook, American Veterinary Medical Association
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/petownership-isotype-1.png" alt="(ref:petownership-isotype)" width="1260" />
+<img src="telling_a_story_files/figure-html/petownership-isotype-1.png" alt="(ref:petownership-isotype)" width="630" />
 <p class="caption">(\#fig:petownership-isotype)(ref:petownership-isotype)</p>
 </div>
 
@@ -133,7 +133,7 @@ When discussing compound figures in Chapter \@ref(compound-figures), I mentioned
 (ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/athletes-composite-repetitive-1.png" alt="(ref:athletes-composite-repetitive)" width="1260" />
+<img src="telling_a_story_files/figure-html/athletes-composite-repetitive-1.png" alt="(ref:athletes-composite-repetitive)" width="630" />
 <p class="caption">(\#fig:athletes-composite-repetitive)(ref:athletes-composite-repetitive)</p>
 </div>
 
@@ -147,7 +147,7 @@ Sets of repetitive figures are often a consequence of multi-part stories where e
 (ref:tech-stocks-repetitive) Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around \$25/share in mid-2012 to \$150/share in mid-2017. (b) The prices of other large tech companies did not rise comparably over the same time period. Prices have been indexed to 100 on June 1, 2012 to allow for easy comparison. This figure is labeled as "ugly" because parts (a) and (b) are repetitive. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/tech-stocks-repetitive-1.png" alt="(ref:tech-stocks-repetitive)" width="1260" />
+<img src="telling_a_story_files/figure-html/tech-stocks-repetitive-1.png" alt="(ref:tech-stocks-repetitive)" width="630" />
 <p class="caption">(\#fig:tech-stocks-repetitive)(ref:tech-stocks-repetitive)</p>
 </div>
 
@@ -156,7 +156,7 @@ I would recommend to leave part (a) as is but replace part (b) with a bar plot s
 (ref:tech-stocks-diverse) Growth of Facebook stock price over a five-year interval and comparison with other tech stocks. (a) The Facebook stock price rose from around \$25/share in mid-2012 to \$150/share in mid-2017, an increase of almost 450%. (b) The prices of other large tech companies did not rise comparably over the same time period. Price increases ranged from 90% to 240%. Data source: Yahoo Finance
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/tech-stocks-diverse-1.png" alt="(ref:tech-stocks-diverse)" width="1260" />
+<img src="telling_a_story_files/figure-html/tech-stocks-diverse-1.png" alt="(ref:tech-stocks-diverse)" width="630" />
 <p class="caption">(\#fig:tech-stocks-diverse)(ref:tech-stocks-diverse)</p>
 </div>
 

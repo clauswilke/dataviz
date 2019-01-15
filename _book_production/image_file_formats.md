@@ -30,7 +30,7 @@ Vector graphics are also called "resolution-independent," because they can be ma
 (ref:bitmap-zoom) Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square indicates the area we are magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated as we zoom in further. (c) Increasing magnification of a vector representation of the image. The image maintains perfect sharpness at arbitrary magnification levels.
 
 <div class="figure" style="text-align: center">
-<img src="image_file_formats_files/figure-html/bitmap-zoom-1.png" alt="(ref:bitmap-zoom)" width="1785" />
+<img src="image_file_formats_files/figure-html/bitmap-zoom-1.png" alt="(ref:bitmap-zoom)" width="892.5" />
 <p class="caption">(\#fig:bitmap-zoom)(ref:bitmap-zoom)</p>
 </div>
 

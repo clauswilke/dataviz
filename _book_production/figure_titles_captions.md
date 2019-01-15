@@ -11,7 +11,7 @@ One critical component of every figure is the figure title. Every figure needs t
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. This figure was inspired by a posting in @Economist-corruption. Data sources: Transparency International & UN Human Development Report
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/corruption-development-1.png" alt="(ref:corruption-development)" width="1470" />
+<img src="figure_titles_captions_files/figure-html/corruption-development-1.png" alt="(ref:corruption-development)" width="735" />
 <p class="caption">(\#fig:corruption-development)(ref:corruption-development)</p>
 </div>
 
@@ -20,7 +20,7 @@ Alternatively, I could incorporate the figure title---as well as other elements 
 (ref:corruption-development-infographic) Infographic version of Figure \@ref(fig:corruption-development). The title, subtitle, and data source statements have been incorporated into the figure. This figure could be posted on the web as is or otherwise used without separate caption block.
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/corruption-development-infographic-1.png" alt="(ref:corruption-development-infographic)" width="1470" />
+<img src="figure_titles_captions_files/figure-html/corruption-development-infographic-1.png" alt="(ref:corruption-development-infographic)" width="735" />
 <p class="caption">(\#fig:corruption-development-infographic)(ref:corruption-development-infographic)</p>
 </div>
 
@@ -39,7 +39,7 @@ To present an example of a plot where all axes and legends are appropriately lab
 (ref:blue-jays-scatter-bubbles2) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color, and the birds' skull size by symbol size. Head-length measurements include the length of the bill while skull-size measurements do not. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/blue-jays-scatter-bubbles2-1.png" alt="(ref:blue-jays-scatter-bubbles2)" width="1260" />
+<img src="figure_titles_captions_files/figure-html/blue-jays-scatter-bubbles2-1.png" alt="(ref:blue-jays-scatter-bubbles2)" width="630" />
 <p class="caption">(\#fig:blue-jays-scatter-bubbles2)(ref:blue-jays-scatter-bubbles2)</p>
 </div>
 
@@ -48,7 +48,7 @@ There are cases, however, when axis or legend titles can be omitted, namely when
 (ref:tech-stocks-minimal-labeling) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This figure is a slightly modified version of Figure \@ref(fig:tech-stocks-good-legend) in Chapter \@ref(redundant-coding). Here, the *x* axis representing time does not have a title. It is clear from the context that the numbers 2013, 2014, etc. refer to years.
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/tech-stocks-minimal-labeling-1.png" alt="(ref:tech-stocks-minimal-labeling)" width="1260" />
+<img src="figure_titles_captions_files/figure-html/tech-stocks-minimal-labeling-1.png" alt="(ref:tech-stocks-minimal-labeling)" width="630" />
 <p class="caption">(\#fig:tech-stocks-minimal-labeling)(ref:tech-stocks-minimal-labeling)</p>
 </div>
 
@@ -57,7 +57,7 @@ However, we have to be careful when omitting axis or legend titles, because it i
 (ref:tech-stocks-minimal-labeling-bad) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This variant of Figure \@ref(fig:tech-stocks-minimal-labeling) has been labeled as "bad" because the *y* axis now does not have a title either, and what the values shown along the *y* axis represent is not immediately obvious from the context.
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/tech-stocks-minimal-labeling-bad-1.png" alt="(ref:tech-stocks-minimal-labeling-bad)" width="1260" />
+<img src="figure_titles_captions_files/figure-html/tech-stocks-minimal-labeling-bad-1.png" alt="(ref:tech-stocks-minimal-labeling-bad)" width="630" />
 <p class="caption">(\#fig:tech-stocks-minimal-labeling-bad)(ref:tech-stocks-minimal-labeling-bad)</p>
 </div>
 
@@ -66,7 +66,7 @@ On the flip side, we can overdo the labeling. If the legend lists the names of f
 (ref:tech-stocks-labeling-ugly) Stock price over time for four major tech companies. The stock price for each company has been normalized to equal 100 in June 2012. This variant of Figure \@ref(fig:tech-stocks-minimal-labeling) has been labeled as "ugly" because it is labeled excessively. In particular, providing a unit ("years AD") for the values along the *x* axis is awkward.
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/tech-stocks-labeling-ugly-1.png" alt="(ref:tech-stocks-labeling-ugly)" width="1260" />
+<img src="figure_titles_captions_files/figure-html/tech-stocks-labeling-ugly-1.png" alt="(ref:tech-stocks-labeling-ugly)" width="630" />
 <p class="caption">(\#fig:tech-stocks-labeling-ugly)(ref:tech-stocks-labeling-ugly)</p>
 </div>
 
@@ -91,7 +91,7 @@ Figure \@ref(fig:table-examples) reproduces Table \@ref(tab:boxoffice-gross) fro
 (ref:table-examples) Examples of poorly and appropriately formatted tables, using the data from Table \@ref(tab:boxoffice-gross) in Chapter \@ref(visualizing-amounts). (a) This table violates numerous conventions of proper table formatting, including using vertical lines, using horizontal lines between data rows, and using centered data columns. (b) This table suffers from all problems of Table (a), and in addition it creates additional visual noise by alternating between very dark and very light rows. Also, the table header is not strongly visually separated from the table body. (c) This is an appropriately formatted table with a minimal design. (d) Colors can be used effectively to group data into rows, but the color differences should be subtle. The table header can be set off by using a stronger color. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="1260" />
+<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="630" />
 <p class="caption">(\#fig:table-examples)(ref:table-examples)</p>
 </div>
 

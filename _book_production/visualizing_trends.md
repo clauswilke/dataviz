@@ -11,7 +11,7 @@ Let us consider a time series of the Dow Jones Industrial Average (Dow Jones for
 (ref:dow-jones) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/dow-jones-1.png" alt="(ref:dow-jones)" width="1260" />
+<img src="visualizing_trends_files/figure-html/dow-jones-1.png" alt="(ref:dow-jones)" width="630" />
 <p class="caption">(\#fig:dow-jones)(ref:dow-jones)</p>
 </div>
 
@@ -22,7 +22,7 @@ To plot this sequence of moving averages, we need to decide which specific time 
 (ref:dow-jones-moving-ave) Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/dow-jones-moving-ave-1.png" alt="(ref:dow-jones-moving-ave)" width="1260" />
+<img src="visualizing_trends_files/figure-html/dow-jones-moving-ave-1.png" alt="(ref:dow-jones-moving-ave)" width="630" />
 <p class="caption">(\#fig:dow-jones-moving-ave)(ref:dow-jones-moving-ave)</p>
 </div>
 
@@ -35,7 +35,7 @@ Statisticians have developed numerous approaches to smoothing that alleviate the
 (ref:dow-jones-loess) Comparison of LOESS fit to 100-day moving average for the Dow Jones data of Figure \@ref(fig:dow-jones-moving-ave). The overall trend shown by the LOESS smooth is nearly identical to the 100-day moving average, but the LOESS curve is much smoother and it extends to the entire range of the data. Data source: Yahoo! Finance
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/dow-jones-loess-1.png" alt="(ref:dow-jones-loess)" width="1260" />
+<img src="visualizing_trends_files/figure-html/dow-jones-loess-1.png" alt="(ref:dow-jones-loess)" width="630" />
 <p class="caption">(\#fig:dow-jones-loess)(ref:dow-jones-loess)</p>
 </div>
 
@@ -44,7 +44,7 @@ Importantly, LOESS is not limited to time series. It can be applied to arbitrary
 (ref:tank-capacity-loess) Fuel-tank capacity versus price of 93 cars released for the 1993 model year. Each dot corresponds to one car. The solid line represents a LOESS smooth of the data. We see that fuel-tank capacity increases approximately linearly with price, up to a price of approximately $20,000, and then it levels off. Data source: Robin H. Lock, St. Lawrence University
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/tank-capacity-loess-1.png" alt="(ref:tank-capacity-loess)" width="1050" />
+<img src="visualizing_trends_files/figure-html/tank-capacity-loess-1.png" alt="(ref:tank-capacity-loess)" width="525" />
 <p class="caption">(\#fig:tank-capacity-loess)(ref:tank-capacity-loess)</p>
 </div>
 
@@ -55,7 +55,7 @@ As a faster alternative to LOESS, we can use spline models. A spline is a piecew
 (ref:tank-capacity-smoothers) Different smoothing models display widely different behaviors, in particular near the boundaries of the data. (a) LOESS smoother, as in Figure \@ref(fig:tank-capacity-loess). (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/tank-capacity-smoothers-1.png" alt="(ref:tank-capacity-smoothers)" width="1785" />
+<img src="visualizing_trends_files/figure-html/tank-capacity-smoothers-1.png" alt="(ref:tank-capacity-smoothers)" width="892.5" />
 <p class="caption">(\#fig:tank-capacity-smoothers)(ref:tank-capacity-smoothers)</p>
 </div>
 
@@ -75,7 +75,7 @@ For the fuel-tank data, we need a curve that initially rises linearly but then l
 (ref:tank-capacity-model) Fuel-tank data represented with an explicit analytical model. The solid line corresponds to a least-squares fit of the formula $y = A - B \exp(-mx)$ to the data. Fitted parameters are $A = 19.6$, $B = 29.2$, $m = 0.00015$.  Data source: Robin H. Lock, St. Lawrence University
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/tank-capacity-model-1.png" alt="(ref:tank-capacity-model)" width="1260" />
+<img src="visualizing_trends_files/figure-html/tank-capacity-model-1.png" alt="(ref:tank-capacity-model)" width="630" />
 <p class="caption">(\#fig:tank-capacity-model)(ref:tank-capacity-model)</p>
 </div>
 
@@ -84,7 +84,7 @@ A functional form that is applicable in many different contexts is the simple st
 (ref:blue-jays-scatter-line) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color. This figure is equivalent to Figure \@ref(fig:blue-jays-scatter-sex), except that now we have drawn linear trend lines on top of the individual data points. Data source: Keith Tarvin, Oberlin College
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/blue-jays-scatter-line-1.png" alt="(ref:blue-jays-scatter-line)" width="1050" />
+<img src="visualizing_trends_files/figure-html/blue-jays-scatter-line-1.png" alt="(ref:blue-jays-scatter-line)" width="525" />
 <p class="caption">(\#fig:blue-jays-scatter-line)(ref:blue-jays-scatter-line)</p>
 </div>
 
@@ -93,7 +93,7 @@ When the data display a non-linear relationship, we need to guess what an approp
 (ref:biorxiv-expfit) Monthly submissions to the preprint server bioRxiv. The solid blue line represents the actual monthly preprint counts and the dashed black line represents an exponential fit to the data, $y = 60\exp[0.77(x - 2014)]$. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/biorxiv-expfit-1.png" alt="(ref:biorxiv-expfit)" width="1260" />
+<img src="visualizing_trends_files/figure-html/biorxiv-expfit-1.png" alt="(ref:biorxiv-expfit)" width="630" />
 <p class="caption">(\#fig:biorxiv-expfit)(ref:biorxiv-expfit)</p>
 </div>
 
@@ -102,7 +102,7 @@ If the original curve is exponential, $y = A\exp(mx)$, then a log-transformation
 (ref:biorxiv-logscale) Monthly submissions to the preprint server bioRxiv, shown on a log scale. The solid blue line represents the actual monthly preprint counts, the dashed black line represents the exponential fit from Figure \@ref(fig:biorxiv-expfit), and the solid black line represents a linear fit to log-transformed data, corresponding to $y = 43\exp[0.88(x - 2014)]$. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/biorxiv-logscale-1.png" alt="(ref:biorxiv-logscale)" width="1260" />
+<img src="visualizing_trends_files/figure-html/biorxiv-logscale-1.png" alt="(ref:biorxiv-logscale)" width="630" />
 <p class="caption">(\#fig:biorxiv-logscale)(ref:biorxiv-logscale)</p>
 </div>
 
@@ -124,7 +124,7 @@ Over long periods of time, house prices tend to display consistent annual growth
 (ref:hpi-trends) Freddie Mac House Price Index from 1980 through 2017, for four selected states (California, Nevada, Texas, and West Virginia). The House Price Index is a unitless number that tracks relative house prices in the chosen geographic region over time. The index is scaled arbitrarily such that it equals 100 in December of the year 2000. The blue lines show the monthly fluctuations in the index and the straight gray lines show the long-term price trends in the respective states. Note that the *y* axes are logarithmic, so that the straight gray lines represent consistent exponential growth. Data source: Freddie Mac House Prices Index
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/hpi-trends-1.png" alt="(ref:hpi-trends)" width="1260" />
+<img src="visualizing_trends_files/figure-html/hpi-trends-1.png" alt="(ref:hpi-trends)" width="630" />
 <p class="caption">(\#fig:hpi-trends)(ref:hpi-trends)</p>
 </div>
 
@@ -133,7 +133,7 @@ We detrend housing prices by dividing the actual price index at each time point 
 (ref:hpi-detrended) Detrended version of the Freddie Mac House Price Index shown in Figure \@ref(fig:hpi-trends). The detrended index was calculated by dividing the actual index (blue lines in Figure \@ref(fig:hpi-trends)) by the expected value based on the long-term trend (straight gray lines in Figure \@ref(fig:hpi-trends)). This visualization shows that California experienced two housing bubbles, around 1990 and in the mid-2000s, identifiable from a rapid rise and subsequent decline in the actual housing prices relative to what would have been expected from the long-term trend. Similarly, Nevada experienced one housing bubble, in the mid-2000s, and neither Texas nor West Virginia experienced much of a bubble at all. Data source: Freddie Mac House Prices Index
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/hpi-detrended-1.png" alt="(ref:hpi-detrended)" width="1260" />
+<img src="visualizing_trends_files/figure-html/hpi-detrended-1.png" alt="(ref:hpi-detrended)" width="630" />
 <p class="caption">(\#fig:hpi-detrended)(ref:hpi-detrended)</p>
 </div>
 
@@ -144,7 +144,7 @@ To demonstrate the concept of distinct time-series components, I will here decom
 (ref:keeling-curve) The Keeling curve. The Keeling curve shows the change of CO<sub>2</sub> abundance in the atmosphere over time. Since 1958, CO<sub>2</sub> abundance has been continuously monitored at the Mauna Loa Observatory in Hawaii, initially under the direction of Charles Keeling. Shown here are monthly average CO<sub>2</sub> readings, expressed in parts per million (ppm). The CO<sub>2</sub> readings fluctuate anually with the seasons but show a consistent long-term trend of increase. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/keeling-curve-1.png" alt="(ref:keeling-curve)" width="1260" />
+<img src="visualizing_trends_files/figure-html/keeling-curve-1.png" alt="(ref:keeling-curve)" width="630" />
 <p class="caption">(\#fig:keeling-curve)(ref:keeling-curve)</p>
 </div>
 
@@ -153,6 +153,6 @@ We can decompose the Keeling curve into its long-term trend, seasonal fluctuatio
 (ref:keeling-curve-decomposition) Time-series decomposition of the Keeling curve, showing the montly average (as in Figure \@ref(fig:keeling-curve)), the long-term trend, seasonal fluctuations, and remainder. The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and it represents random noise. I have zoomed into the most recent 30 years of data to more clearly show the shape of the annual fluctuations. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_trends_files/figure-html/keeling-curve-decomposition-1.png" alt="(ref:keeling-curve-decomposition)" width="1260" />
+<img src="visualizing_trends_files/figure-html/keeling-curve-decomposition-1.png" alt="(ref:keeling-curve-decomposition)" width="630" />
 <p class="caption">(\#fig:keeling-curve-decomposition)(ref:keeling-curve-decomposition)</p>
 </div>
