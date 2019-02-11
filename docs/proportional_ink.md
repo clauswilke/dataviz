@@ -5,7 +5,7 @@
 
 # The principle of proportional ink {#proportional-ink}
 
-In many different visualization scenarios, we represent data values by the extent of a graphical element. For example, in a bar plot, we draw bars that begin at 0 and end at the data value they represent. In this case, the data value is not only encoded in the end point of the bar but also in the height or length of the bar. If we drew a bar that started at a different value than 0, then the length of the bar and the bar endpoint would convey contradicting information. I consider such visualizations not just "bad" but "wrong," because they are internally inconsistent. They show two different values with the same graphical element. Contrast this to a scenario where we visualize the data value with a dot. In this case, the value is only encoded in the location of the dot but not in the size or shape of the dot.
+In many different visualization scenarios, we represent data values by the extent of a graphical element. For example, in a bar plot, we draw bars that begin at 0 and end at the data value they represent. In this case, the data value is not only encoded in the end point of the bar but also in the height or length of the bar. If we drew a bar that started at a different value than 0, then the length of the bar and the bar endpoint would convey contradicting information. Such figures are internally inconsistent, because they show two different values with the same graphical element. Contrast this to a scenario where we visualize the data value with a dot. In this case, the value is only encoded in the location of the dot but not in the size or shape of the dot.
 
 Similar issues will arise whenever we use graphical elements such as bars, rectangles, shaded areas of arbitrary shape, or any other elements that have a clear visual extent which can be either consistent or inconsistent with the data value shown. In all these cases, we need to make sure that there is no inconsistency. This concept has been termed by Bergstrom and West as the *principle of proportional ink* [@BergstromWest2016]:
 
@@ -17,7 +17,7 @@ Similar issues will arise whenever we use graphical elements such as bars, recta
 
 We first consider the most common scenario, visualization of amounts along a linear scale. Figure \@ref(fig:hawaii-income-bars-bad) shows the median income in the five counties that make up the state of Hawaii. It is a typical figure one might encounter in a newspaper article. A quick glance at the figure suggests that the county of Hawaii is incredibly poor while the county of Honolulu is much richer than the other counties. However, Figure \@ref(fig:hawaii-income-bars-bad) is quite misleading, because all bars begin at \$50,000 median income. Thus, while the endpoint of each bar correctly represents the actual median income in each county, the bar height represents the extent to which median incomes exceed $50,000, an arbitrary number. And human perception is such that the bar height is the key quantity we perceive when looking at this figure, not the location of the bar endpoint relative to the *y* axis.
 
-(ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is incorrect, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the bar heights are not proportional to the values shown, and the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
+(ref:hawaii-income-bars-bad) Median income in the five counties of the state of Hawaii. This figure is misleading, because the *y* axis scale starts at \$50,000 instead of \$0. As a result, the bar heights are not proportional to the values shown, and the income differential between the county of Hawaii and the other four counties appears much bigger than it actually is. Data source: 2015 Five-Year American Community Survey.
 
 <div class="figure" style="text-align: center">
 <img src="proportional_ink_files/figure-html/hawaii-income-bars-bad-1.png" alt="(ref:hawaii-income-bars-bad)" width="576" />
@@ -34,12 +34,12 @@ An appropriate visualization of these data makes for a less exciting story (Figu
 </div>
 
 <div class="rmdtip">
-<p>Bars on a linear scale must always start at 0.</p>
+<p>Bars on a linear scale should always start at 0.</p>
 </div>
 
 Similar visualization problems frequently arise in the visualization of time series, such as those of stock prices. Figure \@ref(fig:fb-stock-drop-bad) suggests a massive collapse in the stock price of Facebook occurred around Nov. 1, 2016. In reality, the price decline was moderate relative to the total price of the stock (Figure \@ref(fig:fb-stock-drop-good)). The *y*-axis range in Figure \@ref(fig:fb-stock-drop-bad) would be questionable even without the shading undearneath the curve. But with the shading, the figure becomes particularly problematic. The shading emphasizes the distance from the location of the *x* axis to the specific *y* values shown, and thus it creates the visual impression that the height of the shaded area at a given day represents the stock price of that day. Instead, it only represents the difference in stock price from the baseline, which is $110 in Figure \@ref(fig:fb-stock-drop-bad).
 
-(ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 22, 2016 to Jan. 21, 2017. This figure seems to imply that the Facebook stock pice collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
+(ref:fb-stock-drop-bad) Stock price of Facebook (FB) from Oct. 22, 2016 to Jan. 21, 2017. This figure seems to imply that the Facebook stock price collapsed around Nov. 1, 2016. However, this is misleading, because the *y* axis starts at $110 instead of $0.
 
 <div class="figure" style="text-align: center">
 <img src="proportional_ink_files/figure-html/fb-stock-drop-bad-1.png" alt="(ref:fb-stock-drop-bad)" width="576" />
