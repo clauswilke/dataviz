@@ -141,7 +141,7 @@ comfortable with bioRxiv. As a result bioRxiv quickly gained acceptance
 among biologists, to a degree that arXiv had never managed. In fact,
 soon after its launch, bioRxiv started experiencing rapid, exponential
 growth in monthly submissions, and the slowdown in q-bio submissions
-exactly conincides with the start of this exponential growth in bioRxiv
+exactly coincides with the start of this exponential growth in bioRxiv
 (Figure @ref(fig:q-bio-bioRxiv-monthly-growth)). It appears to be the
 case that many quantitative biologists who otherwise might have
 deposited a preprint with q-bio decided to deposit it with bioRxiv
@@ -210,7 +210,7 @@ Never assume your audience can rapidly process complex visual displays.
 Some might hear this story and conclude that the generals are not very
 smart or just not that into science. I think that's exactly the wrong
 take-home message. The generals are simply very busy. They can't spend
-30 minutes trying to decypher a cryptic figure. When they give millions
+30 minutes trying to decipher a cryptic figure. When they give millions
 of dollars of taxpayer funds to scientists to do basic research, the
 least they can expect in return is a handful of clear demonstrations
 that something worthwhile and interesting was accomplished. This story
@@ -240,7 +240,7 @@ each point represents the number of flights from one of the three major
 New York City airports (Newark, JFK, or LaGuardia) to that destination
 in 2013. Negative delays imply that the flight arrived early. Solid
 lines represent the mean trends between arrival delay and distance.
-Delta has consistenly lower arrival delays than other airlines,
+Delta has consistently lower arrival delays than other airlines,
 regardless of distance traveled. American has among the lowest delays,
 on average, for short distances, but has among the highest delays for
 longer distances traveled. This figure is labeled as "bad" because it is
@@ -294,7 +294,7 @@ a large amount of information at once. In those cases, we can make
 things easier for our readers if we first show them a simplified version
 of the figure before we show the final one in its full complexity. The
 same approach is also highly recommended for presentations. Never jump
-straight to a highly complex figure; first show an easily digestable
+straight to a highly complex figure; first show an easily digestible
 subset.
 
 This recommendation is particularly relevant if the final figure is a

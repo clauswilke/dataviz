@@ -39,7 +39,7 @@ just completed an exam on which they could score between 0 and 100
 points. How can we best visualize the class performance, for example to
 determine appropriate grade boundaries?
 
-We can plot the total number of students that have received at least a
+We can plot the total number of students that have received at most a
 certain number of points versus all possible point scores. This plot
 will be an ascending function, starting at 0 for 0 points and ending at
 50 for 100 points. A different way of thinking about this visualization

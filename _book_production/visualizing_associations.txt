@@ -336,27 +336,30 @@ measurements on each subject (e.g., the length of the right and the left
 arm of a person), repeat measurements on the same subject at different
 time points (e.g., a person's weight at two different times during the
 year), or measurements on two closely related subjects (e.g., the
-heights of two identical twins). For paired data, our null hypothesis is
-that each pair of measurements is identical or nearly so, whereas there
-is substantial variation between pairs. Two twins will be approximately
-of the same height but will differ in height from other twins.
-Therefore, we need to choose visualizations that highlight deviations
-from this null hypothesis.
+heights of two identical twins). For paired data, it is reasonable to
+assume that the two measurements belonging to a pair are more similar to
+each other than to the measurements belonging to other pairs. Two twins
+will be approximately of the same height but will differ in height from
+other twins. Therefore, for paired data, we need to choose
+visualizations that highlight any differences between the paired
+measurements.
 
-An excellent choice for paired data is a simple scatter plot on top of a
-diagonal line marking _x_ = _y_. If our null hypothesis is true, all
-points in the sample will be scattered symmetrically around this line. A
-systematic deviation from the null hypothesis, by contrast, will be
-visible in a systematic shift of the data points up or down relative to
-the diagonal. As an example, consider the carbon dioxide (CO2) emissions
-per person, measured for 166 countries both in 1970 and in 2010 (Figure
-@ref(fig:CO2-paired-scatter)). This example highlights two common
-features of paired data. First, most points are relatively close to the
-diagonal line. Even though CO2 emissions vary over nearly four orders of
-magnitude among countries, they are fairly consistent within each
-country over a 40-year time span. Second, the points are systematically
-shifted upwards relative to the diagonal line. The majority of countries
-has seen an increase in CO2 emissions over the 40 years considered.
+An excellent choice in this case is a simple scatter plot on top of a
+diagonal line marking _x_ = _y_. In such a plot, if the only difference
+between the two measurements of each pair is random noise, then all
+points in the sample will be scattered symmetrically around this line.
+Any systematic differences between the paired measurements, by contrast,
+will be visible in a systematic shift of the data points up or down
+relative to the diagonal. As an example, consider the carbon dioxide
+(CO2) emissions per person, measured for 166 countries both in 1970 and
+in 2010 (Figure @ref(fig:CO2-paired-scatter)). This example highlights
+two common features of paired data. First, most points are relatively
+close to the diagonal line. Even though CO2 emissions vary over nearly
+four orders of magnitude among countries, they are fairly consistent
+within each country over a 40-year time span. Second, the points are
+systematically shifted upwards relative to the diagonal line. The
+majority of countries has seen an increase in CO2 emissions over the 40
+years considered.
 
 (ref:CO2-paired-scatter) Carbon dioxide (CO2) emissions per person in
 1970 and 2010, for 166 countries. Each dot represents one country. The

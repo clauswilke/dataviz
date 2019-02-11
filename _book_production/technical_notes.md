@@ -32,10 +32,10 @@ The book was last compiled using the following environment:
 ## [16] rgeos_0.3-28         ggspatial_1.0.3      geofacet_0.1.9      
 ## [19] plot3D_1.1.1         magick_1.9           hexbin_1.27.2       
 ## [22] treemapify_2.5.0     gridExtra_2.3        ggmap_2.7.904       
-## [25] ggthemes_4.0.1       ggridges_0.5.1       ggrepel_0.8.0       
+## [25] ggthemes_4.0.1       ggridges_0.5.1.9000  ggrepel_0.8.0       
 ## [28] ggforce_0.1.1        patchwork_0.0.1      lubridate_1.7.4     
 ## [31] forcats_0.3.0        stringr_1.3.1        purrr_0.2.5         
-## [34] readr_1.1.1          tidyr_0.8.2          tibble_1.4.2        
+## [34] readr_1.1.1          tidyr_0.8.2          tibble_2.0.1        
 ## [37] tidyverse_1.2.1      dviz.supp_0.1.0      dplyr_0.8.0.9000    
 ## [40] colorblindr_0.1.0    ggplot2_3.1.0        colorspace_1.4-0    
 ## [43] cowplot_0.9.99      
@@ -63,14 +63,14 @@ The book was last compiled using the following environment:
 ## [39] scales_1.0.0              hms_0.4.2                
 ## [41] yaml_2.2.0                stringi_1.2.4            
 ## [43] e1071_1.7-0               spData_0.2.9.4           
-## [45] RgoogleMaps_1.4.3         rlang_0.3.0.1            
+## [45] RgoogleMaps_1.4.3         rlang_0.3.1              
 ## [47] pkgconfig_2.0.2           bitops_1.0-6             
 ## [49] geogrid_0.1.1             evaluate_0.11            
 ## [51] lattice_0.20-35           tidyselect_0.2.5         
 ## [53] plyr_1.8.4                magrittr_1.5             
 ## [55] bookdown_0.7              R6_2.3.0                 
 ## [57] generics_0.0.2            DBI_1.0.0                
-## [59] pillar_1.3.0              haven_1.1.2              
+## [59] pillar_1.3.1              haven_1.1.2              
 ## [61] foreign_0.8-71            withr_2.1.2.9000         
 ## [63] units_0.6-1               modelr_0.1.2             
 ## [65] crayon_1.3.4              arrayhelpers_1.0-20160527

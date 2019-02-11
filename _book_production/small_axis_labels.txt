@@ -1,6 +1,6 @@
 [[small-axis-labels]]
-Your axis labels are too small
-------------------------------
+Use larger axis labels
+----------------------
 
 If you take away only one single lesson from this book, make it this
 one: Pay attention to your axis labels, axis tick labels, and other

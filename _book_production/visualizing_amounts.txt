@@ -149,7 +149,7 @@ within each group according to the other categorical variable.
 (ref:income-by-age-race-dodged) 2016 median U.S. annual household income
 versus age group and race. Age groups are shown along the _x_ axis, and
 for each age group there are four bars, corresponding to the median
-income of asian, white, hispanic, and black people, respectively. Data
+income of Asian, white, Hispanic, and black people, respectively. Data
 source: United States Census Bureau
 
 (#fig:income-by-age-race-dodged)(ref:income-by-age-race-dodged)

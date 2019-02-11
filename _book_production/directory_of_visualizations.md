@@ -50,7 +50,7 @@ When proportions are specified according to multiple grouping variables, then mo
 <img src="directory_of_visualizations_files/figure-html/basic-scatter-1.png" width="630" style="display: block; margin: auto;" />
 
 
-Scatter plots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatter plot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
+Scatterplots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatterplot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
 
 <img src="directory_of_visualizations_files/figure-html/xy-binning-1.png" width="630" style="display: block; margin: auto;" />
 
@@ -58,7 +58,7 @@ For large numbers of points, regular scatterplots can become uninformative due t
 
 <img src="directory_of_visualizations_files/figure-html/xy-lines-1.png" width="630" style="display: block; margin: auto;" />
 
-When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we can draw a connected scatter plot where we first plot the two response variables in a scatter plot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We can use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
+When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we can draw a connected scatterplot where we first plot the two response variables in a scatterplot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We can use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
 
 
 ## Geospatial data {#directory-geospatial-data}
@@ -76,7 +76,7 @@ error bars show multiple ranges at the same time, where each range corresponds t
 
 <img src="directory_of_visualizations_files/figure-html/confidence-dists-1.png" width="630" style="display: block; margin: auto;" />
 
-To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dotplot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dotplot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
+To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dot plot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dot plot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
 
 <img src="directory_of_visualizations_files/figure-html/confidence-bands-1.png" width="630" style="display: block; margin: auto;" />
 

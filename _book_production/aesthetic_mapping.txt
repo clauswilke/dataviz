@@ -42,8 +42,8 @@ partially transparent.
 (ref:common-aesthetics) Commonly used aesthetics in data visualization:
 position, shape, size, color, line width, line type. Some of these
 aesthetics can represent both continuous and discrete data (position,
-size, line width, color) while others can only represent discrete data
-(shape, line type).
+size, line width, color) while others can usually only represent
+discrete data (shape, line type).
 
 (#fig:common-aesthetics)(ref:common-aesthetics)
 
@@ -56,8 +56,8 @@ as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By
 contrast, number of persons in a room is a discrete value. A room can
 hold 5 persons or 6, but not 5.5. For the examples in Figure
 @ref(fig:common-aesthetics), position, size, color, and line width can
-represent continuous data, but shape and line type can only represent
-discrete data.
+represent continuous data, but shape and line type can usually only
+represent discrete data.
 
 Next we'll consider the types of data we may want to represent in our
 visualization. You may think of data as numbers, but numerical values

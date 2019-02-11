@@ -434,9 +434,9 @@ visible as a sudden spike in the remainder. Figure
 events have had a major effect on the Keeling curve in recent decades.
 
 (ref:keeling-curve-decomposition) Time-series decomposition of the
-Keeling curve, showing the montly average (as in Figure
+Keeling curve, showing the monthly average (as in Figure
 @ref(fig:keeling-curve)), the long-term trend, seasonal fluctuations,
-and remainder. The remainder is the difference between the actual
+and the remainder. The remainder is the difference between the actual
 readings and the sum of the long-term trend and the seasonal
 fluctuations, and it represents random noise. I have zoomed into the
 most recent 30 years of data to more clearly show the shape of the

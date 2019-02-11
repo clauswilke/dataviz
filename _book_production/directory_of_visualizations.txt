@@ -82,11 +82,11 @@ grouping variables.
 _x_--_y_ relationships
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Scatter plots represent the archetypical visualization when we want to
+Scatterplots represent the archetypical visualization when we want to
 show one quantitative variable relative to another (Chapter
 @ref(associations-scatterplots)). If we have three quantitative
 variables, we can map one onto the dot size, creating a variant of the
-scatter plot called bubble chart. For paired data, where the variables
+scatterplot called bubble chart. For paired data, where the variables
 along the _x_ and the _y_ axes are measured in the same units, it is
 generally helpful to add a line indicating _x_ = _y_ (Chapter
 @ref(associations-paired-data)). Paired data can also be shown as a
@@ -104,8 +104,8 @@ data (Chapter @ref(associations-correlograms)).
 When the _x_ axis represents time or a strictly increasing quantity such
 as a treatment dose, we commonly draw line graphs (Chapter
 @ref(time-series)). If we have a temporal sequence of two response
-variables, we can draw a connected scatter plot where we first plot the
-two response variables in a scatter plot and then connect dots
+variables, we can draw a connected scatterplot where we first plot the
+two response variables in a scatterplot and then connect dots
 corresponding to adjacent time points (Chapter
 @ref(time-series-connected-scatter)). We can use smooth lines to
 represent trends in a larger dataset (Chapter @ref(visualizing-trends)).
@@ -145,12 +145,12 @@ Confidence strips provide a clear visual sense of uncertainty but are
 difficult to read accurately. Eyes and half-eyes combine error bars with
 approaches to visualize distributions (violins and ridgelines,
 respectively), and thus show both precise ranges for some confidence
-levels and the overall uncertainty distribution. A quantile dotplot can
+levels and the overall uncertainty distribution. A quantile dot plot can
 serve as an alternative visualization of an uncertainty distribution
 (Chapter @ref(frequency-framing)). By showing the distribution in
-discrete units, the quantile dotplot is not as precise but can be easier
-to read than the continuous distribution shown by a violin or ridgeline
-plot.
+discrete units, the quantile dot plot is not as precise but can be
+easier to read than the continuous distribution shown by a violin or
+ridgeline plot.
 
 For smooth line graphs, the equivalent of an error bar is a confidence
 band (Chapter @ref(uncertainty-curve-fits)). It shows a range of values

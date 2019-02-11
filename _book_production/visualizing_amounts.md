@@ -83,7 +83,7 @@ We should only rearrange bars, however, when there is no natural ordering to the
 
 All examples from the previous subsection showed how a quantitative amount varied with respect to one categorical variable. Frequently, however, we are interested in two categorical variables at the same time. For example, the U.S. Census Bureau provides median income levels broken down by both age and race. We can visualize this dataset with a *grouped bar plot* (Figure \@ref(fig:income-by-age-race-dodged)). In a grouped bar plot, we draw a group of bars at each position along the *x* axis, determined by one categorical variable, and then we draw bars within each group according to the other categorical variable.
 
-(ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. Age groups are shown along the *x* axis, and for each age group there are four bars, corresponding to the median income of asian, white, hispanic, and black people, respectively. Data source: United States Census Bureau
+(ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. Age groups are shown along the *x* axis, and for each age group there are four bars, corresponding to the median income of Asian, white, Hispanic, and black people, respectively. Data source: United States Census Bureau
 
 <div class="figure" style="text-align: center">
 <img src="visualizing_amounts_files/figure-html/income-by-age-race-dodged-1.png" alt="(ref:income-by-age-race-dodged)" width="840" />
