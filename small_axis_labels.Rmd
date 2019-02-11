@@ -3,7 +3,7 @@
 source("_common.R")
 ```
 
-# Your axis labels are too small {#small-axis-labels}
+# Use larger axis labels {#small-axis-labels}
 
 If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you're almost certainly making a poor choice.
 

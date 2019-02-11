@@ -669,9 +669,9 @@ Error bars are convenient because they allow us to show many estimates with thei
 ```{r mean-chocolate-ratings, fig.asp = 0.5, fig.cap = '(ref:mean-chocolate-ratings)'}
 #countries <- c("Austria", "Belgium", "Canada", "Peru", "Switzerland")
 #
-#cacao_small <- cacao %>% 
-#  filter(location %in% c("U.S.A.", countries)) %>%
-#  mutate(location = factor(location, levels = c("U.S.A.", countries)))
+cacao_small <- 
+  cacao_small %>% 
+  mutate(location = fct_recode(location, US = "U.S.A.")) # change to O'Reilly style
 
 fit <- lm(rating ~ location, data = cacao_small)
 
@@ -787,7 +787,7 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
     sec.axis = dup_axis(
       name = NULL,
       breaks = 0,
-      labels = "U.S.A. mean rating"
+      labels = "US mean rating"
     )
   ) +
   scale_y_discrete(
@@ -1527,17 +1527,18 @@ To illustrate the concept of a HOP, let's go back once more to chocolate bar rat
 
 ```{r chocolate-HOP-static, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:chocolate-HOP-static)'}
 cacao %>% 
-  filter(location %in% c("Canada", "U.S.A.")) -> cacao_US_CA
+  filter(location %in% c("Canada", "U.S.A.")) %>%
+  mutate(location = fct_recode(location, US = "U.S.A.")) -> cacao_US_CA
 
 set.seed(49323)
 n <- 9
 CA_ratings <- sample_n(filter(cacao_US_CA, location == "Canada"), n, replace = TRUE) %>%
   mutate(.draw = 1:n())
-US_ratings <- sample_n(filter(cacao_US_CA, location == "U.S.A."), n, replace = TRUE) %>%
+US_ratings <- sample_n(filter(cacao_US_CA, location == "US"), n, replace = TRUE) %>%
   mutate(.draw = 1:n())
 
 sample_df <- rbind(CA_ratings, US_ratings) %>%
-  mutate(location = fct_relevel(location, "U.S.A.", "Canada"))
+  mutate(location = fct_relevel(location, "US", "Canada"))
 
 ggplot(sample_df) +
   geom_segment(
@@ -1555,7 +1556,7 @@ ggplot(sample_df) +
   ) +
   scale_y_discrete(
     name = NULL,
-    limits = c("U.S.A.", "Canada"),
+    limits = c("US", "Canada"),
     expand = c(0, 0.25)
   ) +
   theme_dviz_hgrid(12, rel_small = 1) +
@@ -1581,11 +1582,11 @@ n <- 30
 
 CA_ratings <- sample_n(filter(cacao_US_CA, location == "Canada"), n, replace = TRUE) %>%
   mutate(.draw = 1:n())
-US_ratings <- sample_n(filter(cacao_US_CA, location == "U.S.A."), n, replace = TRUE) %>%
+US_ratings <- sample_n(filter(cacao_US_CA, location == "US"), n, replace = TRUE) %>%
   mutate(.draw = 1:n())
 
 sample_df <- rbind(CA_ratings, US_ratings) %>%
-  mutate(location = fct_relevel(location, "U.S.A.", "Canada"))
+  mutate(location = fct_relevel(location, "US", "Canada"))
 
 ggplot(sample_df) +
   geom_segment(
@@ -1604,7 +1605,7 @@ ggplot(sample_df) +
   ) +
   scale_y_discrete(
     name = NULL,
-    limits = c("U.S.A.", "Canada"),
+    limits = c("US", "Canada"),
     expand = c(0, 0.25)
   ) +
   theme_dviz_hgrid() +

@@ -361,12 +361,12 @@ df_multi_dist_small <- group_by(df_multi_dist, type) %>%
 
 p3 <- ggplot(df_multi_dist_small, aes(x = type, y = y)) + 
   geom_jitter(color = palette[1], width = 0.15, height = 0, size = .3) +
-  labs(title = "strip chart") +
+  labs(title = "strip charts") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_multi_dist_small, aes(x = type, y = y)) + 
   dviz.supp::stat_sina(color = palette[1], size = 0.3) +
-  labs(title = "sina plot") +
+  labs(title = "sina plots") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
@@ -585,7 +585,7 @@ p1 <- ggplot(df_scatter_xy, aes(x, y)) +
   geom_point(fill = palette[2], color = palette[npal], pch = 21, size = 2.4) + 
   scale_x_continuous(expand = c(.2, 0)) +
   scale_y_continuous(expand = c(.2, 0)) +
-  labs(title = "scatter plot") +
+  labs(title = "scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p2 <- ggplot(df_scatter_xyz, aes(x, y, size = z)) + 
@@ -604,7 +604,7 @@ p3 <- ggplot(spread(df_paired, x, y), aes(A, B)) +
   ) +
   scale_x_continuous(limits = c(1.5, 6.5)) +
   scale_y_continuous(limits = c(1.5, 6.5)) +
-  labs(title = "paired scatter plot") +
+  labs(title = "paired scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p4 <- ggplot(df_paired, aes(x, y, group = group)) + 
@@ -626,7 +626,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 ```
 
 
-Scatter plots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatter plot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
+Scatterplots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatterplot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
 
 ```{r xy-binning, fig.width = 6, fig.asp = 1/4}
 p5 <- ggplot(df_dense_scatter, aes(x, y)) + 
@@ -701,7 +701,7 @@ p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
   ) +
   scale_x_continuous(limits = c(0.3, 3.7)) +
   scale_y_continuous(limits = c(-2.5, 2.5)) +
-  labs(title = "connected scatter plot") +
+  labs(title = "connected scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
@@ -719,7 +719,7 @@ p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
 plot_grid(p1, p2, p3, ncol = 4, scale = .9)
 ```
 
-When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we can draw a connected scatter plot where we first plot the two response variables in a scatter plot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We can use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
+When the *x* axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs (Chapter \@ref(time-series)). If we have a temporal sequence of two response variables, we can draw a connected scatterplot where we first plot the two response variables in a scatterplot and then connect dots corresponding to adjacent time points (Chapter \@ref(time-series-connected-scatter)). We can use smooth lines to represent trends in a larger dataset (Chapter \@ref(visualizing-trends)). 
 
 
 ## Geospatial data {#directory-geospatial-data}
@@ -971,7 +971,7 @@ p3 <- ggplot(df_uncertain, aes(y, type)) +
   ) +
   scale_x_continuous(limits = c(1.6, 6.4), expand = c(0, 0)) +
   scale_y_discrete(expand = expand_scale(add = c(0.2, 0.8))) +
-  labs(title = "half eyes") +
+  labs(title = "half-eyes") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -995,7 +995,7 @@ p4 <- ggplot(df_q, aes(x)) +
     expand = c(0.02, 0),
     limits = c(0, 0.4)
   ) +
-  labs(title = "quantile dotplot") +
+  labs(title = "quantile dot plot") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -1006,7 +1006,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
   
 ```
 
-To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dotplot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dotplot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
+To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dot plot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dot plot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
 
 ```{r confidence-bands, fig.width = 6, fig.asp = 1/4}
 p1 <- ggplot(df_dense_scatter_sample, aes(x, y)) +

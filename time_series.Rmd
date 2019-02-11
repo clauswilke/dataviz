@@ -238,7 +238,7 @@ p1 <- ggplot(CA_house_prices, aes(date, house_price_perc)) +
   scale_y_continuous(
     limits = c(-0.3, .32), expand = c(0, 0),
     breaks = c(-.3, -.15, 0, .15, .3),
-    name = "12-month change\nin house prices", labels = scales::percent
+    name = "12-month change\nin house prices", labels = scales::percent_format(accuracy = 1)
   ) + 
   scale_x_date(name = "", expand = c(0, 0)) +
   coord_cartesian(clip = "off") +
@@ -252,7 +252,7 @@ p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
   geom_line(size = 0.75, color = "#0072b2") +
   scale_y_continuous(
     limits = c(0.037, 0.143),
-    name = "unemploy-\nment rate", labels = scales::percent,
+    name = "unemploy-\nment rate", labels = scales::percent_format(accuracy = 1),
     expand = c(0, 0)
   ) +
   scale_x_date(name = "year", expand = c(0, 0)) +
@@ -285,13 +285,13 @@ ggplot(CA_house_prices) +
   ) +
   scale_x_continuous(
     limits = c(0.037, 0.143),
-    name = "unemployment rate", labels = scales::percent,
+    name = "unemployment rate", labels = scales::percent_format(accuracy = 1),
     expand = c(0, 0)
   ) +
   scale_y_continuous(
     limits = c(-0.315, .315), expand = c(0, 0),
     breaks = c(-.3, -.15, 0, .15, .3),
-    name = "12-month change in house prices", labels = scales::percent
+    name = "12-month change in house prices", labels = scales::percent_format(accuracy = 1)
   ) + 
   scale_colour_gradient(low = "#E7F0FF", high = "#035B8F") + #"#0072b2") +
   guides(colour = FALSE) +
@@ -316,13 +316,13 @@ p <- ggplot(CA_house_prices) +
   geom_path(size = 0.75, lineend = "round", color = "#0072b2") +
   scale_x_continuous(
     limits = c(0.037, 0.143),
-    name = "unemployment rate", labels = scales::percent,
+    name = "unemployment rate", labels = scales::percent_format(accuracy = 1),
     expand = c(0, 0)
   ) +
   scale_y_continuous(
     limits = c(-0.315, .315), expand = c(0, 0),
     breaks = c(-.3, -.15, 0, .15, .3),
-    name = "12-month change in house prices", labels = scales::percent
+    name = "12-month change in house prices", labels = scales::percent_format(accuracy = 1)
   ) + 
   coord_cartesian(clip = "off") +
   theme_dviz_grid() +

@@ -27,7 +27,7 @@ corruption %>% filter(year == 2015) %>% na.omit() %>%
   mutate(region = case_when(
     region == "Middle East and North Africa" ~ "Middle East\nand North Africa",
     region == "Europe and Central Asia" ~ "Europe and\nCentral Asia",
-    region == "Sub Saharan Africa" ~ "Sub Saharan\nAfrica",
+    region == "Sub Saharan Africa" ~ "Sub-Saharan\nAfrica",
     TRUE ~ region),
     label = ifelse(country %in% country_highlight, country, "")
     ) %>%

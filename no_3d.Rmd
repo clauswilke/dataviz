@@ -136,7 +136,7 @@ p2 <- ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) +
   )
 
 
-plot_grid(p1, p2)
+plot_grid(p1, p2, labels = "auto")
 ```
 
 (ref:mtcars-2d-size) Power versus displacement for 32 cars, with fuel efficiency represented by dot size. Data source: *Motor Trend,* 1974.
