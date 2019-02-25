@@ -109,7 +109,7 @@ As an alternative to a bubble chart, it may be preferable to show an all-against
 (ref:blue-jays-scatter-all) All-against-all scatter plot matrix of head length, body mass, and skull size, for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
 
 
-```{r blue-jays-scatter-all, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-all)'}
+```{r blue-jays-scatter-all, fig.width = 5*6/4.2, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-all)'}
 blue_jays %>% select(BirdID, KnownSex, Head, Mass, Skull) %>%
   gather(var_x, val_x, Head:Skull) %>%
   left_join(select(blue_jays, BirdID, Head, Mass, Skull)) %>%
@@ -171,11 +171,12 @@ When we have more than three to four quantiative variables, all-against-all scat
 
 (ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other). In all six panels, the sets of *x* and *y* values are identical, but the pairings between individual *x* and *y* values have been reshuffled to generate the specified correlation coefficients.
 
-```{r correlations, fig.asp = 283/434, fig.cap = '(ref:correlations)'}
+```{r correlations, fig.width = 5*6/4.2, fig.asp = 283/434, fig.cap = '(ref:correlations)'}
 r <- c(.2, .6, .9, -.2, -.6, -.9)
 labels_df <- tibble(
   r = factor(r, levels = r),
-  label = paste0("r = ", r),
+  #label = paste0("r = ", r),
+  label = c("r = 0.2", "r = 0.6", "r = 0.9", "r = –0.2", "r = –0.6", "r = –0.9"),
   x = c(-2.3, -2.3, -2.3, 2.3, 2.3, 2.3),
   hjust = c(0, 0, 0, 1, 1, 1),
   y = 2.3
@@ -188,7 +189,7 @@ ggplot(correlation_examples, aes(x, y)) +
     aes(label = label, hjust = hjust),
     vjust = 1,
     family = "Myriad Pro",
-    size = 12/.pt
+    size = 14/.pt
   ) +
   facet_wrap(~r) +
   coord_fixed(xlim = c(-2.5, 2.5), ylim = c(-2.5, 2.5), expand = FALSE, clip = "off") +
@@ -296,7 +297,7 @@ There are many techniques for dimension reduction. I will discuss only one techn
 
 (ref:blue-jays-PCA) Example principal components (PC) analysis in two dimensions. (a) The original data. As example data, I am using the head-length and skull-size measurements from the blue jays dataset. Female and male birds are distinguished by color, but this distinction has no effect on the PC analysis. (b) As the first step in PCA, we scale the original data values to zero mean and unit variance. We then we define new variables (the principal components, PCs) along the directions of maximum variation in the data. (c) Finally, we project the data into the new coordinates. Mathematically, this projection is equivalent to a rotation of the data points around the origin. In the 2D example shown here, the data points are rotated clockwise by 45 degrees. 
 
-```{r blue-jays-PCA, fig.width = 8.5, fig.asp = 0.35, fig.cap = '(ref:blue-jays-PCA)'}
+```{r blue-jays-PCA, fig.width = 5.5*6/4.2, fig.asp = 0.35, fig.cap = '(ref:blue-jays-PCA)'}
 p1 <- ggplot(blue_jays, aes(Skull, Head, fill = KnownSex)) + 
   geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
   scale_x_continuous(
@@ -526,9 +527,9 @@ Next, we project the original data into the principal components space (Figure \
 (ref:forensic-PCA) Composition of individual glass fragments visualized in the principal components space defined in Figure \@ref(fig:forensic-PCA-rotation). We see that the different types of glass samples cluster at characteristic values of PC 1 and 2. In particular, headlamps are characterized by a negative PC 1 value whereas windows tend to have a positive PC 1 value. Tableware and containers have PC 1 values close to zero and tend to have positive PC 2 values. However, there are a few exceptions where container fragments have both a negative PC 1 value and a negative PC 2 value. These are fragments whose composition drastically differs from all other fragments analyzed.
 
 
-```{r forensic-PCA, fig.cap = '(ref:forensic-PCA)'}
+```{r forensic-PCA, fig.width = 5*6/4.2, fig.cap = '(ref:forensic-PCA)'}
 ggplot(pca_data, aes(x = PC1, y = PC2, color = type, fill = type, shape = type)) + 
-  geom_point() +
+  geom_point(size = 2) +
   scale_color_manual(values = colors, name = "fragment type") +
   scale_fill_manual(values = fills, name = "fragment type") +
   scale_shape_manual(values = c(22:24, 21), name = "fragment type") +

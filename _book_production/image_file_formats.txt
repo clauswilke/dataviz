@@ -163,10 +163,10 @@ very noticeable artifacts (Figure @ref(fig:jpeg-example)).
 (ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is
 reproduced multiple times using increasingly severe jpeg compression.
 The resulting file size is shown in red text above each image. A
-reduction in file size by a factor of 10, from 432kB in the original
-image to 43kB in the compressed image, results in only minor perceptible
+reduction in file size by a factor of 10, from 432KB in the original
+image to 43KB in the compressed image, results in only minor perceptible
 reduction in image quality. However, a further reduction in file size by
-a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b)
+a factor of 2, to a mere 25KB, leads to numerous visible artifacts. (b)
 Zooming in to the most highly compressed image reveals the various
 compression artifacts. Photo credit: Claus O. Wilke
 
