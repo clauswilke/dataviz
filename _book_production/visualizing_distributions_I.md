@@ -66,7 +66,7 @@ For the age distribution of Titanic passengers, we can see that a bin width of o
 (ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" alt="(ref:titanic-ages-hist-grid)" width="892.5" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-hist-grid-1.png" alt="(ref:titanic-ages-hist-grid)" width="825" />
 <p class="caption">(\#fig:titanic-ages-hist-grid)(ref:titanic-ages-hist-grid)</p>
 </div>
 
@@ -88,7 +88,7 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 (ref:titanic-ages-dens-grid) Kernel density estimates depend on the chosen kernel and bandwidth. Here, the same age distribution of Titanic passengers is shown for four different combinations of these parameters: (a) Gaussian kernel, bandwidth = 0.5; (b) Gaussian kernel, bandwidth = 2; (c) Gaussian kernel, bandwidth = 5; (d) Rectangular kernel, bandwidth = 2.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-grid-1.png" alt="(ref:titanic-ages-dens-grid)" width="892.5" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-ages-dens-grid-1.png" alt="(ref:titanic-ages-dens-grid)" width="825" />
 <p class="caption">(\#fig:titanic-ages-dens-grid)(ref:titanic-ages-dens-grid)</p>
 </div>
 
@@ -148,7 +148,7 @@ A solution that works well for this dataset is to show the age distributions of 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_distributions_I_files/figure-html/titanic-age-fractional-dens-1.png" alt="(ref:titanic-age-fractional-dens)" width="892.5" />
+<img src="visualizing_distributions_I_files/figure-html/titanic-age-fractional-dens-1.png" alt="(ref:titanic-age-fractional-dens)" width="825" />
 <p class="caption">(\#fig:titanic-age-fractional-dens)(ref:titanic-age-fractional-dens)</p>
 </div>
 
