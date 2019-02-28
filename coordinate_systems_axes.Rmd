@@ -22,7 +22,7 @@ The most widely used coordinate system for data visualization is the 2d *Cartesi
 ```{r cartesian-coord, fig.asp = 0.8, fig.cap = '(ref:cartesian-coord)'}
 df_points <- data.frame(x = c(-1, 0, 2),
                         y = c(-1, 0, 1),
-                        label = c("(-1, -1)", "(0, 0)", "(2, 1)"),
+                        label = c("(–1, –1)", "(0, 0)", "(2, 1)"),
                         vjust = c(1.4, -.8, -.8),
                         hjust = c(1.1, 1.1, -.1))
 
@@ -35,7 +35,7 @@ df_labels <- data.frame(x = c(-1, -.5, 1, 2),
                         y = c(-.5, -1, 1, 0.5),
                         vjust = c(.5, 1.3, -.3, .5),
                         hjust = c(1.1, .5, .5, -.1),
-                        label = c("y = -1", "x = -1", "x = 2", "y = 1"))
+                        label = c("y = –1", "x = –1", "x = 2", "y = 1"))
 
 ggplot(df_points, aes(x, y)) +
   geom_hline(yintercept = 0, color = "gray60") +
@@ -60,7 +60,7 @@ A Cartesian coordinate system can have two axes representing two different units
 
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
-```{r temperature-normals-Houston, fig.width = 6, fig.asp = 3/4, fig.cap = '(ref:temperature-normals-Houston)'}
+```{r temperature-normals-Houston, fig.width = 5*6/4.2, fig.asp = 3/4, fig.cap = '(ref:temperature-normals-Houston)'}
 temps_wide <- filter(ncdc_normals,
                 station_id %in% c(
                   "USW00014819", # Chicago, IL 60638
@@ -83,10 +83,24 @@ temps_wide <- filter(ncdc_normals,
   spread(location, temperature) %>%
   arrange(date)
 
-temps_wide_label <- mutate(temps_wide,
-                           label = ifelse(date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), 
-                                                      ymd("0000-07-01"), ymd("0000-10-01")),
-                                          format(date, "%b 1st"), ""))
+temps_wide_label <- mutate(
+  temps_wide,
+  label = ifelse(
+    date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
+    format(date, "%b 1st"),
+    ""
+  ),
+  nudge_x = ifelse(
+    date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
+    c(-1, -2, -2, 1)[round(month(date)/3)+1],
+    0
+  ),
+  nudge_y = ifelse(
+    date %in% c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"), ymd("0000-10-01")),
+    c(-2, 1, 0.5, -2)[round(month(date)/3)+1],
+    0
+  )
+)
 
 temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   geom_line(size = 1, color = "#0072B2") +
@@ -97,30 +111,41 @@ temp_plot <- ggplot(temps_wide_label, aes(x = date, y = `Houston`)) +
   scale_y_continuous(limits = c(50, 90),
                      name = "temperature (°F)") +
   theme_dviz_grid(12) +
-  theme(plot.margin = margin(3, 12, 12, 1.5))
+  theme(plot.margin = margin(3, 5, 3, 1.5))
 
-plot_grid(plot_grid(temp_plot, temp_plot, rel_widths = c(1, 2), labels = "auto"),
-          temp_plot, rel_heights = c(1.5, 1), labels = c("", "c"), label_y = c(1, 1.15), ncol = 1)
+plot_grid(
+  plot_grid(
+    temp_plot, NULL, temp_plot, rel_widths = c(1, 0.06, 2), labels = c("a", "", "b"), nrow = 1
+  ),
+  NULL, temp_plot,
+  rel_heights = c(1.5, 0.06, 1), labels = c("", "", "c"), label_y = c(1, 1, 1.03), ncol = 1
+)
 ```
 
 On the other hand, if the *x* and the *y* axes are measured in the same units, then the grid spacings for the two axes should be equal, such that the same distance along the *x* or *y* axis corresponds to the same number of data units. As an example, we can plot the temperature in Houston, TX against the temperature in San Diego, CA, for every day of the year (Figure \@ref(fig:temperature-normals-Houston-San-Diego)a). Since the same quantity is plotted along both axes, we need to make sure that the grid lines form perfect squares, as is the case in Figure \@ref(fig:temperature-normals-Houston-San-Diego).
 
 (ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Fahrenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
 
-```{r temperature-normals-Houston-San-Diego, fig.width = 8.5, fig.asp = 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
+```{r temperature-normals-Houston-San-Diego, fig.width = 5.5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:temperature-normals-Houston-San-Diego)'}
 tempsplot_F <- ggplot(temps_wide_label, aes(x = `San Diego`, y = `Houston`)) +
   geom_path(size = 1, color = "#0072B2") +
-  geom_text_repel(aes(label = label), point.padding = .4, color = "black",
-                  min.segment.length = 0, size = 12/.pt,
-                  family = dviz_font_family) +
-  coord_fixed(xlim = c(45, 85), ylim = c(48, 88),
-              expand = FALSE) +
+  geom_text_repel(
+    aes(label = label), point.padding = .4, color = "black",
+    min.segment.length = 0, size = 12/.pt,
+    family = dviz_font_family,
+    nudge_x = (9/5)*temps_wide_label$nudge_x,
+    nudge_y = (9/5)*temps_wide_label$nudge_y
+  ) +
+  coord_fixed(
+    xlim = c(45, 85), ylim = c(48, 88),
+    expand = FALSE
+  ) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(10*(5:8))) +
   xlab("temperature in San Diego (°F)") +
   ylab("temperature in Houston (°F)") +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3, 14, 3, 1.5))
+  theme(plot.margin = margin(3, 1.5, 3, 1.5))
 
 # Fahrenheit to Celsius conversion
 
@@ -128,20 +153,29 @@ F2C <- function(t) {(t-32)*5/9}
 
 tempsplot_C <- ggplot(temps_wide_label, aes(x = F2C(`San Diego`), y = F2C(`Houston`))) +
   geom_path(size = 1, color = "#0072B2") +
-  geom_text_repel(aes(label = label), point.padding = .4, color = "black",
-                  min.segment.length = 0, size = 12/.pt,
-                  family = dviz_font_family) +
-  coord_fixed(xlim = F2C(c(45, 85)), ylim = F2C(c(48, 88)),
-              expand = FALSE) +
+  geom_text_repel(
+    aes(label = label), point.padding = .4, color = "black",
+    min.segment.length = 0, size = 12/.pt,
+    family = dviz_font_family,
+    nudge_x = temps_wide_label$nudge_x,
+    nudge_y = temps_wide_label$nudge_y
+  ) +
+  coord_fixed(
+    xlim = F2C(c(45, 85)), ylim = F2C(c(48, 88)),
+    expand = FALSE
+  ) +
   scale_color_continuous_qualitative(guide = "none") +
   scale_x_continuous(breaks = c(5*(2:6))) +
   xlab("temperature in San Diego (°C)") +
   ylab("temperature in Houston (°C)") +
   theme_dviz_grid() +
-  theme(plot.margin = margin(3, 14, 3, 1.5))
+  theme(plot.margin = margin(3, 1.5, 3, 1.5))
 
 
-plot_grid(tempsplot_F, tempsplot_C, labels = "auto")
+plot_grid(
+  tempsplot_F, NULL, tempsplot_C,
+  labels = c("a", "", "b"), nrow = 1, rel_widths = c(1, .04, 1)
+)
 ```
 
 You may wonder what happens if you change the units of your data. After all, units are arbitrary, and your preferences might be different from somebody else's. A change in units is a linear transformation, where we add or subtract a number to or from all data values and/or multiply all data values with another number. Fortunately, Cartesian coordinate systems are invariant under such linear transformations. Therefore, you can change the units of your data and the resulting figure will not change as long as you change the axes accordingly. As an example, compare Figures \@ref(fig:temperature-normals-Houston-San-Diego)a and \@ref(fig:temperature-normals-Houston-San-Diego)b. Both show the same data, but in part (a) the temperature units are degrees Fahrenheit and in part (b) they are degrees Celsius. Even though the grid lines are in different locations and the numbers along the axes are different, the two data visualizations look exactly the same.
@@ -205,7 +239,7 @@ Because multiplication on a log scale looks like addition on a linear scale, log
 
 (ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighted by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
 
-```{r texas-counties-pop-ratio-log, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
+```{r texas-counties-pop-ratio-log, fig.width = 5*6/4.2, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-log)'}
 set.seed(3878)
 US_census %>% filter(state == "Texas") %>%
   select(name, pop2010) %>%
@@ -234,7 +268,7 @@ ggplot(tx_counties, aes(x = index, y = popratio)) +
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
 
-```{r texas-counties-pop-ratio-lin, fig.width = 7.5, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
+```{r texas-counties-pop-ratio-lin, fig.width = 5*6/4.2, fig.asp = 0.6, fig.cap = '(ref:texas-counties-pop-ratio-lin)'}
 counties_lin <- ggplot(tx_counties, aes(x = index, y = popratio)) +
   geom_point(size = 0.5, color = "#0072B2") +
   geom_text_repel(aes(label = label_large), point.padding = .4, color = "black",
@@ -302,7 +336,7 @@ Despite these problems with square-root scales, they are valid position scales a
 
 (ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a linear scale. (b) Areas shown on a square-root scale. Data source: Google. 
 
-```{r northeast-state-areas, fig.width = 8.5, fig.asp = 0.4, fig.cap = '(ref:northeast-state-areas)'}
+```{r northeast-state-areas, fig.width = 5.5*6/4.2, fig.asp = 0.4, fig.cap = '(ref:northeast-state-areas)'}
 # areas in square miles
 # source: Google, 01/07/2018
 northeast_areas <- read.csv(text = "state_abr,area
@@ -323,14 +357,17 @@ areas_base <- ggplot(northeast_areas, aes(x = state_abr, y = area)) +
   ylab("area (square miles)") +
   xlab("state") +
   theme_dviz_hgrid() +
-  theme(plot.margin = margin(3, 14, 3, 1.5))
+  theme(plot.margin = margin(3, 1.5, 3, 1.5))
 
 p1 <- areas_base + scale_y_sqrt(limits = c(0, 55000), breaks = c(0, 1000, 5000, 10000*(1:5)), 
                                 expand = c(0, 0))
   
 p2 <- areas_base + scale_y_continuous(limits = c(0, 55000), breaks = 10000*(0:6), expand = c(0, 0))
 
-plot_grid(p2, p1, labels = "auto")
+plot_grid(
+  p2, NULL, p1,
+  labels = c("a", "", "b"), nrow = 1, rel_widths = c(1, .04, 1)
+)
 ```
 
 ## Coordinate systems with curved axes
@@ -339,7 +376,7 @@ All coordinate systems we have encountered so far used two straight axes positio
 
 (ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
-```{r polar-coord, fig.width = 6, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
+```{r polar-coord, fig.width = 5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:polar-coord)'}
 df_points <- data.frame(x = c(1, 3.5, 0),
                         y = c(3, 4, 0),
                         label = c("(1, 3)", "(3.5, 4)", "(0, 0)"),
@@ -366,7 +403,7 @@ p_cart <- ggplot(df_points, aes(x, y)) +
   theme_dviz_grid(12) +
   theme(axis.ticks = element_blank(),
         axis.ticks.length = grid::unit(0, "pt"),
-        plot.margin = margin(3, 12, 3, 1.5))
+        plot.margin = margin(3, 1.5, 3, 1.5))
 
 
 p_polar <- ggplot(df_points, aes(x, y)) +
@@ -391,9 +428,12 @@ p_polar <- ggplot(df_points, aes(x, y)) +
   background_grid(major = "none") +
   theme(axis.line.x = element_blank(),
         axis.ticks = element_line(color = "black"),
-        plot.margin = margin(3, 12, 3, 1.5))
+        plot.margin = margin(3, 1.5, 3, 1.5))
 
-plot_grid(p_cart, p_polar, labels = "auto")
+plot_grid(
+  p_cart, NULL, p_polar,
+  labels = c("a", "", "b"), nrow = 1, rel_widths = c(1, .04, 1)
+)
 ```
 
 Polar coordinates can be useful for data of a periodic nature, such that data values at one end of the scale can be logically joined to data values at the other end. For example, consider the days in a year. December 31st is the last day of the year, but it is also one day before the first day of the year. If we want to show how some quantity varies over the year, it can be appropriate to use polar coordinates with the angle coordinate specifying each day. Let's apply this concept to the temperature normals of Figure \@ref(fig:temp-normals-vs-time). Because temperature normals are average temperatures that are not tied to any specific year, Dec. 31st can be thought of as 366 days later than Jan. 1st (temperature normals include Feb. 29) and also one day earlier. By plotting the temperature normals in a polar coordinate system, we emphasize this cyclical property they have (Figure \@ref(fig:temperature-normals-polar)). In comparison to Figure \@ref(fig:temp-normals-vs-time), the polar version highlights how similar the temperatures are in Death Valley, Houston, and San Diego from late fall to early spring. In the Cartesian coordinate system, this fact is obscured because the temperature values in late December and in early January are shown in opposite parts of the figure and therefore don't form a single visual unit.
@@ -427,7 +467,7 @@ A second setting in which we encounter curved axes is in the context of geospati
 
 (ref:worldmap-four-projections) Map of the world, shown in four different projections. The Cartesian longitude and latitude system maps the longitude and latitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3D globe. The interrupted Goode homolosine projection perfectly represents true surface areas, at the cost of dividing some land masses into separate pieces, most notably Greenland and Antarctica. The Robinson projection and the Winkel tripel projection both strike a balance between angular and area distortions, and they are commonly used for maps of the entire globe.
 
-```{r worldmap-four-projections, fig.width = 8.5, fig.cap = '(ref:worldmap-four-projections)'}
+```{r worldmap-four-projections, fig.width = 5.5*6/4.2, fig.cap = '(ref:worldmap-four-projections)'}
 library(sf)
 
 world_sf <- sf::st_as_sf(rworldmap::getMap(resolution = "low"))

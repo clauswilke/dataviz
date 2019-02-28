@@ -99,7 +99,7 @@ A pie chart breaks a circle into slices such that the area of each slice is prop
 
 (ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
-```{r, bundestag-stacked-bars, fig.width = 8.5, fig.cap='(ref:bundestag-stacked-bars)'}
+```{r, bundestag-stacked-bars, fig.width = 5.5*6/4.2, fig.cap='(ref:bundestag-stacked-bars)'}
 bundestag <- mutate(bundestag,
                     label_y = cumsum(seats) - seats/2)
 
@@ -222,7 +222,7 @@ I will now demonstrate a case where pie charts fail. This example is modeled aft
 
 (ref:marketshare-pies) Market share of five hypothetical companies, A--E, for the years 2015--2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
 
-```{r marketshare-pies, fig.width = 8.5, fig.asp = .35, fig.cap='(ref:marketshare-pies)'}
+```{r marketshare-pies, fig.width = 5*6/4.2, fig.asp = .35, fig.cap='(ref:marketshare-pies)'}
 # calculate the start and end angles for each pie
 market_pies_df <- marketshare %>%
   group_by(year) %>%
@@ -237,25 +237,35 @@ rpie = 1
 rlabel = 1.05 * rpie
 
 market_pies <- ggplot(market_pies_df) + 
-  geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = rpie,
-                   start = start_angle, end = end_angle, fill = company), color = NA) +
-  geom_text(aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = company,
-                family = dviz_font_family,
-                hjust = hjust, vjust = vjust)) +
+  geom_arc_bar(
+    aes(
+      x0 = 0, y0 = 0, r0 = 0, r = rpie,
+      start = start_angle, end = end_angle, fill = company
+    ),
+    color = NA
+  ) +
+  geom_text(
+    aes(x = rlabel*sin(mid_angle), y = rlabel*cos(mid_angle), label = company, hjust = hjust, vjust = vjust),
+    family = dviz_font_family,
+    size = small_size
+  ) +
   coord_fixed() +
   facet_wrap(~year) +
-  scale_x_continuous(limits = c(-1.2, 1.2), expand = c(0, 0), name = "", breaks = NULL, labels = NULL) +
-  scale_y_continuous(limits = c(-1.2, 1.2), expand = c(0, 0),name = "", breaks = NULL, labels = NULL) +
+  scale_x_continuous(limits = c(-1.2, 1.2), expand = c(0, 0), name = NULL, breaks = NULL, labels = NULL) +
+  scale_y_continuous(limits = c(-1.2, 1.2), expand = c(0, 0), name = NULL, breaks = NULL, labels = NULL) +
   scale_fill_OkabeIto(order = c(1:3, 5, 4)) + 
   guides(fill = "none") +
   theme_dviz_open() +
-  theme(axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.margin = margin(7, 7, 0, 7),
-        legend.position = "none",
-        strip.background = element_blank(),
-        strip.text.x = element_text(margin = margin(0, 0, 0.1, 0)))
+  theme(
+    axis.line = element_blank(),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(0, "pt"),
+    plot.margin = margin(7, 7, 0, 7),
+    legend.position = "none",
+    strip.background = element_blank(),
+    strip.text.x = element_text(size= 14, margin = margin(0, 0, 0.1, 0))
+  )
 
 stamp_bad(market_pies)
 ```
@@ -423,7 +433,7 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 
 (ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution.
 
-```{r health-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:health-vs-age-facets)'}
+```{r health-vs-age-facets, fig.width = 5.5*6/4.2, fig.asp = 0.35, fig.cap='(ref:health-vs-age-facets)'}
 ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..)) +
   geom_density_line(data = select(df_health, -health), aes(fill = "all people surveyed   "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
@@ -439,12 +449,12 @@ ggplot(mutate(df_health, health = fct_rev(health)), aes(x = age, y = ..count..))
   theme_dviz_hgrid() +
   theme(
     axis.line.x = element_blank(),
-    strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+    strip.text = element_text(size = 14, margin = margin(0, 0, 0.2, 0, "cm")),
     legend.position = "bottom",
     legend.justification = "right",
-    legend.margin = margin(0, 0, 0.2, 0, "cm"),
+    legend.margin = margin(4.5, 0, 1.5, 0, "pt"),
     legend.spacing.x = grid::unit(4.5, "pt"),
-    legend.spacing.y = grid::unit(0, "cm"),
+    legend.spacing.y = grid::unit(0, "pt"),
     legend.box.spacing = grid::unit(0, "cm")
   )
 ```
@@ -463,7 +473,7 @@ The same dataset visualized as partial densities is much clearer (Figure \@ref(f
 
 (ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 
-```{r marital-vs-age-facets, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
+```{r marital-vs-age-facets, fig.width = 5.5*6/4.2, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-facets)'}
 ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count..)) +
   geom_density_line(data = select(df_marital, -marital), aes(fill = "all people surveyed  "), color = "transparent") +
   geom_density_line(aes(fill = "highlighted group"), color = "transparent") +
@@ -479,12 +489,12 @@ ggplot(mutate(df_marital, marital = fct_rev(marital)), aes(x = age, y = ..count.
   theme_dviz_hgrid() +
   theme(
     axis.line.x = element_blank(),
-    strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+    strip.text = element_text(size = 14, margin = margin(0, 0, 0.2, 0, "cm")),
     legend.position = "bottom",
     legend.justification = "right",
-    legend.margin = margin(0, 0, 0.2, 0, "cm"),
+    legend.margin = margin(4.5, 0, 1.5, 0, "pt"),
     legend.spacing.x = grid::unit(4.5, "pt"),
-    legend.spacing.y = grid::unit(0, "cm"),
+    legend.spacing.y = grid::unit(0, "pt"),
     legend.box.spacing = grid::unit(0, "cm")
   )
 ```
@@ -493,7 +503,7 @@ However, one downside of Figure \@ref(fig:marital-vs-age-facets) is that this re
 
 (ref:marital-vs-age-proportions) Marital status by age, shown as proportion of the total number of people in the survey. The areas colored in blue show the percent of people at the given age with the respective status, and the areas colored in gray show the percent of people with all other marital statuses.
 
-```{r marital-vs-age-proportions, fig.width = 8.5, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-proportions)'}
+```{r marital-vs-age-proportions, fig.width = 5.5*6/4.2, fig.asp = 0.35, fig.cap='(ref:marital-vs-age-proportions)'}
 df_marital2 <- rbind(
   mutate(df_marital,
     marital = as.character(fct_collapse(marital, `never married` = "never married", aother = c("married", "divorced", "widowed"))),
@@ -542,12 +552,12 @@ ggplot(df_marital2, aes(age)) +
   theme_dviz_hgrid() +
   theme(
     axis.line.x = element_blank(),
-    strip.text = element_text(margin = margin(0, 0, 0.2, 0, "cm")),
+    strip.text = element_text(size = 14, margin = margin(0, 0, 0.2, 0, "cm")),
     legend.position = "bottom",
     legend.justification = "right",
-    legend.margin = margin(0, 0, 0.2, 0, "cm"),
+    legend.margin = margin(4.5, 0, 1.5, 0, "pt"),
     legend.spacing.x = grid::unit(4.5, "pt"),
-    legend.spacing.y = grid::unit(0, "cm"),
+    legend.spacing.y = grid::unit(0, "pt"),
     legend.box.spacing = grid::unit(0, "cm")
   )
 ```

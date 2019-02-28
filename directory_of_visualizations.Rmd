@@ -24,7 +24,7 @@ This chapter provides a quick visual overview of the various plots and charts th
 
 # theme
 theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
-                            line_size = .5, font_size = 12) {
+                            line_size = .5, font_size = 14) {
   theme_dviz_open() %+replace% theme(
     axis.text.x       = element_blank(),
     axis.text.y       = element_blank(),
@@ -52,7 +52,7 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
 }
 
 theme_plot_icon_hgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
-                                  line_size = .5, font_size = 12) {
+                                  line_size = .5, font_size = 14) {
   theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
       # make grid lines
       #panel.grid.major.y   = element_line(colour = paste0(line_color, "30"),
@@ -65,7 +65,7 @@ theme_plot_icon_hgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
 }
 
 theme_plot_icon_vgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
-                                  line_size = .5, font_size = 12) {
+                                  line_size = .5, font_size = 14) {
   theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
       # make grid lines
       #panel.grid.major.x   = element_line(colour = paste0(line_color, "30"),
@@ -78,7 +78,7 @@ theme_plot_icon_vgrid <- function(bg_color = "#F5F8EA", line_color = "#243400",
 }
 
 theme_plot_icon_blank <- function(bg_color = "#F5F8EA", line_color = "#243400",
-                                  line_size = .5, font_size = 12) {
+                                  line_size = .5, font_size = 14) {
   theme_plot_icon(bg_color, line_color, line_size, font_size) %+replace% theme(
       axis.ticks          = element_blank(),
       axis.line.x         = element_blank(),
@@ -222,7 +222,7 @@ pal_steel_blue_inv <- sequential_hcl(n = npal, h1 = 257-180, c1 = 80, c2 = 10, l
 
 ## Amounts
 
-```{r amounts, fig.width = 6, fig.asp = 1/4}
+```{r amounts, fig.width = 5*6/4.2, fig.asp = 1/4}
 palette <- pal_earth_brown
 
 p1 <- ggplot(df_props, aes(x = group, y = value)) + 
@@ -294,7 +294,7 @@ plot_grid(p1, p2, p7, ncol = 4, scale = .9)
 
 The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged (Chapter \@ref(visualizing-amounts)). However, instead of using bars, we can also place dots at the location where the corresponding bar would end (Chapter \@ref(visualizing-amounts)).
 
-```{r amounts_multi, fig.width = 6, fig.asp = 1/2}
+```{r amounts_multi, fig.width = 5*6/4.2, fig.asp = 1/2}
 plot_grid(p3, p4, p5, p6, 
           p8, ncol = 4, scale = .9)
 ```
@@ -304,7 +304,7 @@ If there are two or more sets of categories for which we want to show amounts, w
 
 ## Distributions
 
-```{r single-distributions, fig.width = 6, fig.asp = 1/4}
+```{r single-distributions, fig.width = 5*6/4.2, fig.asp = 1/4}
 
 palette <- pal_ocean_blue
 
@@ -343,7 +343,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
 
 
-```{r multiple-distributions, fig.width = 6, fig.asp = 1/2}
+```{r multiple-distributions, fig.width = 5*6/4.2, fig.asp = 1/2}
 palette <- pal_ocean_blue
 
 p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
@@ -401,7 +401,7 @@ Boxplots, violins, strip charts, and sina plots are useful when we want to visua
 
 ## Proportions
 
-```{r proportions, fig.width = 6, fig.asp = 1/4}
+```{r proportions, fig.width = 5*6/4.2, fig.asp = 1/4}
 palette <- pal_brown_green
 
 p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) + 
@@ -458,7 +458,7 @@ plot_grid(p1, p4, p5, p2, ncol = 4, scale = .9)
 Proportions can be visualized as pie charts, side-by-side bars, or stacked bars (Chapter \@ref(visualizing-proportions)), and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
 
 
-```{r proportions-comp, fig.width = 6, fig.asp = 1/4}
+```{r proportions-comp, fig.width = 5*6/4.2, fig.asp = 1/4}
 p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
                                    fill=factor(type, levels = c("A", "C", "B")))) + 
   geom_col(position="dodge", color = palette[npal],
@@ -531,7 +531,7 @@ plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
 
 When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densities (Chapter \@ref(visualizing-proportions)) are appropriate when the proportions change along a continuous variable.
 
-```{r proportions-multi, fig.width = 6, fig.asp = 1/4}
+```{r proportions-multi, fig.width = 5*6/4.2, fig.asp = 1/4}
 p1 <- ggplot(df_multi_props, aes(x = var2, y = count, fill = var1, width = group_count)) +
   geom_bar(stat = "identity", position = "fill", colour = palette[npal], size = 0.5) +
   facet_grid(~var2, scales = "free_x", space = "free_x") +
@@ -578,7 +578,7 @@ When proportions are specified according to multiple grouping variables, then mo
 
 ## *x*--*y* relationships
 
-```{r basic-scatter, fig.width = 6, fig.asp = 1/4}
+```{r basic-scatter, fig.width = 5*6/4.2, fig.asp = 1/4}
 palette <- pal_steel_blue
 
 p1 <- ggplot(df_scatter_xy, aes(x, y)) + 
@@ -628,7 +628,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 
 Scatterplots represent the archetypical visualization when we want to show one quantitative variable relative to another (Chapter \@ref(associations-scatterplots)). If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatterplot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y* (Chapter \@ref(associations-paired-data)). Paired data can also be shown as a slope graph of paired points connected by straight lines (Chapter \@ref(associations-paired-data)).
 
-```{r xy-binning, fig.width = 6, fig.asp = 1/4}
+```{r xy-binning, fig.width = 5*6/4.2, fig.asp = 1/4}
 p5 <- ggplot(df_dense_scatter, aes(x, y)) + 
   geom_density2d(binwidth = 0.02, color = palette[1]) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
@@ -677,7 +677,7 @@ plot_grid(p5, p6, p7, p8, ncol = 4, scale = .9)
 
 For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, contour lines, 2D bins, or hex bins may provide an alternative (Chapter \@ref(overlapping-points)). When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a correlogram instead of the underlying raw data (Chapter \@ref(associations-correlograms)).
 
-```{r xy-lines, fig.width = 6, fig.asp = 1/4}
+```{r xy-lines, fig.width = 5*6/4.2, fig.asp = 1/4}
 p1 <- ggplot(df_one_line, aes(x, y)) +
   geom_line(color = palette[1]) + 
   geom_point(
@@ -724,7 +724,7 @@ When the *x* axis represents time or a strictly increasing quantity such as a tr
 
 ## Geospatial data {#directory-geospatial-data}
 
-```{r geospatial, fig.width = 6, fig.asp = 1/4}
+```{r geospatial, fig.width = 5*6/4.2, fig.asp = 1/4}
 palette <- pal_green_brown
 
 lower48 <- mutate(
@@ -817,7 +817,7 @@ The primary mode of showing geospatial data is in the form of a map (Chapter \@r
 
 ## Uncertainty {#directory-uncertainty}
 
-```{r errorbars, fig.width = 6, fig.asp = 1/4}
+```{r errorbars, fig.width = 5*6/4.2, fig.asp = 1/4}
 palette <- pal_brown_red
 
 p1 <- ggplot(df_uncertain, aes(y, type)) +
@@ -905,7 +905,7 @@ plot_grid(p1, p2, p4, p3, ncol = 4, scale = .9)
 Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement (Chapter \@ref(visualizing-uncertainty)). Reference points can be shown in various ways, such as by dots or by bars. Graded 
 error bars show multiple ranges at the same time, where each range corresponds to a different degree of confidence. They are in effect multiple error bars with different line thicknesses plotted on top of each other.
 
-```{r confidence-dists, fig.width = 6, fig.asp = 1/4}
+```{r confidence-dists, fig.width = 5*6/4.2, fig.asp = 1/4}
 
 p1 <- ggplot(df_uncertain, aes(y, type)) +
   stat_confidence_density(aes(moe = dy), fill = palette[3], height = 0.6, confidence = 0.68) +
@@ -1008,7 +1008,7 @@ plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 
 To achieve a more detailed visualization than is possible with error bars or graded error bars, we can visualize the actual confidence or posterior distributions (Chapter \@ref(visualizing-uncertainty)). Confidence strips provide a clear visual sense of uncertainty but are difficult to read accurately. Eyes and half-eyes combine error bars with approaches to visualize distributions (violins and ridgelines, respectively), and thus show both precise ranges for some confidence levels and the overall uncertainty distribution. A quantile dot plot can serve as an alternative visualization of an uncertainty distribution (Chapter \@ref(frequency-framing)). By showing the distribution in discrete units, the quantile dot plot is not as precise but can be easier to read than the continuous distribution shown by a violin or ridgeline plot.
 
-```{r confidence-bands, fig.width = 6, fig.asp = 1/4}
+```{r confidence-bands, fig.width = 5*6/4.2, fig.asp = 1/4}
 p1 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
   geom_smooth(
     color = palette[1],
@@ -1049,17 +1049,3 @@ plot_grid(p1, p2, p3, ncol = 4, scale = .9)
 
 For smooth line graphs, the equivalent of an error bar is a confidence band (Chapter \@ref(uncertainty-curve-fits)). It shows a range of values the line might pass through at a given confidence level. As in the case of error bars, we can draw graded confidence bands that show multiple confidence levels at once. We can also show individual fitted draws in lieu of or in addition to the confidence bands.
 
-```{r include = FALSE}
-## plots to add:
-
-# x-y relationships:
-# - multiple lines
-
-# proportions
-# - mosaic plot/stacked bars flipped to horizontal
-
-# geospatial
-# - cloropleth
-# - cartogram
-# - 
-```

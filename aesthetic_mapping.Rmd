@@ -227,7 +227,7 @@ Figure \@ref(fig:temp-normals-vs-time) is a fairly standard visualization for a 
 
 (ref:four-locations-temps-by-month) Monthly normal mean temperatures for four locations in the U.S. Data source: NOAA 
 
-```{r four-locations-temps-by-month, fig.width = 8.5, fig.asp = .3, fig.cap = '(ref:four-locations-temps-by-month)'}
+```{r four-locations-temps-by-month, fig.width = 5.5*6/4.2, fig.asp = .3, fig.cap = '(ref:four-locations-temps-by-month)'}
 month_names <- c("01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",
                    "07" = "Jul", "08" = "Aug", "09" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")
 

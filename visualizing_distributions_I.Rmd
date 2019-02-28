@@ -63,7 +63,7 @@ For the age distribution of Titanic passengers, we can see that a bin width of o
 
 (ref:titanic-ages-hist-grid) Histograms depend on the chosen bin width. Here, the same age distribution of Titanic passengers is shown with four different bin widths: (a) one year; (b) three years; (c) five years; (d) fifteen years.
 
-```{r titanic-ages-hist-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-hist-grid)'}
+```{r titanic-ages-hist-grid, fig.width=5.5*6/4.2, fig.cap='(ref:titanic-ages-hist-grid)'}
 age_hist_1 <- data.frame(
   age = (1:75) - 0.5, 
   count = hist(titanic$age, breaks = (0:75) + .01, plot = FALSE)$counts
@@ -87,7 +87,7 @@ h2 <- ggplot(age_hist_1, aes(x = age, y = count)) +
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill = "#56B4E9")  + 
@@ -97,7 +97,7 @@ h3 <- ggplot(age_hist_3, aes(x = age, y = count)) + geom_col(width = 2.75, fill 
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill = "#56B4E9")  + 
@@ -107,15 +107,19 @@ h4 <- ggplot(age_hist_15, aes(x = age, y = count)) + geom_col(width = 14.5, fill
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 
 plot_grid(
-  h2, h3,
-  h1 + theme_dviz_hgrid(12) + theme(axis.line.x = element_blank(), plot.margin = margin(3, 12, 12, 1.5)),
-  h4,
-  align = 'hv', labels = 'auto'
+  h2, NULL, h3,
+  NULL, NULL, NULL,
+  h1 + theme_dviz_hgrid(12) + theme(axis.line.x = element_blank(), plot.margin = margin(3, 1.5, 3, 1.5)),
+  NULL, h4,
+  align = 'hv',
+  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  rel_widths = c(1, .04, 1),
+  rel_heights = c(1, .04, 1)
 )
 ```
 
@@ -144,7 +148,7 @@ Just as is the case with histograms, the exact visual appearance of a density pl
 
 (ref:titanic-ages-dens-grid) Kernel density estimates depend on the chosen kernel and bandwidth. Here, the same age distribution of Titanic passengers is shown for four different combinations of these parameters: (a) Gaussian kernel, bandwidth = 0.5; (b) Gaussian kernel, bandwidth = 2; (c) Gaussian kernel, bandwidth = 5; (d) Rectangular kernel, bandwidth = 2.
 
-```{r titanic-ages-dens-grid, fig.width=8.5, fig.cap='(ref:titanic-ages-dens-grid)'}
+```{r titanic-ages-dens-grid, fig.width=5.5*6/4.2, fig.cap='(ref:titanic-ages-dens-grid)'}
 pdens1 <- ggplot(titanic, aes(x = age)) + 
   geom_density_line(fill = "#56B4E9", color = darken("#56B4E9", 0.5), bw = .5, kernel = "gaussian") + 
   scale_y_continuous(limits = c(0, 0.046), expand = c(0, 0), name = "density") +
@@ -153,7 +157,7 @@ pdens1 <- ggplot(titanic, aes(x = age)) +
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 pdens2 <- ggplot(titanic, aes(x = age)) + 
@@ -164,7 +168,7 @@ pdens2 <- ggplot(titanic, aes(x = age)) +
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 pdens3 <- ggplot(titanic, aes(x = age)) + 
@@ -175,7 +179,7 @@ pdens3 <- ggplot(titanic, aes(x = age)) +
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
 pdens4 <- ggplot(titanic, aes(x = age)) + 
@@ -186,10 +190,18 @@ pdens4 <- ggplot(titanic, aes(x = age)) +
   theme_dviz_hgrid(12) +
   theme(
     axis.line.x = element_blank(),
-    plot.margin = margin(3, 12, 12, 1.5)
+    plot.margin = margin(3, 1.5, 3, 1.5)
   )
 
-plot_grid(pdens1, pdens2, pdens3, pdens4, align = 'hv', labels = 'auto')
+plot_grid(
+  pdens1, NULL, pdens2, 
+  NULL, NULL, NULL,
+  pdens3, NULL, pdens4,
+  align = 'hv',
+  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  rel_widths = c(1, .04, 1),
+  rel_heights = c(1, .04, 1)
+)
 ```
 
 Density curves are usually scaled such that the area under the curve equals one. This convention can make the *y* axis scale confusing, because it depends on the units of the *x* axis. For example, in the case of the age distribution, the data range on the *x* axis goes from 0 to approximately 75. Therefore, we expect the mean height of the density curve to be 1/75 = 0.013. Indeed, when looking at the age density curves (e.g., Figure \@ref(fig:titanic-ages-dens-grid)), we see that the *y* values range from 0 to approximately 0.04, with an average of somewhere close to 0.01.
@@ -314,7 +326,7 @@ A solution that works well for this dataset is to show the age distributions of 
 
 (ref:titanic-age-fractional-dens) Age distributions of male and female Titanic passengers, shown as proportion of the passenger total. The colored areas show the density estimates of the ages of male and female passengers, respectively, and the gray areas show the overall passenger age distribution.
 
-```{r titanic-age-fractional-dens, fig.width = 8.5, fig.asp = .45, fig.cap='(ref:titanic-age-fractional-dens)'}
+```{r titanic-age-fractional-dens, fig.width = 5.5*6/4.2, fig.asp = .45, fig.cap='(ref:titanic-age-fractional-dens)'}
 ggplot(titanic2, aes(x = age, y = ..count..)) +
   geom_density_line(
     data = select(titanic, -sex), aes(fill = "all passengers"),
@@ -335,11 +347,12 @@ ggplot(titanic2, aes(x = age, y = ..count..)) +
   theme_dviz_hgrid() +
   theme(
     axis.line.x = element_blank(),
+    strip.text = element_text(size = 14, margin = margin(0, 0, 0.2, 0, "cm")),
     legend.position = "bottom",
     legend.justification = "right",
-    legend.margin = margin(0, 0, 0.2, 0, "cm"),
-    legend.spacing.x = grid::unit(0.2, "cm"),
-    legend.spacing.y = grid::unit(0, "cm"),
+    legend.margin = margin(4.5, 0, 1.5, 0, "pt"),
+    legend.spacing.x = grid::unit(4.5, "pt"),
+    legend.spacing.y = grid::unit(0, "pt"),
     legend.box.spacing = grid::unit(0, "cm")
   )
 ```

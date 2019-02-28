@@ -49,7 +49,7 @@ This kind of data is commonly visualized with vertical bars. For each movie, we 
 
 (ref:boxoffice-vertical) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
-```{r boxoffice-vertical, fig.width = 7, fig.asp = .5, fig.cap = '(ref:boxoffice-vertical)'}
+```{r boxoffice-vertical, fig.width = 5*6/4.2, fig.asp = .5, fig.cap = '(ref:boxoffice-vertical)'}
 boxoffice %>%
   ggplot(aes(x = fct_reorder(title_short, rank), y = amount)) +
     geom_col(fill = "#56B4E9", width = 0.6, alpha = 0.9) +
@@ -203,7 +203,7 @@ All examples from the previous subsection showed how a quantitative amount varie
 
 (ref:income-by-age-race-dodged) 2016 median U.S. annual household income versus age group and race. Age groups are shown along the *x* axis, and for each age group there are four bars, corresponding to the median income of Asian, white, Hispanic, and black people, respectively. Data source: United States Census Bureau
 
-```{r income-by-age-race-dodged, fig.width = 8, fig.asp = 0.5, fig.cap = '(ref:income-by-age-race-dodged)'}
+```{r income-by-age-race-dodged, fig.width = 5.5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:income-by-age-race-dodged)'}
 income_by_age %>% filter(race %in% c("white", "asian", "black", "hispanic")) %>%
    mutate(race = fct_relevel(race, c("asian", "white", "hispanic", "black")),
           race = fct_recode(race, Asian = "asian", Hispanic = "hispanic"),
@@ -237,7 +237,7 @@ Grouped bar plots show a lot of information at once and they can be confusing. I
 
 (ref:income-by-race-age-dodged) 2016 median U.S. annual household income versus age group and race. In contrast to Figure \@ref(fig:income-by-age-race-dodged), now race is shown along the *x* axis, and for each race we show seven bars according to the seven age groups. Data source: United States Census Bureau
 
-```{r income-by-race-age-dodged, fig.width = 8, fig.asp = 0.4, fig.cap = '(ref:income-by-race-age-dodged) '}
+```{r income-by-race-age-dodged, fig.width = 5.5*6/4.2, fig.asp = 0.4, fig.cap = '(ref:income-by-race-age-dodged) '}
 # Take the darkest seven colors from 8-class ColorBrewer palette "PuBu"
 colors_seven = RColorBrewer::brewer.pal(8, "PuBu")[2:8]
 
@@ -266,7 +266,7 @@ Both Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-a
 
 (ref:income-by-age-race-faceted) 2016 median U.S. annual household income versus age group and race. Instead of displaying this data as a grouped bar plot, as in Figures \@ref(fig:income-by-age-race-dodged) and \@ref(fig:income-by-race-age-dodged), we now show the data as four separate regular bar plots. This choice has the advantage that we don't need to encode either categorical variable by bar color. Data source: United States Census Bureau
 
-```{r income-by-age-race-faceted, fig.width = 8.5, fig.cap = '(ref:income-by-age-race-faceted)'}
+```{r income-by-age-race-faceted, fig.width = 5.5*6/4.2, fig.cap = '(ref:income-by-age-race-faceted)'}
 income_df %>%
    mutate(age = fct_recode(age, "15–24" = "15 to 24", "25–34" = "25 to 34", "35–44" = "35 to 44",
                                 "45–54" = "45 to 54", "55–64" = "55 to 64", "65–74" = "65 to 74")) -> income_age_abbrev_df
@@ -313,8 +313,10 @@ titanic_groups <- titanic_all %>% filter(class != "*") %>%
 
 ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
   geom_col(position = "stack", color = "white", size = 1, width = 1) +
-  geom_text(aes(y = nlabel, label = n), color = "white", size = 14/.pt,
-            family = dviz_font_family) +
+  geom_text(
+    aes(y = nlabel, label = n), color = "white", size = 14/.pt,
+    family = dviz_font_family
+  ) +
   scale_x_discrete(expand = c(0, 0), name = NULL) +
   scale_y_continuous(expand = c(0, 0), breaks = NULL, name = NULL) +
   scale_fill_manual(
@@ -331,7 +333,10 @@ ggplot(titanic_groups, aes(x = class, y = n, fill = sex)) +
     axis.text = element_text(size = 14),
     legend.position = "bottom",
     legend.justification = "center",
-    legend.background = element_rect(fill = "white")
+    legend.background = element_rect(fill = "white"),
+    legend.spacing.x = grid::unit(4.5, "pt"),
+    legend.spacing.y = grid::unit(0, "cm"),
+    legend.box.spacing = grid::unit(7, "pt")
   )
 ```
 
@@ -414,7 +419,7 @@ As an alternative to mapping data values onto positions via bars or dots, we can
 
 (ref:internet-over-time) Internet adoption over time, for select countries. Color represents the percent of internet users for the respective country and year. Countries were ordered by percent internet users in 2016. Data source: World Bank
 
-```{r internet-over-time, fig.width = 8.5, fig.cap = '(ref:internet-over-time)'}
+```{r internet-over-time, fig.width = 5.5*6/4.2, fig.cap = '(ref:internet-over-time)'}
 country_list = c("United States", "China", "India", "Japan", "Algeria",
                  "Brazil", "Germany", "France", "United Kingdom", "Italy", "New Zealand",
                  "Canada", "Mexico", "Chile", "Argentina", "Norway", "South Africa", "Kenya",
@@ -435,25 +440,31 @@ internet_short <- internet_short %>%
 ggplot(filter(internet_short, year > 1993),
        aes(x = year, y = country, fill = users)) +
   geom_tile(color = "white", size = 0.25) +
-  scale_fill_viridis_c(option = "A", begin = 0.05, end = 0.98,
-                       limits = c(0, 100),
-                       name = "internet users / 100 people",
-                       guide = guide_colorbar(direction = "horizontal",
-                                              label.position = "bottom",
-                                              title.position = "top",
-                                              ticks = FALSE,
-                                              barwidth = grid::unit(3.5, "in"),
-                                              barheight = grid::unit(0.2, "in"))) +
+  scale_fill_viridis_c(
+    option = "A", begin = 0.05, end = 0.98,
+    limits = c(0, 100),
+    name = "internet users / 100 people",
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      ticks = FALSE,
+      barwidth = grid::unit(3.5, "in"),
+      barheight = grid::unit(0.2, "in")
+    )
+  ) +
   scale_x_continuous(expand = c(0, 0), name = NULL) +
   scale_y_discrete(name = NULL, position = "right") +
   theme_dviz_open(12) +
-  theme(axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        #axis.ticks.length = grid::unit(0, "pt"),
-        legend.position = "top",
-        legend.justification = "left",
-        legend.title.align = 0.5,
-        legend.title = element_text(size = 12*12/14))
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(1, "pt"),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title.align = 0.5,
+    legend.title = element_text(size = 12*12/14)
+  )
 ```
 
 As is the case with all other visualization approaches discussed in this chapter, we need to pay attention to the ordering of the categorical data values when making heatmaps. In Figure \@ref(fig:internet-over-time), countries are ordered by the percentage of internet users in 2016. This ordering places the United Kingdom, Japan, Canada, and Germany above the United States, because all these countries have higher internet penetration in 2016 than the United States does, even though the United States saw significant internet use at an earlier time. Alternatively, we could order countries by how early they started to see significant internet usage. In Figure \@ref(fig:internet-over-time2), countries are ordered by the year in which internet usage first rose to above 20%. In this figure, the United States falls into the third position from the top, and it stands out for having relatively low internet usage in 2016 compared to how early internet usage started there. A similar pattern can be seen for Italy. Israel and France, by contrast, started relatively late but gained ground rapidly.
@@ -461,7 +472,7 @@ As is the case with all other visualization approaches discussed in this chapter
 (ref:internet-over-time2) Internet adoption over time, for select countries. Countries were ordered by the year in which their internet usage first exceeded 20%. Data source: World Bank
 
 
-```{r internet-over-time2, fig.width = 8.5, fig.cap = '(ref:internet-over-time2)'}
+```{r internet-over-time2, fig.width = 5.5*6/4.2, fig.cap = '(ref:internet-over-time2)'}
 internet_summary <- internet_short %>%
   group_by(country) %>%
   summarize(year1 = min(year[users > 20]),
@@ -474,25 +485,31 @@ internet_short <- internet_short %>%
 ggplot(filter(internet_short, year > 1993),
        aes(x = year, y = country, fill = users)) +
   geom_tile(color = "white", size = 0.25) +
-  scale_fill_viridis_c(option = "A", begin = 0.05, end = 0.98,
-                       limits = c(0, 100),
-                       name = "internet users / 100 people",
-                       guide = guide_colorbar(direction = "horizontal",
-                                              label.position = "bottom",
-                                              title.position = "top",
-                                              ticks = FALSE,
-                                              barwidth = grid::unit(3.5, "in"),
-                                              barheight = grid::unit(0.2, "in"))) +
+  scale_fill_viridis_c(
+    option = "A", begin = 0.05, end = 0.98,
+    limits = c(0, 100),
+    name = "internet users / 100 people",
+    guide = guide_colorbar(
+      direction = "horizontal",
+      label.position = "bottom",
+      title.position = "top",
+      ticks = FALSE,
+      barwidth = grid::unit(3.5, "in"),
+      barheight = grid::unit(0.2, "in")
+    )
+  ) +
   scale_x_continuous(expand = c(0, 0), name = NULL) +
   scale_y_discrete(name = NULL, position = "right") +
   theme_dviz_open(12) +
-  theme(axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        #axis.ticks.length = grid::unit(0, "pt"),
-        legend.position = "top",
-        legend.justification = "left",
-        legend.title.align = 0.5,
-        legend.title = element_text(size = 12*12/14))
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(1, "pt"),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title.align = 0.5,
+    legend.title = element_text(size = 12*12/14)
+  )
 ```
 
 Both Figures \@ref(fig:internet-over-time) and \@ref(fig:internet-over-time2) are valid representations of the data. Which one is prefered depends on the story we want to convey. If our story is about internet usage in 2016, then Figures \@ref(fig:internet-over-time) is probably the better choice. If, however, our story is about how early or late adoption of the internet relates to current-day usage, then Figure \@ref(fig:internet-over-time2) is preferable.
