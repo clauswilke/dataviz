@@ -65,12 +65,12 @@ Because the head length is defined as the distance from the tip of the bill to t
 (ref:blue-jays-scatter-bubbles) Head length versus body mass for 123 blue jays. The birds' sex is indicated by color, and the birds' skull size by symbol size. Head-length measurements include the length of the bill while skull-size measurements do not. Head length and skull size tend to be correlated, but there are some birds with unusually long or short bills given their skull size. Data source: Keith Tarvin, Oberlin College
 
 
-```{r blue-jays-scatter-bubbles, fig.width = 5, fig.asp = 5/4, fig.cap='(ref:blue-jays-scatter-bubbles)'}
+```{r blue-jays-scatter-bubbles, fig.width = 5.5*6/4.2, fig.asp = 3.2/8, fig.cap='(ref:blue-jays-scatter-bubbles)'}
 blue_jays$sex <- ifelse(blue_jays$KnownSex == "F", "female birds", "male birds")
-blue_jays$sex <- factor(blue_jays$sex, levels = c("male birds", "female birds"))
+blue_jays$sex <- factor(blue_jays$sex, levels = c("female birds", "male birds"))
 ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) + 
   geom_point(pch = 21, color = "white") +
-  facet_wrap(~sex, ncol = 1, scales = "fixed") +
+  facet_wrap(~sex, ncol = 2, scales = "fixed") +
   scale_x_continuous(name = "body mass (g)") +
   scale_y_continuous(name = "head length (mm)", breaks = c(52, 54, 56, 58, 60)) +
   scale_fill_manual(values = c(F = "#D55E00", M = "#0072B2"), guide = "none") +
@@ -88,15 +88,20 @@ ggplot(blue_jays, aes(Mass, Head, size = Skull, fill = KnownSex)) +
       override.aes = list(fill = "gray40")
     )
   ) +
-  theme_dviz_grid() +
+  theme_dviz_grid(12) +
   theme(
-    legend.position = c(1, 0.53),
+    legend.position = c(1, 0.03),
     legend.justification = c(1, 0),
     legend.spacing.x = unit(2, "pt"),
     legend.spacing.y = unit(2, "pt"),
     legend.background = element_rect(fill = "white", color = NA),
     legend.key.width = unit(10, "pt"),
-    strip.text = element_text(size = 14, family = "Myriad Pro Semibold")
+    #strip.text = element_text(size = 14, family = "Myriad Pro Semibold")
+    strip.text = element_text(size = 12, margin = margin(2, 0, 2, 0)),
+    strip.background  = element_rect(
+      fill = "grey85", colour = "grey85",
+      linetype = 1, size = 0.25
+    )
   )
 ```
 
@@ -123,10 +128,14 @@ labels <- c(
 
 ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) + 
   geom_point(pch = 21, color = "white", size = 2, stroke = 0.2) +
-  scale_x_continuous(expand = expand_scale(mult = 0.1),
-                     breaks = scales::pretty_breaks(4, min.n = 3)) +
-  scale_y_continuous(expand = expand_scale(mult = 0.1),
-                     breaks = scales::pretty_breaks(4, min.n = 3)) +
+  scale_x_continuous(
+    expand = expand_scale(mult = 0.1),
+    breaks = scales::pretty_breaks(4, min.n = 3)
+  ) +
+  scale_y_continuous(
+    expand = expand_scale(mult = 0.1),
+    breaks = scales::pretty_breaks(4, min.n = 3)
+  ) +
   scale_fill_manual(
     values = c(F = "#D55E00D0", M = "#0072B2D0"),
     breaks = c("F", "M"),
@@ -153,7 +162,7 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
   theme(
     strip.placement = "outside",
     strip.text.x = element_text(vjust = 1, margin = margin(0, 0, 0, 0)),
-    strip.text.y = element_text(vjust = 0, angle = -90),
+    strip.text.y = element_text(vjust = 0, angle = -90, margin = margin(0, 3.5, 0, 0)),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.text = element_text(vjust = 0.6),
     legend.position = "top",

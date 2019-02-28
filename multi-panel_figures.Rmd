@@ -34,9 +34,9 @@ titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
           axis.ticks = element_blank(),
           axis.text.x = element_text(margin = margin(7, 0, 0, 0)),
           strip.text = element_text(margin = margin(3.5, 3.5, 3.5, 3.5)),
-          strip.background  = element_rect(fill = "grey80", colour = "grey80",
+          strip.background  = element_rect(fill = "grey85", colour = "grey85",
                                             linetype = 1, size = 0.25),
-          panel.border = element_rect(colour = "grey80", fill = NA, linetype = 1,
+          panel.border = element_rect(colour = "grey85", fill = NA, linetype = 1,
                                       size = 1.))
 ```
 

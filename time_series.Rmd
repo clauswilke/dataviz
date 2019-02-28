@@ -24,7 +24,7 @@ preprint_growth %>% filter(archive == "bioRxiv") %>%
 
 ggplot(biorxiv_growth, aes(date, count)) + 
   #geom_point(color = "#0072B2") +
-  geom_point(color = "white", fill = "#0072B2", shape = 21, size = 1.75) +
+  geom_point(color = "white", fill = "#0072B2", shape = 21, size = 2) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
@@ -38,8 +38,8 @@ There is an important difference however between Figure \@ref(fig:biorxiv-dots) 
 
 ```{r biorxiv-dots-line, fig.cap = '(ref:biorxiv-dots-line)'}
 ggplot(biorxiv_growth, aes(date, count)) +
-  geom_line(color = "#0072B2") + 
-  geom_point(color = "white", fill = "#0072B2", shape = 21, size = 1.75) +
+  geom_line(size = 0.5, color = "#0072B2") + 
+  geom_point(color = "white", fill = "#0072B2", shape = 21, size = 2) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
@@ -54,7 +54,7 @@ Using lines to represent time series is generally accepted practice, however, an
 (ref:biorxiv-line) Monthly submissions to the preprint server bioRxiv, shown as a line graph without dots. Omitting the dots emphasizes the overall temporal trend while de-emphasizing individual observations at specific time points. It is particularly useful when the time points are spaced very densely. Data source: Jordan Anaya, http://www.prepubmed.org/
 
 ```{r biorxiv-line, fig.cap = '(ref:biorxiv-line)'}
-ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = .75) +
+ggplot(biorxiv_growth, aes(date, count)) + geom_line(color = "#0072B2", size = 1) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
@@ -68,7 +68,7 @@ We can also fill the area under the curve with a solid color (Figure \@ref(fig:b
 
 ```{r biorxiv-line-area, fig.cap = '(ref:biorxiv-line-area)'}
 ggplot(biorxiv_growth, aes(date, height = count, y = 0)) + 
-  geom_ridgeline(color = "#0072B2", fill = "#0072B240", size = .75) +
+  geom_ridgeline(color = "#0072B2", fill = "#0072B240", size = 0.75) +
   scale_y_continuous(limits = c(0, 1600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = "year") +
@@ -113,7 +113,7 @@ stamp_bad(p)
 
 ```{r bio-preprints-lines, fig.cap = '(ref:bio-preprints-lines)'}
 ggplot(preprints, aes(date, count, color = archive, fill = archive, shape = archive)) + 
-  geom_line() + geom_point(color = "white", size = 2) +
+  geom_line(size = 0.75) + geom_point(color = "white", size = 2) +
   scale_y_continuous(limits = c(0, 600), expand = c(0, 0),
                 name = "preprints / month") + 
   scale_x_date(name = "year",
@@ -140,7 +140,7 @@ preprints_final <- filter(preprints, date == ymd("2017-01-01"))
 
 ggplot(preprints) +
   aes(date, count, color = archive, fill = archive, shape = archive) + 
-  geom_line(size = 0.75) + 
+  geom_line(size = 1) + 
   #geom_point(color = "white", size = 2) +
   scale_y_continuous(
     limits = c(0, 600), expand = c(0, 0),
@@ -186,7 +186,7 @@ oats_df$variety <- factor(oats_df$variety, levels = c("Marvellous", "Golden Rain
  
 ggplot(oats_df,
        aes(N, mean, color = variety, shape = variety, fill = variety)) +
-  geom_line() + geom_point(color = "white", size = 2.5) +
+  geom_line(size = 0.75) + geom_point(color = "white", size = 2.5) +
   scale_y_continuous(name = "mean yield (lbs/acre)") + 
   scale_x_continuous(name = "manure treatment (cwt/acre)") +
   scale_shape_manual(values = c(21, 22, 23),
@@ -209,7 +209,7 @@ Given the tools from the preceding subsections, we can visualize such data as tw
 
 (ref:house-price-unemploy) 12-month change in house prices (a) and  unemployment rate (b) over time, from Jan. 2001 through Dec. 2017. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
-```{r house-price-unemploy, fig.cap = '(ref:house-price-unemploy)'}
+```{r house-price-unemploy, fig.width = 5*6/4.2, fig.cap = '(ref:house-price-unemploy)'}
 # prepare dataset already for next figure
 CA_house_prices <- 
   filter(house_prices, state == "California", year(date) > 2000) %>%
@@ -234,7 +234,7 @@ CA_house_prices <-
   )
 
 p1 <- ggplot(CA_house_prices, aes(date, house_price_perc)) +
-  geom_line(size = 0.75, color = "#0072b2") +
+  geom_line(size = 1, color = "#0072b2") +
   scale_y_continuous(
     limits = c(-0.3, .32), expand = c(0, 0),
     breaks = c(-.3, -.15, 0, .15, .3),
@@ -242,21 +242,21 @@ p1 <- ggplot(CA_house_prices, aes(date, house_price_perc)) +
   ) + 
   scale_x_date(name = "", expand = c(0, 0)) +
   coord_cartesian(clip = "off") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     axis.line = element_blank(),
     plot.margin = margin(12, 1.5, 0, 1.5)
   )
 
 p2 <- ggplot(CA_house_prices, aes(date, unemploy_perc/100)) +
-  geom_line(size = 0.75, color = "#0072b2") +
+  geom_line(size = 1, color = "#0072b2") +
   scale_y_continuous(
     limits = c(0.037, 0.143),
-    name = "unemploy-\nment rate", labels = scales::percent_format(accuracy = 1),
+    name = "unemployment\nrate", labels = scales::percent_format(accuracy = 1),
     expand = c(0, 0)
   ) +
   scale_x_date(name = "year", expand = c(0, 0)) +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     axis.line = element_blank(),
     plot.margin = margin(6, 1.5, 3, 1.5)
@@ -273,7 +273,7 @@ As an alternative to showing two separate line graphs, we can plot the two varia
 
 ggplot(CA_house_prices) +
   aes(unemploy_perc/100, house_price_perc, colour = as.numeric(date)) + 
-  geom_path(size = 0.75, lineend = "round") +
+  geom_path(size = 1, lineend = "round") +
   geom_text_repel(
     aes(label = label), point.padding = .2, color = "black",
     min.segment.length = 0, size = 12/.pt,
@@ -313,7 +313,7 @@ When drawing a connected scatter plot, it is important that we indicate both the
 
 p <- ggplot(CA_house_prices) +
   aes(unemploy_perc/100, house_price_perc) + 
-  geom_path(size = 0.75, lineend = "round", color = "#0072b2") +
+  geom_path(size = 1, lineend = "round", color = "#0072b2") +
   scale_x_continuous(
     limits = c(0.037, 0.143),
     name = "unemployment rate", labels = scales::percent_format(accuracy = 1),
@@ -339,7 +339,7 @@ Even though connected scatter plots can show only two variables at a time, we ca
 
 (ref:fred-md-PCA) Visualizing a high-dimensional time series as a connected scatter plot in principal components space. The path indicates the joint movement of over 100 macroeconomic indicators from January 1990 to December 2017. Times of recession and recovery are indicated via color, and the end points of the three recessions (March 1991, November 2001, and June 2009) are also labeled. (a) PC 2 versus PC 1. (b) PC 2 versus PC 3. Data source: M. W. McCracken, St. Louis Fed
 
-```{r fred-md-PCA, fig.asp = 2*0.618, fig.cap = '(ref:fred-md-PCA)'}
+```{r fred-md-PCA, fig.width = 5*6/4.2, fig.asp = 2*0.618, fig.cap = '(ref:fred-md-PCA)'}
 fred_md %>%
   select(-date, -sasdate) %>%
   scale() %>%
@@ -386,7 +386,7 @@ p1 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
     aes(label = label),
     alpha = 1,
     point.padding = .2, color = "black",
-    min.segment.length = 0, size = 10/.pt,
+    min.segment.length = 0, size = 12/.pt,
     family = dviz_font_family,
     nudge_x = pca_labels$nudge_x,
     nudge_y = pca_labels$nudge_y,
@@ -400,14 +400,14 @@ p1 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
   scale_alpha_date(range = c(0.45, 1), guide = "none") +
   scale_x_continuous(limits = c(-2, 15.5), name = "PC 1") +
   scale_y_continuous(limits = c(-5, 5), name = "PC 2") +
-  theme_dviz_grid(12, rel_small = 1) +
+  theme_dviz_grid(14) +
   theme(
     legend.position = c(1, 1),
     legend.justification = c(1, 1),
     legend.direction = "horizontal",
     legend.box.background = element_rect(color = NA, fill = "white"),
     legend.box.margin = margin(6, 0, 6, 0),
-    plot.margin = margin(3, 0, 6, 1)
+    plot.margin = margin(3, 1.5, 6, 1.5)
   )
 
 p2 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
@@ -418,7 +418,7 @@ p2 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
     aes(label = label),
     alpha = 1,
     point.padding = .2, color = "black",
-    min.segment.length = 0, size = 10/.pt,
+    min.segment.length = 0, size = 12/.pt,
     family = dviz_font_family,
     nudge_x = pca_labels$nudge_x2,
     nudge_y = pca_labels$nudge_y2,
@@ -432,14 +432,14 @@ p2 <- ggplot(filter(pca_data, date >= ymd("1990-01-01"))) +
   scale_alpha_date(range = c(0.45, 1), guide = "none") +
   scale_x_continuous(limits = c(-6, 8.5), name = "PC 3") +
   scale_y_continuous(limits = c(-5, 5), name = "PC 2") +
-  theme_dviz_grid(12, rel_small = 1) +
+  theme_dviz_grid(14) +
   theme(
     legend.position = c(1, 1),
     legend.justification = c(1, 1),
     legend.direction = "horizontal",
     legend.box.background = element_rect(color = NA, fill = "white"),
     legend.box.margin = margin(6, 0, 6, 0),
-    plot.margin = margin(6, 0, 3, 1)
+    plot.margin = margin(6, 1.5, 3, 1.5)
   )
 
 plot_grid(p1, p2, labels = "auto", ncol = 1)

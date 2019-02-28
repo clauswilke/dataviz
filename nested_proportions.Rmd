@@ -287,7 +287,7 @@ More generally, mosaic plots assume that all of the proportions shown can be ide
 
 (ref:US-states-treemap) States in the U.S. visualized as a treemap. Each rectangle represents one state, and the area of each rectangle is proportional to the state's land surface area. The states are grouped into four regions, West, Northeast, Midwest, and South. The coloring is proportional to the number of inhabitants for each state, with darker colors representing larger numbers of inhabitants. Data source: 2010 U.S. Census
 
-```{r US-states-treemap, fig.width = 8.5, fig.cap = '(ref:US-states-treemap)'}
+```{r US-states-treemap, fig.width = 5.5*6/4.2, fig.cap = '(ref:US-states-treemap)'}
 population_df <- left_join(US_census, US_regions) %>%
     group_by(region, division, state) %>%
     summarize(
@@ -358,7 +358,7 @@ There are two possibilities. First, we can draw a pie chart composed of an inner
 
 (ref:bridges-nested-pie) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron, inner circle) and by era of construction (crafts, emerging, mature, modern, outer circle). Numbers represent the counts of bridges within each category. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-```{r bridges-nested-pie, fig.width = 5, fig.asp = 0.7, fig.cap = '(ref:bridges-nested-pie)'}
+```{r bridges-nested-pie, fig.asp = 3/4, fig.cap = '(ref:bridges-nested-pie)'}
 bridges_arranged <-
   ungroup(bridges_tidy) %>%
   mutate(material = factor(material, levels = c("wood", "iron", "steel"))) %>%
@@ -468,7 +468,7 @@ Alternatively, we can first slice the pie into pieces representing the proportio
 
 (ref:bridges-nested-pie2) Breakdown of bridges in Pittsburgh by construction material (steel, wood, iron) and by era of construction (crafts, emerging, mature, modern). Numbers represent the counts of bridges within each category.  Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-```{r bridges-nested-pie2, fig.width = 5, fig.asp = 0.7, fig.cap = '(ref:bridges-nested-pie2)'}
+```{r bridges-nested-pie2, fig.asp = 3/4, fig.cap = '(ref:bridges-nested-pie2)'}
 rpie <- 1
 rpie1 <- 0
 rpie2 <- 1
@@ -537,7 +537,7 @@ When we want to visualize proportions described by more than two categorical var
 
 (ref:bridges-parallel-sets1) Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span, shown as a parallel sets plot. The coloring of the bands highlights the construction material of the different bridges. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-```{r bridges-parallel-sets1, fig.cap = '(ref:bridges-parallel-sets1)'}
+```{r bridges-parallel-sets1, fig.width = 5*6/4.2, fig.cap = '(ref:bridges-parallel-sets1)'}
 select(bridges, MATERIAL, ERECTED, RIVER, LENGTH) %>%
   filter(RIVER != "Y") %>%
   table() %>% 
@@ -602,7 +602,7 @@ The same visualization looks quite different if we color by a different criterio
 
 (ref:bridges-parallel-sets2) Breakdown of bridges in Pittsburgh by construction material, length, era of construction, and the river they span. This figure is similar to Figure \@ref(fig:bridges-parallel-sets1) but now the coloring of the bands highlights the river spanned by the different bridges. This figure is labeled "ugly" because the arrangement of the colored bands in the middle of the figure is very busy, and also because the bands need to be read from right to left. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-```{r bridges-parallel-sets2, fig.cap = '(ref:bridges-parallel-sets2)'}
+```{r bridges-parallel-sets2, fig.width = 5*6/4.2, fig.cap = '(ref:bridges-parallel-sets2)'}
 data$x <- factor(data$x, levels = c("material", "length", "erected", "river"))
 
 p_ugly <- ggplot(data, aes(x, id = id, split = y, value = count)) +
@@ -637,7 +637,7 @@ I have labeled Figure \@ref(fig:bridges-parallel-sets2) as "ugly" because I thin
 
 (ref:bridges-parallel-sets3) Breakdown of bridges in Pittsburgh by river, era of construction, length, and construction material. This figure differs from Figure \@ref(fig:bridges-parallel-sets2) only in the order of the parallel sets. However, the modified order results in a figure that is easier to read and less busy. Data source: Yoram Reich and Steven J. Fenves, via the UCI Machine Learning Repository [@UCI_repo_2017]
 
-```{r bridges-parallel-sets3, fig.cap = '(ref:bridges-parallel-sets3)'}
+```{r bridges-parallel-sets3, fig.width = 5*6/4.2, fig.cap = '(ref:bridges-parallel-sets3)'}
 #data$x <- factor(data$x, levels = c("river", "length", "material", "erected"))
 data$x <- factor(data$x, levels = rev(c("material", "length", "erected", "river")))
 data$x <- factor(data$x, levels = c("river", "length", "material", "erected"))

@@ -16,13 +16,13 @@ Let us consider a time series of the Dow Jones Industrial Average (Dow Jones for
 
 (ref:dow-jones) Daily closing values of the Dow Jones Industrial Average for the year 2009. Data source: Yahoo! Finance
 
-```{r dow-jones, fig.asp = 0.5, fig.cap = '(ref:dow-jones)'}
+```{r dow-jones, fig.width = 5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:dow-jones)'}
 dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01/10")) %>%
   ggplot(aes(date, close)) + 
-  geom_line(color = "grey20", size = .5) + 
+  geom_line(color = "grey20", size = 0.75) + 
   scale_x_date(limits = c(ymd("2008-12-31"), ymd("2010-01-10")), expand = c(0, 0)) +
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     plot.margin = margin(3, 12, 3, 1.5)
   )
@@ -34,7 +34,7 @@ To plot this sequence of moving averages, we need to decide which specific time 
 
 (ref:dow-jones-moving-ave) Daily closing values of the Dow Jones Industrial Average for the year 2009, shown together with their 20-day, 50-day, and 100-day moving averages. (a) The moving averages are plotted at the end of the moving time windows. (b) The moving averages are plotted in the center of the moving time windows. Data source: Yahoo! Finance
 
-```{r dow-jones-moving-ave, fig.asp = 1, fig.cap = '(ref:dow-jones-moving-ave)'}
+```{r dow-jones-moving-ave, fig.width = 5*6/4.2, fig.asp = 1, fig.cap = '(ref:dow-jones-moving-ave)'}
 p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01/10")) %>%
   mutate(
     close_20d_ave = moving_ave(date, close, 20, center = FALSE),
@@ -42,7 +42,7 @@ p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
     close_100d_ave = moving_ave(date, close, 100, center = FALSE)
   ) %>%
   ggplot(aes(date, close)) + 
-  geom_line(color = "grey20", size = .25) +
+  geom_line(color = "grey20", size = .35) +
   geom_line(aes(date, close_20d_ave, color = "20d"), size = 1, na.rm = TRUE) +
   geom_line(aes(date, close_50d_ave, color = "50d"), size = 1, na.rm = TRUE) +
   geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
@@ -61,7 +61,7 @@ p1 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
     labels = NULL
   ) +
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     plot.margin = margin(3, 12, 3, 1.5),
     legend.position = c(1, 0),
@@ -78,7 +78,7 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
     close_100d_ave = moving_ave(date, close, 100, center = TRUE)
   ) %>%
   ggplot(aes(date, close)) + 
-  geom_line(color = "grey20", size = .25) +
+  geom_line(color = "grey20", size = .35) +
   geom_line(aes(date, close_20d_ave, color = "20d"), size = 1, na.rm = TRUE) +
   geom_line(aes(date, close_50d_ave, color = "50d"), size = 1, na.rm = TRUE) +
   geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
@@ -95,7 +95,7 @@ p2 <- dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2
   ) + 
   scale_x_date(limits = c(ymd("2008-12-31"), ymd("2010-01-10")), expand = c(0, 0)) +
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     plot.margin = margin(3, 12, 3, 1.5)
   )
@@ -111,7 +111,7 @@ Statisticians have developed numerous approaches to smoothing that alleviate the
 
 (ref:dow-jones-loess) Comparison of LOESS fit to 100-day moving average for the Dow Jones data of Figure \@ref(fig:dow-jones-moving-ave). The overall trend shown by the LOESS smooth is nearly identical to the 100-day moving average, but the LOESS curve is much smoother and it extends to the entire range of the data. Data source: Yahoo! Finance
 
-```{r dow-jones-loess, fig.asp = 0.5, fig.cap = '(ref:dow-jones-loess)'}
+```{r dow-jones-loess, fig.width = 5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:dow-jones-loess)'}
 # LOESS (locally estimated scatterplot smoothing) 
 
 dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01/10")) %>%
@@ -119,7 +119,7 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
     close_100d_ave = moving_ave(date, close, 100)
   ) %>%
   ggplot(aes(date, close)) + 
-  geom_line(color = "grey20", size = .25) +
+  geom_line(color = "grey20", size = .35) +
   geom_line(aes(date, close_100d_ave, color = "100d"), size = 1, na.rm = TRUE) +
   geom_smooth(aes(color = "smooth"), size = 1, na.rm = TRUE, se = FALSE) +
   scale_color_manual(
@@ -133,7 +133,7 @@ dow_jones_industrial %>% filter(date >= ymd("2008/12/31") & date <= ymd("2010/01
   ) + 
   scale_x_date(limits = c(ymd("2008-12-31"), ymd("2010-01-10")), expand = c(0, 0)) +
   xlab(NULL) + ylab("Dow Jones Industrial Average") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
     legend.position = c(1, 0.48),
     legend.justification = c(1, 0.5),
@@ -168,7 +168,7 @@ As a faster alternative to LOESS, we can use spline models. A spline is a piecew
 
 (ref:tank-capacity-smoothers) Different smoothing models display widely different behaviors, in particular near the boundaries of the data. (a) LOESS smoother, as in Figure \@ref(fig:tank-capacity-loess). (b) Cubic regression splines with 5 knots. (c) Thin-plate regression spline with 3 knots. (d)  Gaussian process spline with 6 knots. Data source: Robin H. Lock, St. Lawrence University
 
-```{r tank-capacity-smoothers, fig.width=8.5, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
+```{r tank-capacity-smoothers, fig.width = 5.5*6/4.2, fig.asp = 0.75, fig.cap='(ref:tank-capacity-smoothers)'}
 cars_base <- ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) + geom_point(color = "grey60") + 
   scale_x_continuous(
     name = "price (USD)",
@@ -209,7 +209,7 @@ For the fuel-tank data, we need a curve that initially rises linearly but then l
 
 (ref:tank-capacity-model) Fuel-tank data represented with an explicit analytical model. The solid line corresponds to a least-squares fit of the formula $y = A - B \exp(-mx)$ to the data. Fitted parameters are $A = 19.6$, $B = 29.2$, $m = 0.00015$.  Data source: Robin H. Lock, St. Lawrence University
 
-```{r tank-capacity-model, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
+```{r tank-capacity-model, fig.width = 5, fig.asp = 0.75, fig.cap = '(ref:tank-capacity-model)'}
 # first model
 fit.out <- nls(
   Fuel.tank.capacity ~ a*Price/(Price + b) + c,
@@ -319,7 +319,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
   geom_line(data = expfit.df, aes(color = "expfit"), size = .5, linetype = 2) +
   geom_point(aes(fill = "expfit"), shape = NA, na.rm = TRUE) + # dummy for legend
   geom_line(aes(color = "data"), size = .5) +
-  geom_point(aes(fill = "data"), color = "white", shape = 21, size = 1.75) +
+  geom_point(aes(fill = "data"), color = "white", shape = 21, size = 2) +
   scale_y_continuous(
      limits = c(0, 1550),
      breaks = c(0, 500, 1000, 1500),
@@ -336,7 +336,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
       override.aes = list(
         color = c("white", "black"),
         shape = c(21, NA),
-        size = c(1.75, 0.5),
+        size = c(2, 0.5),
         linetype = c(0, 2)
       )
     )
@@ -368,7 +368,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
   geom_line(data = linfit.df, aes(color = "linfit"), size = .5) +
   geom_point(aes(fill = "linfit"), shape = NA, na.rm = TRUE) + # dummy for legend
   geom_line(aes(color = "data"), size = .5) +
-  geom_point(aes(fill = "data"), color = "white", shape = 21, size = 1.75) +
+  geom_point(aes(fill = "data"), color = "white", shape = 21, size = 2) +
   scale_y_log10(
     limits = c(30, 1670),
     breaks = c(10*(3:9), 100*(1:9), 1000*(1:2)),
@@ -389,7 +389,7 @@ ggplot(biorxiv_growth, aes(date_dec, count)) +
       override.aes = list(
         color = c("white", "black", "black"),
         shape = c(21, NA, NA),
-        size = c(1.75, 0.5, 0.5),
+        size = c(2, 0.5, 0.5),
         linetype = c(0, 2, 1)
       )
     )
@@ -428,7 +428,7 @@ Over long periods of time, house prices tend to display consistent annual growth
 
 (ref:hpi-trends) Freddie Mac House Price Index from 1980 through 2017, for four selected states (California, Nevada, Texas, and West Virginia). The House Price Index is a unitless number that tracks relative house prices in the chosen geographic region over time. The index is scaled arbitrarily such that it equals 100 in December of the year 2000. The blue lines show the monthly fluctuations in the index and the straight gray lines show the long-term price trends in the respective states. Note that the *y* axes are logarithmic, so that the straight gray lines represent consistent exponential growth. Data source: Freddie Mac House Prices Index
 
-```{r hpi-trends, fig.cap = '(ref:hpi-trends)'}
+```{r hpi-trends, fig.width = 5*6/4.2, fig.cap = '(ref:hpi-trends)'}
 hpi_trends <- house_prices %>%
   filter(year(date) >= 1980) %>%
   filter(state %in% c("California", "Nevada", "West Virginia", "Texas")) %>%
@@ -452,9 +452,10 @@ ggplot(hpi_trends, aes(date, hpi)) +
   scale_x_date(name = NULL) +
   scale_y_log10(name = "House Price Index (Dec. 2000 = 100)") +
   facet_wrap(~state, scales = "free_x") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid() +
   theme(
-    strip.background = element_rect(fill = "grey90"),
+    strip.text = element_text(size = 12),
+    strip.background = element_rect(fill = "grey85"),
     axis.line.x = element_line(color = "grey50"),
     axis.ticks.x = element_line(color = "grey50"),
     axis.ticks.y = element_blank(),
@@ -467,7 +468,7 @@ We detrend housing prices by dividing the actual price index at each time point 
 
 (ref:hpi-detrended) Detrended version of the Freddie Mac House Price Index shown in Figure \@ref(fig:hpi-trends). The detrended index was calculated by dividing the actual index (blue lines in Figure \@ref(fig:hpi-trends)) by the expected value based on the long-term trend (straight gray lines in Figure \@ref(fig:hpi-trends)). This visualization shows that California experienced two housing bubbles, around 1990 and in the mid-2000s, identifiable from a rapid rise and subsequent decline in the actual housing prices relative to what would have been expected from the long-term trend. Similarly, Nevada experienced one housing bubble, in the mid-2000s, and neither Texas nor West Virginia experienced much of a bubble at all. Data source: Freddie Mac House Prices Index
 
-```{r hpi-detrended, fig.cap = '(ref:hpi-detrended)'}
+```{r hpi-detrended, fig.width = 5*6/4.2, fig.cap = '(ref:hpi-detrended)'}
 ggplot(hpi_trends, aes(date, hpi_detrended)) +
   geom_hline(yintercept = 1, color = "grey50", size = 0.4) +
   geom_line(color = "#0072B2", size = 0.75) +
@@ -478,9 +479,10 @@ ggplot(hpi_trends, aes(date, hpi_detrended)) +
     labels = c("0.75", "1.00", "1.33", "1.77")
   ) +
   facet_wrap(~state, scales = "free_x") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid() +
   theme(
-    strip.background = element_rect(fill = "grey90"),
+    strip.text = element_text(size = 12),
+    strip.background = element_rect(fill = "grey85"),
     axis.line.x = element_line(color = "grey50"),
     axis.ticks.x = element_line(color = "grey50"),
     axis.ticks.y = element_blank(),
@@ -520,7 +522,7 @@ We can decompose the Keeling curve into its long-term trend, seasonal fluctuatio
 
 (ref:keeling-curve-decomposition) Time-series decomposition of the Keeling curve, showing the monthly average (as in Figure \@ref(fig:keeling-curve)), the long-term trend, seasonal fluctuations, and the remainder. The remainder is the difference between the actual readings and the sum of the long-term trend and the seasonal fluctuations, and it represents random noise. I have zoomed into the most recent 30 years of data to more clearly show the shape of the annual fluctuations. Data source: Dr. Pieter Tans, NOAA/ESRL, and Dr. Ralph Keeling, Scripps Institution of Oceanography
 
-```{r keeling-curve-decomposition, fig.asp = 0.9, fig.cap = '(ref:keeling-curve-decomposition)'}
+```{r keeling-curve-decomposition, fig.width = 5*6/4.2, fig.asp = 0.9, fig.cap = '(ref:keeling-curve-decomposition)'}
 # use complete years only
 CO2_complete <- filter(CO2, year >= 1959, year < 2018)
 # convert to time series object
@@ -570,9 +572,9 @@ CO2_detrended %>%
     expand = c(0, 0)
   ) +
   facet_wrap(facets = vars(variable), ncol = 1, scales = "free") +
-  theme_dviz_grid(12) +
+  theme_dviz_grid() +
   theme(
-    plot.margin = margin(3, 0, 3, 1),
-    strip.text = element_text(size = 11)
+    plot.margin = margin(3, 1.5, 3, 1.5),
+    strip.text = element_text(size = 12)
   )
 ```
