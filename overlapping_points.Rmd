@@ -125,7 +125,7 @@ When the number of individual points gets very large, partial transparency (with
 breaks_x <- c("0:00", "6:00", "12:00", "18:00", "24:00")
 
 p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (minutes)`)) + 
-  geom_abline(slope = 0, intercept = 0, color="grey80") +
+  geom_abline(slope = 0, intercept = 0, color="grey70") +
   scale_x_time(
     name = "departure time",
     breaks = hm(breaks_x),
@@ -137,7 +137,7 @@ p_flights_base <- ggplot(flight_delays, aes(`departure time`, `departure delay (
   theme_dviz_open() +
   theme(plot.margin = margin(3, 7, 3, 1.5))
   
-p_flights_scatter <- p_flights_base + geom_point(alpha = 0.2)
+p_flights_scatter <- p_flights_base + geom_point(alpha = 0.1, stroke = 0, size = 2)
 
 stamp_bad(p_flights_scatter)
 ```
@@ -152,8 +152,8 @@ In such cases, instead of plotting individual points, we can make a 2D histogram
 p_flights_2d_bins <- p_flights_base +
   geom_bin2d(bins=50) +
   #scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
-    scale_fill_continuous_sequential(
-    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, 
+  scale_fill_continuous_sequential(
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 94, p1 = 1, p2 = 1.2, 
     rev = TRUE,
     begin = 0.2,
     name = "departures"
@@ -171,10 +171,11 @@ As an alternative to binning the data into rectangle, we can also bin into hexag
 
 ```{r nycflights-hex-bins, fig.asp = 0.75, fig.cap = '(ref:nycflights-hex-bins)'}
 p_flights_hex_bins <- p_flights_base +
-  geom_hex(bins=50) +
+  geom_hex(aes(colour = stat(count)), bins = 50) +
   #scale_fill_continuous_sequential(palette = "Blue-Yellow", l2 = 90, c2 = 20) +
   scale_fill_continuous_sequential(
-    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 100, p1 = 1, p2 = 1.2, 
+    aesthetics = c("colour", "fill"),
+    h1 = -83, h2 = 20, c1 = 30, cmax = 40, c2 = 0, l1 = 20, l2 = 94, p1 = 1, p2 = 1.2, 
     rev = TRUE,
     begin = 0.2,
     name = "departures"
@@ -262,7 +263,7 @@ To illustrate this potential problem, I will employ the diamonds dataset, which 
 
 (ref:diamonds-points) Price of diamonds versus their carat value, for 53,940 individual diamonds. Each diamond's cut is indicated by color. The plot is labeled as "bad" because the extensive overplotting makes it impossible to discern any patterns among the different diamond cuts. Data source: Hadley Wickham, ggplot2
 
-```{r diamonds-points, fig.asp = 3/4, fig.cap = '(ref:diamonds-points)'}
+```{r diamonds-points, fig.width = 5*6/4.2, fig.asp = 3/4, fig.cap = '(ref:diamonds-points)'}
 p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
   geom_point(size = .2, alpha = 1/5) +
   scale_x_continuous(
@@ -306,7 +307,7 @@ We could try to draw colored contour lines for the different qualities of cut, a
 (ref:diamonds-contour-colors) Price of diamonds versus their carat value. As Figure \@ref(fig:diamonds-points), but now individual points have been replaced by contour lines. The resulting plot is still labeled "bad", because the contour lines all lie on top of each other. Neither the point distribution for individual cuts nor the overall point distribution can be discerned. Data source: Hadley Wickham, ggplot2
 
 
-```{r diamonds-contour-colors, fig.asp = 3/4, fig.cap = '(ref:diamonds-contour-colors)'}
+```{r diamonds-contour-colors, fig.width = 5*6/4.2, fig.asp = 3/4, fig.cap = '(ref:diamonds-contour-colors)'}
 p <- ggplot(diamonds, aes(carat, price, color = cut)) + 
   geom_density2d(size = .35, binwidth = 0.8) +
   scale_x_continuous(
@@ -349,7 +350,7 @@ What helps here is to draw the contour lines for each cut quality in its own plo
 (ref:diamonds-contour-facets) Price of diamonds versus their carat value. Here, we have taken the density contours from Figure \@ref(fig:diamonds-contour-colors) and drawn them separately for each cut. We can now see that better cuts (very good, premium, ideal) tend to have lower carat values than the poorer cuts (fair, good) but command a higher price per carat. Data source: Hadley Wickham, ggplot2
 
 
-```{r diamonds-contour-facets, fig.width = 8.5, fig.asp = 3/4, fig.cap = "(ref:diamonds-contour-facets)"}
+```{r diamonds-contour-facets, fig.width = 5.5*6/4.2, fig.asp = 3/4, fig.cap = "(ref:diamonds-contour-facets)"}
 ggplot(diamonds, aes(carat, price)) + 
   stat_density_2d(aes(fill = ..level..), geom = "polygon", color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +
   #geom_density2d(color = darken("#0072B2", .2), size = .3, binwidth = 0.8) +

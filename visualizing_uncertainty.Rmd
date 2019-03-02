@@ -35,7 +35,7 @@ We can make the concept of probability tangible by creating a graph that emphasi
 
 (ref:probability-waffle) Visualizing probability as frequency. There are 100 squares in each grid, and each square represents either success of failure in some random trial. A 1% chance of success corresponds to one dark and 99 light squares, a 10% chance of success corresponds to ten dark and 90 light squares, and a 40% chance of success corresponds to 40 dark and 60 light squares. By randomly placing the dark squares among the light squares, we can create a visual impression of randomness that emphasizes the uncertainty of the outcome of a single trial.
 
-```{r probability-waffle, fig.asp = 1.2/3, fig.cap = '(ref:probability-waffle)'}
+```{r probability-waffle, fig.width = 5*6/4.2, fig.asp = 1.2/3, fig.cap = '(ref:probability-waffle)'}
 g <- expand.grid(x = 1:10, y = 1:10)
 
 set.seed(84524)
@@ -82,7 +82,8 @@ ggplot(data, aes(x, y, fill = value)) +
     legend.justification = "right",
     legend.box.spacing = unit(6, "pt"),
     legend.spacing.x = unit(3, "pt"),
-    legend.key.size = unit(10, "pt")
+    legend.key.size = unit(10, "pt"),
+    plot.margin = margin(0, 0, 3.5, 0) # crop plot a little more tightly
   )
 ```
 
@@ -394,7 +395,7 @@ Frequentists most commonly visualize uncertainty with error bars. While error ba
 
 (ref:cocoa-data-vs-CI) Relationship between sample, sample mean, standard deviation, standard error, and confidence intervals, in an example of chocolate bar ratings. The observations (shown as jittered green dots) that make up the sample represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dot represents the mean of the ratings. Error bars indicate, from top to bottom, twice the standard deviation, twice the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
-```{r cocoa-data-vs-CI, fig.asp = 0.48, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
+```{r cocoa-data-vs-CI, fig.width = 5*6/4.2, fig.asp = 0.48, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-data-vs-CI)'}
 
 # color for individual small data points
 point_color <- darken("#009E73", .3)
@@ -455,21 +456,21 @@ ggplot(CI_df, aes(estimate, type)) +
   geom_label(
     aes(label_x, label = label), hjust = 0, nudge_y = 0.01, na.rm = TRUE,
     family = dviz_font_family,
-    size = 12/.pt,
+    size = 14/.pt,
     label.size = 0
   ) +
   geom_label(
     data = filter(CI_df, type == "sample"),
     aes(conf.high + 0.06, label = type), hjust = 0, nudge_y = 0.01,
     family = dviz_font_family,
-    size = 12/.pt,
+    size = 14/.pt,
     label.size = 0
   ) +
   geom_text(
     data = filter(CI_df, type == "sample"),
     aes(estimate, label = "mean"), hjust = 0.2, vjust = 0, nudge_y = 0.2,
     family = dviz_font_family,
-    size = 12/.pt
+    size = 14/.pt
   ) +
   scale_x_continuous(
     limits = c(1.95, 4.1),
@@ -483,9 +484,9 @@ ggplot(CI_df, aes(estimate, type)) +
     breaks = NULL
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_vgrid(12, rel_small = 1) +
+  theme_dviz_vgrid(14, rel_small = 1) +
   theme(
-    plot.margin = margin(3, 73, 3, 1.5),
+    plot.margin = margin(3, 82, 3, 1.5),
     axis.line.x = element_line(),
     axis.ticks.x = element_line(color = "black"),
     axis.title.x = element_text(hjust = 1)
@@ -502,7 +503,7 @@ The standard error is approximately given by the sample standard deviation divid
 
 (ref:cocoa-CI-vs-n) Confidence intervals widen with smaller sample size. Chocolate bars from Canada and Switzerland have comparable mean ratings and comparable standard deviations (indicated with simple black error bars). However, over three times as many Canadian bars were rated as Swiss bars, and therefore the confidence intervals (indicated with error bars of different colors and thickness drawn on top of one another) are substantially wider for the mean of the Swiss ratings than for the mean of the Canadian ratings. Data source: Brady Brelinski, Manhattan Chocolate Society
 
-```{r cocoa-CI-vs-n, fig.asp = 0.46, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-CI-vs-n)'}
+```{r cocoa-CI-vs-n, fig.width = 5*6/4.2, fig.asp = 0.46, warning = FALSE, message = FALSE, fig.cap = '(ref:cocoa-CI-vs-n)'}
 cacao_CA <- filter(cacao, location == "Canada")
 cacao_CH <- filter(cacao, location == "Switzerland")
 
@@ -572,16 +573,12 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
     aes(y = interaction(location, "original data"), xmin = conf.low, xmax = conf.high),
     height = 0.2
   ) +
-#  geom_tile(
-#    data = CI_df,
-#    aes(width = conf.high - conf.low, fill = level), height = 0.2
-#  ) +
-  geom_errorbarh(
+  geom_errorbarh( # error bar without cap
     data = CI_df,
     aes(y = interaction(location, "CI"), xmin = conf.low, xmax = conf.high, color = level, size = level),
     height = 0
   ) +
-  geom_errorbarh(
+  geom_errorbarh( # error bar with cap
     data = CI_df,
     aes(y = interaction(location, "CI"), xmin = conf.low, xmax = conf.high, color = level),
     height = 0.2
@@ -599,7 +596,7 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
     ),
     aes(label = label), hjust = 0, vjust = 0.5, nudge_y = 0.01,
     family = dviz_font_family,
-    size = 12/.pt,
+    size = 14/.pt,
     label.size = 0
   ) +
   scale_x_continuous(
@@ -630,9 +627,9 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
   scale_size_manual(
     name = "confidence level",
     values = c(
-     `80%` = 1.5,
-     `95%` = 1,
-     `99%` = 0.5
+     `80%` = 2.25,
+     `95%` = 1.5,
+     `99%` = .75
     ),
     guide = guide_legend(
       direction = "horizontal",
@@ -641,18 +638,18 @@ ggplot(rbind(CI_df, sd_df), aes(estimate, interaction(location, type))) +
     )
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_vgrid(12, rel_small = 1) +
+  theme_dviz_vgrid(14, rel_small = 1) +
   theme(
-    plot.margin = margin(3, 73, 3, 1.5),
+    plot.margin = margin(3, 82, 3, 1.5),
     axis.line.x = element_line(),
     axis.ticks.x = element_line(color = "black"),
     axis.title.x = element_text(hjust = 1),
     legend.position = c(0, 0.01),
     legend.justification = c(0, 0),
-    legend.key.height = grid::unit(6, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
-    legend.spacing.x = grid::unit(6, "pt"),
-    legend.spacing.y = grid::unit(3, "pt"),
+    legend.key.height = grid::unit(7, "pt"),
+    legend.key.width = grid::unit(35, "pt"),
+    legend.spacing.x = grid::unit(7, "pt"),
+    legend.spacing.y = grid::unit(3.5, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.title.align = 0.5
@@ -666,7 +663,7 @@ Error bars are convenient because they allow us to show many estimates with thei
 
 (ref:mean-chocolate-ratings) Mean chocolate flavor ratings and associated confidence intervals for chocolate bars from manufacturers in six different countries. Data source: Brady Brelinski, Manhattan Chocolate Society
 
-```{r mean-chocolate-ratings, fig.asp = 0.5, fig.cap = '(ref:mean-chocolate-ratings)'}
+```{r mean-chocolate-ratings, fig.width = 5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:mean-chocolate-ratings)'}
 #countries <- c("Austria", "Belgium", "Canada", "Peru", "Switzerland")
 #
 cacao_small <- 
@@ -718,9 +715,9 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
   scale_size_manual(
     name = "confidence level",
     values = c(
-     `80%` = 1.5,
-     `95%` = 1,
-     `99%` = 0.5
+     `80%` = 2.25,
+     `95%` = 1.5,
+     `99%` = 0.75
     ),
     guide = guide_legend(
       direction = "horizontal",
@@ -729,17 +726,17 @@ ggplot(conf_df, aes(estimate, reorder(location, estimate))) +
     )
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid(14, rel_small = 1) +
   theme(
     axis.line.x = element_line(color = "black"),
     axis.ticks.x = element_line(color = "black"),
     axis.title.x = element_text(hjust = 1),
     legend.position = c(1, 0.01),
     legend.justification = c(1, 0),
-    legend.key.height = grid::unit(6, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
-    legend.spacing.x = grid::unit(6, "pt"),
-    legend.spacing.y = grid::unit(3, "pt"),
+    legend.key.height = grid::unit(7, "pt"),
+    legend.key.width = grid::unit(35, "pt"),
+    legend.spacing.x = grid::unit(7, "pt"),
+    legend.spacing.y = grid::unit(3.5, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.title.align = 0.5
@@ -753,7 +750,7 @@ Assessing significance from Figure \@ref(fig:mean-chocolate-ratings) is difficul
 
 (ref:chocolate-ratings-contrasts) Mean chocolate flavor ratings for manufacturers from five different countries, relative to the mean rating of U.S. chocolate bars. Canadian chocolate bars are significantly higher rated that U.S. bars. For the other four countries there is no significant difference in mean rating to the U.S. at the 95% confidence level. Confidence levels have been adjusted for multiple comparisons using Dunnett's method. Data source: Brady Brelinski, Manhattan Chocolate Society
 
-```{r chocolate-ratings-contrasts, fig.asp = 0.5, fig.cap = '(ref:chocolate-ratings-contrasts)'}
+```{r chocolate-ratings-contrasts, fig.width = 5*6/4.2, fig.asp = 0.5, fig.cap = '(ref:chocolate-ratings-contrasts)'}
 # need reference grid for contrasts
 fit_rg <- ref_grid(fit)
 
@@ -809,9 +806,9 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
   scale_size_manual(
     name = "confidence level",
     values = c(
-     `80%` = 1.5,
-     `95%` = 1,
-     `99%` = 0.5
+     `80%` = 2.25,
+     `95%` = 1.5,
+     `99%` = 0.75
     ),
     guide = guide_legend(
       direction = "horizontal",
@@ -820,19 +817,19 @@ ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimate))) +
     )
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid(14, rel_small = 1) +
   theme(
     axis.line.x = element_line(color = "black"),
     axis.line.x.top = element_blank(),
     axis.ticks.x = element_line(color = "black"),
     axis.ticks.x.top = element_line(color = "gray50"),
     #axis.title.x = element_text(hjust = 1),
-    legend.position = c(1, 0.01),
+    legend.position = c(1, 0.02),
     legend.justification = c(1, 0),
-    legend.key.height = grid::unit(6, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
-    legend.spacing.x = grid::unit(6, "pt"),
-    legend.spacing.y = grid::unit(3, "pt"),
+    legend.key.height = grid::unit(7, "pt"),
+    legend.key.width = grid::unit(35, "pt"),
+    legend.spacing.x = grid::unit(7, "pt"),
+    legend.spacing.y = grid::unit(3.5, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.title.align = 0.5
@@ -844,7 +841,7 @@ In the preceding figures, I have used two different types of error bars, graded 
 
 (ref:confidence-visualizations) Mean chocolate flavor ratings for manufacturers from four different countries, relative to the mean rating of U.S. chocolate bars. Each panel uses a different approach to visualizing the same uncertainty information. (a) Graded error bars with cap. (b) Graded error bars without cap. (c) Single-interval error bars with cap. (d) Single-interval error bars without cap. (e) Confidence strips. (f) Confidence distributions.
 
-```{r confidence-visualizations, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:confidence-visualizations)'}
+```{r confidence-visualizations, fig.width = 5.5*6/4.2, fig.asp = 0.75, fig.cap = '(ref:confidence-visualizations)'}
 cacao_smaller <- filter(cacao_small, location != "Switzerland")
 
 fit <- lm(rating ~ location, data = cacao_smaller)
@@ -919,7 +916,7 @@ p1 <- ggplot(contrasts_dunnettx, aes(x = estimate, y = reorder(contrast, estimat
     #legend.position = c(1, .01),
     legend.justification = c(1, 0),
     legend.key.height = grid::unit(6, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
+    legend.key.width = grid::unit(30, "pt"),
     legend.spacing.x = grid::unit(6, "pt"),
     legend.spacing.y = grid::unit(3, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
@@ -1201,7 +1198,8 @@ ggplot(df, aes(y = y)) +
              shape = 21, fill = "lightblue") +
   stat_summary(
     data = spl, aes(x = .draw, color = ifelse(stat(ymax) < 0 | stat(ymin) > 0, "outside", "inside")),
-    geom = "errorbar", width = 0.2, position = position_nudge(x = -.15)
+    geom = "errorbar", width = 0.2, size = 0.75,
+    position = position_nudge(x = -.15)
   ) +
   stat_summary(
     data = spl, aes(x = .draw, color = ifelse(stat(ymax) < 0 | stat(ymin) > 0, "outside", "inside")),
@@ -1229,7 +1227,7 @@ To summarize, a Bayesian credible interval makes a statement about the true para
 
 (ref:bayes-vs-ols) Comparison of frequentist confidence intervals and Bayesian credible intervals for mean chocolate ratings. We see that both approaches yield similar but not exactly identical results. In particular, the Bayesian estimates display a small amount of shrinkage, which is an adjustment of the most extreme parameter estimates towards the overall mean. (Note how the Bayesian estimate for Switzerland is slightly moved to the left and the Bayesian estimate for Peru is slightly moved to the right relative to the respective frequentist estimates.) The frequentist estimates and confidence intervals shown here are identical to the results for 95% confidence shown in Figure \@ref(fig:mean-chocolate-ratings). 
 
-```{r bayes-vs-ols, fig.asp = 0.6, fig.cap = '(ref:bayes-vs-ols)'}
+```{r bayes-vs-ols, fig.width = 5*6/4.2, fig.asp = 0.6, fig.cap = '(ref:bayes-vs-ols)'}
 linear_results <-
   lm(rating ~ location, data = cacao_small) %>% 
   emmeans(~ location) %>% 
@@ -1268,17 +1266,17 @@ bind_rows(linear_results, bayes_results) %>%
     #guide = guide_legend(direction = "horizontal")
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid(14, rel_small = 1) +
   theme(
     axis.line.x = element_line(color = "black"),
     axis.ticks.x = element_line(color = "black"),
     axis.title.x = element_text(hjust = 1),
-    legend.position = c(1, 0.01),
+    legend.position = c(1, 0.013),
     legend.justification = c(1, 0),
-    legend.key.height = grid::unit(13, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
-    legend.spacing.x = grid::unit(3, "pt"),
-    legend.spacing.y = grid::unit(12, "pt"),
+    legend.key.height = grid::unit(15, "pt"),
+    legend.key.width = grid::unit(28, "pt"),
+    legend.spacing.x = grid::unit(3.5, "pt"),
+    legend.spacing.y = grid::unit(14, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.title.align = 0.5
@@ -1294,7 +1292,7 @@ The central goal of Bayesian estimation is to obtain the posterior distribution.
 
 (ref:bayes-ridgeline) Bayesian posterior distributions of mean chocolate bar ratings, shown as a ridgeline plot. The red dots represent the medians of each posterior distribution. Because it is difficult to convert a continuous distribution into specific confidence regions by eye, I have added shading under each curve to indicate the center 80%, 95%, and 99% of each posterior distribution.
 
-```{r bayes-ridgeline, fig.asp = 0.6, fig.cap = '(ref:bayes-ridgeline)'}
+```{r bayes-ridgeline, fig.width = 5*6/4.2, fig.asp = 0.6, fig.cap = '(ref:bayes-ridgeline)'}
 bayes_emmeans %>%
   ggplot(aes(.value, reorder(location, .value))) +
   geom_density_ridges_gradient(
@@ -1337,17 +1335,17 @@ bayes_emmeans %>%
     )
   ) +
   coord_cartesian(xlim = c(2.6, 3.6), clip = "off") +
-  theme_dviz_hgrid(12, rel_small = 1) +
+  theme_dviz_hgrid(14, rel_small = 1) +
   theme(
     axis.line.x = element_line(color = "black"),
     axis.ticks.x = element_line(color = "black"),
     axis.title.x = element_text(hjust = 1),
-    legend.position = c(1, 0.01),
+    legend.position = c(1, 0.013),
     legend.justification = c(1, 0),
-    legend.key.height = grid::unit(12, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
-    legend.spacing.x = grid::unit(6, "pt"),
-    legend.spacing.y = grid::unit(3, "pt"),
+    legend.key.height = grid::unit(14, "pt"),
+    legend.key.width = grid::unit(35, "pt"),
+    legend.spacing.x = grid::unit(7, "pt"),
+    legend.spacing.y = grid::unit(3.5, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
     legend.box.spacing = grid::unit(0, "pt"),
     legend.title.align = 0.5
@@ -1464,7 +1462,7 @@ ggplot(blue_jays_male, aes(Mass, Head)) +
     legend.position = c(1, .01),
     legend.justification = c(1, 0),
     legend.key.height = grid::unit(12, "pt"),
-    legend.key.width = grid::unit(24, "pt"),
+    legend.key.width = grid::unit(30, "pt"),
     legend.spacing.x = grid::unit(6, "pt"),
     legend.spacing.y = grid::unit(3, "pt"),
     legend.box.background = element_rect(fill = "white", color = NA),
@@ -1477,7 +1475,7 @@ We can also draw confidence bands for non-linear curve fits. Such confidence ban
 
 (ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. (a) Best fit spline and confidence band. (b) Equally likely alternative fits drawn from the posterior distribution. Data source: Motor Trend, 1974.
 
-```{r mpg-uncertain, fig.width = 8.5, fig.asp = 3/8, fig.cap='(ref:mpg-uncertain)'}
+```{r mpg-uncertain, fig.width = 5.5*6/4.2, fig.asp = 3/8, fig.cap='(ref:mpg-uncertain)'}
 set.seed(8692282)
 
 fit <- gam(mpg ~ s(disp, bs = 'cr', k = 5), data = mtcars, method = "REML")
@@ -1525,7 +1523,7 @@ To illustrate the concept of a HOP, let's go back once more to chocolate bar rat
 
 (ref:chocolate-HOP-static) (for print edition) Schematic of a hypothetical outcome plot for chocolate bar ratings of Canadian and U.S. manufactured bars. Each vertical green bar represents the rating for one bar, and each panel shows a comparison of two randomly chosen bars, one each from a Canadian manufacturer and a U.S. manufacturer. In an actual hypothetical outcome plot, the display would cycle between the distinct plot panels instead of showing them side-by-side.
 
-```{r chocolate-HOP-static, fig.width = 8.5, fig.asp = 0.6, fig.cap = '(ref:chocolate-HOP-static)'}
+```{r chocolate-HOP-static, fig.width = 5.5*6/4.2, fig.asp = 0.6, fig.cap = '(ref:chocolate-HOP-static)'}
 cacao %>% 
   filter(location %in% c("Canada", "U.S.A.")) %>%
   mutate(location = fct_recode(location, US = "U.S.A.")) -> cacao_US_CA
@@ -1626,7 +1624,7 @@ As a second example, consider the variation in shapes among equally probable tre
 (ref:mpg-uncertain-HOP-static) (for print edition) Schematic of a hypothetical outcome plot for fuel efficiency versus displacement. Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. Each line in each panel represents one alternative fit outcome, drawn from the posterior distribution of the fit parameters. In an actual hypothetical outcome plot, the display would cycle between the distinct plot panels instead of showing them side-by-side.
 
 
-```{r mpg-uncertain-HOP-static, fig.width = 8.5, fig.asp = 2/4, fig.cap = '(ref:mpg-uncertain-HOP-static)'}
+```{r mpg-uncertain-HOP-static, fig.width = 5.5*6/4.2, fig.asp = 2/4, fig.cap = '(ref:mpg-uncertain-HOP-static)'}
 #set.seed(8692282)
 set.seed(8692276)
 
