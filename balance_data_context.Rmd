@@ -163,24 +163,32 @@ The R software ggplot2 has popularized a style using a fairly prominent backgrou
 
 ```{r price-plot-ggplot-default, fig.cap='(ref:price-plot-ggplot-default)'}
 price_plot <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
-  geom_line() +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
-                     name="",
-                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
-                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
-  scale_x_date(name="year",
-               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
-               expand=c(0,0)) + 
-  scale_y_continuous(name="stock price, indexed",
-                     limits = c(0, 560),
-                     expand=c(0,0)) +
+  geom_line(size = 0.66, na.rm = TRUE) +
+  scale_color_manual(
+    values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+    name = NULL,
+    breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+    labels = c("Facebook", "Alphabet", "Microsoft", "Apple")
+  ) +
+  scale_x_date(
+    name="year",
+    limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
+    expand=c(0,0)
+  ) + 
+  scale_y_continuous(
+    name = "stock price, indexed",
+    limits = c(0, 560),
+    expand = c(0,0)
+  ) +
   theme_dviz_grid() +
-  theme(panel.background = element_rect(fill = "grey90"),
-        panel.grid.major = element_line(color = "white"),
-        panel.grid.minor = element_line(color = "white", size = rel(0.5)),
-        legend.key = element_rect(fill = "grey90", color = "white"),
-        axis.ticks = element_line(color = "black"),
-        plot.margin = margin(7, 7, 3, 1.5))
+  theme(
+    panel.background = element_rect(fill = "grey90"),
+    panel.grid.major = element_line(color = "white"),
+    panel.grid.minor = element_line(color = "white", size = rel(0.5)),
+    legend.key = element_rect(fill = "grey90", color = "white"),
+    axis.ticks = element_line(color = "black"),
+    plot.margin = margin(7, 7, 3, 1.5)
+  )
 
 stamp_ugly(price_plot)
 ```
@@ -192,9 +200,11 @@ We can go all the way in the opposite direction and remove both the background a
 (ref:price-plot-no-grid) Indexed stock price over time for four major tech companies. In this variant of Figure \@ref(fig:price-plot-ggplot-default), the data lines are not sufficiently anchored. This makes it difficult to ascertain to what extent they have deviated from the index value of 100 at the end of the covered time interval. Data source: Yahoo Finance
 
 ```{r price-plot-no-grid, fig.cap='(ref:price-plot-no-grid)'}
-stamp_bad(price_plot + 
-            theme_dviz_open() +
-            theme(plot.margin = margin(7, 7, 3, 1.5)))
+stamp_bad(
+  price_plot + 
+    theme_dviz_open() +
+    theme(plot.margin = margin(7, 7, 3, 1.5))
+)
 ```
 
 At the absolute minimum, we need to add one horizontal reference line. Since the stock prices in Figure \@ref(fig:price-plot-no-grid) indexed to 100 in June 2012, marking this value with a thin horizontal line at *y* = 100 helps a lot (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
@@ -204,17 +214,23 @@ At the absolute minimum, we need to add one horizontal reference line. Since the
 ```{r price-plot-refline, fig.cap='(ref:price-plot-refline)'}
 price_plot2 <- ggplot(tech_stocks, aes(x=date, y=price_indexed, color=ticker)) +
   geom_hline(yintercept = 100, size = 0.5, color="grey70") +
-  geom_line() +
-  scale_color_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73"),
-                     name="",
-                     breaks=c("FB", "GOOG", "MSFT", "AAPL"),
-                     labels=c("Facebook", "Alphabet", "Microsoft", "Apple")) +
-  scale_x_date(name="year",
-               limits=c(ymd("2012-06-01"), ymd("2017-05-31")),
-               expand=c(0,0)) + 
-  scale_y_continuous(name="stock price, indexed",
-                     limits = c(0, 560),
-                     expand=c(0,0)) +
+  geom_line(size = 0.66, na.rm = TRUE) +
+  scale_color_manual(
+    values = c("#000000", "#E69F00", "#56B4E9", "#009E73"),
+    name = NULL,
+    breaks = c("FB", "GOOG", "MSFT", "AAPL"),
+    labels = c("Facebook", "Alphabet", "Microsoft", "Apple")
+  ) +
+  scale_x_date(
+    name = "year",
+    limits = c(ymd("2012-06-01"), ymd("2017-05-31")),
+    expand = c(0,0)
+  ) + 
+  scale_y_continuous(
+    name = "stock price, indexed",
+    limits = c(0, 560),
+    expand = c(0,0)
+  ) +
   theme_dviz_open() +
   theme(plot.margin = margin(7, 7, 3, 1.5))
 
@@ -225,7 +241,8 @@ price_plot2
 (ref:price-plot-hgrid) Indexed stock price over time for four major tech companies. Adding thin  horizontal lines at all major *y* axis ticks provides a better set of reference points than just the one horizontal line of Figure \@ref(fig:price-plot-refline). This design also removes the need for prominent *x* and *y* axis lines, since the evenly spaced horizontal lines create a visual frame for the plot panel. Data source: Yahoo Finance
 
 ```{r price-plot-hgrid, fig.cap='(ref:price-plot-hgrid)'}
-price_plot + theme_dviz_hgrid() +
+price_plot + 
+  theme_dviz_hgrid() +
   theme(plot.margin = margin(7, 7, 3, 1.5))
 ```
 

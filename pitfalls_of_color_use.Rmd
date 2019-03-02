@@ -1,8 +1,6 @@
 ```{r echo = FALSE, message = FALSE}
 # run setup script
 source("_common.R")
-
-library(ggridges)
 ```
 
 # Common pitfalls of color use {#color-pitfalls}
@@ -69,10 +67,12 @@ library(ggrepel)
 set.seed(7586)
 region_colors <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442")
 
-labeled_states <- c("Alaska", "Arizona", "California", "Florida", "Wisconsin", 
-                    "Louisiana", "Nevada", "Michigan", "Montana", "New Mexico", "Pennsylvania",
-                    "New York", "Oregon", "Rhode Island",
-                    "Tennessee", "Texas", "Utah", "Vermont")
+labeled_states <- c(
+  "Alaska", "Arizona", "California", "Florida", "Wisconsin", 
+  "Louisiana", "Nevada", "Michigan", "Montana", "New Mexico",
+  "Pennsylvania", "New York", "Oregon", "Rhode Island",
+  "Tennessee", "Texas", "Utah", "Vermont"
+)
 
 df_repel <- select(popgrowth_df, x = pop2000, y = popgrowth, state) %>%
   mutate(label = ifelse(state %in% labeled_states, as.character(state), ""))
@@ -86,10 +86,10 @@ ggplot(popgrowth_df, aes(x = pop2000, y = popgrowth, color = region, fill = regi
     force = 1,
     min.segment.length = 0.1,
     family = dviz_font_family,
-    size = 10/.pt, inherit.aes = FALSE
+    size = 11/.pt, inherit.aes = FALSE
   ) +
-  geom_point(size = 3, color = "white") +
-  geom_point(size = 2, shape = 21) +
+  geom_point(size = 3.5, color = "white") +
+  geom_point(size = 2.5, shape = 21) +
   scale_x_log10(labels = label_log10) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_fill_manual(values = region_colors) +
@@ -142,12 +142,27 @@ In Chapter \@ref(color-basics), I listed two critical conditions for designing s
 
 (ref:rainbow-desaturated) The rainbow colorscale is highly non-monotonic. This becomes clearly visible by converting the colors to gray values. From left to right, the scale goes from moderately dark to light to very dark and back to moderately dark. In addition, the changes in lightness are very non-uniform. The lightest part of the scale (corresponding to the colors yellow, light green, and cyan) takes up almost a third of the entire scale while the darkest part (corresponding to dark blue) is concentrated in a narrow region of the scale.
 
-```{r rainbow-desaturated, fig.width=4.8*6/4.2, fig.asp=2*.14, fig.cap = '(ref:rainbow-desaturated)'}
-p1 <- gg_color_gradient(title_family = dviz_font_family) + 
-  scale_fill_gradientn(colors = rainbow(10)) + ggtitle("rainbow scale")
-p2 <- gg_color_gradient(title_family = dviz_font_family) + 
-  scale_fill_gradientn(colors = desaturate(rainbow(10))) + ggtitle("rainbow converted to grayscale")
-plot_grid(p1, p2, ncol = 1)
+```{r rainbow-desaturated, fig.width=5*6/4.2, fig.asp=2*.14, fig.cap = '(ref:rainbow-desaturated)'}
+p1 <- gg_color_gradient(
+  plot_margin = margin(17.5, 1, 0, 1),
+  ymargin = 0.05
+) + 
+  scale_fill_gradientn(colors = rainbow(10))
+
+p2 <- gg_color_gradient(
+  plot_margin = margin(17.5, 1, 0, 1),
+  ymargin = 0.05
+) + 
+  scale_fill_gradientn(colors = desaturate(rainbow(10)))
+
+plot_grid(
+  p1, NULL, p2,
+  ncol = 1,
+  rel_heights = c(0.9, 0.1, 0.9),
+  labels = c("rainbow scale", "", "rainbow converted to grayscale"),
+  label_x = 0, label_y = 0.96,
+  label_size = 14
+)
 ```
 
 In a visualization of actual data, the rainbow scale tends to obscure data features and/or highlight arbitrary aspects of the data (Figure \@ref(fig:map-Texas-rainbow)). As an aside, the colors in the rainbow scale are also overly saturated. Looking at Figure \@ref(fig:map-Texas-rainbow) for any extended period of time can be quite uncomfortable.
@@ -208,52 +223,64 @@ As discussed in Chapter \@ref(color-basics), there are three fundamental types o
 
 (ref:heat-cvd-sim) Color-vision deficiency (cvd) simulation of the sequential color scale Heat, which runs from dark red to light yellow. From left to right and top to bottom, we see the original scale and the scale as seen under deuteranomaly, protanomaly, and tritanomaly simulations. Even though the specific colors look different under the three types of cvd, in each case we can see a clear gradient from dark to light. Therefore, this color scale is safe to use for cvd.
 
-```{r heat-cvd-sim, fig.width = 4.8*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:heat-cvd-sim)'}
+```{r heat-cvd-sim, fig.width = 5*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:heat-cvd-sim)'}
 grad_heat <- gg_color_gradient(
-  plot_margin = margin(12, 0, 0, 0),
+  plot_margin = margin(17.5, 1, 0, 1),
   ymargin = 0.05
 ) + 
   scale_fill_continuous_sequential("Heat")
 
-cvd_sim(grad_heat, label_size = 14)
+cvd_sim(grad_heat, label_y = 0.96)
 ```
 
 Things become more complicated for diverging scales, because popular color contrasts can become indistinguishable under cvd. In particular, the colors red and green provide about the strongest contrast for people with normal color vision but become nearly indistinguishable for deutans (people with deuteranomaly) or protans (people with protanomaly) (Figure \@ref(fig:red-green-cvd-sim)). Similarly, blue-green contrasts are visible for deutans and protans but become indistinguishable for tritans (people with tritanomaly) (Figure \@ref(fig:blue-green-cvd-sim)).
 
 (ref:red-green-cvd-sim) A red--green contrast becomes indistinguishable under red--green cvd (deuteranomaly or protanomaly).
 
-```{r red-green-cvd-sim, fig.width = 4.8*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:red-green-cvd-sim)'}
+```{r red-green-cvd-sim, fig.width = 5*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:red-green-cvd-sim)'}
 cols <- scales::colour_ramp(c("#FF1B1B", "#F9F1CE", high = "#057905"))(seq(0, 1, .25))
 
-grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
-                                    ymargin = 0.05) + 
-                  scale_fill_manual(values = cols)
+grad_red_green <- gg_color_swatches(
+  n = 5,
+  plot_margin = margin(17.5, 1, 0, 1),
+  xmargin = 0.1,
+  ymargin = 0.05
+) + 
+  scale_fill_manual(values = cols)
 
-cvd_sim(grad_red_green, label_size = 14)
+cvd_sim(grad_red_green, label_y = 0.96)
 ```
 
 (ref:blue-green-cvd-sim) A blue--green contrast becomes indistinguishable under blue--yellow cvd (tritanomaly).
 
-```{r blue-green-cvd-sim, fig.width = 4.8*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:blue-green-cvd-sim)'}
+```{r blue-green-cvd-sim, fig.width = 5*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:blue-green-cvd-sim)'}
 cols <- scales::colour_ramp(c("#284F9B", "grey90", high = "#056D05"))(seq(0, 1, .25))
 
-grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
-                                    ymargin = 0.05) + 
-                  scale_fill_manual(values = cols)
+grad_red_green <- gg_color_swatches(
+  n = 5,
+  plot_margin = margin(17.5, 1, 0, 1),
+  xmargin = 0.1,
+  ymargin = 0.05
+) + 
+  scale_fill_manual(values = cols)
 
-cvd_sim(grad_red_green, label_size = 14)
+cvd_sim(grad_red_green, label_y = 0.96)
 ```
 
 With these examples, it might seem that it is nearly impossible to find two contrasting colors that are safe under all forms of cvd. However, the situation is not that dire. It is often possible to make slight modifications to the colors such that they have the desired character while also being safe for cvd. For example, the ColorBrewer PiYG (pink to yellow-green) scale from Figure \@ref(fig:diverging-scales) looks red--green to people with normal color vision yet remains distinguishable for people with cvd (Figure \@ref(fig:PiYG-cvd-sim)).
 
 (ref:PiYG-cvd-sim) The ColorBrewer PiYG (pink to yellow-green) scale from Figure \@ref(fig:diverging-scales) looks like a red--green contrast to people with regular color vision but works for all forms of color-vision deficiency. It works because the reddish color is actually pink (a mix of red and blue) while the greenish color also contains yellow. The difference in the blue component between the two colors can be picked up even by deutans or protans, and the difference in the red component can be picked up by tritans.
 
-```{r PiYG-cvd-sim, fig.width = 4.8*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:PiYG-cvd-sim)'}
-grad_red_green <- gg_color_swatches(n = 5, plot_margin = margin(12, 0, 0, 0),
-                                    ymargin = 0.05) + 
-                  scale_fill_brewer(type = "div", palette = "PiYG")
+```{r PiYG-cvd-sim, fig.width = 5*6/4.2, fig.asp = 2*.14, fig.cap = '(ref:PiYG-cvd-sim)'}
+grad_red_green <- gg_color_swatches(
+  n = 5,
+  plot_margin = margin(17.5, 1, 0, 1),
+  xmargin = 0.1,
+  ymargin = 0.05
+) + 
+  scale_fill_brewer(type = "div", palette = "PiYG")
 
-cvd_sim(grad_red_green, label_size = 14)
+cvd_sim(grad_red_green, label_y = 0.96)
 ```
 
 Things are most complicated for qualitative scales, because there we need many different colors and they all need to be distinguishable from each other under all forms of cvd. My preferred qualitative color scale, which I use extensively throughout this book, was developed specifically to address this challenge (Figure \@ref(fig:palette-Okabe-Ito)). By providing eight different colors, the palette works for nearly any scenario with discrete colors. As discussed at the beginning of this chapter, you should probably not color-code more than eight different items in a plot anyways.
@@ -265,7 +292,7 @@ Things are most complicated for qualitative scales, because there we need many d
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 
 palette_plot(cbPalette, label_size = 5, label_family = dviz_font_family) +
-  theme(plot.margin = margin(3, 0, 3, 0))
+  theme(plot.margin = margin(3, 1, 3, 1))
 ```
 
 
@@ -286,34 +313,49 @@ While there are several good, cvd-safe color scales readily available, we need t
 
 (ref:colors-thin-lines) Colored elements become difficult to distinguish at small sizes. The top left panel (labeled "original") shows four rectangles, four thick lines, four thin lines, and four groups of points, all colored in the same four colors. We can see that the colors become more difficult to distinguish the smaller or thinner the visual elements are. This problem becomes exacerbated in the cvd simulations, where the colors are already more difficult to distinguish even for the large graphical elements.
 
-```{r colors-thin-lines, fig.width = 4.8*6/4.2, fig.asp = 0.8, fig.cap = '(ref:colors-thin-lines)'}
-tiles_df <- data.frame(x = c(1, 2, 1, 2),
-                       y = c(1.75, 1.75, 1.25, 1.25),
-                       type = c("A", "B", "C", "D"))
+```{r colors-thin-lines, fig.width = 5*6/4.2, fig.asp = 0.8, fig.cap = '(ref:colors-thin-lines)'}
+tiles_df <- data.frame(
+  x = c(1, 2, 1, 2),
+  y = c(1.75, 1.75, 1.25, 1.25),
+  type = c("A", "B", "C", "D")
+)
 
-segments_df <- data.frame(x0 = rep(0.55, 4),
-                          x1 = rep(2.45, 4),
-                          y0 = seq(.9, .6, -.1),
-                          y1 = seq(.9, .6, -.1),
-                          type = c("A", "B", "C", "D"))
+segments_df <- data.frame(
+  x0 = rep(0.55, 4),
+  x1 = rep(2.45, 4),
+  y0 = seq(.9, .6, -.1),
+  y1 = seq(.9, .6, -.1),
+  type = c("A", "B", "C", "D")
+)
 
-points_df <- data.frame(x = rep(1.58 + .28*(0:3), 4),
-                        y = rep(seq(.4, .1, -.1), each = 4),
-                        size = rep(c(3, 2, 1, .5), 4),
-                        type = rep(c("A", "B", "C", "D"), each = 4))
+points_df <- data.frame(
+  x = rep(1.58 + .28*(0:3), 4),
+  y = rep(seq(.4, .1, -.1), each = 4),
+  size = rep(c(3, 2, 1, .5), 4),
+  type = rep(c("A", "B", "C", "D"), each = 4)
+)
 
 p <- ggplot() + 
   geom_tile(data = tiles_df, aes(x, y, fill = type), width = 0.9, height = 0.45) +
-  geom_segment(data = segments_df, aes(x = x0, xend = x1, y = y0, yend = y1, color = type), size = 1.5) +
-  geom_segment(data = segments_df, aes(x = x0, xend = x0 + .9, y = y0 - .5, yend = y1 - .5, color = type), size = .5) +
+  geom_segment(
+    data = segments_df,
+    aes(x = x0, xend = x1, y = y0, yend = y1, color = type),
+    size = 1.5
+  ) +
+  geom_segment(
+    data = segments_df,
+    aes(x = x0, xend = x0 + .9, y = y0 - .5, yend = y1 - .5, color = type),
+    size = .5
+  ) +
   geom_point(data = points_df, aes(x, y, color = type, size = size)) +
   scale_fill_OkabeIto(order = c(1, 4, 2, 3)) +
   scale_color_OkabeIto(order = c(1, 4, 2, 3)) +
   scale_size_identity() +
-  coord_cartesian(xlim = c(0.5, 2.5), ylim = c(0.05, 2.05), expand = FALSE) +
-  theme_nothing()
+  coord_cartesian(xlim = c(0.55, 2.45), ylim = c(0.05, 2.05), expand = FALSE) +
+  theme_nothing() +
+  theme(plot.margin = margin(14, 1, 0, 1))
 
-cvd_sim(p, label_x = 0.0725, label_y = 0.98, label_size = 14)
+cvd_sim(p, label_y = 0.97)
 ```
 
 ```{block type='rmdtip', echo=TRUE}
