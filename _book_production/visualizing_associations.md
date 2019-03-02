@@ -33,7 +33,7 @@ Because the head length is defined as the distance from the tip of the bill to t
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/blue-jays-scatter-bubbles-1.png" alt="(ref:blue-jays-scatter-bubbles)" width="525" />
+<img src="visualizing_associations_files/figure-html/blue-jays-scatter-bubbles-1.png" alt="(ref:blue-jays-scatter-bubbles)" width="825" />
 <p class="caption">(\#fig:blue-jays-scatter-bubbles)(ref:blue-jays-scatter-bubbles)</p>
 </div>
 

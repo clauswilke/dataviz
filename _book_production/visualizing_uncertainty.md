@@ -19,7 +19,7 @@ We can make the concept of probability tangible by creating a graph that emphasi
 (ref:probability-waffle) Visualizing probability as frequency. There are 100 squares in each grid, and each square represents either success of failure in some random trial. A 1% chance of success corresponds to one dark and 99 light squares, a 10% chance of success corresponds to ten dark and 90 light squares, and a 40% chance of success corresponds to 40 dark and 60 light squares. By randomly placing the dark squares among the light squares, we can create a visual impression of randomness that emphasizes the uncertainty of the outcome of a single trial.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/probability-waffle-1.png" alt="(ref:probability-waffle)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/probability-waffle-1.png" alt="(ref:probability-waffle)" width="750" />
 <p class="caption">(\#fig:probability-waffle)(ref:probability-waffle)</p>
 </div>
 
@@ -70,7 +70,7 @@ Frequentists most commonly visualize uncertainty with error bars. While error ba
 (ref:cocoa-data-vs-CI) Relationship between sample, sample mean, standard deviation, standard error, and confidence intervals, in an example of chocolate bar ratings. The observations (shown as jittered green dots) that make up the sample represent expert ratings of 125 chocolate bars from manufacturers in Canada, rated on a scale from 1 (unpleasant) to 5 (elite). The large orange dot represents the mean of the ratings. Error bars indicate, from top to bottom, twice the standard deviation, twice the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/cocoa-data-vs-CI-1.png" alt="(ref:cocoa-data-vs-CI)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/cocoa-data-vs-CI-1.png" alt="(ref:cocoa-data-vs-CI)" width="750" />
 <p class="caption">(\#fig:cocoa-data-vs-CI)(ref:cocoa-data-vs-CI)</p>
 </div>
 
@@ -84,7 +84,7 @@ The standard error is approximately given by the sample standard deviation divid
 (ref:cocoa-CI-vs-n) Confidence intervals widen with smaller sample size. Chocolate bars from Canada and Switzerland have comparable mean ratings and comparable standard deviations (indicated with simple black error bars). However, over three times as many Canadian bars were rated as Swiss bars, and therefore the confidence intervals (indicated with error bars of different colors and thickness drawn on top of one another) are substantially wider for the mean of the Swiss ratings than for the mean of the Canadian ratings. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/cocoa-CI-vs-n-1.png" alt="(ref:cocoa-CI-vs-n)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/cocoa-CI-vs-n-1.png" alt="(ref:cocoa-CI-vs-n)" width="750" />
 <p class="caption">(\#fig:cocoa-CI-vs-n)(ref:cocoa-CI-vs-n)</p>
 </div>
 
@@ -95,7 +95,7 @@ Error bars are convenient because they allow us to show many estimates with thei
 (ref:mean-chocolate-ratings) Mean chocolate flavor ratings and associated confidence intervals for chocolate bars from manufacturers in six different countries. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/mean-chocolate-ratings-1.png" alt="(ref:mean-chocolate-ratings)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/mean-chocolate-ratings-1.png" alt="(ref:mean-chocolate-ratings)" width="750" />
 <p class="caption">(\#fig:mean-chocolate-ratings)(ref:mean-chocolate-ratings)</p>
 </div>
 
@@ -106,7 +106,7 @@ Assessing significance from Figure \@ref(fig:mean-chocolate-ratings) is difficul
 (ref:chocolate-ratings-contrasts) Mean chocolate flavor ratings for manufacturers from five different countries, relative to the mean rating of U.S. chocolate bars. Canadian chocolate bars are significantly higher rated that U.S. bars. For the other four countries there is no significant difference in mean rating to the U.S. at the 95% confidence level. Confidence levels have been adjusted for multiple comparisons using Dunnett's method. Data source: Brady Brelinski, Manhattan Chocolate Society
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/chocolate-ratings-contrasts-1.png" alt="(ref:chocolate-ratings-contrasts)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/chocolate-ratings-contrasts-1.png" alt="(ref:chocolate-ratings-contrasts)" width="750" />
 <p class="caption">(\#fig:chocolate-ratings-contrasts)(ref:chocolate-ratings-contrasts)</p>
 </div>
 
@@ -115,7 +115,7 @@ In the preceding figures, I have used two different types of error bars, graded 
 (ref:confidence-visualizations) Mean chocolate flavor ratings for manufacturers from four different countries, relative to the mean rating of U.S. chocolate bars. Each panel uses a different approach to visualizing the same uncertainty information. (a) Graded error bars with cap. (b) Graded error bars without cap. (c) Single-interval error bars with cap. (d) Single-interval error bars without cap. (e) Confidence strips. (f) Confidence distributions.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/confidence-visualizations-1.png" alt="(ref:confidence-visualizations)" width="892.5" />
+<img src="visualizing_uncertainty_files/figure-html/confidence-visualizations-1.png" alt="(ref:confidence-visualizations)" width="825" />
 <p class="caption">(\#fig:confidence-visualizations)(ref:confidence-visualizations)</p>
 </div>
 
@@ -153,7 +153,7 @@ To summarize, a Bayesian credible interval makes a statement about the true para
 (ref:bayes-vs-ols) Comparison of frequentist confidence intervals and Bayesian credible intervals for mean chocolate ratings. We see that both approaches yield similar but not exactly identical results. In particular, the Bayesian estimates display a small amount of shrinkage, which is an adjustment of the most extreme parameter estimates towards the overall mean. (Note how the Bayesian estimate for Switzerland is slightly moved to the left and the Bayesian estimate for Peru is slightly moved to the right relative to the respective frequentist estimates.) The frequentist estimates and confidence intervals shown here are identical to the results for 95% confidence shown in Figure \@ref(fig:mean-chocolate-ratings). 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/bayes-vs-ols-1.png" alt="(ref:bayes-vs-ols)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/bayes-vs-ols-1.png" alt="(ref:bayes-vs-ols)" width="750" />
 <p class="caption">(\#fig:bayes-vs-ols)(ref:bayes-vs-ols)</p>
 </div>
 
@@ -167,7 +167,7 @@ The central goal of Bayesian estimation is to obtain the posterior distribution.
 (ref:bayes-ridgeline) Bayesian posterior distributions of mean chocolate bar ratings, shown as a ridgeline plot. The red dots represent the medians of each posterior distribution. Because it is difficult to convert a continuous distribution into specific confidence regions by eye, I have added shading under each curve to indicate the center 80%, 95%, and 99% of each posterior distribution.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/bayes-ridgeline-1.png" alt="(ref:bayes-ridgeline)" width="630" />
+<img src="visualizing_uncertainty_files/figure-html/bayes-ridgeline-1.png" alt="(ref:bayes-ridgeline)" width="750" />
 <p class="caption">(\#fig:bayes-ridgeline)(ref:bayes-ridgeline)</p>
 </div>
 
@@ -204,7 +204,7 @@ We can also draw confidence bands for non-linear curve fits. Such confidence ban
 (ref:mpg-uncertain) Fuel efficiency versus displacement, for 32 cars (1973–74 models). Each dot represents one car, and the smooth lines were obtained by fitting a cubic regression spline with 5 knots. (a) Best fit spline and confidence band. (b) Equally likely alternative fits drawn from the posterior distribution. Data source: Motor Trend, 1974.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/mpg-uncertain-1.png" alt="(ref:mpg-uncertain)" width="892.5" />
+<img src="visualizing_uncertainty_files/figure-html/mpg-uncertain-1.png" alt="(ref:mpg-uncertain)" width="825" />
 <p class="caption">(\#fig:mpg-uncertain)(ref:mpg-uncertain)</p>
 </div>
 
@@ -219,7 +219,7 @@ To illustrate the concept of a HOP, let's go back once more to chocolate bar rat
 (ref:chocolate-HOP-static) (for print edition) Schematic of a hypothetical outcome plot for chocolate bar ratings of Canadian and U.S. manufactured bars. Each vertical green bar represents the rating for one bar, and each panel shows a comparison of two randomly chosen bars, one each from a Canadian manufacturer and a U.S. manufacturer. In an actual hypothetical outcome plot, the display would cycle between the distinct plot panels instead of showing them side-by-side.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/chocolate-HOP-static-1.png" alt="(ref:chocolate-HOP-static)" width="892.5" />
+<img src="visualizing_uncertainty_files/figure-html/chocolate-HOP-static-1.png" alt="(ref:chocolate-HOP-static)" width="825" />
 <p class="caption">(\#fig:chocolate-HOP-static)(ref:chocolate-HOP-static)</p>
 </div>
 
@@ -236,7 +236,7 @@ As a second example, consider the variation in shapes among equally probable tre
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_uncertainty_files/figure-html/mpg-uncertain-HOP-static-1.png" alt="(ref:mpg-uncertain-HOP-static)" width="892.5" />
+<img src="visualizing_uncertainty_files/figure-html/mpg-uncertain-HOP-static-1.png" alt="(ref:mpg-uncertain-HOP-static)" width="825" />
 <p class="caption">(\#fig:mpg-uncertain-HOP-static)(ref:mpg-uncertain-HOP-static)</p>
 </div>
 
