@@ -42,9 +42,11 @@ lincoln_weather %>%
 
 
 lincoln_errbar <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  stat_summary(fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
-               fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
-               fatten = 5) +
+  stat_summary(
+    fun.y = mean, fun.ymax = function(x) {mean(x) + 2*sd(x)},
+    fun.ymin = function(x) {mean(x) - 2*sd(x)}, geom = "pointrange",
+    fatten = 5
+  ) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
   theme_dviz_open() +

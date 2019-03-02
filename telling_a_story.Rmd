@@ -28,43 +28,63 @@ The preprint server physicists developed and still use today is called arXiv.org
 
 (ref:q-bio-monthly-growth) Growth in monthly submissions to the quantitative biology (q-bio) section of the preprint server arXiv.org. A sharp transition in the rate of growth can be seen around 2014. While growth was rapid up to 2014, almost no growth occurred from 2014 to 2018. Note that the *y* axis is logarithmic, so a linear increase in *y* corresponds to exponential growth in preprint submissions. Data source: Jordan Anaya, http://www.prepubmed.org/
 
-```{r q-bio-monthly-growth, fig.asp = 0.75, fig.cap = '(ref:q-bio-monthly-growth)'}
+```{r q-bio-monthly-growth, fig.cap = '(ref:q-bio-monthly-growth)'}
 preprint_growth %>% filter(archive %in% c("bioRxiv", "arXiv q-bio")) %>%
 filter(count > 0) -> df_preprints
 
 df_final <- filter(df_preprints, date == max(date))
 df_final_qbio <- filter(df_final, archive == "arXiv q-bio")
 
-ggplot(filter(df_preprints, archive == "arXiv q-bio"),
-       aes(date, count, color = archive)) + 
+ggplot(
+  filter(df_preprints, archive == "arXiv q-bio"),
+  aes(date, count, color = archive)
+) + 
   geom_line(size = 0.75) +
-  scale_y_log10(limits = c(40, 400), breaks = c(50, 100, 200, 300), expand = c(0, 0),
-                name = "preprints / month",
-                sec.axis = dup_axis(breaks = df_final_qbio$count,
-                                    labels = df_final_qbio$archive,
-                                    name = NULL)) + 
+  scale_y_log10(
+    limits = c(40, 400),
+    breaks = c(50, 100, 200, 300),
+    expand = c(0, 0),
+    name = "preprints / month",
+    sec.axis = dup_axis(
+      breaks = df_final_qbio$count,
+      labels = df_final_qbio$archive,
+      name = NULL
+    )
+  ) + 
   scale_x_date(name = "year", expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
   theme_dviz_grid() +
-  theme(axis.ticks.y.right = element_blank(),
-        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
+  theme(
+    axis.ticks.y.right = element_blank(),
+    axis.text.y.right = element_text(size = 14, margin = margin(0, 0, 0, 0))
+  )
 ```
 
 I will argue that late 2013 marks the point in time when preprints took off in biology, and ironically this caused the q-bio archive to slow its growth. In November 2013, the biology-specific preprint server bioRxiv was launched by Cold Spring Harbor Laboratory (CSHL) Press. CSHL Press is a publisher that is highly respected among biologists. The backing of CSHL Press helped tremendously with the acceptance of preprints in general and bioRxiv in particular among biologists. The same biologists that would have been quite suspicious of arXiv.org were much more comfortable with bioRxiv. As a result bioRxiv quickly gained acceptance among biologists, to a degree that arXiv had never managed. In fact, soon after its launch, bioRxiv started experiencing rapid, exponential growth in monthly submissions, and the slowdown in q-bio submissions exactly coincides with the start of this exponential growth in bioRxiv (Figure \@ref(fig:q-bio-bioRxiv-monthly-growth)). It appears to be the case that many quantitative biologists who otherwise might have deposited a preprint with q-bio decided to deposit it with bioRxiv instead.
 
 (ref:q-bio-bioRxiv-monthly-growth) The leveling off of submission growth to q-bio coincided with the introduction of the bioRxiv server. Shown are the growth in monthly submissions to the q-bio section of the general-purpose preprint server arxiv.org and to the dedicated biology preprint server bioRxiv. The bioRxiv server went live in November 2013, and its submission rate has grown exponentially since. It seems likely that many scientists who otherwise would have submitted preprints to q-bio chose to submit to bioRxiv instead. Data source: Jordan Anaya, http://www.prepubmed.org/
 
-```{r q-bio-bioRxiv-monthly-growth, fig.asp = 0.75, fig.cap = '(ref:q-bio-bioRxiv-monthly-growth)'}
-ggplot(df_preprints, aes(date, count, color = archive)) + geom_line(size = 0.75) +
-  scale_y_log10(limits = c(30, 1600), breaks = c(30, 100, 300, 1000), expand = c(0, 0),
-                name = "preprints / month",
-                sec.axis = dup_axis(breaks = df_final$count, labels = df_final$archive,
-                                    name = NULL)) + 
+```{r q-bio-bioRxiv-monthly-growth, fig.cap = '(ref:q-bio-bioRxiv-monthly-growth)'}
+ggplot(df_preprints, aes(date, count, color = archive)) + 
+  geom_line(size = 0.75) +
+  scale_y_log10(
+    limits = c(29, 1600),
+    breaks = c(30, 100, 300, 1000),
+    expand = c(0, 0),
+    name = "preprints / month",
+    sec.axis = dup_axis(
+      breaks = df_final$count,
+      labels = df_final$archive,
+      name = NULL
+    )
+  ) + 
   scale_x_date(name = "year", expand = c(0, 0)) +
   scale_color_manual(values = c("#D55E00", "#0072B2"), guide = "none") +
   theme_dviz_grid() +
-  theme(axis.ticks.y.right = element_blank(),
-        axis.text.y.right = element_text(margin = margin(0, 0, 0, 0)))
+  theme(
+    axis.ticks.y.right = element_blank(),
+    axis.text.y.right = element_text(size = 14, margin = margin(0, 0, 0, 0))
+  )
 ```
 
 This is my story about preprints in biology. I purposefully told it with two figures, even though the first (Figure \@ref(fig:q-bio-monthly-growth)) is fully contained within the second (Figure \@ref(fig:q-bio-bioRxiv-monthly-growth)). I think this story has the strongest impact when broken into two pieces, and this is how I would present it in a talk. However, Figure \@ref(fig:q-bio-bioRxiv-monthly-growth) alone can be used to tell the entire story, and the single-figure version might be more suitable to a medium where the audience can be expected to have short attention span, such as in a social media post. 
@@ -86,7 +106,7 @@ The first thing that will get in the way of making a figure for the generals is,
 
 (ref:arrival-delay-vs-distance) Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination in 2013. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistently lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled.  This figure is labeled as "bad" because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
-```{r arrival-delay-vs-distance, fig.width = 8, fig.cap = '(ref:arrival-delay-vs-distance)'}
+```{r arrival-delay-vs-distance, fig.width = 5*6/4.2, fig.cap = '(ref:arrival-delay-vs-distance)'}
 library(nycflights13)
 carrier_names <- data.frame(carrier = c("9E", "AA", "B6", "DL", "EV", "MQ", "UA", "US", "WN", "--"),
                             name= c("Endeavor", "American", "JetBlue", "Delta", "ExpressJet", "Envoy", "United",
@@ -190,9 +210,13 @@ This recommendation is particularly relevant if the final figure is a small mult
 (ref:united-departures-weekdays) United Airlines departures out of Newark Airport (EWR) in 2013, by weekday. Most weekdays show approximately the same number of departures, but there are fewer departures on weekends. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 ```{r united-departures-weekdays, fig.width = 3.5, fig.asp = 1, fig.cap = '(ref:united-departures-weekdays)'}
-flights_grouped$name <- factor(flights_grouped$name,
-                               levels = c("United", "ExpressJet", "JetBlue", "Delta", "American",
-                                          "Endeavor", "Envoy", "US Airways", "Southwest", "other"))
+flights_grouped$name <- factor(
+  flights_grouped$name,
+  levels = c(
+    "United", "ExpressJet", "JetBlue", "Delta", "American",
+    "Endeavor", "Envoy", "US Airways", "Southwest", "other"
+  )
+)
 
 filter(flights_grouped, name == "United" & origin == "EWR") %>%
   ggplot(aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
@@ -228,7 +252,7 @@ filter(flights_grouped, name == "United" & origin == "EWR") %>%
 
 (ref:all-departures-weekdays) Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR),  JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
  
-```{r all-departures-weekdays, fig.width = 8.5, fig.asp = .4, fig.cap = '(ref:all-departures-weekdays)'}
+```{r all-departures-weekdays, fig.width = 7.5*6/4.2, fig.asp = .4, fig.cap = '(ref:all-departures-weekdays)'}
 ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) + 
   geom_bar(fill = "#0072B2D0", color = "white") + 
   facet_grid(origin ~ name) +
@@ -239,12 +263,14 @@ ggplot(flights_grouped, aes(x = wday(time_hour, label = TRUE, week_start = 1))) 
     name = "weekday"
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_hgrid(12, dviz_font_family_condensed) +
+  theme_dviz_hgrid(12, rel_small = 1, dviz_font_family_condensed) +
   theme(
     strip.text = element_text(
       family = dviz_font_family_bold_condensed,
       margin = margin(3, 3, 3, 3)
     ),
+    axis.title = element_text(size = 14),
+    axis.ticks = element_line(color = "gray80"),
     axis.line.x = element_blank(),
     panel.spacing.x = grid::unit(5, "pt"),
     panel.spacing.y = grid::unit(5, "pt"),
@@ -288,7 +314,7 @@ ggplot(df, aes(x = pet, y = households, fill = highlight)) +
     aes(label = paste0(signif(households*1e-6, 2), "M")),
     hjust = 0,
     nudge_y = 0.1e6,
-    size = 12/.pt,
+    size = 14/.pt,
     family = dviz_font_family,
     label.size = 0, # no label outline
     label.padding = unit(2, "pt"),
@@ -307,7 +333,7 @@ ggplot(df, aes(x = pet, y = households, fill = highlight)) +
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = c("#B0B0B0D0", "#BD3828D0"), guide = "none") +
-  theme_dviz_vgrid(font_size = 12, rel_small = 1) +
+  theme_dviz_vgrid(rel_small = 1) +
   theme(
     axis.line = element_blank(),
     axis.ticks = element_blank(),
@@ -332,13 +358,16 @@ images <- list(
 )
 
 ggplot(df, aes(x = pet, y = households, image = pet)) +
-  geom_isotype_col(img_width = grid::unit(5000000, "native"), img_height = NULL, nrow = 1, ncol = NA,
-                   hjust = 0, vjust = 0.5) +
+  geom_isotype_col(
+    img_width = grid::unit(5000000, "native"), img_height = NULL,
+    nrow = 1, ncol = NA,
+    hjust = 0, vjust = 0.5
+  ) +
   geom_label(
     aes(label = paste0(signif(households*1e-6, 2), "M")),
     hjust = 0,
     nudge_y = 0.1e6,
-    size = 12/.pt,
+    size = 14/.pt,
     family = dviz_font_family,
     label.size = 0, # no label outline
     label.padding = unit(2, "pt"),
@@ -358,7 +387,7 @@ ggplot(df, aes(x = pet, y = households, image = pet)) +
     #position = "right",
     expand = c(0, 0)
   ) +
-  theme_dviz_vgrid(font_size = 12, rel_small = 1) +
+  theme_dviz_vgrid(rel_small = 1) +
   theme(
     axis.line = element_blank(),
     axis.ticks = element_blank(),

@@ -39,7 +39,7 @@ Consider a 3D scatter plot of fuel efficiency versus displacement and power for 
 (ref:mtcars-3d) Fuel efficiency versus displacement and power for 32 cars (1973–74 models). Each dot represents one car, and the dot color represents the number of cylinders of the car. The four panels (a)--(d) show exactly the same data but use different perspectives. Data source: *Motor Trend,* 1974.
 
 
-```{r mtcars-3d, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d)'}
+```{r mtcars-3d, fig.width = 5*6/4.2, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d)'}
 library(plot3D)
 library(cowplot)
 set_null_device("png")
@@ -48,25 +48,38 @@ colors <- c("#0072B2", "#CC79A7", "#E69F00")
 
 cyls <- data.frame(cyl = factor(c(4, 6, 8)))
 
-p <- ggplot(cyls, aes(cyl, cyl, color = cyl)) + geom_point() +
-  scale_color_manual(values = colors, name = "cylinders") +
-  theme_dviz_open(font_size = 12, font_family = dviz_font_family) +
-  theme(legend.position = "top",
-        legend.justification = "right")
+p <- ggplot(cyls, aes(cyl, cyl, color = cyl)) + 
+  geom_point(size = 2.5) +
+  scale_color_manual(
+    values = colors,
+    name = "cylinders ",
+    labels = c("4  ", "6  ", "8")
+  ) +
+  theme_dviz_open(font_size = 14, rel_small = 1, font_family = dviz_font_family) +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.key.width = unit(4, "pt")
+  )
 legend <- get_legend(p)
 
 pfun <- function(theta = 30, phi = 20) {
   function() {
-    par(xpd = NA,
-        bg = "transparent",
-        mai = c(0, 0.1, 0, 0),
-        family = dviz_font_family_condensed
+    par(
+      xpd = NA,
+      bg = "transparent",
+      mai = c(0, 0.1, 0, 0),
+      family = dviz_font_family_condensed
     )
-    scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
-              col = colors,
-              pch = 19, bty ="b2", theta = theta, phi = phi, colkey = FALSE, 
-              xlab = "displacement (cu. in.)", ylab ="power (hp)", zlab = "efficiency (mpg)",
-              cex.lab = 1) #0.857)
+    scatter3D(
+      mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
+      col = colors,
+      pch = 19, bty ="b2", theta = theta, phi = phi, colkey = FALSE, 
+      xlab = "displacement (cu. in.)",
+      ylab ="power (hp)",
+      zlab = "efficiency (mpg)",
+      cex.lab = 1.17
+    )
   }
 }
 
@@ -84,28 +97,34 @@ Our visual system nevertheless attempts to invert the 3D to 2D transformation. H
 
 (ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power for 32 cars (1973–74 models). The four panels (a)--(d) correspond to the same panels in Figure \@ref(fig:mtcars-3d), only that all grid lines providing depth cues have been removed. Data source: *Motor Trend,* 1974.
 
-```{r mtcars-3d-no-axes, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d-no-axes)'}
+```{r mtcars-3d-no-axes, fig.width = 5*6/4.2, fig.asp = 1.1, fig.cap = '(ref:mtcars-3d-no-axes)'}
 pfun2 <- function(theta = 30, phi = 20) {
   function() {
-    par(xpd = NA,
-        bg = "transparent",
-        mai = c(0, 0.1, 0, 0),
-        family = dviz_font_family_condensed
+    par(
+      xpd = NA,
+      bg = "transparent",
+      mai = c(0, 0.1, 0, 0),
+      family = dviz_font_family_condensed
     )
-    scatter3D(mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
-              col = colors,
-              pch = 19, axes = FALSE, theta = theta, phi = phi, colkey = FALSE, box = FALSE,
-              cex.lab = 1) #0.857)
+    scatter3D(
+      mtcars$disp, mtcars$hp, mtcars$mpg, colvar = mtcars$cyl,
+      col = colors,
+      pch = 19, axes = FALSE, theta = theta, phi = phi,
+      colkey = FALSE, box = FALSE,
+      cex.lab = 1.17
+    )
   }
 }
 
 
-plot_grid(pfun2(30, 20), pfun2(-30, 20), 
-          NULL, legend,
-          pfun2(30, 40), pfun2(-30, 40),
-          rel_heights = c(1, 0.1, 1), ncol = 2,
-          labels = c("a", "b", "", "", "c", "d"),
-          label_fontface = "plain", label_fontfamily = dviz_font_family)
+plot_grid(
+  pfun2(30, 20), pfun2(-30, 20), 
+  NULL, legend,
+  pfun2(30, 40), pfun2(-30, 40),
+  rel_heights = c(1, 0.1, 1), ncol = 2,
+  labels = c("a", "b", "", "", "c", "d"),
+  label_fontface = "plain", label_fontfamily = dviz_font_family
+)
 
 ```
 
@@ -115,7 +134,7 @@ Here, I want to show two alternative ways of plotting exactly the variables used
 
 (ref:mtcars-2d-multiple) Fuel efficiency versus displacement (a) and power (b). Data source: *Motor Trend,* 1974.
 
-```{r mtcars-2d-multiple, fig.asp = .45, fig.cap = '(ref:mtcars-2d-multiple)'}
+```{r mtcars-2d-multiple, fig.width = 5*6/4.2, fig.asp = .45, fig.cap = '(ref:mtcars-2d-multiple)'}
 p1 <- ggplot(mtcars, aes(x = disp, y = mpg, color = factor(cyl))) +
   geom_point(size = 1.5) + 
   scale_color_manual(values = colors, name = "cylinders", guide = "none") +
@@ -132,11 +151,12 @@ p2 <- ggplot(mtcars, aes(x = hp, y = mpg, color = factor(cyl))) +
   theme(
     legend.position = c(1, 1),
     legend.justification = c(1, 1),
-    legend.spacing.y = grid::unit(3, "pt")
+    legend.spacing.y = grid::unit(3, "pt"),
+    legend.key.width = unit(6, "pt")
   )
 
 
-plot_grid(p1, p2, labels = "auto")
+plot_grid(p1, align_legend(p2), labels = "auto")
 ```
 
 (ref:mtcars-2d-size) Power versus displacement for 32 cars, with fuel efficiency represented by dot size. Data source: *Motor Trend,* 1974.
@@ -170,7 +190,7 @@ You may wonder whether the problem with 3D scatter plots is that the actual data
 
 (ref:VA-death-rates-3d) Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons. This figure is labeled as "bad" because the 3D perspective makes the plot difficult to read. Data source: @Molyneaux-et-al-1947
 
-```{r VA-death-rates-3d, fig.width = 4.64, fig.asp = 0.8, fig.cap = '(ref:VA-death-rates-3d)'}
+```{r VA-death-rates-3d, fig.width = 5, fig.asp = 0.8, fig.cap = '(ref:VA-death-rates-3d)'}
 pfun3 <- function() {
 
   par(xpd = NA,
@@ -216,15 +236,19 @@ In general, it is better to use Trellis plots (Chapter \@ref(multi-panel-figures
 
 (ref:VA-death-rates-Trellis) Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons.  Data source: @Molyneaux-et-al-1947
 
-```{r VA-death-rates-Trellis, fig.cap = '(ref:VA-death-rates-Trellis)'}
+```{r VA-death-rates-Trellis, fig.width = 5*6/4.2, fig.cap = '(ref:VA-death-rates-Trellis)'}
 df <- data.frame(VADeaths)
 df$age <- row.names(df)
 row.names(df) <- NULL
 df_long <- gather(df, type, rate, -age) %>%
-  mutate(type = case_when(type == "Urban.Male" ~ "urban male",
-                          type == "Urban.Female" ~ "urban female",
-                          type == "Rural.Male" ~ "rural male",
-                          type == "Rural.Female" ~ "rural female"))
+  mutate(type = 
+    case_when(
+      type == "Urban.Male" ~ "urban male",
+      type == "Urban.Female" ~ "urban female",
+      type == "Rural.Male" ~ "rural male",
+      type == "Rural.Female" ~ "rural female"
+    )
+  )
 ggplot(df_long, aes(age, rate)) + 
   geom_col(fill = "#56B4E9D0") + 
   facet_wrap(~type) +

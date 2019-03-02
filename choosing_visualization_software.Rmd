@@ -26,36 +26,57 @@ Throughout this book, we have seen many examples of figures that reproduce but d
 
 (ref:lincoln-repro) Repeat and reproduction of a figure. Part (a) is a near-complete repeat of Figure \@ref(fig:lincoln-temp-jittered). With exception of the exact sizes of the text elements and points, which were adjusted so the figure remains legible at the reduced size, the two figures are identical down to the random jitter that was applied to each point. By contrast, part (b) is a reproduction but not a repeat. In particular, the jitter in part (b) differs from the jitter in part (a) or in Figure \@ref(fig:lincoln-temp-jittered).
 
-```{r lincoln-repro, fig.width = 8.5, fig.asp = .32, fig.cap = '(ref:lincoln-repro)'}
-ggridges::lincoln_weather %>% mutate(month_short = fct_recode(Month,
-                                                    Jan = "January",
-                                                    Feb = "February",
-                                                    Mar = "March",
-                                                    Apr = "April",
-                                                    May = "May",
-                                                    Jun = "June",
-                                                    Jul = "July",
-                                                    Aug = "August",
-                                                    Sep = "September",
-                                                    Oct = "October",
-                                                    Nov = "November",
-                                                    Dec = "December")) %>%
+```{r lincoln-repro, fig.width = 5.5*6/4.2, fig.asp = .32, fig.cap = '(ref:lincoln-repro)'}
+ggridges::lincoln_weather %>% 
+  mutate(
+    month_short = fct_recode(
+      Month,
+      Jan = "January",
+      Feb = "February",
+      Mar = "March",
+      Apr = "April",
+      May = "May",
+      Jun = "June",
+      Jul = "July",
+      Aug = "August",
+      Sep = "September",
+      Oct = "October",
+      Nov = "November",
+      Dec = "December"
+    )
+  ) %>%
   mutate(month_short = fct_rev(month_short)) -> lincoln_df
 
-lincoln1 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_point(position = position_jitter(width = .15, height = 0, seed = 320),
-             size = .5) +
+lincoln1 <- ggplot(
+  lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)
+) +
+  geom_point(
+    position = position_jitter(width = .15, height = 0, seed = 320),
+    size = .35
+  ) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_dviz_open(12) + theme(plot.margin = margin(3, 12, 3, 1.5))
+  theme_dviz_open(.655*14) + 
+  theme(
+    axis.line = element_line(size = .655*.5),
+    axis.ticks = element_line(size = .655*.5),
+    plot.margin = margin(2, 6, 2, 1.5)
+  )
 
-lincoln2 <- ggplot(lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)) +
-  geom_point(position = position_jitter(width = .2, height = 0, seed = 321),
-             size = .5, color = darken("#0072B2", .3)) +
+lincoln2 <- ggplot(
+  lincoln_df, aes(x = month_short, y = `Mean Temperature [F]`)
+) +
+  geom_point(
+    position = position_jitter(width = .2, height = 0, seed = 321),
+    size = .5, color = darken("#0072B2", .3)
+  ) +
   xlab("month") + 
   ylab("mean temperature (°F)") +
-  theme_dviz_grid(12) + theme(axis.ticks.length = grid::unit(0, "pt"),
-                                 axis.ticks = element_blank())
+  theme_dviz_grid(12) + 
+  theme(
+    axis.ticks.length = grid::unit(0, "pt"),
+    axis.ticks = element_blank()
+  )
 
 plot_grid(lincoln1, lincoln2, labels = "auto", ncol = 2)
 ```
@@ -89,40 +110,60 @@ In the software I have used for this book, ggplot2, separation of content and de
 
 (ref:unemploy-themes) Number of unemployed persons in the U.S. from 1970 to 2015. The same figure is displayed using four different ggplot2 themes: (a) the default theme for this book; (b) the default theme of ggplot2, the plotting software I have used to make all figures in this book; (c) a theme that mimicks visualizations shown in the Economist; (d) a theme that mimicks visualizations shown by FiveThirtyEight. FiveThirtyEight often foregos axis labels in favor of plot titles and subtitles, and therefore I have adjusted the figure accordingly. Data source: U.S. Bureau of Labor Statistics
 
-```{r unemploy-themes, fig.width = 8.5, fig.asp = 0.75, fig.cap = '(ref:unemploy-themes)'}
+```{r unemploy-themes, fig.width = 5.5*6/4.2, fig.asp = 0.75, fig.cap = '(ref:unemploy-themes)'}
 unemploy_base <- ggplot(economics, aes(x = date, y = unemploy)) +
-  scale_y_continuous(name = "unemployed (x1000)",
-                     limits = c(0, 17000),
-                     breaks = c(0, 5000, 10000, 15000),
-                     labels = c("0", "5000", "10,000", "15,000"),
-                     expand = c(0.04, 0)) +
-  scale_x_date(name = "year",
-               expand = c(0.01, 0))
+  scale_y_continuous(
+    name = "unemployed (x1000)",
+    limits = c(0, 17000),
+    breaks = c(0, 5000, 10000, 15000),
+    labels = c("0", "5000", "10,000", "15,000"),
+    expand = c(0.04, 0)
+  ) +
+  scale_x_date(
+    name = "year",
+    expand = c(0.01, 0)
+  )
 
-unemploy_p1 <- unemploy_base + theme_dviz_grid(12) +
+unemploy_p1 <- unemploy_base + 
+  theme_dviz_grid(12) +
   geom_line(color = "#0072B2") +
-  theme(axis.ticks.length = grid::unit(0, "pt"),
-        axis.ticks = element_blank(),
-        plot.margin = margin(6, 6, 6, 2))
-unemploy_p2 <- unemploy_base + geom_line() + theme_gray()
-unemploy_p3 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = FALSE, size = .75) +
-  theme_economist() + scale_color_economist() +
-  theme(panel.grid.major = element_line(size = .75))
-unemploy_p4 <- unemploy_base + geom_line(aes(color = "unemploy"), show.legend = FALSE) +
-  scale_color_fivethirtyeight() +
-  labs(title = "United States unemployment",
-       subtitle = "Unemployed persons (in thousands) from 1967\nto 2015") +
-  theme_fivethirtyeight() +
-  theme(plot.title = element_text(size = 14))
+  theme(
+    axis.ticks.length = grid::unit(0, "pt"),
+    axis.ticks = element_blank(),
+    plot.margin = margin(6, 6, 6, 2)
+  )
 
-plot_grid(unemploy_p1, NULL, unemploy_p2, 
-          NULL, NULL, NULL,
-          unemploy_p3, NULL, unemploy_p4,
-          labels = c("a", "", "b", "", "", "", "c", "", "d"),
-          hjust = -.5,
-          vjust = 1.5,
-          rel_widths = c(1, .02, 1),
-          rel_heights = c(1, .02, 1))
+unemploy_p2 <- unemploy_base + geom_line() + theme_gray()
+
+unemploy_p3 <- unemploy_base + 
+  geom_line(aes(color = "unemploy"), show.legend = FALSE, size = .75) +
+  theme_economist() + 
+  scale_color_economist() +
+  theme(panel.grid.major = element_line(size = .75))
+
+unemploy_p4 <- unemploy_base + 
+  geom_line(aes(color = "unemploy"), show.legend = FALSE) +
+  scale_color_fivethirtyeight() +
+  labs(
+    title = "United States unemployment",
+    subtitle = "Unemployed persons (in thousands) from\n1967 to 2015"
+  ) +
+  theme_fivethirtyeight() +
+  theme(
+    plot.title = element_text(size = 12, margin = margin(0, 0, 3, 0)),
+    plot.subtitle = element_text(size = 10, lineheight = 1)
+  )
+
+plot_grid(
+  unemploy_p1, NULL, unemploy_p2, 
+  NULL, NULL, NULL,
+  unemploy_p3, NULL, unemploy_p4,
+  labels = c("a", "", "b", "", "", "", "c", "", "d"),
+  hjust = -.5,
+  vjust = 1.5,
+  rel_widths = c(1, .02, 1),
+  rel_heights = c(1, .02, 1)
+)
 ```
 
 Separation of content and design allows data scientists and designers to each focus on what they do best. Most data scientists are not designers, and therefore their primary concern should be the data, not the design of a visualization. Likewise, most designers are not data scientists, and they should be able provide a unique and appealing visual language for figures without having to worry about specific data, appropriate transformations, and so on. The same principle of separating content and design has long been followed in the publishing world of books, magazines, newspapers, and websites, where writers provide content but not layout or design. Layout and design are created by a separate group of people who specialize in this area and who ensure that the publication appears in a visually consistent and appealing style. This principle is logical and useful, but it is not yet that widespread in the data visualization world.
