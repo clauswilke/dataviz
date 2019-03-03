@@ -260,20 +260,29 @@ Figure \@ref(fig:table-examples) reproduces Table \@ref(tab:boxoffice-gross) fro
 
 (ref:table-examples) Examples of poorly and appropriately formatted tables, using the data from Table \@ref(tab:boxoffice-gross) in Chapter \@ref(visualizing-amounts). (a) This table violates numerous conventions of proper table formatting, including using vertical lines, using horizontal lines between data rows, and using centered data columns. (b) This table suffers from all problems of Table (a), and in addition it creates additional visual noise by alternating between very dark and very light rows. Also, the table header is not strongly visually separated from the table body. (c) This is an appropriately formatted table with a minimal design. (d) Colors can be used effectively to group data into rows, but the color differences should be subtle. The table header can be set off by using a stronger color. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
-```{r table-examples, fig.width = 4.8*6/4.2, fig.asp = 0.58, fig.cap = '(ref:table-examples)'}
+```{r table-examples, fig.width = 5*6/4.2, fig.asp = 0.51, fig.cap = '(ref:table-examples)'}
 boxoffice <- tibble(
   Rank = 1:5,
-  Title = c("Star Wars", "Jumanji", "Pitch Perfect 3", "Greatest Showman", "Ferdinand"),
+  Title = c("Star Wars: The Last Jedi", "Jumanji: Welcome to the Jungle    ", "Pitch Perfect 3", "The Greatest Showman", "Ferdinand"),
   Amount = c("$71,565,498", "$36,169,328", "$19,928,525", "$8,805,843", "$7,316,746")
 )
 
-table_base_size = 12
+boxoffice_ctr <- tibble(
+  Rank = 1:5,
+  Title = c("Star Wars: The Last Jedi", "  Jumanji: Welcome to the Jungle  ", "Pitch Perfect 3", "The Greatest Showman", "Ferdinand"),
+  Amount = c("$71,565,498", "$36,169,328", "$19,928,525", "$8,805,843", "$7,316,746")
+)
+
+table_base_size = 10
 zgrob <- function(...) ggplot2::zeroGrob()
 
 tt1 <- ttheme_minimal(
   base_size = table_base_size,
   base_family = dviz_font_family,
   core = list(
+    fg_params = list(
+      fontface = rep(c(1L, 3L, 1L), each = 5)
+    ),
     bg_params = list(
       col = "black",
       lwd = 1
@@ -297,6 +306,7 @@ tt2 <- ttheme_default(
   base_family = dviz_font_family,
   core = list(
     fg_params = list(
+      fontface = rep(c(1L, 3L, 1L), each = 5),
       col = c("white", "black")
     ),
     bg_params = list(
@@ -325,6 +335,7 @@ tt3 <- ttheme_minimal(
   padding = unit(c(4, 3.2), "mm"),
   core = list(
     fg_params = list(
+      fontface = rep(c(1L, 3L, 1L), each = 5),
       hjust = rep(c(0.5, 0, 1), each = 5),
       x = rep(c(0.5, 0.1, 0.9), each = 5)
     ),
@@ -351,6 +362,7 @@ tt4 <- ttheme_default(
   base_family = dviz_font_family,
   core = list(
     fg_params = list(
+      fontface = rep(c(1L, 3L, 1L), each = 5),
       col = "black",
       hjust = rep(c(0.5, 0, 1), each = 5),
       x = rep(c(0.5, 0.1, 0.9), each = 5)
@@ -392,11 +404,11 @@ hline_bottom <- segmentsGrob(
   gp = gpar(lwd = 0.75, col = "black")
 )
 
-t1 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt1)
+t1 <- tableGrob(boxoffice_ctr, rows = rep("", nrow(boxoffice)), theme = tt1)
 t1$layout$clip <- "off"
 t1 <- gtable_add_padding(t1, margin(14, 16, 0, -2))
 
-t2 <- tableGrob(boxoffice, rows = rep("", nrow(boxoffice)), theme = tt2)
+t2 <- tableGrob(boxoffice_ctr, rows = rep("", nrow(boxoffice)), theme = tt2)
 t2$layout$clip <- "off"
 t2 <- gtable_add_padding(t2, margin(14, 16, 0, -2))
 
