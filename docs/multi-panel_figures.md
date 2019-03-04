@@ -26,7 +26,7 @@ Small multiples are a powerful tool to visualize very large amounts of data at o
 (ref:movie-rankings) Average movie rankings versus number of votes, for movies from 1906 to 2005. Dots represent individual movies, and lines represent the linear regression of the average ranking of each movie versus the logarithm of the number of votes the movie has received. In most years, movies with a higher number of votes have, on average, a higher average ranking. However, this trend has weakend towards the end of the 20th century, and a negative relationship can be seen for movies released in the early 2000s. Data Source: Internet Movie Database (IMDB, http://imdb.com/)
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/movie-rankings-1.png" alt="(ref:movie-rankings)" width="816" />
+<img src="multi-panel_figures_files/figure-html/movie-rankings-1.png" alt="(ref:movie-rankings)" width="754.285714285714" />
 <p class="caption">(\#fig:movie-rankings)(ref:movie-rankings)</p>
 </div>
 
@@ -35,7 +35,7 @@ For such large plots to be easily understandable, it is important that each pane
 (ref:BA-degrees-variable-y-lims) Trends in Bachelor's degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. This figure is labeled as "bad" because all panels use different *y*-axis ranges. This choice obscures the relative sizes of the different degree areas and it over-exagerates the changes that have happened in some of the degree areas. Data Source: National Center for Education Statistics
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/BA-degrees-variable-y-lims-1.png" alt="(ref:BA-degrees-variable-y-lims)" width="816" />
+<img src="multi-panel_figures_files/figure-html/BA-degrees-variable-y-lims-1.png" alt="(ref:BA-degrees-variable-y-lims)" width="754.285714285714" />
 <p class="caption">(\#fig:BA-degrees-variable-y-lims)(ref:BA-degrees-variable-y-lims)</p>
 </div>
 
@@ -44,7 +44,7 @@ Placing all panels onto the same *y* axis reveals, however, that this interpreta
 (ref:BA-degrees-fixed-y-lims) Trends in Bachelor's degrees conferred by U.S. institutions of higher learning. Shown are all degree areas that represent, on average, more than 4% of all degrees. Data Source: National Center for Education Statistics
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/BA-degrees-fixed-y-lims-1.png" alt="(ref:BA-degrees-fixed-y-lims)" width="816" />
+<img src="multi-panel_figures_files/figure-html/BA-degrees-fixed-y-lims-1.png" alt="(ref:BA-degrees-fixed-y-lims)" width="754.285714285714" />
 <p class="caption">(\#fig:BA-degrees-fixed-y-lims)(ref:BA-degrees-fixed-y-lims)</p>
 </div>
 
@@ -65,7 +65,7 @@ Notice how unlike in my small multiples examples, the individual panels of the c
 (ref:BA-degrees-compound) Trends in Bachelor's Degrees conferred by U.S. institutions of higher learning. (a) From 1970 to 2015, the total number of degrees nearly doubled. (b) Among the most popular degree areas, social sciences, history, and education experienced a major decline, while business and health professions grew. Data Source: National Center for Education Statistics
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/BA-degrees-compound-1.png" alt="(ref:BA-degrees-compound)" width="816" />
+<img src="multi-panel_figures_files/figure-html/BA-degrees-compound-1.png" alt="(ref:BA-degrees-compound)" width="754.285714285714" />
 <p class="caption">(\#fig:BA-degrees-compound)(ref:BA-degrees-compound)</p>
 </div>
 
@@ -74,7 +74,7 @@ When labeling the different panels of a compound figure, pay attention to how th
 (ref:BA-degrees-compound-bad) Variation of Figure \@ref(fig:BA-degrees-compound) with poor labeling. The labels are too large and thick, they are in the wrong font, and they are placed in an awkward location. Also, while labeling with capital letters is fine and is in fact quite common, labeling needs to be consistent across all figures in a document. In this book, the convention is that multi-panel figures use lower lower-case labels, and thus this figure is inconsistent with the other figures in this book.
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/BA-degrees-compound-bad-1.png" alt="(ref:BA-degrees-compound-bad)" width="816" />
+<img src="multi-panel_figures_files/figure-html/BA-degrees-compound-bad-1.png" alt="(ref:BA-degrees-compound-bad)" width="754.285714285714" />
 <p class="caption">(\#fig:BA-degrees-compound-bad)(ref:BA-degrees-compound-bad)</p>
 </div>
 
@@ -86,7 +86,7 @@ Let's look at an example that violates this principle. Figure \@ref(fig:athletes
 (ref:athletes-composite-inconsistent) Physiology and body-composition of male and female athletes. (a) The data set encompasses 73 female and 85 male professional athletes. (b) Male athletes tend to have higher red blood cell (RBC, reported in units of $10^{12}$ per liter) counts than female athletes, but there are no such differences for white blood cell counts (WBC, reported in units of $10^{9}$ per liter). (c) Male athletes tend to have a lower body fat percentage than female athletes performing in the same sport. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/athletes-composite-inconsistent-1.png" alt="(ref:athletes-composite-inconsistent)" width="576" />
+<img src="multi-panel_figures_files/figure-html/athletes-composite-inconsistent-1.png" alt="(ref:athletes-composite-inconsistent)" width="685.714285714286" />
 <p class="caption">(\#fig:athletes-composite-inconsistent)(ref:athletes-composite-inconsistent)</p>
 </div>
 
@@ -95,7 +95,7 @@ Figure \@ref(fig:athletes-composite-good) fixes all these issues. In this figure
 (ref:athletes-composite-good) Physiology and body-composition of male and female athletes. This figure shows the exact same data as Figure \@ref(fig:athletes-composite-inconsistent), but now using a consistent visual language. Data for female athletes is always shown to the left of the corresponding data for male athletes, and genders are consistently color-coded throughout all elements of the figure. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/athletes-composite-good-1.png" alt="(ref:athletes-composite-good)" width="576" />
+<img src="multi-panel_figures_files/figure-html/athletes-composite-good-1.png" alt="(ref:athletes-composite-good)" width="685.714285714286" />
 <p class="caption">(\#fig:athletes-composite-good)(ref:athletes-composite-good)</p>
 </div>
 
@@ -104,6 +104,6 @@ Finally, we need to pay attention to the alignment of individual figure panels i
 (ref:athletes-composite-misaligned) Variation of Figure \@ref(fig:athletes-composite-good) where all figure panels are slightly misaligned. Misalignments are ugly and should be avoided.
 
 <div class="figure" style="text-align: center">
-<img src="multi-panel_figures_files/figure-html/athletes-composite-misaligned-1.png" alt="(ref:athletes-composite-misaligned)" width="576" />
+<img src="multi-panel_figures_files/figure-html/athletes-composite-misaligned-1.png" alt="(ref:athletes-composite-misaligned)" width="685.714285714286" />
 <p class="caption">(\#fig:athletes-composite-misaligned)(ref:athletes-composite-misaligned)</p>
 </div>

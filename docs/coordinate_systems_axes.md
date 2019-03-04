@@ -23,7 +23,7 @@ A Cartesian coordinate system can have two axes representing two different units
 (ref:temperature-normals-Houston) Daily temperature normals for Houston, TX. Temperature is mapped to the *y* axis and day of the year to the *x* axis. Parts (a), (b), and (c) show the same figure in different aspect ratios. All three parts are valid visualizations of the temperature data. Data source: NOAA.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-1.png" alt="(ref:temperature-normals-Houston)" width="576" />
+<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-1.png" alt="(ref:temperature-normals-Houston)" width="685.714285714286" />
 <p class="caption">(\#fig:temperature-normals-Houston)(ref:temperature-normals-Houston)</p>
 </div>
 
@@ -32,7 +32,7 @@ On the other hand, if the *x* and the *y* axes are measured in the same units, t
 (ref:temperature-normals-Houston-San-Diego) Daily temperature normals for Houston, TX, plotted versus the respective temperature normals of San Diego, CA. The first days of the months January, April, July, and October are highlighted to provide a temporal reference. (a) Temperatures are shown in degrees Fahrenheit. (b) Temperatures are shown in degrees Celsius. Data source: NOAA.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-San-Diego-1.png" alt="(ref:temperature-normals-Houston-San-Diego)" width="816" />
+<img src="coordinate_systems_axes_files/figure-html/temperature-normals-Houston-San-Diego-1.png" alt="(ref:temperature-normals-Houston-San-Diego)" width="754.285714285714" />
 <p class="caption">(\#fig:temperature-normals-Houston-San-Diego)(ref:temperature-normals-Houston-San-Diego)</p>
 </div>
 
@@ -59,14 +59,14 @@ Because multiplication on a log scale looks like addition on a linear scale, log
 (ref:texas-counties-pop-ratio-log) Population numbers of Texas counties relative to their median value. Select counties are highlighted by name. The dashed line indicates a ratio of 1, corresponding to a county with median population number. The most populous counties have approximately 100 times more inhabitants than the median county, and the least populous counties have approximately 100 times fewer inhabitants than the median county. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-log-1.png" alt="(ref:texas-counties-pop-ratio-log)" width="720" />
+<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-log-1.png" alt="(ref:texas-counties-pop-ratio-log)" width="685.714285714286" />
 <p class="caption">(\#fig:texas-counties-pop-ratio-log)(ref:texas-counties-pop-ratio-log)</p>
 </div>
 
 (ref:texas-counties-pop-ratio-lin) Population sizes of Texas counties relative to their median value. By displaying a ratio on a linear scale, we have overemphasized ratios > 1 and have obscured ratios < 1. As a general rule, ratios should not be displayed on a linear scale. Data source: 2010 Decennial U.S. Census.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-lin-1.png" alt="(ref:texas-counties-pop-ratio-lin)" width="720" />
+<img src="coordinate_systems_axes_files/figure-html/texas-counties-pop-ratio-lin-1.png" alt="(ref:texas-counties-pop-ratio-lin)" width="685.714285714286" />
 <p class="caption">(\#fig:texas-counties-pop-ratio-lin)(ref:texas-counties-pop-ratio-lin)</p>
 </div>
 
@@ -88,7 +88,7 @@ Despite these problems with square-root scales, they are valid position scales a
 (ref:northeast-state-areas) Areas of Northeastern U.S. states. (a) Areas shown on a linear scale. (b) Areas shown on a square-root scale. Data source: Google. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/northeast-state-areas-1.png" alt="(ref:northeast-state-areas)" width="816" />
+<img src="coordinate_systems_axes_files/figure-html/northeast-state-areas-1.png" alt="(ref:northeast-state-areas)" width="754.285714285714" />
 <p class="caption">(\#fig:northeast-state-areas)(ref:northeast-state-areas)</p>
 </div>
 
@@ -99,7 +99,7 @@ All coordinate systems we have encountered so far used two straight axes positio
 (ref:polar-coord) Relationship between Cartesian and polar coordinates. (a) Three data points shown in a Cartesian coordinate system. (b) The same three data points shown in a polar coordinate system. We have taken the *x* coordinates from part (a) and used them as angular coordinates and the *y* coordinates from part (a) and used them as radial coordinates. The circular axis runs from 0 to 4 in this example, and therefore *x* = 0 and *x* = 4 are the same locations in this coordinate system. 
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/polar-coord-1.png" alt="(ref:polar-coord)" width="576" />
+<img src="coordinate_systems_axes_files/figure-html/polar-coord-1.png" alt="(ref:polar-coord)" width="685.714285714286" />
 <p class="caption">(\#fig:polar-coord)(ref:polar-coord)</p>
 </div>
 
@@ -118,6 +118,6 @@ A second setting in which we encounter curved axes is in the context of geospati
 (ref:worldmap-four-projections) Map of the world, shown in four different projections. The Cartesian longitude and latitude system maps the longitude and latitude of each location onto a regular Cartesian coordinate system. This mapping causes substantial distortions in both areas and angles relative to their true values on the 3D globe. The interrupted Goode homolosine projection perfectly represents true surface areas, at the cost of dividing some land masses into separate pieces, most notably Greenland and Antarctica. The Robinson projection and the Winkel tripel projection both strike a balance between angular and area distortions, and they are commonly used for maps of the entire globe.
 
 <div class="figure" style="text-align: center">
-<img src="coordinate_systems_axes_files/figure-html/worldmap-four-projections-1.png" alt="(ref:worldmap-four-projections)" width="816" />
+<img src="coordinate_systems_axes_files/figure-html/worldmap-four-projections-1.png" alt="(ref:worldmap-four-projections)" width="754.285714285714" />
 <p class="caption">(\#fig:worldmap-four-projections)(ref:worldmap-four-projections)</p>
 </div>

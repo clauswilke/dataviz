@@ -30,7 +30,7 @@ Vector graphics are also called "resolution-independent," because they can be ma
 (ref:bitmap-zoom) Illustration of the key difference between vector graphics and bitmaps. (a) Original image. The black square indicates the area we are magnifying in parts (b) and (c). (b) Increasing magnification of the highlighted area from part (a) when the image has been stored as a bitmap graphic. We can see how the image becomes increasingly pixelated as we zoom in further. (c) Increasing magnification of a vector representation of the image. The image maintains perfect sharpness at arbitrary magnification levels.
 
 <div class="figure" style="text-align: center">
-<img src="image_file_formats_files/figure-html/bitmap-zoom-1.png" alt="(ref:bitmap-zoom)" width="816" />
+<img src="image_file_formats_files/figure-html/bitmap-zoom-1.png" alt="(ref:bitmap-zoom)" width="754.285714285714" />
 <p class="caption">(\#fig:bitmap-zoom)(ref:bitmap-zoom)</p>
 </div>
 
@@ -49,10 +49,10 @@ Photographic images rarely have multiple pixels of identical color and brightnes
 The most widely used lossy image format is jpeg (Table \@ref(tab:file-formats)), and indeed many digital cameras output images as jpeg by default. Jpeg compression works exceptionally well for photographic images, and huge reductions in file size can often be obtained with very little degradation in image quality. However, jpeg compression fails when images contain sharp edges, such as created by line drawings or by text. In those cases, jpeg compression can result in very noticeable artifacts (Figure \@ref(fig:jpeg-example)). 
 
 
-(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in red text above each image. A reduction in file size by a factor of 10, from 432kB in the original image to 43kB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25kB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. Photo credit: Claus O. Wilke 
+(ref:jpeg-example) Illustration of jpeg artifacts. (a) The same image is reproduced multiple times using increasingly severe jpeg compression. The resulting file size is shown in red text above each image. A reduction in file size by a factor of 10, from 432KB in the original image to 43KB in the compressed image, results in only minor perceptible reduction in image quality. However, a further reduction in file size by a factor of 2, to a mere 25KB, leads to numerous visible artifacts. (b) Zooming in to the most highly compressed image reveals the various compression artifacts. Photo credit: Claus O. Wilke 
 
 <div class="figure" style="text-align: center">
-<img src="figures/jpeg_example_combined.png" alt="(ref:jpeg-example)" width="576" />
+<img src="figures/jpeg_example_combined.png" alt="(ref:jpeg-example)" width="686" />
 <p class="caption">(\#fig:jpeg-example)(ref:jpeg-example)</p>
 </div>
 

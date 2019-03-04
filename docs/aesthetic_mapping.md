@@ -105,7 +105,7 @@ Figure \@ref(fig:temp-normals-vs-time) is a fairly standard visualization for a 
 (ref:four-locations-temps-by-month) Monthly normal mean temperatures for four locations in the U.S. Data source: NOAA 
 
 <div class="figure" style="text-align: center">
-<img src="aesthetic_mapping_files/figure-html/four-locations-temps-by-month-1.png" alt="(ref:four-locations-temps-by-month)" width="816" />
+<img src="aesthetic_mapping_files/figure-html/four-locations-temps-by-month-1.png" alt="(ref:four-locations-temps-by-month)" width="754.285714285714" />
 <p class="caption">(\#fig:four-locations-temps-by-month)(ref:four-locations-temps-by-month)</p>
 </div>
 

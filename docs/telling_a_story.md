@@ -54,7 +54,7 @@ The first thing that will get in the way of making a figure for the generals is,
 (ref:arrival-delay-vs-distance) Mean arrival delay versus distance from New York City. Each point represents one destination, and the size of each point represents the number of flights from one of the three major New York City airports (Newark, JFK, or LaGuardia) to that destination in 2013. Negative delays imply that the flight arrived early. Solid lines represent the mean trends between arrival delay and distance. Delta has consistently lower arrival delays than other airlines, regardless of distance traveled. American has among the lowest delays, on average, for short distances, but has among the highest delays for longer distances traveled.  This figure is labeled as "bad" because it is overly complex. Most readers will find it confusing and will not intuitively grasp what it is the figure is showing. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/arrival-delay-vs-distance-1.png" alt="(ref:arrival-delay-vs-distance)" width="768" />
+<img src="telling_a_story_files/figure-html/arrival-delay-vs-distance-1.png" alt="(ref:arrival-delay-vs-distance)" width="685.714285714286" />
 <p class="caption">(\#fig:arrival-delay-vs-distance)(ref:arrival-delay-vs-distance)</p>
 </div>
 
@@ -97,7 +97,7 @@ This recommendation is particularly relevant if the final figure is a small mult
 (ref:all-departures-weekdays) Departures out of airports in the New York city area in 2013, broken down by airline, airport, and weekday. United Airlines and ExpressJet make up most of the departures out of Newark Airport (EWR),  JetBlue, Delta, American, and Endeavor make up most of the departures out of JFK, and Delta, American, Envoy, and US Airways make up most of the departures out of LaGuardia (LGA). Most but not all airlines have fewer departures on weekends than during the work week. Data source: U.S. Dept. of Transportation, Bureau of Transportation Statistics.
  
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/all-departures-weekdays-1.png" alt="(ref:all-departures-weekdays)" width="816" />
+<img src="telling_a_story_files/figure-html/all-departures-weekdays-1.png" alt="(ref:all-departures-weekdays)" width="1028.57142857143" />
 <p class="caption">(\#fig:all-departures-weekdays)(ref:all-departures-weekdays)</p>
 </div>
 
@@ -133,7 +133,7 @@ When discussing compound figures in Chapter \@ref(compound-figures), I mentioned
 (ref:athletes-composite-repetitive) Physiology and body-composition of male and female athletes. Error bars indicate the standard error of the mean. This figure is overly repetitive. It shows the same data as Figure \@ref(fig:athletes-composite-good) and it uses a consistent visual language, but all sub-figures use the same type of visualization (bar plot). This makes it difficult for the reader to process that parts (a), (b), and (c) show entirely different results. Data source: @Telford-Cunningham-1991
 
 <div class="figure" style="text-align: center">
-<img src="telling_a_story_files/figure-html/athletes-composite-repetitive-1.png" alt="(ref:athletes-composite-repetitive)" width="576" />
+<img src="telling_a_story_files/figure-html/athletes-composite-repetitive-1.png" alt="(ref:athletes-composite-repetitive)" width="685.714285714286" />
 <p class="caption">(\#fig:athletes-composite-repetitive)(ref:athletes-composite-repetitive)</p>
 </div>
 

@@ -11,7 +11,7 @@ One critical component of every figure is the figure title. Every figure needs t
 (ref:corruption-development) Corruption and human development: The most developed countries experience the least corruption. This figure was inspired by a posting in @Economist-corruption. Data sources: Transparency International & UN Human Development Report
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/corruption-development-1.png" alt="(ref:corruption-development)" width="672" />
+<img src="figure_titles_captions_files/figure-html/corruption-development-1.png" alt="(ref:corruption-development)" width="685.714285714286" />
 <p class="caption">(\#fig:corruption-development)(ref:corruption-development)</p>
 </div>
 
@@ -20,7 +20,7 @@ Alternatively, I could incorporate the figure title---as well as other elements 
 (ref:corruption-development-infographic) Infographic version of Figure \@ref(fig:corruption-development). The title, subtitle, and data source statements have been incorporated into the figure. This figure could be posted on the web as is or otherwise used without separate caption block.
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/corruption-development-infographic-1.png" alt="(ref:corruption-development-infographic)" width="672" />
+<img src="figure_titles_captions_files/figure-html/corruption-development-infographic-1.png" alt="(ref:corruption-development-infographic)" width="685.714285714286" />
 <p class="caption">(\#fig:corruption-development-infographic)(ref:corruption-development-infographic)</p>
 </div>
 
@@ -91,7 +91,7 @@ Figure \@ref(fig:table-examples) reproduces Table \@ref(tab:boxoffice-gross) fro
 (ref:table-examples) Examples of poorly and appropriately formatted tables, using the data from Table \@ref(tab:boxoffice-gross) in Chapter \@ref(visualizing-amounts). (a) This table violates numerous conventions of proper table formatting, including using vertical lines, using horizontal lines between data rows, and using centered data columns. (b) This table suffers from all problems of Table (a), and in addition it creates additional visual noise by alternating between very dark and very light rows. Also, the table header is not strongly visually separated from the table body. (c) This is an appropriately formatted table with a minimal design. (d) Colors can be used effectively to group data into rows, but the color differences should be subtle. The table header can be set off by using a stronger color. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="576" />
+<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="685.714285714286" />
 <p class="caption">(\#fig:table-examples)(ref:table-examples)</p>
 </div>
 

@@ -37,7 +37,7 @@ A whole-world projection that is perfectly area-preserving is the Goode homolosi
 (ref:world-goode) Interrupted Goode homolosine projection of the world. This projection accurately preserves areas while minimizing angular distortions, at the cost of showing oceans and some land masses (Greenland, Antarctica) in a non-contiguous way.
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/world-goode-1.png" alt="(ref:world-goode)" width="816" />
+<img src="geospatial_data_files/figure-html/world-goode-1.png" alt="(ref:world-goode)" width="685.714285714286" />
 <p class="caption">(\#fig:world-goode)(ref:world-goode)</p>
 </div>
 
@@ -85,7 +85,7 @@ To visualize geospatial data in the proper context, we usually create maps consi
 (ref:sfbay-overview) Wind turbines in the San Francisco Bay Area. Individual wind turbines are shown as purple-colored dots. Two regions with a high concentration of wind turbines are highlighted with black rectangles. I refer to the wind turbines near Rio Vista collectively as the Shiloh Wind Farm. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data: United States Wind Turbine Database
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/sfbay-overview-1.png" alt="(ref:sfbay-overview)" width="816" />
+<img src="geospatial_data_files/figure-html/sfbay-overview-1.png" alt="(ref:sfbay-overview)" width="754.285714285714" />
 <p class="caption">(\#fig:sfbay-overview)(ref:sfbay-overview)</p>
 </div>
 
@@ -94,7 +94,7 @@ Figure \@ref(fig:sfbay-overview) consists of four separate layers. At the bottom
 (ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/sfbay-layers-1.png" alt="(ref:sfbay-layers) " width="816" />
+<img src="geospatial_data_files/figure-html/sfbay-layers-1.png" alt="(ref:sfbay-layers) " width="754.285714285714" />
 <p class="caption">(\#fig:sfbay-layers)(ref:sfbay-layers) </p>
 </div>
 
@@ -184,7 +184,7 @@ Finally, we can draw more complex cartograms by placing individual plots at the 
 (ref:unemployment-geofacet) Unemployment rate leading up to and following the 2008 financial crisis, by state. Each panel shows the unemployment rate for one state, including the District of Columbia (DC), from January 2007 through May 2013. Vertical grid lines mark January of 2008, 2010, and 2012. States that are geographically close tend to show similar trends in the unemployment rate. Data source: U.S. Bureau of Labor Statistics
 
 <div class="figure" style="text-align: center">
-<img src="geospatial_data_files/figure-html/unemployment-geofacet-1.png" alt="(ref:unemployment-geofacet)" width="816" />
+<img src="geospatial_data_files/figure-html/unemployment-geofacet-1.png" alt="(ref:unemployment-geofacet)" width="754.285714285714" />
 <p class="caption">(\#fig:unemployment-geofacet)(ref:unemployment-geofacet)</p>
 </div>
 

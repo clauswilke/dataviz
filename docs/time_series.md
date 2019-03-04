@@ -92,7 +92,7 @@ Given the tools from the preceding subsections, we can visualize such data as tw
 (ref:house-price-unemploy) 12-month change in house prices (a) and  unemployment rate (b) over time, from Jan. 2001 through Dec. 2017. Data sources: Freddie Mac House Prices Index, U.S. Bureau of Labor Statistics.
 
 <div class="figure" style="text-align: center">
-<img src="time_series_files/figure-html/house-price-unemploy-1.png" alt="(ref:house-price-unemploy)" width="576" />
+<img src="time_series_files/figure-html/house-price-unemploy-1.png" alt="(ref:house-price-unemploy)" width="685.714285714286" />
 <p class="caption">(\#fig:house-price-unemploy)(ref:house-price-unemploy)</p>
 </div>
 
@@ -124,7 +124,7 @@ Even though connected scatter plots can show only two variables at a time, we ca
 (ref:fred-md-PCA) Visualizing a high-dimensional time series as a connected scatter plot in principal components space. The path indicates the joint movement of over 100 macroeconomic indicators from January 1990 to December 2017. Times of recession and recovery are indicated via color, and the end points of the three recessions (March 1991, November 2001, and June 2009) are also labeled. (a) PC 2 versus PC 1. (b) PC 2 versus PC 3. Data source: M. W. McCracken, St. Louis Fed
 
 <div class="figure" style="text-align: center">
-<img src="time_series_files/figure-html/fred-md-PCA-1.png" alt="(ref:fred-md-PCA)" width="576" />
+<img src="time_series_files/figure-html/fred-md-PCA-1.png" alt="(ref:fred-md-PCA)" width="685.714285714286" />
 <p class="caption">(\#fig:fred-md-PCA)(ref:fred-md-PCA)</p>
 </div>
 

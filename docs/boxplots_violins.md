@@ -23,7 +23,7 @@ We can address all four shortcomings of Figure \@ref(fig:lincoln-temp-points-err
 (ref:boxplot-schematic) Anatomy of a boxplot. Shown are a cloud of points (left) and the corresponding boxplot (right). Only the *y* values of the points are visualized in the boxplot. The line in the middle of the boxplot represents the median, and the box encloses the middle 50% of the data. The top and bottom whiskers extend either to the maximum and minimum of the data or to the maximum or minimum that falls within 1.5 times the height of the box, whichever yields the shorter whisker. The distances of 1.5 times the height of the box in either direction are called the upper and the lower fences. Individual data points that fall beyond the fences are referred to as outliers and are usually showns as individual dots.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="576" />
+<img src="boxplots_violins_files/figure-html/boxplot-schematic-1.png" alt="(ref:boxplot-schematic)" width="685.714285714286" />
 <p class="caption">(\#fig:boxplot-schematic)(ref:boxplot-schematic)</p>
 </div>
 
@@ -42,7 +42,7 @@ Boxplots were invented by the statistician John Tukey in the early 1970s, and th
 (ref:violin-schematic) Anatomy of a violin plot. Shown are a cloud of points (left) and the corresponding violin plot (right). Only the *y* values of the points are visualized in the violin plot. The width of the violin at a given *y* value represents the point density at that *y* value. Technically, a violin plot is a density estimate rotated by 90 degrees and then mirrored. Violins are therefore symmetric. Violins begin and end at the minimum and maximum data values, respectively. The thickest part of the violin corresponds to the highest point density in the dataset.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/violin-schematic-1.png" alt="(ref:violin-schematic)" width="576" />
+<img src="boxplots_violins_files/figure-html/violin-schematic-1.png" alt="(ref:violin-schematic)" width="685.714285714286" />
 <p class="caption">(\#fig:violin-schematic)(ref:violin-schematic)</p>
 </div>
 
@@ -135,6 +135,6 @@ Ridgeline plots also work well if we want to compare two trends over time. This 
 (ref:dw-nominate-ridgeline) Voting patterns in the U.S. House of Representatives have become increasingly polarized. DW-NOMINATE scores are frequently used to compare voting patterns of representatives between parties and over time. Here, score distributions are shown for each Congress from 1963 to 2013 separately for Democrats and Republicans. Each Congress is represented by its first year. Original figure concept: @McDonald-DW-NOMINATE.
 
 <div class="figure" style="text-align: center">
-<img src="boxplots_violins_files/figure-html/dw-nominate-ridgeline-1.png" alt="(ref:dw-nominate-ridgeline)" width="816" />
+<img src="boxplots_violins_files/figure-html/dw-nominate-ridgeline-1.png" alt="(ref:dw-nominate-ridgeline)" width="754.285714285714" />
 <p class="caption">(\#fig:dw-nominate-ridgeline)(ref:dw-nominate-ridgeline)</p>
 </div>

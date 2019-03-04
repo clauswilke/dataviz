@@ -113,7 +113,7 @@ To illustrate this potential problem, I will employ the diamonds dataset, which 
 (ref:diamonds-points) Price of diamonds versus their carat value, for 53,940 individual diamonds. Each diamond's cut is indicated by color. The plot is labeled as "bad" because the extensive overplotting makes it impossible to discern any patterns among the different diamond cuts. Data source: Hadley Wickham, ggplot2
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-points-1.png" alt="(ref:diamonds-points)" width="576" />
+<img src="overlapping_points_files/figure-html/diamonds-points-1.png" alt="(ref:diamonds-points)" width="685.714285714286" />
 <p class="caption">(\#fig:diamonds-points)(ref:diamonds-points)</p>
 </div>
 
@@ -123,7 +123,7 @@ We could try to draw colored contour lines for the different qualities of cut, a
 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-contour-colors-1.png" alt="(ref:diamonds-contour-colors)" width="576" />
+<img src="overlapping_points_files/figure-html/diamonds-contour-colors-1.png" alt="(ref:diamonds-contour-colors)" width="685.714285714286" />
 <p class="caption">(\#fig:diamonds-contour-colors)(ref:diamonds-contour-colors)</p>
 </div>
 
@@ -133,7 +133,7 @@ What helps here is to draw the contour lines for each cut quality in its own plo
 
 
 <div class="figure" style="text-align: center">
-<img src="overlapping_points_files/figure-html/diamonds-contour-facets-1.png" alt="(ref:diamonds-contour-facets)" width="816" />
+<img src="overlapping_points_files/figure-html/diamonds-contour-facets-1.png" alt="(ref:diamonds-contour-facets)" width="754.285714285714" />
 <p class="caption">(\#fig:diamonds-contour-facets)(ref:diamonds-contour-facets)</p>
 </div>
 

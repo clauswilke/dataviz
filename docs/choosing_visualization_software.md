@@ -18,10 +18,10 @@ With minor modifications, we can apply these concepts to data visualization. A v
 
 Throughout this book, we have seen many examples of figures that reproduce but don't repeat other figures. For example, Chapter \@ref(avoid-line-drawings) shows several sets of figures where all figures in each set show the same data but each figure in each set looks somewhat different. Similarly, Figure \@ref(fig:lincoln-repro)a is a repeat of Figure \@ref(fig:lincoln-temp-jittered), down to the random jitter that was applied to each data point, whereas Figure \@ref(fig:lincoln-repro)b is only a reproduction of that figure. Figure \@ref(fig:lincoln-repro)b has different jitter than Figure \@ref(fig:lincoln-temp-jittered), and it also uses a sufficiently different visual design that the two figures look quite distinct, even if they clearly convey the same information about the data.
 
-(ref:lincoln-repro) Repeat and reproduction of a figure. Part (a) is a near-complete repeat of Figure \@ref(fig:lincoln-temp-jittered). With exception of the exact sizes of the text elements and points, which were adjusted so the figure remains legible at the reduced size, the two figures are identical down to the random jitter that was applied to each point. By contrast, part (b) is a reproduction but not a repeat. In particular, the jitter in part (b) differs from the jitter in part (a) or in Figure \@ref(fig:lincoln-temp-jittered).
+(ref:lincoln-repro) Repeat and reproduction of a figure. Part (a) is a repeat of Figure \@ref(fig:lincoln-temp-jittered). The two figures are identical down to the random jitter that was applied to each point. By contrast, part (b) is a reproduction but not a repeat. In particular, the jitter in part (b) differs from the jitter in part (a) or in Figure \@ref(fig:lincoln-temp-jittered).
 
 <div class="figure" style="text-align: center">
-<img src="choosing_visualization_software_files/figure-html/lincoln-repro-1.png" alt="(ref:lincoln-repro)" width="816" />
+<img src="choosing_visualization_software_files/figure-html/lincoln-repro-1.png" alt="(ref:lincoln-repro)" width="754.285714285714" />
 <p class="caption">(\#fig:lincoln-repro)(ref:lincoln-repro)</p>
 </div>
 
@@ -56,7 +56,7 @@ In the software I have used for this book, ggplot2, separation of content and de
 (ref:unemploy-themes) Number of unemployed persons in the U.S. from 1970 to 2015. The same figure is displayed using four different ggplot2 themes: (a) the default theme for this book; (b) the default theme of ggplot2, the plotting software I have used to make all figures in this book; (c) a theme that mimicks visualizations shown in the Economist; (d) a theme that mimicks visualizations shown by FiveThirtyEight. FiveThirtyEight often foregos axis labels in favor of plot titles and subtitles, and therefore I have adjusted the figure accordingly. Data source: U.S. Bureau of Labor Statistics
 
 <div class="figure" style="text-align: center">
-<img src="choosing_visualization_software_files/figure-html/unemploy-themes-1.png" alt="(ref:unemploy-themes)" width="816" />
+<img src="choosing_visualization_software_files/figure-html/unemploy-themes-1.png" alt="(ref:unemploy-themes)" width="754.285714285714" />
 <p class="caption">(\#fig:unemploy-themes)(ref:unemploy-themes)</p>
 </div>
 

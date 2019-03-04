@@ -26,7 +26,7 @@ A pie chart breaks a circle into slices such that the area of each slice is prop
 (ref:bundestag-stacked-bars) Party composition of the 8th German Bundestag, 1976--1980, visualized as stacked bars. (a) Bars stacked vertically. (b) Bars stacked horizontally. It is not immediately obvious that SPD and FDP jointly had more seats than CDU/CSU.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="(ref:bundestag-stacked-bars)" width="816" />
+<img src="visualizing_proportions_files/figure-html/bundestag-stacked-bars-1.png" alt="(ref:bundestag-stacked-bars)" width="754.285714285714" />
 <p class="caption">(\#fig:bundestag-stacked-bars)(ref:bundestag-stacked-bars)</p>
 </div>
 
@@ -79,7 +79,7 @@ I will now demonstrate a case where pie charts fail. This example is modeled aft
 (ref:marketshare-pies) Market share of five hypothetical companies, A--E, for the years 2015--2017, visualized as pie charts. This visualization has two major problems: 1. A comparison of relative market share within years is nearly impossible. 2. Changes in market share across years are difficult to see.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/marketshare-pies-1.png" alt="(ref:marketshare-pies)" width="816" />
+<img src="visualizing_proportions_files/figure-html/marketshare-pies-1.png" alt="(ref:marketshare-pies)" width="685.714285714286" />
 <p class="caption">(\#fig:marketshare-pies)(ref:marketshare-pies)</p>
 </div>
 
@@ -134,7 +134,7 @@ Side-by-side bars have the problem that they don't clearly visualize the size of
 (ref:health-vs-age-facets) Health status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective health status and the gray areas show the overall age distribution.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/health-vs-age-facets-1.png" alt="(ref:health-vs-age-facets)" width="816" />
+<img src="visualizing_proportions_files/figure-html/health-vs-age-facets-1.png" alt="(ref:health-vs-age-facets)" width="754.285714285714" />
 <p class="caption">(\#fig:health-vs-age-facets)(ref:health-vs-age-facets)</p>
 </div>
 
@@ -154,7 +154,7 @@ The same dataset visualized as partial densities is much clearer (Figure \@ref(f
 (ref:marital-vs-age-facets) Marital status by age, shown as proportion of the total number of people in the survey. The colored areas show the density estimates of the ages of people with the respective marital status, and the gray areas show the overall age distribution.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/marital-vs-age-facets-1.png" alt="(ref:marital-vs-age-facets)" width="816" />
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-facets-1.png" alt="(ref:marital-vs-age-facets)" width="754.285714285714" />
 <p class="caption">(\#fig:marital-vs-age-facets)(ref:marital-vs-age-facets)</p>
 </div>
 
@@ -163,6 +163,6 @@ However, one downside of Figure \@ref(fig:marital-vs-age-facets) is that this re
 (ref:marital-vs-age-proportions) Marital status by age, shown as proportion of the total number of people in the survey. The areas colored in blue show the percent of people at the given age with the respective status, and the areas colored in gray show the percent of people with all other marital statuses.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_proportions_files/figure-html/marital-vs-age-proportions-1.png" alt="(ref:marital-vs-age-proportions)" width="816" />
+<img src="visualizing_proportions_files/figure-html/marital-vs-age-proportions-1.png" alt="(ref:marital-vs-age-proportions)" width="754.285714285714" />
 <p class="caption">(\#fig:marital-vs-age-proportions)(ref:marital-vs-age-proportions)</p>
 </div>

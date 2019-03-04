@@ -37,7 +37,7 @@ Consider a 3D scatter plot of fuel efficiency versus displacement and power for 
 
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-3d-1.png" alt="(ref:mtcars-3d)" width="576" />
+<img src="no_3d_files/figure-html/mtcars-3d-1.png" alt="(ref:mtcars-3d)" width="685.714285714286" />
 <p class="caption">(\#fig:mtcars-3d)(ref:mtcars-3d)</p>
 </div>
 
@@ -48,7 +48,7 @@ Our visual system nevertheless attempts to invert the 3D to 2D transformation. H
 (ref:mtcars-3d-no-axes) Fuel efficiency versus displacement and power for 32 cars (1973–74 models). The four panels (a)--(d) correspond to the same panels in Figure \@ref(fig:mtcars-3d), only that all grid lines providing depth cues have been removed. Data source: *Motor Trend,* 1974.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-3d-no-axes-1.png" alt="(ref:mtcars-3d-no-axes)" width="576" />
+<img src="no_3d_files/figure-html/mtcars-3d-no-axes-1.png" alt="(ref:mtcars-3d-no-axes)" width="685.714285714286" />
 <p class="caption">(\#fig:mtcars-3d-no-axes)(ref:mtcars-3d-no-axes)</p>
 </div>
 
@@ -59,7 +59,7 @@ Here, I want to show two alternative ways of plotting exactly the variables used
 (ref:mtcars-2d-multiple) Fuel efficiency versus displacement (a) and power (b). Data source: *Motor Trend,* 1974.
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/mtcars-2d-multiple-1.png" alt="(ref:mtcars-2d-multiple)" width="576" />
+<img src="no_3d_files/figure-html/mtcars-2d-multiple-1.png" alt="(ref:mtcars-2d-multiple)" width="685.714285714286" />
 <p class="caption">(\#fig:mtcars-2d-multiple)(ref:mtcars-2d-multiple)</p>
 </div>
 
@@ -75,7 +75,7 @@ You may wonder whether the problem with 3D scatter plots is that the actual data
 (ref:VA-death-rates-3d) Mortality rates in Virginia in 1940, visualized as a 3D bar plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons. This figure is labeled as "bad" because the 3D perspective makes the plot difficult to read. Data source: @Molyneaux-et-al-1947
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/VA-death-rates-3d-1.png" alt="(ref:VA-death-rates-3d)" width="445.44" />
+<img src="no_3d_files/figure-html/VA-death-rates-3d-1.png" alt="(ref:VA-death-rates-3d)" width="480" />
 <p class="caption">(\#fig:VA-death-rates-3d)(ref:VA-death-rates-3d)</p>
 </div>
 
@@ -84,7 +84,7 @@ In general, it is better to use Trellis plots (Chapter \@ref(multi-panel-figures
 (ref:VA-death-rates-Trellis) Mortality rates in Virginia in 1940, visualized as a Trellis plot. Mortality rates are shown for four groups of people (urban and rural females and males) and five age categories (50--54, 55--59, 60--64, 65--69, 70--74), and they are reported in units of deaths per 1000 persons.  Data source: @Molyneaux-et-al-1947
 
 <div class="figure" style="text-align: center">
-<img src="no_3d_files/figure-html/VA-death-rates-Trellis-1.png" alt="(ref:VA-death-rates-Trellis)" width="576" />
+<img src="no_3d_files/figure-html/VA-death-rates-Trellis-1.png" alt="(ref:VA-death-rates-Trellis)" width="685.714285714286" />
 <p class="caption">(\#fig:VA-death-rates-Trellis)(ref:VA-death-rates-Trellis)</p>
 </div>
 

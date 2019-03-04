@@ -21,7 +21,7 @@ Surprisingly, the green and blue points look more distinct for people with red--
 (ref:iris-scatter-one-shape-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-one-shape).
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-cvd-1.png" alt="(ref:iris-scatter-one-shape-cvd)" width="816" />
+<img src="redundant_coding_files/figure-html/iris-scatter-one-shape-cvd-1.png" alt="(ref:iris-scatter-one-shape-cvd)" width="754.285714285714" />
 <p class="caption">(\#fig:iris-scatter-one-shape-cvd)(ref:iris-scatter-one-shape-cvd)</p>
 </div>
 
@@ -38,7 +38,7 @@ There are two simple improvements we can make to Figure \@ref(fig:iris-scatter-o
 (ref:iris-scatter-three-shapes-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:iris-scatter-three-shapes). Because of the use of different point shapes, even the fully desaturated gray-scale version of the figure is legible.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-cvd-1.png" alt="(ref:iris-scatter-three-shapes-cvd)" width="816" />
+<img src="redundant_coding_files/figure-html/iris-scatter-three-shapes-cvd-1.png" alt="(ref:iris-scatter-three-shapes-cvd)" width="754.285714285714" />
 <p class="caption">(\#fig:iris-scatter-three-shapes-cvd)(ref:iris-scatter-three-shapes-cvd)</p>
 </div>
 
@@ -73,7 +73,7 @@ Matching the legend order to the data order is always helpful, but the benefits 
 (ref:tech-stocks-good-legend-cvd) Color-vision-deficiency simulation of Figure \@ref(fig:tech-stocks-good-legend).
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-cvd-1.png" alt="(ref:tech-stocks-good-legend-cvd)" width="816" />
+<img src="redundant_coding_files/figure-html/tech-stocks-good-legend-cvd-1.png" alt="(ref:tech-stocks-good-legend-cvd)" width="754.285714285714" />
 <p class="caption">(\#fig:tech-stocks-good-legend-cvd)(ref:tech-stocks-good-legend-cvd)</p>
 </div>
 
@@ -119,7 +119,7 @@ We can also use density plots such as the one in Figure \@ref(fig:iris-densities
 (ref:iris-scatter-dens) Sepal width versus sepal length for three different iris species, with marginal density estimates of each variable for each species.
 
 <div class="figure" style="text-align: center">
-<img src="redundant_coding_files/figure-html/iris-scatter-dens-1.png" alt="(ref:iris-scatter-dens)" width="576" />
+<img src="redundant_coding_files/figure-html/iris-scatter-dens-1.png" alt="(ref:iris-scatter-dens)" width="685.714285714286" />
 <p class="caption">(\#fig:iris-scatter-dens)(ref:iris-scatter-dens)</p>
 </div>
 

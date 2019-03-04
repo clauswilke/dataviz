@@ -33,7 +33,7 @@ Because the head length is defined as the distance from the tip of the bill to t
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/blue-jays-scatter-bubbles-1.png" alt="(ref:blue-jays-scatter-bubbles)" width="480" />
+<img src="visualizing_associations_files/figure-html/blue-jays-scatter-bubbles-1.png" alt="(ref:blue-jays-scatter-bubbles)" width="754.285714285714" />
 <p class="caption">(\#fig:blue-jays-scatter-bubbles)(ref:blue-jays-scatter-bubbles)</p>
 </div>
 
@@ -47,7 +47,7 @@ As an alternative to a bubble chart, it may be preferable to show an all-against
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/blue-jays-scatter-all-1.png" alt="(ref:blue-jays-scatter-all)" width="576" />
+<img src="visualizing_associations_files/figure-html/blue-jays-scatter-all-1.png" alt="(ref:blue-jays-scatter-all)" width="685.714285714286" />
 <p class="caption">(\#fig:blue-jays-scatter-all)(ref:blue-jays-scatter-all)</p>
 </div>
 
@@ -59,7 +59,7 @@ When we have more than three to four quantiative variables, all-against-all scat
 (ref:correlations) Examples of correlations of different magnitude and direction, with associated correlation coefficient *r*. In both rows, from left to right correlations go from weak to strong. In the top row the correlations are positive (larger values for one quantity are associated with larger values for the other) and in the bottom row they are negative (larger values for one quantity are associated with smaller values for the other). In all six panels, the sets of *x* and *y* values are identical, but the pairings between individual *x* and *y* values have been reshuffled to generate the specified correlation coefficients.
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/correlations-1.png" alt="(ref:correlations)" width="576" />
+<img src="visualizing_associations_files/figure-html/correlations-1.png" alt="(ref:correlations)" width="685.714285714286" />
 <p class="caption">(\#fig:correlations)(ref:correlations)</p>
 </div>
 
@@ -99,7 +99,7 @@ There are many techniques for dimension reduction. I will discuss only one techn
 (ref:blue-jays-PCA) Example principal components (PC) analysis in two dimensions. (a) The original data. As example data, I am using the head-length and skull-size measurements from the blue jays dataset. Female and male birds are distinguished by color, but this distinction has no effect on the PC analysis. (b) As the first step in PCA, we scale the original data values to zero mean and unit variance. We then we define new variables (the principal components, PCs) along the directions of maximum variation in the data. (c) Finally, we project the data into the new coordinates. Mathematically, this projection is equivalent to a rotation of the data points around the origin. In the 2D example shown here, the data points are rotated clockwise by 45 degrees. 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/blue-jays-PCA-1.png" alt="(ref:blue-jays-PCA)" width="816" />
+<img src="visualizing_associations_files/figure-html/blue-jays-PCA-1.png" alt="(ref:blue-jays-PCA)" width="754.285714285714" />
 <p class="caption">(\#fig:blue-jays-PCA)(ref:blue-jays-PCA)</p>
 </div>
 
@@ -120,7 +120,7 @@ Next, we project the original data into the principal components space (Figure \
 
 
 <div class="figure" style="text-align: center">
-<img src="visualizing_associations_files/figure-html/forensic-PCA-1.png" alt="(ref:forensic-PCA)" width="576" />
+<img src="visualizing_associations_files/figure-html/forensic-PCA-1.png" alt="(ref:forensic-PCA)" width="685.714285714286" />
 <p class="caption">(\#fig:forensic-PCA)(ref:forensic-PCA)</p>
 </div>
 
