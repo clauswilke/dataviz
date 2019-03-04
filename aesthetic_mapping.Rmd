@@ -215,7 +215,7 @@ ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
                breaks = c(ymd("0000-01-01"), ymd("0000-04-01"), ymd("0000-07-01"),
                           ymd("0000-10-01"), ymd("0001-01-01")),
                labels = c("Jan", "Apr", "Jul", "Oct", "Jan"), expand = c(1/366, 0)) + 
-  scale_y_continuous(limits = c(15, 110),
+  scale_y_continuous(limits = c(19.9, 107),
                      breaks = seq(20, 100, by = 20),
                      name = "temperature (°F)") +
   scale_color_OkabeIto(order = c(1:3, 7), name = NULL) +

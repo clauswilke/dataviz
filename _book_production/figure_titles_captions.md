@@ -91,7 +91,7 @@ Figure \@ref(fig:table-examples) reproduces Table \@ref(tab:boxoffice-gross) fro
 (ref:table-examples) Examples of poorly and appropriately formatted tables, using the data from Table \@ref(tab:boxoffice-gross) in Chapter \@ref(visualizing-amounts). (a) This table violates numerous conventions of proper table formatting, including using vertical lines, using horizontal lines between data rows, and using centered data columns. (b) This table suffers from all problems of Table (a), and in addition it creates additional visual noise by alternating between very dark and very light rows. Also, the table header is not strongly visually separated from the table body. (c) This is an appropriately formatted table with a minimal design. (d) Colors can be used effectively to group data into rows, but the color differences should be subtle. The table header can be set off by using a stronger color. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 <div class="figure" style="text-align: center">
-<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="720" />
+<img src="figure_titles_captions_files/figure-html/table-examples-1.png" alt="(ref:table-examples)" width="750" />
 <p class="caption">(\#fig:table-examples)(ref:table-examples)</p>
 </div>
 

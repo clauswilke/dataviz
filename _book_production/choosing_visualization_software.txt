@@ -79,13 +79,11 @@ different visual design that the two figures look quite distinct, even
 if they clearly convey the same information about the data.
 
 (ref:lincoln-repro) Repeat and reproduction of a figure. Part (a) is a
-near-complete repeat of Figure @ref(fig:lincoln-temp-jittered). With
-exception of the exact sizes of the text elements and points, which were
-adjusted so the figure remains legible at the reduced size, the two
-figures are identical down to the random jitter that was applied to each
-point. By contrast, part (b) is a reproduction but not a repeat. In
-particular, the jitter in part (b) differs from the jitter in part (a)
-or in Figure @ref(fig:lincoln-temp-jittered).
+repeat of Figure @ref(fig:lincoln-temp-jittered). The two figures are
+identical down to the random jitter that was applied to each point. By
+contrast, part (b) is a reproduction but not a repeat. In particular,
+the jitter in part (b) differs from the jitter in part (a) or in Figure
+@ref(fig:lincoln-temp-jittered).
 
 (#fig:lincoln-repro)(ref:lincoln-repro)
 

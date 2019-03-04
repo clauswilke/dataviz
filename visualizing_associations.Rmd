@@ -157,8 +157,8 @@ ggplot(bj_matrix, aes(val_x, val_y, fill = KnownSex)) +
     )
   ) +
   coord_cartesian(clip = "off") +
-  theme_dviz_grid() +
-  panel_border(colour = "grey90", size = 0.5) +
+  theme_dviz_grid(line_size = 0.3) +
+  panel_border(colour = "grey85", size = 0.4) +
   theme(
     strip.placement = "outside",
     strip.text.x = element_text(vjust = 1, margin = margin(0, 0, 0, 0)),
@@ -239,7 +239,9 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_y_discrete(name = NULL, expand = c(0, 0)) +
   scale_fill_continuous_divergingx(
     palette = "Earth", rev = FALSE,
-    limits = c(-.5, .5), breaks = c(-.5, 0, .5),
+    limits = c(-.5, .5),
+    breaks = c(-.5, 0, .5),
+    labels = c("–0.5", "0.0", "0.5"),
     name = "correlation",
     guide = guide_colorbar(
       direction = "horizontal",
@@ -252,12 +254,14 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   ) +
   coord_fixed() +
   theme_dviz_open(rel_small = 1) +
-  theme(axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        axis.ticks.length = grid::unit(3, "pt"),
-        legend.position = c(.97, .0),
-        legend.justification = c(1, 0),
-        legend.title.align = 0.5)
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(3, "pt"),
+    legend.position = c(.97, .0),
+    legend.justification = c(1, 0),
+    legend.title.align = 0.5
+  )
 
 ```
 
@@ -274,7 +278,9 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_size_area(max_size = 19, limits = c(0, 0.5), guide = "none") +
   scale_fill_continuous_divergingx(
     palette = "Earth", rev = FALSE,
-    limits = c(-.5, .5), breaks = c(-.5, 0, .5),
+    limits = c(-.5, .5),
+    breaks = c(-.5, 0, .5),
+    labels = c("–0.5", "0.0", "0.5"),
     name = "correlation",
     guide = guide_colorbar(
       direction = "horizontal",
@@ -287,12 +293,14 @@ ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   ) +
   coord_fixed() +
   theme_dviz_open(rel_small = 1) +
-  theme(axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        axis.ticks.length = grid::unit(3, "pt"),
-        legend.position = c(.97, .0),
-        legend.justification = c(1, 0),
-        legend.title.align = 0.5)
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = grid::unit(3, "pt"),
+    legend.position = c(.97, .0),
+    legend.justification = c(1, 0),
+    legend.title.align = 0.5
+  )
 
 ```
 

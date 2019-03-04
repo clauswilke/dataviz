@@ -481,7 +481,7 @@ ydens <- axis_canvas(iris_scatter2, axis = "y", coord_flip = TRUE) +
   geom_density_line(
     data = iris_dens2,
     aes(x = Sepal.Width, y = density, fill = Species, color = Species),
-    stat = "identity", alpha = 0.5, size = .2
+    stat = "identity", size = .2
   )  +
   scale_color_manual(
     values = darken(c("#56B4E9", "#E69F00", "#009E73"), 0.3),
