@@ -1,4 +1,7 @@
 
+```
+## Warning: package 'dplyr' was built under R version 3.5.2
+```
 
 
 # Visualizing distributions: Histograms and density plots {#histograms-density-plots}
@@ -50,7 +53,7 @@ Age range    Count
 </tbody>
 </table>
 
-We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins (Figure \@ref(fig:titanic-ages-hist1)). Such a visualization is called a histogram.
+We can visualize this table by drawing filled rectangles whose heights correspond to the counts and whose widths correspond to the width of the age bins (Figure \@ref(fig:titanic-ages-hist1)). Such a visualization is called a histogram. (Note that all bins must have the same width for the visualization to be a valid histogram.)
 
 (ref:titanic-ages-hist1) Histogram of the ages of Titanic passengers.
 

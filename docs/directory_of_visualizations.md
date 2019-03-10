@@ -1,4 +1,7 @@
 
+```
+## Warning: package 'dplyr' was built under R version 3.5.2
+```
 
 # Directory of visualizations {#directory-of-visualizations}
 
@@ -21,7 +24,7 @@ If there are two or more sets of categories for which we want to show amounts, w
 
 <img src="directory_of_visualizations_files/figure-html/single-distributions-1.png" width="685.714285714286" style="display: block; margin: auto;" />
 
-Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
+Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and quantile-quantile (q-q) plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
 
 
 <img src="directory_of_visualizations_files/figure-html/multiple-distributions-1.png" width="685.714285714286" style="display: block; margin: auto;" />
