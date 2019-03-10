@@ -1,3 +1,7 @@
+....
+## Warning: package 'dplyr' was built under R version 3.5.2
+....
+
 [[telling-a-story]]
 Telling a story and making a point
 ----------------------------------

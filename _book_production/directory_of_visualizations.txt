@@ -1,3 +1,7 @@
+....
+## Warning: package 'dplyr' was built under R version 3.5.2
+....
+
 [[directory-of-visualizations]]
 Directory of visualizations
 ---------------------------
@@ -32,8 +36,9 @@ Distributions
 Histograms and density plots (Chapter @ref(histograms-density-plots))
 provide the most intuitive visualizations of a distribution, but both
 require arbitrary parameter choices and can be misleading. Cumulative
-densities and q-q plots (Chapter @ref(ecdf-qq)) always represent the
-data faithfully but can be more difficult to interpret.
+densities and quantile-quantile (q-q) plots (Chapter @ref(ecdf-qq))
+always represent the data faithfully but can be more difficult to
+interpret.
 
 Boxplots, violins, strip charts, and sina plots are useful when we want
 to visualize many distributions at once and/or if we are primarily

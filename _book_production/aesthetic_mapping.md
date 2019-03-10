@@ -1,4 +1,7 @@
 
+```
+## Warning: package 'dplyr' was built under R version 3.5.2
+```
 
 
 # (PART\*) Part I: From data to visualization {-}

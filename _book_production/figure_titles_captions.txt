@@ -1,3 +1,7 @@
+....
+## Warning: package 'dplyr' was built under R version 3.5.2
+....
+
 [[figure-titles-captions]]
 Titles, captions, and tables
 ----------------------------

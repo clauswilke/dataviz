@@ -11,8 +11,9 @@ copy_fig <- function(chnum, fignum, dir, filename, ...) {
   dest <- here("_book_production/figures/all-final", glue("fodv_{fignum_combined}.png"))
 
   cat(glue("Copying {src} to {dest}"), "\n")
-  file.copy(src, dest)
+  file.copy(src, dest, overwrite = TRUE)
   dest
 }
 
+dir.create(here("_book_production/figures/all-final"))
 invisible(pmap(fnames, copy_fig))

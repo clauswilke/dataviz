@@ -1,3 +1,7 @@
+....
+## Warning: package 'dplyr' was built under R version 3.5.2
+....
+
 [[part-part-i-from-data-to-visualization]]
 (PART*) Part I: From data to visualization
 ------------------------------------------
