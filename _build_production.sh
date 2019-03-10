@@ -10,3 +10,4 @@ Rscript -e "bookdown::render_book(input = 'index.Rmd', output_format = 'bookdown
 mv ./_common_backup.R ./_common.R
 
 ./_build_asciidoc.sh
+Rscript ./tools/rename-figures.R
