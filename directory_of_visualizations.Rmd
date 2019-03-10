@@ -38,14 +38,16 @@ theme_plot_icon <- function(bg_color = "#F5F8EA", line_color = "#243400",
     axis.ticks        = element_line(size = line_size, color = line_color),
     axis.ticks.length = grid::unit(4, "pt"),
     legend.position   = "none",
-    plot.margin       = margin(2, font_size, font_size, font_size),
+    plot.margin       = margin(
+      font_size*8/14, font_size, font_size*10/14, font_size
+    ),
     plot.title        = element_text(
       hjust = 0.5,
       #family = dviz_font_family_bold,
       family = dviz_font_family_condensed,
       color = line_color,
       size = font_size,
-      margin = margin(2, 0, 2, 0)
+      margin = margin(0, 0, font_size*6/14, 0)
     ),
     plot.background   = element_rect(fill = bg_color)
   )
@@ -232,7 +234,7 @@ p1 <- ggplot(df_props, aes(x = group, y = value)) +
   ) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "bars") +
+  labs(title = "Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p2 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) + 
@@ -241,7 +243,7 @@ p2 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   coord_flip() +
-  labs(title = "bars") +
+  labs(title = "Bars") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
 p3 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
@@ -251,7 +253,7 @@ p3 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
   scale_y_continuous(expand = c(0, 0),
                      limits = c(0, .7)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "grouped bars") +
+  labs(title = "Grouped Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p4 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
@@ -262,7 +264,7 @@ p4 <- ggplot(filter(df_multi_amounts, x!=4), aes(x, y,
                      limits = c(0, .7)) +
   scale_fill_manual(values = rev(palette[2:4])) +
   coord_flip() +
-  labs(title = "grouped bars") +
+  labs(title = "Grouped Bars") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
 p5 <- ggplot(df_multi_amounts, aes(x, y, fill=factor(type, levels = c("B", "C", "A")))) + 
@@ -270,7 +272,7 @@ p5 <- ggplot(df_multi_amounts, aes(x, y, fill=factor(type, levels = c("B", "C", 
   scale_y_continuous(limits = c(0, 1.55),
                      expand = c(0, 0)) +
   scale_fill_manual(values = rev(palette[2:4])) +
-  labs(title = "stacked bars") +
+  labs(title = "Stacked Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p6 <- p5 + coord_flip() + theme_plot_icon_vgrid(palette[npal], palette[1])
@@ -279,14 +281,14 @@ p7 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) +
   geom_point(color = palette[2], size = 2) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   coord_flip() + 
-  labs(title = "dots") +
+  labs(title = "Dots") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
 p8 <- ggplot(filter(df_multi_amounts, x != 1), aes(x, y = factor(type, levels = c("A", "C", "B")), fill = y)) + 
   geom_tile(color = palette[5], size = 1.5) +
   scale_fill_continuous_sequential(h1 = 71, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5,
                                    begin = 0.2, end = 0.75) +
-  labs(title = "heatmap") +
+  labs(title = "Heatmap") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 plot_grid(p1, p2, p7, ncol = 4, scale = .9)
@@ -313,7 +315,7 @@ p1 <- ggplot(df_one_dist, aes(x)) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, 350), 
                      expand = c(0, 0)) +
-  labs(title = "histogram") +
+  labs(title = "Histogram") +
   theme_plot_icon(palette[npal], palette[1])
 
 
@@ -321,26 +323,26 @@ p2 <- ggplot(df_one_dist, aes(x)) +
   geom_density(fill = palette[3], color = palette[npal], bw = .35) +
   scale_x_continuous(limits = c(-4.8, 6.8), expand = c(0, 0)) +
   scale_y_continuous(limits = c(0, .27), expand = c(0, 0)) +
-  labs(title = "density plot") +
+  labs(title = "Density Plot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p3 <- ggplot(df_one_normal, aes(x)) +
   stat_ecdf(color = palette[2], size = .7) +
   scale_x_continuous(expand = c(0.05, 0)) +
   scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
-  labs(title = "cumulative density") +
+  labs(title = "Cumulative Density") +
   theme_plot_icon(palette[npal], palette[1])
 
 p4 <- ggplot(df_one_normal, aes(sample = x)) +
   geom_abline(intercept = 0, slope = 1, color = palette[3]) +
   geom_qq(color = palette[1], size = 0.8) +
-  labs(title = "q-q plot") +
+  labs(title = "Quantile-Quantile Plot") +
   theme_plot_icon(palette[npal], palette[1])
 
 plot_grid(p1, p2, p3, p4, ncol = 4, scale = .9)
 ```
 
-Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and q-q plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
+Histograms and density plots (Chapter \@ref(histograms-density-plots)) provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and quantile-quantile (q-q) plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
 
 
 ```{r multiple-distributions, fig.width = 5*6/4.2, fig.asp = 1/2}
@@ -348,12 +350,12 @@ palette <- pal_ocean_blue
 
 p1 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
   geom_boxplot(color = palette[1], fill = palette[4]) +
-  labs(title = "boxplots") +
+  labs(title = "Boxplots") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p2 <- ggplot(df_multi_dist, aes(x = type, y = y)) + 
   geom_violin(color = palette[npal], fill = palette[2], size = 0) +
-  labs(title = "violins") +
+  labs(title = "Violins") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 df_multi_dist_small <- group_by(df_multi_dist, type) %>%
@@ -361,18 +363,18 @@ df_multi_dist_small <- group_by(df_multi_dist, type) %>%
 
 p3 <- ggplot(df_multi_dist_small, aes(x = type, y = y)) + 
   geom_jitter(color = palette[1], width = 0.15, height = 0, size = .3) +
-  labs(title = "strip charts") +
+  labs(title = "Strip Charts") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_multi_dist_small, aes(x = type, y = y)) + 
   dviz.supp::stat_sina(color = palette[1], size = 0.3) +
-  labs(title = "sina plots") +
+  labs(title = "Sina Plots") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
   geom_histogram(color = palette[npal], binwidth = 0.5, center = 0) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "stacked histograms") +
+  labs(title = "Stacked Histograms") +
   scale_x_continuous() +
   scale_y_continuous(limits = c(0, 49), expand = c(0, 0)) +
   theme_plot_icon(palette[npal], palette[1])
@@ -380,14 +382,14 @@ p5 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", 
 p6 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
   geom_density(alpha = 0.7, color = palette[npal]) +
   scale_fill_manual(values = palette[1:3]) +
-  labs(title = "overlapping densities") +
+  labs(title = "Overlapping Densities") +
   scale_x_continuous() +
   scale_y_continuous(limits = c(0, 1.1), expand = c(0, 0)) +
   theme_plot_icon(palette[npal], palette[1])
 
 p7 <- ggplot(df_multi_dist, aes(x = y, y = number, group = number)) + 
   geom_density_ridges(alpha = 0.7, color = palette[npal], fill = palette[2], scale = 2.5) +
-  labs(title = "ridgeline plot") +
+  labs(title = "Ridgeline Plot") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(limits = c(1, 6.5), expand = c(0, 0)) +
   theme_plot_icon(palette[npal], palette[1])
@@ -415,14 +417,14 @@ p1_main <- ggplot(df_props, aes(x = 1, y = value, fill = group)) +
 
 # make sure plot background is fully filled, as in the other plots
 p1 <- ggdraw(p1_main) +
-  labs(title = "pie chart") +
+  labs(title = "Pie Chart") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 p2 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
   geom_col(position = position_stack(reverse = TRUE), width = .45, color = palette[npal]) + 
   scale_y_continuous(limits = c(0, 108), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "stacked bars") +
+  labs(title = "Stacked Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p3 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) + 
@@ -431,7 +433,7 @@ p3 <- ggplot(df_props, aes(x = factor(1), y = value, fill = group)) +
   scale_y_continuous(limits = c(0, 110), expand = c(0, 0)) +
   coord_flip() +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "stacked bars") +
+  labs(title = "Stacked Bars") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
 p4 <- ggplot(df_props, aes(x = group, y = value, fill = group)) + 
@@ -439,7 +441,7 @@ p4 <- ggplot(df_props, aes(x = group, y = value, fill = group)) +
            width = .8) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "bars") +
+  labs(title = "Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p5 <- ggplot(df_props, aes(x = fct_rev(group), y = value, fill = group)) + 
@@ -448,7 +450,7 @@ p5 <- ggplot(df_props, aes(x = fct_rev(group), y = value, fill = group)) +
   scale_y_continuous(limits = c(0, 66), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
   coord_flip() +
-  labs(title = "bars") +
+  labs(title = "Bars") +
   theme_plot_icon_vgrid(palette[npal], palette[1])
 
 
@@ -466,14 +468,14 @@ p5 <- ggplot(filter(df_fractions, x!=4), aes(x, y,
   scale_y_continuous(expand = c(0, 0),
                      limits = c(0, .58)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "grouped bars") +
+  labs(title = "Grouped Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p6 <- ggplot(df_fractions, aes(x, y, fill=type)) + 
   geom_col(position="stack", color = palette[npal]) +
   scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
   scale_fill_manual(values = palette[2:4]) +
-  labs(title = "stacked bars") +
+  labs(title = "Stacked Bars") +
   theme_plot_icon_hgrid(palette[npal], palette[1])
 
 p7 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", "B")))) + 
@@ -481,7 +483,7 @@ p7 <- ggplot(df_multi_dist, aes(x = y, fill = factor(type, levels = c("C", "A", 
   scale_fill_manual(values = palette[2:4]) +
   scale_x_continuous(expand = c(0.04, 0)) +
   scale_y_continuous(limits = c(0, 1.08), expand = c(0, 0)) +
-  labs(title = "stacked densities") +
+  labs(title = "Stacked Densities") +
   theme_plot_icon(palette[npal], palette[1])
 
 p8_a <- ggplot(filter(df_fractions, x==1), aes(x = 1, y = y, fill = type)) + 
@@ -523,7 +525,7 @@ p8_c <- ggplot(filter(df_fractions, x==3), aes(x = 1, y = y, fill = type)) +
 
 # combine
 p8 <- plot_grid(p8_a, p8_b, p8_c, ncol = 3, scale = 1.1) +
-      labs(title = "multiple pie charts") +
+      labs(title = "Multiple Pie Charts") +
       theme_plot_icon_blank(palette[npal], palette[1])
 
 plot_grid(p8, p5, p6, p7, ncol = 4, scale = .9)
@@ -539,7 +541,7 @@ p1 <- ggplot(df_multi_props, aes(x = var2, y = count, fill = var1, width = group
   scale_y_continuous(name = NULL, breaks = NULL, expand = c(0, 0)) +
   scale_fill_manual(values = palette[4:2], guide = "none") +
   coord_cartesian(clip = "off") +
-  labs(title = "mosaic plot") +
+  labs(title = "Mosaic Plot") +
   theme_plot_icon_blank(palette[npal], palette[1]) +
   theme(
     strip.text = element_blank(),
@@ -551,7 +553,7 @@ p2 <- ggplot(df_multi_props, aes(area = count, subgroup = var2, fill = var2)) +
   geom_treemap_subgroup_border(color = palette[npal], size = 1.5*.pt) +
   scale_fill_manual(values = palette[4:2], guide = "none") +
   coord_cartesian(clip = "off") +
-  labs(title = "treemap") +
+  labs(title = "Treemap") +
   theme_plot_icon_blank(palette[npal], palette[1]) 
 
 df_sets <- gather_set_data(df_multi_props2, 1:3)
@@ -566,7 +568,7 @@ p3 <- ggplot(df_sets, aes(x, id = id, split = y, value = count)) +
   ) +
   scale_y_continuous(breaks = NULL, expand = c(0, 0)) +
   scale_fill_manual(values = c(palette[2], palette[3]), guide = "none") +
-  labs(title = "parallel sets") +
+  labs(title = "Parallel Sets") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 plot_grid(p1, p2, p3, ncol = 4, scale = .9)
@@ -585,7 +587,7 @@ p1 <- ggplot(df_scatter_xy, aes(x, y)) +
   geom_point(fill = palette[2], color = palette[npal], pch = 21, size = 2.4) + 
   scale_x_continuous(expand = c(.2, 0)) +
   scale_y_continuous(expand = c(.2, 0)) +
-  labs(title = "scatterplot") +
+  labs(title = "Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p2 <- ggplot(df_scatter_xyz, aes(x, y, size = z)) + 
@@ -593,7 +595,7 @@ p2 <- ggplot(df_scatter_xyz, aes(x, y, size = z)) +
   scale_x_continuous(expand = c(.2, 0)) +
   scale_y_continuous(expand = c(.2, 0)) +
   scale_radius(range = c(2, 8)) +
-  labs(title = "bubble chart") +
+  labs(title = "Bubble Chart") +
   theme_plot_icon(palette[npal], palette[1])
 
 p3 <- ggplot(spread(df_paired, x, y), aes(A, B)) + 
@@ -604,7 +606,7 @@ p3 <- ggplot(spread(df_paired, x, y), aes(A, B)) +
   ) +
   scale_x_continuous(limits = c(1.5, 6.5)) +
   scale_y_continuous(limits = c(1.5, 6.5)) +
-  labs(title = "paired scatterplot") +
+  labs(title = "Paired Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p4 <- ggplot(df_paired, aes(x, y, group = group)) + 
@@ -615,7 +617,7 @@ p4 <- ggplot(df_paired, aes(x, y, group = group)) +
   ) +
   scale_x_discrete(expand = c(0, 0.4)) +
   scale_y_continuous(limits = c(1.5, 6.5)) +
-  labs(title = "slopegraph") +
+  labs(title = "Slopegraph") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.x = element_blank(),
@@ -633,7 +635,7 @@ p5 <- ggplot(df_dense_scatter, aes(x, y)) +
   geom_density2d(binwidth = 0.02, color = palette[1]) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
-  labs(title = "density contours") +
+  labs(title = "Density Contours") +
   theme_plot_icon(palette[npal], palette[1])
 
 p6 <- ggplot(df_dense_scatter, aes(x, y)) + 
@@ -641,7 +643,7 @@ p6 <- ggplot(df_dense_scatter, aes(x, y)) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
   scale_fill_gradientn(colors = palette[1:(npal-1)]) +
-  labs(title = "2D bins") +
+  labs(title = "2D Bins") +
   theme_plot_icon(palette[npal], palette[1])
 
 p7 <- ggplot(df_dense_scatter, aes(x, y)) + 
@@ -649,7 +651,7 @@ p7 <- ggplot(df_dense_scatter, aes(x, y)) +
   scale_x_continuous(limits = c(-2, 3.6), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-4, 5), expand = c(0, 0)) +
   scale_fill_gradientn(colors = palette[1:(npal-1)]) +
-  labs(title = "hex bins") +
+  labs(title = "Hex Bins") +
   theme_plot_icon(palette[npal], palette[1])
 
 cm <- cor(select(mtcars, mpg, hp, drat, wt, qsec))
@@ -668,7 +670,7 @@ p8 <- ggplot(filter(df_long, as.integer(var1) < as.integer(var2)),
   scale_y_discrete(name = NULL, expand = c(0, 0.5)) +
   scale_size_area(max_size = 8, limits = c(0, 0.9), guide = "none") +
   scale_fill_gradient2(high = palette[2], mid = palette[npal], low = pal_steel_blue_inv[2], guide = "none") +
-  labs(title = "correlogram") +
+  labs(title = "Correlogram") +
   theme_plot_icon(palette[npal], palette[1])
 
 
@@ -686,7 +688,7 @@ p1 <- ggplot(df_one_line, aes(x, y)) +
   ) +
   scale_x_continuous(limits = c(0.5, 5.5), breaks = c(1, 3, 5)) +
   scale_y_continuous(limits = c(2.8, 4.8)) +
-  labs(title = "line graph") +
+  labs(title = "Line Graph") +
   theme_plot_icon(palette[npal], palette[1])
 
 p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
@@ -701,7 +703,7 @@ p2 <- ggplot(df_connected_scatter, aes(x, y, color = t, fill = t)) +
   ) +
   scale_x_continuous(limits = c(0.3, 3.7)) +
   scale_y_continuous(limits = c(-2.5, 2.5)) +
-  labs(title = "connected scatterplot") +
+  labs(title = "Connected Scatterplot") +
   theme_plot_icon(palette[npal], palette[1])
 
 p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
@@ -713,7 +715,7 @@ p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
     se = FALSE
   ) +
   scale_y_continuous(limits = c(-5, 5)) +
-  labs(title = "smooth line graph") +
+  labs(title = "Smooth Line Graph") +
   theme_plot_icon(palette[npal], palette[1])
 
 plot_grid(p1, p2, p3, ncol = 4, scale = .9)
@@ -748,7 +750,7 @@ p1_main <- ggplot(lower48) +
 
 # make sure plot background is fully filled, as in the other plots
 p1 <- ggdraw(p1_main) +
-  labs(title = "map") +
+  labs(title = "Map") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 
@@ -764,7 +766,7 @@ p2_main <- ggplot(lower48, aes(fill = income_bins)) +
   )
 
 p2 <- ggdraw(p2_main) +
-  labs(title = "choropleth") +
+  labs(title = "Choropleth") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 lower48_carto <- mutate(
@@ -787,7 +789,7 @@ p3_main <- ggplot(lower48_carto, aes(fill = income_bins)) +
   )
 
 p3 <- ggdraw(p3_main) +
-  labs(title = "cartogram") +
+  labs(title = "Cartogram") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 lower48_small <- filter(lower48, GEOID %in% c(
@@ -807,7 +809,7 @@ p4_main <- ggplot(lower48_small, aes(state = name, fill = income_bins)) +
     plot.margin = margin(2, 0, 0, 7)
   )
 
-p4 <- ggdraw(p4_main) + labs(title = "cartogram heatmap") +
+p4 <- ggdraw(p4_main) + labs(title = "Cartogram Heatmap") +
   theme_plot_icon_blank(palette[npal], palette[1])
 
 plot_grid(p1, p2, p3, p4, scale = 0.9, nrow = 1)
@@ -829,7 +831,7 @@ p1 <- ggplot(df_uncertain, aes(y, type)) +
     color = palette[1],
     size = 2
   ) +
-  labs(title = "error bars") +
+  labs(title = "Error Bars") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -844,7 +846,7 @@ p2 <- ggplot(df_uncertain, aes(type, y)) +
     size = 0.7
   ) +
   scale_y_continuous(limits = c(0, 6), expand = c(0, 0)) +
-  labs(title = "error bars") +
+  labs(title = "Error Bars") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.x = element_blank(),
@@ -872,7 +874,7 @@ p3 <- ggplot(df_uncertain, aes(y, type)) +
     color = palette[1],
     size = 2
   ) +
-  labs(title = "graded error bars") +
+  labs(title = "Graded Error Bars") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -893,7 +895,7 @@ p4 <- ggplot(df_uncertain, aes(x, y)) +
   ) +
   scale_x_continuous(limits = c(1, 4)) +
   scale_y_continuous(limits = c(2, 6)) +
-  labs(title = "2D error bars") +
+  labs(title = "2D Error Bars") +
   theme_plot_icon(palette[npal], palette[1])
   
 
@@ -911,7 +913,7 @@ p1 <- ggplot(df_uncertain, aes(y, type)) +
   stat_confidence_density(aes(moe = dy), fill = palette[3], height = 0.6, confidence = 0.68) +
   scale_x_continuous(limits = c(1.6, 6.4), expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 1)) +
-  labs(title = "confidence strips") +
+  labs(title = "Confidence Strips") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -948,7 +950,7 @@ p2 <- ggplot(df_uncertain, aes(y, type)) +
   ) +
   scale_x_continuous(limits = c(1.6, 6.4), expand = c(0, 0)) +
   scale_y_discrete(expand = expand_scale(add = c(0.8, 0.8))) +
-  labs(title = "eyes") +
+  labs(title = "Eyes") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -971,7 +973,7 @@ p3 <- ggplot(df_uncertain, aes(y, type)) +
   ) +
   scale_x_continuous(limits = c(1.6, 6.4), expand = c(0, 0)) +
   scale_y_discrete(expand = expand_scale(add = c(0.2, 0.8))) +
-  labs(title = "half-eyes") +
+  labs(title = "Half-Eyes") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -995,7 +997,7 @@ p4 <- ggplot(df_q, aes(x)) +
     expand = c(0.02, 0),
     limits = c(0, 0.4)
   ) +
-  labs(title = "quantile dot plot") +
+  labs(title = "Quantile Dot Plot") +
   theme_plot_icon(palette[npal], palette[1]) +
   theme(
     axis.line.y = element_blank(),
@@ -1017,7 +1019,7 @@ p1 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
     level = 0.95
   ) +
   scale_y_continuous(limits = c(-5, 5)) +
-  labs(title = "confidence band") +
+  labs(title = "Confidence Band") +
   theme_plot_icon(palette[npal], palette[1])
 
 p2 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
@@ -1030,7 +1032,7 @@ p2 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
     level = 0.8
   ) +
   scale_y_continuous(limits = c(-5, 5)) +
-  labs(title = "graded confidence band") +
+  labs(title = "Graded Confidence Band") +
   theme_plot_icon(palette[npal], palette[1])
 
 p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
@@ -1038,10 +1040,10 @@ p3 <- ggplot(df_dense_scatter_sample, aes(x, y)) +
     times = 8,
     aes(group = stat(.draw)),
     color = palette[1],
-    size = 0.1
+    size = 0.15
   ) +
   scale_y_continuous(limits = c(-5, 5)) +
-  labs(title = "fitted draws") +
+  labs(title = "Fitted Draws") +
   theme_plot_icon(palette[npal], palette[1])
 
 plot_grid(p1, p2, p3, ncol = 4, scale = .9)
