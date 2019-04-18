@@ -236,12 +236,13 @@ p <- ggplot(US_states_geoms$true_albers) +
     axis.ticks = element_line(color = "gray30", size = 0.5/.pt)
   )
 
-# work around bug in sf graticule code
-b <- ggplot_build(p)
-b$layout$panel_params[[1]]$graticule$x_start[11] <- 0
-b$layout$panel_params[[1]]$graticule$y_start[11] <- 0.849
-ggdraw(ggplot_gtable(b))
-
+## work around bug in sf graticule code
+## not needed anymore since sf 0.7-3
+#b <- ggplot_build(p)
+#b$layout$panel_params[[1]]$graticule$x_start[11] <- 0
+#b$layout$panel_params[[1]]$graticule$y_start[11] <- 0.849
+#ggdraw(ggplot_gtable(b))
+p
 ```
 
 To address the problem of uninteresting empty space, it is common practice to project Alaska and Hawaii separately (to minimize shape distortions) and then move them so they are shown underneath the lower 48 (Figure \@ref(fig:usa-albers)). You may notice in Figure \@ref(fig:usa-albers) that Alaska looks much smaller relative to the lower 48 than it does in Figure \@ref(fig:usa-true-albers). The reason for this discrepancy is that Alaska has not only been moved, it also has been scaled so it looks comparable in size to typical midwestern or western states. This scaling, while common practice, is highly misleading, and therefore I have labeled the figure as "bad."

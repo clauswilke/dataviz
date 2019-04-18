@@ -12,7 +12,7 @@
   <meta property="og:title" content="Fundamentals of Data Visualization" />
   <meta property="og:type" content="book" />
   
-  
+  <meta property="og:image" content="cover.png" />
   <meta property="og:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
   <meta name="github-repo" content="clauswilke/dataviz" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Fundamentals of Data Visualization" />
   
   <meta name="twitter:description" content="A guide to making visualizations that accurately reflect the data, tell a story, and look professional." />
-  
+  <meta name="twitter:image" content="cover.png" />
 
 <meta name="author" content="Claus O. Wilke">
 
@@ -351,6 +351,7 @@ Figure 27.2: Illustration of jpeg artifacts. (a) The same image is reproduced mu
 <p>It is generally possible to convert any image format into any other image format. For example, on a Mac, you can open an image with Preview and then export to a number of different formats. In this process, though, important information can get lost, and information is never regained. For example, after saving a vector graphic into a bitmap format, e.g. a pdf file as a jpeg, the resolution independence that is a key feature of the vector graphic has been lost. Conversely, saving a jpeg image into a pdf file does not magically turn the image into a vector graphic. The image will still be a bitmap image, just stored inside the pdf file. Similarly, converting a jpeg file into a png file does not remove any artifacts that may have been introduced by the jpeg compression algorithm.</p>
 <p>It is therefore a good rule of thumb to always store the original image in the format that maintains maximum resolution, accuracy, and flexibility. Thus, for data visualizations, either create your figure as pdf and then convert into png or jpg when necessary, or alternatively store as high-resolution png. Similarly, for images that are only available as bitmaps, such as digital photographs, store them in a format that doesn’t use lossy compression, or if that can’t be done, compress as little as possible. Also, store the image in as high a resolution as possible, and downscale when needed.</p>
 
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
 <pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.2</code></pre>
 </div>
 </div>
