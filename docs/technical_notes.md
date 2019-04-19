@@ -33,7 +33,7 @@ The book was last compiled using the following environment:
 ## [19] plot3D_1.1.1        magick_1.9          hexbin_1.27.2      
 ## [22] treemapify_2.5.0    gridExtra_2.3       ggmap_2.7.904      
 ## [25] ggthemes_4.0.1      ggridges_0.5.1.9000 ggrepel_0.8.0      
-## [28] ggforce_0.1.1       patchwork_0.0.1     lubridate_1.7.4    
+## [28] ggforce_0.2.1       patchwork_0.0.1     lubridate_1.7.4    
 ## [31] forcats_0.3.0       stringr_1.3.1       purrr_0.2.5        
 ## [34] readr_1.1.1         tidyr_0.8.2         tibble_2.0.1       
 ## [37] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.8.0.1      
@@ -41,43 +41,42 @@ The book was last compiled using the following environment:
 ## [43] cowplot_0.9.99     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] rjson_0.2.20              deldir_0.1-15            
-##  [3] class_7.3-14              rprojroot_1.3-2          
-##  [5] estimability_1.3          ggstance_0.3.1           
-##  [7] rstudioapi_0.7            farver_1.0.0.9999        
-##  [9] ggfittext_0.6.0           svUnit_0.7-12            
-## [11] mvtnorm_1.0-8             xml2_1.2.0               
-## [13] knitr_1.20                polyclip_1.9-1           
-## [15] jsonlite_1.5              png_0.1-7                
-## [17] compiler_3.5.0            httr_1.3.1               
-## [19] backports_1.1.2           assertthat_0.2.0         
-## [21] Matrix_1.2-14             lazyeval_0.2.1           
-## [23] cli_1.0.1.9000            tweenr_1.0.1             
-## [25] prettyunits_1.0.2         htmltools_0.3.6          
-## [27] tools_3.5.0               misc3d_0.8-4             
-## [29] coda_0.19-2               gtable_0.2.0             
-## [31] glue_1.3.0                Rcpp_1.0.0               
-## [33] cellranger_1.1.0          imguR_1.0.3              
-## [35] xfun_0.3                  strapgod_0.0.0.9000      
-## [37] rvest_0.3.2               MASS_7.3-50              
-## [39] scales_1.0.0              hms_0.4.2                
-## [41] yaml_2.2.0                stringi_1.2.4            
-## [43] e1071_1.7-0               spData_0.2.9.4           
-## [45] RgoogleMaps_1.4.3         rlang_0.3.1              
-## [47] pkgconfig_2.0.2           bitops_1.0-6             
-## [49] geogrid_0.1.1             evaluate_0.11            
-## [51] lattice_0.20-35           tidyselect_0.2.5         
-## [53] plyr_1.8.4                magrittr_1.5             
-## [55] bookdown_0.7              R6_2.3.0                 
-## [57] generics_0.0.2            DBI_1.0.0                
-## [59] pillar_1.3.1              haven_1.1.2              
-## [61] foreign_0.8-71            withr_2.1.2.9000         
-## [63] units_0.6-1               modelr_0.1.2             
-## [65] crayon_1.3.4              arrayhelpers_1.0-20160527
-## [67] rmarkdown_1.10            progress_1.2.0.9000      
-## [69] jpeg_0.1-8                rnaturalearth_0.1.0      
-## [71] grid_3.5.0                readxl_1.1.0             
-## [73] digest_0.6.18             classInt_0.2-3           
-## [75] xtable_1.8-3              munsell_0.5.0            
-## [77] concaveman_1.0.0
+##  [1] rjson_0.2.20              class_7.3-14             
+##  [3] rprojroot_1.3-2           estimability_1.3         
+##  [5] ggstance_0.3.1            rstudioapi_0.7           
+##  [7] farver_1.0.0.9999         ggfittext_0.6.0          
+##  [9] svUnit_0.7-12             mvtnorm_1.0-8            
+## [11] xml2_1.2.0                knitr_1.20               
+## [13] polyclip_1.9-1            jsonlite_1.5             
+## [15] png_0.1-7                 compiler_3.5.0           
+## [17] httr_1.3.1                backports_1.1.2          
+## [19] assertthat_0.2.0          Matrix_1.2-14            
+## [21] lazyeval_0.2.1            cli_1.0.1.9000           
+## [23] tweenr_1.0.1              prettyunits_1.0.2        
+## [25] htmltools_0.3.6           tools_3.5.0              
+## [27] misc3d_0.8-4              coda_0.19-2              
+## [29] gtable_0.2.0              glue_1.3.0               
+## [31] Rcpp_1.0.0                cellranger_1.1.0         
+## [33] imguR_1.0.3               xfun_0.3                 
+## [35] strapgod_0.0.0.9000       rvest_0.3.2              
+## [37] MASS_7.3-50               scales_1.0.0             
+## [39] hms_0.4.2                 yaml_2.2.0               
+## [41] stringi_1.2.4             e1071_1.7-0              
+## [43] spData_0.2.9.4            RgoogleMaps_1.4.3        
+## [45] rlang_0.3.1               pkgconfig_2.0.2          
+## [47] bitops_1.0-6              geogrid_0.1.1            
+## [49] evaluate_0.11             lattice_0.20-35          
+## [51] tidyselect_0.2.5          plyr_1.8.4               
+## [53] magrittr_1.5              bookdown_0.7             
+## [55] R6_2.3.0                  generics_0.0.2           
+## [57] DBI_1.0.0                 pillar_1.3.1             
+## [59] haven_1.1.2               foreign_0.8-71           
+## [61] withr_2.1.2.9000          units_0.6-1              
+## [63] modelr_0.1.2              crayon_1.3.4             
+## [65] arrayhelpers_1.0-20160527 rmarkdown_1.10           
+## [67] progress_1.2.0.9000       jpeg_0.1-8               
+## [69] rnaturalearth_0.1.0       grid_3.5.0               
+## [71] readxl_1.1.0              digest_0.6.18            
+## [73] classInt_0.2-3            xtable_1.8-3             
+## [75] munsell_0.5.0
 ```

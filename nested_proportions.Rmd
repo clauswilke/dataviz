@@ -544,26 +544,38 @@ select(bridges, MATERIAL, ERECTED, RIVER, LENGTH) %>%
   reshape2::melt() %>%
   rename(material = MATERIAL, erected = ERECTED, length = LENGTH, river = RIVER, count = value) %>%
   mutate(
-    material = case_when(
-      material == "IRON" ~ "iron",
-      material == "STEEL" ~ "steel",
-      material == "WOOD" ~ "wood"
+    material = factor(
+      case_when(
+        material == "IRON" ~ "iron",
+        material == "STEEL" ~ "steel",
+        material == "WOOD" ~ "wood"
+      ),
+      levels = c("wood", "steel", "iron")
     ),
-    erected = case_when(
-      erected == "CRAFTS" ~ "crafts",
-      erected == "EMERGING" ~ "emerging",
-      erected == "MATURE" ~ "mature",
-      erected == "MODERN" ~ "modern"
+    erected = factor(
+      case_when(
+        erected == "CRAFTS" ~ "crafts",
+        erected == "EMERGING" ~ "emerging",
+        erected == "MATURE" ~ "mature",
+        erected == "MODERN" ~ "modern"
+      ),
+      levels = c("modern", "mature", "emerging", "crafts")
     ),
-    length = case_when(
-      length == "LONG" ~ "long",
-      length == "MEDIUM" ~ "medium",
-      length == "SHORT" ~ "short"
+    length = factor(
+      case_when(
+        length == "LONG" ~ "long",
+        length == "MEDIUM" ~ "medium",
+        length == "SHORT" ~ "short"
+      ),
+      levels = c("short", "medium", "long")
     ),
-    river = case_when(
-      river == "A" ~ "Allegheny",
-      river == "M" ~ "Monongahela",
-      river == "O" ~ "Ohio"
+    river = factor(
+      case_when(
+        river == "A" ~ "Allegheny",
+        river == "M" ~ "Monongahela",
+        river == "O" ~ "Ohio"
+      ),
+      levels = c("Ohio", "Monongahela", "Allegheny")
     )
   ) -> data
 
@@ -620,7 +632,7 @@ p_ugly <- ggplot(data, aes(x, id = id, split = y, value = count)) +
   ) +
   scale_y_continuous(breaks = NULL, expand = c(0, 0))+
   scale_fill_manual(
-    values = c("#F0E442D0", "#56B4E9D0", "#CC79A7D0"),
+    values = c("#CC79A7D0", "#56B4E9D0", "#F0E442D0"),
     guide = "none"
   ) +
   theme_dviz_open() +
@@ -657,7 +669,7 @@ ggplot(data, aes(x, id = id, split = y, value = count)) +
   ) +
   scale_y_continuous(breaks = NULL, expand = c(0, 0))+
   scale_fill_manual(
-    values = c("#F0E442D0", "#56B4E9D0", "#CC79A7D0"),
+    values = c("#CC79A7D0", "#56B4E9D0", "#F0E442D0"),
     guide = "none"
   ) +
   theme_dviz_open() +

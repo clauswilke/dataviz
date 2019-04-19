@@ -1,6 +1,8 @@
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
+
+library(sf)
 ```
 
 # Color scales {#color-basics}
@@ -99,8 +101,6 @@ Representing data values as colors is particularly useful when we want to show h
 
 
 ```{r map-Texas-income, fig.width = 6, fig.asp = 0.75, fig.cap = '(ref:map-Texas-income)'}
-library(sf)
-
 # B19013_001: Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)
 
 # EPSG:3083
