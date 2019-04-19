@@ -1,4 +1,4 @@
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 # run setup script
 source("_common.R")
 ```

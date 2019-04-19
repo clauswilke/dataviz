@@ -1,11 +1,4 @@
 
-```
-## Warning: package 'ggplot2' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.5.2
-```
 
 # Telling a story and making a point {#telling-a-story}
 

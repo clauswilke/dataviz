@@ -523,7 +523,11 @@ lincoln_base <- ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Mon
     expand = c(0, 0), breaks = c(0, 25, 50, 75), labels = NULL
   ) +
   scale_y_discrete(name = NULL, expand = c(0, .2, 0, 2.6)) +
-  scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0) +
+  scale_fill_continuous_sequential(
+    palette = "Heat",
+    l1 = 20, l2 = 100, c2 = 0,
+    rev = FALSE
+  ) +
   guides(fill = "none") +
   theme_dviz_grid() +
   theme(
@@ -540,13 +544,21 @@ tmin <- min(lincoln_weather$`Mean Temperature [F]`) - 3*bandwidth
 tmax <- max(lincoln_weather$`Mean Temperature [F]`) + 3*bandwidth
 
 xax <- axis_canvas(lincoln_base, axis = "x", ylim = c(0, 2)) +
-  geom_ridgeline_gradient(data = data.frame(temp = seq(tmin, tmax, length.out = 100)),
-                          aes(x = temp, y = 1.1, height = .9, fill = temp),
-                          color = "transparent") +
-  geom_text(data = temps, aes(x = temp, label = temp),
-            color = "black", family = dviz_font_family,
-            y = 0.9, hjust = 0.5, vjust = 1, size = 14/.pt) +
-  scale_fill_continuous_sequential(palette = "Heat", l1 = 20, l2 = 100, c2 = 0)
+  geom_ridgeline_gradient(
+    data = data.frame(temp = seq(tmin, tmax, length.out = 100)),
+    aes(x = temp, y = 1.1, height = .9, fill = temp),
+    color = "transparent"
+  ) +
+  geom_text(
+    data = temps, aes(x = temp, label = temp),
+    color = "black", family = dviz_font_family,
+    y = 0.9, hjust = 0.5, vjust = 1, size = 14/.pt
+  ) +
+  scale_fill_continuous_sequential(
+    palette = "Heat",
+    l1 = 20, l2 = 100, c2 = 0,
+    rev = FALSE
+  )
 
 lincoln_final <- insert_xaxis_grob(lincoln_base, xax, position = "bottom", height = unit(0.1, "null"))
 

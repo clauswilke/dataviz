@@ -85,7 +85,7 @@ p1 <- gg_color_swatches(7, title_family = dviz_font_family) +
   scale_fill_brewer(type = "seq", palette = "Blues", direction = -1) + ggtitle("ColorBrewer Blues") +
   theme(plot.margin = margin(7, 1.5, 7, 1.5))
 p2 <- gg_color_swatches(7, title_family = dviz_font_family) + 
-  scale_fill_discrete_sequential("Heat") + ggtitle("Heat") +
+  scale_fill_discrete_sequential("Heat", rev = FALSE) + ggtitle("Heat") +
   theme(plot.margin = margin(7, 1.5, 7, 1.5))
 p3 <- gg_color_swatches(7, title_family = dviz_font_family) + 
   scale_fill_viridis_d() + ggtitle("Viridis") +

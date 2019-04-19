@@ -286,8 +286,11 @@ p7 <- ggplot(df_props, aes(x = fct_rev(group), y = value)) +
 
 p8 <- ggplot(filter(df_multi_amounts, x != 1), aes(x, y = factor(type, levels = c("A", "C", "B")), fill = y)) + 
   geom_tile(color = palette[5], size = 1.5) +
-  scale_fill_continuous_sequential(h1 = 71, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5,
-                                   begin = 0.2, end = 0.75) +
+  scale_fill_continuous_sequential(
+    h1 = 71, c1 = 80, c2 = 10, l1 = 18, l2 = 97, p1 = 1.5,
+    begin = 0.2, end = 0.75,
+    rev = FALSE
+  ) +
   labs(title = "Heatmap") +
   theme_plot_icon_blank(palette[npal], palette[1])
 

@@ -1,11 +1,4 @@
 
-```
-## Warning: package 'ggplot2' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.5.2
-```
 
 # Common pitfalls of color use {#color-pitfalls}
 

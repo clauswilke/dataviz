@@ -228,7 +228,7 @@ grad_heat <- gg_color_gradient(
   plot_margin = margin(17.5, 1, 0, 1),
   ymargin = 0.05
 ) + 
-  scale_fill_continuous_sequential("Heat")
+  scale_fill_continuous_sequential("Heat", rev = FALSE)
 
 cvd_sim(grad_heat, label_y = 0.96)
 ```

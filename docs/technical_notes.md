@@ -37,7 +37,7 @@ The book was last compiled using the following environment:
 ## [31] forcats_0.3.0       stringr_1.3.1       purrr_0.2.5        
 ## [34] readr_1.1.1         tidyr_0.8.2         tibble_2.0.1       
 ## [37] tidyverse_1.2.1     dviz.supp_0.1.0     dplyr_0.8.0.1      
-## [40] colorblindr_0.1.0   ggplot2_3.1.1       colorspace_1.4-0   
+## [40] colorblindr_0.1.0   ggplot2_3.1.1       colorspace_1.4-1   
 ## [43] cowplot_0.9.99     
 ## 
 ## loaded via a namespace (and not attached):

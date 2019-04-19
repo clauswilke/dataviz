@@ -1,13 +1,5 @@
 
 ```
-## Warning: package 'ggplot2' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.5.2
-```
-
-```
 ## Warning: package 'sf' was built under R version 3.5.2
 ```
 
