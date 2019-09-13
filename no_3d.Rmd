@@ -128,7 +128,7 @@ plot_grid(
 
 ```
 
-Instead of applying two separate data transformations, one of which is non-invertible, I think it is generally better to just apply one appropriate, invertible transformation and map the data directly into 2D space. It is rarely necessary to add a third dimension as a position scale, since variables can also be mapped onto color, size, or shape scales. For example, in Chapter \@ref(aesthetic-mapping), I plotted five variables of the fuel-efficency dataset at once yet used only two position scales (Figure \@ref(fig:mtcars-five-scale)).
+Instead of applying two separate data transformations, one of which is non-invertible, I think it is generally better to just apply one appropriate, invertible transformation and map the data directly into 2D space. It is rarely necessary to add a third dimension as a position scale, since variables can also be mapped onto color, size, or shape scales. For example, in Chapter \@ref(aesthetic-mapping), I plotted five variables of the fuel-efficiency dataset at once yet used only two position scales (Figure \@ref(fig:mtcars-five-scale)).
 
 Here, I want to show two alternative ways of plotting exactly the variables used in Figure \@ref(fig:mtcars-3d). First, if we primarily care about fuel efficiency as the response variable, we can plot it twice, once against displacement and once against power (Figure \@ref(fig:mtcars-2d-multiple)). Second, if we are more interested in how displacement and power relate to each other, with fuel efficiency as a secondary variable of interest, we can plot power versus displacement and map fuel efficiency onto the size of the dots (Figure \@ref(fig:mtcars-2d-size)). Both figures are more useful and less confusing than Figure \@ref(fig:mtcars-3d).
 

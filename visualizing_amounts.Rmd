@@ -8,7 +8,7 @@ library(forcats)
 # Visualizing amounts {#visualizing-amounts}
 
 
-In many scenarios, we are interested in the magnitude of some set of numbers. For example, we might want to visualize the total sales volume of different brands of cars, or the total number of people living in different cities, or the age of olympians performing different sports. In all these cases, we have a set of categories (e.g., brands of cars, cities, or sports) and a quantitative value for each category. I refer to these cases as visualizing amounts, because the main emphasis in these visualizations will be on the magnitude of the quantitative values. The standard visualization in this scenario is the bar plot, which comes in several variations, including simple bars as well as grouped and stacked bars. Alternatives to the bar plot are the dot plot and the heatmap.
+In many scenarios, we are interested in the magnitude of some set of numbers. For example, we might want to visualize the total sales volume of different brands of cars, or the total number of people living in different cities, or the age of Olympians performing different sports. In all these cases, we have a set of categories (e.g., brands of cars, cities, or sports) and a quantitative value for each category. I refer to these cases as visualizing amounts, because the main emphasis in these visualizations will be on the magnitude of the quantitative values. The standard visualization in this scenario is the bar plot, which comes in several variations, including simple bars as well as grouped and stacked bars. Alternatives to the bar plot are the dot plot and the heatmap.
 
 ## Bar plots
 
@@ -70,7 +70,7 @@ boxoffice %>%
 
 One problem we commonly encounter with vertical bars is that the labels identifying each bar take up a lot of horizontal space. In fact, I had to make Figure \@ref(fig:boxoffice-vertical) fairly wide and space out the bars so that I could place the movie titles underneath. To save horizontal space, we could place the bars closer together and rotate the labels (Figure \@ref(fig:boxoffice-rot-axis-tick-labels)). However, I am not a big proponent of rotated labels. I find the resulting plots awkward and difficult to read. And, in my experience, whenever the labels are too long to place horizontally they also don't look good rotated.
 
-(ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot with rotated axis tick labels. Rotated axis tick labels tend to be difficult to read and require awkward space use undearneath the plot. For these reasons, I generally consider plots with rotated tick labels to be ugly. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
+(ref:boxoffice-rot-axis-tick-labels) Highest grossing movies for the weekend of December 22-24, 2017, displayed as a bar plot with rotated axis tick labels. Rotated axis tick labels tend to be difficult to read and require awkward space use underneath the plot. For these reasons, I generally consider plots with rotated tick labels to be ugly. Data source: Box Office Mojo (http://www.boxofficemojo.com/). Used with permission
 
 ```{r boxoffice-rot-axis-tick-labels, fig.asp = 0.85, fig.cap = '(ref:boxoffice-rot-axis-tick-labels)'}
 boxoffice %>%
@@ -512,4 +512,4 @@ ggplot(filter(internet_short, year > 1993),
   )
 ```
 
-Both Figures \@ref(fig:internet-over-time) and \@ref(fig:internet-over-time2) are valid representations of the data. Which one is prefered depends on the story we want to convey. If our story is about internet usage in 2016, then Figures \@ref(fig:internet-over-time) is probably the better choice. If, however, our story is about how early or late adoption of the internet relates to current-day usage, then Figure \@ref(fig:internet-over-time2) is preferable.
+Both Figures \@ref(fig:internet-over-time) and \@ref(fig:internet-over-time2) are valid representations of the data. Which one is preferred depends on the story we want to convey. If our story is about internet usage in 2016, then Figures \@ref(fig:internet-over-time) is probably the better choice. If, however, our story is about how early or late adoption of the internet relates to current-day usage, then Figure \@ref(fig:internet-over-time2) is preferable.

@@ -21,7 +21,7 @@ Maps tend to be intuitive to readers but they can be challenging to design. We n
 
 The earth is approximately a sphere (Figure \@ref(fig:world-orthographic)), and more precisely an oblate spheroid that is slightly flattened along its axis of rotation. The two locations where the axis of rotation intersects with the spheroid are called the *poles* (north pole and south pole). We separate the spheroid into two hemispheres, the northern and the southern hemisphere, by drawing a line equidistant to both poles around the spheroid. This line is called the *equator.* To uniquely specify a location on the earth, we need three pieces of information: where we are located along the direction of the equator (the longitude), how close we are to either pole when moving perpendicular to the equator (the latitude), and how far we are from the earth's center (the altitude). Longitude, latitude, and altitude are specified relative to a reference system called the *datum.* The datum specifies properties such as the shape and size of the earth, as well as the location of zero longitude, latitude, and altitude. One widely used datum is the World Geodetic System (WGS) 84, which is used by the Global Positioning System (GPS).
 
-(ref:world-orthographic) Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the north pole and runing south are called *meridians*, and the lines running orthogonal to the meridians are called *parallels.* All meridians have the same length but parallels become shorter the closer we are to either pole.
+(ref:world-orthographic) Orthographic projection of the world, showing Europe and Northern Africa as they would be visible from space. The lines emanating from the north pole and running south are called *meridians*, and the lines running orthogonal to the meridians are called *parallels.* All meridians have the same length but parallels become shorter the closer we are to either pole.
 
 ```{r world-orthographic, fig.width = 5.5, fig.asp = 1, fig.cap = '(ref:world-orthographic)'}
 intersperse <- function(x1, x2) {
@@ -252,7 +252,7 @@ To address the problem of uninteresting empty space, it is common practice to pr
 ```{r usa-albers, fig.asp = 0.65, fig.cap = '(ref:usa-albers)'}
 # standard US Albers map, with AK artificially small
 
-# mimick color of transparent orange on top of transparent blue,
+# mimic color of transparent orange on top of transparent blue,
 # as in previous maps drawn
 # color was obtained by extraction from rendered png
 brown <- "#deb664"
@@ -385,7 +385,7 @@ p1
 
 Figure \@ref(fig:sfbay-overview) consists of four separate layers. At the bottom, we have the terrain layer, which shows hills, valleys, and water. The next layer shows the road network. On top of the road layer, I have placed a layer indicating the location of individual wind turbines. This layer also contains the two rectangles highlighting the majority of the wind turbines. Finally, the top layer adds the locations and names of cities. These four layers are shown separately in Figure \@ref(fig:sfbay-layers). For any given map we want to make, we may want to add or remove some of these layers. For example, if we wanted to draw a map of voting districts, we might consider terrain information to be irrelevant and distracting. Alternatively, if we wanted to draw a map of exposed or covered roof areas to assess potential for solar power generation, we might want to replace terrain information with satellite imagery that shows individual roofs and actual vegetation. You can interactively try these different types of layers in most online map applications, such as Google Maps. I would like to emphasize that regardless of which layers we decide to keep or remove, it is generally recommended to add a scale bar and a north arrow. The scale bar helps readers understand the size of the spatial features shown in the map, while the north arrow clarifies the map's orientation.
 
-(ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showning the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
+(ref:sfbay-layers) The individual layers of Figure \@ref(fig:sfbay-overview). From bottom to top, the figure consists of a terrain layer, a roads layer, a layer showing the wind turbines, and a layer labeling cities and adding a scale bar and north arrow. Map tiles by Stamen Design, under CC BY 3.0. Map data by OpenStreetMap, under ODbL. Wind turbine data source: United States Wind Turbine Database
 
 ```{r sfbay-layers, fig.width = 5.5*6/4.2, fig.asp = 0.75, fig.cap = '(ref:sfbay-layers) '}
 l1 <- ggmap(sfbay_maps$sfbay_bg) + labs(subtitle = "terrain") + 
@@ -778,7 +778,7 @@ p <- ggplot(US_counties_income) +
 p
 ```
 
-Even though counties are not quite as equal-sized and even-shaped across the entire U.S. as they are just within Texas, I think Figure \@ref(fig:median-income-counties-binned) still works as a choropleth map. No individidual county overly dominates the map. However, things look different when we draw a comparable map at the state level (Figure \@ref(fig:median-income-states)). Then Alaska dominates the choropleth and, because of its size, suggests that median incomes above \$70,000 are common. Yet Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), and thus the income levels in Alaska apply only to a small portion of the U.S. population. The vast majority of U.S. counties, which are nearly all more populous than counties in Alaska, have a median income of below \$60,000.
+Even though counties are not quite as equal-sized and even-shaped across the entire U.S. as they are just within Texas, I think Figure \@ref(fig:median-income-counties-binned) still works as a choropleth map. No individual county overly dominates the map. However, things look different when we draw a comparable map at the state level (Figure \@ref(fig:median-income-states)). Then Alaska dominates the choropleth and, because of its size, suggests that median incomes above \$70,000 are common. Yet Alaska is very sparsely populated (see Figures \@ref(fig:population-density-counties) and \@ref(fig:population-density-counties2)), and thus the income levels in Alaska apply only to a small portion of the U.S. population. The vast majority of U.S. counties, which are nearly all more populous than counties in Alaska, have a median income of below \$60,000.
 
 (ref:median-income-states) Median income in every U.S. state, shown as a choropleth map. This map is visually dominated by the state of Alaska, which has a high median income but very low population density. At the same time, the densely populated high-income states on the East Coast do not appear very prominent on this map. In aggregate, this map provides a poor visualization of the income distribution in the U.S., and therefore I have labeled it as "bad." Data source: 2015 Five-Year American Community Survey
 
@@ -835,7 +835,7 @@ Not every map-like visualization has to be geographically accurate to be useful.
 (ref:median-income-cartogram) Median income in every U.S. state, shown as a cartogram. The shapes of individual states have been modified such that their area is proportional to their number of inhabitants. Data source: 2015 Five-Year American Community Survey
 
 ```{r median-income-cartogram, fig.asp = 0.73, fig.cap = '(ref:median-income-cartogram)'}
-# copy binnned data over, order of both data frames is the same
+# copy binned data over, order of both data frames is the same
 US_income_cartogram$income_bins <- US_income$income_bins
 
 p <- ggplot(US_income_cartogram, aes(fill = income_bins)) + 
