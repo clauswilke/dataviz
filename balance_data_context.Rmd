@@ -102,7 +102,7 @@ p_Aus_base +
 
 Figures with too little non-data ink commonly suffer from the effect that figure elements appear to float in space, without clear connection or reference to anything. This problem tends to be particularly severe in small multiples plots. Figure \@ref(fig:titanic-survival-by-gender-class-bad) shows a small-multiples plot comparing six different bar plots, but it looks more like a piece of modern art than a useful data visualization. The bars are not anchored to a clear baseline and the individual plot facets are not clearly delineated. We can resolve these issues by adding a light gray background and thin horizontal grid lines to each facet (Figure \@ref(fig:titanic-survival-by-gender-class)).
 
-(ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual factes are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
+(ref:titanic-survival-by-gender-class-bad) Survival of passengers on the Titanic, broken down by gender and class. This small-multiples plot is too minimalistic. The individual facets are not framed, so it's difficult to see which part of the figure belongs to which facet. Further, the individual bars are not anchored to a clear baseline, and they seem to float.
 
 ```{r titanic-survival-by-gender-class-bad, fig.width = 5, fig.asp = 3/4, fig.cap = '(ref:titanic-survival-by-gender-class-bad)'}
 titanic %>% mutate(surv = ifelse(survived == 0, "died", "survived")) %>%
@@ -207,7 +207,7 @@ stamp_bad(
 )
 ```
 
-At the absolute minimum, we need to add one horizontal reference line. Since the stock prices in Figure \@ref(fig:price-plot-no-grid) indexed to 100 in June 2012, marking this value with a thin horizontal line at *y* = 100 helps a lot (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horzontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
+At the absolute minimum, we need to add one horizontal reference line. Since the stock prices in Figure \@ref(fig:price-plot-no-grid) indexed to 100 in June 2012, marking this value with a thin horizontal line at *y* = 100 helps a lot (Figure \@ref(fig:price-plot-refline)). Alternatively, we can use a minimal "grid" of horizontal lines. For a plot where we are primarily interested in the change in *y* values, vertical grid lines are not needed. Moreover, grid lines positioned at only the major axis ticks will often be sufficient. And, the axis line can be omitted or made very thin, since the horizontal lines clearly mark the extent of the plot (Figure \@ref(fig:price-plot-hgrid)).
 
 (ref:price-plot-refline) Indexed stock price over time for four major tech companies. Adding a thin horizontal line at the index value of 100 to Figure \@ref(fig:price-plot-no-grid) helps provide an important reference throughout the entire time period the plot spans. Data source: Yahoo Finance
 
