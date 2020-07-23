@@ -111,7 +111,7 @@ Figure \@ref(fig:blue-jays-scatter-bubbles), I used a size mapping that visually
 As an alternative to a bubble chart, it may be preferable to show an all-against-all matrix of scatter plots, where each individual plot shows two data dimensions (Figure \@ref(fig:blue-jays-scatter-all)). This figure shows clearly that the relationship between skull size and body mass is comparable for female and male birds except that the female birds tend to be somewhat smaller. However, the same is not true for the relationship between head length and body mass. There is a clear separation by sex. Male birds tend to have longer bills than female birds, all else equal.
 
 
-(ref:blue-jays-scatter-all) All-against-all scatter plot matrix of head length, body mass, and skull size, for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-sex). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-sex). Data source: Keith Tarvin, Oberlin College
+(ref:blue-jays-scatter-all) All-against-all scatter plot matrix of head length, body mass, and skull size, for 123 blue jays. This figure shows the exact same data as Figure \@ref(fig:blue-jays-scatter-bubbles). However, because we are better at judging position than symbol size, correlations between skull size and the other two variables are easier to perceive in the pairwise scatter plots than in Figure \@ref(fig:blue-jays-scatter-bubbles). Data source: Keith Tarvin, Oberlin College
 
 
 ```{r blue-jays-scatter-all, fig.width = 5*6/4.2, fig.asp = 3/4, fig.cap='(ref:blue-jays-scatter-all)'}
